@@ -67,31 +67,34 @@ type shapeDescriptor =
 [@@deriving show, equal]
 
 let getShapeTraits descriptor =
-  match descriptor with
-  | ListShape { traits; _ }
-  | StructureShape { traits; _ }
-  | OperationShape { traits; _ }
-  | UnionShape { traits; _ }
-  | BlobShape { traits }
-  | ServiceShape { traits; _ }
-  | BooleanShape { traits }
-  | IntegerShape { traits }
-  | ShortShape { traits }
-  | StringShape { traits }
-  | MapShape { traits; _ }
-  | TimestampShape { traits }
-  | LongShape { traits }
-  | FloatShape { traits }
-  | DoubleShape { traits }
-  | BigIntegerShape { traits }
-  | BigDecimalShape { traits }
-  | SetShape { traits; _ } ->
-      traits
-  | EnumShape { traits; _ } -> traits
-  | ByteShape { traits; _ } -> traits
-  | UnitShape -> None
-  | ResourceShape -> None
-  | DocumentShape -> None
+  let traits =
+    match descriptor with
+    | ListShape { traits; _ }
+    | StructureShape { traits; _ }
+    | OperationShape { traits; _ }
+    | UnionShape { traits; _ }
+    | BlobShape { traits }
+    | ServiceShape { traits; _ }
+    | BooleanShape { traits }
+    | IntegerShape { traits }
+    | ShortShape { traits }
+    | StringShape { traits }
+    | MapShape { traits; _ }
+    | TimestampShape { traits }
+    | LongShape { traits }
+    | FloatShape { traits }
+    | DoubleShape { traits }
+    | BigIntegerShape { traits }
+    | BigDecimalShape { traits }
+    | SetShape { traits; _ }
+    | EnumShape { traits; _ }
+    | ByteShape { traits; _ } ->
+        traits
+    | UnitShape -> None
+    | ResourceShape -> None
+    | DocumentShape -> None
+  in
+  Option.value ~default:[] traits
 
 type t = { name : string; descriptor : shapeDescriptor } [@@deriving show, equal]
 

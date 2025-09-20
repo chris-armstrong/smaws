@@ -12,10 +12,18 @@ val pp_http_failure : Format.formatter -> http_failure -> unit
 val equal_http_failure : http_failure -> http_failure -> bool
 
 type headers = (string * string) list
-type input_body = [ `None | `String of string | `Form of (string * string list) list ]
+type body_encoding = Compression.body_encoding = Gzip
+
+type input_body =
+  [ `None
+  | `String of string
+  | `Compressed of string * body_encoding
+  | `Form of (string * string list) list ]
 
 val pp_input_body : Format.formatter -> input_body -> unit
 val equal_input_body : input_body -> input_body -> bool
+val pp_body_encoding : Format.formatter -> body_encoding -> unit
+val equal_body_encoding : body_encoding -> body_encoding -> bool
 
 type method_ =
   [ `GET | `POST | `CONNECT | `DELETE | `HEAD | `OPTIONS | `Other of string | `PUT | `TRACE ]
@@ -37,7 +45,7 @@ module type Client_intf = sig
   module Body : sig
     type t
 
-    val to_string : t -> string
+    val to_string : t -> string option
     val drain : t -> unit
   end
 
@@ -50,7 +58,13 @@ module type Client_intf = sig
     (Response.t * Body.t, http_failure) result
 end
 
-module Client : sig
+module type Client = sig
+  include Client_intf
+
+  val make : unit -> t
+end
+
+module Http_Client_Eio : sig
   type t
 
   module Response : sig
@@ -63,7 +77,7 @@ module Client : sig
   module Body : sig
     type t
 
-    val to_string : t -> string
+    val to_string : t -> string option
     val drain : t -> unit
   end
 
@@ -75,7 +89,7 @@ module Client : sig
     t ->
     (Response.t * Body.t, http_failure) result
 
-  val make :
+  val make_eio_client :
     sw:Eio.Switch.t ->
     < mono_clock : [> `Clock of Mtime.t ] Eio.Resource.t
     ; net : [> `Network | `Platform of [> `Generic | `Unix ] ] Eio.Resource.t

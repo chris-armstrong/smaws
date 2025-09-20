@@ -22,6 +22,7 @@ depends: [
   "httpun" {>= "0.2.0"}
   "httpun-eio" {>= "0.2.0"}
   "ptime" {>= "1.2.0"}
+  "camlzip" {>= "1.11"}
   "ppx_deriving" {>= "5.0" & build}
   "alcotest" {with-test}
   "eio_main" {with-dev-setup}

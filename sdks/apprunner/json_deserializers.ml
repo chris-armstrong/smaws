@@ -19,8 +19,7 @@ let vpc_ingress_connection_summary_list_of_yojson tree path =
   list_of_yojson vpc_ingress_connection_summary_of_yojson tree path
 
 let vpc_ingress_connection_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DELETED" -> DELETED
     | `String "FAILED_DELETION" -> FAILED_DELETION
     | `String "FAILED_UPDATE" -> FAILED_UPDATE
@@ -95,8 +94,7 @@ let integer_of_yojson = int_of_yojson
 let string_list_of_yojson tree path = list_of_yojson string__of_yojson tree path
 
 let vpc_connector_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "INACTIVE" -> INACTIVE
     | `String "ACTIVE" -> ACTIVE
     | `String value -> raise (deserialize_unknown_enum_value_error path "VpcConnectorStatus" value)
@@ -170,8 +168,7 @@ let service_name_of_yojson = string_of_yojson
 let service_id_of_yojson = string_of_yojson
 
 let service_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "OPERATION_IN_PROGRESS" -> OPERATION_IN_PROGRESS
     | `String "PAUSED" -> PAUSED
     | `String "DELETE_FAILED" -> DELETE_FAILED
@@ -184,8 +181,7 @@ let service_status_of_yojson (tree : t) path =
     : service_status)
 
 let source_code_version_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "BRANCH" -> BRANCH
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "SourceCodeVersionType" value)
@@ -202,8 +198,7 @@ let source_code_version_of_yojson tree path =
     : source_code_version)
 
 let configuration_source_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "API" -> API
     | `String "REPOSITORY" -> REPOSITORY
     | `String value -> raise (deserialize_unknown_enum_value_error path "ConfigurationSource" value)
@@ -212,8 +207,7 @@ let configuration_source_of_yojson (tree : t) path =
     : configuration_source)
 
 let runtime_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "NODEJS_22" -> NODEJS_22
     | `String "NODEJS_18" -> NODEJS_18
     | `String "PYTHON_311" -> PYTHON_311
@@ -315,8 +309,7 @@ let image_configuration_of_yojson tree path =
     : image_configuration)
 
 let image_repository_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ECR_PUBLIC" -> ECR_PUBLIC
     | `String "ECR" -> ECR
     | `String value -> raise (deserialize_unknown_enum_value_error path "ImageRepositoryType" value)
@@ -388,8 +381,7 @@ let encryption_configuration_of_yojson tree path =
   ({ kms_key = value_for_key kms_key_arn_of_yojson "KmsKey" _list path } : encryption_configuration)
 
 let health_check_protocol_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "HTTP" -> HTTP
     | `String "TCP" -> TCP
     | `String value -> raise (deserialize_unknown_enum_value_error path "HealthCheckProtocol" value)
@@ -426,8 +418,7 @@ let health_check_configuration_of_yojson tree path =
 let auto_scaling_configuration_name_of_yojson = string_of_yojson
 
 let auto_scaling_configuration_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "INACTIVE" -> INACTIVE
     | `String "ACTIVE" -> ACTIVE
     | `String value ->
@@ -468,8 +459,7 @@ let auto_scaling_configuration_summary_of_yojson tree path =
     : auto_scaling_configuration_summary)
 
 let egress_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "VPC" -> VPC
     | `String "DEFAULT" -> DEFAULT
     | `String value -> raise (deserialize_unknown_enum_value_error path "EgressType" value)
@@ -499,8 +489,7 @@ let ingress_configuration_of_yojson tree path =
     : ingress_configuration)
 
 let ip_address_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DUAL_STACK" -> DUAL_STACK
     | `String "IPV4" -> IPV4
     | `String value -> raise (deserialize_unknown_enum_value_error path "IpAddressType" value)
@@ -684,8 +673,7 @@ let untag_resource_request_of_yojson tree path =
     : untag_resource_request)
 
 let tracing_vendor_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "AWSXRAY" -> AWSXRAY
     | `String value -> raise (deserialize_unknown_enum_value_error path "TracingVendor" value)
     | _ -> raise (deserialize_wrong_type_error path "TracingVendor")
@@ -770,8 +758,7 @@ let resume_service_request_of_yojson tree path =
     : resume_service_request)
 
 let provider_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "BITBUCKET" -> BITBUCKET
     | `String "GITHUB" -> GITHUB
     | `String value -> raise (deserialize_unknown_enum_value_error path "ProviderType" value)
@@ -793,8 +780,7 @@ let pause_service_request_of_yojson tree path =
     : pause_service_request)
 
 let operation_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "UPDATE_SERVICE" -> UPDATE_SERVICE
     | `String "DELETE_SERVICE" -> DELETE_SERVICE
     | `String "RESUME_SERVICE" -> RESUME_SERVICE
@@ -807,8 +793,7 @@ let operation_type_of_yojson (tree : t) path =
     : operation_type)
 
 let operation_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ROLLBACK_SUCCEEDED" -> ROLLBACK_SUCCEEDED
     | `String "ROLLBACK_FAILED" -> ROLLBACK_FAILED
     | `String "ROLLBACK_IN_PROGRESS" -> ROLLBACK_IN_PROGRESS
@@ -862,8 +847,7 @@ let observability_configuration_summary_list_of_yojson tree path =
   list_of_yojson observability_configuration_summary_of_yojson tree path
 
 let observability_configuration_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "INACTIVE" -> INACTIVE
     | `String "ACTIVE" -> ACTIVE
     | `String value ->
@@ -1048,8 +1032,7 @@ let list_observability_configurations_request_of_yojson tree path =
 let connection_name_of_yojson = string_of_yojson
 
 let connection_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DELETED" -> DELETED
     | `String "ERROR" -> ERROR
     | `String "AVAILABLE" -> AVAILABLE
@@ -1122,8 +1105,7 @@ let list_auto_scaling_configurations_request_of_yojson tree path =
     : list_auto_scaling_configurations_request)
 
 let certificate_validation_record_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "FAILED" -> FAILED
     | `String "SUCCESS" -> SUCCESS
     | `String "PENDING_VALIDATION" -> PENDING_VALIDATION
@@ -1150,8 +1132,7 @@ let certificate_validation_record_list_of_yojson tree path =
   list_of_yojson certificate_validation_record_of_yojson tree path
 
 let custom_domain_association_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "BINDING_CERTIFICATE" -> BINDING_CERTIFICATE
     | `String "PENDING_CERTIFICATE_DNS_VALIDATION" -> PENDING_CERTIFICATE_DNS_VALIDATION
     | `String "DELETE_FAILED" -> DELETE_FAILED

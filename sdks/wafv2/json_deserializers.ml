@@ -24,8 +24,7 @@ let query_string_of_yojson tree path =
   (() : unit)
 
 let oversize_handling_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "NO_MATCH" -> NO_MATCH
     | `String "MATCH" -> MATCH
     | `String "CONTINUE" -> CONTINUE
@@ -63,8 +62,7 @@ let json_match_pattern_of_yojson tree path =
     : json_match_pattern)
 
 let json_match_scope_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "VALUE" -> VALUE
     | `String "KEY" -> KEY
     | `String "ALL" -> ALL
@@ -74,8 +72,7 @@ let json_match_scope_of_yojson (tree : t) path =
     : json_match_scope)
 
 let body_parsing_fallback_behavior_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "EVALUATE_AS_STRING" -> EVALUATE_AS_STRING
     | `String "NO_MATCH" -> NO_MATCH
     | `String "MATCH" -> MATCH
@@ -113,8 +110,7 @@ let header_match_pattern_of_yojson tree path =
     : header_match_pattern)
 
 let map_match_scope_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "VALUE" -> VALUE
     | `String "KEY" -> KEY
     | `String "ALL" -> ALL
@@ -161,8 +157,7 @@ let header_order_of_yojson tree path =
     : header_order)
 
 let fallback_behavior_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "NO_MATCH" -> NO_MATCH
     | `String "MATCH" -> MATCH
     | `String value -> raise (deserialize_unknown_enum_value_error path "FallbackBehavior" value)
@@ -218,8 +213,7 @@ let field_to_match_of_yojson tree path =
 let text_transformation_priority_of_yojson = int_of_yojson
 
 let text_transformation_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "UTF8_TO_UNICODE" -> UTF8_TO_UNICODE
     | `String "URL_DECODE_UNI" -> URL_DECODE_UNI
     | `String "BASE64_DECODE_EXT" -> BASE64_DECODE_EXT
@@ -346,8 +340,7 @@ let rule_priority_of_yojson = int_of_yojson
 let search_string_of_yojson = blob_of_yojson
 
 let positional_constraint_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CONTAINS_WORD" -> CONTAINS_WORD
     | `String "CONTAINS" -> CONTAINS
     | `String "ENDS_WITH" -> ENDS_WITH
@@ -372,8 +365,7 @@ let byte_match_statement_of_yojson tree path =
     : byte_match_statement)
 
 let sensitivity_level_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "HIGH" -> HIGH
     | `String "LOW" -> LOW
     | `String value -> raise (deserialize_unknown_enum_value_error path "SensitivityLevel" value)
@@ -393,8 +385,7 @@ let sqli_match_statement_of_yojson tree path =
     : sqli_match_statement)
 
 let comparison_operator_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "GT" -> GT
     | `String "GE" -> GE
     | `String "LT" -> LT
@@ -421,8 +412,7 @@ let size_constraint_statement_of_yojson tree path =
     : size_constraint_statement)
 
 let country_code_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "XK" -> XK
     | `String "ZW" -> ZW
     | `String "ZM" -> ZM
@@ -771,8 +761,7 @@ let rule_group_reference_statement_of_yojson tree path =
     : rule_group_reference_statement)
 
 let forwarded_ip_position_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ANY" -> ANY
     | `String "LAST" -> LAST
     | `String "FIRST" -> FIRST
@@ -815,8 +804,7 @@ let rate_limit_of_yojson = long_of_yojson
 let evaluation_window_sec_of_yojson = long_of_yojson
 
 let rate_based_statement_aggregate_key_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CONSTANT" -> CONSTANT
     | `String "CUSTOM_KEYS" -> CUSTOM_KEYS
     | `String "FORWARDED_IP" -> FORWARDED_IP
@@ -944,8 +932,7 @@ let version_key_string_of_yojson = string_of_yojson
 let login_path_string_of_yojson = string_of_yojson
 
 let payload_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "FORM_ENCODED" -> FORM_ENCODED
     | `String "JSON" -> JSON
     | `String value -> raise (deserialize_unknown_enum_value_error path "PayloadType" value)
@@ -966,8 +953,7 @@ let password_field_of_yojson tree path =
     : password_field)
 
 let inspection_level_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "TARGETED" -> TARGETED
     | `String "COMMON" -> COMMON
     | `String value -> raise (deserialize_unknown_enum_value_error path "InspectionLevel" value)
@@ -1167,8 +1153,7 @@ let aws_managed_rules_acfp_rule_set_of_yojson tree path =
     : aws_managed_rules_acfp_rule_set)
 
 let usage_of_action_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DISABLED" -> DISABLED
     | `String "ENABLED" -> ENABLED
     | `String value -> raise (deserialize_unknown_enum_value_error path "UsageOfAction" value)
@@ -1177,8 +1162,7 @@ let usage_of_action_of_yojson (tree : t) path =
     : usage_of_action)
 
 let sensitivity_to_act_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "HIGH" -> HIGH
     | `String "MEDIUM" -> MEDIUM
     | `String "LOW" -> LOW
@@ -1262,8 +1246,7 @@ let managed_rule_group_configs_of_yojson tree path =
   list_of_yojson managed_rule_group_config_of_yojson tree path
 
 let label_match_scope_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "NAMESPACE" -> NAMESPACE
     | `String "LABEL" -> LABEL
     | `String value -> raise (deserialize_unknown_enum_value_error path "LabelMatchScope" value)
@@ -1496,8 +1479,7 @@ let rule_of_yojson tree path =
 let rules_of_yojson tree path = list_of_yojson rule_of_yojson tree path
 
 let field_to_protect_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "BODY" -> BODY
     | `String "QUERY_STRING" -> QUERY_STRING
     | `String "SINGLE_QUERY_ARGUMENT" -> SINGLE_QUERY_ARGUMENT
@@ -1523,8 +1505,7 @@ let field_to_protect_of_yojson tree path =
     : field_to_protect)
 
 let data_protection_action_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "HASH" -> HASH
     | `String "SUBSTITUTION" -> SUBSTITUTION
     | `String value ->
@@ -1584,8 +1565,7 @@ let firewall_manager_rule_groups_of_yojson tree path =
   list_of_yojson firewall_manager_rule_group_of_yojson tree path
 
 let response_content_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "APPLICATION_JSON" -> APPLICATION_JSON
     | `String "TEXT_HTML" -> TEXT_HTML
     | `String "TEXT_PLAIN" -> TEXT_PLAIN
@@ -1611,8 +1591,7 @@ let token_domain_of_yojson = string_of_yojson
 let token_domains_of_yojson tree path = list_of_yojson token_domain_of_yojson tree path
 
 let size_inspection_limit_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "KB_64" -> KB_64
     | `String "KB_48" -> KB_48
     | `String "KB_32" -> KB_32
@@ -1631,8 +1610,7 @@ let request_body_associated_resource_type_config_of_yojson tree path =
     : request_body_associated_resource_type_config)
 
 let associated_resource_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "VERIFIED_ACCESS_INSTANCE" -> VERIFIED_ACCESS_INSTANCE
     | `String "APP_RUNNER_SERVICE" -> APP_RUNNER_SERVICE
     | `String "COGNITO_USER_POOL" -> COGNITO_USER_POOL
@@ -1656,8 +1634,7 @@ let association_config_of_yojson tree path =
     : association_config)
 
 let low_reputation_mode_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ALWAYS_ON" -> ALWAYS_ON
     | `String "ACTIVE_UNDER_DDOS" -> ACTIVE_UNDER_DDOS
     | `String value -> raise (deserialize_unknown_enum_value_error path "LowReputationMode" value)
@@ -1816,8 +1793,7 @@ let waf_invalid_permission_policy_exception_of_yojson tree path =
     : waf_invalid_permission_policy_exception)
 
 let parameter_exception_field_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "LOW_REPUTATION_MODE" -> LOW_REPUTATION_MODE
     | `String "DATA_PROTECTION_CONFIG" -> DATA_PROTECTION_CONFIG
     | `String "ACP_RULE_SET_RESPONSE_INSPECTION" -> ACP_RULE_SET_RESPONSE_INSPECTION
@@ -1966,8 +1942,7 @@ let update_web_acl_response_of_yojson tree path =
     : update_web_acl_response)
 
 let scope_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "REGIONAL" -> REGIONAL
     | `String "CLOUDFRONT" -> CLOUDFRONT
     | `String value -> raise (deserialize_unknown_enum_value_error path "Scope" value)
@@ -2201,8 +2176,7 @@ let action_of_yojson = string_of_yojson
 let response_code_of_yojson = int_of_yojson
 
 let failure_reason_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "TOKEN_DOMAIN_MISMATCH" -> TOKEN_DOMAIN_MISMATCH
     | `String "TOKEN_INVALID" -> TOKEN_INVALID
     | `String "TOKEN_EXPIRED" -> TOKEN_EXPIRED
@@ -2319,8 +2293,7 @@ let rule_group_of_yojson tree path =
     : rule_group)
 
 let resource_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "AMPLIFY" -> AMPLIFY
     | `String "VERIFIED_ACCESS_INSTANCE" -> VERIFIED_ACCESS_INSTANCE
     | `String "APP_RUNNER_SERVICE" -> APP_RUNNER_SERVICE
@@ -2380,8 +2353,7 @@ let regex_pattern_set_of_yojson tree path =
 let redacted_fields_of_yojson tree path = list_of_yojson field_to_match_of_yojson tree path
 
 let ip_address_version_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "IPV6" -> IPV6
     | `String "IPV4" -> IPV4
     | `String value -> raise (deserialize_unknown_enum_value_error path "IPAddressVersion" value)
@@ -2437,8 +2409,7 @@ let put_managed_rule_set_versions_request_of_yojson tree path =
 let log_destination_configs_of_yojson tree path = list_of_yojson resource_arn_of_yojson tree path
 
 let filter_behavior_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DROP" -> DROP
     | `String "KEEP" -> KEEP
     | `String value -> raise (deserialize_unknown_enum_value_error path "FilterBehavior" value)
@@ -2447,8 +2418,7 @@ let filter_behavior_of_yojson (tree : t) path =
     : filter_behavior)
 
 let filter_requirement_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "MEETS_ANY" -> MEETS_ANY
     | `String "MEETS_ALL" -> MEETS_ALL
     | `String value -> raise (deserialize_unknown_enum_value_error path "FilterRequirement" value)
@@ -2457,8 +2427,7 @@ let filter_requirement_of_yojson (tree : t) path =
     : filter_requirement)
 
 let action_value_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "EXCLUDED_AS_COUNT" -> EXCLUDED_AS_COUNT
     | `String "CHALLENGE" -> CHALLENGE
     | `String "CAPTCHA" -> CAPTCHA
@@ -2513,8 +2482,7 @@ let logging_filter_of_yojson tree path =
     : logging_filter)
 
 let log_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "WAF_LOGS" -> WAF_LOGS
     | `String value -> raise (deserialize_unknown_enum_value_error path "LogType" value)
     | _ -> raise (deserialize_wrong_type_error path "LogType")
@@ -2522,8 +2490,7 @@ let log_type_of_yojson (tree : t) path =
     : log_type)
 
 let log_scope_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "SECURITY_LAKE" -> SECURITY_LAKE
     | `String "CUSTOMER" -> CUSTOMER
     | `String value -> raise (deserialize_unknown_enum_value_error path "LogScope" value)
@@ -2593,8 +2560,7 @@ let product_description_of_yojson = string_of_yojson
 let population_size_of_yojson = long_of_yojson
 
 let platform_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ANDROID" -> ANDROID
     | `String "IOS" -> IOS
     | `String value -> raise (deserialize_unknown_enum_value_error path "Platform" value)

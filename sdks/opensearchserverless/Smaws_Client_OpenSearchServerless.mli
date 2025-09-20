@@ -672,8 +672,16 @@ val make_create_access_policy_request :
 (** {1:operations Operations} *)
 
 module CreateAccessPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_access_policy_request ->
     ( create_access_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -691,8 +699,17 @@ end
    access control for Amazon OpenSearch Serverless}.\n"]
 
 module CreateCollection : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `OcuLimitExceededException of ocu_limit_exceeded_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_collection_request ->
     ( create_collection_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -709,8 +726,16 @@ end
    and managing Amazon OpenSearch Serverless collections}.\n"]
 
 module CreateSecurityConfig : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_security_config_request ->
     ( create_security_config_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -726,8 +751,16 @@ end
    authentication for Amazon OpenSearch Serverless}. \n"]
 
 module CreateVpcEndpoint : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_vpc_endpoint_request ->
     ( create_vpc_endpoint_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -743,8 +776,16 @@ end
    Amazon OpenSearch Serverless using an interface endpoint}.\n"]
 
 module DeleteAccessPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_access_policy_request ->
     ( delete_access_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -760,8 +801,16 @@ end
    access control for Amazon OpenSearch Serverless}.\n"]
 
 module DeleteCollection : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_collection_request ->
     ( delete_collection_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -777,8 +826,16 @@ end
    and managing Amazon OpenSearch Serverless collections}.\n"]
 
 module DeleteLifecyclePolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_lifecycle_policy_request ->
     ( delete_lifecycle_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -794,8 +851,16 @@ end
    data lifecycle policies}.\n"]
 
 module DeleteSecurityConfig : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_security_config_request ->
     ( delete_security_config_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -811,8 +876,16 @@ end
    authentication for Amazon OpenSearch Serverless}.\n"]
 
 module DeleteSecurityPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_security_policy_request ->
     ( delete_security_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -825,8 +898,16 @@ end
 [@@ocaml.doc "Deletes an OpenSearch Serverless security policy.\n"]
 
 module DeleteVpcEndpoint : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_vpc_endpoint_request ->
     ( delete_vpc_endpoint_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -842,8 +923,15 @@ end
    Amazon OpenSearch Serverless using an interface endpoint}.\n"]
 
 module GetAccessPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_access_policy_request ->
     ( get_access_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -858,8 +946,15 @@ end
    access control for Amazon OpenSearch Serverless}.\n"]
 
 module GetSecurityConfig : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_security_config_request ->
     ( get_security_config_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -875,8 +970,15 @@ end
    authentication for Amazon OpenSearch Serverless}.\n"]
 
 module GetSecurityPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_security_policy_request ->
     ( get_security_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -894,8 +996,14 @@ end
    at rest for Amazon OpenSearch Serverless}.\n"]
 
 module ListAccessPolicies : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_access_policies_request ->
     ( list_access_policies_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -906,8 +1014,14 @@ end
 [@@ocaml.doc "Returns information about a list of OpenSearch Serverless access policies.\n"]
 
 module ListCollections : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_collections_request ->
     ( list_collections_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -925,8 +1039,14 @@ end
   \   "]
 
 module ListLifecyclePolicies : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_lifecycle_policies_request ->
     ( list_lifecycle_policies_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -940,8 +1060,14 @@ end
    data lifecycle policies}.\n"]
 
 module ListSecurityConfigs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_security_configs_request ->
     ( list_security_configs_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -956,8 +1082,14 @@ end
    authentication for Amazon OpenSearch Serverless}.\n"]
 
 module ListSecurityPolicies : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_security_policies_request ->
     ( list_security_policies_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -968,8 +1100,14 @@ end
 [@@ocaml.doc "Returns information about configured OpenSearch Serverless security policies.\n"]
 
 module ListVpcEndpoints : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_vpc_endpoints_request ->
     ( list_vpc_endpoints_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -984,8 +1122,14 @@ end
    Amazon OpenSearch Serverless using an interface endpoint}.\n"]
 
 module BatchGetCollection : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     batch_get_collection_request ->
     ( batch_get_collection_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1000,8 +1144,14 @@ end
    and managing Amazon OpenSearch Serverless collections}.\n"]
 
 module BatchGetEffectiveLifecyclePolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     batch_get_effective_lifecycle_policy_request ->
     ( batch_get_effective_lifecycle_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1016,8 +1166,14 @@ end
    data lifecycle policies}.\n"]
 
 module BatchGetLifecyclePolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     batch_get_lifecycle_policy_request ->
     ( batch_get_lifecycle_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1032,8 +1188,14 @@ end
    data lifecycle policies}.\n"]
 
 module BatchGetVpcEndpoint : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     batch_get_vpc_endpoint_request ->
     ( batch_get_vpc_endpoint_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1048,8 +1210,16 @@ end
    Amazon OpenSearch Serverless using an interface endpoint}.\n"]
 
 module CreateLifecyclePolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_lifecycle_policy_request ->
     ( create_lifecycle_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1067,8 +1237,16 @@ end
    data lifecycle policies}.\n"]
 
 module CreateSecurityPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_security_policy_request ->
     ( create_security_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1089,8 +1267,14 @@ end
    at rest for Amazon OpenSearch Serverless}.\n"]
 
 module GetAccountSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_account_settings_request ->
     ( get_account_settings_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1101,8 +1285,12 @@ end
 [@@ocaml.doc "Returns account-level settings related to OpenSearch Serverless.\n"]
 
 module GetPoliciesStats : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InternalServerException of internal_server_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_policies_stats_request ->
     ( get_policies_stats_response,
       [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerException of internal_server_exception ]
@@ -1114,8 +1302,15 @@ end
    configurations, and security policies.\n"]
 
 module ListTagsForResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_tags_for_resource_request ->
     ( list_tags_for_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1130,8 +1325,17 @@ end
    Amazon OpenSearch Serverless collections}.\n"]
 
 module TagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     tag_resource_request ->
     ( tag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1148,8 +1352,16 @@ end
    Amazon OpenSearch Serverless collections}.\n"]
 
 module UntagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     untag_resource_request ->
     ( untag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1165,8 +1377,16 @@ end
    Amazon OpenSearch Serverless collections}.\n"]
 
 module UpdateAccessPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_access_policy_request ->
     ( update_access_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1182,8 +1402,14 @@ end
    access control for Amazon OpenSearch Serverless}.\n"]
 
 module UpdateAccountSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_account_settings_request ->
     ( update_account_settings_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1198,8 +1424,15 @@ end
    capacity limits for Amazon OpenSearch Serverless}.\n"]
 
 module UpdateCollection : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_collection_request ->
     ( update_collection_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1211,8 +1444,17 @@ end
 [@@ocaml.doc "Updates an OpenSearch Serverless collection.\n"]
 
 module UpdateLifecyclePolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_lifecycle_policy_request ->
     ( update_lifecycle_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1229,8 +1471,16 @@ end
    data lifecycle policies}.\n"]
 
 module UpdateSecurityConfig : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_security_config_request ->
     ( update_security_config_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1246,8 +1496,17 @@ end
    authentication for Amazon OpenSearch Serverless}.\n"]
 
 module UpdateSecurityPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_security_policy_request ->
     ( update_security_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1267,8 +1526,15 @@ end
 
 (** {1:Serialization and Deserialization} *)
 module UpdateVpcEndpoint : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_vpc_endpoint_request ->
     ( update_vpc_endpoint_response,
       [> Smaws_Lib.Protocols.AwsJson.error

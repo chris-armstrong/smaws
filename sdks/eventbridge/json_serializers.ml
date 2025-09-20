@@ -132,7 +132,7 @@ let connection_state_to_yojson (x : connection_state) =
   | UPDATING -> `String "UPDATING"
   | CREATING -> `String "CREATING"
 
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let update_connection_response_to_yojson (x : update_connection_response) =
   assoc_to_yojson
@@ -936,7 +936,7 @@ let put_partner_events_response_to_yojson (x : put_partner_events_response) =
       ("FailedEntryCount", option_to_yojson integer_to_yojson x.failed_entry_count);
     ]
 
-let event_time_to_yojson = timestamp_to_yojson
+let event_time_to_yojson = timestamp_epoch_seconds_to_yojson
 let event_source_name_to_yojson = string_to_yojson
 let event_resource_to_yojson = string_to_yojson
 let event_resource_list_to_yojson tree = list_to_yojson event_resource_to_yojson tree

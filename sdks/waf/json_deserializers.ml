@@ -4,8 +4,7 @@ open Types
 let error_message_of_yojson = string_of_yojson
 
 let match_field_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ALL_QUERY_ARGS" -> ALL_QUERY_ARGS
     | `String "SINGLE_QUERY_ARG" -> SINGLE_QUERY_ARG
     | `String "BODY" -> BODY
@@ -29,8 +28,7 @@ let field_to_match_of_yojson tree path =
     : field_to_match)
 
 let text_transformation_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "URL_DECODE" -> URL_DECODE
     | `String "CMD_LINE" -> CMD_LINE
     | `String "LOWERCASE" -> LOWERCASE
@@ -54,8 +52,7 @@ let xss_match_tuple_of_yojson tree path =
 let xss_match_tuples_of_yojson tree path = list_of_yojson xss_match_tuple_of_yojson tree path
 
 let change_action_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DELETE" -> DELETE
     | `String "INSERT" -> INSERT
     | `String value -> raise (deserialize_unknown_enum_value_error path "ChangeAction" value)
@@ -100,8 +97,7 @@ let xss_match_set_of_yojson tree path =
 let rule_priority_of_yojson = int_of_yojson
 
 let waf_action_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "COUNT" -> COUNT
     | `String "ALLOW" -> ALLOW
     | `String "BLOCK" -> BLOCK
@@ -115,8 +111,7 @@ let waf_action_of_yojson tree path =
   ({ type_ = value_for_key waf_action_type_of_yojson "Type" _list path } : waf_action)
 
 let waf_override_action_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "COUNT" -> COUNT
     | `String "NONE" -> NONE
     | `String value ->
@@ -131,8 +126,7 @@ let waf_override_action_of_yojson tree path =
     : waf_override_action)
 
 let waf_rule_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "GROUP" -> GROUP
     | `String "RATE_BASED" -> RATE_BASED
     | `String "REGULAR" -> REGULAR
@@ -257,8 +251,7 @@ let waf_invalid_permission_policy_exception_of_yojson tree path =
     : waf_invalid_permission_policy_exception)
 
 let parameter_exception_field_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "TAG_KEYS" -> TAG_KEYS
     | `String "TAGS" -> TAGS
     | `String "RESOURCE_ARN" -> RESOURCE_ARN
@@ -286,8 +279,7 @@ let parameter_exception_field_of_yojson (tree : t) path =
 let parameter_exception_parameter_of_yojson = string_of_yojson
 
 let parameter_exception_reason_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "INVALID_TAG_KEY" -> INVALID_TAG_KEY
     | `String "ILLEGAL_ARGUMENT" -> ILLEGAL_ARGUMENT
     | `String "ILLEGAL_COMBINATION" -> ILLEGAL_COMBINATION
@@ -326,8 +318,7 @@ let waf_internal_error_exception_of_yojson tree path =
     : waf_internal_error_exception)
 
 let migration_error_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "S3_INTERNAL_ERROR" -> S3_INTERNAL_ERROR
     | `String "S3_BUCKET_INVALID_REGION" -> S3_BUCKET_INVALID_REGION
     | `String "S3_BUCKET_NOT_FOUND" -> S3_BUCKET_NOT_FOUND
@@ -447,8 +438,7 @@ let update_size_constraint_set_response_of_yojson tree path =
     : update_size_constraint_set_response)
 
 let comparison_operator_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "GT" -> GT
     | `String "GE" -> GE
     | `String "LT" -> LT
@@ -504,8 +494,7 @@ let update_rule_response_of_yojson tree path =
 let negated_of_yojson = bool_of_yojson
 
 let predicate_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "RegexMatch" -> REGEX_MATCH
     | `String "XssMatch" -> XSS_MATCH
     | `String "SizeConstraint" -> SIZE_CONSTRAINT
@@ -666,8 +655,7 @@ let update_ip_set_response_of_yojson tree path =
     : update_ip_set_response)
 
 let ip_set_descriptor_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "IPV6" -> IPV6
     | `String "IPV4" -> IPV4
     | `String value -> raise (deserialize_unknown_enum_value_error path "IPSetDescriptorType" value)
@@ -712,8 +700,7 @@ let update_geo_match_set_response_of_yojson tree path =
     : update_geo_match_set_response)
 
 let geo_match_constraint_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "Country" -> Country
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "GeoMatchConstraintType" value)
@@ -722,8 +709,7 @@ let geo_match_constraint_type_of_yojson (tree : t) path =
     : geo_match_constraint_type)
 
 let geo_match_constraint_value_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ZW" -> ZW
     | `String "ZM" -> ZM
     | `String "YE" -> YE
@@ -1018,8 +1004,7 @@ let update_byte_match_set_response_of_yojson tree path =
 let byte_match_target_string_of_yojson = blob_of_yojson
 
 let positional_constraint_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CONTAINS_WORD" -> CONTAINS_WORD
     | `String "CONTAINS" -> CONTAINS
     | `String "ENDS_WITH" -> ENDS_WITH
@@ -1324,8 +1309,7 @@ let regex_match_set_of_yojson tree path =
 let redacted_fields_of_yojson tree path = list_of_yojson field_to_match_of_yojson tree path
 
 let rate_key_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "IP" -> IP
     | `String value -> raise (deserialize_unknown_enum_value_error path "RateKey" value)
     | _ -> raise (deserialize_wrong_type_error path "RateKey")
@@ -1935,8 +1919,7 @@ let get_geo_match_set_request_of_yojson tree path =
     : get_geo_match_set_request)
 
 let change_token_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "INSYNC" -> INSYNC
     | `String "PENDING" -> PENDING
     | `String "PROVISIONED" -> PROVISIONED

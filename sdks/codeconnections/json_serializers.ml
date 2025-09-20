@@ -116,7 +116,7 @@ let blocker_status_to_yojson (x : blocker_status) =
   match x with RESOLVED -> `String "RESOLVED" | ACTIVE -> `String "ACTIVE"
 
 let created_reason_to_yojson = string_to_yojson
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 let sync_blocker_context_key_to_yojson = string_to_yojson
 let sync_blocker_context_value_to_yojson = string_to_yojson
 

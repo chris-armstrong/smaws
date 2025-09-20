@@ -10,14 +10,14 @@ let _ =
             (credentials.session_token |> Option.is_some);
 
           let config : Config.t =
-            {
-              resolveRegion = (fun () -> "ap-southeast-2");
-              resolveAuth = (fun () -> Auth.Profile.resolve env ());
-            }
+            Config.make
+              ~resolveRegion:(fun () -> "ap-southeast-2")
+              ~resolveAuth:(fun () -> Auth.Profile.resolve env ())
+              ()
           in
           let body = {|{}|} in
           Fmt.pr "before context@.";
-          let context = Context.make ~sw ~config env in
+          let context = Context.make_with_eio_http ~sw ~config env in
           let service =
             Service.
               { namespace = "sqs"; endpointPrefix = "sqs"; version = ""; protocol = AwsJson_1_0 }
@@ -35,16 +35,19 @@ let _ =
           let body = `String body in
 
           let ( let* ) res map = Result.map map res in
-          let module Http = Http.Client in
+          let module Http = Http.Http_Client_Eio in
           match
-            let* response, body = Http.request ~method_:`POST ~uri ~headers ~body context.http in
+            let* response, body =
+              Http.request ~method_:`POST ~uri ~headers ~body (Context.http context)
+            in
             let body = Http.Body.to_string body in
             Fmt.pr "Headers %a@."
               (Fmt.list ~sep:Fmt.comma Fmt.string)
               (response |> Http.Response.headers |> List.map (fun (k, v) -> k ^ ":" ^ v));
 
-            Fmt.pr "Response %d: [%d]%s@." (Http.Response.status response) (body |> String.length)
-              body
+            Fmt.pr "Response %d: [%d]%a@." (Http.Response.status response)
+              (body |> Option.value ~default:"" |> String.length)
+              (Fmt.option Fmt.string) body
           with
           | Ok body -> ()
           | Error error -> Fmt.pr "Error! %a\n" Smaws_Lib.Http.pp_http_failure error))

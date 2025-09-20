@@ -12,6 +12,22 @@ let loc = Location.none
 
 exception UnexpectedType of string
 
+(* Helper function to resolve timestamp format from traits *)
+let resolve_timestamp_format ?(member_traits : Trait.t list option = None)
+    ?(shape_traits : Trait.t list option = None) () =
+  let find_timestamp_format traits =
+    Option.(
+      traits >>= fun traits ->
+      List.find_map traits ~f:(function Trait.TimestampFormatTrait x -> Some x | _ -> None))
+  in
+  (* Check member traits first, then shape traits, then default *)
+  match find_timestamp_format member_traits with
+  | Some format -> format
+  | None -> (
+      match find_timestamp_format shape_traits with
+      | Some format -> format
+      | None -> Trait.TimestampFormatEpochSeconds)
+
 (* let has_func_body = *)
 (*   Shape.( *)
 (*     function *)
@@ -26,10 +42,23 @@ exception UnexpectedType of string
 module Serialiser = struct
   let serialiser_func_str name = (name |> SafeNames.safeFunctionName) ^ "_to_yojson"
 
-  let func_name ?(is_exception_type = false)
+  let func_name ?(is_exception_type = false) ?(member_traits : Trait.t list option = None)
+      ?(shape_traits : Trait.t list option = None)
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) name =
+    (* Special handling for TimestampShape with member-level traits *)
     let symbol_transformer ~local x =
-      if local then [ serialiser_func_str x ] else [ "Json_serializers"; serialiser_func_str x ]
+      (* Check if this is a timestamp shape reference *)
+      if String.equal name "smithy.api#Timestamp" then (
+        let format = resolve_timestamp_format ~member_traits ~shape_traits () in
+        let func_suffix =
+          match format with
+          | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_seconds_to_yojson"
+          | Trait.TimestampFormatDateTime -> "timestamp_iso_8601_to_yojson"
+          | Trait.TimestampFormatHttpDate -> "timestamp_http_date_to_yojson"
+        in
+        if local then [ func_suffix ] else [ "Json_serializers"; func_suffix ])
+      else if local then [ serialiser_func_str x ]
+      else [ "Json_serializers"; serialiser_func_str x ]
     in
     let resolved_name =
       Namespace_resolver.Namespace_resolver.resolve_reference ~symbol_transformer namespace_resolver
@@ -37,9 +66,22 @@ module Serialiser = struct
     in
     Longident.unflatten resolved_name |> Option.value_exn
 
-  let external_func_name ?(is_exception_type = false)
+  let external_func_name ?(is_exception_type = false) ?(member_traits : Trait.t list option = None)
+      ?(shape_traits : Trait.t list option = None)
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) name =
-    let symbol_transformer ~local x = [ "Json_serializers"; serialiser_func_str x ] in
+    let symbol_transformer ~local x =
+      (* Check if this is a timestamp shape reference *)
+      if String.equal name "smithy.api#Timestamp" then (
+        let format = resolve_timestamp_format ~member_traits ~shape_traits () in
+        let func_suffix =
+          match format with
+          | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_seconds_to_yojson"
+          | Trait.TimestampFormatDateTime -> "timestamp_iso_8601_to_yojson"
+          | Trait.TimestampFormatHttpDate -> "timestamp_http_date_to_yojson"
+        in
+        [ "Json_serializers"; func_suffix ])
+      else [ "Json_serializers"; serialiser_func_str x ]
+    in
     let resolved_name =
       Namespace_resolver.Namespace_resolver.resolve_reference ~symbol_transformer namespace_resolver
         name
@@ -93,7 +135,8 @@ module Serialiser = struct
                                     (B.pexp_apply
                                        (B.pexp_ident
                                           (Location.mknoloc
-                                             (func_name ~namespace_resolver m.target)))
+                                             (func_name ~member_traits:m.traits
+                                                ~shape_traits:s.traits ~namespace_resolver m.target)))
                                        [ (Nolabel, exp_ident "arg") ]));
                              ];
                          ] );
@@ -116,22 +159,20 @@ module Serialiser = struct
               (B.pexp_ident (lident_noloc "x"))
               (lident_noloc (SafeNames.safeMemberName mem.name))
           in
+          let basic_value_exp =
+            B.pexp_ident
+              (Location.mknoloc
+                 (func_name ~member_traits:mem.traits ~namespace_resolver mem.target))
+          in
           let value =
             match is_required with
             | true ->
                 B.pexp_construct (lident_noloc "Some")
-                  (Some
-                     (B.pexp_apply
-                        (B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver mem.target)))
-                        [ (Nolabel, field_lookup) ]))
+                  (Some (B.pexp_apply basic_value_exp [ (Nolabel, field_lookup) ]))
             | false ->
                 B.pexp_apply
                   (B.pexp_ident (lident_noloc "option_to_yojson"))
-                  [
-                    ( Nolabel,
-                      B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver mem.target)) );
-                    (Nolabel, field_lookup);
-                  ]
+                  [ (Nolabel, basic_value_exp); (Nolabel, field_lookup) ]
           in
           B.pexp_tuple [ const_str mem.name; value ])
     in
@@ -153,7 +194,17 @@ module Serialiser = struct
     | BooleanShape x -> exp_func "bool_to_yojson"
     | BigIntegerShape x -> exp_func "big_int_to_yojson"
     | BigDecimalShape x -> exp_func "big_decimal_to_yojson"
-    | TimestampShape x -> exp_func "timestamp_to_yojson"
+    | TimestampShape x -> begin
+        let format =
+          Option.value ~default:[] x.traits
+          |> List.find_map ~f:(function Trait.TimestampFormatTrait x -> Some x | _ -> None)
+          |> Option.value ~default:Trait.TimestampFormatEpochSeconds
+        in
+        match format with
+        | Trait.TimestampFormatEpochSeconds -> exp_func "timestamp_epoch_seconds_to_yojson"
+        | Trait.TimestampFormatDateTime -> exp_func "timestamp_iso_8601_to_yojson"
+        | Trait.TimestampFormatHttpDate -> exp_func "timestamp_http_date_to_yojson"
+      end
     | BlobShape x -> exp_func "blob_to_yojson"
     | LongShape x -> exp_func "long_to_yojson"
     | FloatShape x -> exp_func "float_to_yojson"
@@ -162,16 +213,25 @@ module Serialiser = struct
     | DocumentShape -> exp_func "json_to_yojson"
     | ServiceShape x -> None
     | MapShape x ->
+        let is_sparse = Trait.hasTrait x.traits Trait.isSparseTrait in
+        let item_transformer =
+          B.pexp_ident
+            (Location.mknoloc
+               (func_name ~member_traits:x.mapValue.traits ~shape_traits:x.traits
+                  ~namespace_resolver x.mapValue.target))
+        in
         Some
           (exp_fun_untyped "tree"
              (B.pexp_apply (exp_ident "map_to_yojson")
                 [
                   ( Nolabel,
+                    (* no need to pass in traits - map keys are always strings *)
                     B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.mapKey.target))
                   );
                   ( Nolabel,
-                    B.pexp_ident
-                      (Location.mknoloc (func_name ~namespace_resolver x.mapValue.target)) );
+                    if is_sparse then
+                      B.pexp_apply (exp_ident "nullable_to_yojson") [ (Nolabel, item_transformer) ]
+                    else item_transformer );
                   (Nolabel, exp_ident "tree");
                 ]))
     | EnumShape s -> Some (enum_func_body shapeWithTarget.name s)
@@ -181,13 +241,17 @@ module Serialiser = struct
           (exp_fun_untyped "tree"
              (B.pexp_apply (exp_ident "set_to_yojson")
                 [
-                  (Nolabel, B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.target)));
+                  ( Nolabel,
+                    B.pexp_ident
+                      (Location.mknoloc
+                         (func_name ~shape_traits:x.traits ~namespace_resolver x.target)) );
                   (Nolabel, exp_ident "tree");
                 ]))
     | ListShape x ->
         let is_sparse = Trait.hasTrait x.traits Trait.isSparseTrait in
         let item_transformer =
-          B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.target))
+          B.pexp_ident
+            (Location.mknoloc (func_name ~shape_traits:x.traits ~namespace_resolver x.target))
         in
         let transformer =
           B.pexp_apply (exp_ident "list_to_yojson")
@@ -266,10 +330,22 @@ end
 module Deserialiser = struct
   let deserialiser_func_str name = (name |> SafeNames.safeFunctionName) ^ "_of_yojson"
 
-  let func_name ?(is_exception_type = false)
+  let func_name ?(is_exception_type = false) ?(member_traits : Trait.t list option = None)
+      ?(shape_traits : Trait.t list option = None)
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) name =
+    (* Special handling for TimestampShape with member-level traits *)
     let symbol_transformer ~local x =
-      if local then [ deserialiser_func_str x ]
+      (* Check if this is a timestamp shape reference *)
+      if String.equal name "smithy.api#Timestamp" then (
+        let format = resolve_timestamp_format ~member_traits ~shape_traits () in
+        let func_suffix =
+          match format with
+          | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_seconds_of_yojson"
+          | Trait.TimestampFormatDateTime -> "timestamp_iso_8601_of_yojson"
+          | Trait.TimestampFormatHttpDate -> "timestamp_http_date_of_yojson"
+        in
+        if local then [ func_suffix ] else [ "Json_deserializers"; func_suffix ])
+      else if local then [ deserialiser_func_str x ]
       else [ "Json_deserializers"; deserialiser_func_str x ]
     in
     let resolved_name =
@@ -279,9 +355,22 @@ module Deserialiser = struct
     in
     resolved_name
 
-  let external_func_name ?(is_exception_type = false)
+  let external_func_name ?(is_exception_type = false) ?(member_traits : Trait.t list option = None)
+      ?(shape_traits : Trait.t list option = None)
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) name =
-    let symbol_transformer ~local x = [ "Json_deserializers"; deserialiser_func_str x ] in
+    let symbol_transformer ~local x =
+      (* Check if this is a timestamp shape reference *)
+      if String.equal name "smithy.api#Timestamp" then (
+        let format = resolve_timestamp_format ~member_traits ~shape_traits () in
+        let func_suffix =
+          match format with
+          | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_seconds_of_yojson"
+          | Trait.TimestampFormatDateTime -> "timestamp_iso_8601_of_yojson"
+          | Trait.TimestampFormatHttpDate -> "timestamp_http_date_of_yojson"
+        in
+        [ "Json_deserializers"; func_suffix ])
+      else [ "Json_deserializers"; deserialiser_func_str x ]
+    in
     let resolved_name =
       Namespace_resolver.Namespace_resolver.resolve_reference ~symbol_transformer namespace_resolver
         name
@@ -297,7 +386,10 @@ module Deserialiser = struct
              let pattern = pat_const_str m.name in
              let application =
                B.pexp_apply
-                 (B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver m.target)))
+                 (B.pexp_ident
+                    (Location.mknoloc
+                       (func_name ~member_traits:m.traits ~shape_traits:s.traits ~namespace_resolver
+                          m.target)))
                  [ (Nolabel, exp_ident "value_"); (Nolabel, exp_ident "path") ]
              in
              let expression =
@@ -375,11 +467,7 @@ module Deserialiser = struct
     let type_name_s = SafeNames.safeTypeName name in
 
     let type_name = B.ptyp_constr (lident_noloc type_name_s) [] in
-    let typed_match_exp =
-      [%expr
-        let _list = assoc_of_yojson tree path in
-        ([%e match_exp] : [%t type_name])]
-    in
+    let typed_match_exp = [%expr ([%e match_exp] : [%t type_name])] in
     exp_fun "tree" "t"
       (exp_fun_untyped "path"
          (B.pexp_constraint typed_match_exp (B.ptyp_constr (lident_noloc type_name_s) [])))
@@ -393,7 +481,8 @@ module Deserialiser = struct
           (List.map descriptor.members ~f:(fun mem ->
                let is_required = Trait.hasTrait mem.traits Trait.isRequiredTrait in
                let converter_name =
-                 func_name ~is_exception_type:false ~namespace_resolver mem.target
+                 func_name ~is_exception_type:false ~member_traits:mem.traits
+                   ~shape_traits:descriptor.traits ~namespace_resolver mem.target
                in
                let key_name = SafeNames.safeMemberName mem.name in
                let key = lident_noloc key_name in
@@ -450,7 +539,17 @@ module Deserialiser = struct
     | BooleanShape x -> exp_func "bool_of_yojson"
     | BigIntegerShape x -> exp_func "big_int_of_yojson"
     | BigDecimalShape x -> exp_func "big_decimal_of_yojson"
-    | TimestampShape x -> exp_func "timestamp_epoch_seconds_of_yojson"
+    | TimestampShape x -> begin
+        let format =
+          Option.value ~default:[] x.traits
+          |> List.find_map ~f:(function Trait.TimestampFormatTrait x -> Some x | _ -> None)
+          |> Option.value ~default:Trait.TimestampFormatEpochSeconds
+        in
+        match format with
+        | Trait.TimestampFormatEpochSeconds -> exp_func "timestamp_epoch_seconds_of_yojson"
+        | Trait.TimestampFormatDateTime -> exp_func "timestamp_iso_8601_of_yojson"
+        | Trait.TimestampFormatHttpDate -> exp_func "timestamp_http_date_of_yojson"
+      end
     | BlobShape x -> exp_func "blob_of_yojson"
     | LongShape x -> exp_func "long_of_yojson"
     | FloatShape x -> exp_func "float_of_yojson"
@@ -459,6 +558,13 @@ module Deserialiser = struct
     | DocumentShape -> exp_func "json_of_yojson"
     | ServiceShape x -> None
     | MapShape x ->
+        let is_sparse = Trait.hasTrait x.traits Trait.isSparseTrait in
+        let item_type =
+          B.pexp_ident
+            (Location.mknoloc
+               (func_name ~member_traits:x.mapValue.traits ~namespace_resolver
+                  ~shape_traits:x.traits x.mapValue.target))
+        in
         Some
           (exp_fun_untyped "tree"
              (exp_fun_untyped "path"
@@ -466,10 +572,17 @@ module Deserialiser = struct
                    [
                      ( Nolabel,
                        B.pexp_ident
-                         (Location.mknoloc (func_name ~namespace_resolver x.mapKey.target)) );
+                         (Location.mknoloc
+                            (func_name ~member_traits:x.mapKey.traits ~namespace_resolver
+                               x.mapKey.target)) );
                      ( Nolabel,
-                       B.pexp_ident
-                         (Location.mknoloc (func_name ~namespace_resolver x.mapValue.target)) );
+                       if is_sparse then
+                         B.pexp_apply
+                           (B.pexp_ident
+                              ([ "nullable_of_yojson" ] |> Longident.unflatten |> Option.value_exn
+                             |> Location.mknoloc))
+                           [ (Nolabel, item_type) ]
+                       else item_type );
                      (Nolabel, exp_ident "tree");
                      (Nolabel, exp_ident "path");
                    ])))
@@ -482,12 +595,17 @@ module Deserialiser = struct
                 (B.pexp_apply (exp_ident "list_of_yojson")
                    [
                      ( Nolabel,
-                       B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.target)) );
+                       B.pexp_ident
+                         (Location.mknoloc
+                            (func_name ~shape_traits:x.traits ~namespace_resolver x.target)) );
                      (Nolabel, exp_ident "tree");
                      (Nolabel, exp_ident "path");
                    ])))
     | ListShape x ->
-        let item_type = B.pexp_ident (Location.mknoloc (func_name ~namespace_resolver x.target)) in
+        let item_type =
+          B.pexp_ident
+            (Location.mknoloc (func_name ~shape_traits:x.traits ~namespace_resolver x.target))
+        in
         let is_sparse = Trait.hasTrait x.traits Trait.isSparseTrait in
         let wrapped_type =
           if is_sparse then
@@ -571,6 +689,44 @@ module Deserialiser = struct
 end
 
 module Operations = struct
+  (** * Create a generic error_to_string function for an operation's error type. * * FIXME: This
+      just prints the error name with its Smithy namespace. It should * also print its value. *)
+  let generate_error_to_string ~(operation_shape : Ast.Shape.operationShapeDetails)
+      ~namespace_resolver () =
+    let errors = operation_shape.errors |> Option.value ~default:[] in
+    let handler_body =
+      match errors with
+      | [] ->
+          B.pexp_ident
+            (Location.mknoloc (make_lident ~names:[ Modules.protocolAwsJson; "error_to_string" ]))
+      | errors ->
+          let error_cases =
+            errors
+            |> List.map ~f:(fun error ->
+                   let name = Util.symbolName error in
+                   B.case
+                     ~lhs:(B.ppat_variant name (Some B.ppat_any))
+                     ~guard:None ~rhs:(const_str error))
+          in
+          let default_case =
+            B.case
+              ~lhs:
+                (B.ppat_alias
+                   (B.ppat_type
+                      (Location.mknoloc (make_lident ~names:[ Modules.protocolAwsJson; "error" ])))
+                   (Location.mknoloc "e"))
+              ~guard:None
+              ~rhs:
+                (B.pexp_apply
+                   (make_lident ~names:[ Modules.protocolAwsJson; "error_to_string" ]
+                   |> Location.mknoloc |> B.pexp_ident)
+                   [ (Nolabel, exp_ident "e") ])
+          in
+          B.pexp_function_cases (error_cases @ [ default_case ])
+    in
+    B.pstr_value Nonrecursive
+      [ B.value_binding ~pat:(B.ppat_var (Location.mknoloc "error_to_string")) ~expr:handler_body ]
+
   let generate_error_handler ~(operation_shape : Ast.Shape.operationShapeDetails)
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
     let errors = operation_shape.errors |> Option.value ~default:[] in
@@ -617,7 +773,6 @@ module Operations = struct
         let matchers = B.pexp_function_cases (cases @ failure_cases) in
 
         [%expr
-          (* let open Json_deserializers in *)
           let handler = fun handler tree path -> [%e matchers] in
           [%e call_handler]]
       end
@@ -640,31 +795,18 @@ module Operations = struct
                     (Location.mknoloc (Serialiser.external_func_name ~namespace_resolver input)))
                  [ (Nolabel, exp_ident "request") ])
       in
-      let service_shape = Util.symbolName name ^ Util.symbolName operation_name in
+      let service_shape = Util.symbolName name ^ "." ^ Util.symbolName operation_name in
       let response_shape_deserializer =
         operation_shape.output
         |> Option.map ~f:(fun output -> Deserialiser.external_func_name ~namespace_resolver output)
         |> Option.value ~default:(Longident.Lident "base_unit_of_yojson")
       in
-      (* Fmt.pr "response_shape_deserializer: %a %a\n%!" (Fmt.list Fmt.string) *)
-      (* (Longident.flatten response_shape_deserializer) *)
-      (* (Fmt.option Fmt.string) operation_shape.output; *)
       let request_func_name =
         B.pexp_ident (Location.mknoloc (make_lident ~names:[ Modules.protocolAwsJson; "request" ]))
       in
-      let config_func_name =
-        B.pexp_ident (Location.mknoloc (make_lident ~names:[ "context"; "config" ]))
-      in
-      let http_func_name =
-        B.pexp_ident (Location.mknoloc (make_lident ~names:[ "context"; "http" ]))
-      in
       [%expr
-        let open Smaws_Lib.Context in
-        (* let open Json_deserializers in *)
-        (* let open Json_serializers in *)
         let input = [%e input] in
-        [%e request_func_name] ~shape_name:[%e const_str service_shape] ~service
-          ~config:[%e config_func_name] ~http:[%e http_func_name] ~input
+        [%e request_func_name] ~shape_name:[%e const_str service_shape] ~service ~context ~input
           ~output_deserializer:[%e B.pexp_ident (Location.mknoloc response_shape_deserializer)]
           ~error_deserializer]
     in
@@ -687,12 +829,12 @@ module Operations = struct
         ~namespace_resolver ()
     in
     let error_handler = generate_error_handler ~operation_shape ~namespace_resolver () in
-    let module_items = [ error_handler; request_handler ] in
+    let error_to_string = generate_error_to_string ~operation_shape ~namespace_resolver () in
+    let module_items = [ error_to_string; error_handler; request_handler ] in
     let module_expr = B.pmod_structure module_items in
     B.pstr_module (B.module_binding ~name:(Location.mknoloc (Some module_name)) ~expr:module_expr)
 
-  let generate_error_type alias_ctx errors
-      ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
+  let generate_error_constructor_list alias_ctx errors ~namespace_resolver () =
     let smaws_lib_constructor =
       [
         B.rinherit
@@ -702,12 +844,22 @@ module Operations = struct
              []);
       ]
     in
-    errors |> Option.value ~default:[]
-    |> List.map ~f:(fun error ->
-           let name = SafeNames.safeConstructorName error in
-           B.rtag (lstr_noloc name) false
-             [ Types.resolve alias_ctx ~name:error ~namespace_resolver () ])
-    |> fun constructors -> B.ptyp_variant (smaws_lib_constructor @ constructors) Open None
+    smaws_lib_constructor
+    @ (errors |> Option.value ~default:[]
+      |> List.map ~f:(fun error ->
+             let name = SafeNames.safeConstructorName error in
+             B.rtag (lstr_noloc name) false
+               [ Types.resolve alias_ctx ~name:error ~namespace_resolver () ]))
+
+  let generate_error_type alias_ctx errors
+      ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
+    generate_error_constructor_list alias_ctx errors ~namespace_resolver () |> fun constructors ->
+    B.ptyp_variant constructors Open None
+
+  let generate_error_to_string_type alias_ctx errors
+      ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
+    generate_error_constructor_list alias_ctx errors ~namespace_resolver () |> fun constructors ->
+    B.ptyp_variant constructors Closed None
 
   let generate_operation_module_sig ~name ~operation_name ~operation_shape ~dependencies
       ~alias_context ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
@@ -737,8 +889,14 @@ module Operations = struct
          ~type_:
            (B.pmty_signature
               [%sig:
+                val error_to_string :
+                  [%t
+                    generate_error_to_string_type alias_context operation_shape.errors
+                      ~namespace_resolver ()] ->
+                  string
+
                 val request :
-                  Smaws_Lib.Context.t ->
+                  'http_type Smaws_Lib.Context.t ->
                   [%t input_type] ->
                   ([%t output_type], [%t exception_type]) result]))
     |> Docs.attach_doc_to_signature_item ~loc ~doc_string

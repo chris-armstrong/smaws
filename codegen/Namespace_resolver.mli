@@ -13,4 +13,7 @@ module Namespace_resolver : sig
     t ->
     string option ->
     string list option
+
+  val current_namespace : t -> string
+  val current_module : t -> string
 end

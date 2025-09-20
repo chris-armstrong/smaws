@@ -17,8 +17,7 @@ let string_set_attribute_value_of_yojson tree path =
 let string__of_yojson = string_of_yojson
 
 let stream_view_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "KEYS_ONLY" -> KEYS_ONLY
     | `String "NEW_AND_OLD_IMAGES" -> NEW_AND_OLD_IMAGES
     | `String "OLD_IMAGE" -> OLD_IMAGE
@@ -29,8 +28,7 @@ let stream_view_type_of_yojson (tree : t) path =
     : stream_view_type)
 
 let stream_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DISABLED" -> DISABLED
     | `String "DISABLING" -> DISABLING
     | `String "ENABLED" -> ENABLED
@@ -118,8 +116,7 @@ let stream_list_of_yojson tree path = list_of_yojson stream_of_yojson tree path
 let key_schema_attribute_name_of_yojson = string_of_yojson
 
 let key_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "RANGE" -> RANGE
     | `String "HASH" -> HASH
     | `String value -> raise (deserialize_unknown_enum_value_error path "KeyType" value)
@@ -185,8 +182,7 @@ let stream_description_of_yojson tree path =
     : stream_description)
 
 let shard_iterator_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "AFTER_SEQUENCE_NUMBER" -> AFTER_SEQUENCE_NUMBER
     | `String "AT_SEQUENCE_NUMBER" -> AT_SEQUENCE_NUMBER
     | `String "LATEST" -> LATEST
@@ -204,8 +200,7 @@ let resource_not_found_exception_of_yojson tree path =
     : resource_not_found_exception)
 
 let operation_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "REMOVE" -> REMOVE
     | `String "MODIFY" -> MODIFY
     | `String "INSERT" -> INSERT

@@ -2,6 +2,17 @@ open Types
 open Service_metadata
 
 module AddApplicationCloudWatchLoggingOption = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidApplicationConfigurationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#InvalidApplicationConfigurationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -27,19 +38,28 @@ module AddApplicationCloudWatchLoggingOption = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : add_application_cloud_watch_logging_option_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.add_application_cloud_watch_logging_option_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523AddApplicationCloudWatchLoggingOption" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.AddApplicationCloudWatchLoggingOption" ~service
+      ~context ~input
       ~output_deserializer:
         Json_deserializers.add_application_cloud_watch_logging_option_response_of_yojson
       ~error_deserializer
 end
 
 module AddApplicationInput = struct
+  let error_to_string = function
+    | `CodeValidationException _ -> "com.amazonaws.kinesisanalyticsv2#CodeValidationException"
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "CodeValidationException" ->
@@ -65,15 +85,23 @@ module AddApplicationInput = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : add_application_input_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.add_application_input_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523AddApplicationInput"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523.AddApplicationInput"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.add_application_input_response_of_yojson
       ~error_deserializer
 end
 
 module AddApplicationInputProcessingConfiguration = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -96,19 +124,27 @@ module AddApplicationInputProcessingConfiguration = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : add_application_input_processing_configuration_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.add_application_input_processing_configuration_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523AddApplicationInputProcessingConfiguration" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.AddApplicationInputProcessingConfiguration" ~service
+      ~context ~input
       ~output_deserializer:
         Json_deserializers.add_application_input_processing_configuration_response_of_yojson
       ~error_deserializer
 end
 
 module AddApplicationOutput = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -131,15 +167,23 @@ module AddApplicationOutput = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : add_application_output_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.add_application_output_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523AddApplicationOutput"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523.AddApplicationOutput"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.add_application_output_response_of_yojson
       ~error_deserializer
 end
 
 module AddApplicationReferenceDataSource = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -162,17 +206,26 @@ module AddApplicationReferenceDataSource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : add_application_reference_data_source_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.add_application_reference_data_source_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523AddApplicationReferenceDataSource" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.AddApplicationReferenceDataSource" ~service ~context
+      ~input
       ~output_deserializer:
         Json_deserializers.add_application_reference_data_source_response_of_yojson
       ~error_deserializer
 end
 
 module AddApplicationVpcConfiguration = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidApplicationConfigurationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#InvalidApplicationConfigurationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -195,16 +248,28 @@ module AddApplicationVpcConfiguration = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : add_application_vpc_configuration_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.add_application_vpc_configuration_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523AddApplicationVpcConfiguration" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.AddApplicationVpcConfiguration" ~service ~context
+      ~input
       ~output_deserializer:Json_deserializers.add_application_vpc_configuration_response_of_yojson
       ~error_deserializer
 end
 
 module CreateApplication = struct
+  let error_to_string = function
+    | `CodeValidationException _ -> "com.amazonaws.kinesisanalyticsv2#CodeValidationException"
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `LimitExceededException _ -> "com.amazonaws.kinesisanalyticsv2#LimitExceededException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `TooManyTagsException _ -> "com.amazonaws.kinesisanalyticsv2#TooManyTagsException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "CodeValidationException" ->
@@ -234,15 +299,20 @@ module CreateApplication = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_application_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_application_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523CreateApplication"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523.CreateApplication"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_application_response_of_yojson
       ~error_deserializer
 end
 
 module CreateApplicationPresignedUrl = struct
+  let error_to_string = function
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArgumentException" ->
@@ -259,16 +329,26 @@ module CreateApplicationPresignedUrl = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_application_presigned_url_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_application_presigned_url_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523CreateApplicationPresignedUrl" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.CreateApplicationPresignedUrl" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_application_presigned_url_response_of_yojson
       ~error_deserializer
 end
 
 module CreateApplicationSnapshot = struct
+  let error_to_string = function
+    | `InvalidApplicationConfigurationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#InvalidApplicationConfigurationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `LimitExceededException _ -> "com.amazonaws.kinesisanalyticsv2#LimitExceededException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidApplicationConfigurationException" ->
@@ -296,16 +376,25 @@ module CreateApplicationSnapshot = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_application_snapshot_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_application_snapshot_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523CreateApplicationSnapshot" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.CreateApplicationSnapshot" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_application_snapshot_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteApplication = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidApplicationConfigurationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#InvalidApplicationConfigurationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -331,15 +420,25 @@ module DeleteApplication = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_application_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_application_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523DeleteApplication"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523.DeleteApplication"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_application_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteApplicationCloudWatchLoggingOption = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidApplicationConfigurationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#InvalidApplicationConfigurationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -365,19 +464,27 @@ module DeleteApplicationCloudWatchLoggingOption = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_application_cloud_watch_logging_option_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.delete_application_cloud_watch_logging_option_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523DeleteApplicationCloudWatchLoggingOption" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.DeleteApplicationCloudWatchLoggingOption" ~service
+      ~context ~input
       ~output_deserializer:
         Json_deserializers.delete_application_cloud_watch_logging_option_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteApplicationInputProcessingConfiguration = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -400,19 +507,27 @@ module DeleteApplicationInputProcessingConfiguration = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_application_input_processing_configuration_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.delete_application_input_processing_configuration_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523DeleteApplicationInputProcessingConfiguration" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.DeleteApplicationInputProcessingConfiguration" ~service
+      ~context ~input
       ~output_deserializer:
         Json_deserializers.delete_application_input_processing_configuration_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteApplicationOutput = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -435,16 +550,23 @@ module DeleteApplicationOutput = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_application_output_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_application_output_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523DeleteApplicationOutput" ~service ~config:context.config
-      ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.DeleteApplicationOutput" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_application_output_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteApplicationReferenceDataSource = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -467,19 +589,29 @@ module DeleteApplicationReferenceDataSource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_application_reference_data_source_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.delete_application_reference_data_source_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523DeleteApplicationReferenceDataSource" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.DeleteApplicationReferenceDataSource" ~service ~context
+      ~input
       ~output_deserializer:
         Json_deserializers.delete_application_reference_data_source_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteApplicationSnapshot = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -505,16 +637,24 @@ module DeleteApplicationSnapshot = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_application_snapshot_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_application_snapshot_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523DeleteApplicationSnapshot" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.DeleteApplicationSnapshot" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_application_snapshot_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteApplicationVpcConfiguration = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidApplicationConfigurationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#InvalidApplicationConfigurationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -537,17 +677,22 @@ module DeleteApplicationVpcConfiguration = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_application_vpc_configuration_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_application_vpc_configuration_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523DeleteApplicationVpcConfiguration" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.DeleteApplicationVpcConfiguration" ~service ~context
+      ~input
       ~output_deserializer:
         Json_deserializers.delete_application_vpc_configuration_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeApplication = struct
+  let error_to_string = function
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArgumentException" ->
@@ -565,15 +710,21 @@ module DescribeApplication = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_application_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_application_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523DescribeApplication"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523.DescribeApplication"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_application_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeApplicationOperation = struct
+  let error_to_string = function
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArgumentException" ->
@@ -591,16 +742,21 @@ module DescribeApplicationOperation = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_application_operation_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_application_operation_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523DescribeApplicationOperation" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.DescribeApplicationOperation" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_application_operation_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeApplicationSnapshot = struct
+  let error_to_string = function
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArgumentException" ->
@@ -618,16 +774,21 @@ module DescribeApplicationSnapshot = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_application_snapshot_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_application_snapshot_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523DescribeApplicationSnapshot" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.DescribeApplicationSnapshot" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_application_snapshot_response_of_yojson
       ~error_deserializer
 end
 
 module DescribeApplicationVersion = struct
+  let error_to_string = function
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArgumentException" ->
@@ -645,16 +806,27 @@ module DescribeApplicationVersion = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_application_version_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_application_version_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523DescribeApplicationVersion" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.DescribeApplicationVersion" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_application_version_response_of_yojson
       ~error_deserializer
 end
 
 module DiscoverInputSchema = struct
+  let error_to_string = function
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceProvisionedThroughputExceededException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ResourceProvisionedThroughputExceededException"
+    | `ServiceUnavailableException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ServiceUnavailableException"
+    | `UnableToDetectSchemaException _ ->
+        "com.amazonaws.kinesisanalyticsv2#UnableToDetectSchemaException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArgumentException" ->
@@ -682,15 +854,21 @@ module DiscoverInputSchema = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : discover_input_schema_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.discover_input_schema_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523DiscoverInputSchema"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523.DiscoverInputSchema"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.discover_input_schema_response_of_yojson
       ~error_deserializer
 end
 
 module ListApplicationOperations = struct
+  let error_to_string = function
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArgumentException" ->
@@ -708,16 +886,20 @@ module ListApplicationOperations = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_application_operations_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_application_operations_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523ListApplicationOperations" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.ListApplicationOperations" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_application_operations_response_of_yojson
       ~error_deserializer
 end
 
 module ListApplicationSnapshots = struct
+  let error_to_string = function
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArgumentException" ->
@@ -732,16 +914,21 @@ module ListApplicationSnapshots = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_application_snapshots_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_application_snapshots_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523ListApplicationSnapshots" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.ListApplicationSnapshots" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_application_snapshots_response_of_yojson
       ~error_deserializer
 end
 
 module ListApplicationVersions = struct
+  let error_to_string = function
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArgumentException" ->
@@ -759,16 +946,18 @@ module ListApplicationVersions = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_application_versions_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_application_versions_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523ListApplicationVersions" ~service ~config:context.config
-      ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.ListApplicationVersions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_application_versions_response_of_yojson
       ~error_deserializer
 end
 
 module ListApplications = struct
+  let error_to_string = function
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidRequestException" ->
@@ -780,15 +969,21 @@ module ListApplications = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_applications_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_applications_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523ListApplications"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523.ListApplications"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_applications_response_of_yojson
       ~error_deserializer
 end
 
 module ListTagsForResource = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -806,15 +1001,25 @@ module ListTagsForResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_tags_for_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523ListTagsForResource"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523.ListTagsForResource"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
       ~error_deserializer
 end
 
 module RollbackApplication = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -840,15 +1045,23 @@ module RollbackApplication = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : rollback_application_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.rollback_application_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523RollbackApplication"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523.RollbackApplication"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.rollback_application_response_of_yojson
       ~error_deserializer
 end
 
 module StartApplication = struct
+  let error_to_string = function
+    | `InvalidApplicationConfigurationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#InvalidApplicationConfigurationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidApplicationConfigurationException" ->
@@ -871,15 +1084,25 @@ module StartApplication = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : start_application_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.start_application_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523StartApplication"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523.StartApplication"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_application_response_of_yojson
       ~error_deserializer
 end
 
 module StopApplication = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidApplicationConfigurationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#InvalidApplicationConfigurationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -905,15 +1128,23 @@ module StopApplication = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : stop_application_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.stop_application_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523StopApplication"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523.StopApplication"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.stop_application_response_of_yojson
       ~error_deserializer
 end
 
 module TagResource = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | `TooManyTagsException _ -> "com.amazonaws.kinesisanalyticsv2#TooManyTagsException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -935,14 +1166,22 @@ module TagResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : tag_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.tag_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523TagResource" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523.TagResource" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module UntagResource = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | `TooManyTagsException _ -> "com.amazonaws.kinesisanalyticsv2#TooManyTagsException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -964,14 +1203,26 @@ module UntagResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : untag_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.untag_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523UntagResource"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523.UntagResource"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson ~error_deserializer
 end
 
 module UpdateApplication = struct
+  let error_to_string = function
+    | `CodeValidationException _ -> "com.amazonaws.kinesisanalyticsv2#CodeValidationException"
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidApplicationConfigurationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#InvalidApplicationConfigurationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `InvalidRequestException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidRequestException"
+    | `LimitExceededException _ -> "com.amazonaws.kinesisanalyticsv2#LimitExceededException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "CodeValidationException" ->
@@ -1002,15 +1253,24 @@ module UpdateApplication = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_application_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_application_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523UpdateApplication"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KinesisAnalytics_20180523.UpdateApplication"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_application_response_of_yojson
       ~error_deserializer
 end
 
 module UpdateApplicationMaintenanceConfiguration = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#ConcurrentModificationException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesisanalyticsv2#InvalidArgumentException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesisanalyticsv2#ResourceNotFoundException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.kinesisanalyticsv2#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -1033,13 +1293,12 @@ module UpdateApplicationMaintenanceConfiguration = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_application_maintenance_configuration_request) =
-    let open Smaws_Lib.Context in
     let input =
       Json_serializers.update_application_maintenance_configuration_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"KinesisAnalytics_20180523UpdateApplicationMaintenanceConfiguration" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"KinesisAnalytics_20180523.UpdateApplicationMaintenanceConfiguration" ~service
+      ~context ~input
       ~output_deserializer:
         Json_deserializers.update_application_maintenance_configuration_response_of_yojson
       ~error_deserializer

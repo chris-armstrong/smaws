@@ -37,7 +37,7 @@ let ingress_vpc_configuration_to_yojson (x : ingress_vpc_configuration) =
       ("VpcId", option_to_yojson string__to_yojson x.vpc_id);
     ]
 
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let vpc_ingress_connection_to_yojson (x : vpc_ingress_connection) =
   assoc_to_yojson

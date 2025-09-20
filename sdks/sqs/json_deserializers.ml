@@ -85,8 +85,7 @@ let resource_not_found_exception_of_yojson tree path =
     : resource_not_found_exception)
 
 let queue_attribute_name_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "SqsManagedSseEnabled" -> SqsManagedSseEnabled
     | `String "RedriveAllowPolicy" -> RedriveAllowPolicy
     | `String "FifoThroughputLimit" -> FifoThroughputLimit
@@ -188,8 +187,7 @@ let message_system_attribute_value_of_yojson tree path =
     : message_system_attribute_value)
 
 let message_system_attribute_name_for_sends_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "AWSTraceHeader" -> AWSTraceHeader
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "MessageSystemAttributeNameForSends" value)
@@ -367,8 +365,7 @@ let remove_permission_request_of_yojson tree path =
     : remove_permission_request)
 
 let message_system_attribute_name_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DeadLetterQueueSourceArn" -> DeadLetterQueueSourceArn
     | `String "AWSTraceHeader" -> AWSTraceHeader
     | `String "MessageGroupId" -> MessageGroupId

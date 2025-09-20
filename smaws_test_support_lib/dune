@@ -1,0 +1,5 @@
+(library
+ (name Smaws_Test_Support_Lib)
+ (libraries Smaws_Lib alcotest)
+ (preprocess
+  (pps ppx_deriving.show ppx_deriving.eq)))

@@ -2,6 +2,16 @@ open Types
 open Service_metadata
 
 module DescribeReportCreation = struct
+  let error_to_string = function
+    | `ConstraintViolationException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#ConstraintViolationException"
+    | `InternalServiceException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InternalServiceException"
+    | `InvalidParameterException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InvalidParameterException"
+    | `ThrottledException _ -> "com.amazonaws.resourcegroupstaggingapi#ThrottledException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConstraintViolationException" ->
@@ -21,16 +31,24 @@ module DescribeReportCreation = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_report_creation_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_report_creation_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"ResourceGroupsTaggingAPI_20170126DescribeReportCreation" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.describe_report_creation_output_of_yojson
+      ~shape_name:"ResourceGroupsTaggingAPI_20170126.DescribeReportCreation" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.describe_report_creation_output_of_yojson
       ~error_deserializer
 end
 
 module GetComplianceSummary = struct
+  let error_to_string = function
+    | `ConstraintViolationException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#ConstraintViolationException"
+    | `InternalServiceException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InternalServiceException"
+    | `InvalidParameterException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InvalidParameterException"
+    | `ThrottledException _ -> "com.amazonaws.resourcegroupstaggingapi#ThrottledException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConstraintViolationException" ->
@@ -50,16 +68,24 @@ module GetComplianceSummary = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_compliance_summary_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_compliance_summary_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"ResourceGroupsTaggingAPI_20170126GetComplianceSummary" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"ResourceGroupsTaggingAPI_20170126.GetComplianceSummary" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_compliance_summary_output_of_yojson
       ~error_deserializer
 end
 
 module GetResources = struct
+  let error_to_string = function
+    | `InternalServiceException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InternalServiceException"
+    | `InvalidParameterException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InvalidParameterException"
+    | `PaginationTokenExpiredException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#PaginationTokenExpiredException"
+    | `ThrottledException _ -> "com.amazonaws.resourcegroupstaggingapi#ThrottledException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InternalServiceException" ->
@@ -79,14 +105,23 @@ module GetResources = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_resources_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_resources_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ResourceGroupsTaggingAPI_20170126GetResources"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ResourceGroupsTaggingAPI_20170126.GetResources"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_resources_output_of_yojson ~error_deserializer
 end
 
 module GetTagKeys = struct
+  let error_to_string = function
+    | `InternalServiceException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InternalServiceException"
+    | `InvalidParameterException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InvalidParameterException"
+    | `PaginationTokenExpiredException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#PaginationTokenExpiredException"
+    | `ThrottledException _ -> "com.amazonaws.resourcegroupstaggingapi#ThrottledException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InternalServiceException" ->
@@ -106,14 +141,23 @@ module GetTagKeys = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_tag_keys_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_tag_keys_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ResourceGroupsTaggingAPI_20170126GetTagKeys"
-      ~service ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.get_tag_keys_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ResourceGroupsTaggingAPI_20170126.GetTagKeys"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.get_tag_keys_output_of_yojson
+      ~error_deserializer
 end
 
 module GetTagValues = struct
+  let error_to_string = function
+    | `InternalServiceException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InternalServiceException"
+    | `InvalidParameterException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InvalidParameterException"
+    | `PaginationTokenExpiredException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#PaginationTokenExpiredException"
+    | `ThrottledException _ -> "com.amazonaws.resourcegroupstaggingapi#ThrottledException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InternalServiceException" ->
@@ -133,14 +177,25 @@ module GetTagValues = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_tag_values_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_tag_values_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ResourceGroupsTaggingAPI_20170126GetTagValues"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ResourceGroupsTaggingAPI_20170126.GetTagValues"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_tag_values_output_of_yojson ~error_deserializer
 end
 
 module StartReportCreation = struct
+  let error_to_string = function
+    | `ConcurrentModificationException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#ConcurrentModificationException"
+    | `ConstraintViolationException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#ConstraintViolationException"
+    | `InternalServiceException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InternalServiceException"
+    | `InvalidParameterException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InvalidParameterException"
+    | `ThrottledException _ -> "com.amazonaws.resourcegroupstaggingapi#ThrottledException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConcurrentModificationException" ->
@@ -163,16 +218,22 @@ module StartReportCreation = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : start_report_creation_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.start_report_creation_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"ResourceGroupsTaggingAPI_20170126StartReportCreation" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"ResourceGroupsTaggingAPI_20170126.StartReportCreation" ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_report_creation_output_of_yojson
       ~error_deserializer
 end
 
 module TagResources = struct
+  let error_to_string = function
+    | `InternalServiceException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InternalServiceException"
+    | `InvalidParameterException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InvalidParameterException"
+    | `ThrottledException _ -> "com.amazonaws.resourcegroupstaggingapi#ThrottledException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InternalServiceException" ->
@@ -189,14 +250,21 @@ module TagResources = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : tag_resources_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.tag_resources_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ResourceGroupsTaggingAPI_20170126TagResources"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ResourceGroupsTaggingAPI_20170126.TagResources"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.tag_resources_output_of_yojson ~error_deserializer
 end
 
 module UntagResources = struct
+  let error_to_string = function
+    | `InternalServiceException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InternalServiceException"
+    | `InvalidParameterException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InvalidParameterException"
+    | `ThrottledException _ -> "com.amazonaws.resourcegroupstaggingapi#ThrottledException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InternalServiceException" ->
@@ -213,10 +281,8 @@ module UntagResources = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : untag_resources_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.untag_resources_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"ResourceGroupsTaggingAPI_20170126UntagResources" ~service ~config:context.config
-      ~http:context.http ~input
+      ~shape_name:"ResourceGroupsTaggingAPI_20170126.UntagResources" ~service ~context ~input
       ~output_deserializer:Json_deserializers.untag_resources_output_of_yojson ~error_deserializer
 end

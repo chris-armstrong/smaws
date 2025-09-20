@@ -1,8 +1,17 @@
 open Types
 
 module AssociateWebACL : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     associate_web_acl_request ->
     ( associate_web_acl_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -58,8 +67,22 @@ end
   \  "]
 
 module CheckCapacity : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFExpiredManagedRuleGroupVersionException of
+      waf_expired_managed_rule_group_version_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFInvalidResourceException of waf_invalid_resource_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFSubscriptionNotFoundException of waf_subscription_not_found_exception
+    | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     check_capacity_request ->
     ( check_capacity_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -90,8 +113,16 @@ end
   \ "]
 
 module CreateAPIKey : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_api_key_request ->
     ( create_api_key_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -114,8 +145,20 @@ end
   \  "]
 
 module CreateIPSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFDuplicateItemException of waf_duplicate_item_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_ip_set_request ->
     ( create_ip_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -136,8 +179,20 @@ end
    addresses. \n"]
 
 module CreateRegexPatternSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFDuplicateItemException of waf_duplicate_item_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_regex_pattern_set_request ->
     ( create_regex_pattern_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -156,8 +211,23 @@ end
    have WAF inspect a web request component for the specified patterns.\n"]
 
 module CreateRuleGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFDuplicateItemException of waf_duplicate_item_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception
+    | `WAFSubscriptionNotFoundException of waf_subscription_not_found_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception
+    | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_rule_group_request ->
     ( create_rule_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -183,8 +253,27 @@ end
   \ "]
 
 module CreateWebACL : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFConfigurationWarningException of waf_configuration_warning_exception
+    | `WAFDuplicateItemException of waf_duplicate_item_exception
+    | `WAFExpiredManagedRuleGroupVersionException of
+      waf_expired_managed_rule_group_version_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFInvalidResourceException of waf_invalid_resource_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception
+    | `WAFSubscriptionNotFoundException of waf_subscription_not_found_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception
+    | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_web_acl_request ->
     ( create_web_acl_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -219,8 +308,17 @@ end
   \ "]
 
 module DeleteAPIKey : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_api_key_request ->
     ( delete_api_key_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -238,8 +336,17 @@ end
   \ "]
 
 module DeleteFirewallManagerRuleGroups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_firewall_manager_rule_groups_request ->
     ( delete_firewall_manager_rule_groups_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -257,8 +364,20 @@ end
   \ "]
 
 module DeleteIPSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFAssociatedItemException of waf_associated_item_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_ip_set_request ->
     ( delete_ip_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -275,8 +394,17 @@ end
 [@@ocaml.doc "Deletes the specified [IPSet]. \n"]
 
 module DeleteLoggingConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_logging_configuration_request ->
     ( delete_logging_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -290,8 +418,15 @@ end
 [@@ocaml.doc "Deletes the [LoggingConfiguration] from the specified web ACL.\n"]
 
 module DeletePermissionPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_permission_policy_request ->
     ( delete_permission_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -306,8 +441,20 @@ end
   \ "]
 
 module DeleteRegexPatternSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFAssociatedItemException of waf_associated_item_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_regex_pattern_set_request ->
     ( delete_regex_pattern_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -324,8 +471,20 @@ end
 [@@ocaml.doc "Deletes the specified [RegexPatternSet].\n"]
 
 module DeleteRuleGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFAssociatedItemException of waf_associated_item_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_rule_group_request ->
     ( delete_rule_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -342,8 +501,20 @@ end
 [@@ocaml.doc "Deletes the specified [RuleGroup].\n"]
 
 module DeleteWebACL : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFAssociatedItemException of waf_associated_item_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_web_acl_request ->
     ( delete_web_acl_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -399,8 +570,15 @@ end
   \   "]
 
 module DescribeAllManagedProducts : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_all_managed_products_request ->
     ( describe_all_managed_products_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -414,8 +592,15 @@ end
    Amazon Web Services Marketplace managed rule groups. \n"]
 
 module DescribeManagedProductsByVendor : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_managed_products_by_vendor_request ->
     ( describe_managed_products_by_vendor_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -428,8 +613,19 @@ end
   "Provides high-level information for the managed rule groups owned by a specific vendor. \n"]
 
 module DescribeManagedRuleGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFExpiredManagedRuleGroupVersionException of
+      waf_expired_managed_rule_group_version_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFInvalidResourceException of waf_invalid_resource_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_managed_rule_group_request ->
     ( describe_managed_rule_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -446,8 +642,16 @@ end
   "Provides high-level information for a managed rule group, including descriptions of the rules. \n"]
 
 module DisassociateWebACL : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disassociate_web_acl_request ->
     ( disassociate_web_acl_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -474,8 +678,16 @@ end
   \   "]
 
 module GenerateMobileSdkReleaseUrl : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     generate_mobile_sdk_release_url_request ->
     ( generate_mobile_sdk_release_url_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -495,8 +707,17 @@ end
   \ "]
 
 module GetDecryptedAPIKey : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFInvalidResourceException of waf_invalid_resource_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_decrypted_api_key_request ->
     ( get_decrypted_api_key_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -518,8 +739,16 @@ end
   \ "]
 
 module GetIPSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_ip_set_request ->
     ( get_ip_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -532,8 +761,16 @@ end
 [@@ocaml.doc "Retrieves the specified [IPSet].\n"]
 
 module GetLoggingConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_logging_configuration_request ->
     ( get_logging_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -546,8 +783,16 @@ end
 [@@ocaml.doc "Returns the [LoggingConfiguration] for the specified web ACL.\n"]
 
 module GetManagedRuleSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_managed_rule_set_request ->
     ( get_managed_rule_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -569,8 +814,16 @@ end
   \    "]
 
 module GetMobileSdkRelease : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_mobile_sdk_release_request ->
     ( get_mobile_sdk_release_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -590,8 +843,15 @@ end
   \ "]
 
 module GetPermissionPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_permission_policy_request ->
     ( get_permission_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -606,8 +866,17 @@ end
   \ "]
 
 module GetRateBasedStatementManagedKeys : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFUnsupportedAggregateKeyTypeException of waf_unsupported_aggregate_key_type_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_rate_based_statement_managed_keys_request ->
     ( get_rate_based_statement_managed_keys_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -640,8 +909,16 @@ end
   \   "]
 
 module GetRegexPatternSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_regex_pattern_set_request ->
     ( get_regex_pattern_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -654,8 +931,16 @@ end
 [@@ocaml.doc "Retrieves the specified [RegexPatternSet].\n"]
 
 module GetRuleGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_rule_group_request ->
     ( get_rule_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -668,8 +953,15 @@ end
 [@@ocaml.doc "Retrieves the specified [RuleGroup].\n"]
 
 module GetSampledRequests : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_sampled_requests_request ->
     ( get_sampled_requests_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -691,8 +983,16 @@ end
   \ "]
 
 module GetWebACL : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_web_acl_request ->
     ( get_web_acl_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -705,8 +1005,17 @@ end
 [@@ocaml.doc "Retrieves the specified [WebACL].\n"]
 
 module GetWebACLForResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_web_acl_for_resource_request ->
     ( get_web_acl_for_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -738,8 +1047,16 @@ end
   \    "]
 
 module ListAPIKeys : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFInvalidResourceException of waf_invalid_resource_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_api_keys_request ->
     ( list_api_keys_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -759,8 +1076,16 @@ end
   \ "]
 
 module ListAvailableManagedRuleGroupVersions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_available_managed_rule_group_versions_request ->
     ( list_available_managed_rule_group_versions_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -773,8 +1098,15 @@ end
 [@@ocaml.doc "Returns a list of the available versions for the specified managed rule group. \n"]
 
 module ListAvailableManagedRuleGroups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_available_managed_rule_groups_request ->
     ( list_available_managed_rule_groups_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -789,8 +1121,15 @@ end
    Marketplace managed rule groups that you're subscribed to.\n"]
 
 module ListIPSets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_ip_sets_request ->
     ( list_ip_sets_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -802,8 +1141,15 @@ end
 [@@ocaml.doc "Retrieves an array of [IPSetSummary] objects for the IP sets that you manage.\n"]
 
 module ListLoggingConfigurations : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_logging_configurations_request ->
     ( list_logging_configurations_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -815,8 +1161,15 @@ end
 [@@ocaml.doc "Retrieves an array of your [LoggingConfiguration] objects.\n"]
 
 module ListManagedRuleSets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_managed_rule_sets_request ->
     ( list_managed_rule_sets_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -837,8 +1190,15 @@ end
   \    "]
 
 module ListMobileSdkReleases : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_mobile_sdk_releases_request ->
     ( list_mobile_sdk_releases_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -858,8 +1218,15 @@ end
   \ "]
 
 module ListRegexPatternSets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_regex_pattern_sets_request ->
     ( list_regex_pattern_sets_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -873,8 +1240,16 @@ end
    manage.\n"]
 
 module ListResourcesForWebACL : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_resources_for_web_acl_request ->
     ( list_resources_for_web_acl_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -901,8 +1276,15 @@ end
   \   "]
 
 module ListRuleGroups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_rule_groups_request ->
     ( list_rule_groups_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -915,8 +1297,18 @@ end
   "Retrieves an array of [RuleGroupSummary] objects for the rule groups that you manage. \n"]
 
 module ListTagsForResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_tags_for_resource_request ->
     ( list_tags_for_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -939,8 +1331,15 @@ end
   \ "]
 
 module ListWebACLs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_web_ac_ls_request ->
     ( list_web_ac_ls_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -952,8 +1351,20 @@ end
 [@@ocaml.doc "Retrieves an array of [WebACLSummary] objects for the web ACLs that you manage.\n"]
 
 module PutLoggingConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFLogDestinationPermissionIssueException of waf_log_destination_permission_issue_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception
+    | `WAFServiceLinkedRoleErrorException of waf_service_linked_role_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     put_logging_configuration_request ->
     ( put_logging_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1023,8 +1434,17 @@ end
   \    "]
 
 module PutManagedRuleSetVersions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     put_managed_rule_set_versions_request ->
     ( put_managed_rule_set_versions_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1057,8 +1477,16 @@ end
   \      "]
 
 module PutPermissionPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFInvalidPermissionPolicyException of waf_invalid_permission_policy_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     put_permission_policy_request ->
     ( put_permission_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1093,8 +1521,19 @@ end
   \   "]
 
 module TagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     tag_resource_request ->
     ( tag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1118,8 +1557,18 @@ end
   \ "]
 
 module UntagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     untag_resource_request ->
     ( untag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1138,8 +1587,19 @@ end
    container. You can add up to 50 tags to each Amazon Web Services resource.\n"]
 
 module UpdateIPSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFDuplicateItemException of waf_duplicate_item_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_ip_set_request ->
     ( update_ip_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1200,8 +1660,17 @@ end
   \  "]
 
 module UpdateManagedRuleSetVersionExpiryDate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_managed_rule_set_version_expiry_date_request ->
     ( update_managed_rule_set_version_expiry_date_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1227,8 +1696,19 @@ end
   \    "]
 
 module UpdateRegexPatternSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFDuplicateItemException of waf_duplicate_item_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_regex_pattern_set_request ->
     ( update_regex_pattern_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1289,8 +1769,22 @@ end
   \  "]
 
 module UpdateRuleGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFConfigurationWarningException of waf_configuration_warning_exception
+    | `WAFDuplicateItemException of waf_duplicate_item_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception
+    | `WAFSubscriptionNotFoundException of waf_subscription_not_found_exception
+    | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_rule_group_request ->
     ( update_rule_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1359,8 +1853,25 @@ end
   \  "]
 
 module UpdateWebACL : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFConfigurationWarningException of waf_configuration_warning_exception
+    | `WAFDuplicateItemException of waf_duplicate_item_exception
+    | `WAFExpiredManagedRuleGroupVersionException of
+      waf_expired_managed_rule_group_version_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFInvalidResourceException of waf_invalid_resource_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFOptimisticLockException of waf_optimistic_lock_exception
+    | `WAFSubscriptionNotFoundException of waf_subscription_not_found_exception
+    | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_web_acl_request ->
     ( update_web_acl_response,
       [> Smaws_Lib.Protocols.AwsJson.error

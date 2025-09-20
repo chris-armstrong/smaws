@@ -10,8 +10,7 @@ let vpc_endpoint_id_of_yojson = string_of_yojson
 let vpc_endpoint_name_of_yojson = string_of_yojson
 
 let vpc_endpoint_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "PENDING" -> PENDING
     | `String "DELETING" -> DELETING
     | `String "ACTIVE" -> ACTIVE
@@ -170,8 +169,7 @@ let conflict_exception_of_yojson tree path =
     : conflict_exception)
 
 let security_policy_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "encryption" -> Encryption
     | `String "network" -> Network
     | `String value -> raise (deserialize_unknown_enum_value_error path "SecurityPolicyType" value)
@@ -268,8 +266,7 @@ let resource_not_found_exception_of_yojson tree path =
 let security_config_id_of_yojson = string_of_yojson
 
 let security_config_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "saml" -> Saml
     | `String "iamidentitycenter" -> Iamidentitycenter
     | `String value -> raise (deserialize_unknown_enum_value_error path "SecurityConfigType" value)
@@ -302,8 +299,7 @@ let iam_identity_center_instance_arn_of_yojson = string_of_yojson
 let iam_identity_center_application_arn_of_yojson = string_of_yojson
 
 let iam_identity_center_user_attribute_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "UserId" -> UserId
     | `String "UserName" -> UserName
     | `String "Email" -> Email
@@ -314,8 +310,7 @@ let iam_identity_center_user_attribute_of_yojson (tree : t) path =
     : iam_identity_center_user_attribute)
 
 let iam_identity_center_group_attribute_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "GroupId" -> GroupId
     | `String "GroupName" -> GroupName
     | `String value ->
@@ -424,8 +419,7 @@ let update_security_config_request_of_yojson tree path =
     : update_security_config_request)
 
 let lifecycle_policy_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "retention" -> Retention
     | `String value -> raise (deserialize_unknown_enum_value_error path "LifecyclePolicyType" value)
     | _ -> raise (deserialize_wrong_type_error path "LifecyclePolicyType")
@@ -483,8 +477,7 @@ let collection_id_of_yojson = string_of_yojson
 let collection_name_of_yojson = string_of_yojson
 
 let collection_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CREATING" -> CREATING
     | `String "DELETING" -> DELETING
     | `String "ACTIVE" -> ACTIVE
@@ -495,8 +488,7 @@ let collection_status_of_yojson (tree : t) path =
     : collection_status)
 
 let collection_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "SEARCH" -> SEARCH
     | `String "TIMESERIES" -> TIMESERIES
     | `String "VECTORSEARCH" -> VECTORSEARCH
@@ -597,8 +589,7 @@ let update_account_settings_request_of_yojson tree path =
     : update_account_settings_request)
 
 let access_policy_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "data" -> Data
     | `String value -> raise (deserialize_unknown_enum_value_error path "AccessPolicyType" value)
     | _ -> raise (deserialize_wrong_type_error path "AccessPolicyType")
@@ -693,8 +684,7 @@ let tag_resource_request_of_yojson tree path =
     : tag_resource_request)
 
 let standby_replicas_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ENABLED" -> ENABLED
     | `String "DISABLED" -> DISABLED
     | `String value -> raise (deserialize_unknown_enum_value_error path "StandbyReplicas" value)
@@ -774,8 +764,7 @@ let security_config_stats_of_yojson tree path =
     : security_config_stats)
 
 let resource_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "index" -> Index
     | `String value -> raise (deserialize_unknown_enum_value_error path "ResourceType" value)
     | _ -> raise (deserialize_wrong_type_error path "ResourceType")

@@ -143,6 +143,15 @@ let parseTestHttpRequestTests value =
 
         let+ documentation = optional (value |> field "documentation") |> mapOptional parseString in
         let+ tags = optional (value |> field "tags") |> mapOptional (parseArray parseString) in
+        let+ appliesTo =
+          optional (value |> field "appliesTo")
+          |> mapOptional parseString
+          |> Result.map ~f:(function
+               | Some "server" -> Some `Server
+               | Some "client" -> Some `Client
+               | None -> None
+               | _ -> failwith "unexpected value for appliesTo in HttpRequestTrait")
+        in
         Ok
           {
             id;
@@ -163,8 +172,7 @@ let parseTestHttpRequestTests value =
             vendorParamsShape;
             documentation;
             tags;
-            appliesTo = None;
-            (* TODO: parse appliesTo correctly *)
+            appliesTo;
           })
       value
   in
@@ -204,8 +212,12 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
     | "smithy.api#httpQuery" -> Ok Trait.HttpQueryTrait
     | "smithy.api#httpHeader" -> Ok Trait.HttpHeaderTrait
     | "smithy.api#retryable" -> Ok Trait.RetryableTrait
-    | "smithy.api#timestampFormat" ->
-        value |> parseString >>| fun timestampFormat -> Trait.TimestampFormatTrait timestampFormat
+    | "smithy.api#timestampFormat" -> (
+        value |> parseString >>| function
+        | "date-time" -> Trait.TimestampFormatTrait TimestampFormatDateTime
+        | "epoch-seconds" -> Trait.TimestampFormatTrait TimestampFormatEpochSeconds
+        | "http-date" -> Trait.TimestampFormatTrait TimestampFormatHttpDate
+        | x -> failwith (Fmt.str "unknown timestamp format value %s" x))
     | "smithy.api#range" ->
         let obj = value |> parseObject in
         let min = optional (obj |> field "min") |> mapOptional parseNumber in
@@ -270,6 +282,9 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
     | "smithy.api#suppress" -> Ok Trait.SuppressTrait
     | "aws.auth#unsignedPayload" -> Ok Trait.AwsAuthUnsignedPayloadTrait
     | "smithy.api#requiresLength" -> Ok Trait.RequiresLengthTrait
+    | "smithy.api#requestCompression" ->
+        value |> parseObject |> field "encodings" |> parseArray parseString >>| fun encodings ->
+        Trait.RequestCompressionTrait encodings
     | "smithy.api#sparse" -> Ok Trait.SparseTrait
     | "smithy.api#httpChecksumRequired" -> Ok Trait.HttpChecksumRequiredTrait
     | "aws.api#clientDiscoveredEndpoint" -> Ok Trait.AwsApiClientDiscoveredEndpointTrait
@@ -473,7 +488,7 @@ let parseShape name shape =
         (* TODO: these are technically different but they have the same shape and as long as the model is well-formed, this should give the right result *)
         | "intEnum" | "enum" -> parseEnumShape shapeDict
         | "document" -> parseDocumentShape shapeDict
-        | _ -> Error (CustomError ({js|unknown shape type |js} ^ typeValue))
+        | _ -> Error (CustomError ("unknown shape type: " ^ typeValue))
       in
 
       Result.map descriptor_ ~f:(fun descriptor ->

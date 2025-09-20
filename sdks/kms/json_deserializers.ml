@@ -55,8 +55,7 @@ let xks_proxy_incorrect_authentication_credential_exception_of_yojson tree path 
     : xks_proxy_incorrect_authentication_credential_exception)
 
 let xks_proxy_connectivity_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "VPC_ENDPOINT_SERVICE" -> VPC_ENDPOINT_SERVICE
     | `String "PUBLIC_ENDPOINT" -> PUBLIC_ENDPOINT
     | `String value ->
@@ -127,8 +126,7 @@ let xks_key_already_in_use_exception_of_yojson tree path =
     : xks_key_already_in_use_exception)
 
 let wrapping_key_spec_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "SM2" -> SM2
     | `String "RSA_4096" -> RSA_4096
     | `String "RSA_3072" -> RSA_3072
@@ -142,8 +140,7 @@ let key_id_type_of_yojson = string_of_yojson
 let boolean_type_of_yojson = bool_of_yojson
 
 let signing_algorithm_spec_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ML_DSA_SHAKE_256" -> ML_DSA_SHAKE_256
     | `String "SM2DSA" -> SM2DSA
     | `String "ECDSA_SHA_512" -> ECDSA_SHA_512
@@ -177,8 +174,7 @@ let verify_response_of_yojson tree path =
 let plaintext_type_of_yojson = blob_of_yojson
 
 let message_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "EXTERNAL_MU" -> EXTERNAL_MU
     | `String "DIGEST" -> DIGEST
     | `String "RAW" -> RAW
@@ -208,8 +204,7 @@ let verify_request_of_yojson tree path =
     : verify_request)
 
 let mac_algorithm_spec_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "HMAC_SHA_512" -> HMAC_SHA_512
     | `String "HMAC_SHA_384" -> HMAC_SHA_384
     | `String "HMAC_SHA_256" -> HMAC_SHA_256
@@ -494,8 +489,7 @@ let sign_request_of_yojson tree path =
 let date_type_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let key_state_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "Updating" -> Updating
     | `String "Unavailable" -> Unavailable
     | `String "PendingReplicaDeletion" -> PendingReplicaDeletion
@@ -591,8 +585,7 @@ let aws_account_id_type_of_yojson = string_of_yojson
 let arn_type_of_yojson = string_of_yojson
 
 let key_usage_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "KEY_AGREEMENT" -> KEY_AGREEMENT
     | `String "GENERATE_VERIFY_MAC" -> GENERATE_VERIFY_MAC
     | `String "ENCRYPT_DECRYPT" -> ENCRYPT_DECRYPT
@@ -603,8 +596,7 @@ let key_usage_type_of_yojson (tree : t) path =
     : key_usage_type)
 
 let origin_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "EXTERNAL_KEY_STORE" -> EXTERNAL_KEY_STORE
     | `String "AWS_CLOUDHSM" -> AWS_CLOUDHSM
     | `String "EXTERNAL" -> EXTERNAL
@@ -615,8 +607,7 @@ let origin_type_of_yojson (tree : t) path =
     : origin_type)
 
 let expiration_model_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "KEY_MATERIAL_DOES_NOT_EXPIRE" -> KEY_MATERIAL_DOES_NOT_EXPIRE
     | `String "KEY_MATERIAL_EXPIRES" -> KEY_MATERIAL_EXPIRES
     | `String value -> raise (deserialize_unknown_enum_value_error path "ExpirationModelType" value)
@@ -625,8 +616,7 @@ let expiration_model_type_of_yojson (tree : t) path =
     : expiration_model_type)
 
 let key_manager_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CUSTOMER" -> CUSTOMER
     | `String "AWS" -> AWS
     | `String value -> raise (deserialize_unknown_enum_value_error path "KeyManagerType" value)
@@ -635,8 +625,7 @@ let key_manager_type_of_yojson (tree : t) path =
     : key_manager_type)
 
 let customer_master_key_spec_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "SM2" -> SM2
     | `String "HMAC_512" -> HMAC_512
     | `String "HMAC_384" -> HMAC_384
@@ -657,8 +646,7 @@ let customer_master_key_spec_of_yojson (tree : t) path =
     : customer_master_key_spec)
 
 let key_spec_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ML_DSA_87" -> ML_DSA_87
     | `String "ML_DSA_65" -> ML_DSA_65
     | `String "ML_DSA_44" -> ML_DSA_44
@@ -681,8 +669,7 @@ let key_spec_of_yojson (tree : t) path =
     : key_spec)
 
 let encryption_algorithm_spec_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "SM2PKE" -> SM2PKE
     | `String "RSAES_OAEP_SHA_256" -> RSAES_OAEP_SHA_256
     | `String "RSAES_OAEP_SHA_1" -> RSAES_OAEP_SHA_1
@@ -700,8 +687,7 @@ let signing_algorithm_spec_list_of_yojson tree path =
   list_of_yojson signing_algorithm_spec_of_yojson tree path
 
 let key_agreement_algorithm_spec_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ECDH" -> ECDH
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "KeyAgreementAlgorithmSpec" value)
@@ -713,8 +699,7 @@ let key_agreement_algorithm_spec_list_of_yojson tree path =
   list_of_yojson key_agreement_algorithm_spec_of_yojson tree path
 
 let multi_region_key_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "REPLICA" -> REPLICA
     | `String "PRIMARY" -> PRIMARY
     | `String value -> raise (deserialize_unknown_enum_value_error path "MultiRegionKeyType" value)
@@ -943,8 +928,7 @@ let grant_name_type_of_yojson = string_of_yojson
 let principal_id_type_of_yojson = string_of_yojson
 
 let grant_operation_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DeriveSharedSecret" -> DeriveSharedSecret
     | `String "VerifyMac" -> VerifyMac
     | `String "GenerateMac" -> GenerateMac
@@ -1074,8 +1058,7 @@ let list_keys_request_of_yojson tree path =
 let key_material_description_type_of_yojson = string_of_yojson
 
 let import_state_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "PENDING_IMPORT" -> PENDING_IMPORT
     | `String "IMPORTED" -> IMPORTED
     | `String value -> raise (deserialize_unknown_enum_value_error path "ImportState" value)
@@ -1084,8 +1067,7 @@ let import_state_of_yojson (tree : t) path =
     : import_state)
 
 let key_material_state_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "PENDING_ROTATION" -> PENDING_ROTATION
     | `String "CURRENT" -> CURRENT
     | `String "NON_CURRENT" -> NON_CURRENT
@@ -1095,8 +1077,7 @@ let key_material_state_of_yojson (tree : t) path =
     : key_material_state)
 
 let rotation_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ON_DEMAND" -> ON_DEMAND
     | `String "AUTOMATIC" -> AUTOMATIC
     | `String value -> raise (deserialize_unknown_enum_value_error path "RotationType" value)
@@ -1138,8 +1119,7 @@ let list_key_rotations_response_of_yojson tree path =
     : list_key_rotations_response)
 
 let include_key_material_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ROTATIONS_ONLY" -> ROTATIONS_ONLY
     | `String "ALL_KEY_MATERIAL" -> ALL_KEY_MATERIAL
     | `String value -> raise (deserialize_unknown_enum_value_error path "IncludeKeyMaterial" value)
@@ -1250,8 +1230,7 @@ let import_key_material_response_of_yojson tree path =
     : import_key_material_response)
 
 let import_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "EXISTING_KEY_MATERIAL" -> EXISTING_KEY_MATERIAL
     | `String "NEW_KEY_MATERIAL" -> NEW_KEY_MATERIAL
     | `String value -> raise (deserialize_unknown_enum_value_error path "ImportType" value)
@@ -1329,8 +1308,7 @@ let get_parameters_for_import_response_of_yojson tree path =
     : get_parameters_for_import_response)
 
 let algorithm_spec_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "SM2PKE" -> SM2PKE
     | `String "RSA_AES_KEY_WRAP_SHA_256" -> RSA_AES_KEY_WRAP_SHA_256
     | `String "RSA_AES_KEY_WRAP_SHA_1" -> RSA_AES_KEY_WRAP_SHA_1
@@ -1407,8 +1385,7 @@ let generate_random_response_of_yojson tree path =
 let number_of_bytes_type_of_yojson = int_of_yojson
 
 let key_encryption_mechanism_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "RSAES_OAEP_SHA_256" -> RSAES_OAEP_SHA_256
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "KeyEncryptionMechanism" value)
@@ -1479,8 +1456,7 @@ let generate_data_key_without_plaintext_response_of_yojson tree path =
     : generate_data_key_without_plaintext_response)
 
 let data_key_spec_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "AES_128" -> AES_128
     | `String "AES_256" -> AES_256
     | `String value -> raise (deserialize_unknown_enum_value_error path "DataKeySpec" value)
@@ -1506,8 +1482,7 @@ let generate_data_key_without_plaintext_request_of_yojson tree path =
     : generate_data_key_without_plaintext_request)
 
 let data_key_pair_spec_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "SM2" -> SM2
     | `String "ECC_SECG_P256K1" -> ECC_SECG_P256K1
     | `String "ECC_NIST_P521" -> ECC_NIST_P521
@@ -1709,8 +1684,7 @@ let describe_key_request_of_yojson tree path =
     : describe_key_request)
 
 let connection_state_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DISCONNECTING" -> DISCONNECTING
     | `String "DISCONNECTED" -> DISCONNECTED
     | `String "FAILED" -> FAILED
@@ -1722,8 +1696,7 @@ let connection_state_type_of_yojson (tree : t) path =
     : connection_state_type)
 
 let connection_error_code_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "XKS_PROXY_INVALID_TLS_CONFIGURATION" -> XKS_PROXY_INVALID_TLS_CONFIGURATION
     | `String "XKS_PROXY_TIMED_OUT" -> XKS_PROXY_TIMED_OUT
     | `String "XKS_VPC_ENDPOINT_SERVICE_INVALID_CONFIGURATION" ->
@@ -1750,8 +1723,7 @@ let connection_error_code_type_of_yojson (tree : t) path =
     : connection_error_code_type)
 
 let custom_key_store_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "EXTERNAL_KEY_STORE" -> EXTERNAL_KEY_STORE
     | `String "AWS_CLOUDHSM" -> AWS_CLOUDHSM
     | `String value -> raise (deserialize_unknown_enum_value_error path "CustomKeyStoreType" value)

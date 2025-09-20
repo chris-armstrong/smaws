@@ -836,7 +836,7 @@ let untag_resource_request_to_yojson (x : untag_resource_request) =
     ]
 
 let uri_string_to_yojson = string_to_yojson
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let time_window_to_yojson (x : time_window) =
   assoc_to_yojson

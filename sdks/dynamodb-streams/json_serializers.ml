@@ -25,7 +25,7 @@ let stream_status_to_yojson (x : stream_status) =
   | ENABLED -> `String "ENABLED"
   | ENABLING -> `String "ENABLING"
 
-let date_to_yojson = timestamp_to_yojson
+let date_to_yojson = timestamp_epoch_seconds_to_yojson
 let number_attribute_value_to_yojson = string_to_yojson
 let binary_attribute_value_to_yojson = blob_to_yojson
 let number_set_attribute_value_to_yojson tree = list_to_yojson number_attribute_value_to_yojson tree

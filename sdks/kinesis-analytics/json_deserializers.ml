@@ -51,8 +51,7 @@ let kinesis_firehose_input_update_of_yojson tree path =
     : kinesis_firehose_input_update)
 
 let record_format_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CSV" -> CSV
     | `String "JSON" -> JSON
     | `String value -> raise (deserialize_unknown_enum_value_error path "RecordFormatType" value)
@@ -439,8 +438,7 @@ let start_application_response_of_yojson tree path =
   (() : unit)
 
 let input_starting_position_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "LAST_STOPPED_POINT" -> LAST_STOPPED_POINT
     | `String "TRIM_HORIZON" -> TRIM_HORIZON
     | `String "NOW" -> NOW
@@ -668,8 +666,7 @@ let list_tags_for_resource_request_of_yojson tree path =
     : list_tags_for_resource_request)
 
 let application_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "UPDATING" -> UPDATING
     | `String "RUNNING" -> RUNNING
     | `String "READY" -> READY

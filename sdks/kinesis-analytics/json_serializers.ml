@@ -279,7 +279,7 @@ let unable_to_detect_schema_exception_to_yojson (x : unable_to_detect_schema_exc
       ("message", option_to_yojson error_message_to_yojson x.message);
     ]
 
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 let tag_value_to_yojson = string_to_yojson
 
 let tag_to_yojson (x : tag) =

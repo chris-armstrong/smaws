@@ -203,7 +203,7 @@ let too_many_tags_exception_to_yojson (x : too_many_tags_exception) =
       ("Message", option_to_yojson error_message_to_yojson x.message);
     ]
 
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 let tag_value_to_yojson = string_to_yojson
 let tag_resource_response_to_yojson = unit_to_yojson
 

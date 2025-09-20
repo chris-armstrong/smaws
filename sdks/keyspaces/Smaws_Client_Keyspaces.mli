@@ -348,8 +348,17 @@ val make_create_keyspace_request :
 (** {1:operations Operations} *)
 
 module CreateKeyspace : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_keyspace_request ->
     ( create_keyspace_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -372,8 +381,18 @@ end
   \  "]
 
 module CreateTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_table_request ->
     ( create_table_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -399,8 +418,18 @@ end
   \  "]
 
 module CreateType : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_type_request ->
     ( create_type_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -424,8 +453,18 @@ end
   \  "]
 
 module DeleteKeyspace : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_keyspace_request ->
     ( delete_keyspace_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -440,8 +479,18 @@ end
 [@@ocaml.doc "The [DeleteKeyspace] operation deletes a keyspace and all of its tables. \n"]
 
 module DeleteTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_table_request ->
     ( delete_table_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -462,8 +511,18 @@ end
    If the table is already in the [DELETING] state, no error is returned.\n"]
 
 module DeleteType : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_type_request ->
     ( delete_type_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -484,8 +543,17 @@ end
   \ "]
 
 module GetKeyspace : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_keyspace_request ->
     ( get_keyspace_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -502,8 +570,17 @@ end
    added Regions after an [UpdateKeyspace] operation.\n"]
 
 module GetTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_table_request ->
     ( get_table_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -522,8 +599,17 @@ end
   \ "]
 
 module GetTableAutoScalingSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_table_auto_scaling_settings_request ->
     ( get_table_auto_scaling_settings_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -561,8 +647,17 @@ end
   \  "]
 
 module GetType : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_type_request ->
     ( get_type_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -584,8 +679,17 @@ end
   \ "]
 
 module ListKeyspaces : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_keyspaces_request ->
     ( list_keyspaces_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -599,8 +703,17 @@ end
 [@@ocaml.doc "The [ListKeyspaces] operation returns a list of keyspaces.\n"]
 
 module ListTables : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_tables_request ->
     ( list_tables_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -618,8 +731,17 @@ end
   \ "]
 
 module ListTagsForResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_tags_for_resource_request ->
     ( list_tags_for_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -637,8 +759,17 @@ end
   \ "]
 
 module ListTypes : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_types_request ->
     ( list_types_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -658,8 +789,18 @@ end
   \ "]
 
 module RestoreTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     restore_table_request ->
     ( restore_table_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -727,8 +868,18 @@ end
   \  "]
 
 module TagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     tag_resource_request ->
     ( tag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -753,8 +904,18 @@ end
   \ "]
 
 module UntagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     untag_resource_request ->
     ( untag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -769,8 +930,18 @@ end
 [@@ocaml.doc "Removes the association of tags from a Amazon Keyspaces resource.\n"]
 
 module UpdateKeyspace : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_keyspace_request ->
     ( update_keyspace_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -865,8 +1036,18 @@ end
 
 (** {1:Serialization and Deserialization} *)
 module UpdateTable : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_table_request ->
     ( update_table_response,
       [> Smaws_Lib.Protocols.AwsJson.error

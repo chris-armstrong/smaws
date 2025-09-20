@@ -2,6 +2,14 @@ open Types
 open Service_metadata
 
 module CreateKeyspace = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.keyspaces#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -22,14 +30,22 @@ module CreateKeyspace = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_keyspace_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_keyspace_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceCreateKeyspace" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.create_keyspace_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.CreateKeyspace" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.create_keyspace_response_of_yojson
+      ~error_deserializer
 end
 
 module CreateTable = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.keyspaces#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -53,14 +69,22 @@ module CreateTable = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_table_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_table_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceCreateTable" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.create_table_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.CreateTable" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.create_table_response_of_yojson
+      ~error_deserializer
 end
 
 module CreateType = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.keyspaces#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -84,14 +108,22 @@ module CreateType = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_type_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_type_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceCreateType" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.create_type_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.CreateType" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.create_type_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteKeyspace = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.keyspaces#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -115,14 +147,22 @@ module DeleteKeyspace = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_keyspace_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_keyspace_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceDeleteKeyspace" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.delete_keyspace_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.DeleteKeyspace" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.delete_keyspace_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteTable = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.keyspaces#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -146,14 +186,22 @@ module DeleteTable = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_table_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_table_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceDeleteTable" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.delete_table_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.DeleteTable" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.delete_table_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteType = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.keyspaces#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -177,14 +225,21 @@ module DeleteType = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_type_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_type_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceDeleteType" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.delete_type_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.DeleteType" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.delete_type_response_of_yojson
+      ~error_deserializer
 end
 
 module GetKeyspace = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -206,14 +261,21 @@ module GetKeyspace = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_keyspace_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_keyspace_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceGetKeyspace" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.get_keyspace_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.GetKeyspace" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.get_keyspace_response_of_yojson
+      ~error_deserializer
 end
 
 module GetTable = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -235,14 +297,21 @@ module GetTable = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_table_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_table_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceGetTable" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.get_table_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.GetTable" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.get_table_response_of_yojson
+      ~error_deserializer
 end
 
 module GetTableAutoScalingSettings = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -264,15 +333,22 @@ module GetTableAutoScalingSettings = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_table_auto_scaling_settings_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_table_auto_scaling_settings_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceGetTableAutoScalingSettings"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.GetTableAutoScalingSettings"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_table_auto_scaling_settings_response_of_yojson
       ~error_deserializer
 end
 
 module GetType = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -294,14 +370,20 @@ module GetType = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_type_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_type_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceGetType" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.get_type_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.GetType" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.get_type_response_of_yojson ~error_deserializer
 end
 
 module ListKeyspaces = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -323,14 +405,21 @@ module ListKeyspaces = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_keyspaces_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_keyspaces_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceListKeyspaces" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.list_keyspaces_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.ListKeyspaces" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_keyspaces_response_of_yojson
+      ~error_deserializer
 end
 
 module ListTables = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -352,14 +441,21 @@ module ListTables = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_tables_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_tables_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceListTables" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.list_tables_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.ListTables" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.list_tables_response_of_yojson
+      ~error_deserializer
 end
 
 module ListTagsForResource = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -381,15 +477,22 @@ module ListTagsForResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_tags_for_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceListTagsForResource" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.ListTagsForResource" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
       ~error_deserializer
 end
 
 module ListTypes = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -411,14 +514,22 @@ module ListTypes = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_types_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_types_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceListTypes" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.list_types_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.ListTypes" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.list_types_response_of_yojson
+      ~error_deserializer
 end
 
 module RestoreTable = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.keyspaces#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -442,14 +553,22 @@ module RestoreTable = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : restore_table_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.restore_table_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceRestoreTable" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.restore_table_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.RestoreTable" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.restore_table_response_of_yojson
+      ~error_deserializer
 end
 
 module TagResource = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.keyspaces#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -473,14 +592,22 @@ module TagResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : tag_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.tag_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceTagResource" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.TagResource" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module UntagResource = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.keyspaces#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -504,14 +631,22 @@ module UntagResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : untag_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.untag_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceUntagResource" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.UntagResource" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module UpdateKeyspace = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.keyspaces#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -535,14 +670,22 @@ module UpdateKeyspace = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_keyspace_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_keyspace_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceUpdateKeyspace" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.update_keyspace_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.UpdateKeyspace" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.update_keyspace_response_of_yojson
+      ~error_deserializer
 end
 
 module UpdateTable = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.keyspaces#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.keyspaces#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.keyspaces#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.keyspaces#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.keyspaces#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.keyspaces#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -566,9 +709,8 @@ module UpdateTable = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_table_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_table_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesServiceUpdateTable" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.update_table_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.UpdateTable" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.update_table_response_of_yojson
+      ~error_deserializer
 end

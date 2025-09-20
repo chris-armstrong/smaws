@@ -47,8 +47,7 @@ let update_job_shipment_state_result_of_yojson tree path =
   (() : unit)
 
 let shipment_state_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "RETURNED" -> RETURNED
     | `String "RECEIVED" -> RECEIVED
     | `String value -> raise (deserialize_unknown_enum_value_error path "ShipmentState" value)
@@ -77,8 +76,7 @@ let role_ar_n_of_yojson = string_of_yojson
 let sns_topic_ar_n_of_yojson = string_of_yojson
 
 let job_state_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "Pending" -> PENDING
     | `String "Listing" -> LISTING
     | `String "Cancelled" -> CANCELLED
@@ -125,8 +123,7 @@ let key_range_of_yojson tree path =
     : key_range)
 
 let device_service_name_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "S3_ON_DEVICE_SERVICE" -> S3_ON_DEVICE_SERVICE
     | `String "NFS_ON_DEVICE_SERVICE" -> NFS_ON_DEVICE_SERVICE
     | `String value -> raise (deserialize_unknown_enum_value_error path "DeviceServiceName" value)
@@ -135,8 +132,7 @@ let device_service_name_of_yojson (tree : t) path =
     : device_service_name)
 
 let transfer_option_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "LOCAL_USE" -> LOCAL_USE
     | `String "EXPORT" -> EXPORT
     | `String "IMPORT" -> IMPORT
@@ -222,8 +218,7 @@ let job_resource_of_yojson tree path =
 let storage_limit_of_yojson = int_of_yojson
 
 let storage_unit_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "TB" -> TB
     | `String value -> raise (deserialize_unknown_enum_value_error path "StorageUnit" value)
     | _ -> raise (deserialize_wrong_type_error path "StorageUnit")
@@ -299,8 +294,7 @@ let on_device_service_configuration_of_yojson tree path =
 let address_id_of_yojson = string_of_yojson
 
 let shipping_option_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "STANDARD" -> STANDARD
     | `String "EXPRESS" -> EXPRESS
     | `String "NEXT_DAY" -> NEXT_DAY
@@ -311,8 +305,7 @@ let shipping_option_of_yojson (tree : t) path =
     : shipping_option)
 
 let snowball_capacity_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "T13" -> T13
     | `String "T240" -> T240
     | `String "NoPreference" -> NO_PREFERENCE
@@ -455,8 +448,7 @@ let snowcone_device_configuration_of_yojson tree path =
     : snowcone_device_configuration)
 
 let snowball_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "RACK_5U_C" -> RACK_5U_C
     | `String "V3_5S" -> V3_5S
     | `String "V3_5C" -> V3_5C
@@ -473,8 +465,7 @@ let snowball_type_of_yojson (tree : t) path =
     : snowball_type)
 
 let shipping_label_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "Failed" -> FAILED
     | `String "Succeeded" -> SUCCEEDED
     | `String "TimedOut" -> TIMED_OUT
@@ -513,8 +504,7 @@ let service_version_of_yojson tree path =
 let service_version_list_of_yojson tree path = list_of_yojson service_version_of_yojson tree path
 
 let service_name_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "EKS_ANYWHERE" -> EKS_ANYWHERE
     | `String "KUBERNETES" -> KUBERNETES
     | `String value -> raise (deserialize_unknown_enum_value_error path "ServiceName" value)
@@ -528,8 +518,7 @@ let return_shipping_label_already_exists_exception_of_yojson tree path =
     : return_shipping_label_already_exists_exception)
 
 let remote_management_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "NOT_INSTALLED" -> NOT_INSTALLED
     | `String "INSTALLED_AUTOSTART" -> INSTALLED_AUTOSTART
     | `String "INSTALLED_ONLY" -> INSTALLED_ONLY
@@ -539,8 +528,7 @@ let remote_management_of_yojson (tree : t) path =
     : remote_management)
 
 let long_term_pricing_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "OneMonth" -> ONE_MONTH
     | `String "ThreeYear" -> THREE_YEAR
     | `String "OneYear" -> ONE_YEAR
@@ -639,8 +627,7 @@ let invalid_next_token_exception_of_yojson tree path =
     : invalid_next_token_exception)
 
 let address_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "AWS_SHIP" -> AWS_SHIP
     | `String "CUST_PICKUP" -> CUST_PICKUP
     | `String value -> raise (deserialize_unknown_enum_value_error path "AddressType" value)
@@ -709,8 +696,7 @@ let list_long_term_pricing_request_of_yojson tree path =
     : list_long_term_pricing_request)
 
 let job_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "LOCAL_USE" -> LOCAL_USE
     | `String "EXPORT" -> EXPORT
     | `String "IMPORT" -> IMPORT
@@ -782,8 +768,7 @@ let list_compatible_images_request_of_yojson tree path =
     : list_compatible_images_request)
 
 let cluster_state_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "Cancelled" -> CANCELLED
     | `String "Complete" -> COMPLETE
     | `String "InUse" -> IN_USE
@@ -882,8 +867,7 @@ let device_configuration_of_yojson tree path =
     : device_configuration)
 
 let impact_level_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "IL99" -> IL99
     | `String "IL6" -> IL6
     | `String "IL5" -> IL5

@@ -71,7 +71,7 @@ let tag_to_yojson (x : tag) =
     ]
 
 let tag_list_to_yojson tree = list_to_yojson tag_to_yojson tree
-let t_stamp_to_yojson = timestamp_to_yojson
+let t_stamp_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let sort_order_to_yojson (x : sort_order) =
   match x with DESCENDING -> `String "DESCENDING" | ASCENDING -> `String "ASCENDING"

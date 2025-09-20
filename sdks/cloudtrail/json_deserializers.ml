@@ -247,8 +247,7 @@ let event_data_store_arn_of_yojson = string_of_yojson
 let event_data_store_name_of_yojson = string_of_yojson
 
 let event_data_store_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "STOPPED_INGESTION" -> STOPPED_INGESTION
     | `String "STOPPING_INGESTION" -> STOPPING_INGESTION
     | `String "STARTING_INGESTION" -> STARTING_INGESTION
@@ -300,8 +299,7 @@ let date_of_yojson = timestamp_epoch_seconds_of_yojson
 let event_data_store_kms_key_id_of_yojson = string_of_yojson
 
 let billing_mode_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "FIXED_RETENTION_PRICING" -> FIXED_RETENTION_PRICING
     | `String "EXTENDABLE_RETENTION_PRICING" -> EXTENDABLE_RETENTION_PRICING
     | `String value -> raise (deserialize_unknown_enum_value_error path "BillingMode" value)
@@ -310,8 +308,7 @@ let billing_mode_of_yojson (tree : t) path =
     : billing_mode)
 
 let federation_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DISABLED" -> DISABLED
     | `String "DISABLING" -> DISABLING
     | `String "ENABLED" -> ENABLED
@@ -419,8 +416,7 @@ let dashboard_arn_of_yojson = string_of_yojson
 let dashboard_name_of_yojson = string_of_yojson
 
 let dashboard_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CUSTOM" -> CUSTOM
     | `String "MANAGED" -> MANAGED
     | `String value -> raise (deserialize_unknown_enum_value_error path "DashboardType" value)
@@ -429,8 +425,7 @@ let dashboard_type_of_yojson (tree : t) path =
     : dashboard_type)
 
 let refresh_schedule_frequency_unit_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DAYS" -> DAYS
     | `String "HOURS" -> HOURS
     | `String value ->
@@ -454,8 +449,7 @@ let refresh_schedule_frequency_of_yojson tree path =
     : refresh_schedule_frequency)
 
 let refresh_schedule_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DISABLED" -> DISABLED
     | `String "ENABLED" -> ENABLED
     | `String value ->
@@ -543,8 +537,7 @@ let channel_name_of_yojson = string_of_yojson
 let source_of_yojson = string_of_yojson
 
 let destination_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "AWS_SERVICE" -> AWS_SERVICE
     | `String "EVENT_DATA_STORE" -> EVENT_DATA_STORE
     | `String value -> raise (deserialize_unknown_enum_value_error path "DestinationType" value)
@@ -608,8 +601,7 @@ let channel_already_exists_exception_of_yojson tree path =
 let uui_d_of_yojson = string_of_yojson
 
 let type__of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "RequestContext" -> RequestContext
     | `String "TagContext" -> TagContext
     | `String value -> raise (deserialize_unknown_enum_value_error path "Type" value)
@@ -710,8 +702,7 @@ let import_destinations_of_yojson tree path =
   list_of_yojson event_data_store_arn_of_yojson tree path
 
 let import_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "COMPLETED" -> COMPLETED
     | `String "STOPPED" -> STOPPED
     | `String "FAILED" -> FAILED
@@ -1105,8 +1096,7 @@ let account_not_found_exception_of_yojson tree path =
     : account_not_found_exception)
 
 let read_write_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "All" -> All
     | `String "WriteOnly" -> WriteOnly
     | `String "ReadOnly" -> ReadOnly
@@ -1116,8 +1106,7 @@ let read_write_type_of_yojson (tree : t) path =
     : read_write_type)
 
 let query_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "TIMED_OUT" -> TIMED_OUT
     | `String "CANCELLED" -> CANCELLED
     | `String "FAILED" -> FAILED
@@ -1200,8 +1189,7 @@ let put_resource_policy_request_of_yojson tree path =
     : put_resource_policy_request)
 
 let insight_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ApiErrorRateInsight" -> ApiErrorRateInsight
     | `String "ApiCallRateInsight" -> ApiCallRateInsight
     | `String value -> raise (deserialize_unknown_enum_value_error path "InsightType" value)
@@ -1309,8 +1297,7 @@ let put_event_selectors_request_of_yojson tree path =
     : put_event_selectors_request)
 
 let max_event_size_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "Large" -> Large
     | `String "Standard" -> Standard
     | `String value -> raise (deserialize_unknown_enum_value_error path "MaxEventSize" value)
@@ -1426,8 +1413,7 @@ let lookup_events_response_of_yojson tree path =
     : lookup_events_response)
 
 let lookup_attribute_key_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "AccessKeyId" -> ACCESS_KEY_ID
     | `String "EventSource" -> EVENT_SOURCE
     | `String "ResourceName" -> RESOURCE_NAME
@@ -1454,8 +1440,7 @@ let lookup_attribute_of_yojson tree path =
 let lookup_attributes_list_of_yojson tree path = list_of_yojson lookup_attribute_of_yojson tree path
 
 let event_category_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "insight" -> Insight
     | `String value -> raise (deserialize_unknown_enum_value_error path "EventCategory" value)
     | _ -> raise (deserialize_wrong_type_error path "EventCategory")
@@ -1615,8 +1600,7 @@ let list_insights_metric_data_response_of_yojson tree path =
 let insights_metric_period_of_yojson = int_of_yojson
 
 let insights_metric_data_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "NonZeroData" -> NON_ZERO_DATA
     | `String "FillWithZeros" -> FILL_WITH_ZEROS
     | `String value ->
@@ -1691,8 +1675,7 @@ let list_imports_request_of_yojson tree path =
     : list_imports_request)
 
 let import_failure_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "SUCCEEDED" -> SUCCEEDED
     | `String "RETRY" -> RETRY
     | `String "FAILED" -> FAILED
@@ -2134,8 +2117,7 @@ let get_event_configuration_request_of_yojson tree path =
     : get_event_configuration_request)
 
 let dashboard_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "DELETING" -> DELETING
     | `String "UPDATED" -> UPDATED
     | `String "UPDATING" -> UPDATING
@@ -2302,8 +2284,7 @@ let describe_trails_request_of_yojson tree path =
     : describe_trails_request)
 
 let delivery_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "UNKNOWN" -> UNKNOWN
     | `String "CANCELLED" -> CANCELLED
     | `String "ACCESS_DENIED_SIGNING_FILE" -> ACCESS_DENIED_SIGNING_FILE

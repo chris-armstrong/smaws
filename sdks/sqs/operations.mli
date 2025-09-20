@@ -1,8 +1,18 @@
 open Types
 
 module AddPermission : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `OverLimit of over_limit
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     add_permission_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -53,8 +63,17 @@ end
   \      "]
 
 module CancelMessageMoveTask : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `RequestThrottled of request_throttled
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     cancel_message_move_task_request ->
     ( cancel_message_move_task_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -84,8 +103,19 @@ end
   \   "]
 
 module ChangeMessageVisibility : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `MessageNotInflight of message_not_inflight
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `ReceiptHandleIsInvalid of receipt_handle_is_invalid
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     change_message_visibility_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -159,8 +189,21 @@ end
   \          "]
 
 module ChangeMessageVisibilityBatch : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BatchEntryIdsNotDistinct of batch_entry_ids_not_distinct
+    | `EmptyBatchRequest of empty_batch_request
+    | `InvalidAddress of invalid_address
+    | `InvalidBatchEntryId of invalid_batch_entry_id
+    | `InvalidSecurity of invalid_security
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `TooManyEntriesInBatchRequest of too_many_entries_in_batch_request
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     change_message_visibility_batch_request ->
     ( change_message_visibility_batch_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -192,8 +235,20 @@ end
   \   "]
 
 module CreateQueue : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidAttributeName of invalid_attribute_name
+    | `InvalidAttributeValue of invalid_attribute_value
+    | `InvalidSecurity of invalid_security
+    | `QueueDeletedRecently of queue_deleted_recently
+    | `QueueNameExists of queue_name_exists
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_queue_request ->
     ( create_queue_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -265,8 +320,19 @@ end
   \     "]
 
 module DeleteMessage : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidIdFormat of invalid_id_format
+    | `InvalidSecurity of invalid_security
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `ReceiptHandleIsInvalid of receipt_handle_is_invalid
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_message_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -301,8 +367,21 @@ end
   \    "]
 
 module DeleteMessageBatch : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BatchEntryIdsNotDistinct of batch_entry_ids_not_distinct
+    | `EmptyBatchRequest of empty_batch_request
+    | `InvalidAddress of invalid_address
+    | `InvalidBatchEntryId of invalid_batch_entry_id
+    | `InvalidSecurity of invalid_security
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `TooManyEntriesInBatchRequest of too_many_entries_in_batch_request
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_message_batch_request ->
     ( delete_message_batch_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -329,8 +408,17 @@ end
   \   "]
 
 module DeleteQueue : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_queue_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -366,8 +454,18 @@ end
   \         "]
 
 module GetQueueAttributes : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidAttributeName of invalid_attribute_name
+    | `InvalidSecurity of invalid_security
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_queue_attributes_request ->
     ( get_queue_attributes_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -388,8 +486,17 @@ end
   \   "]
 
 module GetQueueUrl : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_queue_url_request ->
     ( get_queue_url_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -416,8 +523,17 @@ end
   \ "]
 
 module ListDeadLetterSourceQueues : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_dead_letter_source_queues_request ->
     ( list_dead_letter_source_queues_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -444,8 +560,17 @@ end
   \  "]
 
 module ListMessageMoveTasks : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `RequestThrottled of request_throttled
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_message_move_tasks_request ->
     ( list_message_move_tasks_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -473,8 +598,17 @@ end
   \   "]
 
 module ListQueueTags : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_queue_tags_request ->
     ( list_queue_tags_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -496,8 +630,16 @@ end
   \   "]
 
 module ListQueues : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_queues_request ->
     ( list_queues_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -525,8 +667,18 @@ end
   \    "]
 
 module PurgeQueue : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `PurgeQueueInProgress of purge_queue_in_progress
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     purge_queue_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -554,8 +706,25 @@ end
   \      "]
 
 module ReceiveMessage : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `KmsAccessDenied of kms_access_denied
+    | `KmsDisabled of kms_disabled
+    | `KmsInvalidKeyUsage of kms_invalid_key_usage
+    | `KmsInvalidState of kms_invalid_state
+    | `KmsNotFound of kms_not_found
+    | `KmsOptInRequired of kms_opt_in_required
+    | `KmsThrottled of kms_throttled
+    | `OverLimit of over_limit
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     receive_message_request ->
     ( receive_message_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -625,8 +794,17 @@ end
   \       "]
 
 module RemovePermission : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     remove_permission_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -656,8 +834,25 @@ end
   \   "]
 
 module SendMessage : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidMessageContents of invalid_message_contents
+    | `InvalidSecurity of invalid_security
+    | `KmsAccessDenied of kms_access_denied
+    | `KmsDisabled of kms_disabled
+    | `KmsInvalidKeyUsage of kms_invalid_key_usage
+    | `KmsInvalidState of kms_invalid_state
+    | `KmsNotFound of kms_not_found
+    | `KmsOptInRequired of kms_opt_in_required
+    | `KmsThrottled of kms_throttled
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     send_message_request ->
     ( send_message_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -691,8 +886,29 @@ end
   \     "]
 
 module SendMessageBatch : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BatchEntryIdsNotDistinct of batch_entry_ids_not_distinct
+    | `BatchRequestTooLong of batch_request_too_long
+    | `EmptyBatchRequest of empty_batch_request
+    | `InvalidAddress of invalid_address
+    | `InvalidBatchEntryId of invalid_batch_entry_id
+    | `InvalidSecurity of invalid_security
+    | `KmsAccessDenied of kms_access_denied
+    | `KmsDisabled of kms_disabled
+    | `KmsInvalidKeyUsage of kms_invalid_key_usage
+    | `KmsInvalidState of kms_invalid_state
+    | `KmsNotFound of kms_not_found
+    | `KmsOptInRequired of kms_opt_in_required
+    | `KmsThrottled of kms_throttled
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `TooManyEntriesInBatchRequest of too_many_entries_in_batch_request
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     send_message_batch_request ->
     ( send_message_batch_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -747,8 +963,20 @@ end
   \        "]
 
 module SetQueueAttributes : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidAttributeName of invalid_attribute_name
+    | `InvalidAttributeValue of invalid_attribute_value
+    | `InvalidSecurity of invalid_security
+    | `OverLimit of over_limit
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     set_queue_attributes_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -788,8 +1016,17 @@ end
   \   "]
 
 module StartMessageMoveTask : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `RequestThrottled of request_throttled
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     start_message_move_task_request ->
     ( start_message_move_task_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -823,8 +1060,17 @@ end
   \   "]
 
 module TagQueue : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     tag_queue_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -868,8 +1114,17 @@ end
   \      "]
 
 module UntagQueue : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidAddress of invalid_address
+    | `InvalidSecurity of invalid_security
+    | `QueueDoesNotExist of queue_does_not_exist
+    | `RequestThrottled of request_throttled
+    | `UnsupportedOperation of unsupported_operation ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     untag_queue_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error

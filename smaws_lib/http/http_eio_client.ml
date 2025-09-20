@@ -7,7 +7,7 @@ module Log =
 module type S = sig
   include Http_client_intf.S
 
-  val make :
+  val make_eio_client :
     sw:Eio.Switch.t ->
     < mono_clock : [> `Clock of Mtime.t ] Eio.Resource.t
     ; net : [> `Network | `Platform of [> `Generic | `Unix ] ] Eio.Resource.t
@@ -46,7 +46,7 @@ module Make (Connection : Http_eio_connection.S) : S = struct
 
   type t = { sw : Eio.Switch.t; pool : Connection_pool.t; env : env_type }
 
-  let make ~sw env =
+  let make_eio_client ~sw env =
     let env = (env :> env_type) in
     { pool = Connection_pool.make ~sw; sw; env }
 

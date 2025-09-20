@@ -11,15 +11,20 @@ let to_string body =
   Logs.debug (fun m -> m "BodyImpl.to_string");
   let module BodyReader = (val body.reader : BodyImpl) in
   let promise, resolver = Eio.Promise.create () in
-  let body_string = ref String.empty in
+  let body_string : string option ref = ref None in
   let rec read () =
     BodyReader.schedule_read
       ~on_read:(fun s ~off ~len ->
         Logs.debug (fun m -> m "on_read offset=%d len=%d" off len);
-        body_string := String.cat !body_string (Bigstringaf.substring s ~off ~len);
+        let new_body_string = !body_string |> Option.value ~default:"" in
+
+        body_string := Some (String.cat new_body_string (Bigstringaf.substring s ~off ~len));
         read ())
       ~on_eof:(fun () ->
-        Logs.debug (fun m -> m "on_eof len=%d %s" (!body_string |> String.length) !body_string);
+        Logs.debug (fun m ->
+            m "on_eof len=%d %a"
+              (!body_string |> Option.value ~default:"" |> String.length)
+              (Fmt.option Fmt.string) !body_string);
         Eio.Promise.resolve resolver !body_string;
         Eio.Promise.resolve body.resolver ())
   in

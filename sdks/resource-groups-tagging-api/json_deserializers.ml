@@ -4,8 +4,7 @@ open Types
 let status_code_of_yojson = int_of_yojson
 
 let error_code_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "InvalidParameterException" -> INVALID_PARAMETER_EXCEPTION
     | `String "InternalServiceException" -> INTERNAL_SERVICE_EXCEPTION
     | `String value -> raise (deserialize_unknown_enum_value_error path "ErrorCode" value)
@@ -73,8 +72,7 @@ let internal_service_exception_of_yojson tree path =
     : internal_service_exception)
 
 let target_id_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "ROOT" -> ROOT
     | `String "OU" -> OU
     | `String "ACCOUNT" -> ACCOUNT
@@ -316,8 +314,7 @@ let get_compliance_summary_output_of_yojson tree path =
 let region_filter_list_of_yojson tree path = list_of_yojson region_of_yojson tree path
 
 let group_by_attribute_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "RESOURCE_TYPE" -> RESOURCE_TYPE
     | `String "REGION" -> REGION
     | `String "TARGET_ID" -> TARGET_ID

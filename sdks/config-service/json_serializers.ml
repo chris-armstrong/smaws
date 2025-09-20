@@ -502,7 +502,7 @@ let unmodifiable_entity_exception_to_yojson (x : unmodifiable_entity_exception) 
 let too_many_tags_exception_to_yojson (x : too_many_tags_exception) =
   assoc_to_yojson [ ("message", option_to_yojson error_message_to_yojson x.message) ]
 
-let date_to_yojson = timestamp_to_yojson
+let date_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let time_window_to_yojson (x : time_window) =
   assoc_to_yojson
@@ -1206,7 +1206,7 @@ let compliance_type_to_yojson (x : compliance_type) =
   | Non_Compliant -> `String "NON_COMPLIANT"
   | Compliant -> `String "COMPLIANT"
 
-let ordering_timestamp_to_yojson = timestamp_to_yojson
+let ordering_timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let external_evaluation_to_yojson (x : external_evaluation) =
   assoc_to_yojson
@@ -1722,7 +1722,7 @@ let list_resource_evaluations_request_to_yojson (x : list_resource_evaluations_r
       ("Filters", option_to_yojson resource_evaluation_filters_to_yojson x.filters);
     ]
 
-let resource_deletion_time_to_yojson = timestamp_to_yojson
+let resource_deletion_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let resource_identifier_to_yojson (x : resource_identifier) =
   assoc_to_yojson
@@ -1758,7 +1758,7 @@ let list_discovered_resources_request_to_yojson (x : list_discovered_resources_r
     ]
 
 let compliance_score_to_yojson = string_to_yojson
-let last_updated_time_to_yojson = timestamp_to_yojson
+let last_updated_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let conformance_pack_compliance_score_to_yojson (x : conformance_pack_compliance_score) =
   assoc_to_yojson
@@ -1931,7 +1931,7 @@ let get_resource_evaluation_summary_request_to_yojson (x : get_resource_evaluati
 let resource_not_discovered_exception_to_yojson (x : resource_not_discovered_exception) =
   assoc_to_yojson [ ("message", option_to_yojson error_message_to_yojson x.message) ]
 
-let configuration_item_capture_time_to_yojson = timestamp_to_yojson
+let configuration_item_capture_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let configuration_item_status_to_yojson (x : configuration_item_status) =
   match x with
@@ -1945,7 +1945,7 @@ let configuration_state_id_to_yojson = string_to_yojson
 let configuration_item_md5_hash_to_yojson = string_to_yojson
 let ar_n_to_yojson = string_to_yojson
 let availability_zone_to_yojson = string_to_yojson
-let resource_creation_time_to_yojson = timestamp_to_yojson
+let resource_creation_time_to_yojson = timestamp_epoch_seconds_to_yojson
 let related_event_to_yojson = string_to_yojson
 let related_event_list_to_yojson tree = list_to_yojson related_event_to_yojson tree
 let relationship_name_to_yojson = string_to_yojson
@@ -1960,7 +1960,7 @@ let relationship_to_yojson (x : relationship) =
     ]
 
 let relationship_list_to_yojson tree = list_to_yojson relationship_to_yojson tree
-let configuration_item_delivery_time_to_yojson = timestamp_to_yojson
+let configuration_item_delivery_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let configuration_item_to_yojson (x : configuration_item) =
   assoc_to_yojson
@@ -2006,8 +2006,8 @@ let get_resource_config_history_response_to_yojson (x : get_resource_config_hist
         option_to_yojson configuration_item_list_to_yojson x.configuration_items );
     ]
 
-let later_time_to_yojson = timestamp_to_yojson
-let earlier_time_to_yojson = timestamp_to_yojson
+let later_time_to_yojson = timestamp_epoch_seconds_to_yojson
+let earlier_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let chronological_order_to_yojson (x : chronological_order) =
   match x with Forward -> `String "Forward" | Reverse -> `String "Reverse"

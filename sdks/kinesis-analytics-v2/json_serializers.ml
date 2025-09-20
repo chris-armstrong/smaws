@@ -285,7 +285,7 @@ let application_status_to_yojson (x : application_status) =
   | DELETING -> `String "DELETING"
 
 let application_version_id_to_yojson = long_to_yojson
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 let in_app_stream_name_to_yojson = string_to_yojson
 let in_app_stream_names_to_yojson tree = list_to_yojson in_app_stream_name_to_yojson tree
 

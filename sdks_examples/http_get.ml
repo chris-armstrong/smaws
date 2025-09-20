@@ -3,9 +3,9 @@ Logs.set_level (Some Logs.Debug);
 
 Eio_main.run (fun env ->
     Eio.Switch.run (fun sw ->
-        let module Http = Smaws_Lib.Http.Client in
+        let module Http = Smaws_Lib.Http.Http_Client_Eio in
         let ( let@ ) res map = Result.iter map res in
-        let http = Http.make ~sw env in
+        let http = Http.make_eio_client ~sw env in
         Format.printf "Making request@.";
         let@ response, body =
           Http.request ~method_:`GET ~uri:(Uri.of_string "https://www.abc.net.au/") http

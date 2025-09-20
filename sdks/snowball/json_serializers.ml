@@ -226,7 +226,7 @@ let snowball_capacity_to_yojson (x : snowball_capacity) =
 
 let phone_number_to_yojson = string_to_yojson
 let email_to_yojson = string_to_yojson
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 let device_pickup_id_to_yojson = string_to_yojson
 
 let pickup_details_to_yojson (x : pickup_details) =

@@ -106,8 +106,12 @@ let service_template_version_to_yojson (x : service_template_version) =
       ( "compatibleEnvironmentTemplates",
         Some (compatible_environment_template_list_to_yojson x.compatible_environment_templates) );
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
+      );
       ("arn", Some (service_template_version_arn_to_yojson x.arn));
       ("description", option_to_yojson description_to_yojson x.description);
       ("statusMessage", option_to_yojson status_message_to_yojson x.status_message);
@@ -170,8 +174,12 @@ let service_template_to_yojson (x : service_template) =
       ("description", option_to_yojson description_to_yojson x.description);
       ("displayName", option_to_yojson display_name_to_yojson x.display_name);
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
+      );
       ("arn", Some (service_template_arn_to_yojson x.arn));
       ("name", Some (resource_name_to_yojson x.name));
     ]
@@ -231,12 +239,15 @@ let sync_blocker_to_yojson (x : sync_blocker) =
   assoc_to_yojson
     [
       ( "resolvedAt",
-        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.resolved_at );
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+          x.resolved_at );
       ( "resolvedReason",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.resolved_reason
       );
       ("contexts", option_to_yojson sync_blocker_contexts_to_yojson x.contexts);
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
+      );
       ( "createdReason",
         Some (Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.created_reason) );
       ("status", Some (blocker_status_to_yojson x.status));
@@ -290,13 +301,15 @@ let service_pipeline_to_yojson (x : service_pipeline) =
       ("templateName", Some (resource_name_to_yojson x.template_name));
       ( "lastDeploymentSucceededAt",
         Some
-          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_deployment_succeeded_at)
-      );
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_deployment_succeeded_at) );
       ( "lastDeploymentAttemptedAt",
         Some
-          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_deployment_attempted_at)
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_deployment_attempted_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
       );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
       ("arn", Some (arn_to_yojson x.arn));
     ]
 
@@ -354,8 +367,12 @@ let service_to_yojson (x : service) =
       ("statusMessage", option_to_yojson status_message_to_yojson x.status_message);
       ("status", Some (service_status_to_yojson x.status));
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
+      );
       ("templateName", Some (resource_name_to_yojson x.template_name));
       ("arn", Some (service_arn_to_yojson x.arn));
       ("description", option_to_yojson description_to_yojson x.description);
@@ -388,13 +405,15 @@ let service_instance_to_yojson (x : service_instance) =
       ("serviceName", Some (resource_name_to_yojson x.service_name));
       ( "lastDeploymentSucceededAt",
         Some
-          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_deployment_succeeded_at)
-      );
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_deployment_succeeded_at) );
       ( "lastDeploymentAttemptedAt",
         Some
-          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_deployment_attempted_at)
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_deployment_attempted_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
       );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
       ("arn", Some (service_instance_arn_to_yojson x.arn));
       ("name", Some (resource_name_to_yojson x.name));
     ]
@@ -436,8 +455,12 @@ let environment_template_version_to_yojson (x : environment_template_version) =
     [
       ("schema", option_to_yojson template_schema_to_yojson x.schema);
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
+      );
       ("arn", Some (environment_template_version_arn_to_yojson x.arn));
       ("description", option_to_yojson description_to_yojson x.description);
       ("statusMessage", option_to_yojson status_message_to_yojson x.status_message);
@@ -480,8 +503,12 @@ let environment_template_to_yojson (x : environment_template) =
       ("description", option_to_yojson description_to_yojson x.description);
       ("displayName", option_to_yojson display_name_to_yojson x.display_name);
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
+      );
       ("arn", Some (environment_template_arn_to_yojson x.arn));
       ("name", Some (resource_name_to_yojson x.name));
     ]
@@ -541,13 +568,15 @@ let environment_to_yojson (x : environment) =
       ("arn", Some (environment_arn_to_yojson x.arn));
       ( "lastDeploymentSucceededAt",
         Some
-          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_deployment_succeeded_at)
-      );
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_deployment_succeeded_at) );
       ( "lastDeploymentAttemptedAt",
         Some
-          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_deployment_attempted_at)
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_deployment_attempted_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
       );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
       ("description", option_to_yojson description_to_yojson x.description);
       ("name", Some (resource_name_to_yojson x.name));
     ]
@@ -599,9 +628,13 @@ let environment_account_connection_to_yojson (x : environment_account_connection
       ("componentRoleArn", option_to_yojson role_arn_to_yojson x.component_role_arn);
       ("status", Some (environment_account_connection_status_to_yojson x.status));
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
       ( "requestedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.requested_at) );
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.requested_at)
+      );
       ("environmentName", Some (resource_name_to_yojson x.environment_name));
       ("roleArn", Some (arn_to_yojson x.role_arn));
       ("environmentAccountId", Some (aws_account_id_to_yojson x.environment_account_id));
@@ -645,14 +678,18 @@ let component_to_yojson (x : component) =
         option_to_yojson status_message_to_yojson x.deployment_status_message );
       ("deploymentStatus", Some (deployment_status_to_yojson x.deployment_status));
       ( "lastDeploymentSucceededAt",
-        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
           x.last_deployment_succeeded_at );
       ( "lastDeploymentAttemptedAt",
-        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
           x.last_deployment_attempted_at );
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
+      );
       ("serviceInstanceName", option_to_yojson resource_name_to_yojson x.service_instance_name);
       ("serviceName", option_to_yojson resource_name_to_yojson x.service_name);
       ("environmentName", Some (resource_name_to_yojson x.environment_name));
@@ -762,8 +799,12 @@ let service_template_version_summary_to_yojson (x : service_template_version_sum
   assoc_to_yojson
     [
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
+      );
       ("arn", Some (service_template_version_arn_to_yojson x.arn));
       ("description", option_to_yojson description_to_yojson x.description);
       ("statusMessage", option_to_yojson status_message_to_yojson x.status_message);
@@ -787,8 +828,12 @@ let service_template_summary_to_yojson (x : service_template_summary) =
       ("description", option_to_yojson description_to_yojson x.description);
       ("displayName", option_to_yojson display_name_to_yojson x.display_name);
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
+      );
       ("arn", Some (service_template_arn_to_yojson x.arn));
       ("name", Some (resource_name_to_yojson x.name));
     ]
@@ -814,8 +859,12 @@ let service_summary_to_yojson (x : service_summary) =
       ("statusMessage", option_to_yojson status_message_to_yojson x.status_message);
       ("status", Some (service_status_to_yojson x.status));
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
+      );
       ("templateName", Some (resource_name_to_yojson x.template_name));
       ("arn", Some (service_arn_to_yojson x.arn));
       ("description", option_to_yojson description_to_yojson x.description);
@@ -850,13 +899,15 @@ let service_instance_summary_to_yojson (x : service_instance_summary) =
       ("serviceName", Some (resource_name_to_yojson x.service_name));
       ( "lastDeploymentSucceededAt",
         Some
-          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_deployment_succeeded_at)
-      );
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_deployment_succeeded_at) );
       ( "lastDeploymentAttemptedAt",
         Some
-          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_deployment_attempted_at)
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_deployment_attempted_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
       );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
       ("arn", Some (service_instance_arn_to_yojson x.arn));
       ("name", Some (resource_name_to_yojson x.name));
     ]
@@ -905,7 +956,7 @@ let resource_sync_event_to_yojson (x : resource_sync_event) =
   assoc_to_yojson
     [
       ("event", Some (Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.event));
-      ("time", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.time));
+      ("time", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.time));
       ( "externalId",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.external_id );
       ("type", Some (Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.type_));
@@ -918,7 +969,9 @@ let resource_sync_attempt_to_yojson (x : resource_sync_attempt) =
     [
       ("events", Some (resource_sync_events_to_yojson x.events));
       ("status", Some (resource_sync_status_to_yojson x.status));
-      ("startedAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.started_at));
+      ( "startedAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.started_at)
+      );
       ("target", Some (Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.target));
       ("targetRevision", Some (revision_to_yojson x.target_revision));
       ("initialRevision", Some (revision_to_yojson x.initial_revision));
@@ -955,7 +1008,7 @@ let repository_sync_event_to_yojson (x : repository_sync_event) =
   assoc_to_yojson
     [
       ("event", Some (Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.event));
-      ("time", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.time));
+      ("time", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.time));
       ( "externalId",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.external_id );
       ("type", Some (Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.type_));
@@ -980,7 +1033,9 @@ let repository_sync_attempt_to_yojson (x : repository_sync_attempt) =
     [
       ("events", Some (repository_sync_events_to_yojson x.events));
       ("status", Some (repository_sync_status_to_yojson x.status));
-      ("startedAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.started_at));
+      ( "startedAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.started_at)
+      );
     ]
 
 let repository_summary_to_yojson (x : repository_summary) =
@@ -1294,13 +1349,15 @@ let environment_summary_to_yojson (x : environment_summary) =
       ("arn", Some (environment_arn_to_yojson x.arn));
       ( "lastDeploymentSucceededAt",
         Some
-          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_deployment_succeeded_at)
-      );
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_deployment_succeeded_at) );
       ( "lastDeploymentAttemptedAt",
         Some
-          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_deployment_attempted_at)
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_deployment_attempted_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
       );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
       ("description", option_to_yojson description_to_yojson x.description);
       ("name", Some (resource_name_to_yojson x.name));
     ]
@@ -1342,8 +1399,12 @@ let environment_template_summary_to_yojson (x : environment_template_summary) =
       ("description", option_to_yojson description_to_yojson x.description);
       ("displayName", option_to_yojson display_name_to_yojson x.display_name);
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
+      );
       ("arn", Some (environment_template_arn_to_yojson x.arn));
       ("name", Some (resource_name_to_yojson x.name));
     ]
@@ -1369,8 +1430,12 @@ let environment_template_version_summary_to_yojson (x : environment_template_ver
   assoc_to_yojson
     [
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
+      );
       ("arn", Some (environment_template_version_arn_to_yojson x.arn));
       ("description", option_to_yojson description_to_yojson x.description);
       ("statusMessage", option_to_yojson status_message_to_yojson x.status_message);
@@ -1441,9 +1506,13 @@ let environment_account_connection_summary_to_yojson (x : environment_account_co
       ("componentRoleArn", option_to_yojson arn_to_yojson x.component_role_arn);
       ("status", Some (environment_account_connection_status_to_yojson x.status));
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
       ( "requestedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.requested_at) );
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.requested_at)
+      );
       ("environmentName", Some (resource_name_to_yojson x.environment_name));
       ("roleArn", Some (arn_to_yojson x.role_arn));
       ("environmentAccountId", Some (aws_account_id_to_yojson x.environment_account_id));
@@ -1509,15 +1578,20 @@ let deployment_summary_to_yojson (x : deployment_summary) =
       ("serviceName", option_to_yojson resource_name_to_yojson x.service_name);
       ("environmentName", Some (resource_name_to_yojson x.environment_name));
       ( "completedAt",
-        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.completed_at );
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+          x.completed_at );
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
+      );
       ("targetResourceType", Some (deployment_target_resource_type_to_yojson x.target_resource_type));
       ( "targetResourceCreatedAt",
         Some
-          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.target_resource_created_at)
-      );
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.target_resource_created_at) );
       ("targetArn", Some (arn_to_yojson x.target_arn));
       ("arn", Some (deployment_arn_to_yojson x.arn));
       ("id", Some (deployment_id_to_yojson x.id));
@@ -1554,14 +1628,18 @@ let component_summary_to_yojson (x : component_summary) =
         option_to_yojson status_message_to_yojson x.deployment_status_message );
       ("deploymentStatus", Some (deployment_status_to_yojson x.deployment_status));
       ( "lastDeploymentSucceededAt",
-        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
           x.last_deployment_succeeded_at );
       ( "lastDeploymentAttemptedAt",
-        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
           x.last_deployment_attempted_at );
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
+      );
       ("serviceInstanceName", option_to_yojson resource_name_to_yojson x.service_instance_name);
       ("serviceName", option_to_yojson resource_name_to_yojson x.service_name);
       ("environmentName", Some (resource_name_to_yojson x.environment_name));
@@ -1845,10 +1923,15 @@ let deployment_to_yojson (x : deployment) =
       ( "lastAttemptedDeploymentId",
         option_to_yojson deployment_id_to_yojson x.last_attempted_deployment_id );
       ( "completedAt",
-        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.completed_at );
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+          x.completed_at );
       ( "lastModifiedAt",
-        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.last_modified_at) );
-      ("createdAt", Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.created_at));
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.last_modified_at) );
+      ( "createdAt",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson x.created_at)
+      );
       ( "deploymentStatusMessage",
         option_to_yojson status_message_to_yojson x.deployment_status_message );
       ("deploymentStatus", Some (deployment_status_to_yojson x.deployment_status));
@@ -1859,8 +1942,8 @@ let deployment_to_yojson (x : deployment) =
       ("targetResourceType", Some (deployment_target_resource_type_to_yojson x.target_resource_type));
       ( "targetResourceCreatedAt",
         Some
-          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_to_yojson x.target_resource_created_at)
-      );
+          (Smaws_Lib.Smithy_api.Json_serializers.timestamp_epoch_seconds_to_yojson
+             x.target_resource_created_at) );
       ("targetArn", Some (arn_to_yojson x.target_arn));
       ("arn", Some (deployment_arn_to_yojson x.arn));
       ("id", Some (deployment_id_to_yojson x.id));

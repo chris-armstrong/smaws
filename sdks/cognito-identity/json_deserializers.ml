@@ -142,8 +142,7 @@ let untag_resource_input_of_yojson tree path =
 let identity_id_of_yojson = string_of_yojson
 
 let error_code_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "InternalServerError" -> INTERNAL_SERVER_ERROR
     | `String "AccessDenied" -> ACCESS_DENIED
     | `String value -> raise (deserialize_unknown_enum_value_error path "ErrorCode" value)
@@ -248,8 +247,7 @@ let role_type_of_yojson = string_of_yojson
 let roles_map_of_yojson tree path = map_of_yojson role_type_of_yojson arn_string_of_yojson tree path
 
 let role_mapping_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "Rules" -> RULES
     | `String "Token" -> TOKEN
     | `String value -> raise (deserialize_unknown_enum_value_error path "RoleMappingType" value)
@@ -258,8 +256,7 @@ let role_mapping_type_of_yojson (tree : t) path =
     : role_mapping_type)
 
 let ambiguous_role_resolution_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "Deny" -> DENY
     | `String "AuthenticatedRole" -> AUTHENTICATED_ROLE
     | `String value ->
@@ -271,8 +268,7 @@ let ambiguous_role_resolution_type_of_yojson (tree : t) path =
 let claim_name_of_yojson = string_of_yojson
 
 let mapping_rule_match_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "NotEqual" -> NOT_EQUAL
     | `String "StartsWith" -> STARTS_WITH
     | `String "Contains" -> CONTAINS

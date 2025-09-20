@@ -110,6 +110,34 @@ let getTargets descriptor =
   | DocumentShape -> []
 [@@ocaml.doc "\n * Get the targets for each shape type\n "]
 
+let getTraits shape =
+  shape
+  |> ( function
+  | StructureShape { traits; _ } -> traits
+  | ServiceShape { traits; _ } -> traits
+  | OperationShape { traits; _ } -> traits
+  | MapShape { traits; _ } -> traits
+  | ListShape { traits; _ } -> traits
+  | SetShape { traits; _ } -> traits
+  | UnionShape { traits; _ } -> traits
+  | EnumShape { traits; _ } -> traits
+  | ByteShape { traits; _ } -> traits
+  | ShortShape { traits; _ } -> traits
+  | IntegerShape { traits; _ } -> traits
+  | LongShape { traits; _ } -> traits
+  | FloatShape { traits; _ } -> traits
+  | DoubleShape { traits; _ } -> traits
+  | BigIntegerShape { traits; _ } -> traits
+  | BigDecimalShape { traits; _ } -> traits
+  | TimestampShape { traits; _ } -> traits
+  | BlobShape { traits; _ } -> traits
+  | StringShape { traits; _ } -> traits
+  | BooleanShape { traits; _ } -> traits
+  | DocumentShape -> None
+  | UnitShape -> None
+  | ResourceShape -> None )
+  |> Option.value ~default:[]
+
 let getShapeTargets shapes =
   List.map shapes ~f:(fun (shape : Shape.t) -> (shape, getTargets shape.descriptor))
 

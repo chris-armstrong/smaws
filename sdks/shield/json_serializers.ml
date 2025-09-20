@@ -160,7 +160,7 @@ let contributor_to_yojson (x : contributor) =
 
 let top_contributors_to_yojson tree = list_to_yojson contributor_to_yojson tree
 let token_to_yojson = string_to_yojson
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let time_range_to_yojson (x : time_range) =
   assoc_to_yojson
@@ -449,7 +449,7 @@ let list_protection_groups_request_to_yojson (x : list_protection_groups_request
       ("NextToken", option_to_yojson token_to_yojson x.next_token);
     ]
 
-let attack_timestamp_to_yojson = timestamp_to_yojson
+let attack_timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let attack_vector_description_to_yojson (x : attack_vector_description) =
   assoc_to_yojson [ ("VectorType", Some (string__to_yojson x.vector_type)) ]

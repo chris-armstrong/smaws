@@ -1,6 +1,14 @@
-(tests
- (package smaws-lib)
- (names aws_smsdk_lib_tests)
+(test
+ (name request_test_example)
  (preprocess
   (pps ppx_deriving.show ppx_deriving.eq))
- (libraries alcotest smaws-lib))
+ (libraries
+  model_tests_protocols
+  Smaws_Lib
+  eio_main
+  alcotest
+  Smaws_Test_Support_Lib))
+
+(test
+ (name test_compression)
+ (libraries Smaws_Lib alcotest eio unix))

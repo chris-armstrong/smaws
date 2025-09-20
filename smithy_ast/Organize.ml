@@ -9,6 +9,11 @@ let shapesWithTargets shapes =
       let open Dependencies in
       { name; descriptor; targets = Dependencies.getTargets descriptor; recursWith = None })
 
+(** Partition a list of shapes in into the service shape, the operation shapes and the remaining
+    shapes.
+
+    The operations shape is provided with its name, the operation details and the list of its
+    targets *)
 let partitionOperationShapes shapesWithTargets =
   let service, _remaining =
     List.partition_map shapesWithTargets ~f:(fun { descriptor; name; targets; recursWith } ->

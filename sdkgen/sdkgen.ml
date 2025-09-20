@@ -3,6 +3,7 @@ module Ast = Smithy_ast
 
 type t = {
   namespace : string;
+  shape_resolver : Codegen.Shape_resolver.t;
   operation_shapes : (string * Ast.Shape.operationShapeDetails * string list) list;
   structure_shapes : Ast.Dependencies.shapeWithTarget list;
   service_details : (string * Ast.Shape.serviceShapeDetails * Ast.Trait.serviceDetails) option;
@@ -26,6 +27,9 @@ let rec partition_by_namespace (ordered_shapes : Ast.Dependencies.shapeWithTarge
           | None -> [ shape ]
           | Some existing -> shape :: existing))
   in
+  let shape_resolver =
+    Codegen.Shape_resolver.make (ordered_shapes @ Ast.Dependencies.smithyImplicitShapes)
+  in
   Map.to_alist namespace_map
   |> List.filter_map ~f:(fun (namespace, namespace_shapes) ->
          (* Only create contexts for namespaces that have services *)
@@ -35,13 +39,14 @@ let rec partition_by_namespace (ordered_shapes : Ast.Dependencies.shapeWithTarge
          (* in *)
          (* if has_service then ( *)
          let context =
-           make_namespace_context namespace (List.rev namespace_shapes) namespace_module_mapping
+           make_namespace_context ~shape_resolver ~namespace ~shapes:(List.rev namespace_shapes)
+             ~namespace_module_mapping ()
          in
          Some (namespace, context))
 (* else None) *)
 
-and make_namespace_context ?(should_alias : bool = false) namespace shapes namespace_module_mapping
-    =
+and make_namespace_context ?(should_alias : bool = false) ~shape_resolver ~namespace ~shapes
+    ~namespace_module_mapping () =
   let namespace_module_mapping =
     Map.Poly.add_exn namespace_module_mapping ~key:"smithy.api" ~data:"Smaws_Lib.Smithy_api"
   in
@@ -54,9 +59,6 @@ and make_namespace_context ?(should_alias : bool = false) namespace shapes names
            (name, service, Ast.Trait.extractServiceTrait service.traits))
   in
   let namespace_resolver =
-    (* if Map.is_empty namespace_module_mapping then None *)
-    (* else ( *)
-    (* let current_namespace = Codegen.Util.symbolNamespace name in *)
     Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
       ~namespace_module_mapping
   in
@@ -72,6 +74,7 @@ and make_namespace_context ?(should_alias : bool = false) namespace shapes names
     Gen_types.create_alias_context ~namespace ~namespace_resolver ~should_alias flattened_shapes
   in
   {
+    shape_resolver;
     namespace;
     service_details;
     operation_shapes;
@@ -80,34 +83,6 @@ and make_namespace_context ?(should_alias : bool = false) namespace shapes names
     shapes = flattened_shapes;
     namespace_module_mapping;
   }
-
-(* let make_context shapes = *)
-(*   (* let open Ast.Dependencies in *) *)
-(*   let ordered = shapes |> List.map ~f:shape_with_target |> Ast.Dependencies.order in *)
-(*   let (name, service), operation_shapes, structure_shapes = *)
-(*     Ast.Organize.partitionOperationShapes ordered *)
-(*   in *)
-(*   let service_details = Ast.Trait.extractServiceTrait service.traits in *)
-(*   let shapes = *)
-(*     structure_shapes *)
-(*     |> List.concat_map ~f:(fun Ast.Dependencies.{ name; descriptor; recursWith; _ } -> *)
-(*            Ast.Shape.{ name; descriptor } *)
-(*            :: Option.value_map recursWith ~default:[] ~f:(fun recurs -> *)
-(*                   List.map recurs ~f:(fun Ast.Dependencies.{ name; descriptor; _ } -> *)
-(*                       Ast.Shape.{ name; descriptor }))) *)
-(*   in *)
-(**)
-(*   let alias_context = Gen_types.create_alias_context shapes in *)
-(*   { *)
-(*     name; *)
-(*     service; *)
-(*     operation_shapes; *)
-(*     structure_shapes; *)
-(*     service_details; *)
-(*     alias_context; *)
-(*     shapes; *)
-(*     namespace_module_mapping = Map.Poly.empty; *)
-(*   } *)
 
 type error = [ `ParseError of Smaws_parse.Json.Decode.jsonParseError | `OutputError of string ]
 
@@ -118,13 +93,6 @@ let pp_error ppf = function
 
 let ( let+ ) r func = Result.map ~f:func r
 let ( and+ ) r1 r2 = Result.all [ r1; r2 ]
-
-(** Create a context from a model file. DEPRECATED: use create_from_model_file_with_namespaces
-    instead *)
-(* let create_from_model_file input_filename = *)
-(*   match Parse.Json.Decode.parseJsonFile input_filename Parse.Smithy.parseModel with *)
-(*   | Ok shapes -> Ok (make_context shapes) *)
-(*   | Error error -> Error (`ParseError error) *)
 
 (** Create a mapping of namespaces to contexts from a Smithy model file.
 
@@ -297,6 +265,28 @@ let write_deserialisers ~output_dir t =
   let filename = "json_deserializers" in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
       Gen_deserialisers.generate ~operation_shapes ~structure_shapes ~namespace_resolver output_fmt)
+
+let write_protocol_tests ~output_dir t =
+  let {
+    namespace;
+    service_details;
+    operation_shapes;
+    structure_shapes;
+    alias_context;
+    namespace_module_mapping;
+    shape_resolver;
+    _;
+  } =
+    t
+  in
+  let namespace_resolver =
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
+      ~namespace_module_mapping
+  in
+  let filename = "protocol_tests" in
+  write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
+      Gen_protocol_tests.generate_ml ~shape_resolver ~structure_shapes ~operation_shapes
+        ~alias_context ~namespace_resolver output_fmt)
 
 let write_module ~output_dir ~filename t =
   let {

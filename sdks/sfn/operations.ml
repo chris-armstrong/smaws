@@ -2,6 +2,16 @@ open Types
 open Service_metadata
 
 module CreateActivity = struct
+  let error_to_string = function
+    | `ActivityAlreadyExists _ -> "com.amazonaws.sfn#ActivityAlreadyExists"
+    | `ActivityLimitExceeded _ -> "com.amazonaws.sfn#ActivityLimitExceeded"
+    | `InvalidEncryptionConfiguration _ -> "com.amazonaws.sfn#InvalidEncryptionConfiguration"
+    | `InvalidName _ -> "com.amazonaws.sfn#InvalidName"
+    | `KmsAccessDeniedException _ -> "com.amazonaws.sfn#KmsAccessDeniedException"
+    | `KmsThrottlingException _ -> "com.amazonaws.sfn#KmsThrottlingException"
+    | `TooManyTags _ -> "com.amazonaws.sfn#TooManyTags"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ActivityAlreadyExists" ->
@@ -24,14 +34,31 @@ module CreateActivity = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_activity_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_activity_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsCreateActivity" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.create_activity_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.CreateActivity" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.create_activity_output_of_yojson
+      ~error_deserializer
 end
 
 module CreateStateMachine = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.sfn#ConflictException"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `InvalidDefinition _ -> "com.amazonaws.sfn#InvalidDefinition"
+    | `InvalidEncryptionConfiguration _ -> "com.amazonaws.sfn#InvalidEncryptionConfiguration"
+    | `InvalidLoggingConfiguration _ -> "com.amazonaws.sfn#InvalidLoggingConfiguration"
+    | `InvalidName _ -> "com.amazonaws.sfn#InvalidName"
+    | `InvalidTracingConfiguration _ -> "com.amazonaws.sfn#InvalidTracingConfiguration"
+    | `KmsAccessDeniedException _ -> "com.amazonaws.sfn#KmsAccessDeniedException"
+    | `KmsThrottlingException _ -> "com.amazonaws.sfn#KmsThrottlingException"
+    | `StateMachineAlreadyExists _ -> "com.amazonaws.sfn#StateMachineAlreadyExists"
+    | `StateMachineDeleting _ -> "com.amazonaws.sfn#StateMachineDeleting"
+    | `StateMachineLimitExceeded _ -> "com.amazonaws.sfn#StateMachineLimitExceeded"
+    | `StateMachineTypeNotSupported _ -> "com.amazonaws.sfn#StateMachineTypeNotSupported"
+    | `TooManyTags _ -> "com.amazonaws.sfn#TooManyTags"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConflictException" ->
@@ -74,15 +101,23 @@ module CreateStateMachine = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_state_machine_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_state_machine_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsCreateStateMachine" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.create_state_machine_output_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.CreateStateMachine" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.create_state_machine_output_of_yojson
       ~error_deserializer
 end
 
 module CreateStateMachineAlias = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.sfn#ConflictException"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `InvalidName _ -> "com.amazonaws.sfn#InvalidName"
+    | `ResourceNotFound _ -> "com.amazonaws.sfn#ResourceNotFound"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.sfn#ServiceQuotaExceededException"
+    | `StateMachineDeleting _ -> "com.amazonaws.sfn#StateMachineDeleting"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConflictException" ->
@@ -104,15 +139,18 @@ module CreateStateMachineAlias = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_state_machine_alias_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_state_machine_alias_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsCreateStateMachineAlias"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.CreateStateMachineAlias"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_state_machine_alias_output_of_yojson
       ~error_deserializer
 end
 
 module DeleteActivity = struct
+  let error_to_string = function
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArn" -> `InvalidArn (Json_deserializers.invalid_arn_of_yojson tree path)
@@ -122,14 +160,18 @@ module DeleteActivity = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_activity_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_activity_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsDeleteActivity" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.delete_activity_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.DeleteActivity" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.delete_activity_output_of_yojson
+      ~error_deserializer
 end
 
 module DeleteStateMachine = struct
+  let error_to_string = function
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArn" -> `InvalidArn (Json_deserializers.invalid_arn_of_yojson tree path)
@@ -141,15 +183,20 @@ module DeleteStateMachine = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_state_machine_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_state_machine_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsDeleteStateMachine" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.delete_state_machine_output_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.DeleteStateMachine" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.delete_state_machine_output_of_yojson
       ~error_deserializer
 end
 
 module DeleteStateMachineAlias = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.sfn#ConflictException"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `ResourceNotFound _ -> "com.amazonaws.sfn#ResourceNotFound"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConflictException" ->
@@ -165,15 +212,20 @@ module DeleteStateMachineAlias = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_state_machine_alias_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_state_machine_alias_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsDeleteStateMachineAlias"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.DeleteStateMachineAlias"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_state_machine_alias_output_of_yojson
       ~error_deserializer
 end
 
 module DeleteStateMachineVersion = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.sfn#ConflictException"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConflictException" ->
@@ -187,15 +239,19 @@ module DeleteStateMachineVersion = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_state_machine_version_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_state_machine_version_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsDeleteStateMachineVersion"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.DeleteStateMachineVersion"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_state_machine_version_output_of_yojson
       ~error_deserializer
 end
 
 module DescribeActivity = struct
+  let error_to_string = function
+    | `ActivityDoesNotExist _ -> "com.amazonaws.sfn#ActivityDoesNotExist"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ActivityDoesNotExist" ->
@@ -207,14 +263,21 @@ module DescribeActivity = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_activity_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_activity_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsDescribeActivity" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.describe_activity_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.DescribeActivity" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.describe_activity_output_of_yojson
+      ~error_deserializer
 end
 
 module DescribeExecution = struct
+  let error_to_string = function
+    | `ExecutionDoesNotExist _ -> "com.amazonaws.sfn#ExecutionDoesNotExist"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `KmsAccessDeniedException _ -> "com.amazonaws.sfn#KmsAccessDeniedException"
+    | `KmsInvalidStateException _ -> "com.amazonaws.sfn#KmsInvalidStateException"
+    | `KmsThrottlingException _ -> "com.amazonaws.sfn#KmsThrottlingException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ExecutionDoesNotExist" ->
@@ -234,15 +297,18 @@ module DescribeExecution = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_execution_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_execution_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsDescribeExecution" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.describe_execution_output_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.DescribeExecution" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.describe_execution_output_of_yojson
       ~error_deserializer
 end
 
 module DescribeMapRun = struct
+  let error_to_string = function
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `ResourceNotFound _ -> "com.amazonaws.sfn#ResourceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArn" -> `InvalidArn (Json_deserializers.invalid_arn_of_yojson tree path)
@@ -254,14 +320,21 @@ module DescribeMapRun = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_map_run_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_map_run_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsDescribeMapRun" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.describe_map_run_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.DescribeMapRun" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.describe_map_run_output_of_yojson
+      ~error_deserializer
 end
 
 module DescribeStateMachine = struct
+  let error_to_string = function
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `KmsAccessDeniedException _ -> "com.amazonaws.sfn#KmsAccessDeniedException"
+    | `KmsInvalidStateException _ -> "com.amazonaws.sfn#KmsInvalidStateException"
+    | `KmsThrottlingException _ -> "com.amazonaws.sfn#KmsThrottlingException"
+    | `StateMachineDoesNotExist _ -> "com.amazonaws.sfn#StateMachineDoesNotExist"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArn" -> `InvalidArn (Json_deserializers.invalid_arn_of_yojson tree path)
@@ -282,15 +355,20 @@ module DescribeStateMachine = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_state_machine_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_state_machine_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsDescribeStateMachine" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.DescribeStateMachine" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.describe_state_machine_output_of_yojson
       ~error_deserializer
 end
 
 module DescribeStateMachineAlias = struct
+  let error_to_string = function
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `ResourceNotFound _ -> "com.amazonaws.sfn#ResourceNotFound"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArn" -> `InvalidArn (Json_deserializers.invalid_arn_of_yojson tree path)
@@ -304,15 +382,22 @@ module DescribeStateMachineAlias = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_state_machine_alias_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_state_machine_alias_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsDescribeStateMachineAlias"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.DescribeStateMachineAlias"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_state_machine_alias_output_of_yojson
       ~error_deserializer
 end
 
 module DescribeStateMachineForExecution = struct
+  let error_to_string = function
+    | `ExecutionDoesNotExist _ -> "com.amazonaws.sfn#ExecutionDoesNotExist"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `KmsAccessDeniedException _ -> "com.amazonaws.sfn#KmsAccessDeniedException"
+    | `KmsInvalidStateException _ -> "com.amazonaws.sfn#KmsInvalidStateException"
+    | `KmsThrottlingException _ -> "com.amazonaws.sfn#KmsThrottlingException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ExecutionDoesNotExist" ->
@@ -332,16 +417,23 @@ module DescribeStateMachineForExecution = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_state_machine_for_execution_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_state_machine_for_execution_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"AWSStepFunctionsDescribeStateMachineForExecution" ~service ~config:context.config
-      ~http:context.http ~input
+      ~shape_name:"AWSStepFunctions.DescribeStateMachineForExecution" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_state_machine_for_execution_output_of_yojson
       ~error_deserializer
 end
 
 module GetActivityTask = struct
+  let error_to_string = function
+    | `ActivityDoesNotExist _ -> "com.amazonaws.sfn#ActivityDoesNotExist"
+    | `ActivityWorkerLimitExceeded _ -> "com.amazonaws.sfn#ActivityWorkerLimitExceeded"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `KmsAccessDeniedException _ -> "com.amazonaws.sfn#KmsAccessDeniedException"
+    | `KmsInvalidStateException _ -> "com.amazonaws.sfn#KmsInvalidStateException"
+    | `KmsThrottlingException _ -> "com.amazonaws.sfn#KmsThrottlingException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ActivityDoesNotExist" ->
@@ -364,14 +456,22 @@ module GetActivityTask = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_activity_task_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_activity_task_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsGetActivityTask" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.get_activity_task_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.GetActivityTask" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_activity_task_output_of_yojson
+      ~error_deserializer
 end
 
 module GetExecutionHistory = struct
+  let error_to_string = function
+    | `ExecutionDoesNotExist _ -> "com.amazonaws.sfn#ExecutionDoesNotExist"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `InvalidToken _ -> "com.amazonaws.sfn#InvalidToken"
+    | `KmsAccessDeniedException _ -> "com.amazonaws.sfn#KmsAccessDeniedException"
+    | `KmsInvalidStateException _ -> "com.amazonaws.sfn#KmsInvalidStateException"
+    | `KmsThrottlingException _ -> "com.amazonaws.sfn#KmsThrottlingException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ExecutionDoesNotExist" ->
@@ -392,15 +492,17 @@ module GetExecutionHistory = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_execution_history_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_execution_history_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsGetExecutionHistory" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.get_execution_history_output_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.GetExecutionHistory" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_execution_history_output_of_yojson
       ~error_deserializer
 end
 
 module ListActivities = struct
+  let error_to_string = function
+    | `InvalidToken _ -> "com.amazonaws.sfn#InvalidToken"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidToken" -> `InvalidToken (Json_deserializers.invalid_token_of_yojson tree path)
@@ -410,14 +512,22 @@ module ListActivities = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_activities_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_activities_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsListActivities" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.list_activities_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.ListActivities" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_activities_output_of_yojson
+      ~error_deserializer
 end
 
 module ListExecutions = struct
+  let error_to_string = function
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `InvalidToken _ -> "com.amazonaws.sfn#InvalidToken"
+    | `ResourceNotFound _ -> "com.amazonaws.sfn#ResourceNotFound"
+    | `StateMachineDoesNotExist _ -> "com.amazonaws.sfn#StateMachineDoesNotExist"
+    | `StateMachineTypeNotSupported _ -> "com.amazonaws.sfn#StateMachineTypeNotSupported"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArn" -> `InvalidArn (Json_deserializers.invalid_arn_of_yojson tree path)
@@ -438,14 +548,19 @@ module ListExecutions = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_executions_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_executions_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsListExecutions" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.list_executions_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.ListExecutions" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_executions_output_of_yojson
+      ~error_deserializer
 end
 
 module ListMapRuns = struct
+  let error_to_string = function
+    | `ExecutionDoesNotExist _ -> "com.amazonaws.sfn#ExecutionDoesNotExist"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `InvalidToken _ -> "com.amazonaws.sfn#InvalidToken"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ExecutionDoesNotExist" ->
@@ -458,14 +573,21 @@ module ListMapRuns = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_map_runs_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_map_runs_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsListMapRuns" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.list_map_runs_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.ListMapRuns" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.list_map_runs_output_of_yojson
+      ~error_deserializer
 end
 
 module ListStateMachineAliases = struct
+  let error_to_string = function
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `InvalidToken _ -> "com.amazonaws.sfn#InvalidToken"
+    | `ResourceNotFound _ -> "com.amazonaws.sfn#ResourceNotFound"
+    | `StateMachineDeleting _ -> "com.amazonaws.sfn#StateMachineDeleting"
+    | `StateMachineDoesNotExist _ -> "com.amazonaws.sfn#StateMachineDoesNotExist"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArn" -> `InvalidArn (Json_deserializers.invalid_arn_of_yojson tree path)
@@ -483,15 +605,20 @@ module ListStateMachineAliases = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_state_machine_aliases_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_state_machine_aliases_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsListStateMachineAliases"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.ListStateMachineAliases"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_state_machine_aliases_output_of_yojson
       ~error_deserializer
 end
 
 module ListStateMachineVersions = struct
+  let error_to_string = function
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `InvalidToken _ -> "com.amazonaws.sfn#InvalidToken"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArn" -> `InvalidArn (Json_deserializers.invalid_arn_of_yojson tree path)
@@ -504,15 +631,18 @@ module ListStateMachineVersions = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_state_machine_versions_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_state_machine_versions_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsListStateMachineVersions"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.ListStateMachineVersions"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_state_machine_versions_output_of_yojson
       ~error_deserializer
 end
 
 module ListStateMachines = struct
+  let error_to_string = function
+    | `InvalidToken _ -> "com.amazonaws.sfn#InvalidToken"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidToken" -> `InvalidToken (Json_deserializers.invalid_token_of_yojson tree path)
@@ -522,15 +652,18 @@ module ListStateMachines = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_state_machines_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_state_machines_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsListStateMachines" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.list_state_machines_output_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.ListStateMachines" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_state_machines_output_of_yojson
       ~error_deserializer
 end
 
 module ListTagsForResource = struct
+  let error_to_string = function
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `ResourceNotFound _ -> "com.amazonaws.sfn#ResourceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArn" -> `InvalidArn (Json_deserializers.invalid_arn_of_yojson tree path)
@@ -542,15 +675,23 @@ module ListTagsForResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_tags_for_resource_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_tags_for_resource_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsListTagsForResource" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.ListTagsForResource" ~service
+      ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_output_of_yojson
       ~error_deserializer
 end
 
 module PublishStateMachineVersion = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.sfn#ConflictException"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.sfn#ServiceQuotaExceededException"
+    | `StateMachineDeleting _ -> "com.amazonaws.sfn#StateMachineDeleting"
+    | `StateMachineDoesNotExist _ -> "com.amazonaws.sfn#StateMachineDoesNotExist"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConflictException" ->
@@ -572,15 +713,22 @@ module PublishStateMachineVersion = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : publish_state_machine_version_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.publish_state_machine_version_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsPublishStateMachineVersion"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.PublishStateMachineVersion"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.publish_state_machine_version_output_of_yojson
       ~error_deserializer
 end
 
 module RedriveExecution = struct
+  let error_to_string = function
+    | `ExecutionDoesNotExist _ -> "com.amazonaws.sfn#ExecutionDoesNotExist"
+    | `ExecutionLimitExceeded _ -> "com.amazonaws.sfn#ExecutionLimitExceeded"
+    | `ExecutionNotRedrivable _ -> "com.amazonaws.sfn#ExecutionNotRedrivable"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ExecutionDoesNotExist" ->
@@ -598,14 +746,22 @@ module RedriveExecution = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : redrive_execution_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.redrive_execution_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsRedriveExecution" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.redrive_execution_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.RedriveExecution" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.redrive_execution_output_of_yojson
+      ~error_deserializer
 end
 
 module SendTaskFailure = struct
+  let error_to_string = function
+    | `InvalidToken _ -> "com.amazonaws.sfn#InvalidToken"
+    | `KmsAccessDeniedException _ -> "com.amazonaws.sfn#KmsAccessDeniedException"
+    | `KmsInvalidStateException _ -> "com.amazonaws.sfn#KmsInvalidStateException"
+    | `KmsThrottlingException _ -> "com.amazonaws.sfn#KmsThrottlingException"
+    | `TaskDoesNotExist _ -> "com.amazonaws.sfn#TaskDoesNotExist"
+    | `TaskTimedOut _ -> "com.amazonaws.sfn#TaskTimedOut"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidToken" -> `InvalidToken (Json_deserializers.invalid_token_of_yojson tree path)
@@ -626,14 +782,19 @@ module SendTaskFailure = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : send_task_failure_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.send_task_failure_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsSendTaskFailure" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.send_task_failure_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.SendTaskFailure" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.send_task_failure_output_of_yojson
+      ~error_deserializer
 end
 
 module SendTaskHeartbeat = struct
+  let error_to_string = function
+    | `InvalidToken _ -> "com.amazonaws.sfn#InvalidToken"
+    | `TaskDoesNotExist _ -> "com.amazonaws.sfn#TaskDoesNotExist"
+    | `TaskTimedOut _ -> "com.amazonaws.sfn#TaskTimedOut"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidToken" -> `InvalidToken (Json_deserializers.invalid_token_of_yojson tree path)
@@ -646,15 +807,23 @@ module SendTaskHeartbeat = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : send_task_heartbeat_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.send_task_heartbeat_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsSendTaskHeartbeat" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.send_task_heartbeat_output_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.SendTaskHeartbeat" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.send_task_heartbeat_output_of_yojson
       ~error_deserializer
 end
 
 module SendTaskSuccess = struct
+  let error_to_string = function
+    | `InvalidOutput _ -> "com.amazonaws.sfn#InvalidOutput"
+    | `InvalidToken _ -> "com.amazonaws.sfn#InvalidToken"
+    | `KmsAccessDeniedException _ -> "com.amazonaws.sfn#KmsAccessDeniedException"
+    | `KmsInvalidStateException _ -> "com.amazonaws.sfn#KmsInvalidStateException"
+    | `KmsThrottlingException _ -> "com.amazonaws.sfn#KmsThrottlingException"
+    | `TaskDoesNotExist _ -> "com.amazonaws.sfn#TaskDoesNotExist"
+    | `TaskTimedOut _ -> "com.amazonaws.sfn#TaskTimedOut"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidOutput" -> `InvalidOutput (Json_deserializers.invalid_output_of_yojson tree path)
@@ -676,14 +845,27 @@ module SendTaskSuccess = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : send_task_success_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.send_task_success_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsSendTaskSuccess" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.send_task_success_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.SendTaskSuccess" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.send_task_success_output_of_yojson
+      ~error_deserializer
 end
 
 module StartExecution = struct
+  let error_to_string = function
+    | `ExecutionAlreadyExists _ -> "com.amazonaws.sfn#ExecutionAlreadyExists"
+    | `ExecutionLimitExceeded _ -> "com.amazonaws.sfn#ExecutionLimitExceeded"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `InvalidExecutionInput _ -> "com.amazonaws.sfn#InvalidExecutionInput"
+    | `InvalidName _ -> "com.amazonaws.sfn#InvalidName"
+    | `KmsAccessDeniedException _ -> "com.amazonaws.sfn#KmsAccessDeniedException"
+    | `KmsInvalidStateException _ -> "com.amazonaws.sfn#KmsInvalidStateException"
+    | `KmsThrottlingException _ -> "com.amazonaws.sfn#KmsThrottlingException"
+    | `StateMachineDeleting _ -> "com.amazonaws.sfn#StateMachineDeleting"
+    | `StateMachineDoesNotExist _ -> "com.amazonaws.sfn#StateMachineDoesNotExist"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ExecutionAlreadyExists" ->
@@ -715,14 +897,25 @@ module StartExecution = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : start_execution_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.start_execution_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsStartExecution" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.start_execution_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.StartExecution" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.start_execution_output_of_yojson
+      ~error_deserializer
 end
 
 module StartSyncExecution = struct
+  let error_to_string = function
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `InvalidExecutionInput _ -> "com.amazonaws.sfn#InvalidExecutionInput"
+    | `InvalidName _ -> "com.amazonaws.sfn#InvalidName"
+    | `KmsAccessDeniedException _ -> "com.amazonaws.sfn#KmsAccessDeniedException"
+    | `KmsInvalidStateException _ -> "com.amazonaws.sfn#KmsInvalidStateException"
+    | `KmsThrottlingException _ -> "com.amazonaws.sfn#KmsThrottlingException"
+    | `StateMachineDeleting _ -> "com.amazonaws.sfn#StateMachineDeleting"
+    | `StateMachineDoesNotExist _ -> "com.amazonaws.sfn#StateMachineDoesNotExist"
+    | `StateMachineTypeNotSupported _ -> "com.amazonaws.sfn#StateMachineTypeNotSupported"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArn" -> `InvalidArn (Json_deserializers.invalid_arn_of_yojson tree path)
@@ -751,15 +944,22 @@ module StartSyncExecution = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : start_sync_execution_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.start_sync_execution_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsStartSyncExecution" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.start_sync_execution_output_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.StartSyncExecution" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.start_sync_execution_output_of_yojson
       ~error_deserializer
 end
 
 module StopExecution = struct
+  let error_to_string = function
+    | `ExecutionDoesNotExist _ -> "com.amazonaws.sfn#ExecutionDoesNotExist"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `KmsAccessDeniedException _ -> "com.amazonaws.sfn#KmsAccessDeniedException"
+    | `KmsInvalidStateException _ -> "com.amazonaws.sfn#KmsInvalidStateException"
+    | `KmsThrottlingException _ -> "com.amazonaws.sfn#KmsThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ExecutionDoesNotExist" ->
@@ -781,14 +981,19 @@ module StopExecution = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : stop_execution_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.stop_execution_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsStopExecution" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.stop_execution_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.StopExecution" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.stop_execution_output_of_yojson
+      ~error_deserializer
 end
 
 module TagResource = struct
+  let error_to_string = function
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `ResourceNotFound _ -> "com.amazonaws.sfn#ResourceNotFound"
+    | `TooManyTags _ -> "com.amazonaws.sfn#TooManyTags"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArn" -> `InvalidArn (Json_deserializers.invalid_arn_of_yojson tree path)
@@ -801,14 +1006,20 @@ module TagResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : tag_resource_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.tag_resource_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsTagResource" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.tag_resource_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.TagResource" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.tag_resource_output_of_yojson
+      ~error_deserializer
 end
 
 module TestState = struct
+  let error_to_string = function
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `InvalidDefinition _ -> "com.amazonaws.sfn#InvalidDefinition"
+    | `InvalidExecutionInput _ -> "com.amazonaws.sfn#InvalidExecutionInput"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArn" -> `InvalidArn (Json_deserializers.invalid_arn_of_yojson tree path)
@@ -824,14 +1035,17 @@ module TestState = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : test_state_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.test_state_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsTestState" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.test_state_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.TestState" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.test_state_output_of_yojson ~error_deserializer
 end
 
 module UntagResource = struct
+  let error_to_string = function
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `ResourceNotFound _ -> "com.amazonaws.sfn#ResourceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArn" -> `InvalidArn (Json_deserializers.invalid_arn_of_yojson tree path)
@@ -843,14 +1057,19 @@ module UntagResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : untag_resource_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.untag_resource_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsUntagResource" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.untag_resource_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.UntagResource" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.untag_resource_output_of_yojson
+      ~error_deserializer
 end
 
 module UpdateMapRun = struct
+  let error_to_string = function
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `ResourceNotFound _ -> "com.amazonaws.sfn#ResourceNotFound"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArn" -> `InvalidArn (Json_deserializers.invalid_arn_of_yojson tree path)
@@ -864,14 +1083,29 @@ module UpdateMapRun = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_map_run_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_map_run_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsUpdateMapRun" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.update_map_run_output_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.UpdateMapRun" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.update_map_run_output_of_yojson
+      ~error_deserializer
 end
 
 module UpdateStateMachine = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.sfn#ConflictException"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `InvalidDefinition _ -> "com.amazonaws.sfn#InvalidDefinition"
+    | `InvalidEncryptionConfiguration _ -> "com.amazonaws.sfn#InvalidEncryptionConfiguration"
+    | `InvalidLoggingConfiguration _ -> "com.amazonaws.sfn#InvalidLoggingConfiguration"
+    | `InvalidTracingConfiguration _ -> "com.amazonaws.sfn#InvalidTracingConfiguration"
+    | `KmsAccessDeniedException _ -> "com.amazonaws.sfn#KmsAccessDeniedException"
+    | `KmsThrottlingException _ -> "com.amazonaws.sfn#KmsThrottlingException"
+    | `MissingRequiredParameter _ -> "com.amazonaws.sfn#MissingRequiredParameter"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.sfn#ServiceQuotaExceededException"
+    | `StateMachineDeleting _ -> "com.amazonaws.sfn#StateMachineDeleting"
+    | `StateMachineDoesNotExist _ -> "com.amazonaws.sfn#StateMachineDoesNotExist"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConflictException" ->
@@ -912,15 +1146,21 @@ module UpdateStateMachine = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_state_machine_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_state_machine_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsUpdateStateMachine" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.update_state_machine_output_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.UpdateStateMachine" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.update_state_machine_output_of_yojson
       ~error_deserializer
 end
 
 module UpdateStateMachineAlias = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.sfn#ConflictException"
+    | `InvalidArn _ -> "com.amazonaws.sfn#InvalidArn"
+    | `ResourceNotFound _ -> "com.amazonaws.sfn#ResourceNotFound"
+    | `StateMachineDeleting _ -> "com.amazonaws.sfn#StateMachineDeleting"
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ConflictException" ->
@@ -938,15 +1178,18 @@ module UpdateStateMachineAlias = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_state_machine_alias_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_state_machine_alias_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsUpdateStateMachineAlias"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.UpdateStateMachineAlias"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_state_machine_alias_output_of_yojson
       ~error_deserializer
 end
 
 module ValidateStateMachineDefinition = struct
+  let error_to_string = function
+    | `ValidationException _ -> "com.amazonaws.sfn#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "ValidationException" ->
@@ -957,10 +1200,9 @@ module ValidateStateMachineDefinition = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : validate_state_machine_definition_input) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.validate_state_machine_definition_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctionsValidateStateMachineDefinition"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSStepFunctions.ValidateStateMachineDefinition" ~service ~context ~input
       ~output_deserializer:Json_deserializers.validate_state_machine_definition_output_of_yojson
       ~error_deserializer
 end

@@ -2,6 +2,8 @@ open CoreTypes
 
 type t = Yojson.Basic.t
 
+let of_string x = Yojson.Basic.from_string x
+
 module SerializeHelpers = struct
   type t = Yojson.Basic.t
 
@@ -11,8 +13,21 @@ module SerializeHelpers = struct
   let byte_to_yojson (x : int) : t = `Int x (* TODO: check number range *)
   let short_to_yojson (x : int) : t = `Int x (* TODO: check number range *)
   let long_to_yojson (x : int) : t = `Int x (* TODO: check number range *)
-  let float_to_yojson (x : float) : t = `Float x
-  let double_to_yojson (x : float) : t = `Float x
+
+  let float_to_yojson (x : float) : t =
+    match x with
+    | x when Float.is_nan x -> `String "NaN"
+    | x when Float.is_infinite x && x < 0. -> `String "-Infinity"
+    | x when Float.is_infinite x && x > 0. -> `String "Infinity"
+    | _ -> `Float x
+
+  let double_to_yojson (x : float) : t =
+    match x with
+    | x when Float.is_nan x -> `String "NaN"
+    | x when Float.is_infinite x && x < 0. -> `String "-Infinity"
+    | x when Float.is_infinite x && x > 0. -> `String "Infinity"
+    | _ -> `Float x
+
   let list_to_yojson (converter : 'a -> t) (x : 'a list) : t = `List (List.map converter x)
   let big_int_to_yojson (x : int64) : t = `Int (Int64.to_int x)
   let bool_to_yojson (x : bool) : t = `Bool x
@@ -37,7 +52,52 @@ module SerializeHelpers = struct
              value_converter value ))
          x)
 
-  let timestamp_to_yojson (x : Timestamp.t) : t = `Float (Timestamp.to_float_s x)
+  let timestamp_iso_8601_to_yojson (x : Timestamp.t) : t =
+    let rfc3339_str = Timestamp.to_rfc3339 x in
+    (* Convert -00:00 to Z for UTC timezone *)
+    let len = String.length rfc3339_str in
+    let z_format =
+      if len >= 6 && String.sub rfc3339_str (len - 6) 6 = "-00:00" then
+        String.sub rfc3339_str 0 (len - 6) ^ "Z"
+      else rfc3339_str
+    in
+    `String z_format
+
+  let timestamp_epoch_seconds_to_yojson (x : Timestamp.t) : t =
+    let f = Timestamp.to_float_s x in
+    match f |> Float.is_integer with true -> `Int (Float.to_int f) | false -> `Float f
+
+  let timestamp_http_date_to_yojson (x : Timestamp.t) : t =
+    let (year, month, day), ((hour, minute, second), _) = Timestamp.to_date_time x in
+    let weekday =
+      Timestamp.weekday x |> function
+      | `Sun -> "Sun"
+      | `Mon -> "Mon"
+      | `Tue -> "Tue"
+      | `Wed -> "Wed"
+      | `Thu -> "Thu"
+      | `Fri -> "Fri"
+      | `Sat -> "Sat"
+    in
+    let month =
+      month |> function
+      | 1 -> "Jan"
+      | 2 -> "Feb"
+      | 3 -> "Mar"
+      | 4 -> "Apr"
+      | 5 -> "May"
+      | 6 -> "Jun"
+      | 7 -> "Jul"
+      | 8 -> "Aug"
+      | 9 -> "Sep"
+      | 10 -> "Oct"
+      | 11 -> "Nov"
+      | 12 -> "Dec"
+      | _ -> failwith "unexpected month"
+    in
+    `String
+      (Fmt.str "%s, %02d %s %04d %02d:%02d:%02d GMT" weekday day month year hour minute second)
+
   let option_to_yojson (converter : 'a -> t) (x : 'a option) = Option.map converter x
 
   let nullable_to_yojson (converter : 'a -> t) (x : 'a Nullable.t) : t =
@@ -104,10 +164,20 @@ module DeserializeHelpers = struct
     match tree with `Int x -> x | _ -> raise (deserialize_wrong_type_error path "long")
 
   let float_of_yojson (tree : t) path =
-    match tree with `Float x -> x | _ -> raise (deserialize_wrong_type_error path "float")
+    match tree with
+    | `Float x -> x
+    | `String "NaN" -> Float.nan
+    | `String "Infinity" -> Float.infinity
+    | `String "-Infinity" -> Float.neg_infinity
+    | _ -> raise (deserialize_wrong_type_error path "float")
 
   let double_of_yojson (tree : t) path =
-    match tree with `Float x -> x | _ -> raise (deserialize_wrong_type_error path "double")
+    match tree with
+    | `Float x -> x
+    | `String "NaN" -> Float.nan
+    | `String "Infinity" -> Float.infinity
+    | `String "-Infinity" -> Float.neg_infinity
+    | _ -> raise (deserialize_wrong_type_error path "double")
 
   let list_of_yojson parser (tree : t) path =
     match tree with
@@ -146,15 +216,66 @@ module DeserializeHelpers = struct
     | _ -> raise (deserialize_wrong_type_error path "bigdecimal")
 
   let timestamp_epoch_seconds_of_yojson (tree : t) path =
-    match tree with
-    | `Float fl ->
-        CoreTypes.Timestamp.of_float_s fl
-        |> Option.get_or_exn
-             ~exn:
-               (JsonDeserializeError
-                  (RecordParseError
-                     (path_to_string path, "unable to parse POSIX timestamp as number")))
-    | _ -> raise (deserialize_wrong_type_error path "timestamp")
+    (match tree with
+    | `Int fl -> CoreTypes.Timestamp.of_float_s (fl |> Float.of_int)
+    | `Float fl -> CoreTypes.Timestamp.of_float_s fl
+    | _ -> raise (deserialize_wrong_type_error path "timestamp(epoch-seconds)"))
+    |> Option.get_or_exn
+         ~exn:
+           (JsonDeserializeError
+              (RecordParseError (path_to_string path, "unable to parse POSIX timestamp as number")))
+
+  let timestamp_iso_8601_of_yojson (tree : t) path =
+    (match tree with
+    | `String str ->
+        CoreTypes.Timestamp.of_rfc3339 str
+        |> Result.map (fun (t, _, _) -> t)
+        |> Result.map_error (function `RFC3339 (range, error) ->
+               JsonDeserializeError
+                 (CustomError
+                    (Fmt.str "unable to parse ISO 8601 timestamp: %a" Timestamp.pp_rfc3339_error
+                       error)))
+    | _ -> Error (deserialize_wrong_type_error path "timestamp(iso8601)"))
+    |> function
+    | Ok x -> x
+    | Error e -> raise e
+
+  let timestamp_http_date_of_yojson (tree : t) path =
+    (match tree with
+    | `String str ->
+        Scanf.sscanf str "%s@, %d %s %d %d:%d:%d GMT"
+          (fun weekday day month year hour minute second ->
+            let weekday =
+              match weekday with
+              | "Sun" -> `Sun
+              | "Mon" -> `Mon
+              | "Tue" -> `Tue
+              | "Wed" -> `Wed
+              | "Thu" -> `Thu
+              | "Fri" -> `Fri
+              | "Sat" -> `Sat
+              | _ -> failwith "unexpected weekday"
+            in
+            let month =
+              match month with
+              | "Jan" -> 1
+              | "Feb" -> 2
+              | "Mar" -> 3
+              | "Apr" -> 4
+              | "May" -> 5
+              | "Jun" -> 6
+              | "Jul" -> 7
+              | "Aug" -> 8
+              | "Sep" -> 9
+              | "Oct" -> 10
+              | "Nov" -> 11
+              | "Dec" -> 12
+              | _ -> failwith "unexpected month"
+            in
+            Fmt.pf Fmt.stdout "read %d %d %d %d-%d-%d\n" year month day hour minute second;
+            CoreTypes.Timestamp.of_date_time ((year, month, day), ((hour, minute, second), 0)))
+    | _ -> raise (deserialize_wrong_type_error path "timestamp(http-date)"))
+    |> Option.get_or_exn ~exn:(JsonDeserializeError (CustomError "invalid timestamp"))
 
   let value_for_key converter key (l : (string * t) list) path =
     match List.assoc_opt key l with
@@ -166,5 +287,5 @@ module DeserializeHelpers = struct
     try Some (converter tree path) with JsonDeserializeError (NoValueError v) -> None
 
   let nullable_of_yojson (converter : t -> string list -> 'a) (tree : t) path : 'a Nullable.t =
-    try Value (converter tree path) with JsonDeserializeError (NoValueError v) -> Null
+    match tree with `Null -> Null | _ -> Value (converter tree path)
 end

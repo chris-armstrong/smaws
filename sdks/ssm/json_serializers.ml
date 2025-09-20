@@ -202,7 +202,7 @@ let patch_id_list_to_yojson tree = list_to_yojson patch_id_to_yojson tree
 let patch_action_to_yojson (x : patch_action) =
   match x with Block -> `String "BLOCK" | AllowAsDependency -> `String "ALLOW_AS_DEPENDENCY"
 
-let date_time_to_yojson = timestamp_to_yojson
+let date_time_to_yojson = timestamp_epoch_seconds_to_yojson
 let baseline_description_to_yojson = string_to_yojson
 let patch_source_name_to_yojson = string_to_yojson
 let patch_source_product_to_yojson = string_to_yojson
@@ -2096,9 +2096,9 @@ let resource_data_sync_s3_destination_to_yojson (x : resource_data_sync_s3_desti
       ("BucketName", Some (resource_data_sync_s3_bucket_name_to_yojson x.bucket_name));
     ]
 
-let resource_data_sync_last_modified_time_to_yojson = timestamp_to_yojson
-let last_resource_data_sync_time_to_yojson = timestamp_to_yojson
-let last_successful_resource_data_sync_time_to_yojson = timestamp_to_yojson
+let resource_data_sync_last_modified_time_to_yojson = timestamp_epoch_seconds_to_yojson
+let last_resource_data_sync_time_to_yojson = timestamp_epoch_seconds_to_yojson
+let last_successful_resource_data_sync_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let last_resource_data_sync_status_to_yojson (x : last_resource_data_sync_status) =
   match x with
@@ -2106,7 +2106,7 @@ let last_resource_data_sync_status_to_yojson (x : last_resource_data_sync_status
   | FAILED -> `String "Failed"
   | SUCCESSFUL -> `String "Successful"
 
-let resource_data_sync_created_time_to_yojson = timestamp_to_yojson
+let resource_data_sync_created_time_to_yojson = timestamp_epoch_seconds_to_yojson
 let last_resource_data_sync_message_to_yojson = string_to_yojson
 
 let resource_data_sync_item_to_yojson (x : resource_data_sync_item) =
@@ -3265,7 +3265,7 @@ let node_owner_info_to_yojson (x : node_owner_info) =
       ("AccountId", option_to_yojson node_account_id_to_yojson x.account_id);
     ]
 
-let node_capture_time_to_yojson = timestamp_to_yojson
+let node_capture_time_to_yojson = timestamp_epoch_seconds_to_yojson
 let node_id_to_yojson = string_to_yojson
 
 let node_to_yojson (x : node) =
@@ -4305,7 +4305,7 @@ let inventory_group_to_yojson (x : inventory_group) =
     ]
 
 let inventory_group_list_to_yojson tree = list_to_yojson inventory_group_to_yojson tree
-let inventory_deletion_start_time_to_yojson = timestamp_to_yojson
+let inventory_deletion_start_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let inventory_deletion_status_to_yojson (x : inventory_deletion_status) =
   match x with COMPLETE -> `String "Complete" | IN_PROGRESS -> `String "InProgress"
@@ -4331,7 +4331,7 @@ let inventory_deletion_summary_to_yojson (x : inventory_deletion_summary) =
       ("TotalCount", option_to_yojson total_count_to_yojson x.total_count);
     ]
 
-let inventory_deletion_last_status_update_time_to_yojson = timestamp_to_yojson
+let inventory_deletion_last_status_update_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let inventory_deletion_status_item_to_yojson (x : inventory_deletion_status_item) =
   assoc_to_yojson
@@ -5407,7 +5407,7 @@ let failed_create_association_to_yojson (x : failed_create_association) =
 let failed_create_association_list_to_yojson tree =
   list_to_yojson failed_create_association_to_yojson tree
 
-let expiration_date_to_yojson = timestamp_to_yojson
+let expiration_date_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let effective_patch_to_yojson (x : effective_patch) =
   assoc_to_yojson
@@ -6191,7 +6191,7 @@ let association_execution_does_not_exist_to_yojson (x : association_execution_do
 
 let activation_description_to_yojson = string_to_yojson
 let default_instance_name_to_yojson = string_to_yojson
-let created_date_to_yojson = timestamp_to_yojson
+let created_date_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let activation_to_yojson (x : activation) =
   assoc_to_yojson

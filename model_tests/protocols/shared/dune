@@ -1,0 +1,24 @@
+(rule
+ (mode promote)
+ (targets
+  builders.ml
+  builders.mli
+  types.ml
+  types.mli
+  shared.ml
+  shared.mli
+  protocol_tests.ml
+  json_serializers.ml
+  json_deserializers.ml)
+ (deps
+  (:gen ../../gen.exe)
+  (:input ../../../smithy-aws-protocol-tests_model.json))
+ (action
+  (run %{gen} %{input} . aws.protocoltests.shared)))
+
+(library
+ (name shared)
+ (modules builders types shared json_serializers json_deserializers)
+ (preprocess
+  (pps ppx_deriving.show ppx_deriving.eq))
+ (libraries Smaws_Lib Smaws_Test_Support_Lib alcotest eio_main))

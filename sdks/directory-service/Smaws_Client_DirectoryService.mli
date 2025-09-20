@@ -696,8 +696,17 @@ val make_accept_shared_directory_request :
 (** {1:operations Operations} *)
 
 module AcceptSharedDirectory : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryAlreadySharedException of directory_already_shared_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     accept_shared_directory_request ->
     ( accept_shared_directory_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -712,8 +721,19 @@ end
   "Accepts a directory sharing request that was sent from the directory owner account.\n"]
 
 module AddIpRoutes : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EntityAlreadyExistsException of entity_already_exists_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `IpRouteLimitExceededException of ip_route_limit_exceeded_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     add_ip_routes_request ->
     ( add_ip_routes_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -740,8 +760,22 @@ end
   \ "]
 
 module AddRegion : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryAlreadyInRegionException of directory_already_in_region_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `RegionLimitExceededException of region_limit_exceeded_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     add_region_request ->
     ( add_region_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -760,8 +794,17 @@ end
 [@@ocaml.doc "Adds two domain controllers in the specified Region for the specified directory.\n"]
 
 module AddTagsToResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `TagLimitExceededException of tag_limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     add_tags_to_resource_request ->
     ( add_tags_to_resource_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -778,8 +821,15 @@ end
    each resource.\n"]
 
 module CancelSchemaExtension : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     cancel_schema_extension_request ->
     ( cancel_schema_extension_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -795,8 +845,16 @@ end
    [CreatingSnapshot], and [UpdatingSchema].\n"]
 
 module ConnectDirectory : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryLimitExceededException of directory_limit_exceeded_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     connect_directory_request ->
     ( connect_directory_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -816,8 +874,17 @@ end
   \ "]
 
 module CreateAlias : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityAlreadyExistsException of entity_already_exists_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_alias_request ->
     ( create_alias_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -841,8 +908,20 @@ end
   \   "]
 
 module CreateComputer : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AuthenticationFailedException of authentication_failed_exception
+    | `ClientException of client_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EntityAlreadyExistsException of entity_already_exists_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_computer_request ->
     ( create_computer_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -859,8 +938,19 @@ end
 [@@ocaml.doc "Creates an Active Directory computer object in the specified directory.\n"]
 
 module CreateConditionalForwarder : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EntityAlreadyExistsException of entity_already_exists_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_conditional_forwarder_request ->
     ( create_conditional_forwarder_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -879,8 +969,16 @@ end
    conditional forwarder points to the trusted domain.\n"]
 
 module CreateDirectory : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryLimitExceededException of directory_limit_exceeded_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_directory_request ->
     ( create_directory_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -902,8 +1000,18 @@ end
   \ "]
 
 module CreateLogSubscription : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityAlreadyExistsException of entity_already_exists_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InsufficientPermissionsException of insufficient_permissions_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_log_subscription_request ->
     ( create_log_subscription_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -920,8 +1028,17 @@ end
    to the specified Amazon CloudWatch log group in your Amazon Web Services account.\n"]
 
 module CreateMicrosoftAD : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryLimitExceededException of directory_limit_exceeded_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_microsoft_ad_request ->
     ( create_microsoft_ad_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -944,8 +1061,17 @@ end
   \ "]
 
 module CreateSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `SnapshotLimitExceededException of snapshot_limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_snapshot_request ->
     ( create_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -963,8 +1089,18 @@ end
   \   "]
 
 module CreateTrust : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityAlreadyExistsException of entity_already_exists_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_trust_request ->
     ( create_trust_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -987,8 +1123,18 @@ end
   \ "]
 
 module DeleteConditionalForwarder : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_conditional_forwarder_request ->
     ( delete_conditional_forwarder_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1004,8 +1150,15 @@ end
   "Deletes a conditional forwarder that has been set up for your Amazon Web Services directory.\n"]
 
 module DeleteDirectory : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_directory_request ->
     ( delete_directory_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1024,8 +1177,16 @@ end
   \ "]
 
 module DeleteLogSubscription : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_log_subscription_request ->
     ( delete_log_subscription_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1038,8 +1199,16 @@ end
 [@@ocaml.doc "Deletes the specified log subscription.\n"]
 
 module DeleteSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_snapshot_request ->
     ( delete_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1052,8 +1221,17 @@ end
 [@@ocaml.doc "Deletes a directory snapshot.\n"]
 
 module DeleteTrust : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_trust_request ->
     ( delete_trust_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1069,8 +1247,20 @@ end
    external domain.\n"]
 
 module DeregisterCertificate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `CertificateDoesNotExistException of certificate_does_not_exist_exception
+    | `CertificateInUseException of certificate_in_use_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     deregister_certificate_request ->
     ( deregister_certificate_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1089,8 +1279,16 @@ end
    certificate authentication.\n"]
 
 module DeregisterEventTopic : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     deregister_event_topic_request ->
     ( deregister_event_topic_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1103,8 +1301,18 @@ end
 [@@ocaml.doc "Removes the specified directory as a publisher to the specified Amazon SNS topic.\n"]
 
 module DescribeCertificate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `CertificateDoesNotExistException of certificate_does_not_exist_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_certificate_request ->
     ( describe_certificate_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1121,8 +1329,18 @@ end
    authentication.\n"]
 
 module DescribeClientAuthenticationSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_client_authentication_settings_request ->
     ( describe_client_authentication_settings_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1141,8 +1359,18 @@ end
    is supported. \n"]
 
 module DescribeConditionalForwarders : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_conditional_forwarders_request ->
     ( describe_conditional_forwarders_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1161,8 +1389,17 @@ end
   \ "]
 
 module DescribeDirectories : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_directories_request ->
     ( describe_directories_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1188,8 +1425,17 @@ end
   \   "]
 
 module DescribeDirectoryDataAccess : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_directory_data_access_request ->
     ( describe_directory_data_access_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1205,8 +1451,18 @@ end
    the specified directory.\n"]
 
 module DescribeDomainControllers : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_domain_controllers_request ->
     ( describe_domain_controllers_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1221,8 +1477,16 @@ end
 [@@ocaml.doc "Provides information about any domain controllers in your directory.\n"]
 
 module DescribeEventTopics : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_event_topics_request ->
     ( describe_event_topics_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1240,8 +1504,18 @@ end
   \ "]
 
 module DescribeLDAPSSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_ldaps_settings_request ->
     ( describe_ldaps_settings_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1256,8 +1530,19 @@ end
 [@@ocaml.doc "Describes the status of LDAP security for the specified directory.\n"]
 
 module DescribeRegions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_regions_request ->
     ( describe_regions_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1274,8 +1559,18 @@ end
   "Provides information about the Regions that are configured for multi-Region replication.\n"]
 
 module DescribeSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_settings_request ->
     ( describe_settings_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1290,8 +1585,18 @@ end
 [@@ocaml.doc "Retrieves information about the configurable settings for the specified directory.\n"]
 
 module DescribeSharedDirectories : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_shared_directories_request ->
     ( describe_shared_directories_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1306,8 +1611,17 @@ end
 [@@ocaml.doc "Returns the shared directories in your account. \n"]
 
 module DescribeSnapshots : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_snapshots_request ->
     ( describe_snapshots_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1328,8 +1642,18 @@ end
   \  "]
 
 module DescribeTrusts : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_trusts_request ->
     ( describe_trusts_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1348,8 +1672,18 @@ end
   \ "]
 
 module DescribeUpdateDirectory : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     describe_update_directory_request ->
     ( describe_update_directory_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1364,8 +1698,18 @@ end
 [@@ocaml.doc " Describes the updates of a directory for a particular update type. \n"]
 
 module DisableClientAuthentication : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidClientAuthStatusException of invalid_client_auth_status_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disable_client_authentication_request ->
     ( disable_client_authentication_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1380,8 +1724,19 @@ end
 [@@ocaml.doc "Disables alternative client authentication methods for the specified directory. \n"]
 
 module DisableDirectoryDataAccess : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `DirectoryInDesiredStateException of directory_in_desired_state_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disable_directory_data_access_request ->
     ( disable_directory_data_access_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1401,8 +1756,19 @@ end
    Service Data API Reference}.\n"]
 
 module DisableLDAPS : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `InvalidLDAPSStatusException of invalid_ldaps_status_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disable_ldaps_request ->
     ( disable_ldaps_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1418,8 +1784,15 @@ end
 [@@ocaml.doc "Deactivates LDAP secure calls for the specified directory.\n"]
 
 module DisableRadius : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disable_radius_request ->
     ( disable_radius_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1433,8 +1806,17 @@ end
    (RADIUS) server for an AD Connector or Microsoft AD directory.\n"]
 
 module DisableSso : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AuthenticationFailedException of authentication_failed_exception
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InsufficientPermissionsException of insufficient_permissions_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     disable_sso_request ->
     ( disable_sso_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1448,8 +1830,19 @@ end
 [@@ocaml.doc "Disables single-sign on for a directory.\n"]
 
 module EnableClientAuthentication : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidClientAuthStatusException of invalid_client_auth_status_exception
+    | `NoAvailableCertificateException of no_available_certificate_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     enable_client_authentication_request ->
     ( enable_client_authentication_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1465,8 +1858,19 @@ end
 [@@ocaml.doc "Enables alternative client authentication methods for the specified directory.\n"]
 
 module EnableDirectoryDataAccess : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `DirectoryInDesiredStateException of directory_in_desired_state_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     enable_directory_data_access_request ->
     ( enable_directory_data_access_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1486,8 +1890,20 @@ end
    Service Data API Reference}.\n"]
 
 module EnableLDAPS : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `InvalidLDAPSStatusException of invalid_ldaps_status_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `NoAvailableCertificateException of no_available_certificate_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     enable_ldaps_request ->
     ( enable_ldaps_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1504,8 +1920,17 @@ end
 [@@ocaml.doc "Activates the switch for the specific directory to always use LDAP secure calls.\n"]
 
 module EnableRadius : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityAlreadyExistsException of entity_already_exists_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     enable_radius_request ->
     ( enable_radius_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1521,8 +1946,17 @@ end
    (RADIUS) server for an AD Connector or Microsoft AD directory.\n"]
 
 module EnableSso : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AuthenticationFailedException of authentication_failed_exception
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InsufficientPermissionsException of insufficient_permissions_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     enable_sso_request ->
     ( enable_sso_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1539,8 +1973,15 @@ end
    enter their credentials separately.\n"]
 
 module GetDirectoryLimits : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_directory_limits_request ->
     ( get_directory_limits_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1552,8 +1993,15 @@ end
 [@@ocaml.doc "Obtains directory limit information for the current Region.\n"]
 
 module GetSnapshotLimits : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_snapshot_limits_request ->
     ( get_snapshot_limits_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1565,8 +2013,18 @@ end
 [@@ocaml.doc "Obtains the manual snapshot limits for a directory.\n"]
 
 module ListCertificates : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_certificates_request ->
     ( list_certificates_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1583,8 +2041,17 @@ end
    certificate authentication.\n"]
 
 module ListIpRoutes : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_ip_routes_request ->
     ( list_ip_routes_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1598,8 +2065,16 @@ end
 [@@ocaml.doc "Lists the address blocks that you have added to a directory.\n"]
 
 module ListLogSubscriptions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_log_subscriptions_request ->
     ( list_log_subscriptions_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1612,8 +2087,16 @@ end
 [@@ocaml.doc "Lists the active log subscriptions for the Amazon Web Services account.\n"]
 
 module ListSchemaExtensions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_schema_extensions_request ->
     ( list_schema_extensions_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1626,8 +2109,17 @@ end
 [@@ocaml.doc "Lists all schema extensions applied to a Microsoft AD Directory.\n"]
 
 module ListTagsForResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_tags_for_resource_request ->
     ( list_tags_for_resource_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1641,8 +2133,21 @@ end
 [@@ocaml.doc "Lists all tags on a directory.\n"]
 
 module RegisterCertificate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `CertificateAlreadyExistsException of certificate_already_exists_exception
+    | `CertificateLimitExceededException of certificate_limit_exceeded_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `InvalidCertificateException of invalid_certificate_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     register_certificate_request ->
     ( register_certificate_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1660,8 +2165,16 @@ end
 [@@ocaml.doc "Registers a certificate for a secure LDAP or client certificate authentication.\n"]
 
 module RegisterEventTopic : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     register_event_topic_request ->
     ( register_event_topic_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1679,8 +2192,17 @@ end
    to an Active status.\n"]
 
 module RejectSharedDirectory : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryAlreadySharedException of directory_already_shared_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     reject_shared_directory_request ->
     ( reject_shared_directory_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1695,8 +2217,17 @@ end
   "Rejects a directory sharing request that was sent from the directory owner account.\n"]
 
 module RemoveIpRoutes : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     remove_ip_routes_request ->
     ( remove_ip_routes_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1710,8 +2241,18 @@ end
 [@@ocaml.doc "Removes IP address blocks from a directory.\n"]
 
 module RemoveRegion : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     remove_region_request ->
     ( remove_region_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1728,8 +2269,16 @@ end
    remove the primary Region with this operation. Instead, use the [DeleteDirectory] API.\n"]
 
 module RemoveTagsFromResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     remove_tags_from_resource_request ->
     ( remove_tags_from_resource_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1742,8 +2291,19 @@ end
 [@@ocaml.doc "Removes tags from a directory.\n"]
 
 module ResetUserPassword : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidPasswordException of invalid_password_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception
+    | `UserDoesNotExistException of user_does_not_exist_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     reset_user_password_request ->
     ( reset_user_password_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1778,8 +2338,16 @@ end
   \  "]
 
 module RestoreFromSnapshot : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     restore_from_snapshot_request ->
     ( restore_from_snapshot_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1801,8 +2369,22 @@ end
   \  "]
 
 module ShareDirectory : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryAlreadySharedException of directory_already_shared_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `InvalidTargetException of invalid_target_exception
+    | `OrganizationsException of organizations_exception
+    | `ServiceException of service_exception
+    | `ShareLimitExceededException of share_limit_exceeded_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     share_directory_request ->
     ( share_directory_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1838,8 +2420,18 @@ end
   \   "]
 
 module StartSchemaExtension : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `SnapshotLimitExceededException of snapshot_limit_exceeded_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     start_schema_extension_request ->
     ( start_schema_extension_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1854,8 +2446,17 @@ end
 [@@ocaml.doc "Applies a schema extension to a Microsoft AD directory.\n"]
 
 module UnshareDirectory : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryNotSharedException of directory_not_shared_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidTargetException of invalid_target_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     unshare_directory_request ->
     ( unshare_directory_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1869,8 +2470,18 @@ end
 [@@ocaml.doc "Stops the directory sharing between the directory owner and consumer accounts. \n"]
 
 module UpdateConditionalForwarder : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_conditional_forwarder_request ->
     ( update_conditional_forwarder_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1886,8 +2497,21 @@ end
   "Updates a conditional forwarder that has been set up for your Amazon Web Services directory.\n"]
 
 module UpdateDirectorySetup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `DirectoryInDesiredStateException of directory_in_desired_state_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `SnapshotLimitExceededException of snapshot_limit_exceeded_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_directory_setup_request ->
     ( update_directory_setup_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1905,8 +2529,19 @@ end
 [@@ocaml.doc " Updates the directory for a particular update type. \n"]
 
 module UpdateNumberOfDomainControllers : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `DomainControllerLimitExceededException of domain_controller_limit_exceeded_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_number_of_domain_controllers_request ->
     ( update_number_of_domain_controllers_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1927,8 +2562,16 @@ end
    another update request.\n"]
 
 module UpdateRadius : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_radius_request ->
     ( update_radius_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1943,8 +2586,20 @@ end
    Connector or Microsoft AD directory.\n"]
 
 module UpdateSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `IncompatibleSettingsException of incompatible_settings_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception
+    | `UnsupportedSettingsException of unsupported_settings_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_settings_request ->
     ( update_settings_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1961,8 +2616,16 @@ end
 [@@ocaml.doc "Updates the configurable settings for the specified directory.\n"]
 
 module UpdateTrust : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_trust_request ->
     ( update_trust_result,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1978,8 +2641,17 @@ end
 
 (** {1:Serialization and Deserialization} *)
 module VerifyTrust : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     verify_trust_request ->
     ( verify_trust_result,
       [> Smaws_Lib.Protocols.AwsJson.error

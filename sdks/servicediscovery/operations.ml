@@ -2,6 +2,14 @@ open Types
 open Service_metadata
 
 module CreateHttpNamespace = struct
+  let error_to_string = function
+    | `DuplicateRequest _ -> "com.amazonaws.servicediscovery#DuplicateRequest"
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `NamespaceAlreadyExists _ -> "com.amazonaws.servicediscovery#NamespaceAlreadyExists"
+    | `ResourceLimitExceeded _ -> "com.amazonaws.servicediscovery#ResourceLimitExceeded"
+    | `TooManyTagsException _ -> "com.amazonaws.servicediscovery#TooManyTagsException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "DuplicateRequest" ->
@@ -19,15 +27,22 @@ module CreateHttpNamespace = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_http_namespace_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_http_namespace_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314CreateHttpNamespace"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"Route53AutoNaming_v20170314.CreateHttpNamespace" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_http_namespace_response_of_yojson
       ~error_deserializer
 end
 
 module CreatePrivateDnsNamespace = struct
+  let error_to_string = function
+    | `DuplicateRequest _ -> "com.amazonaws.servicediscovery#DuplicateRequest"
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `NamespaceAlreadyExists _ -> "com.amazonaws.servicediscovery#NamespaceAlreadyExists"
+    | `ResourceLimitExceeded _ -> "com.amazonaws.servicediscovery#ResourceLimitExceeded"
+    | `TooManyTagsException _ -> "com.amazonaws.servicediscovery#TooManyTagsException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "DuplicateRequest" ->
@@ -45,16 +60,22 @@ module CreatePrivateDnsNamespace = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_private_dns_namespace_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_private_dns_namespace_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"Route53AutoNaming_v20170314CreatePrivateDnsNamespace" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"Route53AutoNaming_v20170314.CreatePrivateDnsNamespace" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_private_dns_namespace_response_of_yojson
       ~error_deserializer
 end
 
 module CreatePublicDnsNamespace = struct
+  let error_to_string = function
+    | `DuplicateRequest _ -> "com.amazonaws.servicediscovery#DuplicateRequest"
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `NamespaceAlreadyExists _ -> "com.amazonaws.servicediscovery#NamespaceAlreadyExists"
+    | `ResourceLimitExceeded _ -> "com.amazonaws.servicediscovery#ResourceLimitExceeded"
+    | `TooManyTagsException _ -> "com.amazonaws.servicediscovery#TooManyTagsException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "DuplicateRequest" ->
@@ -72,16 +93,22 @@ module CreatePublicDnsNamespace = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_public_dns_namespace_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_public_dns_namespace_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"Route53AutoNaming_v20170314CreatePublicDnsNamespace" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"Route53AutoNaming_v20170314.CreatePublicDnsNamespace" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_public_dns_namespace_response_of_yojson
       ~error_deserializer
 end
 
 module CreateService = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `NamespaceNotFound _ -> "com.amazonaws.servicediscovery#NamespaceNotFound"
+    | `ResourceLimitExceeded _ -> "com.amazonaws.servicediscovery#ResourceLimitExceeded"
+    | `ServiceAlreadyExists _ -> "com.amazonaws.servicediscovery#ServiceAlreadyExists"
+    | `TooManyTagsException _ -> "com.amazonaws.servicediscovery#TooManyTagsException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -99,14 +126,20 @@ module CreateService = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : create_service_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.create_service_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314CreateService"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.CreateService"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_service_response_of_yojson ~error_deserializer
 end
 
 module DeleteNamespace = struct
+  let error_to_string = function
+    | `DuplicateRequest _ -> "com.amazonaws.servicediscovery#DuplicateRequest"
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `NamespaceNotFound _ -> "com.amazonaws.servicediscovery#NamespaceNotFound"
+    | `ResourceInUse _ -> "com.amazonaws.servicediscovery#ResourceInUse"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "DuplicateRequest" ->
@@ -122,15 +155,20 @@ module DeleteNamespace = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_namespace_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_namespace_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314DeleteNamespace"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.DeleteNamespace"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_namespace_response_of_yojson
       ~error_deserializer
 end
 
 module DeleteService = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `ResourceInUse _ -> "com.amazonaws.servicediscovery#ResourceInUse"
+    | `ServiceNotFound _ -> "com.amazonaws.servicediscovery#ServiceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -144,14 +182,18 @@ module DeleteService = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_service_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_service_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314DeleteService"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.DeleteService"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_service_response_of_yojson ~error_deserializer
 end
 
 module DeleteServiceAttributes = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `ServiceNotFound _ -> "com.amazonaws.servicediscovery#ServiceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -163,16 +205,22 @@ module DeleteServiceAttributes = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_service_attributes_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_service_attributes_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"Route53AutoNaming_v20170314DeleteServiceAttributes" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"Route53AutoNaming_v20170314.DeleteServiceAttributes" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_service_attributes_response_of_yojson
       ~error_deserializer
 end
 
 module DeregisterInstance = struct
+  let error_to_string = function
+    | `DuplicateRequest _ -> "com.amazonaws.servicediscovery#DuplicateRequest"
+    | `InstanceNotFound _ -> "com.amazonaws.servicediscovery#InstanceNotFound"
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `ResourceInUse _ -> "com.amazonaws.servicediscovery#ResourceInUse"
+    | `ServiceNotFound _ -> "com.amazonaws.servicediscovery#ServiceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "DuplicateRequest" ->
@@ -190,15 +238,21 @@ module DeregisterInstance = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : deregister_instance_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.deregister_instance_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314DeregisterInstance"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.DeregisterInstance"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.deregister_instance_response_of_yojson
       ~error_deserializer
 end
 
 module DiscoverInstances = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `NamespaceNotFound _ -> "com.amazonaws.servicediscovery#NamespaceNotFound"
+    | `RequestLimitExceeded _ -> "com.amazonaws.servicediscovery#RequestLimitExceeded"
+    | `ServiceNotFound _ -> "com.amazonaws.servicediscovery#ServiceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -214,15 +268,21 @@ module DiscoverInstances = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : discover_instances_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.discover_instances_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314DiscoverInstances"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.DiscoverInstances"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.discover_instances_response_of_yojson
       ~error_deserializer
 end
 
 module DiscoverInstancesRevision = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `NamespaceNotFound _ -> "com.amazonaws.servicediscovery#NamespaceNotFound"
+    | `RequestLimitExceeded _ -> "com.amazonaws.servicediscovery#RequestLimitExceeded"
+    | `ServiceNotFound _ -> "com.amazonaws.servicediscovery#ServiceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -238,16 +298,20 @@ module DiscoverInstancesRevision = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : discover_instances_revision_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.discover_instances_revision_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"Route53AutoNaming_v20170314DiscoverInstancesRevision" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"Route53AutoNaming_v20170314.DiscoverInstancesRevision" ~service ~context ~input
       ~output_deserializer:Json_deserializers.discover_instances_revision_response_of_yojson
       ~error_deserializer
 end
 
 module GetInstance = struct
+  let error_to_string = function
+    | `InstanceNotFound _ -> "com.amazonaws.servicediscovery#InstanceNotFound"
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `ServiceNotFound _ -> "com.amazonaws.servicediscovery#ServiceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InstanceNotFound" ->
@@ -261,14 +325,19 @@ module GetInstance = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_instance_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_instance_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314GetInstance"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.GetInstance"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_instance_response_of_yojson ~error_deserializer
 end
 
 module GetInstancesHealthStatus = struct
+  let error_to_string = function
+    | `InstanceNotFound _ -> "com.amazonaws.servicediscovery#InstanceNotFound"
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `ServiceNotFound _ -> "com.amazonaws.servicediscovery#ServiceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InstanceNotFound" ->
@@ -282,16 +351,19 @@ module GetInstancesHealthStatus = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_instances_health_status_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_instances_health_status_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"Route53AutoNaming_v20170314GetInstancesHealthStatus" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"Route53AutoNaming_v20170314.GetInstancesHealthStatus" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_instances_health_status_response_of_yojson
       ~error_deserializer
 end
 
 module GetNamespace = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `NamespaceNotFound _ -> "com.amazonaws.servicediscovery#NamespaceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -303,14 +375,18 @@ module GetNamespace = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_namespace_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_namespace_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314GetNamespace"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.GetNamespace"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_namespace_response_of_yojson ~error_deserializer
 end
 
 module GetOperation = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `OperationNotFound _ -> "com.amazonaws.servicediscovery#OperationNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -322,14 +398,18 @@ module GetOperation = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_operation_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_operation_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314GetOperation"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.GetOperation"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_operation_response_of_yojson ~error_deserializer
 end
 
 module GetService = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `ServiceNotFound _ -> "com.amazonaws.servicediscovery#ServiceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -341,14 +421,18 @@ module GetService = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_service_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_service_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314GetService" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.GetService"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_service_response_of_yojson ~error_deserializer
 end
 
 module GetServiceAttributes = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `ServiceNotFound _ -> "com.amazonaws.servicediscovery#ServiceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -360,16 +444,19 @@ module GetServiceAttributes = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_service_attributes_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_service_attributes_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"Route53AutoNaming_v20170314GetServiceAttributes" ~service ~config:context.config
-      ~http:context.http ~input
+      ~shape_name:"Route53AutoNaming_v20170314.GetServiceAttributes" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_service_attributes_response_of_yojson
       ~error_deserializer
 end
 
 module ListInstances = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `ServiceNotFound _ -> "com.amazonaws.servicediscovery#ServiceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -381,14 +468,17 @@ module ListInstances = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_instances_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_instances_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314ListInstances"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.ListInstances"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_instances_response_of_yojson ~error_deserializer
 end
 
 module ListNamespaces = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -398,14 +488,17 @@ module ListNamespaces = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_namespaces_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_namespaces_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314ListNamespaces"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.ListNamespaces"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_namespaces_response_of_yojson ~error_deserializer
 end
 
 module ListOperations = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -415,14 +508,17 @@ module ListOperations = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_operations_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_operations_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314ListOperations"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.ListOperations"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_operations_response_of_yojson ~error_deserializer
 end
 
 module ListServices = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -432,14 +528,18 @@ module ListServices = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_services_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_services_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314ListServices"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.ListServices"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_services_response_of_yojson ~error_deserializer
 end
 
 module ListTagsForResource = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `ResourceNotFoundException _ -> "com.amazonaws.servicediscovery#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -452,15 +552,22 @@ module ListTagsForResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_tags_for_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314ListTagsForResource"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"Route53AutoNaming_v20170314.ListTagsForResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
       ~error_deserializer
 end
 
 module RegisterInstance = struct
+  let error_to_string = function
+    | `DuplicateRequest _ -> "com.amazonaws.servicediscovery#DuplicateRequest"
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `ResourceInUse _ -> "com.amazonaws.servicediscovery#ResourceInUse"
+    | `ResourceLimitExceeded _ -> "com.amazonaws.servicediscovery#ResourceLimitExceeded"
+    | `ServiceNotFound _ -> "com.amazonaws.servicediscovery#ServiceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "DuplicateRequest" ->
@@ -478,15 +585,20 @@ module RegisterInstance = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : register_instance_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.register_instance_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314RegisterInstance"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.RegisterInstance"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.register_instance_response_of_yojson
       ~error_deserializer
 end
 
 module TagResource = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `ResourceNotFoundException _ -> "com.amazonaws.servicediscovery#ResourceNotFoundException"
+    | `TooManyTagsException _ -> "com.amazonaws.servicediscovery#TooManyTagsException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -501,14 +613,18 @@ module TagResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : tag_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.tag_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314TagResource"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.TagResource"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson ~error_deserializer
 end
 
 module UntagResource = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `ResourceNotFoundException _ -> "com.amazonaws.servicediscovery#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -521,14 +637,20 @@ module UntagResource = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : untag_resource_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.untag_resource_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314UntagResource"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.UntagResource"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson ~error_deserializer
 end
 
 module UpdateHttpNamespace = struct
+  let error_to_string = function
+    | `DuplicateRequest _ -> "com.amazonaws.servicediscovery#DuplicateRequest"
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `NamespaceNotFound _ -> "com.amazonaws.servicediscovery#NamespaceNotFound"
+    | `ResourceInUse _ -> "com.amazonaws.servicediscovery#ResourceInUse"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "DuplicateRequest" ->
@@ -544,15 +666,21 @@ module UpdateHttpNamespace = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_http_namespace_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_http_namespace_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314UpdateHttpNamespace"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"Route53AutoNaming_v20170314.UpdateHttpNamespace" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_http_namespace_response_of_yojson
       ~error_deserializer
 end
 
 module UpdateInstanceCustomHealthStatus = struct
+  let error_to_string = function
+    | `CustomHealthNotFound _ -> "com.amazonaws.servicediscovery#CustomHealthNotFound"
+    | `InstanceNotFound _ -> "com.amazonaws.servicediscovery#InstanceNotFound"
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `ServiceNotFound _ -> "com.amazonaws.servicediscovery#ServiceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "CustomHealthNotFound" ->
@@ -568,16 +696,21 @@ module UpdateInstanceCustomHealthStatus = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_instance_custom_health_status_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_instance_custom_health_status_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"Route53AutoNaming_v20170314UpdateInstanceCustomHealthStatus" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~shape_name:"Route53AutoNaming_v20170314.UpdateInstanceCustomHealthStatus" ~service ~context
+      ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module UpdatePrivateDnsNamespace = struct
+  let error_to_string = function
+    | `DuplicateRequest _ -> "com.amazonaws.servicediscovery#DuplicateRequest"
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `NamespaceNotFound _ -> "com.amazonaws.servicediscovery#NamespaceNotFound"
+    | `ResourceInUse _ -> "com.amazonaws.servicediscovery#ResourceInUse"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "DuplicateRequest" ->
@@ -593,16 +726,21 @@ module UpdatePrivateDnsNamespace = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_private_dns_namespace_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_private_dns_namespace_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"Route53AutoNaming_v20170314UpdatePrivateDnsNamespace" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"Route53AutoNaming_v20170314.UpdatePrivateDnsNamespace" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_private_dns_namespace_response_of_yojson
       ~error_deserializer
 end
 
 module UpdatePublicDnsNamespace = struct
+  let error_to_string = function
+    | `DuplicateRequest _ -> "com.amazonaws.servicediscovery#DuplicateRequest"
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `NamespaceNotFound _ -> "com.amazonaws.servicediscovery#NamespaceNotFound"
+    | `ResourceInUse _ -> "com.amazonaws.servicediscovery#ResourceInUse"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "DuplicateRequest" ->
@@ -618,16 +756,20 @@ module UpdatePublicDnsNamespace = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_public_dns_namespace_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_public_dns_namespace_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"Route53AutoNaming_v20170314UpdatePublicDnsNamespace" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"Route53AutoNaming_v20170314.UpdatePublicDnsNamespace" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_public_dns_namespace_response_of_yojson
       ~error_deserializer
 end
 
 module UpdateService = struct
+  let error_to_string = function
+    | `DuplicateRequest _ -> "com.amazonaws.servicediscovery#DuplicateRequest"
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `ServiceNotFound _ -> "com.amazonaws.servicediscovery#ServiceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "DuplicateRequest" ->
@@ -641,14 +783,20 @@ module UpdateService = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_service_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_service_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314UpdateService"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.UpdateService"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_service_response_of_yojson ~error_deserializer
 end
 
 module UpdateServiceAttributes = struct
+  let error_to_string = function
+    | `InvalidInput _ -> "com.amazonaws.servicediscovery#InvalidInput"
+    | `ServiceAttributesLimitExceededException _ ->
+        "com.amazonaws.servicediscovery#ServiceAttributesLimitExceededException"
+    | `ServiceNotFound _ -> "com.amazonaws.servicediscovery#ServiceNotFound"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidInput" -> `InvalidInput (Json_deserializers.invalid_input_of_yojson tree path)
@@ -663,11 +811,9 @@ module UpdateServiceAttributes = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_service_attributes_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_service_attributes_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"Route53AutoNaming_v20170314UpdateServiceAttributes" ~service
-      ~config:context.config ~http:context.http ~input
+      ~shape_name:"Route53AutoNaming_v20170314.UpdateServiceAttributes" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_service_attributes_response_of_yojson
       ~error_deserializer
 end

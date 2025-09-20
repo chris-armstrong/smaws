@@ -2,6 +2,16 @@ open Types
 open Service_metadata
 
 module AddTagsToCertificate = struct
+  let error_to_string = function
+    | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
+    | `InvalidParameterException _ -> "com.amazonaws.acm#InvalidParameterException"
+    | `InvalidTagException _ -> "com.amazonaws.acm#InvalidTagException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `TagPolicyException _ -> "com.amazonaws.acm#TagPolicyException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `TooManyTagsException _ -> "com.amazonaws.acm#TooManyTagsException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArnException" ->
@@ -26,15 +36,23 @@ module AddTagsToCertificate = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : add_tags_to_certificate_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.add_tags_to_certificate_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerAddTagsToCertificate"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.AddTagsToCertificate"
+      ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DeleteCertificate = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.acm#ConflictException"
+    | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
+    | `ResourceInUseException _ -> "com.amazonaws.acm#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -56,15 +74,18 @@ module DeleteCertificate = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : delete_certificate_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.delete_certificate_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerDeleteCertificate" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.DeleteCertificate" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module DescribeCertificate = struct
+  let error_to_string = function
+    | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArnException" ->
@@ -78,15 +99,20 @@ module DescribeCertificate = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : describe_certificate_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.describe_certificate_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerDescribeCertificate" ~service
-      ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.DescribeCertificate"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_certificate_response_of_yojson
       ~error_deserializer
 end
 
 module ExportCertificate = struct
+  let error_to_string = function
+    | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
+    | `RequestInProgressException _ -> "com.amazonaws.acm#RequestInProgressException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArnException" ->
@@ -103,15 +129,18 @@ module ExportCertificate = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : export_certificate_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.export_certificate_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerExportCertificate" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.export_certificate_response_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ExportCertificate" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.export_certificate_response_of_yojson
       ~error_deserializer
 end
 
 module GetAccountConfiguration = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -124,15 +153,20 @@ module GetAccountConfiguration = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
-    let open Smaws_Lib.Context in
     let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerGetAccountConfiguration"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.GetAccountConfiguration"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_account_configuration_response_of_yojson
       ~error_deserializer
 end
 
 module GetCertificate = struct
+  let error_to_string = function
+    | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
+    | `RequestInProgressException _ -> "com.amazonaws.acm#RequestInProgressException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArnException" ->
@@ -149,14 +183,23 @@ module GetCertificate = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : get_certificate_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.get_certificate_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerGetCertificate" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.get_certificate_response_of_yojson ~error_deserializer
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.GetCertificate" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_certificate_response_of_yojson
+      ~error_deserializer
 end
 
 module ImportCertificate = struct
+  let error_to_string = function
+    | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
+    | `InvalidParameterException _ -> "com.amazonaws.acm#InvalidParameterException"
+    | `InvalidTagException _ -> "com.amazonaws.acm#InvalidTagException"
+    | `LimitExceededException _ -> "com.amazonaws.acm#LimitExceededException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `TagPolicyException _ -> "com.amazonaws.acm#TagPolicyException"
+    | `TooManyTagsException _ -> "com.amazonaws.acm#TooManyTagsException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArnException" ->
@@ -181,15 +224,18 @@ module ImportCertificate = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : import_certificate_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.import_certificate_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerImportCertificate" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.import_certificate_response_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ImportCertificate" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.import_certificate_response_of_yojson
       ~error_deserializer
 end
 
 module ListCertificates = struct
+  let error_to_string = function
+    | `InvalidArgsException _ -> "com.amazonaws.acm#InvalidArgsException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArgsException" ->
@@ -202,15 +248,18 @@ module ListCertificates = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_certificates_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_certificates_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerListCertificates" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.list_certificates_response_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ListCertificates" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_certificates_response_of_yojson
       ~error_deserializer
 end
 
 module ListTagsForCertificate = struct
+  let error_to_string = function
+    | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArnException" ->
@@ -224,15 +273,21 @@ module ListTagsForCertificate = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : list_tags_for_certificate_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.list_tags_for_certificate_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerListTagsForCertificate"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ListTagsForCertificate"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_certificate_response_of_yojson
       ~error_deserializer
 end
 
 module PutAccountConfiguration = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.acm#ConflictException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -249,15 +304,23 @@ module PutAccountConfiguration = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : put_account_configuration_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.put_account_configuration_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerPutAccountConfiguration"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.PutAccountConfiguration"
+      ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module RemoveTagsFromCertificate = struct
+  let error_to_string = function
+    | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
+    | `InvalidParameterException _ -> "com.amazonaws.acm#InvalidParameterException"
+    | `InvalidTagException _ -> "com.amazonaws.acm#InvalidTagException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `TagPolicyException _ -> "com.amazonaws.acm#TagPolicyException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArnException" ->
@@ -280,15 +343,20 @@ module RemoveTagsFromCertificate = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : remove_tags_from_certificate_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.remove_tags_from_certificate_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerRemoveTagsFromCertificate"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.RemoveTagsFromCertificate"
+      ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module RenewCertificate = struct
+  let error_to_string = function
+    | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
+    | `RequestInProgressException _ -> "com.amazonaws.acm#RequestInProgressException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArnException" ->
@@ -305,15 +373,24 @@ module RenewCertificate = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : renew_certificate_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.renew_certificate_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerRenewCertificate" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.RenewCertificate" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module RequestCertificate = struct
+  let error_to_string = function
+    | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
+    | `InvalidDomainValidationOptionsException _ ->
+        "com.amazonaws.acm#InvalidDomainValidationOptionsException"
+    | `InvalidParameterException _ -> "com.amazonaws.acm#InvalidParameterException"
+    | `InvalidTagException _ -> "com.amazonaws.acm#InvalidTagException"
+    | `LimitExceededException _ -> "com.amazonaws.acm#LimitExceededException"
+    | `TagPolicyException _ -> "com.amazonaws.acm#TagPolicyException"
+    | `TooManyTagsException _ -> "com.amazonaws.acm#TooManyTagsException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArnException" ->
@@ -338,15 +415,21 @@ module RequestCertificate = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : request_certificate_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.request_certificate_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerRequestCertificate" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.request_certificate_response_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.RequestCertificate" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.request_certificate_response_of_yojson
       ~error_deserializer
 end
 
 module ResendValidationEmail = struct
+  let error_to_string = function
+    | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
+    | `InvalidDomainValidationOptionsException _ ->
+        "com.amazonaws.acm#InvalidDomainValidationOptionsException"
+    | `InvalidStateException _ -> "com.amazonaws.acm#InvalidStateException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArnException" ->
@@ -365,15 +448,23 @@ module ResendValidationEmail = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : resend_validation_email_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.resend_validation_email_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerResendValidationEmail"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ResendValidationEmail"
+      ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
 module RevokeCertificate = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.acm#ConflictException"
+    | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
+    | `ResourceInUseException _ -> "com.amazonaws.acm#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
@@ -395,15 +486,20 @@ module RevokeCertificate = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : revoke_certificate_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.revoke_certificate_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerRevokeCertificate" ~service
-      ~config:context.config ~http:context.http ~input
-      ~output_deserializer:Json_deserializers.revoke_certificate_response_of_yojson
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.RevokeCertificate" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.revoke_certificate_response_of_yojson
       ~error_deserializer
 end
 
 module UpdateCertificateOptions = struct
+  let error_to_string = function
+    | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
+    | `InvalidStateException _ -> "com.amazonaws.acm#InvalidStateException"
+    | `LimitExceededException _ -> "com.amazonaws.acm#LimitExceededException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
   let error_deserializer tree path =
     let handler handler tree path = function
       | _, "InvalidArnException" ->
@@ -421,10 +517,9 @@ module UpdateCertificateOptions = struct
       error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
 
   let request context (request : update_certificate_options_request) =
-    let open Smaws_Lib.Context in
     let input = Json_serializers.update_certificate_options_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManagerUpdateCertificateOptions"
-      ~service ~config:context.config ~http:context.http ~input
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.UpdateCertificateOptions"
+      ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end

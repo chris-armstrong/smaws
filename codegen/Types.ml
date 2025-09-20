@@ -9,6 +9,25 @@ end)
 
 let loc = Location.none
 
+module Builtin_types = struct
+  open Ppx_util
+
+  let nullable constrained =
+    B.ptyp_constr
+      (make_lident ~names:[ "Smaws_Lib"; "CoreTypes"; "Nullable"; "t" ] |> Location.mknoloc)
+      [ constrained ]
+
+  let timestamp =
+    B.ptyp_constr
+      (make_lident ~names:[ "Smaws_Lib"; "CoreTypes"; "Timestamp"; "t" ] |> Location.mknoloc)
+      []
+
+  let document =
+    B.ptyp_constr
+      (make_lident ~names:[ "Smaws_Lib"; "CoreTypes"; "Document"; "t" ] |> Location.mknoloc)
+      []
+end
+
 let type_name ~is_exception_type name =
   Fmt.str "%s%s" (SafeNames.safeTypeName name) (if is_exception_type then "" else "")
 
@@ -58,7 +77,7 @@ let make_basic_type_manifest ctx descriptor
   | ShortShape { traits; _ } -> [%type: int]
   | BlobShape { traits; _ } -> [%type: bytes]
   | BooleanShape { traits; _ } -> [%type: bool]
-  | DocumentShape -> [%type: Smaws_Lib.CoreTypes.Document.t]
+  | DocumentShape -> Builtin_types.document
   | FloatShape { traits; _ } | DoubleShape { traits; _ } -> [%type: float]
   | LongShape { traits; _ } | IntegerShape { traits; _ } -> [%type: int]
   | StringShape { traits; _ } -> [%type: string]
@@ -70,15 +89,7 @@ let make_basic_type_manifest ctx descriptor
          ourselves *)
       let basic_type = resolve ctx ~name:target ~namespace_resolver () in
       let is_sparse = Ast.Trait.(hasTrait traits isSparseTrait) in
-      let resolved_type =
-        if is_sparse then
-          B.ptyp_constr
-            (Location.mknoloc
-               (Longident.unflatten [ "Smaws_Lib"; "Smithy_api"; "Types"; "nullable" ]
-               |> Option.value_exn))
-            [ basic_type ]
-        else basic_type
-      in
+      let resolved_type = if is_sparse then Builtin_types.nullable basic_type else basic_type in
       B.ptyp_constr (Location.mknoloc (Longident.Lident "list")) [ resolved_type ]
   | TimestampShape { traits; _ } -> [%type: Smaws_Lib.CoreTypes.Timestamp.t]
   | UnitShape -> [%type: unit]
@@ -178,6 +189,10 @@ let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescri
   | MapShape { traits; mapKey; mapValue } ->
       let key_type = resolve ctx ~name:mapKey.target ~namespace_resolver () in
       let value_type = resolve ctx ~name:mapValue.target ~namespace_resolver () in
+      let is_sparse = Ast.Trait.hasTrait traits Ast.Trait.isSparseTrait in
+      let value_type =
+        match is_sparse with true -> Builtin_types.nullable value_type | false -> value_type
+      in
       let tuple = B.ptyp_tuple [ key_type; value_type ] in
       let list_type = B.ptyp_constr (Location.mknoloc (Longident.Lident "list")) [ tuple ] in
 
@@ -244,10 +259,7 @@ let generate_type_target ctx name descriptor
   | _ -> Some (make_complex_type_declaration ctx ~name ~descriptor ~namespace_resolver ())
 
 let str_deriving_attributes () =
-  [
-    B.attribute ~name:(Location.mknoloc "deriving") ~payload:(PStr [%str show]);
-    B.attribute ~name:(Location.mknoloc "deriving") ~payload:(PStr [%str eq]);
-  ]
+  [ B.attribute ~name:(Location.mknoloc "deriving") ~payload:(PStr [%str show, eq]) ]
 
 let stri_structure_shapes ?(with_derivings = false)
     ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) ctx structure_shapes fmt =
@@ -297,7 +309,8 @@ let stri_structure_shapes ?(with_derivings = false)
                   in
 
                   B.pstr_type
-                    (if x |> Ast.Dependencies.is_recursive_shape_with_target then Recursive
+                    (if with_derivings || x |> Ast.Dependencies.is_recursive_shape_with_target then
+                       Recursive
                      else Nonrecursive)
                     [ filtered_declaration ]))
 
@@ -315,15 +328,37 @@ let sigi_structure_shapes ?(with_derivings = false)
                  generate_type_target ctx item.name item.descriptor ~namespace_resolver ())
                items
            in
+           let attributed_items =
+             match with_derivings with
+             | true ->
+                 filtered_items
+                 |> List.map ~f:(fun tt ->
+                        Ppxlib_ast.Ast.
+                          {
+                            tt with
+                            ptype_attributes = tt.ptype_attributes @ str_deriving_attributes ();
+                          })
+             | false -> filtered_items
+           in
 
-           if List.length filtered_items > 0 then Some (B.psig_type Recursive filtered_items)
+           if List.length attributed_items > 0 then Some (B.psig_type Recursive attributed_items)
            else failwith (Fmt.str "no complex structured items in bundle: %s" name)
        | Ast.Dependencies.{ name; descriptor; _ } as x ->
            let type_declaration = generate_type_target ctx name descriptor ~namespace_resolver () in
 
            type_declaration
            |> Option.map ~f:(fun type_declaration ->
+                  if with_derivings then
+                    Ppxlib_ast.Ast.
+                      {
+                        type_declaration with
+                        ptype_attributes =
+                          type_declaration.ptype_attributes @ str_deriving_attributes ();
+                      }
+                  else type_declaration)
+           |> Option.map ~f:(fun type_declaration ->
                   B.psig_type
-                    (if x |> Ast.Dependencies.is_recursive_shape_with_target then Recursive
+                    (if with_derivings || x |> Ast.Dependencies.is_recursive_shape_with_target then
+                       Recursive
                      else Nonrecursive)
                     [ type_declaration ]))

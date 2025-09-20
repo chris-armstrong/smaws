@@ -6,13 +6,12 @@ let _ =
       Eio.Switch.run (fun sw ->
           let open Smaws_Lib in
           let config =
-            Config.
-              {
-                resolveRegion = (fun () -> "ap-southeast-2");
-                resolveAuth = (fun () -> Auth.Profile.resolve env ());
-              }
+            Config.make
+              ~resolveRegion:(fun () -> "ap-southeast-2")
+              ~resolveAuth:(fun () -> Auth.Profile.resolve env ())
+              ()
           in
-          let context = Context.make ~sw ~config env in
+          let context = Context.make_with_eio_http ~sw ~config env in
           let ( let+ ) res map = Result.map map res in
 
           match

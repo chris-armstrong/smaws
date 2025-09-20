@@ -1445,7 +1445,7 @@ let condition_operator_to_yojson (x : condition_operator) =
 
 let document_attribute_string_value_to_yojson = string_to_yojson
 let document_attribute_string_list_value_to_yojson tree = list_to_yojson string__to_yojson tree
-let timestamp_to_yojson = timestamp_to_yojson
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let document_attribute_value_to_yojson (x : document_attribute_value) =
   assoc_to_yojson

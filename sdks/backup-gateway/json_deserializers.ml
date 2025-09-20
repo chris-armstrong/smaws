@@ -219,8 +219,7 @@ let tag_resource_input_of_yojson tree path =
     : tag_resource_input)
 
 let sync_metadata_status_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "CREATED" -> CREATED
     | `String "RUNNING" -> RUNNING
     | `String "FAILED" -> FAILED
@@ -369,8 +368,7 @@ let list_tags_for_resource_input_of_yojson tree path =
 let kms_key_arn_of_yojson = string_of_yojson
 
 let hypervisor_state_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "PENDING" -> PENDING
     | `String "ONLINE" -> ONLINE
     | `String "OFFLINE" -> OFFLINE
@@ -411,8 +409,7 @@ let list_hypervisors_input_of_yojson tree path =
     : list_hypervisors_input)
 
 let gateway_type_of_yojson (tree : t) path =
-  (let _list = assoc_of_yojson tree path in
-   (match tree with
+  ((match tree with
     | `String "BACKUP_VM" -> BACKUP_VM
     | `String value -> raise (deserialize_unknown_enum_value_error path "GatewayType" value)
     | _ -> raise (deserialize_wrong_type_error path "GatewayType")

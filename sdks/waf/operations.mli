@@ -1,8 +1,18 @@
 open Types
 
 module CreateByteMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFDisallowedNameException of waf_disallowed_name_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_byte_match_set_request ->
     ( create_byte_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -55,8 +65,18 @@ end
   \   "]
 
 module CreateGeoMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFDisallowedNameException of waf_disallowed_name_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_geo_match_set_request ->
     ( create_geo_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -108,8 +128,18 @@ end
   \   "]
 
 module CreateIPSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFDisallowedNameException of waf_disallowed_name_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_ip_set_request ->
     ( create_ip_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -161,8 +191,20 @@ end
   \   "]
 
 module CreateRateBasedRule : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFBadRequestException of waf_bad_request_exception
+    | `WAFDisallowedNameException of waf_disallowed_name_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFStaleDataException of waf_stale_data_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_rate_based_rule_request ->
     ( create_rate_based_rule_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -265,8 +307,16 @@ end
   \   "]
 
 module CreateRegexMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFDisallowedNameException of waf_disallowed_name_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_regex_match_set_request ->
     ( create_regex_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -317,8 +367,16 @@ end
   \   "]
 
 module CreateRegexPatternSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFDisallowedNameException of waf_disallowed_name_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_regex_pattern_set_request ->
     ( create_regex_pattern_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -366,8 +424,20 @@ end
   \   "]
 
 module CreateRule : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFBadRequestException of waf_bad_request_exception
+    | `WAFDisallowedNameException of waf_disallowed_name_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFStaleDataException of waf_stale_data_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_rule_request ->
     ( create_rule_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -440,8 +510,19 @@ end
   \   "]
 
 module CreateRuleGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFBadRequestException of waf_bad_request_exception
+    | `WAFDisallowedNameException of waf_disallowed_name_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFStaleDataException of waf_stale_data_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_rule_group_request ->
     ( create_rule_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -486,8 +567,18 @@ end
   \   "]
 
 module CreateSizeConstraintSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFDisallowedNameException of waf_disallowed_name_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_size_constraint_set_request ->
     ( create_size_constraint_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -540,8 +631,18 @@ end
   \   "]
 
 module CreateSqlInjectionMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFDisallowedNameException of waf_disallowed_name_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_sql_injection_match_set_request ->
     ( create_sql_injection_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -591,8 +692,21 @@ end
   \   "]
 
 module CreateWebACL : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFBadRequestException of waf_bad_request_exception
+    | `WAFDisallowedNameException of waf_disallowed_name_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFStaleDataException of waf_stale_data_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_web_acl_request ->
     ( create_web_acl_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -660,8 +774,17 @@ end
   \   "]
 
 module CreateWebACLMigrationStack : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFEntityMigrationException of waf_entity_migration_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_web_acl_migration_stack_request ->
     ( create_web_acl_migration_stack_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -687,8 +810,18 @@ end
   \ "]
 
 module CreateXssMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFDisallowedNameException of waf_disallowed_name_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     create_xss_match_set_request ->
     ( create_xss_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -738,8 +871,18 @@ end
   \   "]
 
 module DeleteByteMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_byte_match_set_request ->
     ( delete_byte_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -784,8 +927,18 @@ end
   \  "]
 
 module DeleteGeoMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_geo_match_set_request ->
     ( delete_geo_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -830,8 +983,18 @@ end
   \  "]
 
 module DeleteIPSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_ip_set_request ->
     ( delete_ip_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -876,8 +1039,15 @@ end
   \  "]
 
 module DeleteLoggingConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_logging_configuration_request ->
     ( delete_logging_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -900,8 +1070,15 @@ end
   \    "]
 
 module DeletePermissionPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_permission_policy_request ->
     ( delete_permission_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -926,8 +1103,20 @@ end
   \     "]
 
 module DeleteRateBasedRule : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_rate_based_rule_request ->
     ( delete_rate_based_rule_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -974,8 +1163,18 @@ end
   \  "]
 
 module DeleteRegexMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_regex_match_set_request ->
     ( delete_regex_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1020,8 +1219,18 @@ end
   \  "]
 
 module DeleteRegexPatternSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_regex_pattern_set_request ->
     ( delete_regex_pattern_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1048,8 +1257,20 @@ end
   \    "]
 
 module DeleteRule : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_rule_request ->
     ( delete_rule_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1096,8 +1317,20 @@ end
   \  "]
 
 module DeleteRuleGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_rule_group_request ->
     ( delete_rule_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1144,8 +1377,18 @@ end
   \  "]
 
 module DeleteSizeConstraintSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_size_constraint_set_request ->
     ( delete_size_constraint_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1190,8 +1433,18 @@ end
   \  "]
 
 module DeleteSqlInjectionMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_sql_injection_match_set_request ->
     ( delete_sql_injection_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1236,8 +1489,20 @@ end
   \  "]
 
 module DeleteWebACL : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_web_acl_request ->
     ( delete_web_acl_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1281,8 +1546,18 @@ end
   \  "]
 
 module DeleteXssMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     delete_xss_match_set_request ->
     ( delete_xss_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1327,8 +1602,15 @@ end
   \  "]
 
 module GetByteMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_byte_match_set_request ->
     ( get_byte_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1351,8 +1633,13 @@ end
   \    "]
 
 module GetChangeToken : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_change_token_request ->
     ( get_change_token_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1384,8 +1671,14 @@ end
   \      "]
 
 module GetChangeTokenStatus : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_change_token_status_request ->
     ( get_change_token_status_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1422,8 +1715,15 @@ end
   \  "]
 
 module GetGeoMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_geo_match_set_request ->
     ( get_geo_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1446,8 +1746,15 @@ end
   \    "]
 
 module GetIPSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_ip_set_request ->
     ( get_ip_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1470,8 +1777,14 @@ end
   \    "]
 
 module GetLoggingConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_logging_configuration_request ->
     ( get_logging_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1493,8 +1806,14 @@ end
   \    "]
 
 module GetPermissionPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_permission_policy_request ->
     ( get_permission_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1516,8 +1835,15 @@ end
   \    "]
 
 module GetRateBasedRule : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_rate_based_rule_request ->
     ( get_rate_based_rule_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1541,8 +1867,16 @@ end
   \    "]
 
 module GetRateBasedRuleManagedKeys : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_rate_based_rule_managed_keys_request ->
     ( get_rate_based_rule_managed_keys_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1569,8 +1903,15 @@ end
   \    "]
 
 module GetRegexMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_regex_match_set_request ->
     ( get_regex_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1593,8 +1934,15 @@ end
   \    "]
 
 module GetRegexPatternSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_regex_pattern_set_request ->
     ( get_regex_pattern_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1617,8 +1965,15 @@ end
   \    "]
 
 module GetRule : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_rule_request ->
     ( get_rule_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1642,8 +1997,14 @@ end
   \    "]
 
 module GetRuleGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_rule_group_request ->
     ( get_rule_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1668,8 +2029,14 @@ end
   \     "]
 
 module GetSampledRequests : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_sampled_requests_request ->
     ( get_sampled_requests_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1700,8 +2067,15 @@ end
   \     "]
 
 module GetSizeConstraintSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_size_constraint_set_request ->
     ( get_size_constraint_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1724,8 +2098,15 @@ end
   \    "]
 
 module GetSqlInjectionMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_sql_injection_match_set_request ->
     ( get_sql_injection_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1748,8 +2129,15 @@ end
   \    "]
 
 module GetWebACL : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_web_acl_request ->
     ( get_web_acl_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1772,8 +2160,15 @@ end
   \    "]
 
 module GetXssMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     get_xss_match_set_request ->
     ( get_xss_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1796,8 +2191,15 @@ end
   \    "]
 
 module ListActivatedRulesInRuleGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_activated_rules_in_rule_group_request ->
     ( list_activated_rules_in_rule_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1820,8 +2222,14 @@ end
   \    "]
 
 module ListByteMatchSets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_byte_match_sets_request ->
     ( list_byte_match_sets_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1843,8 +2251,14 @@ end
   \    "]
 
 module ListGeoMatchSets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_geo_match_sets_request ->
     ( list_geo_match_sets_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1866,8 +2280,14 @@ end
   \    "]
 
 module ListIPSets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_ip_sets_request ->
     ( list_ip_sets_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1889,8 +2309,15 @@ end
   \    "]
 
 module ListLoggingConfigurations : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_logging_configurations_request ->
     ( list_logging_configurations_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1913,8 +2340,14 @@ end
   \    "]
 
 module ListRateBasedRules : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_rate_based_rules_request ->
     ( list_rate_based_rules_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1936,8 +2369,14 @@ end
   \    "]
 
 module ListRegexMatchSets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_regex_match_sets_request ->
     ( list_regex_match_sets_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1959,8 +2398,14 @@ end
   \    "]
 
 module ListRegexPatternSets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_regex_pattern_sets_request ->
     ( list_regex_pattern_sets_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -1982,8 +2427,13 @@ end
   \    "]
 
 module ListRuleGroups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_rule_groups_request ->
     ( list_rule_groups_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2004,8 +2454,14 @@ end
   \    "]
 
 module ListRules : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_rules_request ->
     ( list_rules_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2027,8 +2483,14 @@ end
   \    "]
 
 module ListSizeConstraintSets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_size_constraint_sets_request ->
     ( list_size_constraint_sets_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2050,8 +2512,14 @@ end
   \    "]
 
 module ListSqlInjectionMatchSets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_sql_injection_match_sets_request ->
     ( list_sql_injection_match_sets_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2073,8 +2541,14 @@ end
   \    "]
 
 module ListSubscribedRuleGroups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_subscribed_rule_groups_request ->
     ( list_subscribed_rule_groups_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2096,8 +2570,18 @@ end
   \    "]
 
 module ListTagsForResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFBadRequestException of waf_bad_request_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_tags_for_resource_request ->
     ( list_tags_for_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2130,8 +2614,14 @@ end
   \     "]
 
 module ListWebACLs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_web_ac_ls_request ->
     ( list_web_ac_ls_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2153,8 +2643,14 @@ end
   \    "]
 
 module ListXssMatchSets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     list_xss_match_sets_request ->
     ( list_xss_match_sets_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2176,8 +2672,16 @@ end
   \    "]
 
 module PutLoggingConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFServiceLinkedRoleErrorException of waf_service_linked_role_error_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     put_logging_configuration_request ->
     ( put_logging_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2225,8 +2729,16 @@ end
   \   "]
 
 module PutPermissionPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidPermissionPolicyException of waf_invalid_permission_policy_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     put_permission_policy_request ->
     ( put_permission_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2287,8 +2799,19 @@ end
   \    "]
 
 module TagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFBadRequestException of waf_bad_request_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     tag_resource_request ->
     ( tag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2322,8 +2845,18 @@ end
   \     "]
 
 module UntagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFBadRequestException of waf_bad_request_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFTagOperationException of waf_tag_operation_exception
+    | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     untag_resource_request ->
     ( untag_resource_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2349,8 +2882,20 @@ end
   \    "]
 
 module UpdateByteMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_byte_match_set_request ->
     ( update_byte_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2424,8 +2969,21 @@ end
   \   "]
 
 module UpdateGeoMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_geo_match_set_request ->
     ( update_geo_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2490,8 +3048,21 @@ end
   \    "]
 
 module UpdateIPSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_ip_set_request ->
     ( update_ip_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2585,8 +3156,21 @@ end
   \     "]
 
 module UpdateRateBasedRule : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_rate_based_rule_request ->
     ( update_rate_based_rule_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2658,8 +3242,20 @@ end
   \    "]
 
 module UpdateRegexMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFDisallowedNameException of waf_disallowed_name_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_regex_match_set_request ->
     ( update_regex_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2729,8 +3325,20 @@ end
   \   "]
 
 module UpdateRegexPatternSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidRegexPatternException of waf_invalid_regex_pattern_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_regex_pattern_set_request ->
     ( update_regex_pattern_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2803,8 +3411,21 @@ end
   \   "]
 
 module UpdateRule : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_rule_request ->
     ( update_rule_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2875,8 +3496,19 @@ end
   \    "]
 
 module UpdateRuleGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_rule_group_request ->
     ( update_rule_group_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -2931,8 +3563,21 @@ end
   \    "]
 
 module UpdateSizeConstraintSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_size_constraint_set_request ->
     ( update_size_constraint_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3011,8 +3656,20 @@ end
   \   "]
 
 module UpdateSqlInjectionMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_sql_injection_match_set_request ->
     ( update_sql_injection_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3082,8 +3739,22 @@ end
   \   "]
 
 module UpdateWebACL : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFReferencedItemException of waf_referenced_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception
+    | `WAFSubscriptionNotFoundException of waf_subscription_not_found_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_web_acl_request ->
     ( update_web_acl_response,
       [> Smaws_Lib.Protocols.AwsJson.error
@@ -3177,8 +3848,20 @@ end
   \    "]
 
 module UpdateXssMatchSet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidAccountException of waf_invalid_account_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
+    | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception
+    | `WAFStaleDataException of waf_stale_data_exception ] ->
+    string
+
   val request :
-    Smaws_Lib.Context.t ->
+    'http_type Smaws_Lib.Context.t ->
     update_xss_match_set_request ->
     ( update_xss_match_set_response,
       [> Smaws_Lib.Protocols.AwsJson.error

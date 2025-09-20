@@ -12,7 +12,8 @@
   digestif
   xmlm
   ptime
-  yojson)
+  yojson
+  camlzip)
  (preprocess
   (pps ppx_deriving.show ppx_deriving.eq)))
 

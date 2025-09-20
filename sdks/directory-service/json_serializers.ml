@@ -209,8 +209,8 @@ let domain_controller_limit_exceeded_exception_to_yojson
 
 let region_name_to_yojson = string_to_yojson
 let initiated_by_to_yojson = string_to_yojson
-let start_date_time_to_yojson = timestamp_to_yojson
-let last_updated_date_time_to_yojson = timestamp_to_yojson
+let start_date_time_to_yojson = timestamp_epoch_seconds_to_yojson
+let last_updated_date_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let update_info_entry_to_yojson (x : update_info_entry) =
   assoc_to_yojson
@@ -329,8 +329,8 @@ let trust_state_to_yojson (x : trust_state) =
   | CREATED -> `String "Created"
   | CREATING -> `String "Creating"
 
-let created_date_time_to_yojson = timestamp_to_yojson
-let state_last_updated_date_time_to_yojson = timestamp_to_yojson
+let created_date_time_to_yojson = timestamp_epoch_seconds_to_yojson
+let state_last_updated_date_time_to_yojson = timestamp_epoch_seconds_to_yojson
 let trust_state_reason_to_yojson = string_to_yojson
 
 let trust_to_yojson (x : trust) =
@@ -382,10 +382,10 @@ let tag_limit_exceeded_exception_to_yojson (x : tag_limit_exceeded_exception) =
     ]
 
 let tag_keys_to_yojson tree = list_to_yojson tag_key_to_yojson tree
-let subscription_created_date_time_to_yojson = timestamp_to_yojson
+let subscription_created_date_time_to_yojson = timestamp_epoch_seconds_to_yojson
 let subnet_id_to_yojson = string_to_yojson
 let subnet_ids_to_yojson tree = list_to_yojson subnet_id_to_yojson tree
-let start_time_to_yojson = timestamp_to_yojson
+let start_time_to_yojson = timestamp_epoch_seconds_to_yojson
 let schema_extension_id_to_yojson = string_to_yojson
 
 let start_schema_extension_result_to_yojson (x : start_schema_extension_result) =
@@ -539,8 +539,13 @@ let directory_configuration_setting_request_detailed_status_to_yojson tree =
   map_to_yojson region_name_to_yojson directory_configuration_status_to_yojson tree
 
 let directory_configuration_setting_request_status_message_to_yojson = string_to_yojson
-let directory_configuration_setting_last_updated_date_time_to_yojson = timestamp_to_yojson
-let directory_configuration_setting_last_requested_date_time_to_yojson = timestamp_to_yojson
+
+let directory_configuration_setting_last_updated_date_time_to_yojson =
+  timestamp_epoch_seconds_to_yojson
+
+let directory_configuration_setting_last_requested_date_time_to_yojson =
+  timestamp_epoch_seconds_to_yojson
+
 let directory_configuration_setting_data_type_to_yojson = string_to_yojson
 
 let setting_entry_to_yojson (x : setting_entry) =
@@ -587,7 +592,7 @@ let schema_extension_status_to_yojson (x : schema_extension_status) =
   | INITIALIZING -> `String "Initializing"
 
 let schema_extension_status_reason_to_yojson = string_to_yojson
-let end_date_time_to_yojson = timestamp_to_yojson
+let end_date_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let schema_extension_info_to_yojson (x : schema_extension_info) =
   assoc_to_yojson
@@ -756,7 +761,7 @@ let directory_vpc_settings_to_yojson (x : directory_vpc_settings) =
       ("VpcId", Some (vpc_id_to_yojson x.vpc_id));
     ]
 
-let launch_time_to_yojson = timestamp_to_yojson
+let launch_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let region_description_to_yojson (x : region_description) =
   assoc_to_yojson
@@ -902,7 +907,7 @@ let ip_route_status_msg_to_yojson (x : ip_route_status_msg) =
   | ADDED -> `String "Added"
   | ADDING -> `String "Adding"
 
-let added_date_time_to_yojson = timestamp_to_yojson
+let added_date_time_to_yojson = timestamp_epoch_seconds_to_yojson
 let ip_route_status_reason_to_yojson = string_to_yojson
 
 let ip_route_info_to_yojson (x : ip_route_info) =
@@ -945,7 +950,7 @@ let certificate_state_to_yojson (x : certificate_state) =
   | REGISTERED -> `String "Registered"
   | REGISTERING -> `String "Registering"
 
-let certificate_expiry_date_time_to_yojson = timestamp_to_yojson
+let certificate_expiry_date_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let certificate_info_to_yojson (x : certificate_info) =
   assoc_to_yojson
@@ -1526,7 +1531,7 @@ let certificate_does_not_exist_exception_to_yojson (x : certificate_does_not_exi
     ]
 
 let certificate_state_reason_to_yojson = string_to_yojson
-let certificate_registered_date_time_to_yojson = timestamp_to_yojson
+let certificate_registered_date_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let certificate_to_yojson (x : certificate) =
   assoc_to_yojson

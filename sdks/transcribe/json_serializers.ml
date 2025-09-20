@@ -120,7 +120,7 @@ let language_code_to_yojson (x : language_code) =
   | AR_AE -> `String "ar-AE"
   | AF_ZA -> `String "af-ZA"
 
-let date_time_to_yojson = timestamp_to_yojson
+let date_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let vocabulary_info_to_yojson (x : vocabulary_info) =
   assoc_to_yojson
