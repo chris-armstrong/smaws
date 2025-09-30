@@ -25,3 +25,9 @@ module type S = sig
     t ->
     (Response.t * Body.t, Http_types.http_failure) result
 end
+
+module type SM = sig
+  include S
+
+  val make : unit -> t
+end

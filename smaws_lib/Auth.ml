@@ -4,7 +4,7 @@ include Auth_common
 module Environment = Auth_from_environment
 (** Load authorization credentials from the environment *)
 
-module Profile = Auth_from_profile
+module Profile = Auth_from_profile_generic
 
 let rec resolverChain ~resolvers =
   match resolvers with

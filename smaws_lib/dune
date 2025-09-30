@@ -13,6 +13,10 @@
   xmlm
   ptime
   yojson
+  httpcats
+  h2
+  mirage-crypto-rng-miou-unix
+  miou
   camlzip)
  (preprocess
   (pps ppx_deriving.show ppx_deriving.eq)))

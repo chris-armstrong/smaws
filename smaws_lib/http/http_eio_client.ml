@@ -4,18 +4,19 @@ module Log =
   (val Logs.src_log (Logs.Src.create "Smaws_Lib.http.http_eio" ~doc:"Smaws_Lib HTTP EIO")
       : Logs.LOG)
 
-module type S = sig
-  include Http_client_intf.S
-
-  val make_eio_client :
-    sw:Eio.Switch.t ->
-    < mono_clock : [> `Clock of Mtime.t ] Eio.Resource.t
-    ; net : [> `Network | `Platform of [> `Generic | `Unix ] ] Eio.Resource.t
-    ; .. > ->
-    t
-end
-
-module Make (Connection : Http_eio_connection.S) : S = struct
+(* module type S = sig *)
+(*   include Http_client_intf.S *)
+(**)
+(*   val make_eio_client : *)
+(*     sw:Eio.Switch.t -> *)
+(*     < mono_clock : [> `Clock of Mtime.t ] Eio.Resource.t *)
+(*     ; net : [> `Network | `Platform of [> `Generic | `Unix ] ] Eio.Resource.t *)
+(*     ; .. > -> *)
+(*     t *)
+(* end *)
+(**)
+(* module Make (Connection : Http_eio_connection.S) : S = struct *)
+module Connection = Http_eio_connection.M
   module Connection_pool = Connection_pool.Make (Connection)
   module Response = Response
   module Body = Body
@@ -83,4 +84,4 @@ module Make (Connection : Http_eio_connection.S) : S = struct
         with Connection.ConnectionFailure http_failure ->
           Eio.Promise.resolve_error response_resolver http_failure);
     Eio.Promise.await response_promise
-end
+(* end *)

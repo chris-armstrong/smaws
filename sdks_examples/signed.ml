@@ -5,19 +5,19 @@ let _ =
   Eio_main.run (fun env ->
       Eio.Switch.run (fun sw ->
           let open Smaws_Lib in
-          let credentials = Auth.Profile.resolve env () in
+          let credentials = Schedulers.Eio.Auth.Profile.resolve env () in
           Fmt.pr "has_access_key_id has_secret_access_key has_session_token=%b\n"
             (credentials.session_token |> Option.is_some);
 
           let config : Config.t =
             Config.make
               ~resolveRegion:(fun () -> "ap-southeast-2")
-              ~resolveAuth:(fun () -> Auth.Profile.resolve env ())
+              ~resolveAuth:(fun () -> Schedulers.Eio.Auth.Profile.resolve env ())
               ()
           in
           let body = {|{}|} in
           Fmt.pr "before context@.";
-          let context = Context.make_with_eio_http ~sw ~config env in
+          let context = Schedulers.Eio.Context.make ~sw ~config env in
           let service =
             Service.
               { namespace = "sqs"; endpointPrefix = "sqs"; version = ""; protocol = AwsJson_1_0 }

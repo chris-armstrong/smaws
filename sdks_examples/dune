@@ -14,6 +14,11 @@
  (libraries smaws-lib eio_main logs fmt smaws-clients))
 
 (executable
+ (name sqs_ListQueues_miou)
+ (modules sqs_ListQueues_miou)
+ (libraries smaws-lib miou logs fmt smaws-clients))
+
+(executable
  (name signed)
  (modules signed)
  (modes byte exe)

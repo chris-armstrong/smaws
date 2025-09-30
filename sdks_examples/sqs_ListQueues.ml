@@ -8,10 +8,10 @@ let _ =
           let config =
             Config.make
               ~resolveRegion:(fun () -> "ap-southeast-2")
-              ~resolveAuth:(fun () -> Auth.Profile.resolve env ())
+              ~resolveAuth:(fun () -> Schedulers.Eio.Auth.Profile.resolve env ())
               ()
           in
-          let context = Context.make_with_eio_http ~sw ~config env in
+          let context = Schedulers.Eio.Context.make ~sw ~config env in
           let ( let+ ) res map = Result.map map res in
 
           match

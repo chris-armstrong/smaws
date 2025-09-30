@@ -11,3 +11,4 @@ module Protocols = Protocols
 module Service = Service
 module Sign = Sign
 module Smithy_api = Smithy_api
+module Schedulers = Schedulers

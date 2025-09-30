@@ -1,41 +1,3 @@
-(* module type S = sig *)
-(*   type http *)
-(*   type json_type = Yojson.Basic.t *)
-(**)
-(*   type error = *)
-(*     [ AwsErrors.t *)
-(*     | `HttpError of Http.http_failure *)
-(*     | `JsonParseError of Json.DeserializeHelpers.jsonParseError ] *)
-(**)
-(*   val request : *)
-(*     shape_name:string -> *)
-(*     service:Service.descriptor -> *)
-(*     config:Config.t -> *)
-(*     http:http -> *)
-(*     input:json_type -> *)
-(*     output_deserializer:(json_type -> string list -> 'res) -> *)
-(*     error_deserializer: *)
-(*       (json_type -> *)
-(*       string list -> *)
-(*       ([> `HttpError of Http.http_failure *)
-(*        | `JsonParseError of Json.DeserializeHelpers.jsonParseError ] *)
-(*        as *)
-(*        'error)) -> *)
-(*     ('res, 'error) result *)
-(**)
-(*   val error_deserializer : *)
-(*     (json_type -> string list -> string * string -> 'a) -> json_type -> string list -> 'a *)
-(**)
-(*   module Errors : sig *)
-(*     type 'a handler = json_type -> string list -> string * string -> 'a *)
-(**)
-(*     val default_deserializer : *)
-(*       json_type -> string list -> string * string -> AwsErrors.aws_service_error *)
-(**)
-(*     val default_handler : json_type -> string list -> string * string -> [> AwsErrors.t ] *)
-(*   end *)
-(* end *)
-
 type json_type = Yojson.Basic.t
 
 let json_to_string = Yojson.Basic.to_string
@@ -98,7 +60,7 @@ let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
       let body_res =
         match body with
         | Some body ->
-            Fmt.pr "Response body: %s" body;
+            Logs.debug (fun m -> m "Response body: %s" body);
 
             body |> json_of_string ~fname:(Fmt.str "%s.%s" service.endpointPrefix shape_name)
         | None -> `Assoc []
