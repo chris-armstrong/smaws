@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/smaws-gen/META"
+  "_build/install/default/lib/smaws-gen/dune-package"
+  "_build/install/default/lib/smaws-gen/opam"
+]
+doc: [
+  "_build/install/default/doc/smaws-gen/README.md"
+]
