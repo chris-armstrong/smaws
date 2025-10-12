@@ -8,7 +8,3 @@
   eio_main
   alcotest
   Smaws_Test_Support_Lib))
-
-(test
- (name test_compression)
- (libraries Smaws_Lib alcotest eio unix))

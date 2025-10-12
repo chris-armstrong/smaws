@@ -12,7 +12,7 @@ val pp_http_failure : Format.formatter -> http_failure -> unit
 val equal_http_failure : http_failure -> http_failure -> bool
 
 type headers = (string * string) list
-type body_encoding = Compression.body_encoding = Gzip
+type body_encoding = Deflate
 
 type input_body =
   [ `None
