@@ -1,0 +1,30 @@
+{0 smaws-gen}
+
+[smaws-gen] is the code generator for [smaws-clients]. It generates Amazon Web Services (AWS) service SDKs for OCaml from {{:https://smithy.io/2.0/index.html}Smithy} definitions.
+
+{1 Architecture}
+
+The generator pipeline reads Smithy JSON model definitions and produces OCaml modules: types, builders, serialisers, deserialisers, operations, and service modules.
+
+{2 Generator Pipeline}
+
+{!modules:
+Sdkgen
+Codegen.Namespace_resolver
+Codegen.Types
+Codegen.Builders
+Codegen.AwsProtocolJson
+}
+
+{2 Parser Library}
+
+{!modules:
+Smaws_parse
+Smithy_ast
+}
+
+{2 Design Documents}
+
+For detailed design documentation, see:
+
+- {{:https://github.com/chris-armstrong/smaws/blob/main/smaws-gen/docs/namespace_resolution.md}Namespace Resolution Design} — How multi-namespace Smithy models are partitioned and cross-namespace references are resolved

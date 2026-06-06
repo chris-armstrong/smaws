@@ -1,5 +1,7 @@
 # Namespace Module Support Design Specification
 
+**Status:** Substantially implemented. Remaining work: CLI `--namespace-map` argument, multi-namespace generation loop, subdirectory output, and tests. See `smaws-gen/docs/namespace_resolution.md` for the as-implemented architecture documentation.
+
 ## Overview
 
 This specification outlines the design for refactoring the SDK generation pipeline to support namespace-aware module generation. The current implementation flattens all Smithy namespaces into a single OCaml module, leading to potential name conflicts. This refactoring will enable generating separate OCaml modules for each namespace while maintaining proper cross-namespace references.
