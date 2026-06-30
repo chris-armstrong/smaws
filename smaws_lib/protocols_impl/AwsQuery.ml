@@ -23,7 +23,13 @@ module Serialize = struct
   let string_field path v = [ (join_path path, [ v ]) ]
   let int_field path v = string_field path (string_of_int v)
   let bool_field path v = string_field path (string_of_bool v)
-  let float_field path v = string_field path (Printf.sprintf "%g" v)
+  let float_field path v =
+    let s =
+      if Float.is_nan v then "NaN"
+      else if Float.is_infinite v then (if v > 0.0 then "Infinity" else "-Infinity")
+      else Printf.sprintf "%g" v
+    in
+    string_field path s
   let blob_field path v = string_field path (Base64.encode_exn (Bytes.to_string v))
 
   let timestamp_iso_field path (v : Ptime.t) =
@@ -141,7 +147,13 @@ module Response = struct
   let parse_xml_ok_response ~(action : string) ~(xmlNamespace : string) ~(body : string)
       ~resultParser =
     let open Xml.Parse in
-    let xmlSource = source_with_encoding ~src:body ~encoding:None in
+    let effective_body =
+      if String.length body = 0 then
+        Printf.sprintf "<%sResponse xmlns=\"%s\"><%sResult/></%sResponse>"
+          action xmlNamespace action action
+      else body
+    in
+    let xmlSource = source_with_encoding ~src:effective_body ~encoding:None in
     Read.dtd xmlSource;
     Read.sequence xmlSource (action ^ "Response") ~ns:xmlNamespace
       (fun _ _ ->

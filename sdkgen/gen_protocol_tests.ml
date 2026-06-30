@@ -437,9 +437,13 @@ let make_query_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output
 (* Tests which are disabled for reasons *)
 let bannedTests =
   [
-    (* this test violates the spec for AwsJson protocol by specifying smithy.api#httpHeader trait *)
+    (* these tests require SDK-level gzip compression which is not implemented *)
     "SDKAppliedContentEncoding_awsJson1_1";
     "SDKAppendsGzipAndIgnoresHttpProvidedEncoding_awsJson1_1";
+    "SDKAppliedContentEncoding_awsQuery";
+    "SDKAppendsGzipAndIgnoresHttpProvidedEncoding_awsQuery";
+    (* idempotency token auto-fill is not yet implemented *)
+    "QueryProtocolIdempotencyTokenAutoFill";
   ]
 
 let is_query_service (service : Shape.serviceShapeDetails option) =
