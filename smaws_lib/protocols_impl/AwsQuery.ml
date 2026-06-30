@@ -103,6 +103,28 @@ module Serialize = struct
       entries
 end
 
+module Deserialize = struct
+  let timestamp_iso_of_string s =
+    let (ts, _, _) = Result.get_ok (Ptime.of_rfc3339 s) in ts
+
+  let timestamp_epoch_of_string s =
+    match Ptime.of_float_s (float_of_string s) with
+    | Some t -> t
+    | None -> failwith ("invalid epoch timestamp: " ^ s)
+
+  let timestamp_httpdate_of_string s =
+    Scanf.sscanf s "%s@, %d %s %d %d:%d:%d GMT"
+      (fun _weekday day month_str year hour minute second ->
+        let month = match month_str with
+          | "Jan" -> 1 | "Feb" -> 2 | "Mar" -> 3 | "Apr" -> 4
+          | "May" -> 5 | "Jun" -> 6 | "Jul" -> 7 | "Aug" -> 8
+          | "Sep" -> 9 | "Oct" -> 10 | "Nov" -> 11 | _ -> 12
+        in
+        match Ptime.of_date_time ((year, month, day), ((hour, minute, second), 0)) with
+        | Some t -> t
+        | None -> failwith ("invalid http-date: " ^ s))
+end
+
 module Errors = struct
   let default_handler (error : Error.t) =
     `AWSServiceError

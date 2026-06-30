@@ -1,16 +1,27 @@
 open Base
 module Ast = Smithy_ast
 
-let generate ~service_details output_fmt =
+let generate ~service_details ~is_query output_fmt =
   Fmt.pf output_fmt "module Types = Types@\n";
   Fmt.pf output_fmt "include Builders@\n";
   service_details |> Option.iter ~f:(fun _ -> Fmt.pf output_fmt "include Operations@\n");
-  Fmt.pf output_fmt "module Json_serializers = Json_serializers\n";
-  Fmt.pf output_fmt "module Json_deserializers = Json_deserializers\n"
+  if is_query then begin
+    Fmt.pf output_fmt "module Query_serializers = Query_serializers\n";
+    Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n"
+  end else begin
+    (* Non-service namespaces (e.g. shared) always get query_serializers/deserializers.ml generated *)
+    (match service_details with
+     | None ->
+       Fmt.pf output_fmt "module Query_serializers = Query_serializers\n";
+       Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n"
+     | Some _ -> ());
+    Fmt.pf output_fmt "module Json_serializers = Json_serializers\n";
+    Fmt.pf output_fmt "module Json_deserializers = Json_deserializers\n"
+  end
 
 let generate_mli
     ~(service_details : (string * Ast.Shape.serviceShapeDetails * Ast.Trait.serviceDetails) option)
-    ~namespace_resolver ~operation_shapes ~structure_shapes ~alias_context output_fmt =
+    ~namespace_resolver ~operation_shapes ~structure_shapes ~alias_context ~is_query output_fmt =
   service_details
   |> Option.iter ~f:(fun (name, service, _) ->
          Gen_doc.module_doc ~name ~service ~operation_shapes ~structure_shapes output_fmt);
@@ -30,5 +41,15 @@ let generate_mli
          Gen_operations.generate_mli ~name ~service ~namespace_resolver ~operation_shapes
            ~structure_shapes ~alias_context ~no_open:true output_fmt);
   Fmt.pf output_fmt "(** {1:Serialization and Deserialization} *)@\n@\n";
-  Fmt.pf output_fmt "module Json_serializers = Json_serializers\n";
-  Fmt.pf output_fmt "module Json_deserializers = Json_deserializers\n"
+  if is_query then begin
+    Fmt.pf output_fmt "module Query_serializers = Query_serializers\n";
+    Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n"
+  end else begin
+    (match service_details with
+     | None ->
+       Fmt.pf output_fmt "module Query_serializers = Query_serializers\n";
+       Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n"
+     | Some _ -> ());
+    Fmt.pf output_fmt "module Json_serializers = Json_serializers\n";
+    Fmt.pf output_fmt "module Json_deserializers = Json_deserializers\n"
+  end

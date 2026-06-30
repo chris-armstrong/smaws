@@ -1,5 +1,7 @@
 open Base
 
+module Longident = Ppx_longident
+
 module B = Ppxlib.Ast_builder.Make (struct
   let loc = Location.none
 end)

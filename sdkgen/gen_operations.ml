@@ -9,7 +9,8 @@ let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~str
       | _ -> false)
   then (
     let opens =
-      [ Codegen.Ppx_util.stri_open [ "Types" ]; Codegen.Ppx_util.stri_open [ "Service_metadata" ] ]
+      [ Codegen.Ppx_util.stri_open [ "Types" ]; Codegen.Ppx_util.stri_open [ "Service_metadata" ];
+        Codegen.Ppx_util.stri_open [ "Query_deserializers" ]; Codegen.Ppx_util.stri_open [ "Query_serializers" ] ]
     in
     try
       let structure =

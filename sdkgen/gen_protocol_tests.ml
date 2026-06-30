@@ -2,6 +2,8 @@ open Base
 open Smithy_ast
 open Codegen.Ppx_util
 
+module Longident = Codegen.Ppx_longident
+
 let loc = Location.none
 
 module B = Ppxlib.Ast_builder.Make (struct
@@ -511,7 +513,7 @@ let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_conte
     |> List.map ~f:(fun (name, _, _) ->
            B.pexp_ident
              (Location.mknoloc
-                Longident.(Lident ((name |> Codegen.SafeNames.safeFunctionName) ^ "_test_suite"))))
+                (Longident.Lident ((name |> Codegen.SafeNames.safeFunctionName) ^ "_test_suite"))))
     |> B.elist
   in
   let opens =

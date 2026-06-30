@@ -3,6 +3,8 @@ open Ppx_util
 module Ast = Smithy_ast
 open Ast
 
+module Longident = Ppx_longident
+
 module B = Ppxlib.Ast_builder.Make (struct
   let loc = Location.none
 end)
@@ -15,7 +17,7 @@ let loc = Location.none
 
 let xml_name (traits : Trait.t list option) default =
   Option.value ~default
-    (Option.bind traits (fun ts ->
+    (Option.bind traits ~f:(fun ts ->
       List.find_map ts ~f:(function Trait.XmlNameTrait n -> Some n | _ -> None)))
 
 let is_flattened (traits : Trait.t list option) =
@@ -27,7 +29,7 @@ let is_flattened (traits : Trait.t list option) =
 let resolve_timestamp_format ?(member_traits : Trait.t list option = None)
     ?(shape_traits : Trait.t list option = None) () =
   let find_fmt traits =
-    Option.bind traits (fun ts ->
+    Option.bind traits ~f:(fun ts ->
       List.find_map ts ~f:(function Trait.TimestampFormatTrait x -> Some x | _ -> None))
   in
   match find_fmt member_traits with
@@ -266,6 +268,38 @@ module Serialiser = struct
       Some (map_func_body x ~namespace_resolver ())
     | EnumShape s ->
       Some (enum_func_body shapeWithTarget.name s)
+    | UnionShape _ ->
+      (* AwsQuery union serialization not yet implemented; generate a stub *)
+      Some (exp_fun_untyped "path"
+              (exp_fun_untyped "_x" (B.elist [])))
+    | TimestampShape { traits } ->
+      let fmt = resolve_timestamp_format ~shape_traits:(Some (Option.value ~default:[] traits)) () in
+      let helper = match fmt with
+        | Trait.TimestampFormatDateTime -> "timestamp_iso_field"
+        | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_field"
+        | Trait.TimestampFormatHttpDate -> "timestamp_httpdate_field"
+      in
+      Some (exp_fun_untyped "path"
+              (exp_fun_untyped "v"
+                 (serialize_call helper [(Nolabel, exp_ident "path"); (Nolabel, exp_ident "v")])))
+    | StringShape { traits } ->
+      (* String aliases that carry @timestampFormat need a dedicated serializer *)
+      let has_timestamp_fmt =
+        Option.value ~default:[]  traits
+        |> List.exists ~f:(function Trait.TimestampFormatTrait _ -> true | _ -> false)
+      in
+      if has_timestamp_fmt then
+        let fmt = resolve_timestamp_format ~shape_traits:(Some (Option.value ~default:[] traits)) () in
+        let helper = match fmt with
+          | Trait.TimestampFormatDateTime -> "timestamp_iso_field"
+          | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_field"
+          | Trait.TimestampFormatHttpDate -> "timestamp_httpdate_field"
+        in
+        Some (exp_fun_untyped "path"
+                (exp_fun_untyped "v"
+                   (serialize_call helper [(Nolabel, exp_ident "path"); (Nolabel, exp_ident "v")])))
+      else
+        None
     | _ -> None
 
   let generate ~(structure_shapes : Ast.Dependencies.shapeWithTarget list)
@@ -314,8 +348,8 @@ end
 module Deserialiser = struct
   let deserialiser_func_str name = (name |> SafeNames.safeFunctionName) ^ "_of_xml"
 
-  let xml_read_mod = ["Xml"; "Parse"; "Read"]
-  let xml_struct_mod = ["Xml"; "Parse"; "Structure"]
+  let xml_read_mod = ["Smaws_Lib"; "Xml"; "Parse"; "Read"]
+  let xml_struct_mod = ["Smaws_Lib"; "Xml"; "Parse"; "Structure"]
 
   let xml_call module_path func args =
     B.pexp_apply
@@ -380,8 +414,10 @@ module Deserialiser = struct
       Some (B.pexp_apply (exp_ident "float_of_string") [(Nolabel, str_expr)])
     | "smithy.api#Blob" ->
       Some (B.pexp_apply
-              (B.pexp_ident (Location.mknoloc (make_lident ~names:["Base64"; "decode_exn"])))
-              [(Nolabel, str_expr)])
+              (exp_ident "Bytes.of_string")
+              [(Nolabel, B.pexp_apply
+                  (B.pexp_ident (Location.mknoloc (make_lident ~names:["Base64"; "decode_exn"])))
+                  [(Nolabel, str_expr)])])
     | "smithy.api#Timestamp" ->
       (* Parse ISO 8601 timestamp *)
       Some (B.pexp_apply
@@ -525,7 +561,7 @@ module Deserialiser = struct
           let field_val =
             if is_required then
               (* Xml.Parse.required "Tag" !r_tag i *)
-              xml_call ["Xml"; "Parse"] "required"
+              xml_call ["Smaws_Lib"; "Xml"; "Parse"] "required"
                 [(Nolabel, const_str (xml_name mem.traits mem.name));
                  (Nolabel, deref);
                  (Nolabel, exp_ident "i")]
@@ -605,7 +641,7 @@ module Deserialiser = struct
            let pattern =
              match value with
              | `String sv -> pat_const_str sv
-             | `Int iv -> B.ppat_constant (Pconst_integer (Int.to_string iv, None))
+             | `Int iv -> pat_const_str (Int.to_string iv)
            in
            B.case
              ~lhs:pattern ~guard:None
@@ -639,6 +675,42 @@ module Deserialiser = struct
       Some (map_func_body x ~namespace_resolver ())
     | EnumShape s ->
       Some (enum_func_body shapeWithTarget.name s ~namespace_resolver ())
+    | TimestampShape { traits } ->
+      let fmt = resolve_timestamp_format ~shape_traits:(Some (Option.value ~default:[] traits)) () in
+      let helper = match fmt with
+        | Trait.TimestampFormatDateTime -> "timestamp_iso_of_string"
+        | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_of_string"
+        | Trait.TimestampFormatHttpDate -> "timestamp_httpdate_of_string"
+      in
+      let deser_mod = ["Smaws_Lib"; "Protocols"; "AwsQuery"; "Deserialize"] in
+      let s_expr = xml_call xml_read_mod "data" [(Nolabel, exp_ident "i")] in
+      Some (exp_fun_untyped "i"
+        (B.pexp_apply
+           (B.pexp_ident (Location.mknoloc (make_lident ~names:(deser_mod @ [helper]))))
+           [(Nolabel, s_expr)]))
+    | StringShape { traits } ->
+      let has_timestamp_fmt =
+        Option.value ~default:[] traits
+        |> List.exists ~f:(function Trait.TimestampFormatTrait _ -> true | _ -> false)
+      in
+      if has_timestamp_fmt then
+        let fmt = resolve_timestamp_format ~shape_traits:(Some (Option.value ~default:[] traits)) () in
+        let helper = match fmt with
+          | Trait.TimestampFormatDateTime -> "timestamp_iso_of_string"
+          | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_of_string"
+          | Trait.TimestampFormatHttpDate -> "timestamp_httpdate_of_string"
+        in
+        let deser_mod = ["Smaws_Lib"; "Protocols"; "AwsQuery"; "Deserialize"] in
+        let s_expr = xml_call xml_read_mod "data" [(Nolabel, exp_ident "i")] in
+        Some (exp_fun_untyped "i"
+          (B.pexp_apply
+             (B.pexp_ident (Location.mknoloc (make_lident ~names:(deser_mod @ [helper]))))
+             [(Nolabel, s_expr)]))
+      else None
+    | UnionShape _ ->
+      Some (exp_fun_untyped "_i"
+        (B.pexp_apply (exp_ident "failwith")
+           [(Nolabel, const_str "union xml deserialization not implemented")]))
     | _ -> None
 
   let generate ~(structure_shapes : Ast.Dependencies.shapeWithTarget list)
@@ -753,9 +825,12 @@ module Operations = struct
           B.case ~lhs:B.ppat_any ~guard:None
             ~rhs:(B.pexp_apply default_handler [(Nolabel, exp_ident "error")])
         in
-        [%expr fun (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ->
-          match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-          [%e B.pexp_function_cases (cases @ [default_case])]]
+        let match_body =
+          B.pexp_match
+            [%expr error.Smaws_Lib.Protocols.AwsQuery.Error.code]
+            (cases @ [default_case])
+        in
+        [%expr fun (error : Smaws_Lib.Protocols.AwsQuery.Error.t) -> [%e match_body]]
       end
     in
     B.pstr_value Nonrecursive
@@ -897,7 +972,7 @@ module Operations = struct
 
   let extract_xml_namespace (service : Shape.serviceShapeDetails) =
     Option.value ~default:""
-      (Option.bind service.traits (fun ts ->
+      (Option.bind service.traits ~f:(fun ts ->
         List.find_map ts ~f:(function Trait.ApiXmlNamespaceTrait ns -> Some ns | _ -> None)))
 
   let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~alias_context

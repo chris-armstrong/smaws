@@ -1,13 +1,14 @@
 open Exceptions
 open Smithy_ast
 
-let generate ~(service : Shape.serviceShapeDetails) ~operation_shapes ~structure_shapes
-    ~(shape_resolver : Codegen.Shape_resolver.t)
+let generate ?(is_query_override = false) ~(service : Shape.serviceShapeDetails) ~operation_shapes
+    ~structure_shapes ~(shape_resolver : Codegen.Shape_resolver.t)
     ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t) oc =
   let is_query =
-    Trait.hasTrait service.traits (function
-      | Trait.AwsProtocolAwsQueryTrait -> true
-      | _ -> false)
+    is_query_override
+    || Trait.hasTrait service.traits (function
+         | Trait.AwsProtocolAwsQueryTrait -> true
+         | _ -> false)
   in
   if is_query then
     let opens =

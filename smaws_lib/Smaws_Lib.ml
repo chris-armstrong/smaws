@@ -6,6 +6,7 @@ module AwsErrors = AwsErrors
 module Ini = Ini
 module Http = Http
 module Json = Json
+module Xml = Xml
 module Protocols = Protocols
 module Service = Service
 module Sign = Sign
