@@ -44,6 +44,19 @@ tests) in `model_tests/protocols/query/`, mirroring what already exists for `aws
 
 ---
 
+## Progress
+
+| Phase | Status | Notes |
+|-------|--------|-------|
+| Phase 1 | ✅ Done | `smithy_ast/Trait.ml` + `smaws_parse/Smithy.ml` |
+| Phase 2 | ✅ Done | `smaws_lib/protocols_impl/AwsQuery.ml` rewritten with context API + Serialize helpers |
+| Phase 8 | ✅ Done | `smaws_test_support_lib/alcotest_http.ml` + `input_body_form_testable` |
+| Xml.ml | ✅ Done | `Xml.Parse.Read.skip_element` added |
+| Phase 3 | 🔄 In progress | `codegen/AwsProtocolQuery.ml` Serialiser |
+| Phases 4–7, 9 | ⬜ Pending | |
+
+---
+
 ## Implementation Phases
 
 ### Phase 1 — Smithy parse layer: `httpResponseTests`

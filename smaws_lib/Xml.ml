@@ -110,6 +110,8 @@ module Parse = struct
         | `El_end -> decr depth
         | _ -> ()
       done
+
+    let data i = Accept.data i ~expected:(XmlElementData ("", None))
   end
 
   module Structure = struct

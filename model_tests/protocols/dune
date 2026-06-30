@@ -1,3 +1,3 @@
 (library
  (name model_tests_protocols)
- (libraries Smaws_Lib json))
+ (libraries Smaws_Lib json query))

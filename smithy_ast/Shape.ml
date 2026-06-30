@@ -7,7 +7,12 @@ type structureShapeDetails = { traits : Trait.t list option; members : member li
 [@@deriving show, equal]
 
 type setShapeDetails = { traits : Trait.t list option; target : string } [@@deriving show, equal]
-type listShapeDetails = { target : string; traits : Trait.t list option } [@@deriving show, equal]
+type listShapeDetails = {
+  target : string;
+  traits : Trait.t list option;
+  memberTraits : Trait.t list option;
+}
+[@@deriving show, equal]
 
 type operationShapeDetails = {
   input : string option;

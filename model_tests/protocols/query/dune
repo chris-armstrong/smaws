@@ -1,0 +1,42 @@
+(rule
+ (mode promote)
+ (targets
+  builders.ml
+  builders.mli
+  query.ml
+  query.mli
+  query_deserializers.ml
+  query_serializers.ml
+  operations.ml
+  operations.mli
+  protocol_tests.ml
+  service.ml
+  service_metadata.ml
+  service_metadata.mli
+  types.ml
+  types.mli)
+ (deps
+  (:gen ../../gen.exe)
+  (:input ../../../smithy-aws-protocol-tests_model.json))
+ (action
+  (run %{gen} %{input} . aws.protocoltests.query)))
+
+(library
+ (name query)
+ (modules
+  builders
+  query
+  operations
+  service
+  service_metadata
+  types
+  query_deserializers
+  query_serializers)
+ (preprocess
+  (pps ppx_deriving.show ppx_deriving.eq))
+ (libraries Smaws_Lib shared))
+
+(test
+ (name protocol_tests)
+ (modules protocol_tests)
+ (libraries Smaws_Lib Smaws_Test_Support_Lib alcotest query eio_main))

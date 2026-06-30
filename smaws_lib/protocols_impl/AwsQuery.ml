@@ -44,6 +44,26 @@ module Serialize = struct
     in
     string_field path s
 
+  let timestamp_httpdate_field path (v : Ptime.t) =
+    let weekday_of_int = function
+      | 0 -> "Sun" | 1 -> "Mon" | 2 -> "Tue" | 3 -> "Wed"
+      | 4 -> "Thu" | 5 -> "Fri" | _ -> "Sat"
+    in
+    let month_of_int = function
+      | 1 -> "Jan" | 2 -> "Feb" | 3 -> "Mar" | 4 -> "Apr"
+      | 5 -> "May" | 6 -> "Jun" | 7 -> "Jul" | 8 -> "Aug"
+      | 9 -> "Sep" | 10 -> "Oct" | 11 -> "Nov" | _ -> "Dec"
+    in
+    let (year, month, day), ((hour, min, sec), _) = Ptime.to_date_time v in
+    let dow = Ptime.weekday ~tz_offset_s:0 v |> (function
+      | `Sun -> 0 | `Mon -> 1 | `Tue -> 2 | `Wed -> 3
+      | `Thu -> 4 | `Fri -> 5 | `Sat -> 6)
+    in
+    let s = Printf.sprintf "%s, %02d %s %04d %02d:%02d:%02d GMT"
+      (weekday_of_int dow) day (month_of_int month) year hour min sec
+    in
+    string_field path s
+
   let list_to_query member_tag item_f path = function
     | [] -> [ (join_path path, [ "" ]) ]
     | items ->

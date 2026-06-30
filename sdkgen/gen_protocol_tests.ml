@@ -284,6 +284,20 @@ let make_request_body_test input_body =
           |> Option.map Yojson.Basic.from_string)]
   | None -> [%expr ()]
 
+let make_query_request_body_test input_body =
+  match input_body with
+  | Some input_body ->
+      [%expr
+        check Alcotest_http.input_body_form_testable "expected request body value"
+          (Some [%e const_str input_body])
+          (request.body
+          |> Option.map (function
+               | `Form x -> Uri.encoded_of_query x
+               | `String x -> x
+               | `Compressed (x, _) -> x
+               | `None -> ""))]
+  | None -> [%expr ()]
+
 let make_request_method_expected_expr method_ = B.pexp_variant method_ None
 
 let make_request_uri_expected_expr uri =
@@ -366,6 +380,58 @@ let make_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
                  ()
              | Error error -> failwith ([%e error_to_string_expr] error)])
 
+let make_query_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
+    ~operation_name http_protocols =
+  http_protocols
+  |> List.map ~f:(fun (request_test : Trait.httpRequestTest) ->
+         Fmt.pr "Generating query test for %s\n" request_test.id;
+         let test_name_str =
+           B.pexp_constant (Ppxlib.Ast.Pconst_string (request_test.id, loc, None))
+         in
+         let test_name_pat =
+           B.ppat_var (Location.mknoloc (make_test_case_function_name request_test))
+         in
+         let input_pat = make_input_pattern ~pattern_name:"input" ~namespace_resolver input_shape in
+         let input_expr = make_input_expr ~shape_resolver input_shape request_test.params in
+         let operation_call_expr =
+           make_operation_call_expr ~namespace_resolver ~shape_resolver ~operation_name
+         in
+         let request_body_test = make_query_request_body_test request_test.body in
+         let request_method_expected_expr =
+           make_request_method_expected_expr request_test.method_
+         in
+         let request_uri_expected_expr = make_request_uri_expected_expr request_test.uri in
+         let request_headers_expected_expr = make_headers_expr request_test.headers in
+         let config_expr = make_config_expr request_test in
+         [%stri
+           let [%p test_name_pat] =
+            fun () ->
+             Eio.Switch.run ~name:[%e test_name_str] @@ fun sw ->
+             let module Mock = (val Http_mock.create_http_mock ()) in
+             let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+
+             let config = [%e config_expr] in
+
+             let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+             let [%p input_pat] = [%e input_expr] in
+             Mock.mock_response ~status:200 ~headers:[] ();
+             let _response = [%e operation_call_expr] ctx input in
+             let request = Mock.last_request () in
+             let () = [%e request_body_test] in
+             let () =
+               check Alcotest_http.method_testable "expected request method"
+                 [%e request_method_expected_expr] request.method_
+             in
+             let () =
+               check Alcotest_http.uri_testable "expected request uri"
+                 [%e request_uri_expected_expr] request.uri
+             in
+             let () =
+               check Alcotest_http.headers_testable "expected request headers"
+                 [%e request_headers_expected_expr] request.headers
+             in
+             ()])
+
 (* Tests which are disabled for reasons *)
 let bannedTests =
   [
@@ -374,9 +440,20 @@ let bannedTests =
     "SDKAppendsGzipAndIgnoresHttpProvidedEncoding_awsJson1_1";
   ]
 
+let is_query_service (service : Shape.serviceShapeDetails option) =
+  match service with
+  | None -> false
+  | Some s ->
+    Trait.hasTrait s.traits (function
+      | Trait.AwsProtocolAwsQueryTrait -> true
+      | _ -> false)
+
 let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_context
     ?(with_derivings = false) ?(no_open = false)
+    ?(service : Shape.serviceShapeDetails option = None)
     ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t) fmt =
+  let query_protocol = is_query_service service in
+  let query_protocol_id = "aws.protocols#awsQuery" in
   let all_test_structures =
     operation_shapes
     |> List.map
@@ -392,12 +469,19 @@ let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_conte
                     not (List.exists bannedTests ~f:(String.equal t.id)))
              |> List.filter ~f:(fun (t : Trait.httpRequestTest) ->
                     match t.appliesTo with Some `Client | None -> true | Some `Server -> false)
+             |> List.filter ~f:(fun (t : Trait.httpRequestTest) ->
+                    if query_protocol then String.equal t.protocol query_protocol_id
+                    else not (String.equal t.protocol query_protocol_id))
            in
            let input_shape = input in
            let output_shape = output in
            let test_case_functions =
-             make_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
-               ~operation_name:name http_protocols
+             if query_protocol then
+               make_query_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
+                 ~operation_name:name http_protocols
+             else
+               make_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
+                 ~operation_name:name http_protocols
            in
            let test_suite_name =
              B.ppat_var

@@ -381,10 +381,13 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
   traitValue
 
 let parseListShape shape =
-  let target_ = shape |> field "member" |> extractTargetSpec in
+  let memberObj = shape |> field "member" |> parseObject in
+  let target_ = memberObj |> field "target" |> parseString in
+  let memberTraits_ = optional (memberObj |> field "traits" |> parseRecord parseTrait) in
   let traitParser = parseRecord parseTrait in
   let traits_ = optional (shape |> field "traits" |> traitParser) in
-  map2 target_ traits_ (fun target traits -> Shape.ListShape { target; traits })
+  map3 target_ memberTraits_ traits_ (fun target memberTraits traits ->
+    Shape.ListShape { target; traits; memberTraits })
 
 let parseMember name value =
   let member = parseObject value in
