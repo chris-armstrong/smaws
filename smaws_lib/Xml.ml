@@ -100,6 +100,16 @@ module Parse = struct
       | _ -> None
 
     let dtd i = Accept.dtd i
+
+    let skip_element i =
+      ignore (Xmlm.input i);
+      let depth = ref 1 in
+      while !depth > 0 do
+        match Xmlm.input i with
+        | `El_start _ -> incr depth
+        | `El_end -> decr depth
+        | _ -> ()
+      done
   end
 
   module Structure = struct

@@ -178,6 +178,64 @@ let parseTestHttpRequestTests value =
   in
   Ok (Trait.TestHttpRequestTests tests)
 
+let parseTestHttpResponseTests value =
+  let ( let+ ) r f = Result.bind ~f r in
+  let open Trait in
+  let+ tests =
+    parseArray
+      (fun value ->
+        let value = parseObject value in
+        let+ id = value |> field "id" |> parseString in
+        let+ protocol = value |> field "protocol" |> parseString in
+        let+ code = value |> field "code" |> parseInteger in
+        let+ headers =
+          optional (value |> field "headers")
+          |> mapOptional
+               (parseRecord (fun name value_ ->
+                    let value_ = value_ |> parseString in
+                    map2 (Ok name) value_ (fun name value_ -> (name, value_))))
+        in
+        let+ forbidHeaders =
+          optional (value |> field "forbidHeaders") |> mapOptional (parseArray parseString)
+        in
+        let+ body = optional (value |> field "body") |> mapOptional parseString in
+        let+ bodyMediaType = optional (value |> field "bodyMediaType") |> mapOptional parseString in
+        let+ params = optional (value |> field "params") |> mapOptional raw in
+        let+ vendorParams = optional (value |> field "vendorParams") |> mapOptional raw in
+        let+ vendorParamsShape =
+          optional (value |> field "vendorParamsShape") |> mapOptional parseString
+        in
+        let+ documentation = optional (value |> field "documentation") |> mapOptional parseString in
+        let+ tags = optional (value |> field "tags") |> mapOptional (parseArray parseString) in
+        let+ appliesTo =
+          optional (value |> field "appliesTo")
+          |> mapOptional parseString
+          |> Result.map ~f:(function
+               | Some "server" -> Some `Server
+               | Some "client" -> Some `Client
+               | None -> None
+               | _ -> failwith "unexpected value for appliesTo in HttpResponseTest")
+        in
+        Ok
+          {
+            id;
+            protocol;
+            code;
+            headers;
+            forbidHeaders;
+            body;
+            bodyMediaType;
+            params;
+            vendorParams;
+            vendorParamsShape;
+            documentation;
+            tags;
+            appliesTo;
+          })
+      value
+  in
+  Ok (Trait.TestHttpResponseTests tests)
+
 let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
   let open Result in
   let traitValue =
@@ -317,6 +375,7 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
     | "smithy.api#private" -> Ok Trait.PrivateTrait
     | "smithy.api#idRef" -> value |> parseIdRef
     | "smithy.test#httpRequestTests" -> value |> parseTestHttpRequestTests
+    | "smithy.test#httpResponseTests" -> value |> parseTestHttpResponseTests
     | unknownTrait -> Ok (Trait.UnspecifiedTrait (unknownTrait, value |> Json.Decode.raw_exn))
   in
   traitValue
