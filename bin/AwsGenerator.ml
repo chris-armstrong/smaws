@@ -127,6 +127,7 @@ let main () =
         ("com.amazonaws.snowball", "Snowball");
         ("com.amazonaws.sqs", "SQS");
         ("com.amazonaws.ssm", "SSM");
+        ("com.amazonaws.sts", "STS");
         ("com.amazonaws.swf", "SWF");
         ("com.amazonaws.transcribe", "Transcribe");
         ("com.amazonaws.waf", "WAF");

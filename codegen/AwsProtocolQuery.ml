@@ -51,6 +51,12 @@ module Serialiser = struct
       (B.pexp_ident (Location.mknoloc (make_lident ~names:(serialize_mod @ [ func ]))))
       args
 
+  (* fun path v -> Serialize.<helper> path v *)
+  let primitive_field_lambda helper =
+    exp_fun_untyped "path"
+      (exp_fun_untyped "v"
+         (serialize_call helper [ (Nolabel, exp_ident "path"); (Nolabel, exp_ident "v") ]))
+
   (* Build: List.append <path_expr> ["key"] *)
   let path_append path_expr key =
     B.pexp_apply
@@ -315,7 +321,13 @@ module Serialiser = struct
             (exp_fun_untyped "path"
                (exp_fun_untyped "v"
                   (serialize_call helper [ (Nolabel, exp_ident "path"); (Nolabel, exp_ident "v") ]))))
-        else None
+        else Some (primitive_field_lambda "string_field")
+    | IntegerShape _ | LongShape _ | ShortShape _ | ByteShape _ ->
+        Some (primitive_field_lambda "int_field")
+    | BooleanShape _ -> Some (primitive_field_lambda "bool_field")
+    | FloatShape _ | DoubleShape _ -> Some (primitive_field_lambda "float_field")
+    | BlobShape _ -> Some (primitive_field_lambda "blob_field")
+    | UnitShape -> Some (exp_fun_untyped "path" (exp_fun_untyped "_x" (B.elist [])))
     | _ -> None
 
   let generate ~(structure_shapes : Ast.Dependencies.shapeWithTarget list)
@@ -751,6 +763,20 @@ module Deserialiser = struct
          ]
          (B.pexp_constraint match_exp type_name))
 
+  let deser_mod = [ "Smaws_Lib"; "Protocols"; "AwsQuery"; "Deserialize" ]
+
+  (* fun i -> Read.data i *)
+  let read_data_lambda () =
+    exp_fun_untyped "i" (xml_call xml_read_mod "data" [ (Nolabel, exp_ident "i") ])
+
+  (* fun i -> Deserialize.<helper> (Read.data i) *)
+  let primitive_of_xml_lambda helper =
+    let s_expr = xml_call xml_read_mod "data" [ (Nolabel, exp_ident "i") ] in
+    exp_fun_untyped "i"
+      (B.pexp_apply
+         (B.pexp_ident (Location.mknoloc (make_lident ~names:(deser_mod @ [ helper ]))))
+         [ (Nolabel, s_expr) ])
+
   let generate_func_body (shapeWithTarget : Dependencies.shapeWithTarget)
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
       ~(shape_resolver : Shape_resolver.t) () =
@@ -801,7 +827,13 @@ module Deserialiser = struct
                (B.pexp_apply
                   (B.pexp_ident (Location.mknoloc (make_lident ~names:(deser_mod @ [ helper ]))))
                   [ (Nolabel, s_expr) ])))
-        else None
+        else Some (read_data_lambda ())
+    | IntegerShape _ | LongShape _ | ShortShape _ | ByteShape _ ->
+        Some (primitive_of_xml_lambda "int_of_string")
+    | BooleanShape _ -> Some (primitive_of_xml_lambda "bool_of_string")
+    | FloatShape _ | DoubleShape _ -> Some (primitive_of_xml_lambda "float_of_string")
+    | BlobShape _ -> Some (primitive_of_xml_lambda "blob_of_string")
+    | UnitShape -> Some (exp_fun_untyped "i" unit_expr)
     | UnionShape _ ->
         Some
           (exp_fun_untyped "_i"

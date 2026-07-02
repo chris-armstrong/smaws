@@ -161,6 +161,11 @@ module Deserialize = struct
         match Ptime.of_date_time ((year, month, day), ((hour, minute, second), 0)) with
         | Some t -> t
         | None -> failwith ("invalid http-date: " ^ s))
+
+  let int_of_string s = Stdlib.int_of_string s
+  let bool_of_string s = Stdlib.bool_of_string s
+  let float_of_string s = Stdlib.float_of_string s
+  let blob_of_string s = Bytes.of_string (Base64.decode_exn s)
 end
 
 module Errors = struct

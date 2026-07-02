@@ -15,6 +15,8 @@ let timestamp_list_to_query path xs =
     (fun p v -> Smaws_Lib.Protocols.AwsQuery.Serialize.timestamp_iso_field p v)
     path xs
 
+let text_plain_blob_to_query path v = Smaws_Lib.Protocols.AwsQuery.Serialize.blob_field path v
+
 let greeting_struct_to_query path (x : greeting_struct) =
   List.concat
     [
@@ -88,6 +90,8 @@ let long_list_to_query path xs =
 
 let list_set_to_query path xs =
   Smaws_Lib.Protocols.AwsQuery.Serialize.list_to_query "member" string_list_to_query path xs
+
+let jpeg_blob_to_query path v = Smaws_Lib.Protocols.AwsQuery.Serialize.blob_field path v
 
 let integer_set_to_query path xs =
   Smaws_Lib.Protocols.AwsQuery.Serialize.list_to_query "member"

@@ -20,6 +20,9 @@ let timestamp_list_of_xml i =
       ts)
     (Smaws_Lib.Xml.Parse.Read.elements i "member" ())
 
+let text_plain_blob_of_xml i =
+  Smaws_Lib.Protocols.AwsQuery.Deserialize.blob_of_string (Smaws_Lib.Xml.Parse.Read.data i)
+
 let greeting_struct_of_xml i =
   let r_hi = ref None in
   Smaws_Lib.Xml.Parse.Structure.scanSequence i [ "hi" ] (fun tag _ ->
@@ -81,6 +84,9 @@ let long_list_of_xml i =
 
 let list_set_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "member" (fun i _ -> string_list_of_xml i) ()
+
+let jpeg_blob_of_xml i =
+  Smaws_Lib.Protocols.AwsQuery.Deserialize.blob_of_string (Smaws_Lib.Xml.Parse.Read.data i)
 
 let integer_set_of_xml i =
   List.map (fun s -> int_of_string s) (Smaws_Lib.Xml.Parse.Read.elements i "member" ())
