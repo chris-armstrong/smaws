@@ -252,26 +252,14 @@ let write_serialisers ~output_dir t =
     Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
       ~namespace_module_mapping
   in
-  let service =
-    Option.value_map service_details ~default:empty_service ~f:(fun (_n, s, _t) -> s)
-  in
-  let filename =
-    if is_query_service service then "query_serializers" else "json_serializers"
-  in
+  let service = Option.value_map service_details ~default:empty_service ~f:(fun (_n, s, _t) -> s) in
+  let filename = if is_query_service service then "query_serializers" else "json_serializers" in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
       Gen_serialisers.generate ~service ~operation_shapes ~structure_shapes ~shape_resolver
         ~namespace_resolver output_fmt)
 
 let write_query_serialisers ~output_dir t =
-  let {
-    namespace;
-    structure_shapes;
-    namespace_module_mapping;
-    shape_resolver;
-    _;
-  } =
-    t
-  in
+  let { namespace; structure_shapes; namespace_module_mapping; shape_resolver; _ } = t in
   let namespace_resolver =
     Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
       ~namespace_module_mapping
@@ -281,15 +269,7 @@ let write_query_serialisers ~output_dir t =
         ~structure_shapes ~shape_resolver ~namespace_resolver output_fmt)
 
 let write_query_deserialisers ~output_dir t =
-  let {
-    namespace;
-    structure_shapes;
-    namespace_module_mapping;
-    shape_resolver;
-    _;
-  } =
-    t
-  in
+  let { namespace; structure_shapes; namespace_module_mapping; shape_resolver; _ } = t in
   let namespace_resolver =
     Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
       ~namespace_module_mapping
@@ -314,12 +294,8 @@ let write_deserialisers ~output_dir t =
     Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
       ~namespace_module_mapping
   in
-  let service =
-    Option.value_map service_details ~default:empty_service ~f:(fun (_n, s, _t) -> s)
-  in
-  let filename =
-    if is_query_service service then "query_deserializers" else "json_deserializers"
-  in
+  let service = Option.value_map service_details ~default:empty_service ~f:(fun (_n, s, _t) -> s) in
+  let filename = if is_query_service service then "query_deserializers" else "json_deserializers" in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
       Gen_deserialisers.generate ~service ~operation_shapes ~structure_shapes ~shape_resolver
         ~namespace_resolver output_fmt)
@@ -363,9 +339,7 @@ let write_module ~output_dir ~filename t =
     Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
       ~namespace_module_mapping
   in
-  let service =
-    Option.value_map service_details ~default:empty_service ~f:(fun (_n, s, _t) -> s)
-  in
+  let service = Option.value_map service_details ~default:empty_service ~f:(fun (_n, s, _t) -> s) in
   let is_query = is_query_service service in
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->

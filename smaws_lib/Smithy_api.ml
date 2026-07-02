@@ -65,10 +65,18 @@ module Query_deserializers = struct
   let double_of_xml i = float_of_string (Xml.Parse.Read.data i)
   let boolean__of_xml i = bool_of_string (Xml.Parse.Read.data i)
   let blob_of_xml i = Bytes.of_string (Base64.decode_exn (Xml.Parse.Read.data i))
-  let timestamp_of_xml i = Protocols_impl.AwsQuery.Deserialize.timestamp_iso_of_string (Xml.Parse.Read.data i)
-  let timestamp_epoch_seconds_of_xml i = Protocols_impl.AwsQuery.Deserialize.timestamp_epoch_of_string (Xml.Parse.Read.data i)
-  let timestamp_iso_8601_of_xml i = Protocols_impl.AwsQuery.Deserialize.timestamp_iso_of_string (Xml.Parse.Read.data i)
-  let timestamp_http_date_of_xml i = Protocols_impl.AwsQuery.Deserialize.timestamp_httpdate_of_string (Xml.Parse.Read.data i)
+
+  let timestamp_of_xml i =
+    Protocols_impl.AwsQuery.Deserialize.timestamp_iso_of_string (Xml.Parse.Read.data i)
+
+  let timestamp_epoch_seconds_of_xml i =
+    Protocols_impl.AwsQuery.Deserialize.timestamp_epoch_of_string (Xml.Parse.Read.data i)
+
+  let timestamp_iso_8601_of_xml i =
+    Protocols_impl.AwsQuery.Deserialize.timestamp_iso_of_string (Xml.Parse.Read.data i)
+
+  let timestamp_http_date_of_xml i =
+    Protocols_impl.AwsQuery.Deserialize.timestamp_httpdate_of_string (Xml.Parse.Read.data i)
 end
 
 module Json_deserializers = struct

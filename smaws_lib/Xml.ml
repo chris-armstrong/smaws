@@ -105,10 +105,7 @@ module Parse = struct
       ignore (Xmlm.input i);
       let depth = ref 1 in
       while !depth > 0 do
-        match Xmlm.input i with
-        | `El_start _ -> incr depth
-        | `El_end -> decr depth
-        | _ -> ()
+        match Xmlm.input i with `El_start _ -> incr depth | `El_end -> decr depth | _ -> ()
       done
 
     let data i = Accept.data i ~expected:(XmlElementData ("", None))

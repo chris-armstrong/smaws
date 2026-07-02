@@ -10,12 +10,8 @@ let generate ?(is_query_override = false) ~(service : Shape.serviceShapeDetails)
          | Trait.AwsProtocolAwsQueryTrait -> true
          | _ -> false)
   in
-  if is_query then
-    let opens =
-      [
-        Codegen.Ppx_util.stri_open [ "Types" ];
-      ]
-    in
+  if is_query then (
+    let opens = [ Codegen.Ppx_util.stri_open [ "Types" ] ] in
     try
       let serialisers =
         Codegen.AwsProtocolQuery.Serialiser.generate ~structure_shapes ~namespace_resolver
@@ -24,8 +20,8 @@ let generate ?(is_query_override = false) ~(service : Shape.serviceShapeDetails)
       Ppxlib.Pprintast.structure oc (opens @ serialisers)
     with _ as a ->
       Fmt.pf Fmt.stderr "Unable to generate serialisers: %s" (Printexc.to_string a);
-      raise (Generate_failure ("", a))
-  else
+      raise (Generate_failure ("", a)))
+  else (
     let opens =
       [
         Codegen.Ppx_util.stri_open [ "Smaws_Lib"; "Json"; "SerializeHelpers" ];
@@ -39,4 +35,4 @@ let generate ?(is_query_override = false) ~(service : Shape.serviceShapeDetails)
       Ppxlib.Pprintast.structure oc (opens @ serialisers)
     with _ as a ->
       Fmt.pf Fmt.stderr "Unable to generate serialisers: %s" (Printexc.to_string a);
-      raise (Generate_failure ("", a))
+      raise (Generate_failure ("", a)))

@@ -43,13 +43,10 @@ let parse_form_body s =
   |> List.sort (fun (k1, _) (k2, _) -> String.compare k1 k2)
 
 let form_body_equal s1 s2 =
-  let equal_pair (k1, v1) (k2, v2) =
-    String.equal k1 k2 && List.equal String.equal v1 v2
-  in
+  let equal_pair (k1, v1) (k2, v2) = String.equal k1 k2 && List.equal String.equal v1 v2 in
   List.equal equal_pair (parse_form_body s1) (parse_form_body s2)
 
-let input_body_form_testable =
-  Alcotest.option (Alcotest.testable Fmt.string form_body_equal)
+let input_body_form_testable = Alcotest.option (Alcotest.testable Fmt.string form_body_equal)
 
 (** A testable for comparing Smithy URIs - only compares the path component *)
 let uri_testable =

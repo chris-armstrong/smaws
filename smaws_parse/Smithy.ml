@@ -387,7 +387,7 @@ let parseListShape shape =
   let traitParser = parseRecord parseTrait in
   let traits_ = optional (shape |> field "traits" |> traitParser) in
   map3 target_ memberTraits_ traits_ (fun target memberTraits traits ->
-    Shape.ListShape { target; traits; memberTraits })
+      Shape.ListShape { target; traits; memberTraits })
 
 let parseMember name value =
   let member = parseObject value in

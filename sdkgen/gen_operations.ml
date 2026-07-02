@@ -3,14 +3,15 @@ open Exceptions
 
 let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~structure_shapes
     ~alias_context ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t) oc =
-  if
-    Trait.hasTrait service.traits (function
-      | Trait.AwsProtocolAwsQueryTrait -> true
-      | _ -> false)
+  if Trait.hasTrait service.traits (function Trait.AwsProtocolAwsQueryTrait -> true | _ -> false)
   then (
     let opens =
-      [ Codegen.Ppx_util.stri_open [ "Types" ]; Codegen.Ppx_util.stri_open [ "Service_metadata" ];
-        Codegen.Ppx_util.stri_open [ "Query_deserializers" ]; Codegen.Ppx_util.stri_open [ "Query_serializers" ] ]
+      [
+        Codegen.Ppx_util.stri_open [ "Types" ];
+        Codegen.Ppx_util.stri_open [ "Service_metadata" ];
+        Codegen.Ppx_util.stri_open [ "Query_deserializers" ];
+        Codegen.Ppx_util.stri_open [ "Query_serializers" ];
+      ]
     in
     try
       let structure =
@@ -43,10 +44,7 @@ let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~str
 let generate_mli ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~structure_shapes
     ~alias_context ?(no_open = false)
     ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t) oc =
-  if
-    Trait.hasTrait service.traits (function
-      | Trait.AwsProtocolAwsQueryTrait -> true
-      | _ -> false)
+  if Trait.hasTrait service.traits (function Trait.AwsProtocolAwsQueryTrait -> true | _ -> false)
   then (
     let opens = if no_open then [] else [ Codegen.Ppx_util.sigi_open [ "Types" ] ] in
     try

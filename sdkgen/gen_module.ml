@@ -8,13 +8,14 @@ let generate ~service_details ~is_query output_fmt =
   if is_query then begin
     Fmt.pf output_fmt "module Query_serializers = Query_serializers\n";
     Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n"
-  end else begin
+  end
+  else begin
     (* Non-service namespaces (e.g. shared) always get query_serializers/deserializers.ml generated *)
     (match service_details with
-     | None ->
-       Fmt.pf output_fmt "module Query_serializers = Query_serializers\n";
-       Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n"
-     | Some _ -> ());
+    | None ->
+        Fmt.pf output_fmt "module Query_serializers = Query_serializers\n";
+        Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n"
+    | Some _ -> ());
     Fmt.pf output_fmt "module Json_serializers = Json_serializers\n";
     Fmt.pf output_fmt "module Json_deserializers = Json_deserializers\n"
   end
@@ -44,12 +45,13 @@ let generate_mli
   if is_query then begin
     Fmt.pf output_fmt "module Query_serializers = Query_serializers\n";
     Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n"
-  end else begin
+  end
+  else begin
     (match service_details with
-     | None ->
-       Fmt.pf output_fmt "module Query_serializers = Query_serializers\n";
-       Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n"
-     | Some _ -> ());
+    | None ->
+        Fmt.pf output_fmt "module Query_serializers = Query_serializers\n";
+        Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n"
+    | Some _ -> ());
     Fmt.pf output_fmt "module Json_serializers = Json_serializers\n";
     Fmt.pf output_fmt "module Json_deserializers = Json_deserializers\n"
   end

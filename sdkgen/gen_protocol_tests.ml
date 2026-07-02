@@ -1,7 +1,6 @@
 open Base
 open Smithy_ast
 open Codegen.Ppx_util
-
 module Longident = Codegen.Ppx_longident
 
 let loc = Location.none
@@ -450,9 +449,7 @@ let is_query_service (service : Shape.serviceShapeDetails option) =
   match service with
   | None -> false
   | Some s ->
-    Trait.hasTrait s.traits (function
-      | Trait.AwsProtocolAwsQueryTrait -> true
-      | _ -> false)
+      Trait.hasTrait s.traits (function Trait.AwsProtocolAwsQueryTrait -> true | _ -> false)
 
 let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_context
     ?(with_derivings = false) ?(no_open = false)

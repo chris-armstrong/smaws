@@ -4,10 +4,5 @@
 include Ppxlib.Longident
 
 let unflatten names =
-  let rec go acc = function
-    | [] -> Some acc
-    | s :: rest -> go (Ldot (acc, s)) rest
-  in
-  match names with
-  | [] -> None
-  | head :: tail -> go (Lident head) tail
+  let rec go acc = function [] -> Some acc | s :: rest -> go (Ldot (acc, s)) rest in
+  match names with [] -> None | head :: tail -> go (Lident head) tail
