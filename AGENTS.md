@@ -112,11 +112,4 @@ The service's protocol must be implemented before generation will produce workin
 - **Comments**: only when the *why* is non-obvious; never restate what the code already says
 - **Stop after each phase** and wait for the developer to review before continuing to the next
 
----
 
-## Agent rules
-
-- Never commit, push, or modify git history — that is the developer's responsibility
-- Before touching any subsystem mentioned in `refactorings/`, read the corresponding design document
-- Write a plan to `refactorings/<topic>.md` before starting any non-trivial refactor, and maintain a `refactorings/<topic>.todo.md` as work progresses
-- Do not add libraries, change the dune-project, or modify opam files without explicit approval
