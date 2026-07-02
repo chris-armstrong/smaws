@@ -36,9 +36,29 @@ let query_empty_input_and_empty_output () =
   in
   ()
 
+let query_empty_input_and_empty_output () =
+  Eio.Switch.run ~name:"QueryEmptyInputAndEmptyOutput" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response ?body:None ~status:200 ~headers:[] ();
+  let response = EmptyInputAndEmptyOutput.request ctx () in
+  match response with
+  | Ok result ->
+      let expected = (() : Types.empty_input_and_empty_output_output) in
+      check
+        (Alcotest.testable Types.pp_empty_input_and_empty_output_output
+           Types.equal_empty_input_and_empty_output_output)
+        "expected output" expected result
+  | Error error -> failwith (EmptyInputAndEmptyOutput.error_to_string error)
+
 let empty_input_and_empty_output_test_suite : unit Alcotest.test =
   ( "aws.protocoltests.query#EmptyInputAndEmptyOutput",
-    [ ("QueryEmptyInputAndEmptyOutput", `Quick, query_empty_input_and_empty_output) ] )
+    [
+      ("QueryEmptyInputAndEmptyOutput", `Quick, query_empty_input_and_empty_output);
+      ("QueryEmptyInputAndEmptyOutput", `Quick, query_empty_input_and_empty_output);
+    ] )
 
 let aws_query_endpoint_trait () =
   Eio.Switch.run ~name:"AwsQueryEndpointTrait" @@ fun sw ->
@@ -120,20 +140,166 @@ let endpoint_with_host_label_operation_test_suite : unit Alcotest.test =
   ( "aws.protocoltests.query#EndpointWithHostLabelOperation",
     [ ("AwsQueryEndpointTraitWithHostLabel", `Quick, aws_query_endpoint_trait_with_host_label) ] )
 
+let query_query_flattened_xml_map () =
+  Eio.Switch.run ~name:"QueryQueryFlattenedXmlMap" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<FlattenedXmlMapResponse xmlns=\"https://example.com/\">\n\
+         \    <FlattenedXmlMapResult>\n\
+         \        <myMap>\n\
+         \            <key>foo</key>\n\
+         \            <value>Foo</value>\n\
+         \        </myMap>\n\
+         \        <myMap>\n\
+         \            <key>baz</key>\n\
+         \            <value>Baz</value>\n\
+         \        </myMap>\n\
+         \    </FlattenedXmlMapResult>\n\
+          </FlattenedXmlMapResponse>")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = FlattenedXmlMap.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({ my_map = Some [ ("foo", FOO); ("baz", BAZ) ] } : Types.flattened_xml_map_output)
+      in
+      check
+        (Alcotest.testable Types.pp_flattened_xml_map_output Types.equal_flattened_xml_map_output)
+        "expected output" expected result
+  | Error error -> failwith (FlattenedXmlMap.error_to_string error)
+
 let flattened_xml_map_test_suite : unit Alcotest.test =
-  ("aws.protocoltests.query#FlattenedXmlMap", [])
+  ( "aws.protocoltests.query#FlattenedXmlMap",
+    [ ("QueryQueryFlattenedXmlMap", `Quick, query_query_flattened_xml_map) ] )
+
+let query_query_flattened_xml_map_with_xml_name () =
+  Eio.Switch.run ~name:"QueryQueryFlattenedXmlMapWithXmlName" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<FlattenedXmlMapWithXmlNameResponse xmlns=\"https://example.com/\">\n\
+         \    <FlattenedXmlMapWithXmlNameResult>\n\
+         \        <KVP>\n\
+         \            <K>a</K>\n\
+         \            <V>A</V>\n\
+         \        </KVP>\n\
+         \        <KVP>\n\
+         \            <K>b</K>\n\
+         \            <V>B</V>\n\
+         \        </KVP>\n\
+         \    </FlattenedXmlMapWithXmlNameResult>\n\
+          </FlattenedXmlMapWithXmlNameResponse>")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = FlattenedXmlMapWithXmlName.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({ my_map = Some [ ("a", "A"); ("b", "B") ] }
+          : Types.flattened_xml_map_with_xml_name_output)
+      in
+      check
+        (Alcotest.testable Types.pp_flattened_xml_map_with_xml_name_output
+           Types.equal_flattened_xml_map_with_xml_name_output)
+        "expected output" expected result
+  | Error error -> failwith (FlattenedXmlMapWithXmlName.error_to_string error)
 
 let flattened_xml_map_with_xml_name_test_suite : unit Alcotest.test =
-  ("aws.protocoltests.query#FlattenedXmlMapWithXmlName", [])
+  ( "aws.protocoltests.query#FlattenedXmlMapWithXmlName",
+    [
+      ("QueryQueryFlattenedXmlMapWithXmlName", `Quick, query_query_flattened_xml_map_with_xml_name);
+    ] )
+
+let query_query_flattened_xml_map_with_xml_namespace () =
+  Eio.Switch.run ~name:"QueryQueryFlattenedXmlMapWithXmlNamespace" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<FlattenedXmlMapWithXmlNamespaceResponse xmlns=\"https://example.com/\">\n\
+         \    <FlattenedXmlMapWithXmlNamespaceResult>\n\
+         \        <KVP xmlns=\"https://the-member.example.com\">\n\
+         \            <K xmlns=\"https://the-key.example.com\">a</K>\n\
+         \            <V xmlns=\"https://the-value.example.com\">A</V>\n\
+         \        </KVP>\n\
+         \        <KVP xmlns=\"https://the-member.example.com\">\n\
+         \            <K xmlns=\"https://the-key.example.com\">b</K>\n\
+         \            <V xmlns=\"https://the-value.example.com\">B</V>\n\
+         \        </KVP>\n\
+         \    </FlattenedXmlMapWithXmlNamespaceResult>\n\
+          </FlattenedXmlMapWithXmlNamespaceResponse>")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = FlattenedXmlMapWithXmlNamespace.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({ my_map = Some [ ("a", "A"); ("b", "B") ] }
+          : Types.flattened_xml_map_with_xml_namespace_output)
+      in
+      check
+        (Alcotest.testable Types.pp_flattened_xml_map_with_xml_namespace_output
+           Types.equal_flattened_xml_map_with_xml_namespace_output)
+        "expected output" expected result
+  | Error error -> failwith (FlattenedXmlMapWithXmlNamespace.error_to_string error)
 
 let flattened_xml_map_with_xml_namespace_test_suite : unit Alcotest.test =
-  ("aws.protocoltests.query#FlattenedXmlMapWithXmlNamespace", [])
+  ( "aws.protocoltests.query#FlattenedXmlMapWithXmlNamespace",
+    [
+      ( "QueryQueryFlattenedXmlMapWithXmlNamespace",
+        `Quick,
+        query_query_flattened_xml_map_with_xml_namespace );
+    ] )
 
 let fractional_seconds_test_suite : unit Alcotest.test =
   ("aws.protocoltests.query#FractionalSeconds", [])
 
+let query_greeting_with_errors () =
+  Eio.Switch.run ~name:"QueryGreetingWithErrors" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<GreetingWithErrorsResponse xmlns=\"https://example.com/\">\n\
+         \    <GreetingWithErrorsResult>\n\
+         \        <greeting>Hello</greeting>\n\
+         \    </GreetingWithErrorsResult>\n\
+          </GreetingWithErrorsResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = GreetingWithErrors.request ctx () in
+  match response with
+  | Ok result ->
+      let expected = ({ greeting = Some "Hello" } : Types.greeting_with_errors_output) in
+      check
+        (Alcotest.testable Types.pp_greeting_with_errors_output
+           Types.equal_greeting_with_errors_output)
+        "expected output" expected result
+  | Error error -> failwith (GreetingWithErrors.error_to_string error)
+
 let greeting_with_errors_test_suite : unit Alcotest.test =
-  ("aws.protocoltests.query#GreetingWithErrors", [])
+  ( "aws.protocoltests.query#GreetingWithErrors",
+    [ ("QueryGreetingWithErrors", `Quick, query_greeting_with_errors) ] )
 
 let query_host_with_path () =
   Eio.Switch.run ~name:"QueryHostWithPath" @@ fun sw ->
@@ -171,8 +337,36 @@ let host_with_path_operation_test_suite : unit Alcotest.test =
   ( "aws.protocoltests.query#HostWithPathOperation",
     [ ("QueryHostWithPath", `Quick, query_host_with_path) ] )
 
+let query_ignores_wrapping_xml_name () =
+  Eio.Switch.run ~name:"QueryIgnoresWrappingXmlName" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<IgnoresWrappingXmlNameResponse xmlns=\"https://example.com/\">\n\
+         \    <IgnoresWrappingXmlNameResult>\n\
+         \        <foo>bar</foo>\n\
+         \    </IgnoresWrappingXmlNameResult>\n\
+          </IgnoresWrappingXmlNameResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = IgnoresWrappingXmlName.request ctx () in
+  match response with
+  | Ok result ->
+      let expected = ({ foo = Some "bar" } : Types.ignores_wrapping_xml_name_output) in
+      check
+        (Alcotest.testable Types.pp_ignores_wrapping_xml_name_output
+           Types.equal_ignores_wrapping_xml_name_output)
+        "expected output" expected result
+  | Error error -> failwith (IgnoresWrappingXmlName.error_to_string error)
+
 let ignores_wrapping_xml_name_test_suite : unit Alcotest.test =
-  ("aws.protocoltests.query#IgnoresWrappingXmlName", [])
+  ( "aws.protocoltests.query#IgnoresWrappingXmlName",
+    [ ("QueryIgnoresWrappingXmlName", `Quick, query_ignores_wrapping_xml_name) ] )
 
 let nested_structures () =
   Eio.Switch.run ~name:"NestedStructures" @@ fun sw ->
@@ -250,9 +444,26 @@ let query_no_input_and_no_output () =
   in
   ()
 
+let query_no_input_and_no_output () =
+  Eio.Switch.run ~name:"QueryNoInputAndNoOutput" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response ?body:None ~status:200 ~headers:[] ();
+  let response = NoInputAndNoOutput.request ctx () in
+  match response with
+  | Ok result ->
+      let expected = () in
+      check Alcotest.unit "expected output" expected result
+  | Error error -> failwith (NoInputAndNoOutput.error_to_string error)
+
 let no_input_and_no_output_test_suite : unit Alcotest.test =
   ( "aws.protocoltests.query#NoInputAndNoOutput",
-    [ ("QueryNoInputAndNoOutput", `Quick, query_no_input_and_no_output) ] )
+    [
+      ("QueryNoInputAndNoOutput", `Quick, query_no_input_and_no_output);
+      ("QueryNoInputAndNoOutput", `Quick, query_no_input_and_no_output);
+    ] )
 
 let query_no_input_and_output () =
   Eio.Switch.run ~name:"QueryNoInputAndOutput" @@ fun sw ->
@@ -285,9 +496,29 @@ let query_no_input_and_output () =
   in
   ()
 
+let query_no_input_and_output () =
+  Eio.Switch.run ~name:"QueryNoInputAndOutput" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response ?body:None ~status:200 ~headers:[] ();
+  let response = NoInputAndOutput.request ctx () in
+  match response with
+  | Ok result ->
+      let expected = (() : Types.no_input_and_output_output) in
+      check
+        (Alcotest.testable Types.pp_no_input_and_output_output
+           Types.equal_no_input_and_output_output)
+        "expected output" expected result
+  | Error error -> failwith (NoInputAndOutput.error_to_string error)
+
 let no_input_and_output_test_suite : unit Alcotest.test =
   ( "aws.protocoltests.query#NoInputAndOutput",
-    [ ("QueryNoInputAndOutput", `Quick, query_no_input_and_output) ] )
+    [
+      ("QueryNoInputAndOutput", `Quick, query_no_input_and_output);
+      ("QueryNoInputAndOutput", `Quick, query_no_input_and_output);
+    ] )
 
 let put_with_content_encoding_test_suite : unit Alcotest.test =
   ("aws.protocoltests.query#PutWithContentEncoding", [])
@@ -1028,8 +1259,67 @@ let query_timestamps_test_suite : unit Alcotest.test =
   ( "aws.protocoltests.query#QueryTimestamps",
     [ ("QueryTimestampsInput", `Quick, query_timestamps_input) ] )
 
+let query_recursive_shapes () =
+  Eio.Switch.run ~name:"QueryRecursiveShapes" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<RecursiveXmlShapesResponse xmlns=\"https://example.com/\">\n\
+         \    <RecursiveXmlShapesResult>\n\
+         \        <nested>\n\
+         \            <foo>Foo1</foo>\n\
+         \            <nested>\n\
+         \                <bar>Bar1</bar>\n\
+         \                <recursiveMember>\n\
+         \                    <foo>Foo2</foo>\n\
+         \                    <nested>\n\
+         \                        <bar>Bar2</bar>\n\
+         \                    </nested>\n\
+         \                </recursiveMember>\n\
+         \            </nested>\n\
+         \        </nested>\n\
+         \    </RecursiveXmlShapesResult>\n\
+          </RecursiveXmlShapesResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = RecursiveXmlShapes.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({
+           nested =
+             Some
+               {
+                 nested =
+                   Some
+                     {
+                       recursive_member =
+                         Some
+                           {
+                             nested = Some { recursive_member = None; bar = Some "Bar2" };
+                             foo = Some "Foo2";
+                           };
+                       bar = Some "Bar1";
+                     };
+                 foo = Some "Foo1";
+               };
+         }
+          : Types.recursive_xml_shapes_output)
+      in
+      check
+        (Alcotest.testable Types.pp_recursive_xml_shapes_output
+           Types.equal_recursive_xml_shapes_output)
+        "expected output" expected result
+  | Error error -> failwith (RecursiveXmlShapes.error_to_string error)
+
 let recursive_xml_shapes_test_suite : unit Alcotest.test =
-  ("aws.protocoltests.query#RecursiveXmlShapes", [])
+  ( "aws.protocoltests.query#RecursiveXmlShapes",
+    [ ("QueryRecursiveShapes", `Quick, query_recursive_shapes) ] )
 
 let query_simple_input_params_strings () =
   Eio.Switch.run ~name:"QuerySimpleInputParamsStrings" @@ fun sw ->
@@ -1526,23 +1816,869 @@ let simple_input_params_test_suite : unit Alcotest.test =
         aws_query_supports_negative_infinity_float_inputs );
     ] )
 
-let simple_scalar_xml_properties_test_suite : unit Alcotest.test =
-  ("aws.protocoltests.query#SimpleScalarXmlProperties", [])
+let query_simple_scalar_properties () =
+  Eio.Switch.run ~name:"QuerySimpleScalarProperties" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<SimpleScalarXmlPropertiesResponse xmlns=\"https://example.com/\">\n\
+         \    <SimpleScalarXmlPropertiesResult>\n\
+         \        <stringValue>string</stringValue>\n\
+         \        <emptyStringValue/>\n\
+         \        <trueBooleanValue>true</trueBooleanValue>\n\
+         \        <falseBooleanValue>false</falseBooleanValue>\n\
+         \        <byteValue>1</byteValue>\n\
+         \        <shortValue>2</shortValue>\n\
+         \        <integerValue>3</integerValue>\n\
+         \        <longValue>4</longValue>\n\
+         \        <floatValue>5.5</floatValue>\n\
+         \        <DoubleDribble>6.5</DoubleDribble>\n\
+         \    </SimpleScalarXmlPropertiesResult>\n\
+          </SimpleScalarXmlPropertiesResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = SimpleScalarXmlProperties.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({
+           double_value = Some 6.5;
+           float_value = Some 5.5;
+           long_value = Some 4;
+           integer_value = Some 3;
+           short_value = Some 2;
+           byte_value = Some 1;
+           false_boolean_value = Some false;
+           true_boolean_value = Some true;
+           empty_string_value = Some "";
+           string_value = Some "string";
+         }
+          : Types.simple_scalar_xml_properties_output)
+      in
+      check
+        (Alcotest.testable Types.pp_simple_scalar_xml_properties_output
+           Types.equal_simple_scalar_xml_properties_output)
+        "expected output" expected result
+  | Error error -> failwith (SimpleScalarXmlProperties.error_to_string error)
 
-let xml_blobs_test_suite : unit Alcotest.test = ("aws.protocoltests.query#XmlBlobs", [])
+let aws_query_supports_na_n_float_outputs () =
+  Eio.Switch.run ~name:"AwsQuerySupportsNaNFloatOutputs" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<SimpleScalarXmlPropertiesResponse xmlns=\"https://example.com/\">\n\
+         \    <SimpleScalarXmlPropertiesResult>\n\
+         \        <floatValue>NaN</floatValue>\n\
+         \        <DoubleDribble>NaN</DoubleDribble>\n\
+         \    </SimpleScalarXmlPropertiesResult>\n\
+          </SimpleScalarXmlPropertiesResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = SimpleScalarXmlProperties.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({
+           double_value = Some Float.nan;
+           float_value = Some Float.nan;
+           long_value = None;
+           integer_value = None;
+           short_value = None;
+           byte_value = None;
+           false_boolean_value = None;
+           true_boolean_value = None;
+           empty_string_value = None;
+           string_value = None;
+         }
+          : Types.simple_scalar_xml_properties_output)
+      in
+      check
+        (Alcotest.testable Types.pp_simple_scalar_xml_properties_output
+           Types.equal_simple_scalar_xml_properties_output)
+        "expected output" expected result
+  | Error error -> failwith (SimpleScalarXmlProperties.error_to_string error)
+
+let aws_query_supports_infinity_float_outputs () =
+  Eio.Switch.run ~name:"AwsQuerySupportsInfinityFloatOutputs" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<SimpleScalarXmlPropertiesResponse xmlns=\"https://example.com/\">\n\
+         \    <SimpleScalarXmlPropertiesResult>\n\
+         \        <floatValue>Infinity</floatValue>\n\
+         \        <DoubleDribble>Infinity</DoubleDribble>\n\
+         \    </SimpleScalarXmlPropertiesResult>\n\
+          </SimpleScalarXmlPropertiesResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = SimpleScalarXmlProperties.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({
+           double_value = Some Float.infinity;
+           float_value = Some Float.infinity;
+           long_value = None;
+           integer_value = None;
+           short_value = None;
+           byte_value = None;
+           false_boolean_value = None;
+           true_boolean_value = None;
+           empty_string_value = None;
+           string_value = None;
+         }
+          : Types.simple_scalar_xml_properties_output)
+      in
+      check
+        (Alcotest.testable Types.pp_simple_scalar_xml_properties_output
+           Types.equal_simple_scalar_xml_properties_output)
+        "expected output" expected result
+  | Error error -> failwith (SimpleScalarXmlProperties.error_to_string error)
+
+let aws_query_supports_negative_infinity_float_outputs () =
+  Eio.Switch.run ~name:"AwsQuerySupportsNegativeInfinityFloatOutputs" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<SimpleScalarXmlPropertiesResponse xmlns=\"https://example.com/\">\n\
+         \    <SimpleScalarXmlPropertiesResult>\n\
+         \        <floatValue>-Infinity</floatValue>\n\
+         \        <DoubleDribble>-Infinity</DoubleDribble>\n\
+         \    </SimpleScalarXmlPropertiesResult>\n\
+          </SimpleScalarXmlPropertiesResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = SimpleScalarXmlProperties.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({
+           double_value = Some Float.neg_infinity;
+           float_value = Some Float.neg_infinity;
+           long_value = None;
+           integer_value = None;
+           short_value = None;
+           byte_value = None;
+           false_boolean_value = None;
+           true_boolean_value = None;
+           empty_string_value = None;
+           string_value = None;
+         }
+          : Types.simple_scalar_xml_properties_output)
+      in
+      check
+        (Alcotest.testable Types.pp_simple_scalar_xml_properties_output
+           Types.equal_simple_scalar_xml_properties_output)
+        "expected output" expected result
+  | Error error -> failwith (SimpleScalarXmlProperties.error_to_string error)
+
+let simple_scalar_xml_properties_test_suite : unit Alcotest.test =
+  ( "aws.protocoltests.query#SimpleScalarXmlProperties",
+    [
+      ("QuerySimpleScalarProperties", `Quick, query_simple_scalar_properties);
+      ("AwsQuerySupportsNaNFloatOutputs", `Quick, aws_query_supports_na_n_float_outputs);
+      ("AwsQuerySupportsInfinityFloatOutputs", `Quick, aws_query_supports_infinity_float_outputs);
+      ( "AwsQuerySupportsNegativeInfinityFloatOutputs",
+        `Quick,
+        aws_query_supports_negative_infinity_float_outputs );
+    ] )
+
+let query_xml_blobs () =
+  Eio.Switch.run ~name:"QueryXmlBlobs" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<XmlBlobsResponse xmlns=\"https://example.com/\">\n\
+         \    <XmlBlobsResult>\n\
+         \        <data>dmFsdWU=</data>\n\
+         \    </XmlBlobsResult>\n\
+          </XmlBlobsResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = XmlBlobs.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({ data = Some (Smaws_Lib.CoreTypes.Blob.of_string "value") } : Types.xml_blobs_output)
+      in
+      check
+        (Alcotest.testable Types.pp_xml_blobs_output Types.equal_xml_blobs_output)
+        "expected output" expected result
+  | Error error -> failwith (XmlBlobs.error_to_string error)
+
+let xml_blobs_test_suite : unit Alcotest.test =
+  ("aws.protocoltests.query#XmlBlobs", [ ("QueryXmlBlobs", `Quick, query_xml_blobs) ])
+
 let xml_empty_blobs_test_suite : unit Alcotest.test = ("aws.protocoltests.query#XmlEmptyBlobs", [])
 let xml_empty_lists_test_suite : unit Alcotest.test = ("aws.protocoltests.query#XmlEmptyLists", [])
 let xml_empty_maps_test_suite : unit Alcotest.test = ("aws.protocoltests.query#XmlEmptyMaps", [])
-let xml_enums_test_suite : unit Alcotest.test = ("aws.protocoltests.query#XmlEnums", [])
-let xml_int_enums_test_suite : unit Alcotest.test = ("aws.protocoltests.query#XmlIntEnums", [])
-let xml_lists_test_suite : unit Alcotest.test = ("aws.protocoltests.query#XmlLists", [])
-let xml_maps_test_suite : unit Alcotest.test = ("aws.protocoltests.query#XmlMaps", [])
+
+let query_xml_enums () =
+  Eio.Switch.run ~name:"QueryXmlEnums" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<XmlEnumsResponse xmlns=\"https://example.com/\">\n\
+         \    <XmlEnumsResult>\n\
+         \        <fooEnum1>Foo</fooEnum1>\n\
+         \        <fooEnum2>0</fooEnum2>\n\
+         \        <fooEnum3>1</fooEnum3>\n\
+         \        <fooEnumList>\n\
+         \            <member>Foo</member>\n\
+         \            <member>0</member>\n\
+         \        </fooEnumList>\n\
+         \        <fooEnumSet>\n\
+         \            <member>Foo</member>\n\
+         \            <member>0</member>\n\
+         \        </fooEnumSet>\n\
+         \        <fooEnumMap>\n\
+         \            <entry>\n\
+         \                <key>hi</key>\n\
+         \                <value>Foo</value>\n\
+         \            </entry>\n\
+         \            <entry>\n\
+         \                <key>zero</key>\n\
+         \                <value>0</value>\n\
+         \            </entry>\n\
+         \        </fooEnumMap>\n\
+         \    </XmlEnumsResult>\n\
+          </XmlEnumsResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = XmlEnums.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({
+           foo_enum_map = Some [ ("hi", FOO); ("zero", ZERO) ];
+           foo_enum_set = Some [ FOO; ZERO ];
+           foo_enum_list = Some [ FOO; ZERO ];
+           foo_enum3 = Some ONE;
+           foo_enum2 = Some ZERO;
+           foo_enum1 = Some FOO;
+         }
+          : Types.xml_enums_output)
+      in
+      check
+        (Alcotest.testable Types.pp_xml_enums_output Types.equal_xml_enums_output)
+        "expected output" expected result
+  | Error error -> failwith (XmlEnums.error_to_string error)
+
+let xml_enums_test_suite : unit Alcotest.test =
+  ("aws.protocoltests.query#XmlEnums", [ ("QueryXmlEnums", `Quick, query_xml_enums) ])
+
+let query_xml_int_enums () =
+  Eio.Switch.run ~name:"QueryXmlIntEnums" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<XmlIntEnumsResponse xmlns=\"https://example.com/\">\n\
+         \    <XmlIntEnumsResult>\n\
+         \        <intEnum1>1</intEnum1>\n\
+         \        <intEnum2>2</intEnum2>\n\
+         \        <intEnum3>3</intEnum3>\n\
+         \        <intEnumList>\n\
+         \            <member>1</member>\n\
+         \            <member>2</member>\n\
+         \        </intEnumList>\n\
+         \        <intEnumSet>\n\
+         \            <member>1</member>\n\
+         \            <member>2</member>\n\
+         \        </intEnumSet>\n\
+         \        <intEnumMap>\n\
+         \            <entry>\n\
+         \                <key>a</key>\n\
+         \                <value>1</value>\n\
+         \            </entry>\n\
+         \            <entry>\n\
+         \                <key>b</key>\n\
+         \                <value>2</value>\n\
+         \            </entry>\n\
+         \        </intEnumMap>\n\
+         \    </XmlIntEnumsResult>\n\
+          </XmlIntEnumsResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = XmlIntEnums.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({
+           int_enum_map = Some [ ("a", A); ("b", B) ];
+           int_enum_set = Some [ A; B ];
+           int_enum_list = Some [ A; B ];
+           int_enum3 = Some C;
+           int_enum2 = Some B;
+           int_enum1 = Some A;
+         }
+          : Types.xml_int_enums_output)
+      in
+      check
+        (Alcotest.testable Types.pp_xml_int_enums_output Types.equal_xml_int_enums_output)
+        "expected output" expected result
+  | Error error -> failwith (XmlIntEnums.error_to_string error)
+
+let xml_int_enums_test_suite : unit Alcotest.test =
+  ("aws.protocoltests.query#XmlIntEnums", [ ("QueryXmlIntEnums", `Quick, query_xml_int_enums) ])
+
+let query_xml_lists () =
+  Eio.Switch.run ~name:"QueryXmlLists" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<XmlListsResponse xmlns=\"https://example.com/\">\n\
+         \    <XmlListsResult>\n\
+         \        <stringList>\n\
+         \            <member>foo</member>\n\
+         \            <member>bar</member>\n\
+         \        </stringList>\n\
+         \        <stringSet>\n\
+         \            <member>foo</member>\n\
+         \            <member>bar</member>\n\
+         \        </stringSet>\n\
+         \        <integerList>\n\
+         \            <member>1</member>\n\
+         \            <member>2</member>\n\
+         \        </integerList>\n\
+         \        <booleanList>\n\
+         \            <member>true</member>\n\
+         \            <member>false</member>\n\
+         \        </booleanList>\n\
+         \        <timestampList>\n\
+         \            <member>2014-04-29T18:30:38Z</member>\n\
+         \            <member>2014-04-29T18:30:38Z</member>\n\
+         \        </timestampList>\n\
+         \        <enumList>\n\
+         \            <member>Foo</member>\n\
+         \            <member>0</member>\n\
+         \        </enumList>\n\
+         \        <intEnumList>\n\
+         \            <member>1</member>\n\
+         \            <member>2</member>\n\
+         \        </intEnumList>\n\
+         \        <nestedStringList>\n\
+         \            <member>\n\
+         \                <member>foo</member>\n\
+         \                <member>bar</member>\n\
+         \            </member>\n\
+         \            <member>\n\
+         \                <member>baz</member>\n\
+         \                <member>qux</member>\n\
+         \            </member>\n\
+         \        </nestedStringList>\n\
+         \        <renamed>\n\
+         \            <item>foo</item>\n\
+         \            <item>bar</item>\n\
+         \        </renamed>\n\
+         \        <flattenedList>hi</flattenedList>\n\
+         \        <flattenedList>bye</flattenedList>\n\
+         \        <customName>yep</customName>\n\
+         \        <customName>nope</customName>\n\
+         \        <flattenedListWithMemberNamespace \
+          xmlns=\"https://xml-member.example.com\">a</flattenedListWithMemberNamespace>\n\
+         \        <flattenedListWithMemberNamespace \
+          xmlns=\"https://xml-member.example.com\">b</flattenedListWithMemberNamespace>\n\
+         \        <flattenedListWithNamespace>a</flattenedListWithNamespace>\n\
+         \        <flattenedListWithNamespace>b</flattenedListWithNamespace>\n\
+         \        <myStructureList>\n\
+         \            <item>\n\
+         \                <value>1</value>\n\
+         \                <other>2</other>\n\
+         \            </item>\n\
+         \            <item>\n\
+         \                <value>3</value>\n\
+         \                <other>4</other>\n\
+         \            </item>\n\
+         \        </myStructureList>\n\
+         \    </XmlListsResult>\n\
+          </XmlListsResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = XmlLists.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({
+           structure_list = Some [ { b = Some "2"; a = Some "1" }; { b = Some "4"; a = Some "3" } ];
+           flattened_list_with_namespace = Some [ "a"; "b" ];
+           flattened_list_with_member_namespace = Some [ "a"; "b" ];
+           flattened_list2 = Some [ "yep"; "nope" ];
+           flattened_list = Some [ "hi"; "bye" ];
+           renamed_list_members = Some [ "foo"; "bar" ];
+           nested_string_list = Some [ [ "foo"; "bar" ]; [ "baz"; "qux" ] ];
+           int_enum_list = Some [ A; B ];
+           enum_list = Some [ FOO; ZERO ];
+           timestamp_list =
+             Some
+               [
+                 Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.);
+                 Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.);
+               ];
+           boolean_list = Some [ true; false ];
+           integer_list = Some [ 1; 2 ];
+           string_set = Some [ "foo"; "bar" ];
+           string_list = Some [ "foo"; "bar" ];
+         }
+          : Types.xml_lists_output)
+      in
+      check
+        (Alcotest.testable Types.pp_xml_lists_output Types.equal_xml_lists_output)
+        "expected output" expected result
+  | Error error -> failwith (XmlLists.error_to_string error)
+
+let xml_lists_test_suite : unit Alcotest.test =
+  ("aws.protocoltests.query#XmlLists", [ ("QueryXmlLists", `Quick, query_xml_lists) ])
+
+let query_xml_maps () =
+  Eio.Switch.run ~name:"QueryXmlMaps" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<XmlMapsResponse xmlns=\"https://example.com/\">\n\
+         \    <XmlMapsResult>\n\
+         \        <myMap>\n\
+         \            <entry>\n\
+         \                <key>foo</key>\n\
+         \                <value>\n\
+         \                    <hi>there</hi>\n\
+         \                </value>\n\
+         \            </entry>\n\
+         \            <entry>\n\
+         \                <key>baz</key>\n\
+         \                <value>\n\
+         \                    <hi>bye</hi>\n\
+         \                </value>\n\
+         \            </entry>\n\
+         \        </myMap>\n\
+         \    </XmlMapsResult>\n\
+          </XmlMapsResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = XmlMaps.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({ my_map = Some [ ("foo", { hi = Some "there" }); ("baz", { hi = Some "bye" }) ] }
+          : Types.xml_maps_output)
+      in
+      check
+        (Alcotest.testable Types.pp_xml_maps_output Types.equal_xml_maps_output)
+        "expected output" expected result
+  | Error error -> failwith (XmlMaps.error_to_string error)
+
+let xml_maps_test_suite : unit Alcotest.test =
+  ("aws.protocoltests.query#XmlMaps", [ ("QueryXmlMaps", `Quick, query_xml_maps) ])
+
+let query_query_xml_maps_xml_name () =
+  Eio.Switch.run ~name:"QueryQueryXmlMapsXmlName" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<XmlMapsXmlNameResponse xmlns=\"https://example.com/\">\n\
+         \    <XmlMapsXmlNameResult>\n\
+         \        <myMap>\n\
+         \            <entry>\n\
+         \                <Attribute>foo</Attribute>\n\
+         \                <Setting>\n\
+         \                    <hi>there</hi>\n\
+         \                </Setting>\n\
+         \            </entry>\n\
+         \            <entry>\n\
+         \                <Attribute>baz</Attribute>\n\
+         \                <Setting>\n\
+         \                    <hi>bye</hi>\n\
+         \                </Setting>\n\
+         \            </entry>\n\
+         \        </myMap>\n\
+         \    </XmlMapsXmlNameResult>\n\
+          </XmlMapsXmlNameResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = XmlMapsXmlName.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({ my_map = Some [ ("foo", { hi = Some "there" }); ("baz", { hi = Some "bye" }) ] }
+          : Types.xml_maps_xml_name_output)
+      in
+      check
+        (Alcotest.testable Types.pp_xml_maps_xml_name_output Types.equal_xml_maps_xml_name_output)
+        "expected output" expected result
+  | Error error -> failwith (XmlMapsXmlName.error_to_string error)
 
 let xml_maps_xml_name_test_suite : unit Alcotest.test =
-  ("aws.protocoltests.query#XmlMapsXmlName", [])
+  ( "aws.protocoltests.query#XmlMapsXmlName",
+    [ ("QueryQueryXmlMapsXmlName", `Quick, query_query_xml_maps_xml_name) ] )
 
-let xml_namespaces_test_suite : unit Alcotest.test = ("aws.protocoltests.query#XmlNamespaces", [])
-let xml_timestamps_test_suite : unit Alcotest.test = ("aws.protocoltests.query#XmlTimestamps", [])
+let query_xml_namespaces () =
+  Eio.Switch.run ~name:"QueryXmlNamespaces" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<XmlNamespacesResponse xmlns=\"https://example.com/\">\n\
+         \    <XmlNamespacesResult>\n\
+         \        <nested>\n\
+         \            <foo xmlns:baz=\"http://baz.com\">Foo</foo>\n\
+         \            <values xmlns=\"http://qux.com\">\n\
+         \                <member xmlns=\"http://bux.com\">Bar</member>\n\
+         \                <member xmlns=\"http://bux.com\">Baz</member>\n\
+         \            </values>\n\
+         \        </nested>\n\
+         \    </XmlNamespacesResult>\n\
+          </XmlNamespacesResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = XmlNamespaces.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({ nested = Some { values = Some [ "Bar"; "Baz" ]; foo = Some "Foo" } }
+          : Types.xml_namespaces_output)
+      in
+      check
+        (Alcotest.testable Types.pp_xml_namespaces_output Types.equal_xml_namespaces_output)
+        "expected output" expected result
+  | Error error -> failwith (XmlNamespaces.error_to_string error)
+
+let xml_namespaces_test_suite : unit Alcotest.test =
+  ("aws.protocoltests.query#XmlNamespaces", [ ("QueryXmlNamespaces", `Quick, query_xml_namespaces) ])
+
+let query_xml_timestamps () =
+  Eio.Switch.run ~name:"QueryXmlTimestamps" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<XmlTimestampsResponse xmlns=\"https://example.com/\">\n\
+         \    <XmlTimestampsResult>\n\
+         \        <normal>2014-04-29T18:30:38Z</normal>\n\
+         \    </XmlTimestampsResult>\n\
+          </XmlTimestampsResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = XmlTimestamps.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({
+           http_date_on_target = None;
+           http_date = None;
+           epoch_seconds_on_target = None;
+           epoch_seconds = None;
+           date_time_on_target = None;
+           date_time = None;
+           normal = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+         }
+          : Types.xml_timestamps_output)
+      in
+      check
+        (Alcotest.testable Types.pp_xml_timestamps_output Types.equal_xml_timestamps_output)
+        "expected output" expected result
+  | Error error -> failwith (XmlTimestamps.error_to_string error)
+
+let query_xml_timestamps_with_date_time_format () =
+  Eio.Switch.run ~name:"QueryXmlTimestampsWithDateTimeFormat" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<XmlTimestampsResponse xmlns=\"https://example.com/\">\n\
+         \    <XmlTimestampsResult>\n\
+         \        <dateTime>2014-04-29T18:30:38Z</dateTime>\n\
+         \    </XmlTimestampsResult>\n\
+          </XmlTimestampsResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = XmlTimestamps.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({
+           http_date_on_target = None;
+           http_date = None;
+           epoch_seconds_on_target = None;
+           epoch_seconds = None;
+           date_time_on_target = None;
+           date_time = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           normal = None;
+         }
+          : Types.xml_timestamps_output)
+      in
+      check
+        (Alcotest.testable Types.pp_xml_timestamps_output Types.equal_xml_timestamps_output)
+        "expected output" expected result
+  | Error error -> failwith (XmlTimestamps.error_to_string error)
+
+let query_xml_timestamps_with_date_time_on_target_format () =
+  Eio.Switch.run ~name:"QueryXmlTimestampsWithDateTimeOnTargetFormat" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<XmlTimestampsResponse xmlns=\"https://example.com/\">\n\
+         \    <XmlTimestampsResult>\n\
+         \        <dateTimeOnTarget>2014-04-29T18:30:38Z</dateTimeOnTarget>\n\
+         \    </XmlTimestampsResult>\n\
+          </XmlTimestampsResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = XmlTimestamps.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({
+           http_date_on_target = None;
+           http_date = None;
+           epoch_seconds_on_target = None;
+           epoch_seconds = None;
+           date_time_on_target =
+             Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           date_time = None;
+           normal = None;
+         }
+          : Types.xml_timestamps_output)
+      in
+      check
+        (Alcotest.testable Types.pp_xml_timestamps_output Types.equal_xml_timestamps_output)
+        "expected output" expected result
+  | Error error -> failwith (XmlTimestamps.error_to_string error)
+
+let query_xml_timestamps_with_epoch_seconds_format () =
+  Eio.Switch.run ~name:"QueryXmlTimestampsWithEpochSecondsFormat" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<XmlTimestampsResponse xmlns=\"https://example.com/\">\n\
+         \    <XmlTimestampsResult>\n\
+         \        <epochSeconds>1398796238</epochSeconds>\n\
+         \    </XmlTimestampsResult>\n\
+          </XmlTimestampsResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = XmlTimestamps.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({
+           http_date_on_target = None;
+           http_date = None;
+           epoch_seconds_on_target = None;
+           epoch_seconds = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           date_time_on_target = None;
+           date_time = None;
+           normal = None;
+         }
+          : Types.xml_timestamps_output)
+      in
+      check
+        (Alcotest.testable Types.pp_xml_timestamps_output Types.equal_xml_timestamps_output)
+        "expected output" expected result
+  | Error error -> failwith (XmlTimestamps.error_to_string error)
+
+let query_xml_timestamps_with_epoch_seconds_on_target_format () =
+  Eio.Switch.run ~name:"QueryXmlTimestampsWithEpochSecondsOnTargetFormat" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<XmlTimestampsResponse xmlns=\"https://example.com/\">\n\
+         \    <XmlTimestampsResult>\n\
+         \        <epochSecondsOnTarget>1398796238</epochSecondsOnTarget>\n\
+         \    </XmlTimestampsResult>\n\
+          </XmlTimestampsResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = XmlTimestamps.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({
+           http_date_on_target = None;
+           http_date = None;
+           epoch_seconds_on_target =
+             Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           epoch_seconds = None;
+           date_time_on_target = None;
+           date_time = None;
+           normal = None;
+         }
+          : Types.xml_timestamps_output)
+      in
+      check
+        (Alcotest.testable Types.pp_xml_timestamps_output Types.equal_xml_timestamps_output)
+        "expected output" expected result
+  | Error error -> failwith (XmlTimestamps.error_to_string error)
+
+let query_xml_timestamps_with_http_date_format () =
+  Eio.Switch.run ~name:"QueryXmlTimestampsWithHttpDateFormat" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<XmlTimestampsResponse xmlns=\"https://example.com/\">\n\
+         \    <XmlTimestampsResult>\n\
+         \        <httpDate>Tue, 29 Apr 2014 18:30:38 GMT</httpDate>\n\
+         \    </XmlTimestampsResult>\n\
+          </XmlTimestampsResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = XmlTimestamps.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({
+           http_date_on_target = None;
+           http_date = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           epoch_seconds_on_target = None;
+           epoch_seconds = None;
+           date_time_on_target = None;
+           date_time = None;
+           normal = None;
+         }
+          : Types.xml_timestamps_output)
+      in
+      check
+        (Alcotest.testable Types.pp_xml_timestamps_output Types.equal_xml_timestamps_output)
+        "expected output" expected result
+  | Error error -> failwith (XmlTimestamps.error_to_string error)
+
+let query_xml_timestamps_with_http_date_on_target_format () =
+  Eio.Switch.run ~name:"QueryXmlTimestampsWithHttpDateOnTargetFormat" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<XmlTimestampsResponse xmlns=\"https://example.com/\">\n\
+         \    <XmlTimestampsResult>\n\
+         \        <httpDateOnTarget>Tue, 29 Apr 2014 18:30:38 GMT</httpDateOnTarget>\n\
+         \    </XmlTimestampsResult>\n\
+          </XmlTimestampsResponse>\n")
+    ~status:200
+    ~headers:[ ("Content-Type", "text/xml") ]
+    ();
+  let response = XmlTimestamps.request ctx () in
+  match response with
+  | Ok result ->
+      let expected =
+        ({
+           http_date_on_target =
+             Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           http_date = None;
+           epoch_seconds_on_target = None;
+           epoch_seconds = None;
+           date_time_on_target = None;
+           date_time = None;
+           normal = None;
+         }
+          : Types.xml_timestamps_output)
+      in
+      check
+        (Alcotest.testable Types.pp_xml_timestamps_output Types.equal_xml_timestamps_output)
+        "expected output" expected result
+  | Error error -> failwith (XmlTimestamps.error_to_string error)
+
+let xml_timestamps_test_suite : unit Alcotest.test =
+  ( "aws.protocoltests.query#XmlTimestamps",
+    [
+      ("QueryXmlTimestamps", `Quick, query_xml_timestamps);
+      ("QueryXmlTimestampsWithDateTimeFormat", `Quick, query_xml_timestamps_with_date_time_format);
+      ( "QueryXmlTimestampsWithDateTimeOnTargetFormat",
+        `Quick,
+        query_xml_timestamps_with_date_time_on_target_format );
+      ( "QueryXmlTimestampsWithEpochSecondsFormat",
+        `Quick,
+        query_xml_timestamps_with_epoch_seconds_format );
+      ( "QueryXmlTimestampsWithEpochSecondsOnTargetFormat",
+        `Quick,
+        query_xml_timestamps_with_epoch_seconds_on_target_format );
+      ("QueryXmlTimestampsWithHttpDateFormat", `Quick, query_xml_timestamps_with_http_date_format);
+      ( "QueryXmlTimestampsWithHttpDateOnTargetFormat",
+        `Quick,
+        query_xml_timestamps_with_http_date_on_target_format );
+    ] )
 
 let () =
   Eio_main.run @@ fun env ->
