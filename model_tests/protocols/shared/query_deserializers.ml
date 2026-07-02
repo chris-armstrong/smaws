@@ -36,20 +36,27 @@ let string_set_of_xml i = Smaws_Lib.Xml.Parse.Read.elements i "member" ()
 let string_map_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
     (fun i _ ->
-      (Smaws_Lib.Xml.Parse.Read.element i "key" (), Smaws_Lib.Xml.Parse.Read.element i "value" ()))
+      let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+      let v = Smaws_Lib.Xml.Parse.Read.element i "value" () in
+      (k, v))
     ()
 
 let string_list_of_xml i = Smaws_Lib.Xml.Parse.Read.elements i "member" ()
 
 let string_list_map_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
-    (fun i _ -> (Smaws_Lib.Xml.Parse.Read.element i "key" (), string_list_of_xml i))
+    (fun i _ ->
+      let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+      let v = Smaws_Lib.Xml.Parse.Read.sequence i "value" (fun i _ -> string_list_of_xml i) () in
+      (k, v))
     ()
 
 let sparse_string_map_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
     (fun i _ ->
-      (Smaws_Lib.Xml.Parse.Read.element i "key" (), Smaws_Lib.Xml.Parse.Read.element i "value" ()))
+      let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+      let v = Smaws_Lib.Xml.Parse.Read.element i "value" () in
+      (k, v))
     ()
 
 let sparse_string_list_of_xml i = Smaws_Lib.Xml.Parse.Read.elements i "member" ()
@@ -91,7 +98,10 @@ let integer_enum_set_of_xml i =
 
 let integer_enum_map_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
-    (fun i _ -> (Smaws_Lib.Xml.Parse.Read.element i "key" (), integer_enum_of_xml i))
+    (fun i _ ->
+      let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+      let v = Smaws_Lib.Xml.Parse.Read.sequence i "value" (fun i _ -> integer_enum_of_xml i) () in
+      (k, v))
     ()
 
 let integer_enum_list_of_xml i =
@@ -123,7 +133,10 @@ let foo_enum_set_of_xml i =
 
 let foo_enum_map_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
-    (fun i _ -> (Smaws_Lib.Xml.Parse.Read.element i "key" (), foo_enum_of_xml i))
+    (fun i _ ->
+      let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+      let v = Smaws_Lib.Xml.Parse.Read.sequence i "value" (fun i _ -> foo_enum_of_xml i) () in
+      (k, v))
     ()
 
 let foo_enum_list_of_xml i =

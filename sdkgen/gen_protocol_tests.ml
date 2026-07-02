@@ -426,7 +426,9 @@ let make_response_test_str ~namespace_resolver ~shape_resolver ~input_shape ~out
                in
                let testable =
                  B.pexp_apply
-                   (B.pexp_ident (Location.mknoloc (make_lident ~names:[ "Alcotest"; "testable" ])))
+                   (B.pexp_ident
+                      (Location.mknoloc
+                         (make_lident ~names:[ "Alcotest_http"; "testable_nan_aware" ])))
                    [ (Nolabel, pp_func); (Nolabel, equal_func) ]
                in
                let type_expr =

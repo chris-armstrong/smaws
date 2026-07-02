@@ -30,10 +30,8 @@ let xml_timestamps_output_of_xml i =
       | "httpDate" ->
           r_http_date :=
             Some
-              (let ts, _, _ =
-                 Result.get_ok (Ptime.of_rfc3339 (Smaws_Lib.Xml.Parse.Read.element i "httpDate" ()))
-               in
-               ts)
+              (Smaws_Lib.Protocols.AwsQuery.Deserialize.timestamp_httpdate_of_string
+                 (Smaws_Lib.Xml.Parse.Read.element i "httpDate" ()))
       | "epochSecondsOnTarget" ->
           r_epoch_seconds_on_target :=
             Some
@@ -43,11 +41,8 @@ let xml_timestamps_output_of_xml i =
       | "epochSeconds" ->
           r_epoch_seconds :=
             Some
-              (let ts, _, _ =
-                 Result.get_ok
-                   (Ptime.of_rfc3339 (Smaws_Lib.Xml.Parse.Read.element i "epochSeconds" ()))
-               in
-               ts)
+              (Smaws_Lib.Protocols.AwsQuery.Deserialize.timestamp_epoch_of_string
+                 (Smaws_Lib.Xml.Parse.Read.element i "epochSeconds" ()))
       | "dateTimeOnTarget" ->
           r_date_time_on_target :=
             Some
@@ -57,17 +52,13 @@ let xml_timestamps_output_of_xml i =
       | "dateTime" ->
           r_date_time :=
             Some
-              (let ts, _, _ =
-                 Result.get_ok (Ptime.of_rfc3339 (Smaws_Lib.Xml.Parse.Read.element i "dateTime" ()))
-               in
-               ts)
+              (Smaws_Lib.Protocols.AwsQuery.Deserialize.timestamp_iso_of_string
+                 (Smaws_Lib.Xml.Parse.Read.element i "dateTime" ()))
       | "normal" ->
           r_normal :=
             Some
-              (let ts, _, _ =
-                 Result.get_ok (Ptime.of_rfc3339 (Smaws_Lib.Xml.Parse.Read.element i "normal" ()))
-               in
-               ts)
+              (Smaws_Lib.Protocols.AwsQuery.Deserialize.timestamp_iso_of_string
+                 (Smaws_Lib.Xml.Parse.Read.element i "normal" ()))
       | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
   ({
      http_date_on_target = ( ! ) r_http_date_on_target;
@@ -113,8 +104,13 @@ let xml_namespaces_output_of_xml i =
 let xml_maps_xml_name_output_map_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
     (fun i _ ->
-      ( Smaws_Lib.Xml.Parse.Read.element i "Attribute" (),
-        Shared.Query_deserializers.greeting_struct_of_xml i ))
+      let k = Smaws_Lib.Xml.Parse.Read.element i "Attribute" () in
+      let v =
+        Smaws_Lib.Xml.Parse.Read.sequence i "Setting"
+          (fun i _ -> Shared.Query_deserializers.greeting_struct_of_xml i)
+          ()
+      in
+      (k, v))
     ()
 
 let xml_maps_xml_name_output_of_xml i =
@@ -128,8 +124,13 @@ let xml_maps_xml_name_output_of_xml i =
                  (fun i _ ->
                    Smaws_Lib.Xml.Parse.Read.sequences i "entry"
                      (fun i _ ->
-                       ( Smaws_Lib.Xml.Parse.Read.element i "Attribute" (),
-                         Shared.Query_deserializers.greeting_struct_of_xml i ))
+                       let k = Smaws_Lib.Xml.Parse.Read.element i "Attribute" () in
+                       let v =
+                         Smaws_Lib.Xml.Parse.Read.sequence i "Setting"
+                           (fun i _ -> Shared.Query_deserializers.greeting_struct_of_xml i)
+                           ()
+                       in
+                       (k, v))
                      ())
                  ())
       | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
@@ -138,8 +139,13 @@ let xml_maps_xml_name_output_of_xml i =
 let xml_maps_output_map_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
     (fun i _ ->
-      ( Smaws_Lib.Xml.Parse.Read.element i "key" (),
-        Shared.Query_deserializers.greeting_struct_of_xml i ))
+      let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+      let v =
+        Smaws_Lib.Xml.Parse.Read.sequence i "value"
+          (fun i _ -> Shared.Query_deserializers.greeting_struct_of_xml i)
+          ()
+      in
+      (k, v))
     ()
 
 let xml_maps_output_of_xml i =
@@ -153,8 +159,13 @@ let xml_maps_output_of_xml i =
                  (fun i _ ->
                    Smaws_Lib.Xml.Parse.Read.sequences i "entry"
                      (fun i _ ->
-                       ( Smaws_Lib.Xml.Parse.Read.element i "key" (),
-                         Shared.Query_deserializers.greeting_struct_of_xml i ))
+                       let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+                       let v =
+                         Smaws_Lib.Xml.Parse.Read.sequence i "value"
+                           (fun i _ -> Shared.Query_deserializers.greeting_struct_of_xml i)
+                           ()
+                       in
+                       (k, v))
                      ())
                  ())
       | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
@@ -221,28 +232,14 @@ let xml_lists_output_of_xml i =
                  ())
       | "flattenedListWithNamespace" ->
           r_flattened_list_with_namespace :=
-            Some
-              (Smaws_Lib.Xml.Parse.Read.sequence i "flattenedListWithNamespace"
-                 (fun i _ -> Smaws_Lib.Xml.Parse.Read.elements i "member" ())
-                 ())
+            Some (Smaws_Lib.Xml.Parse.Read.elements i "flattenedListWithNamespace" ())
       | "flattenedListWithMemberNamespace" ->
           r_flattened_list_with_member_namespace :=
-            Some
-              (Smaws_Lib.Xml.Parse.Read.sequence i "flattenedListWithMemberNamespace"
-                 (fun i _ -> Smaws_Lib.Xml.Parse.Read.elements i "member" ())
-                 ())
+            Some (Smaws_Lib.Xml.Parse.Read.elements i "flattenedListWithMemberNamespace" ())
       | "customName" ->
-          r_flattened_list2 :=
-            Some
-              (Smaws_Lib.Xml.Parse.Read.sequence i "customName"
-                 (fun i _ -> Smaws_Lib.Xml.Parse.Read.elements i "item" ())
-                 ())
+          r_flattened_list2 := Some (Smaws_Lib.Xml.Parse.Read.elements i "customName" ())
       | "flattenedList" ->
-          r_flattened_list :=
-            Some
-              (Smaws_Lib.Xml.Parse.Read.sequence i "flattenedList"
-                 (fun i _ -> Smaws_Lib.Xml.Parse.Read.elements i "item" ())
-                 ())
+          r_flattened_list := Some (Smaws_Lib.Xml.Parse.Read.elements i "flattenedList" ())
       | "renamed" ->
           r_renamed_list_members :=
             Some
@@ -353,8 +350,13 @@ let xml_int_enums_output_of_xml i =
                  (fun i _ ->
                    Smaws_Lib.Xml.Parse.Read.sequences i "entry"
                      (fun i _ ->
-                       ( Smaws_Lib.Xml.Parse.Read.element i "key" (),
-                         Shared.Query_deserializers.integer_enum_of_xml i ))
+                       let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+                       let v =
+                         Smaws_Lib.Xml.Parse.Read.sequence i "value"
+                           (fun i _ -> Shared.Query_deserializers.integer_enum_of_xml i)
+                           ()
+                       in
+                       (k, v))
                      ())
                  ())
       | "intEnumSet" ->
@@ -421,8 +423,13 @@ let xml_enums_output_of_xml i =
                  (fun i _ ->
                    Smaws_Lib.Xml.Parse.Read.sequences i "entry"
                      (fun i _ ->
-                       ( Smaws_Lib.Xml.Parse.Read.element i "key" (),
-                         Shared.Query_deserializers.foo_enum_of_xml i ))
+                       let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+                       let v =
+                         Smaws_Lib.Xml.Parse.Read.sequence i "value"
+                           (fun i _ -> Shared.Query_deserializers.foo_enum_of_xml i)
+                           ()
+                       in
+                       (k, v))
                      ())
                  ())
       | "fooEnumSet" ->
@@ -683,19 +690,13 @@ let query_timestamps_input_of_xml i =
       | "epochMember" ->
           r_epoch_member :=
             Some
-              (let ts, _, _ =
-                 Result.get_ok
-                   (Ptime.of_rfc3339 (Smaws_Lib.Xml.Parse.Read.element i "epochMember" ()))
-               in
-               ts)
+              (Smaws_Lib.Protocols.AwsQuery.Deserialize.timestamp_epoch_of_string
+                 (Smaws_Lib.Xml.Parse.Read.element i "epochMember" ()))
       | "normalFormat" ->
           r_normal_format :=
             Some
-              (let ts, _, _ =
-                 Result.get_ok
-                   (Ptime.of_rfc3339 (Smaws_Lib.Xml.Parse.Read.element i "normalFormat" ()))
-               in
-               ts)
+              (Smaws_Lib.Protocols.AwsQuery.Deserialize.timestamp_iso_of_string
+                 (Smaws_Lib.Xml.Parse.Read.element i "normalFormat" ()))
       | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
   ({
      epoch_target = ( ! ) r_epoch_target;
@@ -707,20 +708,33 @@ let query_timestamps_input_of_xml i =
 let complex_map_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
     (fun i _ ->
-      ( Smaws_Lib.Xml.Parse.Read.element i "key" (),
-        Shared.Query_deserializers.greeting_struct_of_xml i ))
+      let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+      let v =
+        Smaws_Lib.Xml.Parse.Read.sequence i "value"
+          (fun i _ -> Shared.Query_deserializers.greeting_struct_of_xml i)
+          ()
+      in
+      (k, v))
     ()
 
 let map_with_xml_name_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
     (fun i _ ->
-      (Smaws_Lib.Xml.Parse.Read.element i "K" (), Smaws_Lib.Xml.Parse.Read.element i "V" ()))
+      let k = Smaws_Lib.Xml.Parse.Read.element i "K" () in
+      let v = Smaws_Lib.Xml.Parse.Read.element i "V" () in
+      (k, v))
     ()
 
 let map_of_lists_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
     (fun i _ ->
-      (Smaws_Lib.Xml.Parse.Read.element i "key" (), Shared.Query_deserializers.string_list_of_xml i))
+      let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+      let v =
+        Smaws_Lib.Xml.Parse.Read.sequence i "value"
+          (fun i _ -> Shared.Query_deserializers.string_list_of_xml i)
+          ()
+      in
+      (k, v))
     ()
 
 let nested_struct_with_map_of_xml i =
@@ -734,8 +748,9 @@ let nested_struct_with_map_of_xml i =
                  (fun i _ ->
                    Smaws_Lib.Xml.Parse.Read.sequences i "entry"
                      (fun i _ ->
-                       ( Smaws_Lib.Xml.Parse.Read.element i "key" (),
-                         Smaws_Lib.Xml.Parse.Read.element i "value" () ))
+                       let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+                       let v = Smaws_Lib.Xml.Parse.Read.element i "value" () in
+                       (k, v))
                      ())
                  ())
       | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
@@ -775,31 +790,32 @@ let query_maps_input_of_xml i =
                  (fun i _ ->
                    Smaws_Lib.Xml.Parse.Read.sequences i "entry"
                      (fun i _ ->
-                       ( Smaws_Lib.Xml.Parse.Read.element i "key" (),
-                         Shared.Query_deserializers.string_list_of_xml i ))
+                       let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+                       let v =
+                         Smaws_Lib.Xml.Parse.Read.sequence i "value"
+                           (fun i _ -> Shared.Query_deserializers.string_list_of_xml i)
+                           ()
+                       in
+                       (k, v))
                      ())
                  ())
       | "Hi" ->
           r_flattened_map_with_xml_name :=
             Some
-              (Smaws_Lib.Xml.Parse.Read.sequence i "Hi"
+              (Smaws_Lib.Xml.Parse.Read.sequences i "Hi"
                  (fun i _ ->
-                   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
-                     (fun i _ ->
-                       ( Smaws_Lib.Xml.Parse.Read.element i "K" (),
-                         Smaws_Lib.Xml.Parse.Read.element i "V" () ))
-                     ())
+                   let k = Smaws_Lib.Xml.Parse.Read.element i "K" () in
+                   let v = Smaws_Lib.Xml.Parse.Read.element i "V" () in
+                   (k, v))
                  ())
       | "FlattenedMap" ->
           r_flattened_map :=
             Some
-              (Smaws_Lib.Xml.Parse.Read.sequence i "FlattenedMap"
+              (Smaws_Lib.Xml.Parse.Read.sequences i "FlattenedMap"
                  (fun i _ ->
-                   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
-                     (fun i _ ->
-                       ( Smaws_Lib.Xml.Parse.Read.element i "key" (),
-                         Smaws_Lib.Xml.Parse.Read.element i "value" () ))
-                     ())
+                   let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+                   let v = Smaws_Lib.Xml.Parse.Read.element i "value" () in
+                   (k, v))
                  ())
       | "MapWithXmlMemberName" ->
           r_map_with_xml_member_name :=
@@ -808,8 +824,9 @@ let query_maps_input_of_xml i =
                  (fun i _ ->
                    Smaws_Lib.Xml.Parse.Read.sequences i "entry"
                      (fun i _ ->
-                       ( Smaws_Lib.Xml.Parse.Read.element i "K" (),
-                         Smaws_Lib.Xml.Parse.Read.element i "V" () ))
+                       let k = Smaws_Lib.Xml.Parse.Read.element i "K" () in
+                       let v = Smaws_Lib.Xml.Parse.Read.element i "V" () in
+                       (k, v))
                      ())
                  ())
       | "ComplexMapArg" ->
@@ -819,8 +836,13 @@ let query_maps_input_of_xml i =
                  (fun i _ ->
                    Smaws_Lib.Xml.Parse.Read.sequences i "entry"
                      (fun i _ ->
-                       ( Smaws_Lib.Xml.Parse.Read.element i "key" (),
-                         Shared.Query_deserializers.greeting_struct_of_xml i ))
+                       let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+                       let v =
+                         Smaws_Lib.Xml.Parse.Read.sequence i "value"
+                           (fun i _ -> Shared.Query_deserializers.greeting_struct_of_xml i)
+                           ()
+                       in
+                       (k, v))
                      ())
                  ())
       | "Foo" ->
@@ -830,8 +852,9 @@ let query_maps_input_of_xml i =
                  (fun i _ ->
                    Smaws_Lib.Xml.Parse.Read.sequences i "entry"
                      (fun i _ ->
-                       ( Smaws_Lib.Xml.Parse.Read.element i "key" (),
-                         Smaws_Lib.Xml.Parse.Read.element i "value" () ))
+                       let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+                       let v = Smaws_Lib.Xml.Parse.Read.element i "value" () in
+                       (k, v))
                      ())
                  ())
       | "MapArg" ->
@@ -841,8 +864,9 @@ let query_maps_input_of_xml i =
                  (fun i _ ->
                    Smaws_Lib.Xml.Parse.Read.sequences i "entry"
                      (fun i _ ->
-                       ( Smaws_Lib.Xml.Parse.Read.element i "key" (),
-                         Smaws_Lib.Xml.Parse.Read.element i "value" () ))
+                       let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+                       let v = Smaws_Lib.Xml.Parse.Read.element i "value" () in
+                       (k, v))
                      ())
                  ())
       | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
@@ -897,11 +921,7 @@ let query_lists_input_of_xml i =
                  (fun i _ -> nested_struct_with_list_of_xml i)
                  ())
       | "Hi" ->
-          r_flattened_list_arg_with_xml_name :=
-            Some
-              (Smaws_Lib.Xml.Parse.Read.sequence i "Hi"
-                 (fun i _ -> Smaws_Lib.Xml.Parse.Read.elements i "item" ())
-                 ())
+          r_flattened_list_arg_with_xml_name := Some (Smaws_Lib.Xml.Parse.Read.elements i "Hi" ())
       | "ListArgWithXmlNameMember" ->
           r_list_arg_with_xml_name_member :=
             Some
@@ -909,11 +929,7 @@ let query_lists_input_of_xml i =
                  (fun i _ -> Smaws_Lib.Xml.Parse.Read.elements i "item" ())
                  ())
       | "FlattenedListArg" ->
-          r_flattened_list_arg :=
-            Some
-              (Smaws_Lib.Xml.Parse.Read.sequence i "FlattenedListArg"
-                 (fun i _ -> Smaws_Lib.Xml.Parse.Read.elements i "member" ())
-                 ())
+          r_flattened_list_arg := Some (Smaws_Lib.Xml.Parse.Read.elements i "FlattenedListArg" ())
       | "ComplexListArg" ->
           r_complex_list_arg :=
             Some
@@ -1050,7 +1066,9 @@ let fractional_seconds_output_of_xml i =
 let flattened_xml_map_with_xml_namespace_output_map_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
     (fun i _ ->
-      (Smaws_Lib.Xml.Parse.Read.element i "K" (), Smaws_Lib.Xml.Parse.Read.element i "V" ()))
+      let k = Smaws_Lib.Xml.Parse.Read.element i "K" () in
+      let v = Smaws_Lib.Xml.Parse.Read.element i "V" () in
+      (k, v))
     ()
 
 let flattened_xml_map_with_xml_namespace_output_of_xml i =
@@ -1060,13 +1078,11 @@ let flattened_xml_map_with_xml_namespace_output_of_xml i =
       | "KVP" ->
           r_my_map :=
             Some
-              (Smaws_Lib.Xml.Parse.Read.sequence i "KVP"
+              (Smaws_Lib.Xml.Parse.Read.sequences i "KVP"
                  (fun i _ ->
-                   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
-                     (fun i _ ->
-                       ( Smaws_Lib.Xml.Parse.Read.element i "K" (),
-                         Smaws_Lib.Xml.Parse.Read.element i "V" () ))
-                     ())
+                   let k = Smaws_Lib.Xml.Parse.Read.element i "K" () in
+                   let v = Smaws_Lib.Xml.Parse.Read.element i "V" () in
+                   (k, v))
                  ())
       | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
   ({ my_map = ( ! ) r_my_map } : flattened_xml_map_with_xml_namespace_output)
@@ -1074,7 +1090,9 @@ let flattened_xml_map_with_xml_namespace_output_of_xml i =
 let flattened_xml_map_with_xml_name_output_map_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
     (fun i _ ->
-      (Smaws_Lib.Xml.Parse.Read.element i "K" (), Smaws_Lib.Xml.Parse.Read.element i "V" ()))
+      let k = Smaws_Lib.Xml.Parse.Read.element i "K" () in
+      let v = Smaws_Lib.Xml.Parse.Read.element i "V" () in
+      (k, v))
     ()
 
 let flattened_xml_map_with_xml_name_output_of_xml i =
@@ -1084,13 +1102,11 @@ let flattened_xml_map_with_xml_name_output_of_xml i =
       | "KVP" ->
           r_my_map :=
             Some
-              (Smaws_Lib.Xml.Parse.Read.sequence i "KVP"
+              (Smaws_Lib.Xml.Parse.Read.sequences i "KVP"
                  (fun i _ ->
-                   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
-                     (fun i _ ->
-                       ( Smaws_Lib.Xml.Parse.Read.element i "K" (),
-                         Smaws_Lib.Xml.Parse.Read.element i "V" () ))
-                     ())
+                   let k = Smaws_Lib.Xml.Parse.Read.element i "K" () in
+                   let v = Smaws_Lib.Xml.Parse.Read.element i "V" () in
+                   (k, v))
                  ())
       | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
   ({ my_map = ( ! ) r_my_map } : flattened_xml_map_with_xml_name_output)
@@ -1102,13 +1118,15 @@ let flattened_xml_map_output_of_xml i =
       | "myMap" ->
           r_my_map :=
             Some
-              (Smaws_Lib.Xml.Parse.Read.sequence i "myMap"
+              (Smaws_Lib.Xml.Parse.Read.sequences i "myMap"
                  (fun i _ ->
-                   Smaws_Lib.Xml.Parse.Read.sequences i "entry"
-                     (fun i _ ->
-                       ( Smaws_Lib.Xml.Parse.Read.element i "key" (),
-                         Shared.Query_deserializers.foo_enum_of_xml i ))
-                     ())
+                   let k = Smaws_Lib.Xml.Parse.Read.element i "key" () in
+                   let v =
+                     Smaws_Lib.Xml.Parse.Read.sequence i "value"
+                       (fun i _ -> Shared.Query_deserializers.foo_enum_of_xml i)
+                       ()
+                   in
+                   (k, v))
                  ())
       | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
   ({ my_map = ( ! ) r_my_map } : flattened_xml_map_output)

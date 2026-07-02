@@ -48,7 +48,7 @@ let query_empty_input_and_empty_output () =
   | Ok result ->
       let expected = (() : Types.empty_input_and_empty_output_output) in
       check
-        (Alcotest.testable Types.pp_empty_input_and_empty_output_output
+        (Alcotest_http.testable_nan_aware Types.pp_empty_input_and_empty_output_output
            Types.equal_empty_input_and_empty_output_output)
         "expected output" expected result
   | Error error -> failwith (EmptyInputAndEmptyOutput.error_to_string error)
@@ -171,7 +171,8 @@ let query_query_flattened_xml_map () =
         ({ my_map = Some [ ("foo", FOO); ("baz", BAZ) ] } : Types.flattened_xml_map_output)
       in
       check
-        (Alcotest.testable Types.pp_flattened_xml_map_output Types.equal_flattened_xml_map_output)
+        (Alcotest_http.testable_nan_aware Types.pp_flattened_xml_map_output
+           Types.equal_flattened_xml_map_output)
         "expected output" expected result
   | Error error -> failwith (FlattenedXmlMap.error_to_string error)
 
@@ -211,7 +212,7 @@ let query_query_flattened_xml_map_with_xml_name () =
           : Types.flattened_xml_map_with_xml_name_output)
       in
       check
-        (Alcotest.testable Types.pp_flattened_xml_map_with_xml_name_output
+        (Alcotest_http.testable_nan_aware Types.pp_flattened_xml_map_with_xml_name_output
            Types.equal_flattened_xml_map_with_xml_name_output)
         "expected output" expected result
   | Error error -> failwith (FlattenedXmlMapWithXmlName.error_to_string error)
@@ -254,7 +255,7 @@ let query_query_flattened_xml_map_with_xml_namespace () =
           : Types.flattened_xml_map_with_xml_namespace_output)
       in
       check
-        (Alcotest.testable Types.pp_flattened_xml_map_with_xml_namespace_output
+        (Alcotest_http.testable_nan_aware Types.pp_flattened_xml_map_with_xml_namespace_output
            Types.equal_flattened_xml_map_with_xml_namespace_output)
         "expected output" expected result
   | Error error -> failwith (FlattenedXmlMapWithXmlNamespace.error_to_string error)
@@ -292,7 +293,7 @@ let query_greeting_with_errors () =
   | Ok result ->
       let expected = ({ greeting = Some "Hello" } : Types.greeting_with_errors_output) in
       check
-        (Alcotest.testable Types.pp_greeting_with_errors_output
+        (Alcotest_http.testable_nan_aware Types.pp_greeting_with_errors_output
            Types.equal_greeting_with_errors_output)
         "expected output" expected result
   | Error error -> failwith (GreetingWithErrors.error_to_string error)
@@ -359,7 +360,7 @@ let query_ignores_wrapping_xml_name () =
   | Ok result ->
       let expected = ({ foo = Some "bar" } : Types.ignores_wrapping_xml_name_output) in
       check
-        (Alcotest.testable Types.pp_ignores_wrapping_xml_name_output
+        (Alcotest_http.testable_nan_aware Types.pp_ignores_wrapping_xml_name_output
            Types.equal_ignores_wrapping_xml_name_output)
         "expected output" expected result
   | Error error -> failwith (IgnoresWrappingXmlName.error_to_string error)
@@ -508,7 +509,7 @@ let query_no_input_and_output () =
   | Ok result ->
       let expected = (() : Types.no_input_and_output_output) in
       check
-        (Alcotest.testable Types.pp_no_input_and_output_output
+        (Alcotest_http.testable_nan_aware Types.pp_no_input_and_output_output
            Types.equal_no_input_and_output_output)
         "expected output" expected result
   | Error error -> failwith (NoInputAndOutput.error_to_string error)
@@ -1312,7 +1313,7 @@ let query_recursive_shapes () =
           : Types.recursive_xml_shapes_output)
       in
       check
-        (Alcotest.testable Types.pp_recursive_xml_shapes_output
+        (Alcotest_http.testable_nan_aware Types.pp_recursive_xml_shapes_output
            Types.equal_recursive_xml_shapes_output)
         "expected output" expected result
   | Error error -> failwith (RecursiveXmlShapes.error_to_string error)
@@ -1861,7 +1862,7 @@ let query_simple_scalar_properties () =
           : Types.simple_scalar_xml_properties_output)
       in
       check
-        (Alcotest.testable Types.pp_simple_scalar_xml_properties_output
+        (Alcotest_http.testable_nan_aware Types.pp_simple_scalar_xml_properties_output
            Types.equal_simple_scalar_xml_properties_output)
         "expected output" expected result
   | Error error -> failwith (SimpleScalarXmlProperties.error_to_string error)
@@ -1903,7 +1904,7 @@ let aws_query_supports_na_n_float_outputs () =
           : Types.simple_scalar_xml_properties_output)
       in
       check
-        (Alcotest.testable Types.pp_simple_scalar_xml_properties_output
+        (Alcotest_http.testable_nan_aware Types.pp_simple_scalar_xml_properties_output
            Types.equal_simple_scalar_xml_properties_output)
         "expected output" expected result
   | Error error -> failwith (SimpleScalarXmlProperties.error_to_string error)
@@ -1945,7 +1946,7 @@ let aws_query_supports_infinity_float_outputs () =
           : Types.simple_scalar_xml_properties_output)
       in
       check
-        (Alcotest.testable Types.pp_simple_scalar_xml_properties_output
+        (Alcotest_http.testable_nan_aware Types.pp_simple_scalar_xml_properties_output
            Types.equal_simple_scalar_xml_properties_output)
         "expected output" expected result
   | Error error -> failwith (SimpleScalarXmlProperties.error_to_string error)
@@ -1987,7 +1988,7 @@ let aws_query_supports_negative_infinity_float_outputs () =
           : Types.simple_scalar_xml_properties_output)
       in
       check
-        (Alcotest.testable Types.pp_simple_scalar_xml_properties_output
+        (Alcotest_http.testable_nan_aware Types.pp_simple_scalar_xml_properties_output
            Types.equal_simple_scalar_xml_properties_output)
         "expected output" expected result
   | Error error -> failwith (SimpleScalarXmlProperties.error_to_string error)
@@ -2027,7 +2028,7 @@ let query_xml_blobs () =
         ({ data = Some (Smaws_Lib.CoreTypes.Blob.of_string "value") } : Types.xml_blobs_output)
       in
       check
-        (Alcotest.testable Types.pp_xml_blobs_output Types.equal_xml_blobs_output)
+        (Alcotest_http.testable_nan_aware Types.pp_xml_blobs_output Types.equal_xml_blobs_output)
         "expected output" expected result
   | Error error -> failwith (XmlBlobs.error_to_string error)
 
@@ -2090,7 +2091,7 @@ let query_xml_enums () =
           : Types.xml_enums_output)
       in
       check
-        (Alcotest.testable Types.pp_xml_enums_output Types.equal_xml_enums_output)
+        (Alcotest_http.testable_nan_aware Types.pp_xml_enums_output Types.equal_xml_enums_output)
         "expected output" expected result
   | Error error -> failwith (XmlEnums.error_to_string error)
 
@@ -2149,7 +2150,8 @@ let query_xml_int_enums () =
           : Types.xml_int_enums_output)
       in
       check
-        (Alcotest.testable Types.pp_xml_int_enums_output Types.equal_xml_int_enums_output)
+        (Alcotest_http.testable_nan_aware Types.pp_xml_int_enums_output
+           Types.equal_xml_int_enums_output)
         "expected output" expected result
   | Error error -> failwith (XmlIntEnums.error_to_string error)
 
@@ -2262,7 +2264,7 @@ let query_xml_lists () =
           : Types.xml_lists_output)
       in
       check
-        (Alcotest.testable Types.pp_xml_lists_output Types.equal_xml_lists_output)
+        (Alcotest_http.testable_nan_aware Types.pp_xml_lists_output Types.equal_xml_lists_output)
         "expected output" expected result
   | Error error -> failwith (XmlLists.error_to_string error)
 
@@ -2307,7 +2309,7 @@ let query_xml_maps () =
           : Types.xml_maps_output)
       in
       check
-        (Alcotest.testable Types.pp_xml_maps_output Types.equal_xml_maps_output)
+        (Alcotest_http.testable_nan_aware Types.pp_xml_maps_output Types.equal_xml_maps_output)
         "expected output" expected result
   | Error error -> failwith (XmlMaps.error_to_string error)
 
@@ -2352,7 +2354,8 @@ let query_query_xml_maps_xml_name () =
           : Types.xml_maps_xml_name_output)
       in
       check
-        (Alcotest.testable Types.pp_xml_maps_xml_name_output Types.equal_xml_maps_xml_name_output)
+        (Alcotest_http.testable_nan_aware Types.pp_xml_maps_xml_name_output
+           Types.equal_xml_maps_xml_name_output)
         "expected output" expected result
   | Error error -> failwith (XmlMapsXmlName.error_to_string error)
 
@@ -2391,7 +2394,8 @@ let query_xml_namespaces () =
           : Types.xml_namespaces_output)
       in
       check
-        (Alcotest.testable Types.pp_xml_namespaces_output Types.equal_xml_namespaces_output)
+        (Alcotest_http.testable_nan_aware Types.pp_xml_namespaces_output
+           Types.equal_xml_namespaces_output)
         "expected output" expected result
   | Error error -> failwith (XmlNamespaces.error_to_string error)
 
@@ -2431,7 +2435,8 @@ let query_xml_timestamps () =
           : Types.xml_timestamps_output)
       in
       check
-        (Alcotest.testable Types.pp_xml_timestamps_output Types.equal_xml_timestamps_output)
+        (Alcotest_http.testable_nan_aware Types.pp_xml_timestamps_output
+           Types.equal_xml_timestamps_output)
         "expected output" expected result
   | Error error -> failwith (XmlTimestamps.error_to_string error)
 
@@ -2468,7 +2473,8 @@ let query_xml_timestamps_with_date_time_format () =
           : Types.xml_timestamps_output)
       in
       check
-        (Alcotest.testable Types.pp_xml_timestamps_output Types.equal_xml_timestamps_output)
+        (Alcotest_http.testable_nan_aware Types.pp_xml_timestamps_output
+           Types.equal_xml_timestamps_output)
         "expected output" expected result
   | Error error -> failwith (XmlTimestamps.error_to_string error)
 
@@ -2506,7 +2512,8 @@ let query_xml_timestamps_with_date_time_on_target_format () =
           : Types.xml_timestamps_output)
       in
       check
-        (Alcotest.testable Types.pp_xml_timestamps_output Types.equal_xml_timestamps_output)
+        (Alcotest_http.testable_nan_aware Types.pp_xml_timestamps_output
+           Types.equal_xml_timestamps_output)
         "expected output" expected result
   | Error error -> failwith (XmlTimestamps.error_to_string error)
 
@@ -2543,7 +2550,8 @@ let query_xml_timestamps_with_epoch_seconds_format () =
           : Types.xml_timestamps_output)
       in
       check
-        (Alcotest.testable Types.pp_xml_timestamps_output Types.equal_xml_timestamps_output)
+        (Alcotest_http.testable_nan_aware Types.pp_xml_timestamps_output
+           Types.equal_xml_timestamps_output)
         "expected output" expected result
   | Error error -> failwith (XmlTimestamps.error_to_string error)
 
@@ -2581,7 +2589,8 @@ let query_xml_timestamps_with_epoch_seconds_on_target_format () =
           : Types.xml_timestamps_output)
       in
       check
-        (Alcotest.testable Types.pp_xml_timestamps_output Types.equal_xml_timestamps_output)
+        (Alcotest_http.testable_nan_aware Types.pp_xml_timestamps_output
+           Types.equal_xml_timestamps_output)
         "expected output" expected result
   | Error error -> failwith (XmlTimestamps.error_to_string error)
 
@@ -2618,7 +2627,8 @@ let query_xml_timestamps_with_http_date_format () =
           : Types.xml_timestamps_output)
       in
       check
-        (Alcotest.testable Types.pp_xml_timestamps_output Types.equal_xml_timestamps_output)
+        (Alcotest_http.testable_nan_aware Types.pp_xml_timestamps_output
+           Types.equal_xml_timestamps_output)
         "expected output" expected result
   | Error error -> failwith (XmlTimestamps.error_to_string error)
 
@@ -2656,7 +2666,8 @@ let query_xml_timestamps_with_http_date_on_target_format () =
           : Types.xml_timestamps_output)
       in
       check
-        (Alcotest.testable Types.pp_xml_timestamps_output Types.equal_xml_timestamps_output)
+        (Alcotest_http.testable_nan_aware Types.pp_xml_timestamps_output
+           Types.equal_xml_timestamps_output)
         "expected output" expected result
   | Error error -> failwith (XmlTimestamps.error_to_string error)
 

@@ -442,7 +442,8 @@ let aws_json11_enums () =
           : Types.json_enums_input_output)
       in
       check
-        (Alcotest.testable Types.pp_json_enums_input_output Types.equal_json_enums_input_output)
+        (Alcotest_http.testable_nan_aware Types.pp_json_enums_input_output
+           Types.equal_json_enums_input_output)
         "expected output" expected result
   | Error error -> failwith (JsonEnums.error_to_string error)
 
@@ -597,7 +598,7 @@ let aws_json11_int_enums () =
           : Types.json_int_enums_input_output)
       in
       check
-        (Alcotest.testable Types.pp_json_int_enums_input_output
+        (Alcotest_http.testable_nan_aware Types.pp_json_int_enums_input_output
            Types.equal_json_int_enums_input_output)
         "expected output" expected result
   | Error error -> failwith (JsonIntEnums.error_to_string error)
@@ -1074,7 +1075,7 @@ let aws_json11_deserialize_string_union_value () =
   | Ok result ->
       let expected = ({ contents = Some (StringValue "foo") } : Types.union_input_output) in
       check
-        (Alcotest.testable Types.pp_union_input_output Types.equal_union_input_output)
+        (Alcotest_http.testable_nan_aware Types.pp_union_input_output Types.equal_union_input_output)
         "expected output" expected result
   | Error error -> failwith (JsonUnions.error_to_string error)
 
@@ -1093,7 +1094,7 @@ let aws_json11_deserialize_boolean_union_value () =
   | Ok result ->
       let expected = ({ contents = Some (BooleanValue true) } : Types.union_input_output) in
       check
-        (Alcotest.testable Types.pp_union_input_output Types.equal_union_input_output)
+        (Alcotest_http.testable_nan_aware Types.pp_union_input_output Types.equal_union_input_output)
         "expected output" expected result
   | Error error -> failwith (JsonUnions.error_to_string error)
 
@@ -1112,7 +1113,7 @@ let aws_json11_deserialize_number_union_value () =
   | Ok result ->
       let expected = ({ contents = Some (NumberValue 1) } : Types.union_input_output) in
       check
-        (Alcotest.testable Types.pp_union_input_output Types.equal_union_input_output)
+        (Alcotest_http.testable_nan_aware Types.pp_union_input_output Types.equal_union_input_output)
         "expected output" expected result
   | Error error -> failwith (JsonUnions.error_to_string error)
 
@@ -1134,7 +1135,7 @@ let aws_json11_deserialize_blob_union_value () =
           : Types.union_input_output)
       in
       check
-        (Alcotest.testable Types.pp_union_input_output Types.equal_union_input_output)
+        (Alcotest_http.testable_nan_aware Types.pp_union_input_output Types.equal_union_input_output)
         "expected output" expected result
   | Error error -> failwith (JsonUnions.error_to_string error)
 
@@ -1161,7 +1162,7 @@ let aws_json11_deserialize_timestamp_union_value () =
           : Types.union_input_output)
       in
       check
-        (Alcotest.testable Types.pp_union_input_output Types.equal_union_input_output)
+        (Alcotest_http.testable_nan_aware Types.pp_union_input_output Types.equal_union_input_output)
         "expected output" expected result
   | Error error -> failwith (JsonUnions.error_to_string error)
 
@@ -1180,7 +1181,7 @@ let aws_json11_deserialize_enum_union_value () =
   | Ok result ->
       let expected = ({ contents = Some (EnumValue FOO) } : Types.union_input_output) in
       check
-        (Alcotest.testable Types.pp_union_input_output Types.equal_union_input_output)
+        (Alcotest_http.testable_nan_aware Types.pp_union_input_output Types.equal_union_input_output)
         "expected output" expected result
   | Error error -> failwith (JsonUnions.error_to_string error)
 
@@ -1202,7 +1203,7 @@ let aws_json11_deserialize_list_union_value () =
         ({ contents = Some (ListValue [ "foo"; "bar" ]) } : Types.union_input_output)
       in
       check
-        (Alcotest.testable Types.pp_union_input_output Types.equal_union_input_output)
+        (Alcotest_http.testable_nan_aware Types.pp_union_input_output Types.equal_union_input_output)
         "expected output" expected result
   | Error error -> failwith (JsonUnions.error_to_string error)
 
@@ -1234,7 +1235,7 @@ let aws_json11_deserialize_map_union_value () =
           : Types.union_input_output)
       in
       check
-        (Alcotest.testable Types.pp_union_input_output Types.equal_union_input_output)
+        (Alcotest_http.testable_nan_aware Types.pp_union_input_output Types.equal_union_input_output)
         "expected output" expected result
   | Error error -> failwith (JsonUnions.error_to_string error)
 
@@ -1264,7 +1265,7 @@ let aws_json11_deserialize_structure_union_value () =
         ({ contents = Some (StructureValue { hi = Some "hello" }) } : Types.union_input_output)
       in
       check
-        (Alcotest.testable Types.pp_union_input_output Types.equal_union_input_output)
+        (Alcotest_http.testable_nan_aware Types.pp_union_input_output Types.equal_union_input_output)
         "expected output" expected result
   | Error error -> failwith (JsonUnions.error_to_string error)
 
@@ -3710,7 +3711,7 @@ let parses_operations_with_empty_json_bodies () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -3788,7 +3789,7 @@ let parses_string_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -3866,7 +3867,7 @@ let parses_integer_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -3944,7 +3945,7 @@ let parses_long_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -4022,7 +4023,7 @@ let parses_float_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -4100,7 +4101,7 @@ let parses_double_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -4178,7 +4179,7 @@ let parses_boolean_shapes_true () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -4256,7 +4257,7 @@ let parses_boolean_false () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -4334,7 +4335,7 @@ let parses_blob_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -4412,7 +4413,7 @@ let parses_timestamp_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -4491,7 +4492,7 @@ let parses_iso8601_timestamps () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -4571,7 +4572,7 @@ let parses_httpdate_timestamps () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -4649,7 +4650,7 @@ let parses_list_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -4729,7 +4730,7 @@ let parses_list_of_map_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -4809,7 +4810,7 @@ let parses_list_of_list_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -4889,7 +4890,7 @@ let parses_list_of_structure_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -5064,7 +5065,7 @@ let parses_list_of_recursive_structure_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -5143,7 +5144,7 @@ let parses_map_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -5226,7 +5227,7 @@ let parses_map_of_list_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -5313,7 +5314,7 @@ let parses_map_of_map_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -5394,7 +5395,7 @@ let parses_map_of_structure_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -5572,7 +5573,7 @@ let parses_map_of_recursive_structure_shapes () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -5654,7 +5655,7 @@ let parses_the_request_id_from_the_response () =
           : Types.kitchen_sink)
       in
       check
-        (Alcotest.testable Types.pp_kitchen_sink Types.equal_kitchen_sink)
+        (Alcotest_http.testable_nan_aware Types.pp_kitchen_sink Types.equal_kitchen_sink)
         "expected output" expected result
   | Error error -> failwith (KitchenSinkOperation.error_to_string error)
 
@@ -5788,7 +5789,7 @@ let aws_json11_servers_dont_serialize_null_structure_values () =
   | Ok result ->
       let expected = ({ string_ = None } : Types.null_operation_input_output) in
       check
-        (Alcotest.testable Types.pp_null_operation_input_output
+        (Alcotest_http.testable_nan_aware Types.pp_null_operation_input_output
            Types.equal_null_operation_input_output)
         "expected output" expected result
   | Error error -> failwith (NullOperation.error_to_string error)
@@ -5960,7 +5961,7 @@ let put_and_get_inline_documents_input () =
           : Types.put_and_get_inline_documents_input_output)
       in
       check
-        (Alcotest.testable Types.pp_put_and_get_inline_documents_input_output
+        (Alcotest_http.testable_nan_aware Types.pp_put_and_get_inline_documents_input_output
            Types.equal_put_and_get_inline_documents_input_output)
         "expected output" expected result
   | Error error -> failwith (PutAndGetInlineDocuments.error_to_string error)
@@ -6136,7 +6137,7 @@ let aws_json11_supports_na_n_float_inputs () =
           : Types.simple_scalar_properties_input_output)
       in
       check
-        (Alcotest.testable Types.pp_simple_scalar_properties_input_output
+        (Alcotest_http.testable_nan_aware Types.pp_simple_scalar_properties_input_output
            Types.equal_simple_scalar_properties_input_output)
         "expected output" expected result
   | Error error -> failwith (SimpleScalarProperties.error_to_string error)
@@ -6160,7 +6161,7 @@ let aws_json11_supports_infinity_float_inputs () =
           : Types.simple_scalar_properties_input_output)
       in
       check
-        (Alcotest.testable Types.pp_simple_scalar_properties_input_output
+        (Alcotest_http.testable_nan_aware Types.pp_simple_scalar_properties_input_output
            Types.equal_simple_scalar_properties_input_output)
         "expected output" expected result
   | Error error -> failwith (SimpleScalarProperties.error_to_string error)
@@ -6184,7 +6185,7 @@ let aws_json11_supports_negative_infinity_float_inputs () =
           : Types.simple_scalar_properties_input_output)
       in
       check
-        (Alcotest.testable Types.pp_simple_scalar_properties_input_output
+        (Alcotest_http.testable_nan_aware Types.pp_simple_scalar_properties_input_output
            Types.equal_simple_scalar_properties_input_output)
         "expected output" expected result
   | Error error -> failwith (SimpleScalarProperties.error_to_string error)
@@ -6322,7 +6323,7 @@ let aws_json11_sparse_maps_deserialize_null_values () =
           : Types.sparse_nulls_operation_input_output)
       in
       check
-        (Alcotest.testable Types.pp_sparse_nulls_operation_input_output
+        (Alcotest_http.testable_nan_aware Types.pp_sparse_nulls_operation_input_output
            Types.equal_sparse_nulls_operation_input_output)
         "expected output" expected result
   | Error error -> failwith (SparseNullsOperation.error_to_string error)
@@ -6350,7 +6351,7 @@ let aws_json11_sparse_lists_deserialize_null () =
           : Types.sparse_nulls_operation_input_output)
       in
       check
-        (Alcotest.testable Types.pp_sparse_nulls_operation_input_output
+        (Alcotest_http.testable_nan_aware Types.pp_sparse_nulls_operation_input_output
            Types.equal_sparse_nulls_operation_input_output)
         "expected output" expected result
   | Error error -> failwith (SparseNullsOperation.error_to_string error)

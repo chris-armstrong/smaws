@@ -465,11 +465,39 @@ module Deserialiser = struct
               (exp_ident "ts") )
     | _ -> None
 
+  (* Body for one map entry: reads <key_tag> then <val_tag> in order, returning (k, v).
+     Primitive sides read their wrapper via Read.element; complex sides read it via
+     Read.sequence so the wrapper is consumed before the struct/enum reader runs.
+     Evaluation is forced left-to-right because OCaml evaluates tuples right-to-left. *)
+  let map_entry_body ~namespace_resolver (ms : Shape.mapShapeDetails) =
+    let key_tag = xml_name ms.mapKey.traits "key" in
+    let val_tag = xml_name ms.mapValue.traits "value" in
+    let key_expr =
+      match parse_primitive_from_string ms.mapKey.target (read_element key_tag) with
+      | Some e -> e
+      | None -> read_element key_tag
+    in
+    let val_expr =
+      match parse_primitive_from_string ms.mapValue.target (read_element val_tag) with
+      | Some e -> e
+      | None ->
+          let vf =
+            B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver ms.mapValue.target))
+          in
+          read_sequence val_tag (B.pexp_apply vf [ (Nolabel, exp_ident "i") ])
+    in
+    B.pexp_let Nonrecursive
+      [ B.value_binding ~pat:(B.ppat_var (Location.mknoloc "k")) ~expr:key_expr ]
+      (B.pexp_let Nonrecursive
+         [ B.value_binding ~pat:(B.ppat_var (Location.mknoloc "v")) ~expr:val_expr ]
+         (B.pexp_tuple [ exp_ident "k"; exp_ident "v" ]))
+
   (* Reader expression for a member inside scanSequence.
      Returns (tag_name, expr) where expr reads+assigns to the ref.
      For primitives: reads the element text.
      For complex types: reads a sequence. *)
-  let member_reader_expr ~namespace_resolver ~shape_resolver xml_tag target_name ref_name =
+  let member_reader_expr ~namespace_resolver ~shape_resolver ~member_traits xml_tag target_name
+      ref_name =
     let assign v_expr =
       B.pexp_apply
         (B.pexp_ident (Location.mknoloc (Longident.Lident ":=")))
@@ -481,73 +509,108 @@ module Deserialiser = struct
         ]
     in
     let raw_str_expr = read_element xml_tag in
-    match parse_primitive_from_string target_name raw_str_expr with
-    | Some parsed_expr -> assign parsed_expr
-    | None -> (
-        (* Complex type - look up to determine if list/map/struct *)
-        let shape = Shape_resolver.find_shape_by_name ~name:target_name shape_resolver in
-        match shape with
-        | Some (Shape.ListShape ls) ->
-            let member_tag = xml_name ls.memberTraits "member" in
-            (* Check if element type is primitive *)
-            let list_body =
-              match parse_primitive_from_string ls.target (read_element member_tag) with
-              | Some _ -> (
-                  (* List of primitives: Read.elements *)
-                  let elements = read_elements member_tag in
-                  (* Map elements to parsed values *)
-                  match ls.target with
-                  | "smithy.api#String" -> elements
-                  | _ ->
-                      B.pexp_apply
-                        (B.pexp_ident (Location.mknoloc (make_lident ~names:[ "List"; "map" ])))
-                        [
-                          ( Nolabel,
-                            B.pexp_fun Nolabel None
-                              (B.ppat_var (Location.mknoloc "s"))
-                              (Option.value_exn
-                                 (parse_primitive_from_string ls.target (exp_ident "s"))) );
-                          (Nolabel, elements);
-                        ])
-              | None ->
-                  (* List of complex types *)
-                  let item_func =
-                    B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver ls.target))
-                  in
-                  read_sequences member_tag (B.pexp_apply item_func [ (Nolabel, exp_ident "i") ])
-            in
-            assign (read_sequence xml_tag list_body)
-        | Some (Shape.SetShape ss) ->
-            let set_body = read_elements "member" in
-            assign (read_sequence xml_tag set_body)
-        | Some (Shape.MapShape ms) ->
-            let key_tag = xml_name ms.mapKey.traits "key" in
-            let val_tag = xml_name ms.mapValue.traits "value" in
-            let entry_body =
-              let key_expr =
-                match parse_primitive_from_string ms.mapKey.target (read_element key_tag) with
-                | Some e -> e
-                | None -> read_element key_tag
-              in
-              let val_expr =
-                match parse_primitive_from_string ms.mapValue.target (read_element val_tag) with
-                | Some e -> e
-                | None ->
-                    let vf =
-                      B.pexp_ident
-                        (Location.mknoloc (func_longident ~namespace_resolver ms.mapValue.target))
-                    in
-                    B.pexp_apply vf [ (Nolabel, exp_ident "i") ]
-              in
-              B.pexp_tuple [ key_expr; val_expr ]
-            in
-            assign (read_sequence xml_tag (read_sequences "entry" entry_body))
-        | _ ->
-            (* Generic structure/enum *)
-            let item_func =
-              B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver target_name))
-            in
-            assign (read_sequence xml_tag (B.pexp_apply item_func [ (Nolabel, exp_ident "i") ])))
+    match target_name with
+    | "smithy.api#Timestamp" ->
+        (* The @timestampFormat trait lives on the member for direct smithy.api#Timestamp
+           targets; named timestamp shapes are handled via their dedicated _of_xml function
+           in the generic branch below. Mirrors the serialiser's member-trait handling. *)
+        let fmt = resolve_timestamp_format ~member_traits ~shape_traits:None () in
+        let helper =
+          match fmt with
+          | Trait.TimestampFormatDateTime -> "timestamp_iso_of_string"
+          | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_of_string"
+          | Trait.TimestampFormatHttpDate -> "timestamp_httpdate_of_string"
+        in
+        let deser_mod = [ "Smaws_Lib"; "Protocols"; "AwsQuery"; "Deserialize" ] in
+        assign
+          (B.pexp_apply
+             (B.pexp_ident (Location.mknoloc (make_lident ~names:(deser_mod @ [ helper ]))))
+             [ (Nolabel, raw_str_expr) ])
+    | _ -> (
+        match parse_primitive_from_string target_name raw_str_expr with
+        | Some parsed_expr -> assign parsed_expr
+        | None -> (
+            (* Complex type - look up to determine if list/map/struct *)
+            let shape = Shape_resolver.find_shape_by_name ~name:target_name shape_resolver in
+            match shape with
+            | Some (Shape.ListShape ls) when is_flattened member_traits ->
+                (* Flattened list: repeated <xml_tag> elements, each holding a member value
+               directly (no member wrapper, no container). *)
+                let list_body =
+                  match parse_primitive_from_string ls.target (read_element xml_tag) with
+                  | Some _ -> (
+                      let elements = read_elements xml_tag in
+                      match ls.target with
+                      | "smithy.api#String" -> elements
+                      | _ ->
+                          B.pexp_apply
+                            (B.pexp_ident (Location.mknoloc (make_lident ~names:[ "List"; "map" ])))
+                            [
+                              ( Nolabel,
+                                B.pexp_fun Nolabel None
+                                  (B.ppat_var (Location.mknoloc "s"))
+                                  (Option.value_exn
+                                     (parse_primitive_from_string ls.target (exp_ident "s"))) );
+                              (Nolabel, elements);
+                            ])
+                  | None ->
+                      let item_func =
+                        B.pexp_ident
+                          (Location.mknoloc (func_longident ~namespace_resolver ls.target))
+                      in
+                      read_sequences xml_tag (B.pexp_apply item_func [ (Nolabel, exp_ident "i") ])
+                in
+                assign list_body
+            | Some (Shape.ListShape ls) ->
+                let member_tag = xml_name ls.memberTraits "member" in
+                (* Check if element type is primitive *)
+                let list_body =
+                  match parse_primitive_from_string ls.target (read_element member_tag) with
+                  | Some _ -> (
+                      (* List of primitives: Read.elements *)
+                      let elements = read_elements member_tag in
+                      (* Map elements to parsed values *)
+                      match ls.target with
+                      | "smithy.api#String" -> elements
+                      | _ ->
+                          B.pexp_apply
+                            (B.pexp_ident (Location.mknoloc (make_lident ~names:[ "List"; "map" ])))
+                            [
+                              ( Nolabel,
+                                B.pexp_fun Nolabel None
+                                  (B.ppat_var (Location.mknoloc "s"))
+                                  (Option.value_exn
+                                     (parse_primitive_from_string ls.target (exp_ident "s"))) );
+                              (Nolabel, elements);
+                            ])
+                  | None ->
+                      (* List of complex types *)
+                      let item_func =
+                        B.pexp_ident
+                          (Location.mknoloc (func_longident ~namespace_resolver ls.target))
+                      in
+                      read_sequences member_tag
+                        (B.pexp_apply item_func [ (Nolabel, exp_ident "i") ])
+                in
+                assign (read_sequence xml_tag list_body)
+            | Some (Shape.SetShape ss) ->
+                let set_body = read_elements "member" in
+                assign (read_sequence xml_tag set_body)
+            | Some (Shape.MapShape ms) when is_flattened member_traits ->
+                (* Flattened map: repeated <xml_tag> elements, each an entry with <key>/<value>
+               directly (no <entry> wrapper, no container). *)
+                assign (read_sequences xml_tag (map_entry_body ~namespace_resolver ms))
+            | Some (Shape.MapShape ms) ->
+                assign
+                  (read_sequence xml_tag
+                     (read_sequences "entry" (map_entry_body ~namespace_resolver ms)))
+            | _ ->
+                (* Generic structure/enum *)
+                let item_func =
+                  B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver target_name))
+                in
+                assign (read_sequence xml_tag (B.pexp_apply item_func [ (Nolabel, exp_ident "i") ]))
+            ))
 
   let structure_func_body name (descriptor : Shape.structureShapeDetails) ~namespace_resolver
       ~shape_resolver () =
@@ -575,7 +638,8 @@ module Deserialiser = struct
             let xml_tag = xml_name mem.traits mem.name in
             let ref_name = "r_" ^ SafeNames.safeMemberName mem.name in
             let reader =
-              member_reader_expr ~namespace_resolver ~shape_resolver xml_tag mem.target ref_name
+              member_reader_expr ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
+                xml_tag mem.target ref_name
             in
             B.case ~lhs:(pat_const_str xml_tag) ~guard:None ~rhs:reader)
       in
@@ -652,26 +716,7 @@ module Deserialiser = struct
     exp_fun_untyped "i" body
 
   let map_func_body (x : Shape.mapShapeDetails) ~namespace_resolver () =
-    let key_tag = xml_name x.mapKey.traits "key" in
-    let val_tag = xml_name x.mapValue.traits "value" in
-    let entry_body =
-      let key_expr =
-        match parse_primitive_from_string x.mapKey.target (read_element key_tag) with
-        | Some e -> e
-        | None -> read_element key_tag
-      in
-      let val_expr =
-        match parse_primitive_from_string x.mapValue.target (read_element val_tag) with
-        | Some e -> e
-        | None ->
-            let vf =
-              B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver x.mapValue.target))
-            in
-            B.pexp_apply vf [ (Nolabel, exp_ident "i") ]
-      in
-      B.pexp_tuple [ key_expr; val_expr ]
-    in
-    exp_fun_untyped "i" (read_sequences "entry" entry_body)
+    exp_fun_untyped "i" (read_sequences "entry" (map_entry_body ~namespace_resolver x))
 
   let enum_func_body name (s : Shape.enumShapeDetails) ~namespace_resolver () =
     let type_name_str = SafeNames.safeTypeName name in

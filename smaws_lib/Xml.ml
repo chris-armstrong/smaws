@@ -66,7 +66,13 @@ module Parse = struct
 
     let element i tag ?ns () =
       let _, _, _ = Accept.startTag i tag ~ns ~expected:(XmlStartElement (tag, ns)) in
-      let data = Accept.data i ~expected:(XmlElementData (tag, ns)) in
+      (* Xmlm emits no `Data signal for empty/self-closing elements (<x/>), so
+         accept an immediate `El_end as an empty string value. *)
+      let data =
+        match Xmlm.peek i with
+        | `El_end -> ""
+        | _ -> Accept.data i ~expected:(XmlElementData (tag, ns))
+      in
       let _ = Accept.endTag i ~expected:(XmlEndElement (tag, ns)) in
       data
 
