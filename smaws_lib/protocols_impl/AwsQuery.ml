@@ -3,7 +3,7 @@ module Log =
 
 module Error = struct
   type errorType = Sender | Receiver
-  type t = { errorType : errorType; code : string }
+  type t = { errorType : errorType; code : string; message : string option }
 end
 
 type error =
@@ -170,7 +170,8 @@ end
 
 module Errors = struct
   let default_handler (error : Error.t) =
-    `AWSServiceError AwsErrors.{ message = None; _type = { namespace = ""; name = error.code } }
+    `AWSServiceError
+      AwsErrors.{ message = error.message; _type = { namespace = ""; name = error.code } }
 end
 
 module Response = struct
@@ -203,18 +204,35 @@ module Response = struct
     try
       Read.sequence xmlSource "ErrorResponse"
         (fun _ _ ->
-          Read.sequence xmlSource "Error"
-            (fun i _ ->
-              let type_ = Read.element i "Type" () in
-              let code = Read.element i "Code" () in
-              let errorType =
-                match type_ with
-                | "Sender" -> Error.Sender
-                | "Receiver" -> Error.Receiver
-                | _ -> raise (Unparseable ("Unknown Error type (expected Sender/Receiver)", body))
-              in
-              Error.{ errorType; code })
-            ())
+          let error =
+            Read.sequence xmlSource "Error"
+              (fun i _ ->
+                let r_type = ref None in
+                let r_code = ref None in
+                let r_message = ref None in
+                Structure.scanSequence i [ "Type"; "Code"; "Message" ] (fun tag _ ->
+                    match tag with
+                    | "Type" -> r_type := Some (Read.element i "Type" ())
+                    | "Code" -> r_code := Some (Read.element i "Code" ())
+                    | "Message" -> r_message := Some (Read.element i "Message" ())
+                    | _ -> Read.skip_element i);
+                let errorType =
+                  match !r_type with
+                  | Some "Sender" -> Error.Sender
+                  | Some "Receiver" -> Error.Receiver
+                  | _ -> raise (Unparseable ("missing or unknown Error/Type", body))
+                in
+                let code =
+                  match !r_code with
+                  | Some c -> c
+                  | None -> raise (Unparseable ("missing Error/Code", body))
+                in
+                Error.{ errorType; code; message = !r_message })
+              ()
+          in
+          (* Skip trailing siblings (e.g. <RequestId>) before </ErrorResponse>. *)
+          Read.skip_to_end xmlSource;
+          error)
         ()
     with
     | Xml.Parse.XmlParse _ -> raise (Unparseable ("xmlm error", body))
