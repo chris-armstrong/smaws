@@ -188,7 +188,12 @@ module Response = struct
     let xmlSource = source_with_encoding ~src:effective_body ~encoding:None in
     Read.dtd xmlSource;
     Read.sequence xmlSource (action ^ "Response") ~ns:xmlNamespace
-      (fun _ _ -> Read.sequence xmlSource (action ^ "Result") (fun i _ -> resultParser i) ())
+      (fun _ _ ->
+        let result = Read.sequence xmlSource (action ^ "Result") (fun i _ -> resultParser i) () in
+        (* Skip trailing siblings such as <ResponseMetadata> mandated by the
+           awsQuery protocol before the response end tag. *)
+        Read.skip_to_end xmlSource;
+        result)
       ()
 
   let parse_xml_error_response ~(body : string) =

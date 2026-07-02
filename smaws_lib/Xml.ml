@@ -114,6 +114,22 @@ module Parse = struct
         match Xmlm.input i with `El_start _ -> incr depth | `El_end -> decr depth | _ -> ()
       done
 
+    (** Consume remaining sibling elements and whitespace until the enclosing element's end tag is
+        reached. The end tag itself is left unconsumed so the caller's [Accept.endTag] can read it.
+        Used to skip protocol envelope siblings such as awsQuery's <ResponseMetadata>. *)
+    let skip_to_end i =
+      let rec loop () =
+        match Xmlm.peek i with
+        | `El_end -> ()
+        | `El_start _ ->
+            skip_element i;
+            loop ()
+        | _ ->
+            ignore (Xmlm.input i);
+            loop ()
+      in
+      loop ()
+
     let data i = Accept.data i ~expected:(XmlElementData ("", None))
   end
 

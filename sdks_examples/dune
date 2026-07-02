@@ -23,3 +23,8 @@
  (name dynamodb_createTableAndWriteData)
  (modules dynamodb_createTableAndWriteData)
  (libraries smaws-lib eio_main logs fmt smaws-clients))
+
+(executable
+ (name sts_GetCallerIdentity)
+ (modules sts_GetCallerIdentity)
+ (libraries smaws-lib eio_main logs fmt smaws-clients))
