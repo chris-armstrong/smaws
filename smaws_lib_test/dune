@@ -8,3 +8,7 @@
   eio_main
   alcotest
   Smaws_Test_Support_Lib))
+
+(test
+ (name aws_query_response_test)
+ (libraries Smaws_Lib alcotest))
