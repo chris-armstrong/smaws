@@ -16,7 +16,8 @@ let common_values_keep_natural_form () =
 let high_precision_double_round_trips () =
   (* %g truncated this to "1.23457", silently corrupting the value sent to AWS. *)
   let s = value_of (S.float_field [] 1.2345678901234567) in
-  Alcotest.(check bool) "round-trips exactly" true
+  Alcotest.(check bool)
+    "round-trips exactly" true
     (Float.equal (Float.of_string s) 1.2345678901234567)
 
 let nan_and_infinity () =

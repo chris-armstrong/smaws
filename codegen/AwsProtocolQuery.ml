@@ -899,7 +899,7 @@ module Operations = struct
           let error_cases =
             errors
             |> List.map ~f:(fun error ->
-                   let name = Util.symbolName error in
+                   let name = SafeNames.safeConstructorName error in
                    B.case
                      ~lhs:(B.ppat_variant name (Some B.ppat_any))
                      ~guard:None ~rhs:(const_str error))

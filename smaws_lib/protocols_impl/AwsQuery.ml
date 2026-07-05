@@ -33,9 +33,9 @@ module Serialize = struct
   let float_to_string v =
     let rec loop p =
       if p > 17 then Printf.sprintf "%.17g" v
-      else
+      else (
         let s = Printf.sprintf "%.*g" p v in
-        if Float.equal (Float.of_string s) v then s else loop (p + 1)
+        if Float.equal (Float.of_string s) v then s else loop (p + 1))
     in
     loop 6
 
@@ -60,8 +60,7 @@ module Serialize = struct
   let timestamp_epoch_field path (v : Ptime.t) =
     let posix = Ptime.to_float_s v in
     let s =
-      if Float.is_integer posix then string_of_int (int_of_float posix)
-      else float_to_string posix
+      if Float.is_integer posix then string_of_int (int_of_float posix) else float_to_string posix
     in
     string_field path s
 
