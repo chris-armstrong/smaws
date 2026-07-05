@@ -237,6 +237,27 @@ module Response = struct
     with
     | Xml.Parse.XmlParse _ -> raise (Unparseable ("xmlm error", body))
     | Xml.Parse.XmlUnexpectedConstruct (_, _, _) -> raise (Unparseable ("construct error", body))
+
+  (* Re-parse an awsQuery error response body and run [structParser] positioned
+     inside <Error>, so generated error deserialisers can recover the
+     error-shape members that <Error> carries alongside <Type>/<Code>/<Message>.
+     The struct reader's scanSequence skips the protocol metadata tags it does
+     not recognise. Trailing <RequestId> siblings are skipped before
+     </ErrorResponse>. *)
+  let parse_error_struct ~(body : string) ~structParser =
+    let open Xml.Parse in
+    let xmlSource = source_with_encoding ~src:body ~encoding:None in
+    Read.dtd xmlSource;
+    try
+      Read.sequence xmlSource "ErrorResponse"
+        (fun _ _ ->
+          let result = Read.sequence xmlSource "Error" (fun i _ -> structParser i) () in
+          Read.skip_to_end xmlSource;
+          result)
+        ()
+    with
+    | Xml.Parse.XmlParse _ -> raise (Unparseable ("xmlm error", body))
+    | Xml.Parse.XmlUnexpectedConstruct (_, _, _) -> raise (Unparseable ("construct error", body))
 end
 
 let error_deserializer handler (error : Error.t) = handler error
