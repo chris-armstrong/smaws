@@ -195,6 +195,7 @@ let write_operations ~output_dir t =
     structure_shapes;
     alias_context;
     namespace_module_mapping;
+    shape_resolver;
     _;
   } =
     t
@@ -214,7 +215,7 @@ let write_operations ~output_dir t =
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
         Gen_operations.generate ~name ~service ~operation_shapes ~structure_shapes ~alias_context
-          ~namespace_resolver output_fmt)
+          ~namespace_resolver ~shape_resolver output_fmt)
   and r2 =
     write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
         Gen_operations.generate_mli ~name ~service ~operation_shapes ~structure_shapes

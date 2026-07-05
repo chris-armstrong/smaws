@@ -2,7 +2,8 @@ open Smithy_ast
 open Exceptions
 
 let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~structure_shapes
-    ~alias_context ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t) oc =
+    ~alias_context ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t)
+    ~(shape_resolver : Codegen.Shape_resolver.t) oc =
   if Trait.hasTrait service.traits (function Trait.AwsProtocolAwsQueryTrait -> true | _ -> false)
   then (
     let opens =
@@ -16,7 +17,7 @@ let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~str
     try
       let structure =
         Codegen.AwsProtocolQuery.Operations.generate ~name ~service ~operation_shapes ~alias_context
-          ~namespace_resolver ()
+          ~namespace_resolver ~shape_resolver ()
       in
       Ppxlib.Pprintast.structure oc (opens @ structure)
     with _ as a ->

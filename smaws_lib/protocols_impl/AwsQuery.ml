@@ -260,12 +260,12 @@ module Response = struct
     | Xml.Parse.XmlUnexpectedConstruct (_, _, _) -> raise (Unparseable ("construct error", body))
 end
 
-let error_deserializer handler (error : Error.t) = handler error
+let error_deserializer handler (error : Error.t) ~body:_ = handler error
 
 let request (type http_t) ~(action : string) ~(xmlNamespace : string)
     ~(service : Service.descriptor) ~(context : http_t Context.t)
     ~(fields : (string * string list) list) ~(output_deserializer : Xmlm.input -> 'out)
-    ~(error_deserializer : Error.t -> 'err) =
+    ~(error_deserializer : Error.t -> body:string -> 'err) =
   let config = Context.config context in
   let uri = Service.makeUri ~config ~service in
   let body_values = ("Action", [ action ]) :: ("Version", [ service.version ]) :: fields in
@@ -294,7 +294,7 @@ let request (type http_t) ~(action : string) ~(xmlNamespace : string)
       | _ -> (
           try
             let error = Response.parse_xml_error_response ~body in
-            Error (error_deserializer error)
+            Error (error_deserializer error ~body)
           with
           | Response.Unparseable (msg, _) -> Error (`XmlParseError msg)
           | Xml.Parse.XmlParse e -> Error (`XmlParseError (Xmlm.error_message e))

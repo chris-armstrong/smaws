@@ -84,12 +84,11 @@ let parse_error_struct_recovers_members_and_skips_metadata () =
         match tag with
         | "TopLevel" -> r_top := Some (Read.element i "TopLevel" ())
         | "Nested" ->
-            r_foo :=
-              Some (Read.sequence i "Nested" (fun i _ -> Read.element i "Foo" ()) ())
+            r_foo := Some (Read.sequence i "Nested" (fun i _ -> Read.element i "Foo" ()) ())
         | _ -> Read.skip_element i);
     (!r_top, !r_foo)
   in
-  let (top, foo) =
+  let top, foo =
     AwsQuery.Response.parse_error_struct ~body:complex_error_body ~structParser:struct_parser
   in
   Alcotest.(check (option string)) "TopLevel recovered" (Some "Top level") top;

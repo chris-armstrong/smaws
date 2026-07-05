@@ -920,29 +920,57 @@ module Operations = struct
       [ B.value_binding ~pat:(B.ppat_var (Location.mknoloc "error_to_string")) ~expr:handler_body ]
 
   let generate_error_handler ~(operation_shape : Ast.Shape.operationShapeDetails)
-      ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
-    (* For AwsQuery, error responses only contain Type and Code - no XML body for struct parsing.
-       We match on error.code and return the appropriate variant. Error struct fields are
-       unavailable so all operations use the default handler for specific error data. *)
+      ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
+      ~(shape_resolver : Shape_resolver.t) () =
+    (* For each declared error, match the wire <Code> (overridden by
+       @awsQueryError.code, else the shape name) and construct the typed variant
+       by deserialising the error-shape members that <Error> carries alongside
+       Type/Code/Message. Unknown codes fall back to the generic
+       `AWSServiceError. *)
     let errors = operation_shape.errors |> Option.value ~default:[] in
     let default_handler =
       B.pexp_ident
         (Location.mknoloc (make_lident ~names:(awsquery_mod @ [ "Errors"; "default_handler" ])))
     in
+    let parse_error_struct =
+      B.pexp_ident
+        (Location.mknoloc
+           (make_lident ~names:(awsquery_mod @ [ "Response"; "parse_error_struct" ])))
+    in
+    let wire_code_of_error error =
+      let trait_code =
+        Shape_resolver.find_shape_by_name ~name:error shape_resolver
+        |> Option.bind ~f:(function
+             | Shape.StructureShape { traits; _ } ->
+                 Option.bind traits ~f:(fun ts ->
+                     List.find_map ts ~f:(function
+                       | Trait.AwsProtocolAwsQueryErrorTrait d -> Some d.code
+                       | _ -> None))
+             | _ -> None)
+      in
+      Option.value trait_code ~default:(Util.symbolName error)
+    in
     let body =
       if List.is_empty errors then
         [%expr
-          fun (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ->
+          fun (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body:_ ->
             Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error]
       else begin
         let cases =
           errors
           |> List.map ~f:(fun error ->
-                 let _, exc_name = Util.symbolPair error in
-                 let pattern = pat_const_str exc_name in
-                 (* AwsQuery errors are identified by code alone; error struct fields not available *)
-                 let expression = B.pexp_apply default_handler [ (Nolabel, exp_ident "error") ] in
-                 B.case ~lhs:pattern ~guard:None ~rhs:expression)
+                 let wire_code = wire_code_of_error error in
+                 let variant = SafeNames.safeConstructorName error in
+                 let deser_func = Deserialiser.func_longident ~namespace_resolver error in
+                 let struct_expr =
+                   B.pexp_apply parse_error_struct
+                     [
+                       (Labelled "body", exp_ident "body");
+                       (Labelled "structParser", B.pexp_ident (Location.mknoloc deser_func));
+                     ]
+                 in
+                 let rhs = B.pexp_variant variant (Some struct_expr) in
+                 B.case ~lhs:(pat_const_str wire_code) ~guard:None ~rhs)
         in
         let default_case =
           B.case ~lhs:B.ppat_any ~guard:None
@@ -952,7 +980,7 @@ module Operations = struct
           B.pexp_match [%expr error.Smaws_Lib.Protocols.AwsQuery.Error.code]
             (cases @ [ default_case ])
         in
-        [%expr fun (error : Smaws_Lib.Protocols.AwsQuery.Error.t) -> [%e match_body]]
+        [%expr fun (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body -> [%e match_body]]
       end
     in
     B.pstr_value Nonrecursive
@@ -1017,13 +1045,16 @@ module Operations = struct
     [%stri let request = fun context -> [%e shape_func]]
 
   let generate_operation_module ~name ~operation_name ~operation_shape ~dependencies ~alias_context
-      ~xml_namespace ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
+      ~xml_namespace ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
+      ~(shape_resolver : Shape_resolver.t) () =
     let module_name = SafeNames.safeConstructorName operation_name in
     let request_handler =
       generate_request_handler ~name ~operation_name ~operation_shape ~alias_context ~xml_namespace
         ~namespace_resolver ()
     in
-    let error_handler = generate_error_handler ~operation_shape ~namespace_resolver () in
+    let error_handler =
+      generate_error_handler ~operation_shape ~namespace_resolver ~shape_resolver ()
+    in
     let error_to_string = generate_error_to_string ~operation_shape ~namespace_resolver () in
     let module_items = [ error_to_string; error_handler; request_handler ] in
     let module_expr = B.pmod_structure module_items in
@@ -1095,12 +1126,13 @@ module Operations = struct
            List.find_map ts ~f:(function Trait.ApiXmlNamespaceTrait ns -> Some ns | _ -> None)))
 
   let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~alias_context
-      ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
+      ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
+      ~(shape_resolver : Shape_resolver.t) () =
     let xml_namespace = extract_xml_namespace service in
     operation_shapes
     |> List.map ~f:(fun (operation_name, operation_shape, dependencies) ->
            generate_operation_module ~name ~operation_name ~operation_shape ~dependencies
-             ~alias_context ~xml_namespace ~namespace_resolver ())
+             ~alias_context ~xml_namespace ~namespace_resolver ~shape_resolver ())
 
   let generate_mli ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~alias_context
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =

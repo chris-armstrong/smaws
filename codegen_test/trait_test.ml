@@ -5,7 +5,6 @@ let json_ref s =
   Ok { tree = Yojson.Basic.from_string s; path = "$" }
 
 let parse_trait name s = Smaws_parse.Smithy.parseTrait name (json_ref s)
-
 let show_err = Smaws_parse.Json.Decode.jsonParseErrorToString
 
 let () =
@@ -28,21 +27,19 @@ let () =
               match result with
               | Ok (Smithy_ast.Trait.AwsProtocolAwsQueryErrorTrait details) ->
                   Alcotest.(check string) "code" "InvalidIdentityToken" details.code;
-                  Alcotest.(check (option int)) "httpResponseCode" (Some 400)
-                    details.httpResponseCode
+                  Alcotest.(check (option int))
+                    "httpResponseCode" (Some 400) details.httpResponseCode
               | Ok other -> Alcotest.fail ("unexpected trait: " ^ trait_to_str other)
               | Error e -> Alcotest.fail ("parse error: " ^ show_err e) );
           ( "httpResponseCode is optional",
             `Quick,
             fun () ->
-              let result =
-                parse_trait "aws.protocols#awsQueryError" {|{"code":"SomeError"}|}
-              in
+              let result = parse_trait "aws.protocols#awsQueryError" {|{"code":"SomeError"}|} in
               match result with
               | Ok (Smithy_ast.Trait.AwsProtocolAwsQueryErrorTrait details) ->
                   Alcotest.(check string) "code" "SomeError" details.code;
-                  Alcotest.(check (option int)) "httpResponseCode absent" None
-                    details.httpResponseCode
+                  Alcotest.(check (option int))
+                    "httpResponseCode absent" None details.httpResponseCode
               | Ok other -> Alcotest.fail ("unexpected trait: " ^ trait_to_str other)
               | Error e -> Alcotest.fail ("parse error: " ^ show_err e) );
         ] );

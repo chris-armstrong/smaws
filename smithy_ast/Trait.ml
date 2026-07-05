@@ -24,10 +24,7 @@ type reference = { resource : string; service : string option } [@@deriving show
 type clientEndpointDiscoveryDetails = { operation : string; error : string }
 [@@deriving show, equal]
 
-type awsQueryErrorDetails = {
-  code : string;
-  httpResponseCode : int option;
-}
+type awsQueryErrorDetails = { code : string; httpResponseCode : int option }
 [@@deriving show, equal]
 
 type externalDocumentationType = DocumentationLink of string | SpecificationLink of string
