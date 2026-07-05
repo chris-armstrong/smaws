@@ -1,6 +1,10 @@
 open Types
 
-let foo_union_to_query path _x = []
+let foo_union_to_query path (x : foo_union) =
+  match x with
+  | Integer v -> Smaws_Lib.Protocols.AwsQuery.Serialize.int_field (List.append path [ "integer" ]) v
+  | String v ->
+      Smaws_Lib.Protocols.AwsQuery.Serialize.string_field (List.append path [ "string" ]) v
 
 let union_set_to_query path xs =
   Smaws_Lib.Protocols.AwsQuery.Serialize.list_to_query "member" foo_union_to_query path xs

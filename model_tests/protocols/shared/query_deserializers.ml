@@ -1,7 +1,23 @@
 open Types
 
 let unit_of_xml _ = ()
-let foo_union_of_xml _i = failwith "union xml deserialization not implemented"
+
+let foo_union_of_xml i =
+  let r_integer = ref None in
+  let r_string_ = ref None in
+  Smaws_Lib.Xml.Parse.Structure.scanSequence i [ "integer"; "string" ] (fun tag _ ->
+      match tag with
+      | "integer" ->
+          r_integer := Some (int_of_string (Smaws_Lib.Xml.Parse.Read.element i "integer" ()))
+      | "string" -> r_string_ := Some (Smaws_Lib.Xml.Parse.Read.element i "string" ())
+      | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
+  (match ( ! ) r_integer with
+   | Some v -> Integer v
+   | None -> (
+       match ( ! ) r_string_ with
+       | Some v -> String v
+       | None -> failwith "no union member present in xml response")
+    : foo_union)
 
 let union_set_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "member" (fun i _ -> foo_union_of_xml i) ()

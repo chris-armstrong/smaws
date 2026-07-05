@@ -561,8 +561,6 @@ tests should also have one (initially empty, add as needed).
 These are acknowledged in `sdkgen/gen_protocol_tests.ml`'s `bannedTests` and
 documented here for visibility:
 
-- **Union shapes** — the serialiser emits an empty list stub and the
-  deserialiser raises; awsQuery unions are not supported.
 - **Idempotency-token auto-fill** — `@idempotencyToken` members are not
   auto-populated (`QueryProtocolIdempotencyTokenAutoFill` is banned).
 - **Request compression** — `@requestCompression` gzip is not implemented

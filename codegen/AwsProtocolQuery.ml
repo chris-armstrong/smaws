@@ -272,6 +272,36 @@ module Serialiser = struct
             (B.ptyp_constr (lident_noloc effective_type_name) []))
          body)
 
+  (* A union serializes identically to a structure, except only one member is ever
+     set: match on the variant constructor and serialize that single member at
+     "path @ [xmlName]", exactly as a structure would for a Some-valued field. *)
+  let union_func_body name (descriptor : Shape.structureShapeDetails) ~namespace_resolver
+      ~shape_resolver () =
+    let type_name = SafeNames.safeTypeName name in
+    let cases =
+      descriptor.members
+      |> List.map ~f:(fun (mem : Shape.member) ->
+             let constructor = lident_noloc (SafeNames.safeConstructorName mem.name) in
+             let pattern =
+               B.ppat_construct constructor (Some (B.ppat_var (Location.mknoloc "v")))
+             in
+             let xml_key = xml_name mem.traits mem.name in
+             let path_expr = path_append path_ident xml_key in
+             let member_traits = Option.value ~default:[] mem.traits in
+             let rhs =
+               member_value_expr ~namespace_resolver ~shape_resolver ~member_traits ~shape_traits:[]
+                 ~path_expr (exp_ident "v") mem.target
+             in
+             B.case ~lhs:pattern ~guard:None ~rhs)
+    in
+    let match_exp = B.pexp_match (exp_ident "x") cases in
+    exp_fun_untyped "path"
+      (B.pexp_fun Nolabel None
+         (B.ppat_constraint
+            (B.ppat_var (Location.mknoloc "x"))
+            (B.ptyp_constr (lident_noloc type_name) []))
+         match_exp)
+
   let generate_func_body (shapeWithTarget : Dependencies.shapeWithTarget)
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
       ~(shape_resolver : Shape_resolver.t) () =
@@ -284,9 +314,8 @@ module Serialiser = struct
     | SetShape x -> Some (set_func_body x ~namespace_resolver ())
     | MapShape x -> Some (map_func_body x ~namespace_resolver ())
     | EnumShape s -> Some (enum_func_body shapeWithTarget.name s)
-    | UnionShape _ ->
-        (* AwsQuery union serialization not yet implemented; generate a stub *)
-        Some (exp_fun_untyped "path" (exp_fun_untyped "_x" (B.elist [])))
+    | UnionShape x ->
+        Some (union_func_body shapeWithTarget.name x ~namespace_resolver ~shape_resolver ())
     | TimestampShape { traits } ->
         let fmt =
           resolve_timestamp_format ~shape_traits:(Some (Option.value ~default:[] traits)) ()
@@ -676,6 +705,41 @@ module Deserialiser = struct
       exp_fun_untyped "i" body
     end
 
+  (* A union deserializes like a structure (scan for each known member tag, skip
+     the rest), but exactly one member's ref ends up set. Build the variant by
+     checking each ref in member order and wrapping the first that is [Some]. *)
+  let union_func_body name (descriptor : Shape.structureShapeDetails) ~namespace_resolver
+      ~shape_resolver () =
+    let type_name_str = SafeNames.safeTypeName name in
+    let type_name = B.ptyp_constr (lident_noloc type_name_str) [] in
+    let members = descriptor.members in
+    let ref_bindings = structure_ref_bindings members in
+    let scan_call = structure_scan_call ~namespace_resolver ~shape_resolver members in
+    let select_expr =
+      List.fold_right members ~init:[%expr failwith "no union member present in xml response"]
+        ~f:(fun mem acc ->
+          let constructor = SafeNames.safeConstructorName mem.name in
+          let deref =
+            B.pexp_apply (exp_ident "( ! )") [ (Nolabel, exp_ident (member_ref_name mem)) ]
+          in
+          B.pexp_match deref
+            [
+              B.case
+                ~lhs:
+                  (B.ppat_construct (lident_noloc "Some")
+                     (Some (B.ppat_var (Location.mknoloc "v"))))
+                ~guard:None
+                ~rhs:(B.pexp_construct (lident_noloc constructor) (Some (exp_ident "v")));
+              B.case ~lhs:(B.ppat_construct (lident_noloc "None") None) ~guard:None ~rhs:acc;
+            ])
+    in
+    let typed_select = B.pexp_constraint select_expr type_name in
+    let body =
+      List.fold_right ref_bindings ~init:(B.pexp_sequence scan_call typed_select)
+        ~f:(fun binding acc -> B.pexp_let Nonrecursive [ binding ] acc)
+    in
+    exp_fun_untyped "i" body
+
   let list_func_body (x : Shape.listShapeDetails) ~namespace_resolver ~shape_resolver () =
     let member_tag = xml_name x.memberTraits "member" in
     exp_fun_untyped "i" (list_items_body ~namespace_resolver x.target member_tag)
@@ -791,11 +855,8 @@ module Deserialiser = struct
     | FloatShape _ | DoubleShape _ -> Some (primitive_of_xml_lambda "float_of_string")
     | BlobShape _ -> Some (primitive_of_xml_lambda "blob_of_string")
     | UnitShape -> Some (exp_fun_untyped "i" unit_expr)
-    | UnionShape _ ->
-        Some
-          (exp_fun_untyped "_i"
-             (B.pexp_apply (exp_ident "failwith")
-                [ (Nolabel, const_str "union xml deserialization not implemented") ]))
+    | UnionShape x ->
+        Some (union_func_body shapeWithTarget.name x ~namespace_resolver ~shape_resolver ())
     | _ -> None
 
   let generate ~(structure_shapes : Ast.Dependencies.shapeWithTarget list)
