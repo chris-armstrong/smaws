@@ -188,21 +188,19 @@ module Serialiser = struct
       B.pexp_match (exp_ident "x")
         (s.members
         |> List.map ~f:(fun (m : Shape.member) ->
-               let value =
-                 List.find_map_exn
-                   ~f:(fun (t : Ast.Trait.t) ->
-                     match t with EnumValueTrait e -> Some e | _ -> None)
-                   Shape.(m.traits |> Option.value ~default:[])
-               in
-               let constructor_name = SafeNames.safeConstructorName m.name in
-               B.case
-                 ~lhs:(B.ppat_construct (lident_noloc constructor_name) None)
-                 ~guard:None
-                 ~rhs:
-                   (match value with
-                   | `String sv -> const_str sv
-                   | `Int iv -> B.pexp_apply (exp_ident "string_of_int") [ (Nolabel, exp_int iv) ]))
-        )
+            let value =
+              List.find_map_exn
+                ~f:(fun (t : Ast.Trait.t) -> match t with EnumValueTrait e -> Some e | _ -> None)
+                Shape.(m.traits |> Option.value ~default:[])
+            in
+            let constructor_name = SafeNames.safeConstructorName m.name in
+            B.case
+              ~lhs:(B.ppat_construct (lident_noloc constructor_name) None)
+              ~guard:None
+              ~rhs:
+                (match value with
+                | `String sv -> const_str sv
+                | `Int iv -> B.pexp_apply (exp_ident "string_of_int") [ (Nolabel, exp_int iv) ])))
     in
     let type_name = SafeNames.safeTypeName name in
     exp_fun_untyped "path"
@@ -281,18 +279,16 @@ module Serialiser = struct
     let cases =
       descriptor.members
       |> List.map ~f:(fun (mem : Shape.member) ->
-             let constructor = lident_noloc (SafeNames.safeConstructorName mem.name) in
-             let pattern =
-               B.ppat_construct constructor (Some (B.ppat_var (Location.mknoloc "v")))
-             in
-             let xml_key = xml_name mem.traits mem.name in
-             let path_expr = path_append path_ident xml_key in
-             let member_traits = Option.value ~default:[] mem.traits in
-             let rhs =
-               member_value_expr ~namespace_resolver ~shape_resolver ~member_traits ~shape_traits:[]
-                 ~path_expr (exp_ident "v") mem.target
-             in
-             B.case ~lhs:pattern ~guard:None ~rhs)
+          let constructor = lident_noloc (SafeNames.safeConstructorName mem.name) in
+          let pattern = B.ppat_construct constructor (Some (B.ppat_var (Location.mknoloc "v"))) in
+          let xml_key = xml_name mem.traits mem.name in
+          let path_expr = path_append path_ident xml_key in
+          let member_traits = Option.value ~default:[] mem.traits in
+          let rhs =
+            member_value_expr ~namespace_resolver ~shape_resolver ~member_traits ~shape_traits:[]
+              ~path_expr (exp_ident "v") mem.target
+          in
+          B.case ~lhs:pattern ~guard:None ~rhs)
     in
     let match_exp = B.pexp_match (exp_ident "x") cases in
     exp_fun_untyped "path"
@@ -364,41 +360,37 @@ module Serialiser = struct
       ~(shape_resolver : Shape_resolver.t) () =
     structure_shapes
     |> List.filter_map ~f:(fun (shapeWithTarget : Dependencies.shapeWithTarget) ->
-           let serialiser_name = serialiser_func_str shapeWithTarget.name in
-           let func_body =
-             generate_func_body shapeWithTarget ~namespace_resolver ~shape_resolver ()
-           in
-           let shape =
-             Option.value_map func_body ~default:[] ~f:(fun func_body ->
-                 [
-                   B.value_binding
-                     ~pat:(B.ppat_var (Location.mknoloc serialiser_name))
-                     ~expr:func_body;
-                 ])
-           in
-           let all_shapes =
-             match shapeWithTarget.recursWith with
-             | Some recursWith ->
-                 let recurs =
-                   List.filter_map recursWith ~f:(fun (swt : Dependencies.shapeWithTarget) ->
-                       let sname = serialiser_func_str swt.name in
-                       let fb = generate_func_body swt ~namespace_resolver ~shape_resolver () in
-                       Option.map fb ~f:(fun body ->
-                           B.value_binding ~pat:(B.ppat_var (Location.mknoloc sname)) ~expr:body))
-                 in
-                 shape @ recurs
-             | None -> shape
-           in
-           if List.is_empty all_shapes then None
-           else
-             Some
-               (B.pstr_value
-                  (if
-                     List.length all_shapes > 1
-                     || shapeWithTarget |> Dependencies.is_recursive_shape_with_target
-                   then Recursive
-                   else Nonrecursive)
-                  all_shapes))
+        let serialiser_name = serialiser_func_str shapeWithTarget.name in
+        let func_body = generate_func_body shapeWithTarget ~namespace_resolver ~shape_resolver () in
+        let shape =
+          Option.value_map func_body ~default:[] ~f:(fun func_body ->
+              [
+                B.value_binding ~pat:(B.ppat_var (Location.mknoloc serialiser_name)) ~expr:func_body;
+              ])
+        in
+        let all_shapes =
+          match shapeWithTarget.recursWith with
+          | Some recursWith ->
+              let recurs =
+                List.filter_map recursWith ~f:(fun (swt : Dependencies.shapeWithTarget) ->
+                    let sname = serialiser_func_str swt.name in
+                    let fb = generate_func_body swt ~namespace_resolver ~shape_resolver () in
+                    Option.map fb ~f:(fun body ->
+                        B.value_binding ~pat:(B.ppat_var (Location.mknoloc sname)) ~expr:body))
+              in
+              shape @ recurs
+          | None -> shape
+        in
+        if List.is_empty all_shapes then None
+        else
+          Some
+            (B.pstr_value
+               (if
+                  List.length all_shapes > 1
+                  || shapeWithTarget |> Dependencies.is_recursive_shape_with_target
+                then Recursive
+                else Nonrecursive)
+               all_shapes))
 end
 
 (* ============================================================ *)
@@ -757,18 +749,18 @@ module Deserialiser = struct
     let cases =
       s.members
       |> List.map ~f:(fun (m : Shape.member) ->
-             let value =
-               List.find_map_exn
-                 ~f:(fun (t : Ast.Trait.t) -> match t with EnumValueTrait e -> Some e | _ -> None)
-                 Shape.(m.traits |> Option.value ~default:[])
-             in
-             let pattern =
-               match value with
-               | `String sv -> pat_const_str sv
-               | `Int iv -> pat_const_str (Int.to_string iv)
-             in
-             B.case ~lhs:pattern ~guard:None
-               ~rhs:(B.pexp_construct (lident_noloc (SafeNames.safeConstructorName m.name)) None))
+          let value =
+            List.find_map_exn
+              ~f:(fun (t : Ast.Trait.t) -> match t with EnumValueTrait e -> Some e | _ -> None)
+              Shape.(m.traits |> Option.value ~default:[])
+          in
+          let pattern =
+            match value with
+            | `String sv -> pat_const_str sv
+            | `Int iv -> pat_const_str (Int.to_string iv)
+          in
+          B.case ~lhs:pattern ~guard:None
+            ~rhs:(B.pexp_construct (lident_noloc (SafeNames.safeConstructorName m.name)) None))
     in
     let failure_case =
       B.case ~lhs:B.ppat_any ~guard:None ~rhs:[%expr failwith "unknown enum value"]
@@ -864,37 +856,35 @@ module Deserialiser = struct
       ~(shape_resolver : Shape_resolver.t) () =
     structure_shapes
     |> List.filter_map ~f:(fun (shapeWithTarget : Dependencies.shapeWithTarget) ->
-           let func_name = deserialiser_func_str shapeWithTarget.name in
-           let func_body =
-             generate_func_body shapeWithTarget ~namespace_resolver ~shape_resolver ()
-           in
-           let shape =
-             Option.value_map func_body ~default:[] ~f:(fun body ->
-                 [ B.value_binding ~pat:(B.ppat_var (Location.mknoloc func_name)) ~expr:body ])
-           in
-           let all_shapes =
-             match shapeWithTarget.recursWith with
-             | Some recursWith ->
-                 let recurs =
-                   List.filter_map recursWith ~f:(fun (swt : Dependencies.shapeWithTarget) ->
-                       let sname = deserialiser_func_str swt.name in
-                       let fb = generate_func_body swt ~namespace_resolver ~shape_resolver () in
-                       Option.map fb ~f:(fun body ->
-                           B.value_binding ~pat:(B.ppat_var (Location.mknoloc sname)) ~expr:body))
-                 in
-                 shape @ recurs
-             | None -> shape
-           in
-           if List.is_empty all_shapes then None
-           else
-             Some
-               (B.pstr_value
-                  (if
-                     List.length all_shapes > 1
-                     || shapeWithTarget |> Dependencies.is_recursive_shape_with_target
-                   then Recursive
-                   else Nonrecursive)
-                  all_shapes))
+        let func_name = deserialiser_func_str shapeWithTarget.name in
+        let func_body = generate_func_body shapeWithTarget ~namespace_resolver ~shape_resolver () in
+        let shape =
+          Option.value_map func_body ~default:[] ~f:(fun body ->
+              [ B.value_binding ~pat:(B.ppat_var (Location.mknoloc func_name)) ~expr:body ])
+        in
+        let all_shapes =
+          match shapeWithTarget.recursWith with
+          | Some recursWith ->
+              let recurs =
+                List.filter_map recursWith ~f:(fun (swt : Dependencies.shapeWithTarget) ->
+                    let sname = deserialiser_func_str swt.name in
+                    let fb = generate_func_body swt ~namespace_resolver ~shape_resolver () in
+                    Option.map fb ~f:(fun body ->
+                        B.value_binding ~pat:(B.ppat_var (Location.mknoloc sname)) ~expr:body))
+              in
+              shape @ recurs
+          | None -> shape
+        in
+        if List.is_empty all_shapes then None
+        else
+          Some
+            (B.pstr_value
+               (if
+                  List.length all_shapes > 1
+                  || shapeWithTarget |> Dependencies.is_recursive_shape_with_target
+                then Recursive
+                else Nonrecursive)
+               all_shapes))
 end
 
 (* ============================================================ *)
@@ -917,10 +907,10 @@ module Operations = struct
           let error_cases =
             errors
             |> List.map ~f:(fun error ->
-                   let name = SafeNames.safeConstructorName error in
-                   B.case
-                     ~lhs:(B.ppat_variant name (Some B.ppat_any))
-                     ~guard:None ~rhs:(const_str error))
+                let name = SafeNames.safeConstructorName error in
+                B.case
+                  ~lhs:(B.ppat_variant name (Some B.ppat_any))
+                  ~guard:None ~rhs:(const_str error))
           in
           let default_case =
             B.case
@@ -959,12 +949,12 @@ module Operations = struct
       let trait_code =
         Shape_resolver.find_shape_by_name ~name:error shape_resolver
         |> Option.bind ~f:(function
-             | Shape.StructureShape { traits; _ } ->
-                 Option.bind traits ~f:(fun ts ->
-                     List.find_map ts ~f:(function
-                       | Trait.AwsProtocolAwsQueryErrorTrait d -> Some d.code
-                       | _ -> None))
-             | _ -> None)
+          | Shape.StructureShape { traits; _ } ->
+              Option.bind traits ~f:(fun ts ->
+                  List.find_map ts ~f:(function
+                    | Trait.AwsProtocolAwsQueryErrorTrait d -> Some d.code
+                    | _ -> None))
+          | _ -> None)
       in
       Option.value trait_code ~default:(Util.symbolName error)
     in
@@ -977,42 +967,42 @@ module Operations = struct
         let cases =
           errors
           |> List.map ~f:(fun error ->
-                 let wire_code = wire_code_of_error error in
-                 let variant = SafeNames.safeConstructorName error in
-                 let deser_func = Deserialiser.func_longident ~namespace_resolver error in
-                 let parse_call =
-                   B.pexp_apply parse_error_struct
-                     [
-                       (Labelled "body", exp_ident "body");
-                       (Labelled "structParser", B.pexp_ident (Location.mknoloc deser_func));
-                     ]
-                 in
-                 (* parse_error_struct returns (struct, Xml.Parse.error) result;
+              let wire_code = wire_code_of_error error in
+              let variant = SafeNames.safeConstructorName error in
+              let deser_func = Deserialiser.func_longident ~namespace_resolver error in
+              let parse_call =
+                B.pexp_apply parse_error_struct
+                  [
+                    (Labelled "body", exp_ident "body");
+                    (Labelled "structParser", B.pexp_ident (Location.mknoloc deser_func));
+                  ]
+              in
+              (* parse_error_struct returns (struct, Xml.Parse.error) result;
                     unwrap into the typed variant on Ok, or `XmlParseError on
                     parse failure. *)
-                 let rhs =
-                   B.pexp_match parse_call
-                     [
-                       B.case
-                         ~lhs:
-                           (B.ppat_construct (lident_noloc "Ok")
-                              (Some (B.ppat_var (Location.mknoloc "s"))))
-                         ~guard:None
-                         ~rhs:(B.pexp_variant variant (Some (exp_ident "s")));
-                       B.case
-                         ~lhs:
-                           (B.ppat_construct (lident_noloc "Error")
-                              (Some
-                                 (B.ppat_construct
-                                    (Location.mknoloc
-                                       (make_lident
-                                          ~names:[ "Smaws_Lib"; "Xml"; "Parse"; "XmlParseError" ]))
-                                    (Some (B.ppat_var (Location.mknoloc "msg"))))))
-                         ~guard:None
-                         ~rhs:(B.pexp_variant "XmlParseError" (Some (exp_ident "msg")));
-                     ]
-                 in
-                 B.case ~lhs:(pat_const_str wire_code) ~guard:None ~rhs)
+              let rhs =
+                B.pexp_match parse_call
+                  [
+                    B.case
+                      ~lhs:
+                        (B.ppat_construct (lident_noloc "Ok")
+                           (Some (B.ppat_var (Location.mknoloc "s"))))
+                      ~guard:None
+                      ~rhs:(B.pexp_variant variant (Some (exp_ident "s")));
+                    B.case
+                      ~lhs:
+                        (B.ppat_construct (lident_noloc "Error")
+                           (Some
+                              (B.ppat_construct
+                                 (Location.mknoloc
+                                    (make_lident
+                                       ~names:[ "Smaws_Lib"; "Xml"; "Parse"; "XmlParseError" ]))
+                                 (Some (B.ppat_var (Location.mknoloc "msg"))))))
+                      ~guard:None
+                      ~rhs:(B.pexp_variant "XmlParseError" (Some (exp_ident "msg")));
+                  ]
+              in
+              B.case ~lhs:(pat_const_str wire_code) ~guard:None ~rhs)
         in
         let default_case =
           B.case ~lhs:B.ppat_any ~guard:None
@@ -1035,18 +1025,18 @@ module Operations = struct
     let input_serializer =
       operation_shape.input
       |> Option.value_map ~default:[%expr []] ~f:(fun input_name ->
-             let sym_transformer ~local x =
-               if local then [ Serialiser.serialiser_func_str x ]
-               else [ "Query_serializers"; Serialiser.serialiser_func_str x ]
-             in
-             let func_ident =
-               Namespace_resolver.Namespace_resolver.resolve_reference
-                 ~symbol_transformer:sym_transformer namespace_resolver input_name
-               |> Longident.unflatten |> Option.value_exn
-             in
-             B.pexp_apply
-               (B.pexp_ident (Location.mknoloc func_ident))
-               [ (Nolabel, B.elist []); (Nolabel, exp_ident "request") ])
+          let sym_transformer ~local x =
+            if local then [ Serialiser.serialiser_func_str x ]
+            else [ "Query_serializers"; Serialiser.serialiser_func_str x ]
+          in
+          let func_ident =
+            Namespace_resolver.Namespace_resolver.resolve_reference
+              ~symbol_transformer:sym_transformer namespace_resolver input_name
+            |> Longident.unflatten |> Option.value_exn
+          in
+          B.pexp_apply
+            (B.pexp_ident (Location.mknoloc func_ident))
+            [ (Nolabel, B.elist []); (Nolabel, exp_ident "request") ])
     in
     let output_deserializer =
       operation_shape.output
@@ -1112,9 +1102,9 @@ module Operations = struct
     smaws_lib_constructor
     @ (errors |> Option.value ~default:[]
       |> List.map ~f:(fun error ->
-             let name = SafeNames.safeConstructorName error in
-             B.rtag (lstr_noloc name) false
-               [ Types.resolve alias_ctx ~name:error ~namespace_resolver () ]))
+          let name = SafeNames.safeConstructorName error in
+          B.rtag (lstr_noloc name) false
+            [ Types.resolve alias_ctx ~name:error ~namespace_resolver () ]))
 
   let generate_error_type alias_ctx errors ~namespace_resolver () =
     generate_error_constructor_list alias_ctx errors ~namespace_resolver () |> fun cs ->
@@ -1173,13 +1163,13 @@ module Operations = struct
     let xml_namespace = extract_xml_namespace service in
     operation_shapes
     |> List.map ~f:(fun (operation_name, operation_shape, dependencies) ->
-           generate_operation_module ~name ~operation_name ~operation_shape ~dependencies
-             ~alias_context ~xml_namespace ~namespace_resolver ~shape_resolver ())
+        generate_operation_module ~name ~operation_name ~operation_shape ~dependencies
+          ~alias_context ~xml_namespace ~namespace_resolver ~shape_resolver ())
 
   let generate_mli ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~alias_context
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
     operation_shapes
     |> List.map ~f:(fun (operation_name, operation_shape, dependencies) ->
-           generate_operation_module_sig ~name ~operation_name ~operation_shape ~dependencies
-             ~alias_context ~namespace_resolver ())
+        generate_operation_module_sig ~name ~operation_name ~operation_shape ~dependencies
+          ~alias_context ~namespace_resolver ())
 end

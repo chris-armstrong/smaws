@@ -35,6 +35,6 @@ let operationDependencies (operationDetailsList : operationTriple list) =
 let partitionDependentStructures allStructures allDependencies =
   allStructures
   |> List.partition_tf ~f:(function
-       | Shape.{ name; descriptor = StructureShape _ } ->
-           List.exists allDependencies ~f:(fun dependency -> String.equal name dependency)
-       | _ -> false)
+    | Shape.{ name; descriptor = StructureShape _ } ->
+        List.exists allDependencies ~f:(fun dependency -> String.equal name dependency)
+    | _ -> false)

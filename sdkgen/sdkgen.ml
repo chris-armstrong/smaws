@@ -32,17 +32,17 @@ let rec partition_by_namespace (ordered_shapes : Ast.Dependencies.shapeWithTarge
   in
   Map.to_alist namespace_map
   |> List.filter_map ~f:(fun (namespace, namespace_shapes) ->
-         (* Only create contexts for namespaces that have services *)
-         (* let has_service = *)
-         (*   List.exists namespace_shapes ~f:(fun Ast.Dependencies.{ descriptor; _ } -> *)
-         (*       match descriptor with ServiceShape _ -> true | _ -> false) *)
-         (* in *)
-         (* if has_service then ( *)
-         let context =
-           make_namespace_context ~shape_resolver ~namespace ~shapes:(List.rev namespace_shapes)
-             ~namespace_module_mapping ()
-         in
-         Some (namespace, context))
+      (* Only create contexts for namespaces that have services *)
+      (* let has_service = *)
+      (*   List.exists namespace_shapes ~f:(fun Ast.Dependencies.{ descriptor; _ } -> *)
+      (*       match descriptor with ServiceShape _ -> true | _ -> false) *)
+      (* in *)
+      (* if has_service then ( *)
+      let context =
+        make_namespace_context ~shape_resolver ~namespace ~shapes:(List.rev namespace_shapes)
+          ~namespace_module_mapping ()
+      in
+      Some (namespace, context))
 (* else None) *)
 
 and make_namespace_context ?(should_alias : bool = false) ~shape_resolver ~namespace ~shapes
@@ -56,7 +56,7 @@ and make_namespace_context ?(should_alias : bool = false) ~shape_resolver ~names
   let service_details =
     service_opt
     |> Option.map ~f:(fun ((name, service) : string * Ast.Shape.serviceShapeDetails) ->
-           (name, service, Ast.Trait.extractServiceTrait service.traits))
+        (name, service, Ast.Trait.extractServiceTrait service.traits))
   in
   let namespace_resolver =
     Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
@@ -65,10 +65,10 @@ and make_namespace_context ?(should_alias : bool = false) ~shape_resolver ~names
   let flattened_shapes =
     structure_shapes
     |> List.concat_map ~f:(fun Ast.Dependencies.{ name; descriptor; recursWith; _ } ->
-           Ast.Shape.{ name; descriptor }
-           :: Option.value_map recursWith ~default:[] ~f:(fun recurs ->
-                  List.map recurs ~f:(fun Ast.Dependencies.{ name; descriptor; _ } ->
-                      Ast.Shape.{ name; descriptor })))
+        Ast.Shape.{ name; descriptor }
+        :: Option.value_map recursWith ~default:[] ~f:(fun recurs ->
+            List.map recurs ~f:(fun Ast.Dependencies.{ name; descriptor; _ } ->
+                Ast.Shape.{ name; descriptor })))
   in
   let alias_context =
     Gen_types.create_alias_context ~namespace ~namespace_resolver ~should_alias flattened_shapes

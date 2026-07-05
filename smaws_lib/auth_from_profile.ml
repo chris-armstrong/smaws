@@ -13,14 +13,14 @@ let load_config_profiles env =
   let home_dir = Sys.getenv "HOME" in
   load_ini_file_res Eio.Path.(Eio.Stdenv.fs env / home_dir / ".aws" / "config")
   |> Result.map (fun kvps ->
-         List.filter_map
-           (fun (section_name, values) ->
-             match section_name with
-             | "default" -> Some (section_name, values)
-             | s when String.starts_with ~prefix:"profile " s ->
-                 Some (String.sub s 8 (String.length s - 8) |> String.trim, values)
-             | _ -> None)
-           kvps)
+      List.filter_map
+        (fun (section_name, values) ->
+          match section_name with
+          | "default" -> Some (section_name, values)
+          | s when String.starts_with ~prefix:"profile " s ->
+              Some (String.sub s 8 (String.length s - 8) |> String.trim, values)
+          | _ -> None)
+        kvps)
 
 type profile = {
   aws_access_key_id : string;

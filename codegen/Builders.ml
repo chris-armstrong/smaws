@@ -15,12 +15,12 @@ let structure_shapes_without_exceptions shapeWithTarget =
   let open Ast.Dependencies in
   shapeWithTarget :: Option.value ~default:[] shapeWithTarget.recursWith
   |> List.filter_map (fun { name; descriptor; _ } ->
-         match descriptor with
-         | StructureShape structureShapeDetails
-           when (not Trait.(hasTrait structureShapeDetails.traits isErrorTrait))
-                && not (String.ends_with ~suffix:"Result" name) ->
-             Some (name, structureShapeDetails)
-         | _ -> None)
+      match descriptor with
+      | StructureShape structureShapeDetails
+        when (not Trait.(hasTrait structureShapeDetails.traits isErrorTrait))
+             && not (String.ends_with ~suffix:"Result" name) ->
+          Some (name, structureShapeDetails)
+      | _ -> None)
 
 let generate_builder ~alias_context name ({ members; _ } : Ast.Shape.structureShapeDetails)
     ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
@@ -110,14 +110,14 @@ let stri_builders ~structure_shapes ~(alias_context : Types.t)
   let structure_items =
     structure_shapes
     |> List.filter_map (fun shapeWithTarget ->
-           let shapes = structure_shapes_without_exceptions shapeWithTarget in
-           match shapes with
-           | [] -> None
-           | items ->
-               let sis =
-                 List.map (fun (name, descriptor) -> make_structure_item name descriptor) items
-               in
-               Some sis)
+        let shapes = structure_shapes_without_exceptions shapeWithTarget in
+        match shapes with
+        | [] -> None
+        | items ->
+            let sis =
+              List.map (fun (name, descriptor) -> make_structure_item name descriptor) items
+            in
+            Some sis)
     |> List.flatten
   in
   structure_items
@@ -127,43 +127,43 @@ let sigi_builders ~structure_shapes ~(alias_context : Types.t)
   let structure_items =
     structure_shapes
     |> List.map (fun shapeWithTarget ->
-           let shapes = structure_shapes_without_exceptions shapeWithTarget in
-           match shapes with
-           | [] -> []
-           | (name, descriptor) :: [] ->
-               let builder =
-                 generate_builder_sig ~alias_context name descriptor ~namespace_resolver ()
-               in
-               let func_name = "make_" ^ SafeNames.safeTypeName name in
+        let shapes = structure_shapes_without_exceptions shapeWithTarget in
+        match shapes with
+        | [] -> []
+        | (name, descriptor) :: [] ->
+            let builder =
+              generate_builder_sig ~alias_context name descriptor ~namespace_resolver ()
+            in
+            let func_name = "make_" ^ SafeNames.safeTypeName name in
 
-               [
-                 B.psig_value
-                   (B.value_description ~name:(Location.mknoloc func_name) ~type_:builder ~prim:[]);
-               ]
-           | (name, descriptor) :: remainder ->
-               let func_name = "make_" ^ SafeNames.safeTypeName name in
-               let builder =
-                 generate_builder_sig ~alias_context name descriptor ~namespace_resolver ()
-               in
-               let value_binding =
-                 B.psig_value
-                   (B.value_description ~name:(Location.mknoloc func_name) ~type_:builder ~prim:[])
-               in
-               let rec_bindings =
-                 remainder
-                 |> List.map (fun (name, descriptor) ->
-                        let func_name = "make_" ^ SafeNames.safeTypeName name in
-                        let builder =
-                          generate_builder_sig ~alias_context name descriptor ~namespace_resolver ()
-                        in
-                        let value_binding =
-                          B.psig_value
-                            (B.value_description ~name:(Location.mknoloc func_name) ~type_:builder
-                               ~prim:[])
-                        in
-                        value_binding)
-               in
-               value_binding :: rec_bindings)
+            [
+              B.psig_value
+                (B.value_description ~name:(Location.mknoloc func_name) ~type_:builder ~prim:[]);
+            ]
+        | (name, descriptor) :: remainder ->
+            let func_name = "make_" ^ SafeNames.safeTypeName name in
+            let builder =
+              generate_builder_sig ~alias_context name descriptor ~namespace_resolver ()
+            in
+            let value_binding =
+              B.psig_value
+                (B.value_description ~name:(Location.mknoloc func_name) ~type_:builder ~prim:[])
+            in
+            let rec_bindings =
+              remainder
+              |> List.map (fun (name, descriptor) ->
+                  let func_name = "make_" ^ SafeNames.safeTypeName name in
+                  let builder =
+                    generate_builder_sig ~alias_context name descriptor ~namespace_resolver ()
+                  in
+                  let value_binding =
+                    B.psig_value
+                      (B.value_description ~name:(Location.mknoloc func_name) ~type_:builder
+                         ~prim:[])
+                  in
+                  value_binding)
+            in
+            value_binding :: rec_bindings)
     |> List.flatten
   in
   structure_items

@@ -39,7 +39,7 @@ module Decode = struct
        with Yojson.Json_error err -> Error (SyntaxError err)
      in
      let open Base.Result in
-     treeResult >>= fun [@u] tree -> rootParser (Ok { tree; path = "$" }))
+     treeResult >>= fun[@u] tree -> rootParser (Ok { tree; path = "$" }))
     [@ns.braces]
 
   let parseJsonFile jsonFile rootParser =
@@ -48,56 +48,56 @@ module Decode = struct
        with Yojson.Json_error err -> Error (SyntaxError err)
      in
      let open Base.Result in
-     treeResult >>= fun [@u] tree -> rootParser (Ok { tree; path = "$" }))
+     treeResult >>= fun[@u] tree -> rootParser (Ok { tree; path = "$" }))
     [@ns.braces]
 
   type nonrec 'a parser = (jsonTreeRef, jsonParseError) Result.t -> ('a, jsonParseError) Result.t
 
   let parseObject (x : jsonTreeResult) : (jsonObjectRef, jsonParseError) Result.t =
     let open Result in
-    x >>= fun [@u] { tree; path } ->
+    x >>= fun[@u] { tree; path } ->
     match tree with `Assoc items -> Ok { object_ = items; path } | _ -> Error (NoValueError path)
 
   let parseRecord recordParser (recordObject : jsonTreeResult) =
     recordObject |> parseObject
     |> Result.bind ~f:(fun { object_; path } ->
-           List.fold
-             ~f:(fun records (key, value) ->
-               Result.bind records ~f:(fun recordsValue ->
-                   let record = recordParser key (Ok { path = path ^ {|.|} ^ key; tree = value }) in
-                   match record with
-                   | Ok recordValue -> Ok (recordValue :: recordsValue)
-                   | Error (CustomError y) -> Error (RecordParseError (path ^ "." ^ key, y))
-                   | Error x -> Error x))
-             ~init:(Ok []) object_)
+        List.fold
+          ~f:(fun records (key, value) ->
+            Result.bind records ~f:(fun recordsValue ->
+                let record = recordParser key (Ok { path = path ^ {|.|} ^ key; tree = value }) in
+                match record with
+                | Ok recordValue -> Ok (recordValue :: recordsValue)
+                | Error (CustomError y) -> Error (RecordParseError (path ^ "." ^ key, y))
+                | Error x -> Error x))
+          ~init:(Ok []) object_)
 
   let parseString x =
     Result.bind x ~f:(fun { tree; path } ->
         match tree with `String str -> Ok str | _ -> Error (WrongType ("string", path)))
 
   let parseNumber x =
-    Result.bind x ~f:(fun [@u] { tree; path } ->
+    Result.bind x ~f:(fun[@u] { tree; path } ->
         match tree with
         | `Int num -> Ok (Int.to_float num)
         | `Float num -> Ok num
         | _ -> Error (WrongType (path, "number")))
 
   let parseBool x =
-    Result.bind x ~f:(fun [@u] { tree; path } ->
+    Result.bind x ~f:(fun[@u] { tree; path } ->
         match tree with `Bool i -> Ok i | _ -> Error (WrongType (path, "bool")))
 
   let parseInteger x =
-    Result.bind x ~f:(fun [@u] { tree; path } ->
+    Result.bind x ~f:(fun[@u] { tree; path } ->
         match tree with `Int i -> Ok i | _ -> Error (WrongType (path, "integer")))
 
   let parseArray itemParser arrayRef =
     let open Result in
-    arrayRef >>= fun [@u] { tree; path } ->
+    arrayRef >>= fun[@u] { tree; path } ->
     match tree with
     | `List arr ->
         Base.List.foldi arr
           ~f:(fun i progress next ->
-            progress >>= fun [@u] items ->
+            progress >>= fun[@u] items ->
             let record =
               itemParser (Ok { path = (path ^ {js|.|js}) ^ Int.to_string i; tree = next })
             in
@@ -118,7 +118,7 @@ module Decode = struct
 
   let field fieldName objectRef =
     let open Result in
-    objectRef >>= fun [@u] { object_; path } ->
+    objectRef >>= fun[@u] { object_; path } ->
     match List.Assoc.find object_ ~equal:String.equal fieldName with
     | Some fieldValue -> Ok { tree = fieldValue; path = (path ^ {js|.|js}) ^ fieldName }
     | None -> Error (NoValueError ((path ^ {js|.|js}) ^ fieldName))

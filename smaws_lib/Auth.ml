@@ -8,13 +8,13 @@ module Profile = Auth_from_profile
 
 let rec resolverChain ~resolvers =
   match resolvers with
-  | resolver :: remaining -> begin
-      try resolver () with
+  | resolver :: remaining ->
+      begin try resolver () with
       | AuthError e ->
           if List.length remaining > 0 then resolverChain ~resolvers:remaining
           else raise (AuthError e)
       | x -> raise x
-    end
+      end
   | [] -> raise (AuthError "No authorization resolvers in chain")
 
 module Dummy = Auth_from_dummy

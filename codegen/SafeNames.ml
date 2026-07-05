@@ -53,11 +53,11 @@ let uppercaseRe = Str.regexp "\\([A-Z][A-Z0-9]+[A-Z]\\|[A-Z]+\\)\\([^A-Z]*\\)"
 let translateBadChars name =
   (name
   |> String.map ~f:(fun char ->
-         match[@ns.braces] char with
-         | 'A' .. 'Z' -> char
-         | 'a' .. 'z' -> char
-         | '0' .. '9' -> char
-         | _ -> '_'))
+      match[@ns.braces] char with
+      | 'A' .. 'Z' -> char
+      | 'a' .. 'z' -> char
+      | '0' .. '9' -> char
+      | _ -> '_'))
   [@ns.braces]
 
 let translateReserved (name : string) =
@@ -129,7 +129,7 @@ let safeVariantName name =
   |> String.substr_replace_all ~pattern:"*" ~with_:"Star"
   |> String.split ~on:'_'
   |> List.filter_map ~f:(fun x ->
-         (if String.length x > 0 then Some (camelCase x) else None) [@ns.ternary])
+      (if String.length x > 0 then Some (camelCase x) else None) [@ns.ternary])
   |> String.concat ~sep:"_")
   [@ns.braces]
 

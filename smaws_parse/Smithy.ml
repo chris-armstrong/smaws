@@ -70,8 +70,8 @@ let parseStaticContextParams value =
   let x =
     value
     |> parseRecord (fun name scf ->
-           scf |> parseObject |> field "value" |> parseStaticContextParamValue
-           |> Result.map ~f:(fun val_ -> (name, val_)))
+        scf |> parseObject |> field "value" |> parseStaticContextParamValue
+        |> Result.map ~f:(fun val_ -> (name, val_)))
   in
   Result.map x ~f:(fun x -> Trait.RulesStaticContextParams x)
 
@@ -79,8 +79,8 @@ let parseOperationContextParams value =
   let x =
     value
     |> parseRecord (fun name ocf ->
-           ocf |> parseObject |> field "path" |> parseString
-           |> Result.map ~f:(fun path -> (name, ({ path } : Trait.operationContextParam))))
+        ocf |> parseObject |> field "path" |> parseString
+        |> Result.map ~f:(fun path -> (name, ({ path } : Trait.operationContextParam))))
   in
   Result.map x ~f:(fun x -> Trait.RulesOperationContextParams x)
 
@@ -96,10 +96,10 @@ let parseEnumValue value =
   let value_ =
     value
     |> Result.bind ~f:(fun ({ tree; path } : jsonTreeRef) ->
-           match tree with
-           | `String x -> Ok (`String x)
-           | `Int x -> Ok (`Int x)
-           | _ -> Error (WrongType (path, "expected a string or integer")))
+        match tree with
+        | `String x -> Ok (`String x)
+        | `Int x -> Ok (`Int x)
+        | _ -> Error (WrongType (path, "expected a string or integer")))
   in
   value_ |> Result.map ~f:(fun value_ -> Trait.EnumValueTrait value_)
 
@@ -147,10 +147,10 @@ let parseTestHttpRequestTests value =
           optional (value |> field "appliesTo")
           |> mapOptional parseString
           |> Result.map ~f:(function
-               | Some "server" -> Some `Server
-               | Some "client" -> Some `Client
-               | None -> None
-               | _ -> failwith "unexpected value for appliesTo in HttpRequestTrait")
+            | Some "server" -> Some `Server
+            | Some "client" -> Some `Client
+            | None -> None
+            | _ -> failwith "unexpected value for appliesTo in HttpRequestTrait")
         in
         Ok
           {
@@ -211,10 +211,10 @@ let parseTestHttpResponseTests value =
           optional (value |> field "appliesTo")
           |> mapOptional parseString
           |> Result.map ~f:(function
-               | Some "server" -> Some `Server
-               | Some "client" -> Some `Client
-               | None -> None
-               | _ -> failwith "unexpected value for appliesTo in HttpResponseTest")
+            | Some "server" -> Some `Server
+            | Some "client" -> Some `Client
+            | None -> None
+            | _ -> failwith "unexpected value for appliesTo in HttpResponseTest")
         in
         Ok
           {

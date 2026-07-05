@@ -1,5 +1,5 @@
 Logs.set_reporter (Logs.format_reporter ());;
-Logs.set_level (Some Logs.Debug)
+Logs.set_level (Some Logs.Debug);;
 
 let optional_empty_list = Option.value ~default:[]
 
