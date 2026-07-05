@@ -2,8 +2,28 @@ open Smithy_ast
 open Exceptions
 
 let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~structure_shapes
-    ~alias_context ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t) oc =
-  if
+    ~alias_context ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t)
+    ~(shape_resolver : Codegen.Shape_resolver.t) oc =
+  if Trait.hasTrait service.traits (function Trait.AwsProtocolAwsQueryTrait -> true | _ -> false)
+  then (
+    let opens =
+      [
+        Codegen.Ppx_util.stri_open [ "Types" ];
+        Codegen.Ppx_util.stri_open [ "Service_metadata" ];
+        Codegen.Ppx_util.stri_open [ "Query_deserializers" ];
+        Codegen.Ppx_util.stri_open [ "Query_serializers" ];
+      ]
+    in
+    try
+      let structure =
+        Codegen.AwsProtocolQuery.Operations.generate ~name ~service ~operation_shapes ~alias_context
+          ~namespace_resolver ~shape_resolver ()
+      in
+      Ppxlib.Pprintast.structure oc (opens @ structure)
+    with _ as a ->
+      Fmt.pf Fmt.stderr "Unable to generate operations for %s: %s" name (Printexc.to_string a);
+      raise (Generate_failure (name, a)))
+  else if
     Trait.hasTrait service.traits (function
       | Trait.AwsProtocolAwsJson1_1Trait -> true
       | Trait.AwsProtocolAwsJson1_0Trait -> true
@@ -25,7 +45,19 @@ let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~str
 let generate_mli ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~structure_shapes
     ~alias_context ?(no_open = false)
     ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t) oc =
-  if
+  if Trait.hasTrait service.traits (function Trait.AwsProtocolAwsQueryTrait -> true | _ -> false)
+  then (
+    let opens = if no_open then [] else [ Codegen.Ppx_util.sigi_open [ "Types" ] ] in
+    try
+      let sign =
+        Codegen.AwsProtocolQuery.Operations.generate_mli ~name ~service ~operation_shapes
+          ~alias_context ~namespace_resolver ()
+      in
+      Ppxlib.Pprintast.signature oc (opens @ sign)
+    with _ as a ->
+      Fmt.pf Fmt.stderr "Unable to generate operations for %s: %s" name (Printexc.to_string a);
+      raise (Generate_failure (name, a)))
+  else if
     Trait.hasTrait service.traits (function
       | Trait.AwsProtocolAwsJson1_1Trait -> true
       | Trait.AwsProtocolAwsJson1_0Trait -> true

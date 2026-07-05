@@ -24,6 +24,9 @@ type reference = { resource : string; service : string option } [@@deriving show
 type clientEndpointDiscoveryDetails = { operation : string; error : string }
 [@@deriving show, equal]
 
+type awsQueryErrorDetails = { code : string; httpResponseCode : int option }
+[@@deriving show, equal]
+
 type externalDocumentationType = DocumentationLink of string | SpecificationLink of string
 [@@deriving show, equal]
 
@@ -66,6 +69,23 @@ type httpRequestTest = {
 }
 [@@deriving show, equal]
 
+type httpResponseTest = {
+  id : string;
+  protocol : string;
+  code : int;
+  headers : (string * string) list option;
+  forbidHeaders : string list option;
+  body : string option;
+  bodyMediaType : string option;
+  params : Yojson.Basic.t option;
+  vendorParams : Yojson.Basic.t option;
+  vendorParamsShape : string option;
+  documentation : string option;
+  tags : string list option;
+  appliesTo : [ `Client | `Server ] option;
+}
+[@@deriving show, equal]
+
 type t =
   | ApiTitleTrait of string
   | ApiXmlNamespaceTrait of string
@@ -87,7 +107,7 @@ type t =
   | AwsProtocolAwsJson1_0Trait
   | AwsProtocolAwsJson1_1Trait
   | AwsProtocolAwsQueryCompatibleTrait
-  | AwsProtocolAwsQueryErrorTrait
+  | AwsProtocolAwsQueryErrorTrait of awsQueryErrorDetails
   | AwsProtocolAwsQueryTrait
   | AwsProtocolEc2QueryNameTrait of string
   | AwsProtocolEc2QueryTrait
@@ -147,6 +167,7 @@ type t =
   | TagsTrait of string list
   | TimestampFormatTrait of timestampFormat
   | TestSmokeTests
+  | TestHttpResponseTests of httpResponseTest list
   | WaitableTrait
   | XmlAttributeTrait
   | XmlFlattenedTrait

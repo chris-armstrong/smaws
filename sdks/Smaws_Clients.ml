@@ -31,6 +31,7 @@ module Shield = Smaws_Client_Shield
 module Snowball = Smaws_Client_Snowball
 module SQS = Smaws_Client_SQS
 module SSM = Smaws_Client_SSM
+module STS = Smaws_Client_STS
 module SWF = Smaws_Client_SWF
 module Transcribe = Smaws_Client_Transcribe
 module WAF = Smaws_Client_WAF

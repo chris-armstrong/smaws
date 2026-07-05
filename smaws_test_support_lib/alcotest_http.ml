@@ -37,6 +37,17 @@ let headers_pp = Fmt.(list (pair string string))
 let headers_testable = Alcotest.testable headers_pp headers_eq
 let method_testable = Alcotest.testable Smaws_Lib.Http.pp_method_ Smaws_Lib.Http.equal_method_
 
+let parse_form_body s =
+  Uri.query_of_encoded s
+  |> List.map (fun (k, vs) -> (k, List.sort String.compare vs))
+  |> List.sort (fun (k1, _) (k2, _) -> String.compare k1 k2)
+
+let form_body_equal s1 s2 =
+  let equal_pair (k1, v1) (k2, v2) = String.equal k1 k2 && List.equal String.equal v1 v2 in
+  List.equal equal_pair (parse_form_body s1) (parse_form_body s2)
+
+let input_body_form_testable = Alcotest.option (Alcotest.testable Fmt.string form_body_equal)
+
 (** A testable for comparing Smithy URIs - only compares the path component *)
 let uri_testable =
   Alcotest.testable
@@ -47,3 +58,19 @@ let uri_testable =
           | "" -> "/"
           | x when String.ends_with ~suffix:"/" x -> x
           | x -> x ^ "/" ))
+
+(** [float_equal_nan a b] compares floats, treating NaN as equal to NaN (unlike polymorphic [=], for
+    which [nan = nan] is [false]). Infinity and -Infinity compare as equal to themselves as normal.
+*)
+let float_equal_nan a b = (Float.is_nan a && Float.is_nan b) || a = b
+
+(** A NaN-aware testable for bare floats. *)
+let float_testable_nan = Alcotest.testable (fun fmt f -> Fmt.pf fmt "%g" f) float_equal_nan
+
+(** [nan_aware_equal equal] wraps an [equal] so that values differing only in NaN-typed float fields
+    still compare equal. The supplied [equal] (typically a [@@deriving eq] function) is used first;
+    [Stdlib.compare] — which treats [nan] as equal to [nan], and otherwise agrees with [=] — is used
+    as a tiebreaker so only the float fields' NaN behaviour changes. *)
+let nan_aware_equal equal a b = equal a b || Stdlib.compare a b = 0
+
+let testable_nan_aware pp equal = Alcotest.testable pp (nan_aware_equal equal)

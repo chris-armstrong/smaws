@@ -3,6 +3,7 @@ open Ppx_util
 module Ast = Smithy_ast
 module Parse = Smaws_parse
 open Ast
+module Longident = Ppx_longident
 
 module B = Ppxlib.Ast_builder.Make (struct
   let loc = Location.none

@@ -37,7 +37,7 @@ Pipeline: Smithy JSON → parse → typed AST → code generation → OCaml sour
 
 ```sh
 dune build          # build everything; run after any change to verify it compiles
-dune fmt            # format all OCaml source (ocamlformat); run before committing
+dune fmt            # always format after build as build changes source code style
 ```
 
 All build artefacts are under `_build/default/`, mirroring the source layout.
@@ -72,7 +72,7 @@ There is no separate lint step — `dune build` catches type errors and `dune fm
 |----------|-----------|--------------|--------|
 | AwsJson 1.0 | Done | `smaws_lib/protocols_impl/AwsJson.ml` | ~32 services (SQS, DynamoDB, …) |
 | AwsJson 1.1 | Done | same | ~138 services total with 1.0 |
-| AwsQuery | Partial | `smaws_lib/protocols_impl/AwsQuery.ml` | CloudFormation, IAM, SNS, … |
+| AwsQuery | Done (core) | `smaws_lib/protocols_impl/AwsQuery.ml` | STS generated; CloudFormation, IAM, SNS, … pending. Passes smithy `aws.protocoltests.query` suite. Pending: idempotency-token auto-fill, request compression |
 | restJson 1 | Not started | — | ~224 services |
 | restXml | Not started | — | S3, CloudFront |
 | EC2 Query | Not started | — | EC2 |
@@ -98,7 +98,7 @@ There is no separate lint step — `dune build` catches type errors and `dune fm
    ```ocaml
    module ServiceName = Smaws_Client_ServiceName
    ```
-7. Run `dune build` and `dune fmt` to verify.
+7. Run `dune build` then `dune fmt` to verify.
 
 The service's protocol must be implemented before generation will produce working code — check the table above.
 
@@ -106,17 +106,11 @@ The service's protocol must be implemented before generation will produce workin
 
 ## Code guidelines
 
+* **Simplify nesting** - avoid nested match statements in favour of Option.* and Result.* combinators with pipes or binding monadic operators (`let (let*) = ...`, `let (let+) = ...`)
 - **Naming**: functions and types `snake_case`; type constructors `CamelCase`; modules `Snake_case` (filename `snake_case.ml`, referenced in code as `Snake_case`)
 - **No new dependencies** without asking the developer first
-- **`base`** is available in `codegen/`, `sdkgen/`, `smaws_parse/`, `smithy_ast/`; `smaws_lib` must use only the OCaml standard library
+- **`base`** is available in `codegen/`, `sdkgen/`, `smaws_parse/`, `smithy_ast/` and must be opened at the top of those libraries and used
+* `smaws_lib` must use only the OCaml standard library
 - **Comments**: only when the *why* is non-obvious; never restate what the code already says
-- **Stop after each phase** and wait for the developer to review before continuing to the next
 
----
 
-## Agent rules
-
-- Never commit, push, or modify git history — that is the developer's responsibility
-- Before touching any subsystem mentioned in `refactorings/`, read the corresponding design document
-- Write a plan to `refactorings/<topic>.md` before starting any non-trivial refactor, and maintain a `refactorings/<topic>.todo.md` as work progresses
-- Do not add libraries, change the dune-project, or modify opam files without explicit approval

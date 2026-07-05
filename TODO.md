@@ -45,6 +45,12 @@
 
 * [x] AwsJson1.0
 * [x] AwsJson1.1
-* [ ] AwsQuery 
+* [x] AwsQuery (core: serialise/deserialise/typed errors, unions; passes smithy conformance suite. Pending: idempotency-token auto-fill, request compression)
+  * [ ] Wire [UInt64] (or [Int64]) into codegen for `smithy.api#Long` - currently maps to OCaml [int], overflowing for values > 2^62-1
+  * [ ] Represent `smithy.api#BigInteger` / `smithy.api#BigDecimal` beyond [int]/[float] - [UInt64] only covers 0..2^64-1; BigInteger is unbounded and BigDecimal needs >15 sig digits. Likely needs a string passthrough or a bignum dependency (ask before adding deps)
+  * [x] awsQuery union serialisation/deserialisation
+  * [ ] `@idempotencyToken` auto-fill (`QueryProtocolIdempotencyTokenAutoFill` is banned)
+  * [ ] `@requestCompression` gzip (`SDKAppliedContentEncoding_awsQuery` / `SDKAppendsGzipAndIgnoresHttpProvidedEncoding_awsQuery` are banned)
+  * [ ] awsJson error-response test generation (`make_error_response_test_str` is awsQuery-only; awsJson error fixtures need a JSON error reader)
 * [ ] REST
 * [ ] S3

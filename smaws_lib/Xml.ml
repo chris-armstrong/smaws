@@ -24,6 +24,23 @@ module Parse = struct
   exception XmlUnexpectedConstruct of expected * signal * pos
   exception XmlMissingElement of string * pos
 
+  (* Unified error for the public, result-returning interface. The internal
+     [Read]/[Structure] functions raise [XmlParse]/[XmlUnexpectedConstruct]/
+     [XmlMissingElement] (and primitive parsers raise [Failure]/
+     [Invalid_argument]); [run] catches them into this type so nothing escapes
+     the [request] boundary. Mirrors [Json.DeserializeHelpers.jsonParseError] /
+     [deserialize_res]. *)
+  type error = XmlParseError of string
+
+  let error_to_string = function XmlParseError s -> s
+  let pos_to_string (line, col) = Fmt.str "line %d, col %d" line col
+
+  let signal_to_string = function
+    | `El_start _ -> "El_start"
+    | `El_end -> "El_end"
+    | `Data _ -> "Data"
+    | `Dtd _ -> "Dtd"
+
   module Accept = struct
     let startTag i tag ~ns ~expected =
       let next = input i in
@@ -66,7 +83,13 @@ module Parse = struct
 
     let element i tag ?ns () =
       let _, _, _ = Accept.startTag i tag ~ns ~expected:(XmlStartElement (tag, ns)) in
-      let data = Accept.data i ~expected:(XmlElementData (tag, ns)) in
+      (* Xmlm emits no `Data signal for empty/self-closing elements (<x/>), so
+         accept an immediate `El_end as an empty string value. *)
+      let data =
+        match Xmlm.peek i with
+        | `El_end -> ""
+        | _ -> Accept.data i ~expected:(XmlElementData (tag, ns))
+      in
       let _ = Accept.endTag i ~expected:(XmlEndElement (tag, ns)) in
       data
 
@@ -100,6 +123,31 @@ module Parse = struct
       | _ -> None
 
     let dtd i = Accept.dtd i
+
+    let skip_element i =
+      ignore (Xmlm.input i);
+      let depth = ref 1 in
+      while !depth > 0 do
+        match Xmlm.input i with `El_start _ -> incr depth | `El_end -> decr depth | _ -> ()
+      done
+
+    (** Consume remaining sibling elements and whitespace until the enclosing element's end tag is
+        reached. The end tag itself is left unconsumed so the caller's [Accept.endTag] can read it.
+        Used to skip protocol envelope siblings such as awsQuery's <ResponseMetadata>. *)
+    let skip_to_end i =
+      let rec loop () =
+        match Xmlm.peek i with
+        | `El_end -> ()
+        | `El_start _ ->
+            skip_element i;
+            loop ()
+        | _ ->
+            ignore (Xmlm.input i);
+            loop ()
+      in
+      loop ()
+
+    let data i = Accept.data i ~expected:(XmlElementData ("", None))
   end
 
   module Structure = struct
@@ -281,4 +329,24 @@ module Parse = struct
 
   let required tag value i =
     match value with Some value -> value | None -> raise (XmlMissingElement (tag, Xmlm.pos i))
+
+  (* Run a direct-style parser [f] (which may raise any of the internal XML
+     exceptions or a primitive-parser [Failure]/[Invalid_argument]) and catch
+     every failure into [error]. This is the result-returning boundary that
+     keeps exceptions internal - mirrors [Json.DeserializeHelpers.deserialize_res]. *)
+  let run f =
+    try Ok (f ()) with
+    | XmlParse e -> Error (XmlParseError (Xmlm.error_message e))
+    | XmlUnexpectedConstruct (_, signal, pos) ->
+        Error
+          (XmlParseError
+             (Fmt.str "unexpected XML construct (%s) at %s" (signal_to_string signal)
+                (pos_to_string pos)))
+    | XmlMissingElement (tag, pos) ->
+        Error (XmlParseError (Fmt.str "missing element %S at %s" tag (pos_to_string pos)))
+    | Structure.MissingElement (tag, pos) ->
+        Error (XmlParseError (Fmt.str "missing element %S at %s" tag (pos_to_string pos)))
+    | Structure.InputUnordered msg -> Error (XmlParseError msg)
+    | Failure msg | Invalid_argument msg -> Error (XmlParseError msg)
+    | exn -> Error (XmlParseError (Printexc.to_string exn))
 end

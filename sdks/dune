@@ -37,6 +37,7 @@
   Smaws_Client_Snowball
   Smaws_Client_SQS
   Smaws_Client_SSM
+  Smaws_Client_STS
   Smaws_Client_SWF
   Smaws_Client_Transcribe
   Smaws_Client_WAF

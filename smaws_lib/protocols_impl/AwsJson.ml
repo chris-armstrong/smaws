@@ -97,11 +97,11 @@ let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
 
       let body_res =
         match body with
-        | Some body ->
+        | Some body when not (String.equal (String.trim body) "") ->
             Fmt.pr "Response body: %s" body;
 
             body |> json_of_string ~fname:(Fmt.str "%s.%s" service.endpointPrefix shape_name)
-        | None -> `Assoc []
+        | _ -> `Assoc []
       in
 
       match response |> Http.Response.status with

@@ -195,6 +195,7 @@ let write_operations ~output_dir t =
     structure_shapes;
     alias_context;
     namespace_module_mapping;
+    shape_resolver;
     _;
   } =
     t
@@ -214,7 +215,7 @@ let write_operations ~output_dir t =
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
         Gen_operations.generate ~name ~service ~operation_shapes ~structure_shapes ~alias_context
-          ~namespace_resolver output_fmt)
+          ~namespace_resolver ~shape_resolver output_fmt)
   and r2 =
     write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
         Gen_operations.generate_mli ~name ~service ~operation_shapes ~structure_shapes
@@ -228,6 +229,9 @@ let write_service ~output_dir t =
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
       SmithyHelpers.printServiceDetails shapes)
 
+let empty_service : Ast.Shape.serviceShapeDetails =
+  { version = ""; operations = None; traits = None }
+
 let write_serialisers ~output_dir t =
   let {
     namespace;
@@ -235,6 +239,7 @@ let write_serialisers ~output_dir t =
     operation_shapes;
     structure_shapes;
     namespace_module_mapping;
+    shape_resolver;
     _;
   } =
     t
@@ -243,9 +248,35 @@ let write_serialisers ~output_dir t =
     Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
       ~namespace_module_mapping
   in
-  let filename = "json_serializers" in
+  let service = Option.value_map service_details ~default:empty_service ~f:(fun (_n, s, _t) -> s) in
+  let filename =
+    match SmithyHelpers.protocol_of_traits service.traits with
+    | Query -> "query_serializers"
+    | Json -> "json_serializers"
+  in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
-      Gen_serialisers.generate ~operation_shapes ~structure_shapes ~namespace_resolver output_fmt)
+      Gen_serialisers.generate ~service ~operation_shapes ~structure_shapes ~shape_resolver
+        ~namespace_resolver output_fmt)
+
+let write_query_serialisers ~output_dir t =
+  let { namespace; structure_shapes; namespace_module_mapping; shape_resolver; _ } = t in
+  let namespace_resolver =
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
+      ~namespace_module_mapping
+  in
+  write_output ~output_dir ~filename:"query_serializers.ml" (fun output_fmt ->
+      Gen_serialisers.generate ~protocol_override:SmithyHelpers.Query ~service:empty_service
+        ~operation_shapes:[] ~structure_shapes ~shape_resolver ~namespace_resolver output_fmt)
+
+let write_query_deserialisers ~output_dir t =
+  let { namespace; structure_shapes; namespace_module_mapping; shape_resolver; _ } = t in
+  let namespace_resolver =
+    Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
+      ~namespace_module_mapping
+  in
+  write_output ~output_dir ~filename:"query_deserializers.ml" (fun output_fmt ->
+      Gen_deserialisers.generate ~protocol_override:SmithyHelpers.Query ~service:empty_service
+        ~operation_shapes:[] ~structure_shapes ~shape_resolver ~namespace_resolver output_fmt)
 
 let write_deserialisers ~output_dir t =
   let {
@@ -254,6 +285,7 @@ let write_deserialisers ~output_dir t =
     operation_shapes;
     structure_shapes;
     namespace_module_mapping;
+    shape_resolver;
     _;
   } =
     t
@@ -262,9 +294,15 @@ let write_deserialisers ~output_dir t =
     Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
       ~namespace_module_mapping
   in
-  let filename = "json_deserializers" in
+  let service = Option.value_map service_details ~default:empty_service ~f:(fun (_n, s, _t) -> s) in
+  let filename =
+    match SmithyHelpers.protocol_of_traits service.traits with
+    | Query -> "query_deserializers"
+    | Json -> "json_deserializers"
+  in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
-      Gen_deserialisers.generate ~operation_shapes ~structure_shapes ~namespace_resolver output_fmt)
+      Gen_deserialisers.generate ~service ~operation_shapes ~structure_shapes ~shape_resolver
+        ~namespace_resolver output_fmt)
 
 let write_protocol_tests ~output_dir t =
   let {
@@ -283,10 +321,11 @@ let write_protocol_tests ~output_dir t =
     Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
       ~namespace_module_mapping
   in
+  let service = Option.map service_details ~f:(fun (_name, svc, _trait) -> svc) in
   let filename = "protocol_tests" in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
       Gen_protocol_tests.generate_ml ~shape_resolver ~structure_shapes ~operation_shapes
-        ~alias_context ~namespace_resolver output_fmt)
+        ~alias_context ~service ~namespace_resolver output_fmt)
 
 let write_module ~output_dir ~filename t =
   let {
@@ -304,14 +343,16 @@ let write_module ~output_dir ~filename t =
     Codegen.Namespace_resolver.Namespace_resolver.create ~current_namespace:namespace
       ~namespace_module_mapping
   in
+  let service = Option.value_map service_details ~default:empty_service ~f:(fun (_n, s, _t) -> s) in
+  let protocol = SmithyHelpers.protocol_of_traits service.traits in
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
-        Gen_module.generate ~service_details output_fmt)
+        Gen_module.generate ~service_details ~protocol output_fmt)
   in
   let r2 =
     write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
         Gen_module.generate_mli ~service_details ~namespace_resolver ~operation_shapes
-          ~structure_shapes ~alias_context output_fmt)
+          ~structure_shapes ~alias_context ~protocol output_fmt)
   in
   Result.all_unit [ r1; r2 ]
 

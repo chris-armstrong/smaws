@@ -3,6 +3,8 @@ module Ast = Smithy_ast
 
 type t = (string, Ppxlib.core_type) Hashtbl.t
 
+module Longident = Ppx_longident
+
 module B = Ppxlib.Ast_builder.Make (struct
   let loc = Location.none
 end)
