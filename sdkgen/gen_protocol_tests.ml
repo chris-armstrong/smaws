@@ -482,6 +482,72 @@ let make_response_test_str ~namespace_resolver ~shape_resolver ~input_shape ~out
                  check [%e testable] "expected output" expected result
              | Error error -> failwith ([%e error_to_string_expr] error)])
 
+let make_error_response_test_str ~namespace_resolver ~shape_resolver ~input_shape ~operation_name
+    error_response_tests =
+  (* Generate a test that mocks an error response body and asserts the operation
+     returns [Error (`Variant struct)] with the error-shape members deserialised
+     to match the test's [params]. Mirrors make_response_test_str but for the
+     Error branch; the httpResponseTests live on the error shapes, not the
+     operation. *)
+  error_response_tests
+  |> List.map ~f:(fun (error_shape_name, (response_test : Trait.httpResponseTest)) ->
+         Fmt.pr "Generating error response test for %s\n" response_test.id;
+         let test_name_str = const_str response_test.id in
+         let test_name_pat =
+           B.ppat_var (Location.mknoloc (make_response_test_case_function_name response_test))
+         in
+         let variant = Codegen.SafeNames.safeConstructorName error_shape_name in
+         let type_name = Codegen.SafeNames.safeTypeName error_shape_name in
+         let expected_struct_expr =
+           make_input_expr ~shape_resolver (Some error_shape_name) response_test.params
+         in
+         let input_expr = make_input_expr ~shape_resolver input_shape None in
+         let response_body_expr = make_response_body_expr response_test.body in
+         let response_headers_expr = make_headers_expr response_test.headers in
+         let operation_call_expr =
+           make_operation_call_expr ~namespace_resolver ~shape_resolver ~operation_name
+         in
+         let error_to_string_expr =
+           make_error_to_string_expr ~namespace_resolver ~shape_resolver ~operation_name
+         in
+         let status_code =
+           B.pexp_constant (Ppxlib.Ast.Pconst_integer (Int.to_string response_test.code, None))
+         in
+         let pp_func =
+           B.pexp_ident (Location.mknoloc (make_lident ~names:[ "Types"; "pp_" ^ type_name ]))
+         in
+         let equal_func =
+           B.pexp_ident (Location.mknoloc (make_lident ~names:[ "Types"; "equal_" ^ type_name ]))
+         in
+         let testable =
+           B.pexp_apply
+             (B.pexp_ident
+                (Location.mknoloc (make_lident ~names:[ "Alcotest_http"; "testable_nan_aware" ])))
+             [ (Nolabel, pp_func); (Nolabel, equal_func) ]
+         in
+         let expected =
+           B.pexp_constraint expected_struct_expr
+             (B.ptyp_constr (Location.mknoloc (make_lident ~names:[ "Types"; type_name ])) [])
+         in
+         let err_var_pat = B.ppat_variant variant (Some (B.ppat_var (Location.mknoloc "e"))) in
+         [%stri
+           let [%p test_name_pat] =
+            fun () ->
+             Eio.Switch.run ~name:[%e test_name_str] @@ fun sw ->
+             let module Mock = (val Http_mock.create_http_mock ()) in
+             let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+             let config = Config.dummy in
+             let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+             Mock.mock_response ?body:[%e response_body_expr] ~status:[%e status_code]
+               ~headers:[%e response_headers_expr] ();
+             let response = [%e operation_call_expr] ctx [%e input_expr] in
+             match response with
+             | Error [%p err_var_pat] ->
+                 let expected = [%e expected] in
+                 check [%e testable] "expected error" expected e
+             | Error other -> failwith ([%e error_to_string_expr] other)
+             | Ok _ -> failwith "expected an error response, got Ok"])
+
 let make_query_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
     ~operation_name http_protocols =
   http_protocols
@@ -552,6 +618,35 @@ let is_query_service (service : Shape.serviceShapeDetails option) =
   | Some s ->
       Trait.hasTrait s.traits (function Trait.AwsProtocolAwsQueryTrait -> true | _ -> false)
 
+(* httpResponseTests attached to an operation's error shapes (rather than to the
+   operation itself). Returns (error_shape_name, httpResponseTest) pairs, after
+   the same banned/appliesTo/protocol filters as the operation-level tests. *)
+let error_shape_response_tests ~query_protocol ~query_protocol_id
+    ~(shape_resolver : Codegen.Shape_resolver.t)
+    (operationShapeDetails : Shape.operationShapeDetails) =
+  operationShapeDetails.errors |> Option.value ~default:[]
+  |> List.concat_map ~f:(fun error_name ->
+         let trait_tests =
+           Codegen.Shape_resolver.find_shape_by_name ~name:error_name shape_resolver
+           |> Option.bind ~f:(function
+                | Shape.StructureShape { traits; _ } ->
+                    Option.bind traits ~f:(fun ts ->
+                        List.find_map ts ~f:(function
+                          | Trait.TestHttpResponseTests x -> Some x
+                          | _ -> None))
+                | _ -> None)
+           |> Option.value ~default:[]
+         in
+         trait_tests
+         |> List.filter ~f:(fun (t : Trait.httpResponseTest) ->
+                not (List.exists bannedTests ~f:(String.equal t.id)))
+         |> List.filter ~f:(fun (t : Trait.httpResponseTest) ->
+                match t.appliesTo with Some `Server -> false | Some `Client | None -> true)
+         |> List.filter ~f:(fun (t : Trait.httpResponseTest) ->
+                if query_protocol then String.equal t.protocol query_protocol_id
+                else not (String.equal t.protocol query_protocol_id))
+         |> List.map ~f:(fun t -> (error_name, t)))
+
 let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_context
     ?(with_derivings = false) ?(no_open = false)
     ?(service : Shape.serviceShapeDetails option = None)
@@ -620,6 +715,12 @@ let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_conte
            in
            let input_shape = input in
            let output_shape = output in
+           let error_response_tests =
+             if query_protocol then
+               error_shape_response_tests ~query_protocol ~query_protocol_id ~shape_resolver
+                 operationShapeDetails
+             else []
+           in
            let request_test_functions =
              if query_protocol then
                make_query_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
@@ -632,7 +733,15 @@ let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_conte
              make_response_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
                ~operation_name:name http_response_protocols
            in
-           let test_case_functions = request_test_functions @ response_test_functions in
+           let error_response_test_functions =
+             if query_protocol then
+               make_error_response_test_str ~namespace_resolver ~shape_resolver ~input_shape
+                 ~operation_name:name error_response_tests
+             else []
+           in
+           let test_case_functions =
+             request_test_functions @ response_test_functions @ error_response_test_functions
+           in
            let test_suite_name =
              B.ppat_var
                (Location.mknoloc ((name |> Codegen.SafeNames.safeFunctionName) ^ "_test_suite"))
@@ -650,6 +759,15 @@ let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_conte
                          ]))
                @ (http_response_protocols
                  |> List.map ~f:(fun (protocol : Trait.httpResponseTest) ->
+                        B.pexp_tuple
+                          [
+                            const_str protocol.id;
+                            B.pexp_variant "Quick" None;
+                            Codegen.Ppx_util.exp_ident
+                              (make_response_test_case_function_name protocol);
+                          ]))
+               @ (error_response_tests
+                 |> List.map ~f:(fun (_, (protocol : Trait.httpResponseTest)) ->
                         B.pexp_tuple
                           [
                             const_str protocol.id;
