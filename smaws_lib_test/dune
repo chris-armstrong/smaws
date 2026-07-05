@@ -16,3 +16,7 @@
 (test
  (name aws_query_serialize_test)
  (libraries Smaws_Lib alcotest))
+
+(test
+ (name uint64_test)
+ (libraries Smaws_Lib alcotest))
