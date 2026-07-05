@@ -962,14 +962,38 @@ module Operations = struct
                  let wire_code = wire_code_of_error error in
                  let variant = SafeNames.safeConstructorName error in
                  let deser_func = Deserialiser.func_longident ~namespace_resolver error in
-                 let struct_expr =
+                 let parse_call =
                    B.pexp_apply parse_error_struct
                      [
                        (Labelled "body", exp_ident "body");
                        (Labelled "structParser", B.pexp_ident (Location.mknoloc deser_func));
                      ]
                  in
-                 let rhs = B.pexp_variant variant (Some struct_expr) in
+                 (* parse_error_struct returns (struct, Xml.Parse.error) result;
+                    unwrap into the typed variant on Ok, or `XmlParseError on
+                    parse failure. *)
+                 let rhs =
+                   B.pexp_match parse_call
+                     [
+                       B.case
+                         ~lhs:
+                           (B.ppat_construct (lident_noloc "Ok")
+                              (Some (B.ppat_var (Location.mknoloc "s"))))
+                         ~guard:None
+                         ~rhs:(B.pexp_variant variant (Some (exp_ident "s")));
+                       B.case
+                         ~lhs:
+                           (B.ppat_construct (lident_noloc "Error")
+                              (Some
+                                 (B.ppat_construct
+                                    (Location.mknoloc
+                                       (make_lident
+                                          ~names:[ "Smaws_Lib"; "Xml"; "Parse"; "XmlParseError" ]))
+                                    (Some (B.ppat_var (Location.mknoloc "msg"))))))
+                         ~guard:None
+                         ~rhs:(B.pexp_variant "XmlParseError" (Some (exp_ident "msg")));
+                     ]
+                 in
                  B.case ~lhs:(pat_const_str wire_code) ~guard:None ~rhs)
         in
         let default_case =

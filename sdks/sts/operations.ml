@@ -13,22 +13,34 @@ module AssumeRole = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
     match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "ExpiredTokenException" ->
-        `ExpiredTokenException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:expired_token_exception_of_xml)
-    | "MalformedPolicyDocument" ->
-        `MalformedPolicyDocumentException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:malformed_policy_document_exception_of_xml)
-    | "PackedPolicyTooLarge" ->
-        `PackedPolicyTooLargeException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:packed_policy_too_large_exception_of_xml)
-    | "RegionDisabledException" ->
-        `RegionDisabledException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:region_disabled_exception_of_xml)
+    | "ExpiredTokenException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:expired_token_exception_of_xml
+        with
+        | Ok s -> `ExpiredTokenException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "MalformedPolicyDocument" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:malformed_policy_document_exception_of_xml
+        with
+        | Ok s -> `MalformedPolicyDocumentException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "PackedPolicyTooLarge" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:packed_policy_too_large_exception_of_xml
+        with
+        | Ok s -> `PackedPolicyTooLargeException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "RegionDisabledException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:region_disabled_exception_of_xml
+        with
+        | Ok s -> `RegionDisabledException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
     | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
 
   let request context (request : assume_role_request) =
@@ -50,30 +62,48 @@ module AssumeRoleWithSAML = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
     match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "ExpiredTokenException" ->
-        `ExpiredTokenException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:expired_token_exception_of_xml)
-    | "IDPRejectedClaim" ->
-        `IDPRejectedClaimException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:idp_rejected_claim_exception_of_xml)
-    | "InvalidIdentityToken" ->
-        `InvalidIdentityTokenException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:invalid_identity_token_exception_of_xml)
-    | "MalformedPolicyDocument" ->
-        `MalformedPolicyDocumentException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:malformed_policy_document_exception_of_xml)
-    | "PackedPolicyTooLarge" ->
-        `PackedPolicyTooLargeException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:packed_policy_too_large_exception_of_xml)
-    | "RegionDisabledException" ->
-        `RegionDisabledException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:region_disabled_exception_of_xml)
+    | "ExpiredTokenException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:expired_token_exception_of_xml
+        with
+        | Ok s -> `ExpiredTokenException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "IDPRejectedClaim" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:idp_rejected_claim_exception_of_xml
+        with
+        | Ok s -> `IDPRejectedClaimException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidIdentityToken" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_identity_token_exception_of_xml
+        with
+        | Ok s -> `InvalidIdentityTokenException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "MalformedPolicyDocument" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:malformed_policy_document_exception_of_xml
+        with
+        | Ok s -> `MalformedPolicyDocumentException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "PackedPolicyTooLarge" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:packed_policy_too_large_exception_of_xml
+        with
+        | Ok s -> `PackedPolicyTooLargeException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "RegionDisabledException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:region_disabled_exception_of_xml
+        with
+        | Ok s -> `RegionDisabledException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
     | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
 
   let request context (request : assume_role_with_saml_request) =
@@ -96,34 +126,55 @@ module AssumeRoleWithWebIdentity = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
     match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "ExpiredTokenException" ->
-        `ExpiredTokenException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:expired_token_exception_of_xml)
-    | "IDPCommunicationError" ->
-        `IDPCommunicationErrorException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:idp_communication_error_exception_of_xml)
-    | "IDPRejectedClaim" ->
-        `IDPRejectedClaimException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:idp_rejected_claim_exception_of_xml)
-    | "InvalidIdentityToken" ->
-        `InvalidIdentityTokenException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:invalid_identity_token_exception_of_xml)
-    | "MalformedPolicyDocument" ->
-        `MalformedPolicyDocumentException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:malformed_policy_document_exception_of_xml)
-    | "PackedPolicyTooLarge" ->
-        `PackedPolicyTooLargeException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:packed_policy_too_large_exception_of_xml)
-    | "RegionDisabledException" ->
-        `RegionDisabledException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:region_disabled_exception_of_xml)
+    | "ExpiredTokenException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:expired_token_exception_of_xml
+        with
+        | Ok s -> `ExpiredTokenException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "IDPCommunicationError" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:idp_communication_error_exception_of_xml
+        with
+        | Ok s -> `IDPCommunicationErrorException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "IDPRejectedClaim" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:idp_rejected_claim_exception_of_xml
+        with
+        | Ok s -> `IDPRejectedClaimException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidIdentityToken" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_identity_token_exception_of_xml
+        with
+        | Ok s -> `InvalidIdentityTokenException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "MalformedPolicyDocument" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:malformed_policy_document_exception_of_xml
+        with
+        | Ok s -> `MalformedPolicyDocumentException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "PackedPolicyTooLarge" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:packed_policy_too_large_exception_of_xml
+        with
+        | Ok s -> `PackedPolicyTooLargeException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "RegionDisabledException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:region_disabled_exception_of_xml
+        with
+        | Ok s -> `RegionDisabledException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
     | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
 
   let request context (request : assume_role_with_web_identity_request) =
@@ -141,14 +192,20 @@ module AssumeRoot = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
     match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "ExpiredTokenException" ->
-        `ExpiredTokenException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:expired_token_exception_of_xml)
-    | "RegionDisabledException" ->
-        `RegionDisabledException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:region_disabled_exception_of_xml)
+    | "ExpiredTokenException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:expired_token_exception_of_xml
+        with
+        | Ok s -> `ExpiredTokenException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "RegionDisabledException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:region_disabled_exception_of_xml
+        with
+        | Ok s -> `RegionDisabledException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
     | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
 
   let request context (request : assume_root_request) =
@@ -166,10 +223,13 @@ module DecodeAuthorizationMessage = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
     match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "InvalidAuthorizationMessageException" ->
-        `InvalidAuthorizationMessageException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:invalid_authorization_message_exception_of_xml)
+    | "InvalidAuthorizationMessageException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_authorization_message_exception_of_xml
+        with
+        | Ok s -> `InvalidAuthorizationMessageException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
     | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
 
   let request context (request : decode_authorization_message_request) =
@@ -214,18 +274,27 @@ module GetFederationToken = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
     match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "MalformedPolicyDocument" ->
-        `MalformedPolicyDocumentException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:malformed_policy_document_exception_of_xml)
-    | "PackedPolicyTooLarge" ->
-        `PackedPolicyTooLargeException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:packed_policy_too_large_exception_of_xml)
-    | "RegionDisabledException" ->
-        `RegionDisabledException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:region_disabled_exception_of_xml)
+    | "MalformedPolicyDocument" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:malformed_policy_document_exception_of_xml
+        with
+        | Ok s -> `MalformedPolicyDocumentException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "PackedPolicyTooLarge" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:packed_policy_too_large_exception_of_xml
+        with
+        | Ok s -> `PackedPolicyTooLargeException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "RegionDisabledException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:region_disabled_exception_of_xml
+        with
+        | Ok s -> `RegionDisabledException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
     | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
 
   let request context (request : get_federation_token_request) =
@@ -242,10 +311,13 @@ module GetSessionToken = struct
 
   let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
     match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "RegionDisabledException" ->
-        `RegionDisabledException
-          (Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-             ~structParser:region_disabled_exception_of_xml)
+    | "RegionDisabledException" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:region_disabled_exception_of_xml
+        with
+        | Ok s -> `RegionDisabledException s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
     | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
 
   let request context (request : get_session_token_request) =

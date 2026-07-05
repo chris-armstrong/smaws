@@ -57,14 +57,15 @@ let ok_response_skips_response_metadata () =
       ~body:ok_body_with_response_metadata ~resultParser:(fun i ->
         Xml.Parse.Read.element i "Foo" ())
   in
-  Alcotest.(check string) "result parsed from <Result>" "bar" result
+  Alcotest.(check string) "result parsed from <Result>" "bar" (Result.get_ok result)
 
 let error_response_recovers_message_and_skips_request_id () =
   (* Without the scanSequence + skip_to_end fix this raises Unparseable
      (on the <Message> after <Code>, and/or the trailing <RequestId>), and
      message was always None. *)
   let error =
-    AwsQuery.Response.parse_xml_error_response ~body:error_body_with_message_and_request_id
+    Result.get_ok
+      (AwsQuery.Response.parse_xml_error_response ~body:error_body_with_message_and_request_id)
   in
   let module E = AwsQuery.Error in
   Alcotest.(check bool) "errorType is Sender" true (error.E.errorType = E.Sender);
@@ -89,7 +90,8 @@ let parse_error_struct_recovers_members_and_skips_metadata () =
     (!r_top, !r_foo)
   in
   let top, foo =
-    AwsQuery.Response.parse_error_struct ~body:complex_error_body ~structParser:struct_parser
+    Result.get_ok
+      (AwsQuery.Response.parse_error_struct ~body:complex_error_body ~structParser:struct_parser)
   in
   Alcotest.(check (option string)) "TopLevel recovered" (Some "Top level") top;
   Alcotest.(check (option string)) "Nested/Foo recovered" (Some "bar") foo

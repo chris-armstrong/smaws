@@ -189,8 +189,6 @@ module Errors = struct
 end
 
 module Response = struct
-  exception Unparseable of string * string
-
   let parse_xml_ok_response ~(action : string) ~(xmlNamespace : string) ~(body : string)
       ~resultParser =
     let open Xml.Parse in
@@ -200,57 +198,55 @@ module Response = struct
           action action
       else body
     in
-    let xmlSource = source_with_encoding ~src:effective_body ~encoding:None in
-    Read.dtd xmlSource;
-    Read.sequence xmlSource (action ^ "Response") ~ns:xmlNamespace
-      (fun _ _ ->
-        let result = Read.sequence xmlSource (action ^ "Result") (fun i _ -> resultParser i) () in
-        (* Skip trailing siblings such as <ResponseMetadata> mandated by the
-           awsQuery protocol before the response end tag. *)
-        Read.skip_to_end xmlSource;
-        result)
-      ()
+    run (fun () ->
+        let xmlSource = source_with_encoding ~src:effective_body ~encoding:None in
+        Read.dtd xmlSource;
+        Read.sequence xmlSource (action ^ "Response") ~ns:xmlNamespace
+          (fun _ _ ->
+            let result =
+              Read.sequence xmlSource (action ^ "Result") (fun i _ -> resultParser i) ()
+            in
+            (* Skip trailing siblings such as <ResponseMetadata> mandated by the
+               awsQuery protocol before the response end tag. *)
+            Read.skip_to_end xmlSource;
+            result)
+          ())
 
-  let parse_xml_error_response ~(body : string) =
+  let parse_xml_error_response ~(body : string) : (Error.t, Xml.Parse.error) result =
     let open Xml.Parse in
-    let xmlSource = source_with_encoding ~src:body ~encoding:None in
-    Read.dtd xmlSource;
-    try
-      Read.sequence xmlSource "ErrorResponse"
-        (fun _ _ ->
-          let error =
-            Read.sequence xmlSource "Error"
-              (fun i _ ->
-                let r_type = ref None in
-                let r_code = ref None in
-                let r_message = ref None in
-                Structure.scanSequence i [ "Type"; "Code"; "Message" ] (fun tag _ ->
-                    match tag with
-                    | "Type" -> r_type := Some (Read.element i "Type" ())
-                    | "Code" -> r_code := Some (Read.element i "Code" ())
-                    | "Message" -> r_message := Some (Read.element i "Message" ())
-                    | _ -> Read.skip_element i);
-                let errorType =
-                  match !r_type with
-                  | Some "Sender" -> Error.Sender
-                  | Some "Receiver" -> Error.Receiver
-                  | _ -> raise (Unparseable ("missing or unknown Error/Type", body))
-                in
-                let code =
-                  match !r_code with
-                  | Some c -> c
-                  | None -> raise (Unparseable ("missing Error/Code", body))
-                in
-                Error.{ errorType; code; message = !r_message })
-              ()
-          in
-          (* Skip trailing siblings (e.g. <RequestId>) before </ErrorResponse>. *)
-          Read.skip_to_end xmlSource;
-          error)
-        ()
-    with
-    | Xml.Parse.XmlParse _ -> raise (Unparseable ("xmlm error", body))
-    | Xml.Parse.XmlUnexpectedConstruct (_, _, _) -> raise (Unparseable ("construct error", body))
+    run (fun () ->
+        let xmlSource = source_with_encoding ~src:body ~encoding:None in
+        Read.dtd xmlSource;
+        Read.sequence xmlSource "ErrorResponse"
+          (fun _ _ ->
+            let error =
+              Read.sequence xmlSource "Error"
+                (fun i _ ->
+                  let r_type = ref None in
+                  let r_code = ref None in
+                  let r_message = ref None in
+                  Structure.scanSequence i [ "Type"; "Code"; "Message" ] (fun tag _ ->
+                      match tag with
+                      | "Type" -> r_type := Some (Read.element i "Type" ())
+                      | "Code" -> r_code := Some (Read.element i "Code" ())
+                      | "Message" -> r_message := Some (Read.element i "Message" ())
+                      | _ -> Read.skip_element i);
+                  let errorType =
+                    match !r_type with
+                    | Some "Sender" -> Error.Sender
+                    | Some "Receiver" -> Error.Receiver
+                    | _ -> raise (Failure "missing or unknown Error/Type")
+                  in
+                  let code =
+                    match !r_code with Some c -> c | None -> raise (Failure "missing Error/Code")
+                  in
+                  Error.{ errorType; code; message = !r_message })
+                ()
+            in
+            (* Skip trailing siblings (e.g. <RequestId>) before </ErrorResponse>. *)
+            Read.skip_to_end xmlSource;
+            error)
+          ())
 
   (* Re-parse an awsQuery error response body and run [structParser] positioned
      inside <Error>, so generated error deserialisers can recover the
@@ -260,18 +256,15 @@ module Response = struct
      </ErrorResponse>. *)
   let parse_error_struct ~(body : string) ~structParser =
     let open Xml.Parse in
-    let xmlSource = source_with_encoding ~src:body ~encoding:None in
-    Read.dtd xmlSource;
-    try
-      Read.sequence xmlSource "ErrorResponse"
-        (fun _ _ ->
-          let result = Read.sequence xmlSource "Error" (fun i _ -> structParser i) () in
-          Read.skip_to_end xmlSource;
-          result)
-        ()
-    with
-    | Xml.Parse.XmlParse _ -> raise (Unparseable ("xmlm error", body))
-    | Xml.Parse.XmlUnexpectedConstruct (_, _, _) -> raise (Unparseable ("construct error", body))
+    run (fun () ->
+        let xmlSource = source_with_encoding ~src:body ~encoding:None in
+        Read.dtd xmlSource;
+        Read.sequence xmlSource "ErrorResponse"
+          (fun _ _ ->
+            let result = Read.sequence xmlSource "Error" (fun i _ -> structParser i) () in
+            Read.skip_to_end xmlSource;
+            result)
+          ())
 end
 
 let error_deserializer handler (error : Error.t) ~body:_ = handler error
@@ -295,24 +288,13 @@ let request (type http_t) ~(action : string) ~(xmlNamespace : string)
       let status = Http.Response.status response in
       let body = match Http.Body.to_string body with Some body -> body | None -> "" in
       match status with
-      | x when x >= 200 && x < 300 -> (
-          try
-            Ok
-              (Response.parse_xml_ok_response ~action ~xmlNamespace ~body
-                 ~resultParser:output_deserializer)
-          with
-          | Response.Unparseable (msg, _) -> Error (`XmlParseError msg)
-          | Xml.Parse.XmlParse e -> Error (`XmlParseError (Xmlm.error_message e))
-          | Xml.Parse.XmlUnexpectedConstruct (_, _, _) ->
-              Error (`XmlParseError "unexpected XML construct"))
+      | x when x >= 200 && x < 300 ->
+          Response.parse_xml_ok_response ~action ~xmlNamespace ~body
+            ~resultParser:output_deserializer
+          |> Result.map_error (fun (Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
       | _ -> (
-          try
-            let error = Response.parse_xml_error_response ~body in
-            Error (error_deserializer error ~body)
-          with
-          | Response.Unparseable (msg, _) -> Error (`XmlParseError msg)
-          | Xml.Parse.XmlParse e -> Error (`XmlParseError (Xmlm.error_message e))
-          | Xml.Parse.XmlUnexpectedConstruct (_, _, _) ->
-              Error (`XmlParseError "unexpected XML construct"))
+          match Response.parse_xml_error_response ~body with
+          | Ok error -> Error (error_deserializer error ~body)
+          | Error (Xml.Parse.XmlParseError msg) -> Error (`XmlParseError msg))
     end
   | Error http_failure -> Error (`HttpError http_failure)
