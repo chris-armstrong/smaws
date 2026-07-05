@@ -346,7 +346,12 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
     | "smithy.api#sparse" -> Ok Trait.SparseTrait
     | "smithy.api#httpChecksumRequired" -> Ok Trait.HttpChecksumRequiredTrait
     | "aws.api#clientDiscoveredEndpoint" -> Ok Trait.AwsApiClientDiscoveredEndpointTrait
-    | "aws.protocols#awsQueryError" -> Ok Trait.AwsProtocolAwsQueryErrorTrait
+    | "aws.protocols#awsQueryError" ->
+        let obj = value |> parseObject in
+        let code = obj |> field "code" |> parseString in
+        let http_code = optional (obj |> field "httpResponseCode") |> mapOptional parseInteger in
+        map2 code http_code (fun code http_code ->
+          Trait.AwsProtocolAwsQueryErrorTrait { code; httpResponseCode = http_code })
     | "aws.cloudformation#cfnExcludeProperty" -> Ok Trait.AwsCloudFormationCfnExcludePropertyTrait
     | "aws.cloudformation#cfnMutability" -> Ok Trait.AwsCloudFormationCfnMutabilityTrait
     | "aws.iam#requiredActions" -> Ok Trait.AwsIamRequiredActionsTrait
