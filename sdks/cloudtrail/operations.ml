@@ -296,6 +296,7 @@ module CreateEventDataStore = struct
     | `OrganizationNotInAllFeaturesModeException _ ->
         "com.amazonaws.cloudtrail#OrganizationNotInAllFeaturesModeException"
     | `OrganizationsNotInUseException _ -> "com.amazonaws.cloudtrail#OrganizationsNotInUseException"
+    | `ThrottlingException _ -> "com.amazonaws.cloudtrail#ThrottlingException"
     | `UnsupportedOperationException _ -> "com.amazonaws.cloudtrail#UnsupportedOperationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
@@ -350,6 +351,8 @@ module CreateEventDataStore = struct
       | _, "OrganizationsNotInUseException" ->
           `OrganizationsNotInUseException
             (Json_deserializers.organizations_not_in_use_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _, "UnsupportedOperationException" ->
           `UnsupportedOperationException
             (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
@@ -1248,9 +1251,11 @@ module GetEventConfiguration = struct
     | `InvalidParameterCombinationException _ ->
         "com.amazonaws.cloudtrail#InvalidParameterCombinationException"
     | `InvalidParameterException _ -> "com.amazonaws.cloudtrail#InvalidParameterException"
+    | `InvalidTrailNameException _ -> "com.amazonaws.cloudtrail#InvalidTrailNameException"
     | `NoManagementAccountSLRExistsException _ ->
         "com.amazonaws.cloudtrail#NoManagementAccountSLRExistsException"
     | `OperationNotPermittedException _ -> "com.amazonaws.cloudtrail#OperationNotPermittedException"
+    | `TrailNotFoundException _ -> "com.amazonaws.cloudtrail#TrailNotFoundException"
     | `UnsupportedOperationException _ -> "com.amazonaws.cloudtrail#UnsupportedOperationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
@@ -1277,12 +1282,17 @@ module GetEventConfiguration = struct
       | _, "InvalidParameterException" ->
           `InvalidParameterException
             (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "InvalidTrailNameException" ->
+          `InvalidTrailNameException
+            (Json_deserializers.invalid_trail_name_exception_of_yojson tree path)
       | _, "NoManagementAccountSLRExistsException" ->
           `NoManagementAccountSLRExistsException
             (Json_deserializers.no_management_account_slr_exists_exception_of_yojson tree path)
       | _, "OperationNotPermittedException" ->
           `OperationNotPermittedException
             (Json_deserializers.operation_not_permitted_exception_of_yojson tree path)
+      | _, "TrailNotFoundException" ->
+          `TrailNotFoundException (Json_deserializers.trail_not_found_exception_of_yojson tree path)
       | _, "UnsupportedOperationException" ->
           `UnsupportedOperationException
             (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
@@ -1831,7 +1841,7 @@ module ListImports = struct
       ~error_deserializer
 end
 
-module ListInsightsMetricData = struct
+module ListInsightsData = struct
   let error_to_string = function
     | `InvalidParameterException _ -> "com.amazonaws.cloudtrail#InvalidParameterException"
     | `OperationNotPermittedException _ -> "com.amazonaws.cloudtrail#OperationNotPermittedException"
@@ -1843,6 +1853,40 @@ module ListInsightsMetricData = struct
       | _, "InvalidParameterException" ->
           `InvalidParameterException
             (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "OperationNotPermittedException" ->
+          `OperationNotPermittedException
+            (Json_deserializers.operation_not_permitted_exception_of_yojson tree path)
+      | _, "UnsupportedOperationException" ->
+          `UnsupportedOperationException
+            (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_insights_data_request) =
+    let input = Json_serializers.list_insights_data_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.ListInsightsData" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_insights_data_response_of_yojson
+      ~error_deserializer
+end
+
+module ListInsightsMetricData = struct
+  let error_to_string = function
+    | `InvalidParameterException _ -> "com.amazonaws.cloudtrail#InvalidParameterException"
+    | `InvalidTrailNameException _ -> "com.amazonaws.cloudtrail#InvalidTrailNameException"
+    | `OperationNotPermittedException _ -> "com.amazonaws.cloudtrail#OperationNotPermittedException"
+    | `UnsupportedOperationException _ -> "com.amazonaws.cloudtrail#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidParameterException" ->
+          `InvalidParameterException
+            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "InvalidTrailNameException" ->
+          `InvalidTrailNameException
+            (Json_deserializers.invalid_trail_name_exception_of_yojson tree path)
       | _, "OperationNotPermittedException" ->
           `OperationNotPermittedException
             (Json_deserializers.operation_not_permitted_exception_of_yojson tree path)
@@ -2122,15 +2166,18 @@ module PutEventConfiguration = struct
         "com.amazonaws.cloudtrail#InvalidEventDataStoreCategoryException"
     | `InvalidEventDataStoreStatusException _ ->
         "com.amazonaws.cloudtrail#InvalidEventDataStoreStatusException"
+    | `InvalidHomeRegionException _ -> "com.amazonaws.cloudtrail#InvalidHomeRegionException"
     | `InvalidParameterCombinationException _ ->
         "com.amazonaws.cloudtrail#InvalidParameterCombinationException"
     | `InvalidParameterException _ -> "com.amazonaws.cloudtrail#InvalidParameterException"
+    | `InvalidTrailNameException _ -> "com.amazonaws.cloudtrail#InvalidTrailNameException"
     | `NoManagementAccountSLRExistsException _ ->
         "com.amazonaws.cloudtrail#NoManagementAccountSLRExistsException"
     | `NotOrganizationMasterAccountException _ ->
         "com.amazonaws.cloudtrail#NotOrganizationMasterAccountException"
     | `OperationNotPermittedException _ -> "com.amazonaws.cloudtrail#OperationNotPermittedException"
     | `ThrottlingException _ -> "com.amazonaws.cloudtrail#ThrottlingException"
+    | `TrailNotFoundException _ -> "com.amazonaws.cloudtrail#TrailNotFoundException"
     | `UnsupportedOperationException _ -> "com.amazonaws.cloudtrail#UnsupportedOperationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
@@ -2163,12 +2210,18 @@ module PutEventConfiguration = struct
       | _, "InvalidEventDataStoreStatusException" ->
           `InvalidEventDataStoreStatusException
             (Json_deserializers.invalid_event_data_store_status_exception_of_yojson tree path)
+      | _, "InvalidHomeRegionException" ->
+          `InvalidHomeRegionException
+            (Json_deserializers.invalid_home_region_exception_of_yojson tree path)
       | _, "InvalidParameterCombinationException" ->
           `InvalidParameterCombinationException
             (Json_deserializers.invalid_parameter_combination_exception_of_yojson tree path)
       | _, "InvalidParameterException" ->
           `InvalidParameterException
             (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "InvalidTrailNameException" ->
+          `InvalidTrailNameException
+            (Json_deserializers.invalid_trail_name_exception_of_yojson tree path)
       | _, "NoManagementAccountSLRExistsException" ->
           `NoManagementAccountSLRExistsException
             (Json_deserializers.no_management_account_slr_exists_exception_of_yojson tree path)
@@ -2180,6 +2233,8 @@ module PutEventConfiguration = struct
             (Json_deserializers.operation_not_permitted_exception_of_yojson tree path)
       | _, "ThrottlingException" ->
           `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "TrailNotFoundException" ->
+          `TrailNotFoundException (Json_deserializers.trail_not_found_exception_of_yojson tree path)
       | _, "UnsupportedOperationException" ->
           `UnsupportedOperationException
             (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
@@ -3285,6 +3340,7 @@ module UpdateEventDataStore = struct
   let error_to_string = function
     | `CloudTrailAccessNotEnabledException _ ->
         "com.amazonaws.cloudtrail#CloudTrailAccessNotEnabledException"
+    | `ConflictException _ -> "com.amazonaws.cloudtrail#ConflictException"
     | `EventDataStoreAlreadyExistsException _ ->
         "com.amazonaws.cloudtrail#EventDataStoreAlreadyExistsException"
     | `EventDataStoreARNInvalidException _ ->
@@ -3314,6 +3370,7 @@ module UpdateEventDataStore = struct
     | `OrganizationNotInAllFeaturesModeException _ ->
         "com.amazonaws.cloudtrail#OrganizationNotInAllFeaturesModeException"
     | `OrganizationsNotInUseException _ -> "com.amazonaws.cloudtrail#OrganizationsNotInUseException"
+    | `ThrottlingException _ -> "com.amazonaws.cloudtrail#ThrottlingException"
     | `UnsupportedOperationException _ -> "com.amazonaws.cloudtrail#UnsupportedOperationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
@@ -3322,6 +3379,8 @@ module UpdateEventDataStore = struct
       | _, "CloudTrailAccessNotEnabledException" ->
           `CloudTrailAccessNotEnabledException
             (Json_deserializers.cloud_trail_access_not_enabled_exception_of_yojson tree path)
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
       | _, "EventDataStoreAlreadyExistsException" ->
           `EventDataStoreAlreadyExistsException
             (Json_deserializers.event_data_store_already_exists_exception_of_yojson tree path)
@@ -3375,6 +3434,8 @@ module UpdateEventDataStore = struct
       | _, "OrganizationsNotInUseException" ->
           `OrganizationsNotInUseException
             (Json_deserializers.organizations_not_in_use_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _, "UnsupportedOperationException" ->
           `UnsupportedOperationException
             (Json_deserializers.unsupported_operation_exception_of_yojson tree path)

@@ -32,6 +32,7 @@ val make_radius_settings :
   ?radius_retries:radius_retries ->
   ?radius_timeout:radius_timeout ->
   ?radius_port:port_number ->
+  ?radius_servers_ipv6:servers ->
   ?radius_servers:servers ->
   unit ->
   radius_settings
@@ -57,8 +58,35 @@ val make_update_info_entry :
   unit ->
   update_info_entry
 
+val make_hybrid_administrator_account_update :
+  secret_arn:secret_arn -> unit -> hybrid_administrator_account_update
+
+val make_hybrid_customer_instances_settings :
+  instance_ids:assessment_instance_ids ->
+  customer_dns_ips:customer_dns_ips ->
+  unit ->
+  hybrid_customer_instances_settings
+
+val make_update_hybrid_ad_request :
+  ?self_managed_instances_settings:hybrid_customer_instances_settings ->
+  ?hybrid_administrator_account_update:hybrid_administrator_account_update ->
+  directory_id:directory_id ->
+  unit ->
+  update_hybrid_ad_request
+
+val make_directory_size_update_settings :
+  ?directory_size:directory_size -> unit -> directory_size_update_settings
+
+val make_network_update_settings :
+  ?customer_dns_ips_v6:dns_ipv6_addrs ->
+  ?network_type:network_type ->
+  unit ->
+  network_update_settings
+
 val make_update_directory_setup_request :
   ?create_snapshot_before_update:create_snapshot_before_update ->
+  ?network_update_settings:network_update_settings ->
+  ?directory_size_update_settings:directory_size_update_settings ->
   ?os_update_settings:os_update_settings ->
   update_type:update_type ->
   directory_id:directory_id ->
@@ -66,7 +94,8 @@ val make_update_directory_setup_request :
   update_directory_setup_request
 
 val make_update_conditional_forwarder_request :
-  dns_ip_addrs:dns_ip_addrs ->
+  ?dns_ipv6_addrs:dns_ipv6_addrs ->
+  ?dns_ip_addrs:dns_ip_addrs ->
   remote_domain_name:remote_domain_name ->
   directory_id:directory_id ->
   unit ->
@@ -101,6 +130,24 @@ val make_start_schema_extension_request :
   directory_id:directory_id ->
   unit ->
   start_schema_extension_request
+
+val make_directory_vpc_settings :
+  subnet_ids:subnet_ids -> vpc_id:vpc_id -> unit -> directory_vpc_settings
+
+val make_assessment_configuration :
+  ?security_group_ids:security_group_ids ->
+  instance_ids:assessment_instance_ids ->
+  vpc_settings:directory_vpc_settings ->
+  dns_name:directory_name ->
+  customer_dns_ips:customer_dns_ips ->
+  unit ->
+  assessment_configuration
+
+val make_start_ad_assessment_request :
+  ?directory_id:directory_id ->
+  ?assessment_configuration:assessment_configuration ->
+  unit ->
+  start_ad_assessment_request
 
 val make_snapshot :
   ?start_time:start_time ->
@@ -184,7 +231,11 @@ val make_remove_tags_from_resource_request :
 val make_remove_region_request : directory_id:directory_id -> unit -> remove_region_request
 
 val make_remove_ip_routes_request :
-  cidr_ips:cidr_ips -> directory_id:directory_id -> unit -> remove_ip_routes_request
+  ?cidr_ipv6s:cidr_ipv6s ->
+  ?cidr_ips:cidr_ips ->
+  directory_id:directory_id ->
+  unit ->
+  remove_ip_routes_request
 
 val make_reject_shared_directory_request :
   shared_directory_id:directory_id -> unit -> reject_shared_directory_request
@@ -204,9 +255,6 @@ val make_register_certificate_request :
 
 val make_regions_info :
   ?additional_regions:additional_regions -> ?primary_region:region_name -> unit -> regions_info
-
-val make_directory_vpc_settings :
-  subnet_ids:subnet_ids -> vpc_id:vpc_id -> unit -> directory_vpc_settings
 
 val make_region_description :
   ?last_updated_date_time:last_updated_date_time ->
@@ -230,9 +278,11 @@ val make_directory_vpc_settings_description :
   directory_vpc_settings_description
 
 val make_owner_directory_description :
+  ?network_type:network_type ->
   ?radius_status:radius_status ->
   ?radius_settings:radius_settings ->
   ?vpc_settings:directory_vpc_settings_description ->
+  ?dns_ipv6_addrs:dns_ipv6_addrs ->
   ?dns_ip_addrs:dns_ip_addrs ->
   ?account_id:customer_id ->
   ?directory_id:directory_id ->
@@ -272,6 +322,7 @@ val make_ip_route_info :
   ?ip_route_status_reason:ip_route_status_reason ->
   ?added_date_time:added_date_time ->
   ?ip_route_status_msg:ip_route_status_msg ->
+  ?cidr_ipv6:cidr_ipv6 ->
   ?cidr_ip:cidr_ip ->
   ?directory_id:directory_id ->
   unit ->
@@ -300,6 +351,25 @@ val make_list_certificates_request :
   unit ->
   list_certificates_request
 
+val make_assessment_summary :
+  ?report_type:assessment_report_type ->
+  ?customer_dns_ips:customer_dns_ips ->
+  ?status:assessment_status ->
+  ?last_update_date_time:last_update_date_time ->
+  ?start_time:assessment_start_time ->
+  ?dns_name:directory_name ->
+  ?directory_id:directory_id ->
+  ?assessment_id:assessment_id ->
+  unit ->
+  assessment_summary
+
+val make_list_ad_assessments_request :
+  ?limit:assessment_limit ->
+  ?next_token:next_token ->
+  ?directory_id:directory_id ->
+  unit ->
+  list_ad_assessments_request
+
 val make_ldaps_setting_info :
   ?last_updated_date_time:last_updated_date_time ->
   ?ldaps_status_reason:ldaps_status_reason ->
@@ -307,7 +377,35 @@ val make_ldaps_setting_info :
   unit ->
   ldaps_setting_info
 
-val make_ip_route : ?description:description -> ?cidr_ip:cidr_ip -> unit -> ip_route
+val make_ip_route :
+  ?description:description -> ?cidr_ipv6:cidr_ipv6 -> ?cidr_ip:cidr_ip -> unit -> ip_route
+
+val make_hybrid_update_value :
+  ?dns_ips:customer_dns_ips -> ?instance_ids:assessment_instance_ids -> unit -> hybrid_update_value
+
+val make_hybrid_update_info_entry :
+  ?assessment_id:assessment_id ->
+  ?last_updated_date_time:last_updated_date_time ->
+  ?start_time:start_date_time ->
+  ?previous_value:hybrid_update_value ->
+  ?new_value:hybrid_update_value ->
+  ?initiated_by:initiated_by ->
+  ?status_reason:update_status_reason ->
+  ?status:update_status ->
+  unit ->
+  hybrid_update_info_entry
+
+val make_hybrid_update_activities :
+  ?hybrid_administrator_account:hybrid_update_info_entries ->
+  ?self_managed_instances:hybrid_update_info_entries ->
+  unit ->
+  hybrid_update_activities
+
+val make_hybrid_settings_description :
+  ?self_managed_instance_ids:assessment_instance_ids ->
+  ?self_managed_dns_ip_addrs:ip_addrs ->
+  unit ->
+  hybrid_settings_description
 
 val make_get_snapshot_limits_request :
   directory_id:directory_id -> unit -> get_snapshot_limits_request
@@ -358,6 +456,12 @@ val make_enable_client_authentication_request :
   unit ->
   enable_client_authentication_request
 
+val make_enable_ca_enrollment_policy_request :
+  pca_connector_arn:pca_connector_arn ->
+  directory_id:directory_id ->
+  unit ->
+  enable_ca_enrollment_policy_request
+
 val make_domain_controller :
   ?status_last_updated_date_time:last_updated_date_time ->
   ?launch_time:launch_time ->
@@ -366,6 +470,7 @@ val make_domain_controller :
   ?availability_zone:availability_zone ->
   ?subnet_id:subnet_id ->
   ?vpc_id:vpc_id ->
+  ?dns_ipv6_addr:ipv6_addr ->
   ?dns_ip_addr:ip_addr ->
   ?domain_controller_id:domain_controller_id ->
   ?directory_id:directory_id ->
@@ -392,6 +497,9 @@ val make_disable_client_authentication_request :
   directory_id:directory_id ->
   unit ->
   disable_client_authentication_request
+
+val make_disable_ca_enrollment_policy_request :
+  directory_id:directory_id -> unit -> disable_ca_enrollment_policy_request
 
 val make_describe_update_directory_request :
   ?next_token:next_token ->
@@ -447,6 +555,13 @@ val make_describe_ldaps_settings_request :
   unit ->
   describe_ldaps_settings_request
 
+val make_describe_hybrid_ad_update_request :
+  ?next_token:next_token ->
+  ?update_type:hybrid_update_type ->
+  directory_id:directory_id ->
+  unit ->
+  describe_hybrid_ad_update_request
+
 val make_describe_event_topics_request :
   ?topic_names:topic_names -> ?directory_id:directory_id -> unit -> describe_event_topics_request
 
@@ -462,6 +577,7 @@ val make_describe_directory_data_access_request :
   directory_id:directory_id -> unit -> describe_directory_data_access_request
 
 val make_directory_connect_settings_description :
+  ?connect_ips_v6:ip_v6_addrs ->
   ?connect_ips:ip_addrs ->
   ?availability_zones:availability_zones ->
   ?security_group_id:security_group_id ->
@@ -472,6 +588,8 @@ val make_directory_connect_settings_description :
   directory_connect_settings_description
 
 val make_directory_description :
+  ?network_type:network_type ->
+  ?hybrid_settings:hybrid_settings_description ->
   ?os_version:os_version ->
   ?regions_info:regions_info ->
   ?owner_directory_description:owner_directory_description ->
@@ -489,6 +607,7 @@ val make_directory_description :
   ?share_method:share_method ->
   ?share_status:share_status ->
   ?stage:directory_stage ->
+  ?dns_ipv6_addrs:dns_ipv6_addrs ->
   ?dns_ip_addrs:dns_ip_addrs ->
   ?description:description ->
   ?access_url:access_url ->
@@ -510,6 +629,7 @@ val make_describe_directories_request :
 
 val make_conditional_forwarder :
   ?replication_scope:replication_scope ->
+  ?dns_ipv6_addrs:dns_ipv6_addrs ->
   ?dns_ip_addrs:dns_ip_addrs ->
   ?remote_domain_name:remote_domain_name ->
   unit ->
@@ -551,6 +671,45 @@ val make_certificate :
 val make_describe_certificate_request :
   certificate_id:certificate_id -> directory_id:directory_id -> unit -> describe_certificate_request
 
+val make_describe_ca_enrollment_policy_request :
+  directory_id:directory_id -> unit -> describe_ca_enrollment_policy_request
+
+val make_assessment :
+  ?version:assessment_version ->
+  ?report_type:assessment_report_type ->
+  ?self_managed_instance_ids:assessment_instance_ids ->
+  ?security_group_ids:security_group_ids ->
+  ?subnet_ids:subnet_ids ->
+  ?vpc_id:vpc_id ->
+  ?customer_dns_ips:customer_dns_ips ->
+  ?status_reason:assessment_status_reason ->
+  ?status_code:assessment_status_code ->
+  ?status:assessment_status ->
+  ?last_update_date_time:last_update_date_time ->
+  ?start_time:assessment_start_time ->
+  ?dns_name:directory_name ->
+  ?directory_id:directory_id ->
+  ?assessment_id:assessment_id ->
+  unit ->
+  assessment
+
+val make_assessment_validation :
+  ?last_update_date_time:assessment_validation_time_stamp ->
+  ?start_time:assessment_validation_time_stamp ->
+  ?status_reason:assessment_validation_status_reason ->
+  ?status_code:assessment_validation_status_code ->
+  ?status:assessment_validation_status ->
+  ?name:assessment_validation_name ->
+  ?category:assessment_validation_category ->
+  unit ->
+  assessment_validation
+
+val make_assessment_report :
+  ?validations:assessment_validations -> ?domain_controller_ip:ip_addr -> unit -> assessment_report
+
+val make_describe_ad_assessment_request :
+  assessment_id:assessment_id -> unit -> describe_ad_assessment_request
+
 val make_deregister_event_topic_request :
   topic_name:topic_name -> directory_id:directory_id -> unit -> deregister_event_topic_request
 
@@ -579,8 +738,12 @@ val make_delete_conditional_forwarder_request :
   unit ->
   delete_conditional_forwarder_request
 
+val make_delete_ad_assessment_request :
+  assessment_id:assessment_id -> unit -> delete_ad_assessment_request
+
 val make_create_trust_request :
   ?selective_auth:selective_auth ->
+  ?conditional_forwarder_ipv6_addrs:dns_ipv6_addrs ->
   ?conditional_forwarder_ip_addrs:dns_ip_addrs ->
   ?trust_type:trust_type ->
   trust_direction:trust_direction ->
@@ -594,6 +757,7 @@ val make_create_snapshot_request :
   ?name:snapshot_name -> directory_id:directory_id -> unit -> create_snapshot_request
 
 val make_create_microsoft_ad_request :
+  ?network_type:network_type ->
   ?tags:tags ->
   ?edition:directory_edition ->
   ?description:description ->
@@ -610,7 +774,15 @@ val make_create_log_subscription_request :
   unit ->
   create_log_subscription_request
 
+val make_create_hybrid_ad_request :
+  ?tags:tags ->
+  assessment_id:assessment_id ->
+  secret_arn:secret_arn ->
+  unit ->
+  create_hybrid_ad_request
+
 val make_create_directory_request :
+  ?network_type:network_type ->
   ?tags:tags ->
   ?vpc_settings:directory_vpc_settings ->
   ?description:description ->
@@ -622,7 +794,8 @@ val make_create_directory_request :
   create_directory_request
 
 val make_create_conditional_forwarder_request :
-  dns_ip_addrs:dns_ip_addrs ->
+  ?dns_ipv6_addrs:dns_ipv6_addrs ->
+  ?dns_ip_addrs:dns_ip_addrs ->
   remote_domain_name:remote_domain_name ->
   directory_id:directory_id ->
   unit ->
@@ -650,14 +823,16 @@ val make_create_alias_request :
   alias:alias_name -> directory_id:directory_id -> unit -> create_alias_request
 
 val make_directory_connect_settings :
+  ?customer_dns_ips_v6:dns_ipv6_addrs ->
+  ?customer_dns_ips:dns_ip_addrs ->
   customer_user_name:user_name ->
-  customer_dns_ips:dns_ip_addrs ->
   subnet_ids:subnet_ids ->
   vpc_id:vpc_id ->
   unit ->
   directory_connect_settings
 
 val make_connect_directory_request :
+  ?network_type:network_type ->
   ?tags:tags ->
   ?description:description ->
   ?short_name:directory_short_name ->
@@ -999,6 +1174,42 @@ end
    Service API Permissions: Actions, Resources, and Conditions Reference}.\n\
   \ "]
 
+module CreateHybridAD : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ADAssessmentLimitExceededException of ad_assessment_limit_exceeded_exception
+    | `ClientException of client_exception
+    | `DirectoryLimitExceededException of directory_limit_exceeded_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_hybrid_ad_request ->
+    ( create_hybrid_ad_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ADAssessmentLimitExceededException of ad_assessment_limit_exceeded_exception
+      | `ClientException of client_exception
+      | `DirectoryLimitExceededException of directory_limit_exceeded_exception
+      | `EntityDoesNotExistException of entity_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Creates a hybrid directory that connects your self-managed Active Directory (AD) infrastructure \
+   and Amazon Web Services.\n\n\
+  \ You must have a successful directory assessment using [StartADAssessment] to validate your \
+   environment compatibility before you use this operation.\n\
+  \ \n\
+  \  Updates are applied asynchronously. Use [DescribeDirectories] to monitor the progress of \
+   directory creation.\n\
+  \  "]
+
 module CreateLogSubscription : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1120,6 +1331,35 @@ end
   \ This action initiates the creation of the Amazon Web Services side of a trust relationship \
    between an Managed Microsoft AD directory and an external domain. You can create either a \
    forest trust or an external trust.\n\
+  \ "]
+
+module DeleteADAssessment : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_ad_assessment_request ->
+    ( delete_ad_assessment_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClientException of client_exception
+      | `EntityDoesNotExistException of entity_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Deletes a directory assessment and all associated data. This operation permanently removes the \
+   assessment results, validation reports, and configuration information.\n\n\
+  \ You cannot delete system-initiated assessments. You can delete customer-created assessments \
+   even if they are in progress.\n\
   \ "]
 
 module DeleteConditionalForwarder : sig
@@ -1299,6 +1539,58 @@ module DeregisterEventTopic : sig
     result
 end
 [@@ocaml.doc "Removes the specified directory as a publisher to the specified Amazon SNS topic.\n"]
+
+module DescribeADAssessment : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_ad_assessment_request ->
+    ( describe_ad_assessment_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClientException of client_exception
+      | `EntityDoesNotExistException of entity_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves detailed information about a directory assessment, including its current status, \
+   validation results, and configuration details. Use this operation to monitor assessment \
+   progress and review results.\n"]
+
+module DescribeCAEnrollmentPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_ca_enrollment_policy_request ->
+    ( describe_ca_enrollment_policy_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClientException of client_exception
+      | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves detailed information about the certificate authority (CA) enrollment policy for the \
+   specified directory. This policy determines how client certificates are automatically enrolled \
+   and managed through Amazon Web Services Private Certificate Authority. \n"]
 
 module DescribeCertificate : sig
   val error_to_string :
@@ -1503,6 +1795,35 @@ end
    all of the associations in the account.\n\
   \ "]
 
+module DescribeHybridADUpdate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_hybrid_ad_update_request ->
+    ( describe_hybrid_ad_update_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClientException of client_exception
+      | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves information about update activities for a hybrid directory. This operation provides \
+   details about configuration changes, administrator account updates, and self-managed instance \
+   settings (IDs and DNS IPs).\n"]
+
 module DescribeLDAPSSettings : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1697,6 +2018,43 @@ module DescribeUpdateDirectory : sig
 end
 [@@ocaml.doc " Describes the updates of a directory for a particular update type. \n"]
 
+module DisableCAEnrollmentPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `DisableAlreadyInProgressException of disable_already_in_progress_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    disable_ca_enrollment_policy_request ->
+    ( disable_ca_enrollment_policy_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ClientException of client_exception
+      | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `DisableAlreadyInProgressException of disable_already_in_progress_exception
+      | `EntityDoesNotExistException of entity_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Disables the certificate authority (CA) enrollment policy for the specified directory. This \
+   stops automatic certificate enrollment and management for domain-joined clients, but does not \
+   affect existing certificates.\n\n\
+  \  Disabling the CA enrollment policy prevents new certificates from being automatically \
+   enrolled, but existing certificates remain valid and functional until they expire.\n\
+  \  \n\
+  \   "]
+
 module DisableClientAuthentication : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1828,6 +2186,46 @@ module DisableSso : sig
     result
 end
 [@@ocaml.doc "Disables single-sign on for a directory.\n"]
+
+module EnableCAEnrollmentPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EnableAlreadyInProgressException of enable_already_in_progress_exception
+    | `EntityAlreadyExistsException of entity_already_exists_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    enable_ca_enrollment_policy_request ->
+    ( enable_ca_enrollment_policy_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ClientException of client_exception
+      | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `EnableAlreadyInProgressException of enable_already_in_progress_exception
+      | `EntityAlreadyExistsException of entity_already_exists_exception
+      | `EntityDoesNotExistException of entity_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Enables certificate authority (CA) enrollment policy for the specified directory. This allows \
+   domain-joined clients to automatically request and receive certificates from the specified \
+   Amazon Web Services Private Certificate Authority.\n\n\
+  \  Before enabling CA enrollment, ensure that the PCA connector is properly configured and \
+   accessible from the directory. The connector must be in an active state and have the necessary \
+   permissions.\n\
+  \  \n\
+  \   "]
 
 module EnableClientAuthentication : sig
   val error_to_string :
@@ -2011,6 +2409,32 @@ module GetSnapshotLimits : sig
     result
 end
 [@@ocaml.doc "Obtains the manual snapshot limits for a directory.\n"]
+
+module ListADAssessments : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_ad_assessments_request ->
+    ( list_ad_assessments_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClientException of client_exception
+      | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves a list of directory assessments for the specified directory or all assessments in \
+   your account. Use this operation to monitor assessment status and manage multiple assessments.\n"]
 
 module ListCertificates : sig
   val error_to_string :
@@ -2419,6 +2843,49 @@ end
    sharing request to the directory consumer. \n\
   \   "]
 
+module StartADAssessment : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ADAssessmentLimitExceededException of ad_assessment_limit_exceeded_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    start_ad_assessment_request ->
+    ( start_ad_assessment_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ADAssessmentLimitExceededException of ad_assessment_limit_exceeded_exception
+      | `ClientException of client_exception
+      | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Initiates a directory assessment to validate your self-managed AD environment for hybrid domain \
+   join. The assessment checks compatibility and connectivity of the self-managed AD environment.\n\n\
+  \ A directory assessment is automatically created when you create a hybrid directory. There are \
+   two types of assessments: [CUSTOMER] and [SYSTEM]. Your Amazon Web Services account has a limit \
+   of 100 [CUSTOMER] directory assessments.\n\
+  \ \n\
+  \  The assessment process typically takes 30 minutes or more to complete. The assessment process \
+   is asynchronous and you can monitor it with [DescribeADAssessment].\n\
+  \  \n\
+  \   The [InstanceIds] must have a one-to-one correspondence with [CustomerDnsIps], meaning that \
+   if the IP address for instance i-10243410 is 10.24.34.100 and the IP address for instance \
+   i-10243420 is 10.24.34.200, then the input arrays must maintain the same order relationship, \
+   either \\[10.24.34.100, 10.24.34.200\\] paired with \\[i-10243410, i-10243420\\] or \
+   \\[10.24.34.200, 10.24.34.100\\] paired with \\[i-10243420, i-10243410\\].\n\
+  \   \n\
+  \    Note: You must provide exactly one [DirectoryId] or [AssessmentConfiguration].\n\
+  \    "]
+
 module StartSchemaExtension : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -2526,7 +2993,49 @@ module UpdateDirectorySetup : sig
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
 end
-[@@ocaml.doc " Updates the directory for a particular update type. \n"]
+[@@ocaml.doc "Updates directory configuration for the specified update type.\n"]
+
+module UpdateHybridAD : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ADAssessmentLimitExceededException of ad_assessment_limit_exceeded_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_hybrid_ad_request ->
+    ( update_hybrid_ad_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ADAssessmentLimitExceededException of ad_assessment_limit_exceeded_exception
+      | `ClientException of client_exception
+      | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Updates the configuration of an existing hybrid directory. You can recover hybrid directory \
+   administrator account or modify self-managed instance settings.\n\n\
+  \ Updates are applied asynchronously. Use [DescribeHybridADUpdate] to monitor the progress of \
+   configuration changes.\n\
+  \ \n\
+  \  The [InstanceIds] must have a one-to-one correspondence with [CustomerDnsIps], meaning that \
+   if the IP address for instance i-10243410 is 10.24.34.100 and the IP address for instance \
+   i-10243420 is 10.24.34.200, then the input arrays must maintain the same order relationship, \
+   either \\[10.24.34.100, 10.24.34.200\\] paired with \\[i-10243410, i-10243420\\] or \
+   \\[10.24.34.200, 10.24.34.100\\] paired with \\[i-10243420, i-10243410\\].\n\
+  \  \n\
+  \    You must provide at least one update to \
+   [UpdateHybridADRequest$HybridAdministratorAccountUpdate] or \
+   [UpdateHybridADRequest$SelfManagedInstancesSettings].\n\
+  \    \n\
+  \     "]
 
 module UpdateNumberOfDomainControllers : sig
   val error_to_string :

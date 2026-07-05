@@ -1,8 +1,50 @@
 type nonrec zero_value_integer = int [@@ocaml.doc ""]
 
+type nonrec payment_request_approval_strategy =
+  | WAIT_FOR_APPROVAL [@ocaml.doc ""]
+  | AUTO_APPROVE_ON_EXPIRATION [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec iso8601_duration = string [@@ocaml.doc ""]
+
+type nonrec variable_payment_term_configuration = {
+  expiration_duration : iso8601_duration option;
+      [@ocaml.doc
+        "Defines the duration after which a payment request is automatically approved if no \
+         further action is taken. This only applies when the payment request approval strategy is \
+         set to [AUTO_APPROVE_ON_EXPIRATION]. The duration is represented in the ISO_8601 format \
+         (e.g., P10D for 10 days).\n"]
+  payment_request_approval_strategy : payment_request_approval_strategy;
+      [@ocaml.doc
+        "Defines the strategy for approving payment requests. Values include \
+         [AUTO_APPROVE_ON_EXPIRATION] and [WAIT_FOR_APPROVAL] \n"]
+}
+[@@ocaml.doc
+  "Additional parameters specified by the acceptor while accepting the variable payment term.\n"]
+
 type nonrec unversioned_term_type = string [@@ocaml.doc ""]
 
+type nonrec term_id = string [@@ocaml.doc ""]
+
+type nonrec currency_code = string [@@ocaml.doc ""]
+
 type nonrec bounded_string = string [@@ocaml.doc ""]
+
+type nonrec variable_payment_term = {
+  configuration : variable_payment_term_configuration option;
+      [@ocaml.doc "Additional parameters specified by the acceptor while accepting the term.\n"]
+  max_total_charge_amount : bounded_string option;
+      [@ocaml.doc
+        "The maximum total amount that can be charged to the customer through variable payment \
+         requests under this term.\n"]
+  currency_code : currency_code option;
+      [@ocaml.doc "Defines the currency for the prices mentioned in the term.\n"]
+  id : term_id option; [@ocaml.doc "The unique identifier for the term.\n"]
+  type_ : unversioned_term_type option; [@ocaml.doc "Type of the term.\n"]
+}
+[@@ocaml.doc
+  "Defines a payment model where sellers can submit variable payment requests up to a maximum \
+   charge amount, with configurable approval strategies and expiration timelines.\n"]
 
 type nonrec timestamp = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
 
@@ -22,22 +64,94 @@ type nonrec validity_term = {
         "Defines the duration that the agreement remains active. If [AgreementStartDate] \
          isn\226\128\153t provided, the agreement duration is relative to the agreement signature \
          time. The duration is represented in the ISO_8601 format.\n"]
+  id : term_id option; [@ocaml.doc "The unique identifier for the term.\n"]
   type_ : unversioned_term_type option; [@ocaml.doc "Category of the term being updated. \n"]
 }
 [@@ocaml.doc "Defines the conditions that will keep an agreement created from this offer valid. \n"]
 
 type nonrec validation_exception_reason =
+  | MISSING_PURCHASE_ORDER_REFERENCE [@ocaml.doc ""]
+  | DUPLICATE_AGREEMENT_IN_ORGANIZATION [@ocaml.doc ""]
+  | UNSUPPORTED_ACCOUNT_PLAN [@ocaml.doc ""]
+  | DUPLICATE_CHARGES [@ocaml.doc ""]
   | OTHER [@ocaml.doc ""]
+  | INVALID_PAYMENT_REQUEST_STATUS [@ocaml.doc ""]
+  | INVALID_REJECTION_REASON [@ocaml.doc ""]
+  | UNSUPPORTED_ACTION [@ocaml.doc ""]
+  | MISSING_ACCOUNT_ADDRESS [@ocaml.doc ""]
+  | INVALID_INCREMENTAL_CHARGE [@ocaml.doc ""]
+  | MISSING_USAGE_AGREEMENT [@ocaml.doc ""]
+  | INCOMPATIBLE_TERMS [@ocaml.doc ""]
+  | MISSING_MANDATORY_TERMS [@ocaml.doc ""]
+  | EXPIRED_AGREEMENT_PROPOSAL [@ocaml.doc ""]
+  | SUPERSEDED_AGREEMENT_PROPOSAL [@ocaml.doc ""]
+  | INACTIVE_AGREEMENT [@ocaml.doc ""]
+  | INVALID_PURCHASE_ORDER_REFERENCE [@ocaml.doc ""]
+  | INVALID_AGREEMENT_TYPE [@ocaml.doc ""]
+  | MISSING_CHARGE_REVISION [@ocaml.doc ""]
+  | INVALID_CHARGE_REVISION [@ocaml.doc ""]
+  | MISSING_CHARGE_ID [@ocaml.doc ""]
+  | INVALID_CHARGE_ID [@ocaml.doc ""]
+  | MISSING_PURCHASE_ORDERS [@ocaml.doc ""]
+  | INVALID_PURCHASE_ORDERS [@ocaml.doc ""]
+  | MISSING_AGREEMENT_REQUEST_ID [@ocaml.doc ""]
+  | INVALID_AGREEMENT_REQUEST_ID [@ocaml.doc ""]
+  | MISSING_REQUESTED_TERM_CONFIGURATION [@ocaml.doc ""]
+  | INVALID_REQUESTED_TERM_CONFIGURATION [@ocaml.doc ""]
+  | MISSING_REQUESTED_TERM_ID [@ocaml.doc ""]
+  | INVALID_REQUESTED_TERM_ID [@ocaml.doc ""]
+  | MISSING_REQUESTED_TERMS [@ocaml.doc ""]
+  | INVALID_REQUESTED_TERMS [@ocaml.doc ""]
+  | MISSING_AGREEMENT_PROPOSAL_IDENTIFIER [@ocaml.doc ""]
+  | INVALID_AGREEMENT_PROPOSAL_IDENTIFIER [@ocaml.doc ""]
+  | MISSING_SOURCE_AGREEMENT_IDENTIFIER [@ocaml.doc ""]
+  | INVALID_SOURCE_AGREEMENT_IDENTIFIER [@ocaml.doc ""]
+  | MISSING_INTENT [@ocaml.doc ""]
+  | INVALID_INTENT [@ocaml.doc ""]
+  | INVALID_CLIENT_TOKEN [@ocaml.doc ""]
   | UNSUPPORTED_FILTERS [@ocaml.doc ""]
+  | INVALID_PARTY_TYPE [@ocaml.doc ""]
+  | MISSING_PARTY_TYPE [@ocaml.doc ""]
+  | INVALID_PAYMENT_REQUEST_ID [@ocaml.doc ""]
+  | MISSING_PAYMENT_REQUEST_ID [@ocaml.doc ""]
+  | INVALID_CHARGE_AMOUNT [@ocaml.doc ""]
+  | MISSING_CHARGE_AMOUNT [@ocaml.doc ""]
+  | INVALID_DESCRIPTION [@ocaml.doc ""]
+  | INVALID_NAME [@ocaml.doc ""]
+  | MISSING_NAME [@ocaml.doc ""]
+  | MISSING_TERM_ID [@ocaml.doc ""]
+  | INVALID_TERM_ID [@ocaml.doc ""]
   | INVALID_MAX_RESULTS [@ocaml.doc ""]
   | INVALID_NEXT_TOKEN [@ocaml.doc ""]
   | INVALID_SORT_ORDER [@ocaml.doc ""]
   | INVALID_SORT_BY [@ocaml.doc ""]
+  | MISSING_FILTER_VALUES [@ocaml.doc ""]
   | INVALID_FILTER_VALUES [@ocaml.doc ""]
+  | MISSING_FILTER_NAME [@ocaml.doc ""]
   | INVALID_FILTER_NAME [@ocaml.doc ""]
+  | INVALID_FILTERS [@ocaml.doc ""]
   | INVALID_CATALOG [@ocaml.doc ""]
   | MISSING_AGREEMENT_ID [@ocaml.doc ""]
   | INVALID_AGREEMENT_ID [@ocaml.doc ""]
+  | INVALID_STATUS [@ocaml.doc ""]
+  | INVALID_REASON [@ocaml.doc ""]
+  | MISSING_REASON [@ocaml.doc ""]
+  | MISSING_AGREEMENT_CANCELLATION_REQUEST_ID [@ocaml.doc ""]
+  | INVALID_AGREEMENT_CANCELLATION_REQUEST_ID [@ocaml.doc ""]
+  | MULTIPLE_AGREEMENT_IDS [@ocaml.doc ""]
+  | MISSING_BILLING_ADJUSTMENT_REQUEST_ENTRY [@ocaml.doc ""]
+  | EXCEEDED_MAXIMUM_ADJUSTMENT_AMOUNT [@ocaml.doc ""]
+  | MISSING_CURRENCY_CODE [@ocaml.doc ""]
+  | INVALID_CURRENCY_CODE [@ocaml.doc ""]
+  | INVALID_INVOICE_ADJUSTMENT_PERIOD [@ocaml.doc ""]
+  | MISSING_DESCRIPTION [@ocaml.doc ""]
+  | MISSING_REASON_CODE [@ocaml.doc ""]
+  | INVALID_REASON_CODE [@ocaml.doc ""]
+  | MISSING_ADJUSTMENT_AMOUNT [@ocaml.doc ""]
+  | INVALID_ADJUSTMENT_AMOUNT [@ocaml.doc ""]
+  | MISSING_INVOICE_ID [@ocaml.doc ""]
+  | BILLING_ADJUSTMENTS_LIMIT_EXCEEDED [@ocaml.doc ""]
+  | MISSING_BILLING_ADJUSTMENTS [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
 type nonrec validation_exception_field = {
@@ -57,7 +171,7 @@ type nonrec validation_exception = {
       [@ocaml.doc "The fields associated with the error.\n"]
   reason : validation_exception_reason option;
       [@ocaml.doc "The reason associated with the error.\n"]
-  message : exception_message option; [@ocaml.doc ""]
+  message : exception_message option; [@ocaml.doc "Description of the error.\n"]
   request_id : request_id option; [@ocaml.doc "The unique identifier associated with the error.\n"]
 }
 [@@ocaml.doc "The input fails to satisfy the constraints specified by the service.\n"]
@@ -86,29 +200,133 @@ type nonrec usage_based_rate_card_item = {
 
 type nonrec usage_based_rate_card_list = usage_based_rate_card_item list [@@ocaml.doc ""]
 
-type nonrec currency_code = string [@@ocaml.doc ""]
-
 type nonrec usage_based_pricing_term = {
   rate_cards : usage_based_rate_card_list option; [@ocaml.doc "List of rate cards.\n"]
   currency_code : currency_code option;
       [@ocaml.doc "Defines the currency for the prices mentioned in the term. \n"]
+  id : term_id option; [@ocaml.doc "The unique identifier for the term.\n"]
   type_ : unversioned_term_type option; [@ocaml.doc "Category of the term.\n"]
 }
 [@@ocaml.doc
   "Defines a usage-based pricing model (typically, pay-as-you-go pricing), where the customers are \
    charged based on product usage.\n"]
 
+type nonrec update_purchase_orders_output = unit [@@ocaml.doc ""]
+
+type nonrec resource_id = string [@@ocaml.doc ""]
+
+type nonrec charge_revision = int [@@ocaml.doc ""]
+
+type nonrec purchase_order_reference = string [@@ocaml.doc ""]
+
+type nonrec purchase_order = {
+  purchase_order_reference : purchase_order_reference option;
+      [@ocaml.doc "The purchase order reference to associate with the charge.\n"]
+  agreement_id : resource_id option;
+      [@ocaml.doc "The unique identifier of the agreement associated with this charge.\n"]
+  charge_revision : charge_revision option; [@ocaml.doc "The revision of the charge.\n"]
+  charge_id : resource_id;
+      [@ocaml.doc "The unique identifier of the charge to associate the purchase order with.\n"]
+}
+[@@ocaml.doc
+  "Contains information about a purchase order association to a charge within an agreement.\n"]
+
+type nonrec purchase_orders = purchase_order list [@@ocaml.doc ""]
+
+type nonrec update_purchase_orders_input = {
+  purchase_orders : purchase_orders;
+      [@ocaml.doc "Contains information about purchase order associations.\n"]
+}
+[@@ocaml.doc ""]
+
 type nonrec throttling_exception = {
-  message : exception_message option; [@ocaml.doc ""]
+  message : exception_message option; [@ocaml.doc "Description of the error.\n"]
   request_id : request_id option; [@ocaml.doc "The unique identifier for the error.\n"]
 }
 [@@ocaml.doc "Request was denied due to request throttling.\n"]
+
+type nonrec resource_type =
+  | BILLING_ADJUSTMENT_REQUEST [@ocaml.doc ""]
+  | AGREEMENT_CANCELLATION_REQUEST [@ocaml.doc ""]
+  | INVOICE [@ocaml.doc ""]
+  | PAYMENT_REQUEST [@ocaml.doc ""]
+  | CHARGE [@ocaml.doc ""]
+  | AGREEMENT_PROPOSAL [@ocaml.doc ""]
+  | AGREEMENT_REQUEST [@ocaml.doc ""]
+  | AGREEMENT [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec resource_not_found_exception = {
+  resource_type : resource_type option; [@ocaml.doc "The type of resource.\n"]
+  resource_id : resource_id option; [@ocaml.doc "The unique identifier for the resource.\n"]
+  message : exception_message option; [@ocaml.doc "Description of the error.\n"]
+  request_id : request_id option; [@ocaml.doc "The unique identifier for the error.\n"]
+}
+[@@ocaml.doc "Request references a resource which does not exist.\n"]
+
+type nonrec internal_server_exception = {
+  message : exception_message option; [@ocaml.doc "Description of the error.\n"]
+  request_id : request_id option; [@ocaml.doc "The unique identifier for the error.\n"]
+}
+[@@ocaml.doc "Unexpected error during processing of request.\n"]
+
+type nonrec conflict_exception = {
+  resource_type : resource_type option;
+      [@ocaml.doc "The type of the resource involved in the conflict.\n"]
+  resource_id : resource_id option;
+      [@ocaml.doc "The unique identifier of the resource involved in the conflict.\n"]
+  message : exception_message option; [@ocaml.doc "Description of the error.\n"]
+  request_id : request_id option; [@ocaml.doc "The unique identifier for the error.\n"]
+}
+[@@ocaml.doc "Request was denied due to a resource conflict.\n"]
+
+type nonrec access_denied_exception_reason =
+  | INVALID_ACCESS [@ocaml.doc ""]
+  | MISSING_MFA [@ocaml.doc ""]
+  | FAILED_KYC_COMPLIANCE [@ocaml.doc ""]
+  | DENIED_BY_PRIVATE_MARKETPLACE_POLICY [@ocaml.doc ""]
+  | INVALID_ACCOUNT_STATE [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec access_denied_exception = {
+  reason : access_denied_exception_reason option;
+      [@ocaml.doc "The reason for the access denied exception.\n"]
+  message : exception_message option; [@ocaml.doc "Description of the error.\n"]
+  request_id : request_id option; [@ocaml.doc "The unique identifier for the error.\n"]
+}
+[@@ocaml.doc "User does not have sufficient access to perform this action.\n"]
+
+type nonrec timing =
+  | BILLING_PERIOD [@ocaml.doc ""]
+  | SCHEDULED [@ocaml.doc ""]
+  | ON_ACCEPTANCE [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec tax_estimation = ENABLED [@ocaml.doc ""] | DISABLED [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec tax_configuration = {
+  tax_estimation : tax_estimation option;
+      [@ocaml.doc
+        "Toggle to estimate tax as part of the response. Values include [ENABLED] and [DISABLED]. \
+         Default is [DISABLED].\n"]
+}
+[@@ocaml.doc "Configuration controls for tax estimation in the agreement request.\n"]
+
+type nonrec tax_breakdown_item = {
+  type_ : bounded_string option; [@ocaml.doc "The type of tax (for example, VAT, ST, or GST).\n"]
+  rate : bounded_string option; [@ocaml.doc "The tax rate, in decimals.\n"]
+  amount : bounded_string option; [@ocaml.doc "The estimated tax amount.\n"]
+}
+[@@ocaml.doc "Represents a single tax breakdown entry with amount, rate, and type.\n"]
+
+type nonrec tax_breakdown = tax_breakdown_item list [@@ocaml.doc ""]
 
 type nonrec support_term = {
   refund_policy : bounded_string option;
       [@ocaml.doc
         "Free-text field about the refund policy description that will be shown to customers as is \
          on the website and console.\n"]
+  id : term_id option; [@ocaml.doc "The unique identifier for the term.\n"]
   type_ : unversioned_term_type option; [@ocaml.doc "Category of the term being updated.\n"]
 }
 [@@ocaml.doc
@@ -130,6 +348,147 @@ type nonrec sort = {
 }
 [@@ocaml.doc "An object that contains the [SortBy] and [SortOrder] attributes.\n"]
 
+type nonrec service_quota_exceeded_exception = {
+  resource_id : resource_id option;
+      [@ocaml.doc "The unique identifier of the resource that exceeded the quota.\n"]
+  resource_type : bounded_string option;
+      [@ocaml.doc "The type of the resource that exceeded the quota.\n"]
+  service_code : bounded_string option;
+      [@ocaml.doc "The code of the service whose quota was exceeded.\n"]
+  quota_code : bounded_string option; [@ocaml.doc "The code of the quota that was exceeded.\n"]
+  message : exception_message option; [@ocaml.doc "Description of the error.\n"]
+  request_id : request_id option; [@ocaml.doc "The unique identifier for the error.\n"]
+}
+[@@ocaml.doc
+  "Request exceeded the maximum allowed limit (quota) for a specific resource or API operation.\n"]
+
+type nonrec payment_request_id = string [@@ocaml.doc ""]
+
+type nonrec agreement_id = string [@@ocaml.doc ""]
+
+type nonrec payment_request_status =
+  | CANCELLED [@ocaml.doc ""]
+  | REJECTED [@ocaml.doc ""]
+  | APPROVED [@ocaml.doc ""]
+  | PENDING_APPROVAL [@ocaml.doc ""]
+  | VALIDATION_FAILED [@ocaml.doc ""]
+  | VALIDATING [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec payment_request_name = string [@@ocaml.doc ""]
+
+type nonrec payment_request_description = string [@@ocaml.doc ""]
+
+type nonrec positive_amount_upto8_decimals = string [@@ocaml.doc ""]
+
+type nonrec send_agreement_payment_request_output = {
+  created_at : timestamp option; [@ocaml.doc "The time when the payment request was created.\n"]
+  currency_code : currency_code option;
+      [@ocaml.doc "The currency code for the charge amount (e.g., [USD]).\n"]
+  charge_amount : positive_amount_upto8_decimals option;
+      [@ocaml.doc "The amount being charged to the buyer.\n"]
+  description : payment_request_description option;
+      [@ocaml.doc "The detailed description of the payment request, if provided.\n"]
+  name : payment_request_name option; [@ocaml.doc "The descriptive name of the payment request.\n"]
+  status : payment_request_status option;
+      [@ocaml.doc
+        "The current status of the payment request. The initial status is [PENDING_APPROVAL].\n"]
+  agreement_id : agreement_id option;
+      [@ocaml.doc "The agreement identifier for this payment request.\n"]
+  payment_request_id : payment_request_id option;
+      [@ocaml.doc "The unique identifier for the sent payment request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec client_token = string [@@ocaml.doc ""]
+
+type nonrec send_agreement_payment_request_input = {
+  description : payment_request_description option;
+      [@ocaml.doc "An optional detailed description of the payment request (1-2000 characters).\n"]
+  charge_amount : positive_amount_upto8_decimals;
+      [@ocaml.doc
+        "The amount requested to be charged to the buyer, positive decimal value in the currency \
+         of the accepted term.\n\n\
+        \  A [ValidationException] is returned if the [chargeAmount] exceeds the available \
+         balance, if the agreement doesn't have an active [VariablePaymentTerm], or if the \
+         [termId] is invalid.\n\
+        \  \n\
+        \   "]
+  name : payment_request_name;
+      [@ocaml.doc "A descriptive name for the payment request (5-64 characters).\n"]
+  term_id : term_id;
+      [@ocaml.doc
+        "The unique identifier of the [VariablePaymentTerm] for the agreement that the payment \
+         request is being sent for.\n"]
+  agreement_id : agreement_id;
+      [@ocaml.doc
+        "The unique identifier of the agreement for which the payment request is being submitted. \
+         Use [GetAgreementTerms] to retrieve agreement term details.\n"]
+  client_token : client_token option;
+      [@ocaml.doc
+        "A unique, case-sensitive identifier that you provide to ensure the idempotency of the \
+         request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec agreement_cancellation_request_id = string [@@ocaml.doc ""]
+
+type nonrec agreement_cancellation_request_status =
+  | VALIDATION_FAILED [@ocaml.doc ""]
+  | CANCELLED [@ocaml.doc ""]
+  | REJECTED [@ocaml.doc ""]
+  | APPROVED [@ocaml.doc ""]
+  | PENDING_APPROVAL [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec agreement_cancellation_request_reason_code =
+  | OTHER [@ocaml.doc ""]
+  | BUYER_DISSATISFACTION [@ocaml.doc ""]
+  | UNINTENDED_RENEWAL [@ocaml.doc ""]
+  | PRODUCT_DISCONTINUED [@ocaml.doc ""]
+  | ALTERNATIVE_PROCUREMENT_CHANNEL [@ocaml.doc ""]
+  | TEST_AGREEMENT [@ocaml.doc ""]
+  | REPLACING_AGREEMENT [@ocaml.doc ""]
+  | INCORRECT_TERMS_ACCEPTED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec agreement_cancellation_request_description = string [@@ocaml.doc ""]
+
+type nonrec send_agreement_cancellation_request_output = {
+  updated_at : timestamp option;
+      [@ocaml.doc "The time when the cancellation request was last updated.\n"]
+  created_at : timestamp option;
+      [@ocaml.doc "The time when the cancellation request was created.\n"]
+  description : agreement_cancellation_request_description option;
+      [@ocaml.doc "The detailed description of the cancellation reason, if provided.\n"]
+  reason_code : agreement_cancellation_request_reason_code option;
+      [@ocaml.doc "The reason code provided for the cancellation.\n"]
+  status : agreement_cancellation_request_status option;
+      [@ocaml.doc
+        "The current status of the cancellation request. The initial status is [PENDING_APPROVAL].\n"]
+  agreement_cancellation_request_id : agreement_cancellation_request_id option;
+      [@ocaml.doc "The unique identifier for the created cancellation request.\n"]
+  agreement_id : agreement_id option; [@ocaml.doc "The unique identifier of the agreement.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec send_agreement_cancellation_request_input = {
+  description : agreement_cancellation_request_description option;
+      [@ocaml.doc
+        "An optional detailed description of the cancellation reason (1-2000 characters).\n"]
+  client_token : client_token option;
+      [@ocaml.doc
+        "A unique, case-sensitive identifier that you provide to ensure the idempotency of the \
+         request.\n"]
+  reason_code : agreement_cancellation_request_reason_code;
+      [@ocaml.doc "The reason code for the cancellation request.\n"]
+  agreement_id : agreement_id;
+      [@ocaml.doc
+        "The unique identifier of the agreement for which the cancellation request is being \
+         submitted.\n"]
+}
+[@@ocaml.doc ""]
+
 type nonrec selector = {
   value : bounded_string option;
       [@ocaml.doc "Contract duration. This field supports the ISO 8601 format. \n"]
@@ -138,8 +497,6 @@ type nonrec selector = {
 [@@ocaml.doc
   "Differentiates between the mutually exclusive rate cards in the same pricing term to be \
    selected by the buyer.\n"]
-
-type nonrec resource_id = string [@@ocaml.doc ""]
 
 type nonrec agreement_type = string [@@ocaml.doc ""]
 
@@ -164,7 +521,8 @@ type nonrec agreement_resource_type = string [@@ocaml.doc ""]
 type nonrec resource = {
   type_ : agreement_resource_type option;
       [@ocaml.doc
-        "Type of the resource, which is the product. Values include [SaaSProduct] or [AmiProduct].\n"]
+        "Type of the resource, which is the product (for example, [SaaSProduct], [AmiProduct], \
+         [ContainerProduct]).\n"]
   id : resource_id option;
       [@ocaml.doc
         "The unique identifier of the resource.\n\n\
@@ -179,7 +537,13 @@ type nonrec resources = resource list [@@ocaml.doc ""]
 
 type nonrec offer_id = string [@@ocaml.doc ""]
 
+type nonrec offer_set_id = string [@@ocaml.doc ""]
+
 type nonrec proposal_summary = {
+  offer_set_id : offer_set_id option;
+      [@ocaml.doc
+        "A unique identifier for the offer set containing this offer. All agreements created from \
+         offers in this set include this identifier as context.\n"]
   offer_id : offer_id option;
       [@ocaml.doc "The unique identifier of the offer in AWS Marketplace.\n"]
   resources : resources option; [@ocaml.doc "The list of resources involved in the agreement.\n"]
@@ -198,7 +562,19 @@ type nonrec agreement_status =
   | ACTIVE [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
+type nonrec entitlement = {
+  license_arn : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the AWS License Manager license associated with the \
+         entitlement.\n"]
+}
+[@@ocaml.doc "Represents an entitlement associated with an agreement.\n"]
+
+type nonrec entitlement_list = entitlement list [@@ocaml.doc ""]
+
 type nonrec agreement_view_summary = {
+  entitlements : entitlement_list option;
+      [@ocaml.doc "A list of entitlements associated with the agreement.\n"]
   status : agreement_status option; [@ocaml.doc "The current status of the agreement. \n"]
   proposal_summary : proposal_summary option; [@ocaml.doc "A summary of the proposal\n"]
   proposer : proposer option;
@@ -209,9 +585,7 @@ type nonrec agreement_view_summary = {
       [@ocaml.doc
         "Details of the party accepting the agreement terms. This is commonly the buyer for \
          [PurchaseAgreement.] \n"]
-  agreement_type : agreement_type option;
-      [@ocaml.doc
-        "The type of agreement. Values are [PurchaseAgreement] or [VendorInsightsAgreement].\n"]
+  agreement_type : agreement_type option; [@ocaml.doc "The type of agreement.\n"]
   end_time : timestamp option;
       [@ocaml.doc
         "The date and time when the agreement ends. The field is [null] for pay-as-you-go \
@@ -223,7 +597,7 @@ type nonrec agreement_view_summary = {
 }
 [@@ocaml.doc
   "A summary of the agreement, including top-level attributes (for example, the agreement ID, \
-   version, proposer, and acceptor).\n"]
+   proposer, and acceptor).\n"]
 
 type nonrec agreement_view_summary_list = agreement_view_summary list [@@ocaml.doc ""]
 
@@ -236,7 +610,7 @@ type nonrec search_agreements_output = {
   agreement_view_summaries : agreement_view_summary_list option;
       [@ocaml.doc
         "A summary of the agreement, including top-level attributes (for example, the agreement \
-         ID, version, proposer, and acceptor).\n"]
+         ID, proposer, and acceptor).\n"]
 }
 [@@ocaml.doc ""]
 
@@ -265,7 +639,9 @@ type nonrec search_agreements_input = {
   max_results : max_results option;
       [@ocaml.doc "The maximum number of agreements to return in the response.\n"]
   sort : sort option;
-      [@ocaml.doc "An object that contains the [SortBy] and [SortOrder] attributes.\n"]
+      [@ocaml.doc
+        "An object that contains the [SortBy] and [SortOrder] attributes. Only [EndTime] is \
+         supported for [SearchAgreements]. The default sort is [EndTime] descending.\n"]
   filters : filter_list option;
       [@ocaml.doc
         "The filter name and value pair used to return a specific list of results.\n\n\
@@ -276,12 +652,12 @@ type nonrec search_agreements_input = {
         \            \n\
         \             }\n\
         \        {-   [ResourceType] \226\128\147 Type of the resource, which is the product \
-         ([AmiProduct], [ContainerProduct], or [SaaSProduct]).\n\
+         ([AmiProduct], [ContainerProduct], [SaaSProduct], [ProfessionalServicesProduct], or \
+         [MachineLearningProduct]).\n\
         \            \n\
         \             }\n\
-        \        {-   [PartyType] \226\128\147 The party type (either [Acceptor] or [Proposer]) of \
-         the caller. For agreements where the caller is the proposer, use the [Proposer] filter. \
-         For agreements where the caller is the acceptor, use the [Acceptor] filter.\n\
+        \        {-   [PartyType] \226\128\147 The party type of the caller. Use [Proposer] or \
+         [Acceptor].\n\
         \            \n\
         \             }\n\
         \        {-   [AcceptorAccountId] \226\128\147 The AWS account ID of the party accepting \
@@ -304,8 +680,13 @@ type nonrec search_agreements_input = {
          after the [endTime] of an agreement.\n\
         \            \n\
         \             }\n\
-        \        {-   [AgreementType] \226\128\147 The type of agreement. Values include \
-         [PurchaseAgreement] or [VendorInsightsAgreement].\n\
+        \        {-   [AgreementType] \226\128\147 The type of agreement. Supported value includes \
+         [PurchaseAgreement].\n\
+        \            \n\
+        \             }\n\
+        \        {-   [OfferSetId] \226\128\147 A unique identifier for the offer set containing \
+         this offer. All agreements created from offers in this set include this identifier as \
+         context.\n\
         \            \n\
         \             }\n\
         \        }\n\
@@ -313,18 +694,6 @@ type nonrec search_agreements_input = {
   catalog : catalog option; [@ocaml.doc "The catalog in which the agreement was created.\n"]
 }
 [@@ocaml.doc ""]
-
-type nonrec internal_server_exception = {
-  message : exception_message option; [@ocaml.doc ""]
-  request_id : request_id option; [@ocaml.doc "The unique identifier for the error.\n"]
-}
-[@@ocaml.doc "Unexpected error during processing of request.\n"]
-
-type nonrec access_denied_exception = {
-  message : exception_message option; [@ocaml.doc ""]
-  request_id : request_id option; [@ocaml.doc "The unique identifier for the error.\n"]
-}
-[@@ocaml.doc "User does not have sufficient access to perform this action.\n"]
 
 type nonrec schedule_item = {
   charge_amount : bounded_string option;
@@ -339,15 +708,37 @@ type nonrec schedule_item = {
 
 type nonrec schedule_list = schedule_item list [@@ocaml.doc ""]
 
-type nonrec resource_type = AGREEMENT [@ocaml.doc ""] [@@ocaml.doc ""]
-
-type nonrec resource_not_found_exception = {
-  resource_type : resource_type option; [@ocaml.doc "The type of resource.\n"]
-  resource_id : resource_id option; [@ocaml.doc "The unique identifier for the resource.\n"]
-  message : exception_message option; [@ocaml.doc ""]
-  request_id : request_id option; [@ocaml.doc "The unique identifier for the error.\n"]
+type nonrec dimension = {
+  dimension_value : zero_value_integer;
+      [@ocaml.doc
+        "The number of units of the dimension the acceptor has purchased.\n\n\
+        \  For Agreements with [ConfigurableUpfrontPricingTerm], the [RateCard] section will \
+         define the prices and dimensions defined by the seller (proposer), whereas the \
+         [Configuration] section will define the actual dimensions, prices, and units the buyer \
+         has chosen to accept.\n\
+        \  \n\
+        \   "]
+  dimension_key : bounded_string; [@ocaml.doc "The name of key value of the dimension.\n"]
 }
-[@@ocaml.doc "Request references a resource which does not exist.\n"]
+[@@ocaml.doc
+  "Defines the dimensions that the acceptor has purchased from the overall set of dimensions \
+   presented in the rate card.\n"]
+
+type nonrec dimension_list = dimension list [@@ocaml.doc ""]
+
+type nonrec configurable_upfront_pricing_term_configuration = {
+  dimensions : dimension_list;
+      [@ocaml.doc
+        "Defines the dimensions that the acceptor has purchased from the overall set of dimensions \
+         presented in the rate card.\n"]
+  selector_value : bounded_string;
+      [@ocaml.doc
+        "Defines the length of time for which the particular pricing/dimension is being purchased \
+         by the acceptor.\n"]
+}
+[@@ocaml.doc
+  "Defines a prepaid payment model that allows buyers to configure the entitlements they want to \
+   purchase and the duration.\n"]
 
 type nonrec boolean_ = bool [@@ocaml.doc ""]
 
@@ -359,9 +750,33 @@ type nonrec renewal_term_configuration = {
 }
 [@@ocaml.doc "Additional parameters specified by the acceptor while accepting the term.\n"]
 
+type nonrec requested_term_configuration =
+  | VariablePaymentTermConfiguration of variable_payment_term_configuration [@ocaml.doc ""]
+  | RenewalTermConfiguration of renewal_term_configuration [@ocaml.doc ""]
+  | ConfigurableUpfrontPricingTermConfiguration of configurable_upfront_pricing_term_configuration
+      [@ocaml.doc ""]
+[@@ocaml.doc
+  "A tagged union that represents the term configuration provided by the acceptor. Only one \
+   configuration is accepted per term.\n"]
+
+type nonrec requested_term = {
+  configuration : requested_term_configuration option;
+      [@ocaml.doc
+        "Additional configuration for the requested terms. This configuration is applicable only \
+         to the terms that accept a customer-provided configuration, such as \
+         [ConfigurableUpfrontPricingTerm].\n"]
+  id : term_id; [@ocaml.doc "The unique identifier of the term in the agreement proposal.\n"]
+}
+[@@ocaml.doc
+  "Defines what is being accepted as part of the agreement creation or update request, and it \
+   includes their configurations.\n"]
+
+type nonrec requested_term_list = requested_term list [@@ocaml.doc ""]
+
 type nonrec renewal_term = {
   configuration : renewal_term_configuration option;
       [@ocaml.doc "Additional parameters specified by the acceptor while accepting the term.\n"]
+  id : term_id option; [@ocaml.doc "The unique identifier for the term.\n"]
   type_ : unversioned_term_type option; [@ocaml.doc "Category of the term being updated. \n"]
 }
 [@@ocaml.doc
@@ -372,17 +787,105 @@ type nonrec renewal_term = {
    decline auto-renewal at the offer acceptance/agreement creation. Buyers can also change this \
    flag from [True] to [False] or [False] to [True] at anytime during the agreement's lifecycle.\n"]
 
+type nonrec payment_request_status_message = string [@@ocaml.doc ""]
+
+type nonrec reject_agreement_payment_request_output = {
+  updated_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The date and time when the payment request was rejected.\n"]
+  created_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The date and time when the payment request was originally created.\n"]
+  currency_code : currency_code option; [@ocaml.doc "The currency code for the charge amount.\n"]
+  charge_amount : positive_amount_upto8_decimals option;
+      [@ocaml.doc "The amount that was requested to be charged.\n"]
+  description : payment_request_description option;
+      [@ocaml.doc "The detailed description of the payment request, if provided.\n"]
+  name : payment_request_name option; [@ocaml.doc "The descriptive name of the payment request.\n"]
+  status_message : payment_request_status_message option;
+      [@ocaml.doc "The rejection reason provided by the buyer, if any.\n"]
+  status : payment_request_status option;
+      [@ocaml.doc "The updated status of the payment request, which is [REJECTED].\n"]
+  agreement_id : agreement_id option;
+      [@ocaml.doc "The unique identifier of the agreement associated with this payment request.\n"]
+  payment_request_id : payment_request_id option;
+      [@ocaml.doc "The unique identifier of the rejected payment request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec payment_request_rejection_reason = string [@@ocaml.doc ""]
+
+type nonrec reject_agreement_payment_request_input = {
+  rejection_reason : payment_request_rejection_reason option;
+      [@ocaml.doc
+        "An optional reason for rejecting the payment request (1-250 characters). This message is \
+         visible to the seller.\n"]
+  agreement_id : agreement_id;
+      [@ocaml.doc "The unique identifier of the agreement associated with the payment request.\n"]
+  payment_request_id : payment_request_id;
+      [@ocaml.doc "The unique identifier of the payment request to reject.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec agreement_cancellation_request_status_message = string [@@ocaml.doc ""]
+
+type nonrec reject_agreement_cancellation_request_output = {
+  updated_at : timestamp option;
+      [@ocaml.doc "The date and time when the cancellation request was rejected.\n"]
+  created_at : timestamp option;
+      [@ocaml.doc "The date and time when the cancellation request was originally created.\n"]
+  description : agreement_cancellation_request_description option;
+      [@ocaml.doc "The detailed description of the cancellation reason, if provided.\n"]
+  reason_code : agreement_cancellation_request_reason_code option;
+      [@ocaml.doc "The original reason code provided when the cancellation request was created.\n"]
+  status_message : agreement_cancellation_request_status_message option;
+      [@ocaml.doc "The rejection reason provided by the buyer.\n"]
+  status : agreement_cancellation_request_status option;
+      [@ocaml.doc "The updated status of the cancellation request, which is [REJECTED].\n"]
+  agreement_cancellation_request_id : agreement_cancellation_request_id option;
+      [@ocaml.doc "The unique identifier of the rejected cancellation request.\n"]
+  agreement_id : agreement_id option;
+      [@ocaml.doc
+        "The unique identifier of the agreement associated with this cancellation request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec agreement_cancellation_request_rejection_reason = string [@@ocaml.doc ""]
+
+type nonrec reject_agreement_cancellation_request_input = {
+  rejection_reason : agreement_cancellation_request_rejection_reason;
+      [@ocaml.doc
+        "The reason for rejecting the cancellation request (1-2000 characters). This message is \
+         visible to the seller.\n"]
+  agreement_cancellation_request_id : agreement_cancellation_request_id;
+      [@ocaml.doc "The unique identifier of the cancellation request to reject.\n"]
+  agreement_id : agreement_id;
+      [@ocaml.doc
+        "The unique identifier of the agreement associated with the cancellation request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec registration_token = string [@@ocaml.doc ""]
+
 type nonrec recurring_payment_term = {
   price : bounded_string option; [@ocaml.doc "Amount charged to the buyer every billing period.\n"]
   billing_period : bounded_string option;
       [@ocaml.doc "Defines the recurrence at which buyers are charged.\n"]
   currency_code : currency_code option;
       [@ocaml.doc "Defines the currency for the prices mentioned in this term. \n"]
+  id : term_id option; [@ocaml.doc "The unique identifier for the term.\n"]
   type_ : unversioned_term_type option; [@ocaml.doc "Type of the term being updated.\n"]
 }
 [@@ocaml.doc
   "Defines a pricing model where customers are charged a fixed recurring price at the end of each \
    billing period.\n"]
+
+type nonrec pricing_currency_amount = {
+  currency_code : currency_code option;
+      [@ocaml.doc "The 3-letter ISO 4217 currency code (e.g., [USD], [EUR], [JPY]).\n"]
+  max_adjustment_amount : bounded_string option;
+      [@ocaml.doc "The maximum refundable amount as a string representation of a decimal number.\n"]
+  amount : bounded_string option; [@ocaml.doc "The monetary amount before tax.\n"]
+}
+[@@ocaml.doc "Monetary amounts associated with an invoice line item group.\n"]
 
 type nonrec positive_integer_with_default_value_one = int [@@ocaml.doc ""]
 
@@ -393,12 +896,327 @@ type nonrec payment_schedule_term = {
          contains the information necessary for calculating the price.\n"]
   currency_code : currency_code option;
       [@ocaml.doc "Defines the currency for the prices mentioned in the term. \n"]
+  id : term_id option; [@ocaml.doc "The unique identifier for the term.\n"]
   type_ : unversioned_term_type option; [@ocaml.doc "Type of the term.\n"]
 }
 [@@ocaml.doc
   "Defines an installment-based pricing model where customers are charged a fixed price on \
    different dates during the agreement validity period. This is used most commonly for flexible \
    payment schedule pricing.\n"]
+
+type nonrec charge_id = string [@@ocaml.doc ""]
+
+type nonrec payment_request_summary = {
+  updated_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The date and time when the payment request was last updated.\n"]
+  created_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The date and time when the payment request was created.\n"]
+  currency_code : currency_code option; [@ocaml.doc "The currency code for the charge amount.\n"]
+  charge_amount : positive_amount_upto8_decimals option;
+      [@ocaml.doc "The amount charged or to be charged to the buyer.\n"]
+  charge_id : charge_id option;
+      [@ocaml.doc
+        "The unique identifier of the charge created after the payment request is approved. This \
+         field is only present for approved payment requests.\n"]
+  name : payment_request_name option; [@ocaml.doc "The descriptive name of the payment request.\n"]
+  status : payment_request_status option;
+      [@ocaml.doc
+        "The current status of the payment request. Possible values include [VALIDATING], \
+         [VALIDATION_FAILED], [PENDING_APPROVAL], [APPROVED], [REJECTED], and [CANCELLED].\n"]
+  agreement_id : agreement_id option;
+      [@ocaml.doc "The unique identifier of the agreement associated with this payment request.\n"]
+  payment_request_id : payment_request_id option;
+      [@ocaml.doc "The unique identifier of the payment request.\n"]
+}
+[@@ocaml.doc "Summary view of a payment request.\n"]
+
+type nonrec payment_request_summary_list = payment_request_summary list [@@ocaml.doc ""]
+
+type nonrec party_type = string [@@ocaml.doc ""]
+
+type nonrec billing_adjustment_request_id = string [@@ocaml.doc ""]
+
+type nonrec invoice_id = string [@@ocaml.doc ""]
+
+type nonrec billing_adjustment_status =
+  | COMPLETED [@ocaml.doc ""]
+  | VALIDATION_FAILED [@ocaml.doc ""]
+  | PENDING [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec billing_adjustment_summary = {
+  catalog : catalog; [@ocaml.doc "The catalog in which the agreement was created.\n"]
+  agreement_type : agreement_type; [@ocaml.doc "The type of agreement.\n"]
+  updated_at : timestamp;
+      [@ocaml.doc "The date and time when the billing adjustment request was last updated.\n"]
+  created_at : timestamp;
+      [@ocaml.doc "The date and time when the billing adjustment request was created.\n"]
+  agreement_id : agreement_id;
+      [@ocaml.doc
+        "The unique identifier of the agreement associated with this billing adjustment request.\n"]
+  status : billing_adjustment_status;
+      [@ocaml.doc "The current status of the billing adjustment request.\n"]
+  currency_code : currency_code; [@ocaml.doc "The currency code for the adjustment amount.\n"]
+  adjustment_amount : positive_amount_upto8_decimals;
+      [@ocaml.doc "The adjustment amount as a string representation of a decimal number.\n"]
+  original_invoice_id : invoice_id;
+      [@ocaml.doc "The identifier of the original invoice being adjusted.\n"]
+  billing_adjustment_request_id : billing_adjustment_request_id;
+      [@ocaml.doc "The unique identifier of the billing adjustment request.\n"]
+}
+[@@ocaml.doc "Summary view of a billing adjustment request.\n"]
+
+type nonrec billing_adjustment_summary_list = billing_adjustment_summary list [@@ocaml.doc ""]
+
+type nonrec list_billing_adjustment_requests_output = {
+  items : billing_adjustment_summary_list;
+      [@ocaml.doc
+        "An array of [BillingAdjustmentSummary] objects containing summary information about each \
+         billing adjustment request.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The token used for pagination. The field is [null] if there are no more results.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_billing_adjustment_requests_input = {
+  next_token : next_token option; [@ocaml.doc "A token to specify where to start pagination.\n"]
+  agreement_type : agreement_type option;
+      [@ocaml.doc
+        "An optional filter to return billing adjustment requests by agreement type (e.g., \
+         [PurchaseAgreement]).\n"]
+  catalog : catalog option;
+      [@ocaml.doc
+        "An optional filter to return billing adjustment requests by catalog (e.g., \
+         [AWSMarketplace]).\n"]
+  max_results : max_results option;
+      [@ocaml.doc "The maximum number of billing adjustment requests to return in the response.\n"]
+  created_before : timestamp option;
+      [@ocaml.doc
+        "An optional filter to return billing adjustment requests created before the specified \
+         timestamp.\n"]
+  created_after : timestamp option;
+      [@ocaml.doc
+        "An optional filter to return billing adjustment requests created after the specified \
+         timestamp.\n"]
+  status : billing_adjustment_status option;
+      [@ocaml.doc
+        "An optional filter to return billing adjustment requests with the specified status.\n"]
+  agreement_id : agreement_id option;
+      [@ocaml.doc
+        "The unique identifier of the agreement to list billing adjustment requests for.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_agreement_payment_requests_output = {
+  items : payment_request_summary_list;
+      [@ocaml.doc
+        "An array of [PaymentRequestSummary] objects containing summary information about each \
+         payment request.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The token used for pagination. The field is [null] if there are no more results.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_agreement_payment_requests_input = {
+  next_token : next_token option; [@ocaml.doc "A token to specify where to start pagination.\n"]
+  max_results : max_results option;
+      [@ocaml.doc
+        "The maximum number of payment requests to return in a single response (1-50). Default is \
+         50.\n"]
+  status : payment_request_status option;
+      [@ocaml.doc
+        "An optional parameter to list payment requests by status. Valid values include \
+         [VALIDATING], [VALIDATION_FAILED], [PENDING_APPROVAL], [APPROVED], [REJECTED], and \
+         [CANCELLED].\n"]
+  agreement_id : agreement_id option;
+      [@ocaml.doc "An optional parameter to list payment requests for a specific agreement.\n"]
+  catalog : catalog option;
+      [@ocaml.doc
+        "An optional parameter to list payment requests by catalog (e.g., [AWSMarketplace]).\n"]
+  agreement_type : agreement_type option;
+      [@ocaml.doc
+        "An optional parameter to list payment requests by agreement type (e.g., \
+         [PurchaseAgreement]).\n"]
+  party_type : party_type;
+      [@ocaml.doc
+        "The party type for the payment requests. Required parameter. Use [Proposer] to list \
+         payment requests where you are the seller, or [Acceptor] to list payment requests where \
+         you are the buyer.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec invoice_billing_period = {
+  year : Smaws_Lib.Smithy_api.Types.integer; [@ocaml.doc "The billing period year.\n"]
+  month : Smaws_Lib.Smithy_api.Types.integer;
+      [@ocaml.doc "The billing period month. Valid range: 1-12.\n"]
+}
+[@@ocaml.doc "The billing period for an invoice, specified by month and year.\n"]
+
+type nonrec invoice_type = CREDIT_MEMO [@ocaml.doc ""] | INVOICE [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec invoicing_entity = {
+  branch_name : bounded_string option;
+      [@ocaml.doc "The branch where the issuing entity is operating from.\n"]
+  legal_name : bounded_string option; [@ocaml.doc "Legal name of the entity issuing the invoice.\n"]
+}
+[@@ocaml.doc "The entity responsible for issuing the invoice.\n"]
+
+type nonrec agreement_invoice_line_item_group_summary = {
+  invoicing_entity : invoicing_entity option; [@ocaml.doc "The entity that issues the invoice.\n"]
+  invoice_type : invoice_type option;
+      [@ocaml.doc "The type of invoice. Valid values are [INVOICE] and [CREDIT_MEMO].\n"]
+  issued_time : timestamp option;
+      [@ocaml.doc "The timestamp when the invoice containing this group was created.\n"]
+  invoice_billing_period : invoice_billing_period option;
+      [@ocaml.doc "The billing period associated with this group.\n"]
+  pricing_currency_amount : pricing_currency_amount option;
+      [@ocaml.doc "Monetary amounts for this invoice group.\n"]
+  invoice_id : resource_id option; [@ocaml.doc "The identifier of the invoice for this group.\n"]
+  agreement_id : resource_id option; [@ocaml.doc "The unique identifier of the agreement.\n"]
+}
+[@@ocaml.doc "A summary of grouped billing data for an agreement invoice line item.\n"]
+
+type nonrec agreement_invoice_line_item_group_summaries =
+  agreement_invoice_line_item_group_summary list
+[@@ocaml.doc ""]
+
+type nonrec list_agreement_invoice_line_items_output = {
+  next_token : next_token option;
+      [@ocaml.doc
+        "The token used for pagination. The field is [null] if there are no more results.\n"]
+  agreement_invoice_line_item_group_summaries : agreement_invoice_line_item_group_summaries option;
+      [@ocaml.doc "A list of grouped billing data objects.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec line_item_group_by = INVOICE_ID [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec list_agreement_invoice_line_items_input = {
+  next_token : next_token option; [@ocaml.doc "A token to specify where to start pagination.\n"]
+  max_results : max_results option;
+      [@ocaml.doc "The maximum number of results to return in the response.\n"]
+  after_issued_time : timestamp option;
+      [@ocaml.doc "An optional filter for invoices issued after the specified timestamp.\n"]
+  before_issued_time : timestamp option;
+      [@ocaml.doc "An optional filter for invoices issued before the specified timestamp.\n"]
+  invoice_billing_period : invoice_billing_period option;
+      [@ocaml.doc "An optional filter for the billing period associated with the invoice.\n"]
+  invoice_type : invoice_type option;
+      [@ocaml.doc
+        "An optional filter for the type of invoice. Valid values are [INVOICE] and [CREDIT_MEMO].\n"]
+  invoice_id : resource_id option;
+      [@ocaml.doc "An optional filter to retrieve invoice information for a specific invoice.\n"]
+  group_by : line_item_group_by;
+      [@ocaml.doc
+        "Specifies a grouping strategy for line items. Currently supports [INVOICE_ID].\n"]
+  agreement_id : resource_id; [@ocaml.doc "The unique identifier of the agreement.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec charge = {
+  time : timestamp option;
+      [@ocaml.doc
+        "The date and time when the charge will be incurred. This is available only when the \
+         charge date is known.\n"]
+  amount : bounded_string option; [@ocaml.doc "The amount of the charge.\n"]
+  currency_code : currency_code option; [@ocaml.doc "The currency code for the charge amount.\n"]
+  purchase_order_reference : purchase_order_reference option;
+      [@ocaml.doc "The purchase order reference associated with the charge, if any.\n"]
+  agreement_type : agreement_type option;
+      [@ocaml.doc
+        "The type of agreement that resulted in this charge (for example, [PurchaseAgreement]).\n"]
+  agreement_id : resource_id option;
+      [@ocaml.doc "The unique identifier of the agreement that resulted in this charge.\n"]
+  revision : charge_revision option; [@ocaml.doc "The revision number of the charge.\n"]
+  id : resource_id option; [@ocaml.doc "The unique identifier of the charge.\n"]
+}
+[@@ocaml.doc
+  "Represents a charge associated with an agreement, including amount, timing, and purchase order \
+   details.\n"]
+
+type nonrec charges = charge list [@@ocaml.doc ""]
+
+type nonrec list_agreement_charges_output = {
+  next_token : next_token option;
+      [@ocaml.doc
+        "The token used for pagination. The field is [null] if there are no more results.\n"]
+  items : charges option; [@ocaml.doc "A list of agreement charges.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_agreement_charges_input = {
+  next_token : next_token option; [@ocaml.doc "A token to specify where to start pagination.\n"]
+  max_results : max_results option;
+      [@ocaml.doc "The maximum number of charges to return in the response.\n"]
+  agreement_type : agreement_type option;
+      [@ocaml.doc
+        "Filter to retrieve charges of a specific agreement type (for example, [PurchaseAgreement]).\n"]
+  agreement_id : resource_id option; [@ocaml.doc "The unique identifier of the agreement.\n"]
+  catalog : catalog option; [@ocaml.doc "The catalog in which the charges were created.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec agreement_cancellation_request_summary = {
+  updated_at : timestamp option;
+      [@ocaml.doc "The date and time when the cancellation request was last updated.\n"]
+  created_at : timestamp option;
+      [@ocaml.doc "The date and time when the cancellation request was created.\n"]
+  catalog : catalog option; [@ocaml.doc "The catalog in which the agreement was created.\n"]
+  agreement_type : agreement_type option; [@ocaml.doc "The type of agreement.\n"]
+  reason_code : agreement_cancellation_request_reason_code option;
+      [@ocaml.doc "The reason code provided for the cancellation.\n"]
+  status : agreement_cancellation_request_status option;
+      [@ocaml.doc
+        "The current status of the cancellation request. Possible values include \
+         [PENDING_APPROVAL], [APPROVED], [REJECTED], [CANCELLED], and [VALIDATION_FAILED].\n"]
+  agreement_id : agreement_id option;
+      [@ocaml.doc
+        "The unique identifier of the agreement associated with this cancellation request.\n"]
+  agreement_cancellation_request_id : agreement_cancellation_request_id option;
+      [@ocaml.doc "The unique identifier of the cancellation request.\n"]
+}
+[@@ocaml.doc "Summary view of an agreement cancellation request.\n"]
+
+type nonrec agreement_cancellation_request_summary_list =
+  agreement_cancellation_request_summary list
+[@@ocaml.doc ""]
+
+type nonrec list_agreement_cancellation_requests_output = {
+  items : agreement_cancellation_request_summary_list option;
+      [@ocaml.doc
+        "An array of [AgreementCancellationRequestSummary] objects containing summary information \
+         about each cancellation request.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The token used for pagination. The field is [null] if there are no more results.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_agreement_cancellation_requests_input = {
+  next_token : next_token option; [@ocaml.doc "A token to specify where to start pagination.\n"]
+  max_results : max_results option;
+      [@ocaml.doc "The maximum number of cancellation requests to return in the response.\n"]
+  catalog : catalog option;
+      [@ocaml.doc
+        "An optional parameter to filter cancellation requests by catalog (e.g., [AWSMarketplace]).\n"]
+  agreement_type : agreement_type option;
+      [@ocaml.doc
+        "An optional parameter to filter cancellation requests by agreement type (e.g., \
+         [PurchaseAgreement]).\n"]
+  status : agreement_cancellation_request_status option;
+      [@ocaml.doc "An optional parameter to filter cancellation requests by status.\n"]
+  agreement_id : agreement_id option;
+      [@ocaml.doc
+        "An optional parameter to filter cancellation requests for a specific agreement.\n"]
+  party_type : party_type;
+      [@ocaml.doc
+        "The party type for the cancellation requests. Required parameter. Use [Proposer] to list \
+         cancellation requests where you are the seller, or [Acceptor] to list cancellation \
+         requests where you are the buyer.\n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec document_item = {
   version : bounded_string option;
@@ -445,11 +1263,35 @@ type nonrec legal_term = {
   documents : document_list option;
       [@ocaml.doc
         "List of references to legal resources proposed to the buyers. An example is the EULA.\n"]
+  id : term_id option; [@ocaml.doc "The unique identifer for the term.\n"]
   type_ : unversioned_term_type option; [@ocaml.doc "Category of the term being updated.\n"]
 }
 [@@ocaml.doc
   "Defines the list of text agreements proposed to the acceptors. An example is the end user \
    license agreement (EULA).\n"]
+
+type nonrec itemized_charge = {
+  incremental_charge_amount : bounded_string option;
+      [@ocaml.doc "The total incremental charge amount for this dimension.\n"]
+  charge_reference : resource_id option;
+      [@ocaml.doc
+        "The identifier of the expected charge that this itemized charge contributes to.\n"]
+  old_quantity : Smaws_Lib.Smithy_api.Types.integer option;
+      [@ocaml.doc
+        "The existing quantity for this dimension from the source agreement. This value is [0] for \
+         NEW intent.\n"]
+  new_quantity : Smaws_Lib.Smithy_api.Types.integer option;
+      [@ocaml.doc "The requested quantity for this dimension.\n"]
+  dimension_key : bounded_string option;
+      [@ocaml.doc "The dimension key as specified in the accepted term.\n"]
+}
+[@@ocaml.doc
+  "A breakdown of individual charges or line items within a billing or pricing context.\n"]
+
+type nonrec itemized_charge_list = itemized_charge list [@@ocaml.doc ""]
+
+type nonrec intent = REPLACE [@ocaml.doc ""] | AMEND [@ocaml.doc ""] | NEW [@ocaml.doc ""]
+[@@ocaml.doc ""]
 
 type nonrec grant_item = {
   max_quantity : positive_integer_with_default_value_one option;
@@ -466,6 +1308,56 @@ type nonrec grant_item = {
   "Entitlements granted to the acceptor of fixed upfront as part of agreement execution.\n"]
 
 type nonrec grant_list = grant_item list [@@ocaml.doc ""]
+
+type nonrec billing_adjustment_reason_code =
+  | OTHER [@ocaml.doc ""]
+  | BUYER_DISSATISFACTION [@ocaml.doc ""]
+  | UNINTENDED_RENEWAL [@ocaml.doc ""]
+  | ALTERNATIVE_PROCUREMENT_CHANNEL [@ocaml.doc ""]
+  | TEST_ENVIRONMENT_CHARGES [@ocaml.doc ""]
+  | INCORRECT_METERING [@ocaml.doc ""]
+  | INCORRECT_TERMS_ACCEPTED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec billing_adjustment_status_message = string [@@ocaml.doc ""]
+
+type nonrec get_billing_adjustment_request_output = {
+  updated_at : timestamp;
+      [@ocaml.doc "The date and time when the billing adjustment request was last updated.\n"]
+  created_at : timestamp;
+      [@ocaml.doc "The date and time when the billing adjustment request was created.\n"]
+  status_message : billing_adjustment_status_message option;
+      [@ocaml.doc
+        "A message providing additional context about the billing adjustment request status. This \
+         field is populated only when the status is [VALIDATION_FAILED].\n"]
+  status : billing_adjustment_status;
+      [@ocaml.doc "The current status of the billing adjustment request.\n"]
+  currency_code : currency_code;
+      [@ocaml.doc "The currency code for the adjustment amount (e.g., [USD]).\n"]
+  adjustment_amount : positive_amount_upto8_decimals;
+      [@ocaml.doc "The adjustment amount as a string representation of a decimal number.\n"]
+  original_invoice_id : invoice_id;
+      [@ocaml.doc "The identifier of the original invoice being adjusted.\n"]
+  description : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The detailed description of the billing adjustment reason, if provided.\n"]
+  adjustment_reason_code : billing_adjustment_reason_code;
+      [@ocaml.doc "The reason code for the billing adjustment.\n"]
+  agreement_id : agreement_id;
+      [@ocaml.doc
+        "The unique identifier of the agreement associated with this billing adjustment request.\n"]
+  billing_adjustment_request_id : billing_adjustment_request_id;
+      [@ocaml.doc "The unique identifier of the billing adjustment request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_billing_adjustment_request_input = {
+  billing_adjustment_request_id : billing_adjustment_request_id;
+      [@ocaml.doc "The unique identifier of the billing adjustment request.\n"]
+  agreement_id : agreement_id;
+      [@ocaml.doc
+        "The unique identifier of the agreement associated with the billing adjustment request.\n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec constraints = {
   quantity_configuration : bounded_string option;
@@ -497,38 +1389,6 @@ type nonrec configurable_upfront_rate_card_item = {
 type nonrec configurable_upfront_rate_card_list = configurable_upfront_rate_card_item list
 [@@ocaml.doc ""]
 
-type nonrec dimension = {
-  dimension_value : zero_value_integer;
-      [@ocaml.doc
-        "The number of units of the dimension the acceptor has purchased.\n\n\
-        \  For Agreements with [ConfigurableUpfrontPricingTerm], the [RateCard] section will \
-         define the prices and dimensions defined by the seller (proposer), whereas the \
-         [Configuration] section will define the actual dimensions, prices, and units the buyer \
-         has chosen to accept.\n\
-        \  \n\
-        \   "]
-  dimension_key : bounded_string; [@ocaml.doc "The name of key value of the dimension.\n"]
-}
-[@@ocaml.doc
-  "Defines the dimensions that the acceptor has purchased from the overall set of dimensions \
-   presented in the rate card.\n"]
-
-type nonrec dimension_list = dimension list [@@ocaml.doc ""]
-
-type nonrec configurable_upfront_pricing_term_configuration = {
-  dimensions : dimension_list;
-      [@ocaml.doc
-        "Defines the dimensions that the acceptor has purchased from the overall set of dimensions \
-         presented in the rate card.\n"]
-  selector_value : bounded_string;
-      [@ocaml.doc
-        "Defines the length of time for which the particular pricing/dimension is being purchased \
-         by the acceptor.\n"]
-}
-[@@ocaml.doc
-  "Defines a prepaid payment model that allows buyers to configure the entitlements they want to \
-   purchase and the duration.\n"]
-
 type nonrec configurable_upfront_pricing_term = {
   configuration : configurable_upfront_pricing_term_configuration option;
       [@ocaml.doc "Additional parameters specified by the acceptor while accepting the term.\n"]
@@ -536,6 +1396,7 @@ type nonrec configurable_upfront_pricing_term = {
       [@ocaml.doc "A rate card defines the per unit rates for product dimensions.\n"]
   currency_code : currency_code option;
       [@ocaml.doc "Defines the currency for the prices mentioned in the term.\n"]
+  id : term_id option; [@ocaml.doc "The unique identifier of the term.\n"]
   type_ : unversioned_term_type option; [@ocaml.doc "Category of selector.\n"]
 }
 [@@ocaml.doc
@@ -543,6 +1404,7 @@ type nonrec configurable_upfront_pricing_term = {
    purchase and the duration.\n"]
 
 type nonrec byol_pricing_term = {
+  id : term_id option; [@ocaml.doc "The unique identifier for the term.\n"]
   type_ : unversioned_term_type option; [@ocaml.doc "Type of the term being updated.\n"]
 }
 [@@ocaml.doc
@@ -556,6 +1418,7 @@ type nonrec free_trial_pricing_term = {
         "Entitlements granted to the acceptor of a free trial as part of an agreement execution.\n"]
   duration : bounded_string option;
       [@ocaml.doc "Duration of the free trial period (5\226\128\14731 days). \n"]
+  id : term_id option; [@ocaml.doc "The unique identifier for the terms.\n"]
   type_ : unversioned_term_type option; [@ocaml.doc "Category of the term.\n"]
 }
 [@@ocaml.doc
@@ -571,12 +1434,17 @@ type nonrec fixed_upfront_pricing_term = {
   duration : bounded_string option; [@ocaml.doc "Contract duration for the terms.\n"]
   currency_code : currency_code option;
       [@ocaml.doc "Defines the currency for the prices mentioned in this term. \n"]
+  id : term_id option; [@ocaml.doc "The unique identifier for the term.\n"]
   type_ : unversioned_term_type option; [@ocaml.doc "Category of the term being updated.\n"]
 }
 [@@ocaml.doc
   "Defines a prepaid pricing model where the customers are charged a fixed upfront amount.\n"]
 
 type nonrec accepted_term =
+  | VariablePaymentTerm of variable_payment_term
+      [@ocaml.doc
+        "Defines a payment model where sellers can submit variable payment requests up to a \
+         maximum charge amount, with configurable approval strategies and expiration timelines.\n"]
   | FixedUpfrontPricingTerm of fixed_upfront_pricing_term
       [@ocaml.doc
         "Defines a pre-paid pricing model where the customers are charged a fixed upfront amount.\n"]
@@ -632,7 +1500,9 @@ type nonrec accepted_term =
 type nonrec accepted_term_list = accepted_term list [@@ocaml.doc ""]
 
 type nonrec get_agreement_terms_output = {
-  next_token : next_token option; [@ocaml.doc "A token to specify where to start pagination\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The token used for pagination. The field is [null] if there are no more results.\n"]
   accepted_terms : accepted_term_list option;
       [@ocaml.doc
         "A subset of terms proposed by the proposer that have been accepted by the acceptor as \
@@ -641,12 +1511,202 @@ type nonrec get_agreement_terms_output = {
 [@@ocaml.doc ""]
 
 type nonrec get_agreement_terms_input = {
-  next_token : next_token option; [@ocaml.doc "A token to specify where to start pagination\n"]
+  next_token : next_token option; [@ocaml.doc "A token to specify where to start pagination.\n"]
   max_results : max_results option;
       [@ocaml.doc "The maximum number of agreements to return in the response.\n"]
   agreement_id : resource_id; [@ocaml.doc "The unique identifier of the agreement.\n"]
 }
 [@@ocaml.doc ""]
+
+type nonrec get_agreement_payment_request_output = {
+  updated_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The date and time when the payment request was last updated.\n"]
+  created_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The date and time when the payment request was created.\n"]
+  currency_code : currency_code option; [@ocaml.doc "The currency code for the charge amount.\n"]
+  charge_amount : positive_amount_upto8_decimals option;
+      [@ocaml.doc "The amount charged or to be charged to the buyer.\n"]
+  charge_id : charge_id option;
+      [@ocaml.doc
+        "The unique identifier of the charge created after the payment request is approved. This \
+         field is only present for approved payment requests and follows the pattern \
+         [ch-\\[a-zA-Z0-9\\]+].\n"]
+  description : payment_request_description option;
+      [@ocaml.doc "The detailed description of the payment request, if provided.\n"]
+  name : payment_request_name option; [@ocaml.doc "The descriptive name of the payment request.\n"]
+  status_message : payment_request_status_message option;
+      [@ocaml.doc
+        "An optional message providing additional context about the payment request status, such \
+         as a rejection reason or validation failure details.\n"]
+  status : payment_request_status option;
+      [@ocaml.doc
+        "The current status of the payment request. Possible values include:\n\n\
+        \ {ul\n\
+        \       {-   [VALIDATING] \226\128\147 The payment request is being validated against \
+         agreement terms.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [VALIDATION_FAILED] \226\128\147 The payment request failed validation.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [PENDING_APPROVAL] \226\128\147 The payment request is awaiting buyer action.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [APPROVED] \226\128\147 The buyer has approved the payment request.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [REJECTED] \226\128\147 The buyer has rejected the payment request.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [CANCELLED] \226\128\147 The seller has cancelled the payment request.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \  "]
+  agreement_id : agreement_id option;
+      [@ocaml.doc
+        "The unique identifier of the agreement associated with this payment request. Use \
+         [DescribeAgreement] to retrieve full agreement details.\n"]
+  payment_request_id : payment_request_id option;
+      [@ocaml.doc "The unique identifier of the payment request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_agreement_payment_request_input = {
+  agreement_id : agreement_id;
+      [@ocaml.doc "The unique identifier of the agreement associated with the payment request.\n"]
+  payment_request_id : payment_request_id; [@ocaml.doc "The identifier of the payment request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec entitlement_type = string [@@ocaml.doc ""]
+
+type nonrec agreement_entitlement_status =
+  | DEPROVISIONED [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+  | PENDING [@ocaml.doc ""]
+  | SCHEDULED [@ocaml.doc ""]
+  | PROVISIONED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec agreement_entitlement_status_reason_code =
+  | PRODUCT_RESTRICTED [@ocaml.doc ""]
+  | AGREEMENT_ACTIVE [@ocaml.doc ""]
+  | AGREEMENT_INACTIVE [@ocaml.doc ""]
+  | UNSUPPORTED_OPERATION [@ocaml.doc ""]
+  | ACCOUNT_SUSPENDED [@ocaml.doc ""]
+  | INCOMPATIBLE_CURRENCY [@ocaml.doc ""]
+  | INVALID_PAYMENT_INSTRUMENT [@ocaml.doc ""]
+  | FUTURE_START_DATE [@ocaml.doc ""]
+  | PROVISIONING_IN_PROGRESS [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec aws_arn = string [@@ocaml.doc ""]
+
+type nonrec agreement_entitlement = {
+  license_arn : aws_arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the AWS License Manager license associated with the \
+         entitlement.\n"]
+  status_reason_code : agreement_entitlement_status_reason_code option;
+      [@ocaml.doc "Provides more information about the status of an entitlement.\n"]
+  status : agreement_entitlement_status option;
+      [@ocaml.doc "The current state of an entitlement.\n"]
+  registration_token : registration_token option;
+      [@ocaml.doc
+        "A short-lived token required by acceptors to register their account with the product \
+         provider. The token is only valid for 30 minutes after creation and is only applicable \
+         for purchase agreements.\n"]
+  type_ : entitlement_type option; [@ocaml.doc "The type of entitlement.\n"]
+  resource : resource option;
+      [@ocaml.doc "The resource that the entitlement is provisioned to, such as a product.\n"]
+}
+[@@ocaml.doc
+  "Represents an entitlement associated with an agreement, including the provisioning status, \
+   resource, and type.\n"]
+
+type nonrec agreement_entitlement_list = agreement_entitlement list [@@ocaml.doc ""]
+
+type nonrec get_agreement_entitlements_output = {
+  next_token : next_token option;
+      [@ocaml.doc
+        "The token used for pagination. The field is [null] if there are no more results.\n"]
+  agreement_entitlements : agreement_entitlement_list option;
+      [@ocaml.doc "A list of agreement entitlements which are part of the latest agreement.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_agreement_entitlements_input = {
+  next_token : next_token option; [@ocaml.doc "A token to specify where to start pagination.\n"]
+  max_results : max_results option;
+      [@ocaml.doc "The maximum number of agreement entitlements to return in the response.\n"]
+  agreement_id : resource_id; [@ocaml.doc "The unique identifier of the agreement.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_agreement_cancellation_request_output = {
+  updated_at : timestamp option;
+      [@ocaml.doc "The date and time when the cancellation request was last updated.\n"]
+  created_at : timestamp option;
+      [@ocaml.doc "The date and time when the cancellation request was created.\n"]
+  status_message : agreement_cancellation_request_status_message option;
+      [@ocaml.doc "A message providing additional context about the cancellation request status.\n"]
+  status : agreement_cancellation_request_status option;
+      [@ocaml.doc "The current status of the cancellation request.\n"]
+  description : agreement_cancellation_request_description option;
+      [@ocaml.doc "The detailed description of the cancellation reason, if provided.\n"]
+  reason_code : agreement_cancellation_request_reason_code option;
+      [@ocaml.doc "The reason code provided for the cancellation.\n"]
+  agreement_id : agreement_id option;
+      [@ocaml.doc
+        "The unique identifier of the agreement associated with this cancellation request. Use \
+         [DescribeAgreement] to retrieve full agreement details.\n"]
+  agreement_cancellation_request_id : agreement_cancellation_request_id option;
+      [@ocaml.doc "The unique identifier of the cancellation request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_agreement_cancellation_request_input = {
+  agreement_id : agreement_id;
+      [@ocaml.doc
+        "The unique identifier of the agreement associated with the cancellation request.\n"]
+  agreement_cancellation_request_id : agreement_cancellation_request_id;
+      [@ocaml.doc "The unique identifier of the cancellation request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec estimated_taxes = {
+  total_amount : bounded_string option;
+      [@ocaml.doc "The total amount of tax aggregated from the tax breakdown.\n"]
+  breakdown : tax_breakdown option; [@ocaml.doc "A list of tax breakdown information.\n"]
+}
+[@@ocaml.doc "Provides an aggregated view of estimated tax information.\n"]
+
+type nonrec expected_charge = {
+  estimated_taxes : estimated_taxes option;
+      [@ocaml.doc
+        "Provides an aggregated view of estimated tax information for this specific charge.\n"]
+  timing : timing option;
+      [@ocaml.doc
+        "Indicates when the charge amount will be incurred. Values include [ON_ACCEPTANCE] \
+         (charged immediately when the agreement request is accepted), [BILLING_PERIOD] (charged \
+         on each billing period), and [SCHEDULED] (charged at a predetermined future date).\n"]
+  amount_after_tax : bounded_string option;
+      [@ocaml.doc
+        "The tax-inclusive amount the acceptor has to pay. The amount is only present for fixed \
+         charges.\n"]
+  amount : bounded_string option;
+      [@ocaml.doc
+        "The tax-exclusive amount of the charge. Only available when the charge amount is known.\n"]
+  time : timestamp option;
+      [@ocaml.doc
+        "The date and time when the charge is due to be invoiced. This is available only when the \
+         charge date is known.\n"]
+  id : resource_id option; [@ocaml.doc "Unique identifier of the charge for a given agreement.\n"]
+}
+[@@ocaml.doc "Estimated charge for the request.\n"]
+
+type nonrec expected_charge_list = expected_charge list [@@ocaml.doc ""]
 
 type nonrec estimated_charges = {
   agreement_value : bounded_string option;
@@ -704,15 +1764,6 @@ type nonrec describe_agreement_output = {
          replacement offer.\n\
         \            \n\
         \             }\n\
-        \        {-   [ROLLED_BACK] (Only applicable to inactive agreement revisions) \226\128\147 \
-         The agreement revision has been rolled back because of an error. An earlier revision is \
-         now active.\n\
-        \            \n\
-        \             }\n\
-        \        {-   [SUPERCEDED] (Only applicable to inactive agreement revisions) \226\128\147 \
-         The agreement revision is no longer active and another agreement revision is now active.\n\
-        \            \n\
-        \             }\n\
         \        {-   [TERMINATED] \226\128\147 The agreement ended before the defined end date \
          because of an AWS termination (for example, a payment failure).\n\
         \            \n\
@@ -751,5 +1802,334 @@ type nonrec describe_agreement_output = {
 
 type nonrec describe_agreement_input = {
   agreement_id : resource_id; [@ocaml.doc "The unique identifier of the agreement.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec agreement_request_id = string [@@ocaml.doc ""]
+
+type nonrec charge_summary = {
+  invoicing_entity : invoicing_entity option;
+      [@ocaml.doc "The entity responsible for issuing the invoice.\n"]
+  itemized_charges : itemized_charge_list option;
+      [@ocaml.doc "An itemized list of charges for the agreement request.\n"]
+  estimated_taxes : estimated_taxes option;
+      [@ocaml.doc "Provides an aggregated view of estimated tax information for the agreement.\n"]
+  expected_charges : expected_charge_list option;
+      [@ocaml.doc "A list of expected charges for the agreement request.\n"]
+  new_agreement_value_after_tax : bounded_string option;
+      [@ocaml.doc "Expected new agreement value after estimated taxes are applied.\n"]
+  new_agreement_value : bounded_string option;
+      [@ocaml.doc "The total value of the agreement, which includes any amendments.\n"]
+  currency_code : currency_code option;
+      [@ocaml.doc "The three-letter currency code for all charges (e.g., USD).\n"]
+}
+[@@ocaml.doc
+  "The [ChargeSummary] provides a detailed breakdown of charges that are associated with an \
+   agreement request. This is applicable only when a request is created for a \
+   [PurchaseAgreement].\n\n\
+  \  Tax and invoicing fields (such as [estimatedTaxes], [amountAfterTax], \
+   [newAgreementValueAfterTax], and [invoicingEntity]) are returned on a best-effort basis and do \
+   not cause the request to fail if unavailable.\n\
+  \  \n\
+  \   A [null] tax amount can have two meanings:\n\
+  \   \n\
+  \    {ul\n\
+  \          {-  Tax estimation was unavailable at the time of the request.\n\
+  \              \n\
+  \               }\n\
+  \          {-  The charge timing is [BILLING_PERIOD], so the charge amount is not determined at \
+   request time. In this case, the tax breakdown may still include the tax [rate] and [type].\n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \   "]
+
+type nonrec create_agreement_request_output = {
+  charge_summary : charge_summary option;
+      [@ocaml.doc
+        "Provides details of the charges associated with the agreement request. This is only \
+         applicable when a request is created for [PurchaseAgreement].\n"]
+  agreement_request_id : agreement_request_id option;
+      [@ocaml.doc
+        "The unique identifier of the agreement request created. Use this identifier with \
+         [AcceptAgreementRequest] to accept the agreement.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec agreement_proposal_id = string [@@ocaml.doc ""]
+
+type nonrec create_agreement_request_input = {
+  tax_configuration : tax_configuration option;
+      [@ocaml.doc "Configuration for tax estimation in the agreement request response.\n"]
+  agreement_proposal_identifier : agreement_proposal_id option;
+      [@ocaml.doc
+        "The agreement proposal signed by the proposer. The proposal includes the requested \
+         resources and the terms that outline an agreement outcome.\n\n\
+        \   This parameter is required if the intent is not [AMEND].\n\
+        \  \n\
+        \   "]
+  source_agreement_identifier : resource_id option;
+      [@ocaml.doc
+        "The agreement's identifier that the request acts upon.\n\n\
+        \   This parameter is required for all non-[NEW] intents (i.e., [AMEND] or [REPLACE]). \
+         Don't provide this parameter if the intent is [NEW]. \n\
+        \  \n\
+        \   "]
+  requested_terms : requested_term_list;
+      [@ocaml.doc
+        "A list of terms that define what is being accepted as part of the agreement. Some terms \
+         require configuration.\n"]
+  intent : intent;
+      [@ocaml.doc
+        "The purpose and desired outcome of the agreement request. This is a required parameter \
+         that determines how the agreement request is processed.\n\n\
+        \ {ul\n\
+        \       {-   [NEW] \226\128\147 Creates a new agreement for terms in the request.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [AMEND] \226\128\147 Modifies an existing agreement with terms that are \
+         accepted in the request.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [REPLACE] \226\128\147 Creates a new agreement with accepted terms and \
+         replaces the existing agreement.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \  "]
+  client_token : client_token option;
+      [@ocaml.doc
+        "A unique, case-sensitive identifier that you provide to ensure the idempotency of the \
+         request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec cancel_agreement_payment_request_output = {
+  updated_at : timestamp option;
+      [@ocaml.doc "The date and time when the payment request was cancelled.\n"]
+  created_at : timestamp option;
+      [@ocaml.doc "The date and time when the payment request was originally created.\n"]
+  currency_code : currency_code option; [@ocaml.doc "The currency code for the charge amount.\n"]
+  charge_amount : positive_amount_upto8_decimals option;
+      [@ocaml.doc "The amount that was requested to be charged.\n"]
+  description : payment_request_description option;
+      [@ocaml.doc "The detailed description of the payment request, if provided.\n"]
+  name : payment_request_name option; [@ocaml.doc "The descriptive name of the payment request.\n"]
+  status : payment_request_status option;
+      [@ocaml.doc "The updated status of the payment request, which is [CANCELLED].\n"]
+  agreement_id : agreement_id option;
+      [@ocaml.doc "The unique identifier of the agreement associated with this payment request.\n"]
+  payment_request_id : payment_request_id option;
+      [@ocaml.doc "The unique identifier of the cancelled payment request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec cancel_agreement_payment_request_input = {
+  agreement_id : agreement_id;
+      [@ocaml.doc "The unique identifier of the agreement associated with the payment request.\n"]
+  payment_request_id : payment_request_id;
+      [@ocaml.doc "The unique identifier of the payment request to cancel.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec cancel_agreement_output = unit [@@ocaml.doc ""]
+
+type nonrec cancel_agreement_input = {
+  agreement_id : resource_id; [@ocaml.doc "The unique identifier of the agreement.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec cancel_agreement_cancellation_request_output = {
+  updated_at : timestamp option;
+      [@ocaml.doc "The date and time when the cancellation request was cancelled.\n"]
+  created_at : timestamp option;
+      [@ocaml.doc "The date and time when the cancellation request was originally created.\n"]
+  status_message : agreement_cancellation_request_status_message option;
+      [@ocaml.doc "A message providing additional context about the cancellation request status.\n"]
+  status : agreement_cancellation_request_status option;
+      [@ocaml.doc "The updated status of the cancellation request, which is [CANCELLED].\n"]
+  description : agreement_cancellation_request_description option;
+      [@ocaml.doc "The detailed description of the original cancellation reason, if provided.\n"]
+  reason_code : agreement_cancellation_request_reason_code option;
+      [@ocaml.doc "The original reason code provided when the cancellation request was created.\n"]
+  agreement_id : agreement_id option;
+      [@ocaml.doc
+        "The unique identifier of the agreement associated with this cancellation request.\n"]
+  agreement_cancellation_request_id : agreement_cancellation_request_id option;
+      [@ocaml.doc "The unique identifier of the cancelled cancellation request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec agreement_cancellation_request_cancellation_reason = string [@@ocaml.doc ""]
+
+type nonrec cancel_agreement_cancellation_request_input = {
+  cancellation_reason : agreement_cancellation_request_cancellation_reason;
+      [@ocaml.doc
+        "A required message explaining why the cancellation request is being withdrawn (1-2000 \
+         characters).\n"]
+  agreement_cancellation_request_id : agreement_cancellation_request_id;
+      [@ocaml.doc "The unique identifier of the cancellation request to cancel.\n"]
+  agreement_id : agreement_id;
+      [@ocaml.doc
+        "The unique identifier of the agreement associated with the cancellation request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec billing_adjustment_error_code =
+  | INTERNAL_FAILURE [@ocaml.doc ""]
+  | RESOURCE_NOT_FOUND_EXCEPTION [@ocaml.doc ""]
+  | VALIDATION_EXCEPTION [@ocaml.doc ""]
+  | CONFLICT_EXCEPTION [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec billing_adjustment_description = string [@@ocaml.doc ""]
+
+type nonrec batch_create_billing_adjustment_item = {
+  client_token : client_token;
+      [@ocaml.doc "The client token provided in the corresponding request entry.\n"]
+  billing_adjustment_request_id : billing_adjustment_request_id;
+      [@ocaml.doc "The unique identifier of the created billing adjustment request.\n"]
+}
+[@@ocaml.doc "A successfully created billing adjustment request item.\n"]
+
+type nonrec batch_create_billing_adjustment_item_list = batch_create_billing_adjustment_item list
+[@@ocaml.doc ""]
+
+type nonrec batch_create_billing_adjustment_error = {
+  client_token : client_token; [@ocaml.doc "The client token of the request entry that failed.\n"]
+  message : Smaws_Lib.Smithy_api.Types.string_;
+      [@ocaml.doc "A human-readable message describing the error.\n"]
+  code : billing_adjustment_error_code;
+      [@ocaml.doc "The error code indicating the reason for failure.\n"]
+}
+[@@ocaml.doc "An error for a billing adjustment request entry that failed validation.\n"]
+
+type nonrec batch_create_billing_adjustment_error_list = batch_create_billing_adjustment_error list
+[@@ocaml.doc ""]
+
+type nonrec batch_create_billing_adjustment_request_output = {
+  errors : batch_create_billing_adjustment_error_list;
+      [@ocaml.doc
+        "A list of errors for entries that failed validation, each containing the [clientToken], \
+         error [code], and [message].\n"]
+  items : batch_create_billing_adjustment_item_list;
+      [@ocaml.doc
+        "A list of successfully created billing adjustment items, each containing the \
+         [billingAdjustmentRequestId] and [clientToken].\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec batch_create_billing_adjustment_request_entry = {
+  client_token : client_token;
+      [@ocaml.doc
+        "A unique, case-sensitive identifier that you provide to ensure the idempotency of the \
+         request.\n"]
+  description : billing_adjustment_description option;
+      [@ocaml.doc "An optional detailed description of the adjustment reason.\n"]
+  adjustment_reason_code : billing_adjustment_reason_code;
+      [@ocaml.doc "The reason code for the billing adjustment.\n"]
+  currency_code : currency_code;
+      [@ocaml.doc
+        "The 3-letter ISO 4217 currency code for the adjustment amount. Must match the currency \
+         code of the offer associated with the agreement (e.g., [USD]).\n"]
+  adjustment_amount : positive_amount_upto8_decimals;
+      [@ocaml.doc
+        "The adjustment amount as a string representation of a decimal number in the currency of \
+         the invoice.\n"]
+  original_invoice_id : invoice_id;
+      [@ocaml.doc "The identifier of the original invoice to adjust.\n"]
+  agreement_id : agreement_id;
+      [@ocaml.doc "The unique identifier of the agreement associated with the invoice.\n"]
+}
+[@@ocaml.doc
+  "An individual entry in a batch billing adjustment request, specifying the invoice and \
+   adjustment details.\n"]
+
+type nonrec batch_create_billing_adjustment_request_entry_list =
+  batch_create_billing_adjustment_request_entry list
+[@@ocaml.doc ""]
+
+type nonrec batch_create_billing_adjustment_request_input = {
+  billing_adjustment_request_entries : batch_create_billing_adjustment_request_entry_list;
+      [@ocaml.doc
+        "A list of billing adjustment request entries. Each entry specifies the invoice and \
+         adjustment details.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec accept_agreement_request_output = {
+  agreement_id : resource_id option;
+      [@ocaml.doc
+        "The unique identifier of the agreement created or modified by accepting the agreement \
+         request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec accept_agreement_request_input = {
+  purchase_orders : purchase_orders option;
+      [@ocaml.doc
+        "A list of purchase orders associated with accepting a marketplace agreement request.\n"]
+  agreement_request_id : agreement_request_id;
+      [@ocaml.doc "The unique identifier of the agreement request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec accept_agreement_payment_request_output = {
+  updated_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The date and time when the payment request was accepted.\n"]
+  created_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The date and time when the payment request was originally created.\n"]
+  currency_code : currency_code option; [@ocaml.doc "The currency code for the charge amount.\n"]
+  charge_amount : positive_amount_upto8_decimals option;
+      [@ocaml.doc "The amount that was approved to be charged.\n"]
+  description : payment_request_description option;
+      [@ocaml.doc "The detailed description of the payment request, if provided.\n"]
+  name : payment_request_name option; [@ocaml.doc "The descriptive name of the payment request.\n"]
+  status : payment_request_status option;
+      [@ocaml.doc "The updated status of the payment request, which is [APPROVED].\n"]
+  agreement_id : agreement_id option;
+      [@ocaml.doc "The unique identifier of the agreement associated with this payment request.\n"]
+  payment_request_id : payment_request_id option;
+      [@ocaml.doc "The unique identifier of the accepted payment request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec accept_agreement_payment_request_input = {
+  purchase_order_reference : purchase_order_reference option;
+      [@ocaml.doc
+        "An optional purchase order reference that buyers can provide to associate the payment \
+         request with their internal purchase order system.\n"]
+  agreement_id : agreement_id;
+      [@ocaml.doc "The unique identifier of the agreement associated with the payment request.\n"]
+  payment_request_id : payment_request_id;
+      [@ocaml.doc "The unique identifier of the payment request to accept.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec accept_agreement_cancellation_request_output = {
+  updated_at : timestamp option;
+      [@ocaml.doc "The date and time when the cancellation request was accepted.\n"]
+  created_at : timestamp option;
+      [@ocaml.doc "The date and time when the cancellation request was originally created.\n"]
+  description : agreement_cancellation_request_description option;
+      [@ocaml.doc "The detailed description of the cancellation reason, if provided.\n"]
+  reason_code : agreement_cancellation_request_reason_code option;
+      [@ocaml.doc "The original reason code provided when the cancellation request was created.\n"]
+  status : agreement_cancellation_request_status option;
+      [@ocaml.doc "The updated status of the cancellation request, which is [APPROVED].\n"]
+  agreement_cancellation_request_id : agreement_cancellation_request_id option;
+      [@ocaml.doc "The unique identifier of the accepted cancellation request.\n"]
+  agreement_id : agreement_id option;
+      [@ocaml.doc
+        "The unique identifier of the agreement associated with this cancellation request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec accept_agreement_cancellation_request_input = {
+  agreement_cancellation_request_id : agreement_cancellation_request_id;
+      [@ocaml.doc "The unique identifier of the cancellation request to accept.\n"]
+  agreement_id : agreement_id;
+      [@ocaml.doc
+        "The unique identifier of the agreement associated with the cancellation request.\n"]
 }
 [@@ocaml.doc ""]

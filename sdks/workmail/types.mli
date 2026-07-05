@@ -845,10 +845,11 @@ type nonrec put_email_monitoring_configuration_request = {
       [@ocaml.doc
         "The Amazon Resource Name (ARN) of the CloudWatch Log group associated with the email \
          monitoring configuration.\n"]
-  role_arn : role_arn;
+  role_arn : role_arn option;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) of the IAM Role associated with the email monitoring \
-         configuration.\n"]
+         configuration. If absent, the IAM Role Arn of AWSServiceRoleForAmazonWorkMailEvents will \
+         be used.\n"]
   organization_id : organization_id;
       [@ocaml.doc
         "The ID of the organization for which the email monitoring configuration is set.\n"]

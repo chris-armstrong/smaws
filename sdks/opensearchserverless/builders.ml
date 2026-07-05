@@ -35,6 +35,11 @@ let make_vpc_endpoint_detail
    }
     : vpc_endpoint_detail)
 
+let make_vector_options
+    ~serverless_vector_acceleration:
+      (serverless_vector_acceleration_ : serverless_vector_acceleration_status) () =
+  ({ serverless_vector_acceleration = serverless_vector_acceleration_ } : vector_options)
+
 let make_update_vpc_endpoint_detail
     ?last_modified_date:(last_modified_date_ : Smaws_Lib.Smithy_api.Types.long option)
     ?security_group_ids:(security_group_ids_ : security_group_ids option)
@@ -140,9 +145,16 @@ let make_iam_identity_center_config_options
    }
     : iam_identity_center_config_options)
 
+let make_iam_federation_config_options
+    ?user_attribute:(user_attribute_ : iam_federation_user_attribute option)
+    ?group_attribute:(group_attribute_ : iam_federation_group_attribute option) () =
+  ({ user_attribute = user_attribute_; group_attribute = group_attribute_ }
+    : iam_federation_config_options)
+
 let make_security_config_detail
     ?last_modified_date:(last_modified_date_ : Smaws_Lib.Smithy_api.Types.long option)
     ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
+    ?iam_federation_options:(iam_federation_options_ : iam_federation_config_options option)
     ?iam_identity_center_options:
       (iam_identity_center_options_ : iam_identity_center_config_options option)
     ?saml_options:(saml_options_ : saml_config_options option)
@@ -152,6 +164,7 @@ let make_security_config_detail
   ({
      last_modified_date = last_modified_date_;
      created_date = created_date_;
+     iam_federation_options = iam_federation_options_;
      iam_identity_center_options = iam_identity_center_options_;
      saml_options = saml_options_;
      description = description_;
@@ -172,6 +185,7 @@ let make_update_iam_identity_center_config_options
     : update_iam_identity_center_config_options)
 
 let make_update_security_config_request ?client_token:(client_token_ : client_token option)
+    ?iam_federation_options:(iam_federation_options_ : iam_federation_config_options option)
     ?iam_identity_center_options_updates:
       (iam_identity_center_options_updates_ : update_iam_identity_center_config_options option)
     ?saml_options:(saml_options_ : saml_config_options option)
@@ -179,6 +193,7 @@ let make_update_security_config_request ?client_token:(client_token_ : client_to
     ~config_version:(config_version_ : policy_version) ~id:(id_ : security_config_id) () =
   ({
      client_token = client_token_;
+     iam_federation_options = iam_federation_options_;
      iam_identity_center_options_updates = iam_identity_center_options_updates_;
      saml_options = saml_options_;
      description = description_;
@@ -224,17 +239,27 @@ let make_update_lifecycle_policy_request ?client_token:(client_token_ : client_t
    }
     : update_lifecycle_policy_request)
 
+let make_update_index_response () = (() : unit)
+
+let make_update_index_request ?index_schema:(index_schema_ : index_schema option)
+    ~index_name:(index_name_ : index_name) ~id:(id_ : collection_id) () =
+  ({ index_schema = index_schema_; index_name = index_name_; id = id_ } : update_index_request)
+
 let make_update_collection_detail
+    ?deletion_protection:(deletion_protection_ : deletion_protection option)
     ?last_modified_date:(last_modified_date_ : Smaws_Lib.Smithy_api.Types.long option)
     ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
     ?arn:(arn_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?vector_options:(vector_options_ : vector_options option)
     ?description:(description_ : Smaws_Lib.Smithy_api.Types.string_ option)
     ?type_:(type__ : collection_type option) ?status:(status_ : collection_status option)
     ?name:(name_ : collection_name option) ?id:(id_ : collection_id option) () =
   ({
+     deletion_protection = deletion_protection_;
      last_modified_date = last_modified_date_;
      created_date = created_date_;
      arn = arn_;
+     vector_options = vector_options_;
      description = description_;
      type_ = type__;
      status = status_;
@@ -248,10 +273,73 @@ let make_update_collection_response
   ({ update_collection_detail = update_collection_detail_ } : update_collection_response)
 
 let make_update_collection_request ?client_token:(client_token_ : client_token option)
+    ?deletion_protection:(deletion_protection_ : deletion_protection option)
+    ?vector_options:(vector_options_ : vector_options option)
     ?description:(description_ : Smaws_Lib.Smithy_api.Types.string_ option)
     ~id:(id_ : collection_id) () =
-  ({ client_token = client_token_; description = description_; id = id_ }
+  ({
+     client_token = client_token_;
+     deletion_protection = deletion_protection_;
+     vector_options = vector_options_;
+     description = description_;
+     id = id_;
+   }
     : update_collection_request)
+
+let make_collection_group_capacity_limits
+    ?min_search_capacity_in_oc_u:
+      (min_search_capacity_in_oc_u_ : collection_group_min_search_capacity_value option)
+    ?min_indexing_capacity_in_oc_u:
+      (min_indexing_capacity_in_oc_u_ : collection_group_min_indexing_capacity_value option)
+    ?max_search_capacity_in_oc_u:
+      (max_search_capacity_in_oc_u_ : collection_group_max_search_capacity_value option)
+    ?max_indexing_capacity_in_oc_u:
+      (max_indexing_capacity_in_oc_u_ : collection_group_max_indexing_capacity_value option) () =
+  ({
+     min_search_capacity_in_oc_u = min_search_capacity_in_oc_u_;
+     min_indexing_capacity_in_oc_u = min_indexing_capacity_in_oc_u_;
+     max_search_capacity_in_oc_u = max_search_capacity_in_oc_u_;
+     max_indexing_capacity_in_oc_u = max_indexing_capacity_in_oc_u_;
+   }
+    : collection_group_capacity_limits)
+
+let make_update_collection_group_detail ?generation:(generation_ : serverless_generation option)
+    ?last_modified_date:(last_modified_date_ : Smaws_Lib.Smithy_api.Types.long option)
+    ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
+    ?capacity_limits:(capacity_limits_ : collection_group_capacity_limits option)
+    ?description:(description_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?name:(name_ : collection_group_name option)
+    ?arn:(arn_ : Smaws_Lib.Smithy_api.Types.string_ option) ?id:(id_ : collection_group_id option)
+    () =
+  ({
+     generation = generation_;
+     last_modified_date = last_modified_date_;
+     created_date = created_date_;
+     capacity_limits = capacity_limits_;
+     description = description_;
+     name = name_;
+     arn = arn_;
+     id = id_;
+   }
+    : update_collection_group_detail)
+
+let make_update_collection_group_response
+    ?update_collection_group_detail:
+      (update_collection_group_detail_ : update_collection_group_detail option) () =
+  ({ update_collection_group_detail = update_collection_group_detail_ }
+    : update_collection_group_response)
+
+let make_update_collection_group_request ?client_token:(client_token_ : client_token option)
+    ?capacity_limits:(capacity_limits_ : collection_group_capacity_limits option)
+    ?description:(description_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ~id:(id_ : collection_group_id) () =
+  ({
+     client_token = client_token_;
+     capacity_limits = capacity_limits_;
+     description = description_;
+     id = id_;
+   }
+    : update_collection_group_request)
 
 let make_capacity_limits
     ?max_search_capacity_in_oc_u:(max_search_capacity_in_oc_u_ : search_capacity_value option)
@@ -524,13 +612,79 @@ let make_batch_get_effective_lifecycle_policy_request
     ~resource_identifiers:(resource_identifiers_ : lifecycle_policy_resource_identifiers) () =
   ({ resource_identifiers = resource_identifiers_ } : batch_get_effective_lifecycle_policy_request)
 
+let make_capacity_details ?autoscaling_status:(autoscaling_status_ : autoscaling_status option)
+    ?capacity_in_ocu:(capacity_in_ocu_ : Smaws_Lib.Smithy_api.Types.float_ option) () =
+  ({ autoscaling_status = autoscaling_status_; capacity_in_ocu = capacity_in_ocu_ }
+    : capacity_details)
+
+let make_current_capacity ?indexing:(indexing_ : capacity_details option)
+    ?search:(search_ : capacity_details option) () =
+  ({ indexing = indexing_; search = search_ } : current_capacity)
+
+let make_collection_group_detail ?generation:(generation_ : serverless_generation option)
+    ?number_of_collections:(number_of_collections_ : Smaws_Lib.Smithy_api.Types.integer option)
+    ?current_capacity:(current_capacity_ : current_capacity option)
+    ?capacity_limits:(capacity_limits_ : collection_group_capacity_limits option)
+    ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
+    ?tags:(tags_ : tags option)
+    ?description:(description_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?standby_replicas:(standby_replicas_ : standby_replicas option)
+    ?name:(name_ : collection_group_name option)
+    ?arn:(arn_ : Smaws_Lib.Smithy_api.Types.string_ option) ?id:(id_ : collection_group_id option)
+    () =
+  ({
+     generation = generation_;
+     number_of_collections = number_of_collections_;
+     current_capacity = current_capacity_;
+     capacity_limits = capacity_limits_;
+     created_date = created_date_;
+     tags = tags_;
+     description = description_;
+     standby_replicas = standby_replicas_;
+     name = name_;
+     arn = arn_;
+     id = id_;
+   }
+    : collection_group_detail)
+
+let make_collection_group_error_detail
+    ?error_code:(error_code_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?error_message:(error_message_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?name:(name_ : collection_group_name option) ?id:(id_ : collection_group_id option) () =
+  ({ error_code = error_code_; error_message = error_message_; name = name_; id = id_ }
+    : collection_group_error_detail)
+
+let make_batch_get_collection_group_response
+    ?collection_group_error_details:
+      (collection_group_error_details_ : collection_group_error_details option)
+    ?collection_group_details:(collection_group_details_ : collection_group_details option) () =
+  ({
+     collection_group_error_details = collection_group_error_details_;
+     collection_group_details = collection_group_details_;
+   }
+    : batch_get_collection_group_response)
+
+let make_batch_get_collection_group_request ?names:(names_ : collection_group_names option)
+    ?ids:(ids_ : collection_group_ids option) () =
+  ({ names = names_; ids = ids_ } : batch_get_collection_group_request)
+
+let make_fips_endpoints
+    ?dashboard_endpoint:(dashboard_endpoint_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?collection_endpoint:(collection_endpoint_ : Smaws_Lib.Smithy_api.Types.string_ option) () =
+  ({ dashboard_endpoint = dashboard_endpoint_; collection_endpoint = collection_endpoint_ }
+    : fips_endpoints)
+
 let make_collection_detail
+    ?collection_group_name:(collection_group_name_ : collection_group_name option)
     ?failure_message:(failure_message_ : Smaws_Lib.Smithy_api.Types.string_ option)
     ?failure_code:(failure_code_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?fips_endpoints:(fips_endpoints_ : fips_endpoints option)
     ?dashboard_endpoint:(dashboard_endpoint_ : Smaws_Lib.Smithy_api.Types.string_ option)
     ?collection_endpoint:(collection_endpoint_ : Smaws_Lib.Smithy_api.Types.string_ option)
     ?last_modified_date:(last_modified_date_ : Smaws_Lib.Smithy_api.Types.long option)
     ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
+    ?vector_options:(vector_options_ : vector_options option)
+    ?deletion_protection:(deletion_protection_ : deletion_protection option)
     ?standby_replicas:(standby_replicas_ : standby_replicas option)
     ?kms_key_arn:(kms_key_arn_ : Smaws_Lib.Smithy_api.Types.string_ option)
     ?arn:(arn_ : Smaws_Lib.Smithy_api.Types.string_ option)
@@ -538,12 +692,16 @@ let make_collection_detail
     ?type_:(type__ : collection_type option) ?status:(status_ : collection_status option)
     ?name:(name_ : collection_name option) ?id:(id_ : collection_id option) () =
   ({
+     collection_group_name = collection_group_name_;
      failure_message = failure_message_;
      failure_code = failure_code_;
+     fips_endpoints = fips_endpoints_;
      dashboard_endpoint = dashboard_endpoint_;
      collection_endpoint = collection_endpoint_;
      last_modified_date = last_modified_date_;
      created_date = created_date_;
+     vector_options = vector_options_;
+     deletion_protection = deletion_protection_;
      standby_replicas = standby_replicas_;
      kms_key_arn = kms_key_arn_;
      arn = arn_;
@@ -649,10 +807,21 @@ let make_list_lifecycle_policies_request
   ({ max_results = max_results_; next_token = next_token_; resources = resources_; type_ = type__ }
     : list_lifecycle_policies_request)
 
-let make_collection_summary ?arn:(arn_ : Smaws_Lib.Smithy_api.Types.string_ option)
+let make_collection_summary
+    ?collection_group_name:(collection_group_name_ : collection_group_name option)
+    ?kms_key_arn:(kms_key_arn_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?arn:(arn_ : Smaws_Lib.Smithy_api.Types.string_ option)
     ?status:(status_ : collection_status option) ?name:(name_ : collection_name option)
     ?id:(id_ : collection_id option) () =
-  ({ arn = arn_; status = status_; name = name_; id = id_ } : collection_summary)
+  ({
+     collection_group_name = collection_group_name_;
+     kms_key_arn = kms_key_arn_;
+     arn = arn_;
+     status = status_;
+     name = name_;
+     id = id_;
+   }
+    : collection_summary)
 
 let make_list_collections_response
     ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
@@ -660,9 +829,11 @@ let make_list_collections_response
   ({ next_token = next_token_; collection_summaries = collection_summaries_ }
     : list_collections_response)
 
-let make_collection_filters ?status:(status_ : collection_status option)
-    ?name:(name_ : collection_name option) () =
-  ({ status = status_; name = name_ } : collection_filters)
+let make_collection_filters
+    ?collection_group_name:(collection_group_name_ : collection_group_name option)
+    ?status:(status_ : collection_status option) ?name:(name_ : collection_name option) () =
+  ({ collection_group_name = collection_group_name_; status = status_; name = name_ }
+    : collection_filters)
 
 let make_list_collections_request
     ?max_results:(max_results_ : Smaws_Lib.Smithy_api.Types.integer option)
@@ -674,6 +845,36 @@ let make_list_collections_request
      collection_filters = collection_filters_;
    }
     : list_collections_request)
+
+let make_collection_group_summary ?generation:(generation_ : serverless_generation option)
+    ?capacity_limits:(capacity_limits_ : collection_group_capacity_limits option)
+    ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
+    ?number_of_collections:(number_of_collections_ : Smaws_Lib.Smithy_api.Types.integer option)
+    ?name:(name_ : collection_group_name option)
+    ?arn:(arn_ : Smaws_Lib.Smithy_api.Types.string_ option) ?id:(id_ : collection_group_id option)
+    () =
+  ({
+     generation = generation_;
+     capacity_limits = capacity_limits_;
+     created_date = created_date_;
+     number_of_collections = number_of_collections_;
+     name = name_;
+     arn = arn_;
+     id = id_;
+   }
+    : collection_group_summary)
+
+let make_list_collection_groups_response
+    ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?collection_group_summaries:(collection_group_summaries_ : collection_group_summaries option) ()
+    =
+  ({ next_token = next_token_; collection_group_summaries = collection_group_summaries_ }
+    : list_collection_groups_response)
+
+let make_list_collection_groups_request
+    ?max_results:(max_results_ : Smaws_Lib.Smithy_api.Types.integer option)
+    ?next_token:(next_token_ : Smaws_Lib.Smithy_api.Types.string_ option) () =
+  ({ max_results = max_results_; next_token = next_token_ } : list_collection_groups_request)
 
 let make_access_policy_summary
     ?last_modified_date:(last_modified_date_ : Smaws_Lib.Smithy_api.Types.long option)
@@ -719,6 +920,12 @@ let make_get_security_config_response
 let make_get_security_config_request ~id:(id_ : security_config_id) () =
   ({ id = id_ } : get_security_config_request)
 
+let make_get_index_response ?index_schema:(index_schema_ : index_schema option) () =
+  ({ index_schema = index_schema_ } : get_index_response)
+
+let make_get_index_request ~index_name:(index_name_ : index_name) ~id:(id_ : collection_id) () =
+  ({ index_name = index_name_; id = id_ } : get_index_request)
+
 let make_get_access_policy_response
     ?access_policy_detail:(access_policy_detail_ : access_policy_detail option) () =
   ({ access_policy_detail = access_policy_detail_ } : get_access_policy_response)
@@ -726,6 +933,10 @@ let make_get_access_policy_response
 let make_get_access_policy_request ~name:(name_ : policy_name) ~type_:(type__ : access_policy_type)
     () =
   ({ name = name_; type_ = type__ } : get_access_policy_request)
+
+let make_encryption_config ?kms_key_arn:(kms_key_arn_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?a_ws_owned_key:(a_ws_owned_key_ : Smaws_Lib.Smithy_api.Types.boolean_ option) () =
+  ({ kms_key_arn = kms_key_arn_; a_ws_owned_key = a_ws_owned_key_ } : encryption_config)
 
 let make_delete_vpc_endpoint_detail ?status:(status_ : vpc_endpoint_status option)
     ?name:(name_ : vpc_endpoint_name option) ?id:(id_ : vpc_endpoint_id option) () =
@@ -758,9 +969,17 @@ let make_delete_lifecycle_policy_request ?client_token:(client_token_ : client_t
     ~name:(name_ : policy_name) ~type_:(type__ : lifecycle_policy_type) () =
   ({ client_token = client_token_; name = name_; type_ = type__ } : delete_lifecycle_policy_request)
 
-let make_delete_collection_detail ?status:(status_ : collection_status option)
-    ?name:(name_ : collection_name option) ?id:(id_ : collection_id option) () =
-  ({ status = status_; name = name_; id = id_ } : delete_collection_detail)
+let make_delete_index_response () = (() : unit)
+
+let make_delete_index_request ~index_name:(index_name_ : index_name) ~id:(id_ : collection_id) () =
+  ({ index_name = index_name_; id = id_ } : delete_index_request)
+
+let make_delete_collection_detail
+    ?deletion_protection:(deletion_protection_ : deletion_protection option)
+    ?status:(status_ : collection_status option) ?name:(name_ : collection_name option)
+    ?id:(id_ : collection_id option) () =
+  ({ deletion_protection = deletion_protection_; status = status_; name = name_; id = id_ }
+    : delete_collection_detail)
 
 let make_delete_collection_response
     ?delete_collection_detail:(delete_collection_detail_ : delete_collection_detail option) () =
@@ -769,6 +988,12 @@ let make_delete_collection_response
 let make_delete_collection_request ?client_token:(client_token_ : client_token option)
     ~id:(id_ : collection_id) () =
   ({ client_token = client_token_; id = id_ } : delete_collection_request)
+
+let make_delete_collection_group_response () = (() : unit)
+
+let make_delete_collection_group_request ?client_token:(client_token_ : client_token option)
+    ~id:(id_ : collection_group_id) () =
+  ({ client_token = client_token_; id = id_ } : delete_collection_group_request)
 
 let make_delete_access_policy_response () = (() : unit)
 
@@ -814,6 +1039,7 @@ let make_create_iam_identity_center_config_options
     : create_iam_identity_center_config_options)
 
 let make_create_security_config_request ?client_token:(client_token_ : client_token option)
+    ?iam_federation_options:(iam_federation_options_ : iam_federation_config_options option)
     ?iam_identity_center_options:
       (iam_identity_center_options_ : create_iam_identity_center_config_options option)
     ?saml_options:(saml_options_ : saml_config_options option)
@@ -821,6 +1047,7 @@ let make_create_security_config_request ?client_token:(client_token_ : client_to
     ~type_:(type__ : security_config_type) () =
   ({
      client_token = client_token_;
+     iam_federation_options = iam_federation_options_;
      iam_identity_center_options = iam_identity_center_options_;
      saml_options = saml_options_;
      description = description_;
@@ -829,9 +1056,18 @@ let make_create_security_config_request ?client_token:(client_token_ : client_to
    }
     : create_security_config_request)
 
+let make_create_index_response () = (() : unit)
+
+let make_create_index_request ?index_schema:(index_schema_ : index_schema option)
+    ~index_name:(index_name_ : index_name) ~id:(id_ : collection_id) () =
+  ({ index_schema = index_schema_; index_name = index_name_; id = id_ } : create_index_request)
+
 let make_create_collection_detail
+    ?collection_group_name:(collection_group_name_ : collection_group_name option)
     ?last_modified_date:(last_modified_date_ : Smaws_Lib.Smithy_api.Types.long option)
     ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
+    ?vector_options:(vector_options_ : vector_options option)
+    ?deletion_protection:(deletion_protection_ : deletion_protection option)
     ?standby_replicas:(standby_replicas_ : standby_replicas option)
     ?kms_key_arn:(kms_key_arn_ : Smaws_Lib.Smithy_api.Types.string_ option)
     ?arn:(arn_ : Smaws_Lib.Smithy_api.Types.string_ option)
@@ -839,8 +1075,11 @@ let make_create_collection_detail
     ?type_:(type__ : collection_type option) ?status:(status_ : collection_status option)
     ?name:(name_ : collection_name option) ?id:(id_ : collection_id option) () =
   ({
+     collection_group_name = collection_group_name_;
      last_modified_date = last_modified_date_;
      created_date = created_date_;
+     vector_options = vector_options_;
+     deletion_protection = deletion_protection_;
      standby_replicas = standby_replicas_;
      kms_key_arn = kms_key_arn_;
      arn = arn_;
@@ -857,11 +1096,19 @@ let make_create_collection_response
   ({ create_collection_detail = create_collection_detail_ } : create_collection_response)
 
 let make_create_collection_request ?client_token:(client_token_ : client_token option)
+    ?deletion_protection:(deletion_protection_ : deletion_protection option)
+    ?encryption_config:(encryption_config_ : encryption_config option)
+    ?collection_group_name:(collection_group_name_ : collection_group_name option)
+    ?vector_options:(vector_options_ : vector_options option)
     ?standby_replicas:(standby_replicas_ : standby_replicas option) ?tags:(tags_ : tags option)
     ?description:(description_ : Smaws_Lib.Smithy_api.Types.string_ option)
     ?type_:(type__ : collection_type option) ~name:(name_ : collection_name) () =
   ({
      client_token = client_token_;
+     deletion_protection = deletion_protection_;
+     encryption_config = encryption_config_;
+     collection_group_name = collection_group_name_;
+     vector_options = vector_options_;
      standby_replicas = standby_replicas_;
      tags = tags_;
      description = description_;
@@ -869,6 +1116,52 @@ let make_create_collection_request ?client_token:(client_token_ : client_token o
      name = name_;
    }
     : create_collection_request)
+
+let make_create_collection_group_detail ?generation:(generation_ : serverless_generation option)
+    ?capacity_limits:(capacity_limits_ : collection_group_capacity_limits option)
+    ?created_date:(created_date_ : Smaws_Lib.Smithy_api.Types.long option)
+    ?tags:(tags_ : tags option)
+    ?description:(description_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?standby_replicas:(standby_replicas_ : standby_replicas option)
+    ?name:(name_ : collection_group_name option)
+    ?arn:(arn_ : Smaws_Lib.Smithy_api.Types.string_ option) ?id:(id_ : collection_group_id option)
+    () =
+  ({
+     generation = generation_;
+     capacity_limits = capacity_limits_;
+     created_date = created_date_;
+     tags = tags_;
+     description = description_;
+     standby_replicas = standby_replicas_;
+     name = name_;
+     arn = arn_;
+     id = id_;
+   }
+    : create_collection_group_detail)
+
+let make_create_collection_group_response
+    ?create_collection_group_detail:
+      (create_collection_group_detail_ : create_collection_group_detail option) () =
+  ({ create_collection_group_detail = create_collection_group_detail_ }
+    : create_collection_group_response)
+
+let make_create_collection_group_request ?client_token:(client_token_ : client_token option)
+    ?generation:(generation_ : serverless_generation option)
+    ?capacity_limits:(capacity_limits_ : collection_group_capacity_limits option)
+    ?tags:(tags_ : tags option)
+    ?description:(description_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ~standby_replicas:(standby_replicas_ : standby_replicas) ~name:(name_ : collection_group_name)
+    () =
+  ({
+     client_token = client_token_;
+     generation = generation_;
+     capacity_limits = capacity_limits_;
+     tags = tags_;
+     description = description_;
+     standby_replicas = standby_replicas_;
+     name = name_;
+   }
+    : create_collection_group_request)
 
 let make_create_access_policy_response
     ?access_policy_detail:(access_policy_detail_ : access_policy_detail option) () =

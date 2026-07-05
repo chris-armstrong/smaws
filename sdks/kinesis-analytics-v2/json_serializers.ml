@@ -255,6 +255,7 @@ let application_name_to_yojson = string_to_yojson
 
 let runtime_environment_to_yojson (x : runtime_environment) =
   match x with
+  | FLINK_2_2 -> `String "FLINK-2_2"
   | FLINK_1_20 -> `String "FLINK-1_20"
   | FLINK_1_19 -> `String "FLINK-1_19"
   | FLINK_1_18 -> `String "FLINK-1_18"
@@ -654,9 +655,27 @@ let application_system_rollback_configuration_description_to_yojson
     (x : application_system_rollback_configuration_description) =
   assoc_to_yojson [ ("RollbackEnabled", Some (boolean_object_to_yojson x.rollback_enabled)) ]
 
+let key_id_to_yojson = string_to_yojson
+
+let key_type_to_yojson (x : key_type) =
+  match x with
+  | CUSTOMER_MANAGED_KEY -> `String "CUSTOMER_MANAGED_KEY"
+  | AWS_OWNED_KEY -> `String "AWS_OWNED_KEY"
+
+let application_encryption_configuration_description_to_yojson
+    (x : application_encryption_configuration_description) =
+  assoc_to_yojson
+    [
+      ("KeyType", Some (key_type_to_yojson x.key_type));
+      ("KeyId", option_to_yojson key_id_to_yojson x.key_id);
+    ]
+
 let application_configuration_description_to_yojson (x : application_configuration_description) =
   assoc_to_yojson
     [
+      ( "ApplicationEncryptionConfigurationDescription",
+        option_to_yojson application_encryption_configuration_description_to_yojson
+          x.application_encryption_configuration_description );
       ( "ZeppelinApplicationConfigurationDescription",
         option_to_yojson zeppelin_application_configuration_description_to_yojson
           x.zeppelin_application_configuration_description );
@@ -952,9 +971,20 @@ let application_system_rollback_configuration_update_to_yojson
   assoc_to_yojson
     [ ("RollbackEnabledUpdate", Some (boolean_object_to_yojson x.rollback_enabled_update)) ]
 
+let application_encryption_configuration_update_to_yojson
+    (x : application_encryption_configuration_update) =
+  assoc_to_yojson
+    [
+      ("KeyTypeUpdate", Some (key_type_to_yojson x.key_type_update));
+      ("KeyIdUpdate", option_to_yojson key_id_to_yojson x.key_id_update);
+    ]
+
 let application_configuration_update_to_yojson (x : application_configuration_update) =
   assoc_to_yojson
     [
+      ( "ApplicationEncryptionConfigurationUpdate",
+        option_to_yojson application_encryption_configuration_update_to_yojson
+          x.application_encryption_configuration_update );
       ( "ZeppelinApplicationConfigurationUpdate",
         option_to_yojson zeppelin_application_configuration_update_to_yojson
           x.zeppelin_application_configuration_update );
@@ -1263,6 +1293,9 @@ let snapshot_status_to_yojson (x : snapshot_status) =
 let snapshot_details_to_yojson (x : snapshot_details) =
   assoc_to_yojson
     [
+      ( "ApplicationEncryptionConfigurationDescription",
+        option_to_yojson application_encryption_configuration_description_to_yojson
+          x.application_encryption_configuration_description );
       ("RuntimeEnvironment", option_to_yojson runtime_environment_to_yojson x.runtime_environment);
       ( "SnapshotCreationTimestamp",
         option_to_yojson timestamp_to_yojson x.snapshot_creation_timestamp );
@@ -1754,9 +1787,19 @@ let application_system_rollback_configuration_to_yojson
     (x : application_system_rollback_configuration) =
   assoc_to_yojson [ ("RollbackEnabled", Some (boolean_object_to_yojson x.rollback_enabled)) ]
 
+let application_encryption_configuration_to_yojson (x : application_encryption_configuration) =
+  assoc_to_yojson
+    [
+      ("KeyType", Some (key_type_to_yojson x.key_type));
+      ("KeyId", option_to_yojson key_id_to_yojson x.key_id);
+    ]
+
 let application_configuration_to_yojson (x : application_configuration) =
   assoc_to_yojson
     [
+      ( "ApplicationEncryptionConfiguration",
+        option_to_yojson application_encryption_configuration_to_yojson
+          x.application_encryption_configuration );
       ( "ZeppelinApplicationConfiguration",
         option_to_yojson zeppelin_application_configuration_to_yojson
           x.zeppelin_application_configuration );

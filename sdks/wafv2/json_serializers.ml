@@ -578,9 +578,16 @@ let challenge_action_to_yojson (x : challenge_action) =
         option_to_yojson custom_request_handling_to_yojson x.custom_request_handling );
     ]
 
+let price_multiplier_to_yojson = string_to_yojson
+
+let monetize_action_to_yojson (x : monetize_action) =
+  assoc_to_yojson
+    [ ("PriceMultiplier", option_to_yojson price_multiplier_to_yojson x.price_multiplier) ]
+
 let rule_action_to_yojson (x : rule_action) =
   assoc_to_yojson
     [
+      ("Monetize", option_to_yojson monetize_action_to_yojson x.monetize);
       ("Challenge", option_to_yojson challenge_action_to_yojson x.challenge);
       ("Captcha", option_to_yojson captcha_action_to_yojson x.captcha);
       ("Count", option_to_yojson count_action_to_yojson x.count);
@@ -1184,6 +1191,7 @@ let request_body_associated_resource_type_config_to_yojson
 
 let associated_resource_type_to_yojson (x : associated_resource_type) =
   match x with
+  | AGENTCORE_GATEWAY -> `String "AGENTCORE_GATEWAY"
   | VERIFIED_ACCESS_INSTANCE -> `String "VERIFIED_ACCESS_INSTANCE"
   | APP_RUNNER_SERVICE -> `String "APP_RUNNER_SERVICE"
   | COGNITO_USER_POOL -> `String "COGNITO_USER_POOL"
@@ -1220,9 +1228,53 @@ let application_attributes_to_yojson tree = list_to_yojson application_attribute
 let application_config_to_yojson (x : application_config) =
   assoc_to_yojson [ ("Attributes", option_to_yojson application_attributes_to_yojson x.attributes) ]
 
+let blockchain_chain_to_yojson (x : blockchain_chain) =
+  match x with
+  | SOLANA_DEVNET -> `String "SOLANA_DEVNET"
+  | BASE_SEPOLIA -> `String "BASE_SEPOLIA"
+  | SOLANA -> `String "SOLANA"
+  | BASE -> `String "BASE"
+
+let wallet_address_to_yojson = string_to_yojson
+let price_amount_to_yojson = string_to_yojson
+let crypto_currency_to_yojson (x : crypto_currency) = match x with USDC -> `String "USDC"
+
+let price_to_yojson (x : price) =
+  assoc_to_yojson
+    [
+      ("Currency", Some (crypto_currency_to_yojson x.currency));
+      ("Amount", Some (price_amount_to_yojson x.amount));
+    ]
+
+let prices_to_yojson tree = list_to_yojson price_to_yojson tree
+
+let payment_network_to_yojson (x : payment_network) =
+  assoc_to_yojson
+    [
+      ("Prices", Some (prices_to_yojson x.prices));
+      ("WalletAddress", Some (wallet_address_to_yojson x.wallet_address));
+      ("Chain", Some (blockchain_chain_to_yojson x.chain));
+    ]
+
+let payment_networks_to_yojson tree = list_to_yojson payment_network_to_yojson tree
+
+let crypto_config_to_yojson (x : crypto_config) =
+  assoc_to_yojson [ ("PaymentNetworks", Some (payment_networks_to_yojson x.payment_networks)) ]
+
+let currency_mode_to_yojson (x : currency_mode) =
+  match x with TEST -> `String "TEST" | REAL -> `String "REAL"
+
+let monetization_config_to_yojson (x : monetization_config) =
+  assoc_to_yojson
+    [
+      ("CurrencyMode", option_to_yojson currency_mode_to_yojson x.currency_mode);
+      ("CryptoConfig", option_to_yojson crypto_config_to_yojson x.crypto_config);
+    ]
+
 let web_ac_l_to_yojson (x : web_ac_l) =
   assoc_to_yojson
     [
+      ("MonetizationConfig", option_to_yojson monetization_config_to_yojson x.monetization_config);
       ("ApplicationConfig", option_to_yojson application_config_to_yojson x.application_config);
       ( "OnSourceDDoSProtectionConfig",
         option_to_yojson on_source_d_do_s_protection_config_to_yojson
@@ -1306,6 +1358,10 @@ let waf_invalid_permission_policy_exception_to_yojson (x : waf_invalid_permissio
 
 let parameter_exception_field_to_yojson (x : parameter_exception_field) =
   match x with
+  | PAYMENT_NETWORK -> `String "PAYMENT_NETWORK"
+  | PRICE_AMOUNT -> `String "PRICE_AMOUNT"
+  | WALLET_ADDRESS -> `String "WALLET_ADDRESS"
+  | MONETIZATION_CONFIG -> `String "MONETIZATION_CONFIG"
   | LOW_REPUTATION_MODE -> `String "LOW_REPUTATION_MODE"
   | DATA_PROTECTION_CONFIG -> `String "DATA_PROTECTION_CONFIG"
   | ACP_RULE_SET_RESPONSE_INSPECTION -> `String "ACP_RULE_SET_RESPONSE_INSPECTION"
@@ -1397,6 +1453,27 @@ let waf_invalid_operation_exception_to_yojson (x : waf_invalid_operation_excepti
 let waf_internal_error_exception_to_yojson (x : waf_internal_error_exception) =
   assoc_to_yojson [ ("Message", option_to_yojson error_message_to_yojson x.message) ]
 
+let pricing_plan_feature_name_to_yojson = string_to_yojson
+let required_pricing_plan_name_to_yojson = string_to_yojson
+
+let disallowed_feature_to_yojson (x : disallowed_feature) =
+  assoc_to_yojson
+    [
+      ( "RequiredPricingPlan",
+        option_to_yojson required_pricing_plan_name_to_yojson x.required_pricing_plan );
+      ("Feature", option_to_yojson pricing_plan_feature_name_to_yojson x.feature);
+    ]
+
+let disallowed_features_to_yojson tree = list_to_yojson disallowed_feature_to_yojson tree
+
+let waf_feature_not_included_in_pricing_plan_exception_to_yojson
+    (x : waf_feature_not_included_in_pricing_plan_exception) =
+  assoc_to_yojson
+    [
+      ("DisallowedFeatures", option_to_yojson disallowed_features_to_yojson x.disallowed_features);
+      ("Message", option_to_yojson error_message_to_yojson x.message);
+    ]
+
 let waf_expired_managed_rule_group_version_exception_to_yojson
     (x : waf_expired_managed_rule_group_version_exception) =
   assoc_to_yojson [ ("Message", option_to_yojson error_message_to_yojson x.message) ]
@@ -1422,6 +1499,9 @@ let version_to_publish_to_yojson (x : version_to_publish) =
 let versions_to_publish_to_yojson tree =
   map_to_yojson version_key_string_to_yojson version_to_publish_to_yojson tree
 
+let verified_status_to_yojson = bool_to_yojson
+let uri_path_prefix_string_to_yojson = string_to_yojson
+
 let update_web_acl_response_to_yojson (x : update_web_acl_response) =
   assoc_to_yojson [ ("NextLockToken", option_to_yojson lock_token_to_yojson x.next_lock_token) ]
 
@@ -1431,6 +1511,8 @@ let scope_to_yojson (x : scope) =
 let update_web_acl_request_to_yojson (x : update_web_acl_request) =
   assoc_to_yojson
     [
+      ("MonetizationConfig", option_to_yojson monetization_config_to_yojson x.monetization_config);
+      ("ApplicationConfig", option_to_yojson application_config_to_yojson x.application_config);
       ( "OnSourceDDoSProtectionConfig",
         option_to_yojson on_source_d_do_s_protection_config_to_yojson
           x.on_source_d_do_s_protection_config );
@@ -1458,6 +1540,7 @@ let update_rule_group_response_to_yojson (x : update_rule_group_response) =
 let update_rule_group_request_to_yojson (x : update_rule_group_request) =
   assoc_to_yojson
     [
+      ("MonetizationConfig", option_to_yojson monetization_config_to_yojson x.monetization_config);
       ( "CustomResponseBodies",
         option_to_yojson custom_response_bodies_to_yojson x.custom_response_bodies );
       ("LockToken", Some (lock_token_to_yojson x.lock_token));
@@ -1543,6 +1626,11 @@ let time_window_to_yojson (x : time_window) =
       ("StartTime", Some (timestamp_to_yojson x.start_time));
     ]
 
+let time_series_statistic_type_to_yojson (x : time_series_statistic_type) =
+  match x with
+  | PAYMENT_TRAFFIC -> `String "PAYMENT_TRAFFIC"
+  | DATE_HISTOGRAM -> `String "DATE_HISTOGRAM"
+
 let tag_value_to_yojson = string_to_yojson
 let tag_resource_response_to_yojson = unit_to_yojson
 
@@ -1566,7 +1654,76 @@ let tag_info_for_resource_to_yojson (x : tag_info_for_resource) =
       ("ResourceARN", option_to_yojson resource_arn_to_yojson x.resource_ar_n);
     ]
 
+let filter_string_to_yojson = string_to_yojson
+let percentage_value_to_yojson = double_to_yojson
+let monetization_amount_value_to_yojson = string_to_yojson
+let request_count_to_yojson = long_to_yojson
+
+let source_statistics_to_yojson (x : source_statistics) =
+  assoc_to_yojson
+    [
+      ("GroupByValue", option_to_yojson filter_string_to_yojson x.group_by_value);
+      ("Verified", option_to_yojson verified_status_to_yojson x.verified);
+      ("Organization", option_to_yojson filter_string_to_yojson x.organization);
+      ("Intent", option_to_yojson filter_string_to_yojson x.intent);
+      ("SourceCategory", option_to_yojson filter_string_to_yojson x.source_category);
+      ("RequestCount", Some (request_count_to_yojson x.request_count));
+      ("Amount", Some (monetization_amount_value_to_yojson x.amount));
+      ("Percentage", Some (percentage_value_to_yojson x.percentage));
+      ("SourceName", Some (filter_string_to_yojson x.source_name));
+    ]
+
+let source_statistics_list_to_yojson tree = list_to_yojson source_statistics_to_yojson tree
+
+let sort_order_to_yojson (x : sort_order) =
+  match x with DESC -> `String "DESC" | ASC -> `String "ASC"
+
 let solve_timestamp_to_yojson = long_to_yojson
+
+let settlement_status_to_yojson (x : settlement_status) =
+  match x with
+  | DUPLICATE -> `String "DUPLICATE"
+  | SKIPPED_ORIGIN_ERROR -> `String "SKIPPED_ORIGIN_ERROR"
+  | SERVICE_ERROR -> `String "SERVICE_ERROR"
+  | FAILED -> `String "FAILED"
+  | PENDING -> `String "PENDING"
+  | SETTLED -> `String "SETTLED"
+
+let settlement_sort_by_to_yojson (x : settlement_sort_by) =
+  match x with
+  | STATUS -> `String "STATUS"
+  | NAME -> `String "NAME"
+  | AMOUNT -> `String "AMOUNT"
+  | TIMESTAMP -> `String "TIMESTAMP"
+
+let settlement_filter_string_to_yojson = string_to_yojson
+let currency_to_yojson (x : currency) = match x with USDC -> `String "USDC"
+let settlement_id_string_to_yojson = string_to_yojson
+
+let settlement_record_to_yojson (x : settlement_record) =
+  assoc_to_yojson
+    [
+      ("RequestTimestamp", option_to_yojson timestamp_to_yojson x.request_timestamp);
+      ("WebAclArn", option_to_yojson resource_arn_to_yojson x.web_acl_arn);
+      ("ContentPath", option_to_yojson filter_string_to_yojson x.content_path);
+      ("Verified", option_to_yojson verified_status_to_yojson x.verified);
+      ("Intent", option_to_yojson filter_string_to_yojson x.intent);
+      ("SourceCategory", option_to_yojson filter_string_to_yojson x.source_category);
+      ("Organization", option_to_yojson filter_string_to_yojson x.organization);
+      ("SourceName", option_to_yojson filter_string_to_yojson x.source_name);
+      ("RequestId", option_to_yojson settlement_filter_string_to_yojson x.request_id);
+      ("TransactionId", option_to_yojson settlement_id_string_to_yojson x.transaction_id);
+      ("Network", option_to_yojson settlement_filter_string_to_yojson x.network);
+      ("Currency", option_to_yojson currency_to_yojson x.currency);
+      ("Amount", Some (monetization_amount_value_to_yojson x.amount));
+      ("Status", Some (settlement_status_to_yojson x.status));
+      ("WalletAddress", option_to_yojson settlement_filter_string_to_yojson x.wallet_address);
+      ("PayerAddress", option_to_yojson settlement_filter_string_to_yojson x.payer_address);
+      ("Timestamp", Some (timestamp_to_yojson x.timestamp));
+    ]
+
+let settlement_record_list_to_yojson tree = list_to_yojson settlement_record_to_yojson tree
+let settlement_record_limit_to_yojson = int_to_yojson
 let ip_string_to_yojson = string_to_yojson
 let country_to_yojson = string_to_yojson
 let http_method_to_yojson = string_to_yojson
@@ -1670,6 +1827,7 @@ let label_summaries_to_yojson tree = list_to_yojson label_summary_to_yojson tree
 let rule_group_to_yojson (x : rule_group) =
   assoc_to_yojson
     [
+      ("MonetizationConfig", option_to_yojson monetization_config_to_yojson x.monetization_config);
       ("ConsumedLabels", option_to_yojson label_summaries_to_yojson x.consumed_labels);
       ("AvailableLabels", option_to_yojson label_summaries_to_yojson x.available_labels);
       ( "CustomResponseBodies",
@@ -1684,8 +1842,34 @@ let rule_group_to_yojson (x : rule_group) =
       ("Name", Some (entity_name_to_yojson x.name));
     ]
 
+let path_string_to_yojson = string_to_yojson
+
+let revenue_path_statistics_to_yojson (x : revenue_path_statistics) =
+  assoc_to_yojson
+    [
+      ("RequestCount", Some (request_count_to_yojson x.request_count));
+      ("Amount", Some (monetization_amount_value_to_yojson x.amount));
+      ("Percentage", Some (percentage_value_to_yojson x.percentage));
+      ("Path", Some (path_string_to_yojson x.path));
+    ]
+
+let revenue_path_statistics_list_to_yojson tree =
+  list_to_yojson revenue_path_statistics_to_yojson tree
+
+let revenue_breakdown_to_yojson (x : revenue_breakdown) =
+  assoc_to_yojson
+    [
+      ("TotalMonetizeServed", option_to_yojson request_count_to_yojson x.total_monetize_served);
+      ("TotalSettled", option_to_yojson request_count_to_yojson x.total_settled);
+      ("Currency", option_to_yojson currency_to_yojson x.currency);
+      ("UnverifiedAmount", option_to_yojson monetization_amount_value_to_yojson x.unverified_amount);
+      ("VerifiedAmount", option_to_yojson monetization_amount_value_to_yojson x.verified_amount);
+      ("TotalAmount", option_to_yojson monetization_amount_value_to_yojson x.total_amount);
+    ]
+
 let resource_type_to_yojson (x : resource_type) =
   match x with
+  | AGENTCORE_GATEWAY -> `String "AGENTCORE_GATEWAY"
   | AMPLIFY -> `String "AMPLIFY"
   | VERIFIED_ACCESS_INSTANCE -> `String "VERIFIED_ACCESS_INSTANCE"
   | APP_RUNNER_SERVICE -> `String "APP_RUNNER_SERVICE"
@@ -1743,6 +1927,17 @@ let rate_based_statement_managed_keys_ip_set_to_yojson
       ("IPAddressVersion", option_to_yojson ip_address_version_to_yojson x.ip_address_version);
     ]
 
+let ranking_statistic_type_to_yojson (x : ranking_statistic_type) =
+  match x with
+  | TOP_PATHS_BY_REVENUE -> `String "TOP_PATHS_BY_REVENUE"
+  | TOP_SOURCES_BY_REVENUE -> `String "TOP_SOURCES_BY_REVENUE"
+
+let ranking_sort_by_to_yojson (x : ranking_sort_by) =
+  match x with
+  | NAME -> `String "NAME"
+  | PERCENTAGE -> `String "PERCENTAGE"
+  | REVENUE -> `String "REVENUE"
+
 let put_permission_policy_response_to_yojson = unit_to_yojson
 let policy_string_to_yojson = string_to_yojson
 
@@ -1778,6 +1973,7 @@ let filter_requirement_to_yojson (x : filter_requirement) =
 let action_value_to_yojson (x : action_value) =
   match x with
   | EXCLUDED_AS_COUNT -> `String "EXCLUDED_AS_COUNT"
+  | MONETIZE -> `String "MONETIZE"
   | CHALLENGE -> `String "CHALLENGE"
   | CAPTCHA -> `String "CAPTCHA"
   | COUNT -> `String "COUNT"
@@ -1819,7 +2015,10 @@ let logging_filter_to_yojson (x : logging_filter) =
 let log_type_to_yojson (x : log_type) = match x with WAF_LOGS -> `String "WAF_LOGS"
 
 let log_scope_to_yojson (x : log_scope) =
-  match x with SECURITY_LAKE -> `String "SECURITY_LAKE" | CUSTOMER -> `String "CUSTOMER"
+  match x with
+  | CLOUDWATCH_TELEMETRY_RULE_MANAGED -> `String "CLOUDWATCH_TELEMETRY_RULE_MANAGED"
+  | SECURITY_LAKE -> `String "SECURITY_LAKE"
+  | CUSTOMER -> `String "CUSTOMER"
 
 let logging_configuration_to_yojson (x : logging_configuration) =
   assoc_to_yojson
@@ -1867,9 +2066,55 @@ let population_size_to_yojson = long_to_yojson
 let platform_to_yojson (x : platform) =
   match x with ANDROID -> `String "ANDROID" | IOS -> `String "IOS"
 
+let filter_source_to_yojson (x : filter_source) =
+  assoc_to_yojson
+    [
+      ("BotName", option_to_yojson filter_string_to_yojson x.bot_name);
+      ("BotOrganization", option_to_yojson filter_string_to_yojson x.bot_organization);
+      ("BotCategory", option_to_yojson filter_string_to_yojson x.bot_category);
+    ]
+
+let bot_statistics_to_yojson (x : bot_statistics) =
+  assoc_to_yojson
+    [
+      ("Percentage", Some (percentage_value_to_yojson x.percentage));
+      ("RequestCount", Some (request_count_to_yojson x.request_count));
+      ("BotName", Some (filter_string_to_yojson x.bot_name));
+    ]
+
+let bot_statistics_list_to_yojson tree = list_to_yojson bot_statistics_to_yojson tree
+
+let path_statistics_to_yojson (x : path_statistics) =
+  assoc_to_yojson
+    [
+      ("TopBots", option_to_yojson bot_statistics_list_to_yojson x.top_bots);
+      ("Percentage", Some (percentage_value_to_yojson x.percentage));
+      ("RequestCount", Some (request_count_to_yojson x.request_count));
+      ("Path", Some (path_string_to_yojson x.path));
+      ("Source", option_to_yojson filter_source_to_yojson x.source);
+    ]
+
+let path_statistics_list_to_yojson tree = list_to_yojson path_statistics_to_yojson tree
+let path_statistics_limit_to_yojson = int_to_yojson
 let pagination_limit_to_yojson = int_to_yojson
 let output_url_to_yojson = string_to_yojson
+let number_of_top_traffic_bots_per_path_to_yojson = int_to_yojson
 let next_marker_to_yojson = string_to_yojson
+let monetization_filter_value_to_yojson = string_to_yojson
+
+let monetization_filter_value_list_to_yojson tree =
+  list_to_yojson monetization_filter_value_to_yojson tree
+
+let monetization_filter_name_to_yojson = string_to_yojson
+
+let monetization_filter_to_yojson (x : monetization_filter) =
+  assoc_to_yojson
+    [
+      ("Values", Some (monetization_filter_value_list_to_yojson x.values));
+      ("Name", Some (monetization_filter_name_to_yojson x.name));
+    ]
+
+let monetization_filter_list_to_yojson tree = list_to_yojson monetization_filter_to_yojson tree
 
 let mobile_sdk_release_to_yojson (x : mobile_sdk_release) =
   assoc_to_yojson
@@ -1879,6 +2124,8 @@ let mobile_sdk_release_to_yojson (x : mobile_sdk_release) =
       ("Timestamp", option_to_yojson timestamp_to_yojson x.timestamp);
       ("ReleaseVersion", option_to_yojson version_key_string_to_yojson x.release_version);
     ]
+
+let max_data_points_to_yojson = int_to_yojson
 
 let managed_rule_set_summary_to_yojson (x : managed_rule_set_summary) =
   assoc_to_yojson
@@ -1977,6 +2224,26 @@ let list_tags_for_resource_request_to_yojson (x : list_tags_for_resource_request
       ("ResourceARN", Some (resource_arn_to_yojson x.resource_ar_n));
       ("Limit", option_to_yojson pagination_limit_to_yojson x.limit);
       ("NextMarker", option_to_yojson next_marker_to_yojson x.next_marker);
+    ]
+
+let list_settlement_records_response_to_yojson (x : list_settlement_records_response) =
+  assoc_to_yojson
+    [
+      ("NextMarker", option_to_yojson next_marker_to_yojson x.next_marker);
+      ("Settlements", option_to_yojson settlement_record_list_to_yojson x.settlements);
+    ]
+
+let list_settlement_records_request_to_yojson (x : list_settlement_records_request) =
+  assoc_to_yojson
+    [
+      ("NextMarker", option_to_yojson next_marker_to_yojson x.next_marker);
+      ("Limit", option_to_yojson settlement_record_limit_to_yojson x.limit);
+      ("SortOrder", option_to_yojson sort_order_to_yojson x.sort_order);
+      ("SortBy", option_to_yojson settlement_sort_by_to_yojson x.sort_by);
+      ("Filters", option_to_yojson monetization_filter_list_to_yojson x.filters);
+      ("Currency", Some (currency_to_yojson x.currency));
+      ("Scope", Some (scope_to_yojson x.scope));
+      ("TimeWindow", Some (time_window_to_yojson x.time_window));
     ]
 
 let list_rule_groups_response_to_yojson (x : list_rule_groups_response) =
@@ -2166,6 +2433,13 @@ let list_api_keys_request_to_yojson (x : list_api_keys_request) =
       ("Scope", Some (scope_to_yojson x.scope));
     ]
 
+let interval_type_to_yojson (x : interval_type) =
+  match x with
+  | DAILY -> `String "DAILY"
+  | HOURLY -> `String "HOURLY"
+  | FIVE_MINUTELY -> `String "FIVE_MINUTELY"
+  | MINUTELY -> `String "MINUTELY"
+
 let ip_set_to_yojson (x : ip_set) =
   assoc_to_yojson
     [
@@ -2176,6 +2450,14 @@ let ip_set_to_yojson (x : ip_set) =
       ("Id", Some (entity_id_to_yojson x.id));
       ("Name", Some (entity_name_to_yojson x.name));
     ]
+
+let group_by_type_to_yojson (x : group_by_type) =
+  match x with
+  | WEBACL -> `String "WEBACL"
+  | ORGANIZATION -> `String "ORGANIZATION"
+  | INTENT -> `String "INTENT"
+  | CATEGORY -> `String "CATEGORY"
+  | NAME -> `String "NAME"
 
 let get_web_acl_response_to_yojson (x : get_web_acl_response) =
   assoc_to_yojson
@@ -2200,6 +2482,34 @@ let get_web_acl_for_resource_response_to_yojson (x : get_web_acl_for_resource_re
 
 let get_web_acl_for_resource_request_to_yojson (x : get_web_acl_for_resource_request) =
   assoc_to_yojson [ ("ResourceArn", Some (resource_arn_to_yojson x.resource_arn)) ]
+
+let get_top_path_statistics_by_traffic_response_to_yojson
+    (x : get_top_path_statistics_by_traffic_response) =
+  assoc_to_yojson
+    [
+      ("TopCategories", option_to_yojson path_statistics_list_to_yojson x.top_categories);
+      ("NextMarker", option_to_yojson next_marker_to_yojson x.next_marker);
+      ("TotalRequestCount", Some (request_count_to_yojson x.total_request_count));
+      ("PathStatistics", Some (path_statistics_list_to_yojson x.path_statistics));
+    ]
+
+let get_top_path_statistics_by_traffic_request_to_yojson
+    (x : get_top_path_statistics_by_traffic_request) =
+  assoc_to_yojson
+    [
+      ("NextMarker", option_to_yojson next_marker_to_yojson x.next_marker);
+      ( "NumberOfTopTrafficBotsPerPath",
+        Some (number_of_top_traffic_bots_per_path_to_yojson x.number_of_top_traffic_bots_per_path)
+      );
+      ("Limit", Some (path_statistics_limit_to_yojson x.limit));
+      ("BotName", option_to_yojson filter_string_to_yojson x.bot_name);
+      ("BotOrganization", option_to_yojson filter_string_to_yojson x.bot_organization);
+      ("BotCategory", option_to_yojson filter_string_to_yojson x.bot_category);
+      ("TimeWindow", Some (time_window_to_yojson x.time_window));
+      ("UriPathPrefix", option_to_yojson uri_path_prefix_string_to_yojson x.uri_path_prefix);
+      ("Scope", Some (scope_to_yojson x.scope));
+      ("WebAclArn", Some (resource_arn_to_yojson x.web_acl_arn));
+    ]
 
 let get_sampled_requests_response_to_yojson (x : get_sampled_requests_response) =
   assoc_to_yojson
@@ -2233,6 +2543,81 @@ let get_rule_group_request_to_yojson (x : get_rule_group_request) =
       ("Id", option_to_yojson entity_id_to_yojson x.id);
       ("Scope", option_to_yojson scope_to_yojson x.scope);
       ("Name", option_to_yojson entity_name_to_yojson x.name);
+    ]
+
+let data_point_entry_to_yojson (x : data_point_entry) =
+  assoc_to_yojson
+    [
+      ("GroupByValue", option_to_yojson filter_string_to_yojson x.group_by_value);
+      ("Intent", option_to_yojson filter_string_to_yojson x.intent);
+      ("Category", option_to_yojson filter_string_to_yojson x.category);
+      ("TotalAmount", option_to_yojson monetization_amount_value_to_yojson x.total_amount);
+      ("SettledCount", option_to_yojson request_count_to_yojson x.settled_count);
+      ("MonetizeServedCount", option_to_yojson request_count_to_yojson x.monetize_served_count);
+      ("Date", option_to_yojson timestamp_to_yojson x.date);
+    ]
+
+let data_points_list_to_yojson tree = list_to_yojson data_point_entry_to_yojson tree
+
+let get_revenue_statistics_time_series_response_to_yojson
+    (x : get_revenue_statistics_time_series_response) =
+  assoc_to_yojson
+    [
+      ("NextMarker", option_to_yojson next_marker_to_yojson x.next_marker);
+      ("DataPoints", option_to_yojson data_points_list_to_yojson x.data_points);
+    ]
+
+let get_revenue_statistics_time_series_request_to_yojson
+    (x : get_revenue_statistics_time_series_request) =
+  assoc_to_yojson
+    [
+      ("NextMarker", option_to_yojson next_marker_to_yojson x.next_marker);
+      ("Limit", option_to_yojson max_data_points_to_yojson x.limit);
+      ("Filters", option_to_yojson monetization_filter_list_to_yojson x.filters);
+      ("GroupBy", option_to_yojson group_by_type_to_yojson x.group_by);
+      ("Currency", Some (currency_to_yojson x.currency));
+      ("Interval", Some (interval_type_to_yojson x.interval));
+      ("Scope", Some (scope_to_yojson x.scope));
+      ("TimeWindow", Some (time_window_to_yojson x.time_window));
+      ("StatisticType", Some (time_series_statistic_type_to_yojson x.statistic_type));
+    ]
+
+let get_revenue_statistics_summary_response_to_yojson (x : get_revenue_statistics_summary_response)
+    =
+  assoc_to_yojson
+    [ ("RevenueBreakdown", option_to_yojson revenue_breakdown_to_yojson x.revenue_breakdown) ]
+
+let get_revenue_statistics_summary_request_to_yojson (x : get_revenue_statistics_summary_request) =
+  assoc_to_yojson
+    [
+      ("Filters", option_to_yojson monetization_filter_list_to_yojson x.filters);
+      ("Currency", Some (currency_to_yojson x.currency));
+      ("Scope", Some (scope_to_yojson x.scope));
+      ("TimeWindow", Some (time_window_to_yojson x.time_window));
+    ]
+
+let get_revenue_statistics_response_to_yojson (x : get_revenue_statistics_response) =
+  assoc_to_yojson
+    [
+      ("NextMarker", option_to_yojson next_marker_to_yojson x.next_marker);
+      ( "RevenuePathStatistics",
+        option_to_yojson revenue_path_statistics_list_to_yojson x.revenue_path_statistics );
+      ("SourceStatistics", option_to_yojson source_statistics_list_to_yojson x.source_statistics);
+    ]
+
+let get_revenue_statistics_request_to_yojson (x : get_revenue_statistics_request) =
+  assoc_to_yojson
+    [
+      ("SortOrder", option_to_yojson sort_order_to_yojson x.sort_order);
+      ("SortBy", option_to_yojson ranking_sort_by_to_yojson x.sort_by);
+      ("Limit", option_to_yojson path_statistics_limit_to_yojson x.limit);
+      ("NextMarker", option_to_yojson next_marker_to_yojson x.next_marker);
+      ("Filters", option_to_yojson monetization_filter_list_to_yojson x.filters);
+      ("GroupBy", option_to_yojson group_by_type_to_yojson x.group_by);
+      ("Currency", Some (currency_to_yojson x.currency));
+      ("Scope", Some (scope_to_yojson x.scope));
+      ("TimeWindow", Some (time_window_to_yojson x.time_window));
+      ("StatisticType", Some (ranking_statistic_type_to_yojson x.statistic_type));
     ]
 
 let get_regex_pattern_set_response_to_yojson (x : get_regex_pattern_set_response) =
@@ -2492,6 +2877,7 @@ let create_web_acl_response_to_yojson (x : create_web_acl_response) =
 let create_web_acl_request_to_yojson (x : create_web_acl_request) =
   assoc_to_yojson
     [
+      ("MonetizationConfig", option_to_yojson monetization_config_to_yojson x.monetization_config);
       ("ApplicationConfig", option_to_yojson application_config_to_yojson x.application_config);
       ( "OnSourceDDoSProtectionConfig",
         option_to_yojson on_source_d_do_s_protection_config_to_yojson
@@ -2519,6 +2905,7 @@ let create_rule_group_response_to_yojson (x : create_rule_group_response) =
 let create_rule_group_request_to_yojson (x : create_rule_group_request) =
   assoc_to_yojson
     [
+      ("MonetizationConfig", option_to_yojson monetization_config_to_yojson x.monetization_config);
       ( "CustomResponseBodies",
         option_to_yojson custom_response_bodies_to_yojson x.custom_response_bodies );
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);

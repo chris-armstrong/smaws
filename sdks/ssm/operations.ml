@@ -278,6 +278,7 @@ module CreateDocument = struct
     | `InvalidDocumentContent _ -> "com.amazonaws.ssm#InvalidDocumentContent"
     | `InvalidDocumentSchemaVersion _ -> "com.amazonaws.ssm#InvalidDocumentSchemaVersion"
     | `MaxDocumentSizeExceeded _ -> "com.amazonaws.ssm#MaxDocumentSizeExceeded"
+    | `NoLongerSupportedException _ -> "com.amazonaws.ssm#NoLongerSupportedException"
     | `TooManyUpdates _ -> "com.amazonaws.ssm#TooManyUpdates"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
@@ -297,6 +298,9 @@ module CreateDocument = struct
       | _, "MaxDocumentSizeExceeded" ->
           `MaxDocumentSizeExceeded
             (Json_deserializers.max_document_size_exceeded_of_yojson tree path)
+      | _, "NoLongerSupportedException" ->
+          `NoLongerSupportedException
+            (Json_deserializers.no_longer_supported_exception_of_yojson tree path)
       | _, "TooManyUpdates" ->
           `TooManyUpdates (Json_deserializers.too_many_updates_of_yojson tree path)
       | _type -> handler tree path _type
@@ -3983,6 +3987,7 @@ module StartChangeRequestExecution = struct
     | `InternalServerError _ -> "com.amazonaws.ssm#InternalServerError"
     | `InvalidAutomationExecutionParametersException _ ->
         "com.amazonaws.ssm#InvalidAutomationExecutionParametersException"
+    | `NoLongerSupportedException _ -> "com.amazonaws.ssm#NoLongerSupportedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -4009,6 +4014,9 @@ module StartChangeRequestExecution = struct
           `InvalidAutomationExecutionParametersException
             (Json_deserializers.invalid_automation_execution_parameters_exception_of_yojson tree
                path)
+      | _, "NoLongerSupportedException" ->
+          `NoLongerSupportedException
+            (Json_deserializers.no_longer_supported_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(

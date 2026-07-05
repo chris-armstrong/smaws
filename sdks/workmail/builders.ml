@@ -357,8 +357,9 @@ let make_put_identity_provider_configuration_request
 
 let make_put_email_monitoring_configuration_response () = (() : unit)
 
-let make_put_email_monitoring_configuration_request ~log_group_arn:(log_group_arn_ : log_group_arn)
-    ~role_arn:(role_arn_ : role_arn) ~organization_id:(organization_id_ : organization_id) () =
+let make_put_email_monitoring_configuration_request ?role_arn:(role_arn_ : role_arn option)
+    ~log_group_arn:(log_group_arn_ : log_group_arn)
+    ~organization_id:(organization_id_ : organization_id) () =
   ({ log_group_arn = log_group_arn_; role_arn = role_arn_; organization_id = organization_id_ }
     : put_email_monitoring_configuration_request)
 

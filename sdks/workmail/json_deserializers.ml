@@ -760,7 +760,7 @@ let put_email_monitoring_configuration_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      log_group_arn = value_for_key log_group_arn_of_yojson "LogGroupArn" _list path;
-     role_arn = value_for_key role_arn_of_yojson "RoleArn" _list path;
+     role_arn = option_of_yojson (value_for_key role_arn_of_yojson "RoleArn") _list path;
      organization_id = value_for_key organization_id_of_yojson "OrganizationId" _list path;
    }
     : put_email_monitoring_configuration_request)

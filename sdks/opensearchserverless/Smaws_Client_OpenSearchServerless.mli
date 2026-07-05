@@ -37,6 +37,9 @@ val make_vpc_endpoint_detail :
   unit ->
   vpc_endpoint_detail
 
+val make_vector_options :
+  serverless_vector_acceleration:serverless_vector_acceleration_status -> unit -> vector_options
+
 val make_update_vpc_endpoint_detail :
   ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
   ?security_group_ids:security_group_ids ->
@@ -103,9 +106,16 @@ val make_iam_identity_center_config_options :
   unit ->
   iam_identity_center_config_options
 
+val make_iam_federation_config_options :
+  ?user_attribute:iam_federation_user_attribute ->
+  ?group_attribute:iam_federation_group_attribute ->
+  unit ->
+  iam_federation_config_options
+
 val make_security_config_detail :
   ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
   ?created_date:Smaws_Lib.Smithy_api.Types.long ->
+  ?iam_federation_options:iam_federation_config_options ->
   ?iam_identity_center_options:iam_identity_center_config_options ->
   ?saml_options:saml_config_options ->
   ?description:config_description ->
@@ -126,6 +136,7 @@ val make_update_iam_identity_center_config_options :
 
 val make_update_security_config_request :
   ?client_token:client_token ->
+  ?iam_federation_options:iam_federation_config_options ->
   ?iam_identity_center_options_updates:update_iam_identity_center_config_options ->
   ?saml_options:saml_config_options ->
   ?description:config_description ->
@@ -158,10 +169,21 @@ val make_update_lifecycle_policy_request :
   unit ->
   update_lifecycle_policy_request
 
+val make_update_index_response : unit -> unit
+
+val make_update_index_request :
+  ?index_schema:index_schema ->
+  index_name:index_name ->
+  id:collection_id ->
+  unit ->
+  update_index_request
+
 val make_update_collection_detail :
+  ?deletion_protection:deletion_protection ->
   ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
   ?created_date:Smaws_Lib.Smithy_api.Types.long ->
   ?arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?vector_options:vector_options ->
   ?description:Smaws_Lib.Smithy_api.Types.string_ ->
   ?type_:collection_type ->
   ?status:collection_status ->
@@ -175,10 +197,45 @@ val make_update_collection_response :
 
 val make_update_collection_request :
   ?client_token:client_token ->
+  ?deletion_protection:deletion_protection ->
+  ?vector_options:vector_options ->
   ?description:Smaws_Lib.Smithy_api.Types.string_ ->
   id:collection_id ->
   unit ->
   update_collection_request
+
+val make_collection_group_capacity_limits :
+  ?min_search_capacity_in_oc_u:collection_group_min_search_capacity_value ->
+  ?min_indexing_capacity_in_oc_u:collection_group_min_indexing_capacity_value ->
+  ?max_search_capacity_in_oc_u:collection_group_max_search_capacity_value ->
+  ?max_indexing_capacity_in_oc_u:collection_group_max_indexing_capacity_value ->
+  unit ->
+  collection_group_capacity_limits
+
+val make_update_collection_group_detail :
+  ?generation:serverless_generation ->
+  ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
+  ?created_date:Smaws_Lib.Smithy_api.Types.long ->
+  ?capacity_limits:collection_group_capacity_limits ->
+  ?description:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?name:collection_group_name ->
+  ?arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?id:collection_group_id ->
+  unit ->
+  update_collection_group_detail
+
+val make_update_collection_group_response :
+  ?update_collection_group_detail:update_collection_group_detail ->
+  unit ->
+  update_collection_group_response
+
+val make_update_collection_group_request :
+  ?client_token:client_token ->
+  ?capacity_limits:collection_group_capacity_limits ->
+  ?description:Smaws_Lib.Smithy_api.Types.string_ ->
+  id:collection_group_id ->
+  unit ->
+  update_collection_group_request
 
 val make_capacity_limits :
   ?max_search_capacity_in_oc_u:search_capacity_value ->
@@ -370,13 +427,67 @@ val make_batch_get_effective_lifecycle_policy_request :
   unit ->
   batch_get_effective_lifecycle_policy_request
 
+val make_capacity_details :
+  ?autoscaling_status:autoscaling_status ->
+  ?capacity_in_ocu:Smaws_Lib.Smithy_api.Types.float_ ->
+  unit ->
+  capacity_details
+
+val make_current_capacity :
+  ?indexing:capacity_details -> ?search:capacity_details -> unit -> current_capacity
+
+val make_collection_group_detail :
+  ?generation:serverless_generation ->
+  ?number_of_collections:Smaws_Lib.Smithy_api.Types.integer ->
+  ?current_capacity:current_capacity ->
+  ?capacity_limits:collection_group_capacity_limits ->
+  ?created_date:Smaws_Lib.Smithy_api.Types.long ->
+  ?tags:tags ->
+  ?description:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?standby_replicas:standby_replicas ->
+  ?name:collection_group_name ->
+  ?arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?id:collection_group_id ->
+  unit ->
+  collection_group_detail
+
+val make_collection_group_error_detail :
+  ?error_code:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?error_message:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?name:collection_group_name ->
+  ?id:collection_group_id ->
+  unit ->
+  collection_group_error_detail
+
+val make_batch_get_collection_group_response :
+  ?collection_group_error_details:collection_group_error_details ->
+  ?collection_group_details:collection_group_details ->
+  unit ->
+  batch_get_collection_group_response
+
+val make_batch_get_collection_group_request :
+  ?names:collection_group_names ->
+  ?ids:collection_group_ids ->
+  unit ->
+  batch_get_collection_group_request
+
+val make_fips_endpoints :
+  ?dashboard_endpoint:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?collection_endpoint:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  fips_endpoints
+
 val make_collection_detail :
+  ?collection_group_name:collection_group_name ->
   ?failure_message:Smaws_Lib.Smithy_api.Types.string_ ->
   ?failure_code:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?fips_endpoints:fips_endpoints ->
   ?dashboard_endpoint:Smaws_Lib.Smithy_api.Types.string_ ->
   ?collection_endpoint:Smaws_Lib.Smithy_api.Types.string_ ->
   ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
   ?created_date:Smaws_Lib.Smithy_api.Types.long ->
+  ?vector_options:vector_options ->
+  ?deletion_protection:deletion_protection ->
   ?standby_replicas:standby_replicas ->
   ?kms_key_arn:Smaws_Lib.Smithy_api.Types.string_ ->
   ?arn:Smaws_Lib.Smithy_api.Types.string_ ->
@@ -470,6 +581,8 @@ val make_list_lifecycle_policies_request :
   list_lifecycle_policies_request
 
 val make_collection_summary :
+  ?collection_group_name:collection_group_name ->
+  ?kms_key_arn:Smaws_Lib.Smithy_api.Types.string_ ->
   ?arn:Smaws_Lib.Smithy_api.Types.string_ ->
   ?status:collection_status ->
   ?name:collection_name ->
@@ -484,7 +597,11 @@ val make_list_collections_response :
   list_collections_response
 
 val make_collection_filters :
-  ?status:collection_status -> ?name:collection_name -> unit -> collection_filters
+  ?collection_group_name:collection_group_name ->
+  ?status:collection_status ->
+  ?name:collection_name ->
+  unit ->
+  collection_filters
 
 val make_list_collections_request :
   ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
@@ -492,6 +609,29 @@ val make_list_collections_request :
   ?collection_filters:collection_filters ->
   unit ->
   list_collections_request
+
+val make_collection_group_summary :
+  ?generation:serverless_generation ->
+  ?capacity_limits:collection_group_capacity_limits ->
+  ?created_date:Smaws_Lib.Smithy_api.Types.long ->
+  ?number_of_collections:Smaws_Lib.Smithy_api.Types.integer ->
+  ?name:collection_group_name ->
+  ?arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?id:collection_group_id ->
+  unit ->
+  collection_group_summary
+
+val make_list_collection_groups_response :
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?collection_group_summaries:collection_group_summaries ->
+  unit ->
+  list_collection_groups_response
+
+val make_list_collection_groups_request :
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  list_collection_groups_request
 
 val make_access_policy_summary :
   ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
@@ -527,12 +667,20 @@ val make_get_security_config_response :
   ?security_config_detail:security_config_detail -> unit -> get_security_config_response
 
 val make_get_security_config_request : id:security_config_id -> unit -> get_security_config_request
+val make_get_index_response : ?index_schema:index_schema -> unit -> get_index_response
+val make_get_index_request : index_name:index_name -> id:collection_id -> unit -> get_index_request
 
 val make_get_access_policy_response :
   ?access_policy_detail:access_policy_detail -> unit -> get_access_policy_response
 
 val make_get_access_policy_request :
   name:policy_name -> type_:access_policy_type -> unit -> get_access_policy_request
+
+val make_encryption_config :
+  ?kms_key_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?a_ws_owned_key:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  unit ->
+  encryption_config
 
 val make_delete_vpc_endpoint_detail :
   ?status:vpc_endpoint_status ->
@@ -570,7 +718,13 @@ val make_delete_lifecycle_policy_request :
   unit ->
   delete_lifecycle_policy_request
 
+val make_delete_index_response : unit -> unit
+
+val make_delete_index_request :
+  index_name:index_name -> id:collection_id -> unit -> delete_index_request
+
 val make_delete_collection_detail :
+  ?deletion_protection:deletion_protection ->
   ?status:collection_status ->
   ?name:collection_name ->
   ?id:collection_id ->
@@ -582,6 +736,11 @@ val make_delete_collection_response :
 
 val make_delete_collection_request :
   ?client_token:client_token -> id:collection_id -> unit -> delete_collection_request
+
+val make_delete_collection_group_response : unit -> unit
+
+val make_delete_collection_group_request :
+  ?client_token:client_token -> id:collection_group_id -> unit -> delete_collection_group_request
 
 val make_delete_access_policy_response : unit -> unit
 
@@ -623,6 +782,7 @@ val make_create_iam_identity_center_config_options :
 
 val make_create_security_config_request :
   ?client_token:client_token ->
+  ?iam_federation_options:iam_federation_config_options ->
   ?iam_identity_center_options:create_iam_identity_center_config_options ->
   ?saml_options:saml_config_options ->
   ?description:config_description ->
@@ -631,9 +791,21 @@ val make_create_security_config_request :
   unit ->
   create_security_config_request
 
+val make_create_index_response : unit -> unit
+
+val make_create_index_request :
+  ?index_schema:index_schema ->
+  index_name:index_name ->
+  id:collection_id ->
+  unit ->
+  create_index_request
+
 val make_create_collection_detail :
+  ?collection_group_name:collection_group_name ->
   ?last_modified_date:Smaws_Lib.Smithy_api.Types.long ->
   ?created_date:Smaws_Lib.Smithy_api.Types.long ->
+  ?vector_options:vector_options ->
+  ?deletion_protection:deletion_protection ->
   ?standby_replicas:standby_replicas ->
   ?kms_key_arn:Smaws_Lib.Smithy_api.Types.string_ ->
   ?arn:Smaws_Lib.Smithy_api.Types.string_ ->
@@ -650,6 +822,10 @@ val make_create_collection_response :
 
 val make_create_collection_request :
   ?client_token:client_token ->
+  ?deletion_protection:deletion_protection ->
+  ?encryption_config:encryption_config ->
+  ?collection_group_name:collection_group_name ->
+  ?vector_options:vector_options ->
   ?standby_replicas:standby_replicas ->
   ?tags:tags ->
   ?description:Smaws_Lib.Smithy_api.Types.string_ ->
@@ -657,6 +833,35 @@ val make_create_collection_request :
   name:collection_name ->
   unit ->
   create_collection_request
+
+val make_create_collection_group_detail :
+  ?generation:serverless_generation ->
+  ?capacity_limits:collection_group_capacity_limits ->
+  ?created_date:Smaws_Lib.Smithy_api.Types.long ->
+  ?tags:tags ->
+  ?description:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?standby_replicas:standby_replicas ->
+  ?name:collection_group_name ->
+  ?arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?id:collection_group_id ->
+  unit ->
+  create_collection_group_detail
+
+val make_create_collection_group_response :
+  ?create_collection_group_detail:create_collection_group_detail ->
+  unit ->
+  create_collection_group_response
+
+val make_create_collection_group_request :
+  ?client_token:client_token ->
+  ?generation:serverless_generation ->
+  ?capacity_limits:collection_group_capacity_limits ->
+  ?tags:tags ->
+  ?description:Smaws_Lib.Smithy_api.Types.string_ ->
+  standby_replicas:standby_replicas ->
+  name:collection_group_name ->
+  unit ->
+  create_collection_group_request
 
 val make_create_access_policy_response :
   ?access_policy_detail:access_policy_detail -> unit -> create_access_policy_response
@@ -725,6 +930,62 @@ end
    {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html}Creating \
    and managing Amazon OpenSearch Serverless collections}.\n"]
 
+module CreateCollectionGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_collection_group_request ->
+    ( create_collection_group_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Creates a collection group within OpenSearch Serverless. Collection groups let you manage \
+   OpenSearch Compute Units (OCUs) at a group level, with multiple collections sharing the group's \
+   capacity limits.\n\n\
+  \ For more information, see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-collection-groups.html}Managing \
+   collection groups}.\n\
+  \ "]
+
+module CreateIndex : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_index_request ->
+    ( create_index_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Creates an index within an OpenSearch Serverless collection. Unlike other OpenSearch indexes, \
+   indexes created by this API are automatically configured to conduct automatic semantic \
+   enrichment ingestion and search. For more information, see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment}About \
+   automatic semantic enrichment} in the {i OpenSearch User Guide}.\n"]
+
 module CreateSecurityConfig : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -748,7 +1009,7 @@ end
 [@@ocaml.doc
   "Specifies a security configuration for OpenSearch Serverless. For more information, see \
    {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html}SAML \
-   authentication for Amazon OpenSearch Serverless}. \n"]
+   authentication for Amazon OpenSearch Serverless}.\n"]
 
 module CreateVpcEndpoint : sig
   val error_to_string :
@@ -824,6 +1085,57 @@ end
   "Deletes an OpenSearch Serverless collection. For more information, see \
    {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html}Creating \
    and managing Amazon OpenSearch Serverless collections}.\n"]
+
+module DeleteCollectionGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_collection_group_request ->
+    ( delete_collection_group_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Deletes a collection group. You can only delete empty collection groups that contain no \
+   collections. For more information, see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html}Creating \
+   and managing Amazon OpenSearch Serverless collections}.\n"]
+
+module DeleteIndex : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_index_request ->
+    ( delete_index_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Deletes an index from an OpenSearch Serverless collection. Be aware that the index might be \
+   configured to conduct automatic semantic enrichment ingestion and search. For more information, \
+   see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment}About \
+   automatic semantic enrichment}.\n"]
 
 module DeleteLifecyclePolicy : sig
   val error_to_string :
@@ -945,6 +1257,31 @@ end
    {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-data-access.html}Data \
    access control for Amazon OpenSearch Serverless}.\n"]
 
+module GetIndex : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_index_request ->
+    ( get_index_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves information about an index in an OpenSearch Serverless collection, including its \
+   schema definition. The index might be configured to conduct automatic semantic enrichment \
+   ingestion and search. For more information, see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment}About \
+   automatic semantic enrichment}.\n"]
+
 module GetSecurityConfig : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1012,6 +1349,27 @@ module ListAccessPolicies : sig
     result
 end
 [@@ocaml.doc "Returns information about a list of OpenSearch Serverless access policies.\n"]
+
+module ListCollectionGroups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_collection_groups_request ->
+    ( list_collection_groups_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Returns a list of collection groups. For more information, see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html}Creating \
+   and managing Amazon OpenSearch Serverless collections}.\n"]
 
 module ListCollections : sig
   val error_to_string :
@@ -1138,8 +1496,30 @@ module BatchGetCollection : sig
     result
 end
 [@@ocaml.doc
-  "Returns attributes for one or more collections, including the collection endpoint and the \
-   OpenSearch Dashboards endpoint. For more information, see \
+  "Returns attributes for one or more collections, including the collection endpoint, the \
+   OpenSearch Dashboards endpoint, and FIPS-compliant endpoints. For more information, see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html}Creating \
+   and managing Amazon OpenSearch Serverless collections}.\n"]
+
+module BatchGetCollectionGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_collection_group_request ->
+    ( batch_get_collection_group_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Returns attributes for one or more collection groups, including capacity limits and the number \
+   of collections in each group. For more information, see \
    {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html}Creating \
    and managing Amazon OpenSearch Serverless collections}.\n"]
 
@@ -1405,6 +1785,7 @@ module UpdateAccountSettings : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `InternalServerException of internal_server_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
     | `ValidationException of validation_exception ] ->
     string
 
@@ -1414,6 +1795,7 @@ module UpdateAccountSettings : sig
     ( update_account_settings_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
 end
@@ -1442,6 +1824,53 @@ module UpdateCollection : sig
     result
 end
 [@@ocaml.doc "Updates an OpenSearch Serverless collection.\n"]
+
+module UpdateCollectionGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_collection_group_request ->
+    ( update_collection_group_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc "Updates the description and capacity limits of a collection group.\n"]
+
+module UpdateIndex : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_index_request ->
+    ( update_index_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Updates an existing index in an OpenSearch Serverless collection. This operation allows you to \
+   modify the index schema, including adding new fields or changing field mappings. You can also \
+   enable automatic semantic enrichment ingestion and search. For more information, see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment}About \
+   automatic semantic enrichment}.\n"]
 
 module UpdateLifecyclePolicy : sig
   val error_to_string :

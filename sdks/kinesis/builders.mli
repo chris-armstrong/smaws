@@ -1,8 +1,31 @@
 open Types
 
+val make_warm_throughput_object :
+  ?current_mi_bps:natural_integer_object ->
+  ?target_mi_bps:natural_integer_object ->
+  unit ->
+  warm_throughput_object
+
+val make_update_stream_warm_throughput_output :
+  ?warm_throughput:warm_throughput_object ->
+  ?stream_name:stream_name ->
+  ?stream_ar_n:stream_ar_n ->
+  unit ->
+  update_stream_warm_throughput_output
+
+val make_update_stream_warm_throughput_input :
+  ?stream_id:stream_id ->
+  ?stream_name:stream_name ->
+  ?stream_ar_n:stream_ar_n ->
+  warm_throughput_mi_bps:natural_integer_object ->
+  unit ->
+  update_stream_warm_throughput_input
+
 val make_stream_mode_details : stream_mode:stream_mode -> unit -> stream_mode_details
 
 val make_update_stream_mode_input :
+  ?warm_throughput_mi_bps:natural_integer_object ->
+  ?stream_id:stream_id ->
   stream_mode_details:stream_mode_details ->
   stream_ar_n:stream_ar_n ->
   unit ->
@@ -17,6 +40,7 @@ val make_update_shard_count_output :
   update_shard_count_output
 
 val make_update_shard_count_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   scaling_type:scaling_type ->
@@ -24,11 +48,45 @@ val make_update_shard_count_input :
   unit ->
   update_shard_count_input
 
+val make_update_max_record_size_input :
+  ?stream_id:stream_id ->
+  ?stream_ar_n:stream_ar_n ->
+  max_record_size_in_ki_b:max_record_size_in_ki_b ->
+  unit ->
+  update_max_record_size_input
+
+val make_minimum_throughput_billing_commitment_output :
+  ?earliest_allowed_end_at:timestamp ->
+  ?ended_at:timestamp ->
+  ?started_at:timestamp ->
+  status:minimum_throughput_billing_commitment_output_status ->
+  unit ->
+  minimum_throughput_billing_commitment_output
+
+val make_update_account_settings_output :
+  ?minimum_throughput_billing_commitment:minimum_throughput_billing_commitment_output ->
+  unit ->
+  update_account_settings_output
+
+val make_minimum_throughput_billing_commitment_input :
+  status:minimum_throughput_billing_commitment_input_status ->
+  unit ->
+  minimum_throughput_billing_commitment_input
+
+val make_update_account_settings_input :
+  minimum_throughput_billing_commitment:minimum_throughput_billing_commitment_input ->
+  unit ->
+  update_account_settings_input
+
 val make_untag_resource_input :
-  resource_ar_n:resource_ar_n -> tag_keys:tag_key_list -> unit -> untag_resource_input
+  ?stream_id:stream_id ->
+  resource_ar_n:resource_ar_n ->
+  tag_keys:tag_key_list ->
+  unit ->
+  untag_resource_input
 
 val make_tag_resource_input :
-  resource_ar_n:resource_ar_n -> tags:tag_map -> unit -> tag_resource_input
+  ?stream_id:stream_id -> resource_ar_n:resource_ar_n -> tags:tag_map -> unit -> tag_resource_input
 
 val make_tag : ?value:tag_value -> key:tag_key -> unit -> tag
 
@@ -70,6 +128,7 @@ val make_starting_position :
   starting_position
 
 val make_subscribe_to_shard_input :
+  ?stream_id:stream_id ->
   starting_position:starting_position ->
   shard_id:shard_id ->
   consumer_ar_n:consumer_ar_n ->
@@ -88,10 +147,13 @@ val make_stream_summary :
 val make_enhanced_metrics : ?shard_level_metrics:metrics_name_list -> unit -> enhanced_metrics
 
 val make_stream_description_summary :
+  ?max_record_size_in_ki_b:max_record_size_in_ki_b ->
+  ?warm_throughput:warm_throughput_object ->
   ?consumer_count:consumer_count_object ->
   ?key_id:key_id ->
   ?encryption_type:encryption_type ->
   ?stream_mode_details:stream_mode_details ->
+  ?stream_id:stream_id ->
   open_shard_count:shard_count_object ->
   enhanced_monitoring:enhanced_monitoring_list ->
   stream_creation_timestamp:timestamp ->
@@ -133,6 +195,7 @@ val make_stream_description :
   stream_description
 
 val make_stop_stream_encryption_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   key_id:key_id ->
@@ -141,6 +204,7 @@ val make_stop_stream_encryption_input :
   stop_stream_encryption_input
 
 val make_start_stream_encryption_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   key_id:key_id ->
@@ -149,6 +213,7 @@ val make_start_stream_encryption_input :
   start_stream_encryption_input
 
 val make_split_shard_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   new_starting_hash_key:hash_key ->
@@ -160,6 +225,7 @@ val make_shard_filter :
   ?timestamp:timestamp -> ?shard_id:shard_id -> type_:shard_filter_type -> unit -> shard_filter
 
 val make_remove_tags_from_stream_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   tag_keys:tag_key_list ->
@@ -179,13 +245,18 @@ val make_register_stream_consumer_output :
 
 val make_register_stream_consumer_input :
   ?tags:tag_map ->
+  ?stream_id:stream_id ->
   consumer_name:consumer_name ->
   stream_ar_n:stream_ar_n ->
   unit ->
   register_stream_consumer_input
 
 val make_put_resource_policy_input :
-  policy:policy -> resource_ar_n:resource_ar_n -> unit -> put_resource_policy_input
+  ?stream_id:stream_id ->
+  policy:policy ->
+  resource_ar_n:resource_ar_n ->
+  unit ->
+  put_resource_policy_input
 
 val make_put_records_result_entry :
   ?error_message:error_message ->
@@ -210,6 +281,7 @@ val make_put_records_output :
   put_records_output
 
 val make_put_records_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   records:put_records_request_entry_list ->
@@ -224,6 +296,7 @@ val make_put_record_output :
   put_record_output
 
 val make_put_record_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?sequence_number_for_ordering:sequence_number ->
   ?explicit_hash_key:hash_key ->
@@ -234,6 +307,7 @@ val make_put_record_input :
   put_record_input
 
 val make_merge_shards_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   adjacent_shard_to_merge:shard_id ->
@@ -245,6 +319,7 @@ val make_list_tags_for_stream_output :
   has_more_tags:boolean_object -> tags:tag_list -> unit -> list_tags_for_stream_output
 
 val make_list_tags_for_stream_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?limit:list_tags_for_stream_input_limit ->
   ?exclusive_start_tag_key:tag_key ->
@@ -255,7 +330,7 @@ val make_list_tags_for_stream_input :
 val make_list_tags_for_resource_output : ?tags:tag_list -> unit -> list_tags_for_resource_output
 
 val make_list_tags_for_resource_input :
-  resource_ar_n:resource_ar_n -> unit -> list_tags_for_resource_input
+  ?stream_id:stream_id -> resource_ar_n:resource_ar_n -> unit -> list_tags_for_resource_input
 
 val make_list_streams_output :
   ?stream_summaries:stream_summary_list ->
@@ -276,6 +351,7 @@ val make_list_stream_consumers_output :
   ?next_token:next_token -> ?consumers:consumer_list -> unit -> list_stream_consumers_output
 
 val make_list_stream_consumers_input :
+  ?stream_id:stream_id ->
   ?stream_creation_timestamp:timestamp ->
   ?max_results:list_stream_consumers_input_limit ->
   ?next_token:next_token ->
@@ -287,6 +363,7 @@ val make_list_shards_output :
   ?next_token:next_token -> ?shards:shard_list -> unit -> list_shards_output
 
 val make_list_shards_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?shard_filter:shard_filter ->
   ?stream_creation_timestamp:timestamp ->
@@ -298,6 +375,7 @@ val make_list_shards_input :
   list_shards_input
 
 val make_increase_stream_retention_period_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   retention_period_hours:retention_period_hours ->
@@ -308,6 +386,7 @@ val make_get_shard_iterator_output :
   ?shard_iterator:shard_iterator -> unit -> get_shard_iterator_output
 
 val make_get_shard_iterator_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?timestamp:timestamp ->
   ?starting_sequence_number:sequence_number ->
@@ -320,7 +399,7 @@ val make_get_shard_iterator_input :
 val make_get_resource_policy_output : policy:policy -> unit -> get_resource_policy_output
 
 val make_get_resource_policy_input :
-  resource_ar_n:resource_ar_n -> unit -> get_resource_policy_input
+  ?stream_id:stream_id -> resource_ar_n:resource_ar_n -> unit -> get_resource_policy_input
 
 val make_get_records_output :
   ?child_shards:child_shard_list ->
@@ -331,6 +410,7 @@ val make_get_records_output :
   get_records_output
 
 val make_get_records_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?limit:get_records_input_limit ->
   shard_iterator:shard_iterator ->
@@ -346,6 +426,7 @@ val make_enhanced_monitoring_output :
   enhanced_monitoring_output
 
 val make_enable_enhanced_monitoring_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   shard_level_metrics:metrics_name_list ->
@@ -353,6 +434,7 @@ val make_enable_enhanced_monitoring_input :
   enable_enhanced_monitoring_input
 
 val make_disable_enhanced_monitoring_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   shard_level_metrics:metrics_name_list ->
@@ -363,7 +445,11 @@ val make_describe_stream_summary_output :
   stream_description_summary:stream_description_summary -> unit -> describe_stream_summary_output
 
 val make_describe_stream_summary_input :
-  ?stream_ar_n:stream_ar_n -> ?stream_name:stream_name -> unit -> describe_stream_summary_input
+  ?stream_id:stream_id ->
+  ?stream_ar_n:stream_ar_n ->
+  ?stream_name:stream_name ->
+  unit ->
+  describe_stream_summary_input
 
 val make_consumer_description :
   stream_ar_n:stream_ar_n ->
@@ -378,6 +464,7 @@ val make_describe_stream_consumer_output :
   consumer_description:consumer_description -> unit -> describe_stream_consumer_output
 
 val make_describe_stream_consumer_input :
+  ?stream_id:stream_id ->
   ?consumer_ar_n:consumer_ar_n ->
   ?consumer_name:consumer_name ->
   ?stream_ar_n:stream_ar_n ->
@@ -388,6 +475,7 @@ val make_describe_stream_output :
   stream_description:stream_description -> unit -> describe_stream_output
 
 val make_describe_stream_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?exclusive_start_shard_id:shard_id ->
   ?limit:describe_stream_input_limit ->
@@ -405,7 +493,15 @@ val make_describe_limits_output :
 
 val make_describe_limits_input : unit -> unit
 
+val make_describe_account_settings_output :
+  ?minimum_throughput_billing_commitment:minimum_throughput_billing_commitment_output ->
+  unit ->
+  describe_account_settings_output
+
+val make_describe_account_settings_input : unit -> unit
+
 val make_deregister_stream_consumer_input :
+  ?stream_id:stream_id ->
   ?consumer_ar_n:consumer_ar_n ->
   ?consumer_name:consumer_name ->
   ?stream_ar_n:stream_ar_n ->
@@ -413,6 +509,7 @@ val make_deregister_stream_consumer_input :
   deregister_stream_consumer_input
 
 val make_delete_stream_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?enforce_consumer_deletion:boolean_object ->
   ?stream_name:stream_name ->
@@ -420,9 +517,10 @@ val make_delete_stream_input :
   delete_stream_input
 
 val make_delete_resource_policy_input :
-  resource_ar_n:resource_ar_n -> unit -> delete_resource_policy_input
+  ?stream_id:stream_id -> resource_ar_n:resource_ar_n -> unit -> delete_resource_policy_input
 
 val make_decrease_stream_retention_period_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   retention_period_hours:retention_period_hours ->
@@ -430,6 +528,8 @@ val make_decrease_stream_retention_period_input :
   decrease_stream_retention_period_input
 
 val make_create_stream_input :
+  ?max_record_size_in_ki_b:max_record_size_in_ki_b ->
+  ?warm_throughput_mi_bps:natural_integer_object ->
   ?tags:tag_map ->
   ?stream_mode_details:stream_mode_details ->
   ?shard_count:positive_integer_object ->
@@ -438,6 +538,7 @@ val make_create_stream_input :
   create_stream_input
 
 val make_add_tags_to_stream_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   tags:tag_map ->

@@ -39,6 +39,7 @@ type nonrec deployment_file_path = string [@@ocaml.doc ""]
 type nonrec owner_id = string [@@ocaml.doc ""]
 
 type nonrec provider_type =
+  | AZURE_DEV_OPS [@ocaml.doc ""]
   | GITLAB_SELF_MANAGED [@ocaml.doc ""]
   | GITLAB [@ocaml.doc ""]
   | GITHUB_ENTERPRISE_SERVER [@ocaml.doc ""]
@@ -693,7 +694,7 @@ type nonrec connection = {
   connection_arn : connection_arn option;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) of the connection. The ARN is used as the connection \
-         reference when the connection is shared between Amazon Web Servicesservices.\n\n\
+         reference when the connection is shared between Amazon Web Services services.\n\n\
         \  The ARN is never reused if the connection is deleted.\n\
         \  \n\
         \   "]

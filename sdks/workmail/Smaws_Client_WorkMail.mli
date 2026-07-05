@@ -287,8 +287,8 @@ val make_put_identity_provider_configuration_request :
 val make_put_email_monitoring_configuration_response : unit -> unit
 
 val make_put_email_monitoring_configuration_request :
+  ?role_arn:role_arn ->
   log_group_arn:log_group_arn ->
-  role_arn:role_arn ->
   organization_id:organization_id ->
   unit ->
   put_email_monitoring_configuration_request
@@ -3160,7 +3160,8 @@ module RegisterToWorkMail : sig
     | `MailDomainNotFoundException of mail_domain_not_found_exception
     | `MailDomainStateException of mail_domain_state_exception
     | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
+    | `OrganizationStateException of organization_state_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
     string
 
   val request :
@@ -3179,7 +3180,8 @@ module RegisterToWorkMail : sig
       | `MailDomainNotFoundException of mail_domain_not_found_exception
       | `MailDomainStateException of mail_domain_state_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
 end
 [@@ocaml.doc

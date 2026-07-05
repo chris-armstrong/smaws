@@ -48,6 +48,7 @@ val make_start_report_creation_input : s3_bucket:s3_bucket -> unit -> start_repo
 
 val make_compliance_details :
   ?compliance_status:compliance_status ->
+  ?missing_tag_keys:tag_key_list ->
   ?keys_with_noncompliant_values:tag_key_list ->
   ?noncompliant_keys:tag_key_list ->
   unit ->
@@ -59,6 +60,25 @@ val make_resource_tag_mapping :
   ?resource_ar_n:resource_ar_n ->
   unit ->
   resource_tag_mapping
+
+val make_required_tag :
+  ?reporting_tag_keys:reporting_tag_keys ->
+  ?cloud_formation_resource_types:cloud_formation_resource_types ->
+  ?resource_type:resource_type ->
+  unit ->
+  required_tag
+
+val make_list_required_tags_output :
+  ?next_token:pagination_token ->
+  ?required_tags:required_tags_for_list_required_tags ->
+  unit ->
+  list_required_tags_output
+
+val make_list_required_tags_input :
+  ?max_results:max_results_for_list_required_tags ->
+  ?next_token:pagination_token ->
+  unit ->
+  list_required_tags_input
 
 val make_get_tag_values_output :
   ?tag_values:tag_values_output_list ->
@@ -204,7 +224,7 @@ module GetResources : sig
 end
 [@@ocaml.doc
   "Returns all the tagged or previously tagged resources that are located in the specified Amazon \
-   Web Services Region for the account.\n\n\
+   Web Services Region for the account. \n\n\
   \ Depending on what information you want returned, you can also specify the following:\n\
   \ \n\
   \  {ul\n\
@@ -224,7 +244,15 @@ end
    results available to return. Repeat the query, passing the [PaginationToken] response parameter \
    value as an input to the next request until you recieve a [null] value. A null value for \
    [PaginationToken] indicates that there are no more results waiting to be returned.\n\
-  \   "]
+  \   \n\
+  \      [GetResources] does not return untagged resources. \n\
+  \     \n\
+  \      To find untagged resources in your account, use Amazon Web Services Resource Explorer \
+   with a query that uses [tag:none]. For more information, see \
+   {{:https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html} \
+   Search query syntax reference for Resource Explorer}. \n\
+  \      \n\
+  \       "]
 
 module GetTagKeys : sig
   val error_to_string :
@@ -286,6 +314,29 @@ end
    [PaginationToken] indicates that there are no more results waiting to be returned.\n\
   \ "]
 
+module ListRequiredTags : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceException of internal_service_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `PaginationTokenExpiredException of pagination_token_expired_exception
+    | `ThrottledException of throttled_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_required_tags_input ->
+    ( list_required_tags_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `PaginationTokenExpiredException of pagination_token_expired_exception
+      | `ThrottledException of throttled_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Lists the required tags for supported resource types in an Amazon Web Services account.\n"]
+
 module StartReportCreation : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -314,11 +365,24 @@ end
    refreshed daily. The report is generated asynchronously.\n\n\
   \ The generated report is saved to the following location:\n\
   \ \n\
-  \   [s3://example-bucket/AwsTagPolicies/o-exampleorgid/YYYY-MM-ddTHH:mm:ssZ/report.csv] \n\
+  \   [s3://amzn-s3-demo-bucket/AwsTagPolicies/o-exampleorgid/YYYY-MM-ddTHH:mm:ssZ/report.csv] \n\
   \  \n\
-  \   You can call this operation only from the organization's management account and from the \
+  \   For more information about evaluating resource compliance with tag policies, including the \
+   required permissions, review \
+   {{:https://docs.aws.amazon.com/tag-editor/latest/userguide/tag-policies-orgs.html#tag-policies-permissions-org}Permissions \
+   for evaluating organization-wide compliance} in the {i Tagging Amazon Web Services Resources \
+   and Tag Editor} user guide. \n\
+  \   \n\
+  \    You can call this operation only from the organization's management account and from the \
    us-east-1 Region.\n\
-  \   "]
+  \    \n\
+  \     If the account associated with the identity used to call [StartReportCreation] is \
+   different from the account that owns the Amazon S3 bucket, there must be a bucket policy \
+   attached to the bucket to provide access. For more information, review \
+   {{:https://docs.aws.amazon.com/tag-editor/latest/userguide/tag-policies-orgs.html#bucket-policy}Amazon \
+   S3 bucket policy for report storage} in the {i Tagging Amazon Web Services Resources and Tag \
+   Editor} user guide.\n\
+  \     "]
 
 module TagResources : sig
   val error_to_string :
@@ -363,6 +427,17 @@ end
    documentation for each service.\n\
   \           \n\
   \            }\n\
+  \       {-  When you use the \
+   {{:https://docs.aws.amazon.com/resourcegroupstagging/latest/APIReference/overview.html}Amazon \
+   Web Services Resource Groups Tagging API} to update tags for Amazon Web Services CloudFormation \
+   stack sets, Amazon Web Services calls the \
+   {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_UpdateStack.html}Amazon \
+   Web Services CloudFormation [UpdateStack] } operation. This operation may initiate additional \
+   resource property updates in addition to the desired tag updates. To avoid unexpected resource \
+   updates, Amazon Web Services recommends that you only apply or update tags to your \
+   CloudFormation stack sets using Amazon Web Services CloudFormation. \n\
+  \           \n\
+  \            }\n\
   \       }\n\
   \    Do not store personally identifiable information (PII) or other confidential or sensitive \
    information in tags. We use tags to provide you with billing and administration services. Tags \
@@ -376,14 +451,19 @@ end
    following permissions:\n\
   \       \n\
   \        {ul\n\
-  \              {-   [tag:TagResource] \n\
+  \              {-   [tag:TagResources] \n\
   \                  \n\
   \                   }\n\
   \              {-   [ec2:CreateTags] \n\
   \                  \n\
   \                   }\n\
   \              }\n\
-  \  "]
+  \    In addition, some services might have specific requirements for tagging some types of \
+   resources. For example, to tag an Amazon S3 bucket, you must also have the \
+   [s3:GetBucketTagging] permission. If the expected minimum permissions don't work, check the \
+   documentation for that service's tagging APIs for more information.\n\
+  \    \n\
+  \     "]
 
 (** {1:Serialization and Deserialization} *)
 module UntagResources : sig
@@ -427,14 +507,19 @@ end
    you must have both of the following permissions:\n\
   \    \n\
   \     {ul\n\
-  \           {-   [tag:UntagResource] \n\
+  \           {-   [tag:UntagResources] \n\
   \               \n\
   \                }\n\
   \           {-   [ec2:DeleteTags] \n\
   \               \n\
   \                }\n\
   \           }\n\
-  \  "]
+  \    In addition, some services might have specific requirements for untagging some types of \
+   resources. For example, to untag Amazon Web Services Glue Connection, you must also have the \
+   [glue:GetConnection] permission. If the expected minimum permissions don't work, check the \
+   documentation for that service's tagging APIs for more information.\n\
+  \    \n\
+  \     "]
 
 module Json_serializers = Json_serializers
 module Json_deserializers = Json_deserializers

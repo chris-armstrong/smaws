@@ -86,27 +86,34 @@ type nonrec untag_resources_input = {
 type nonrec exception_message = string [@@ocaml.doc ""]
 
 type nonrec throttled_exception = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The request was denied to limit the frequency of submitted requests.\n"]
+[@@ocaml.doc
+  "The request failed because it exceeded the allowed frequency of submitted requests.\n"]
 
 type nonrec invalid_parameter_exception = { message : exception_message option [@ocaml.doc ""] }
 [@@ocaml.doc
-  "This error indicates one of the following:\n\n\
+  "The request failed because of one of the following reasons:\n\n\
   \ {ul\n\
-  \       {-  A parameter is missing.\n\
+  \       {-  A required parameter is missing.\n\
   \           \n\
   \            }\n\
-  \       {-  A malformed string was supplied for the request parameter.\n\
+  \       {-  A provided string parameter is malformed.\n\
   \           \n\
   \            }\n\
-  \       {-  An out-of-range value was supplied for the request parameter.\n\
+  \       {-  An provided parameter value is out of range.\n\
   \           \n\
   \            }\n\
   \       {-  The target ID is invalid, unsupported, or doesn't exist.\n\
   \           \n\
   \            }\n\
   \       {-  You can't access the Amazon S3 bucket for report storage. For more information, see \
-   {{:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_tag-policies-prereqs.html#bucket-policies-org-report}Additional \
-   Requirements for Organization-wide Tag Compliance Reports} in the {i Organizations User Guide.} \n\
+   {{:https://docs.aws.amazon.com/tag-editor/latest/userguide/tag-policies-orgs.html#bucket-policy}Amazon \
+   S3 bucket policy for report storage} in the {i Tagging Amazon Web Services resources and Tag \
+   Editor} user guide. \n\
+  \           \n\
+  \            }\n\
+  \       {-  The partition specified in an ARN parameter in the request doesn't match the \
+   partition where you invoked the operation. The partition is specified by the second field of \
+   the ARN.\n\
   \           \n\
   \            }\n\
   \       }\n\
@@ -237,23 +244,23 @@ type nonrec start_report_creation_input = {
   s3_bucket : s3_bucket;
       [@ocaml.doc
         "The name of the Amazon S3 bucket where the report will be stored; for example:\n\n\
-        \  [awsexamplebucket] \n\
+        \  [amzn-s3-demo-bucket] \n\
         \ \n\
         \  For more information on S3 bucket requirements, including an example bucket policy, see \
-         the example S3 bucket policy on this page.\n\
+         the example Amazon S3 bucket policy on this page.\n\
         \  "]
 }
 [@@ocaml.doc ""]
 
 type nonrec constraint_violation_exception = { message : exception_message option [@ocaml.doc ""] }
 [@@ocaml.doc
-  "The request was denied because performing this operation violates a constraint. \n\n\
+  "The request failed because performing the operation would violate a constraint.\n\n\
   \ Some of the reasons in the following list might not apply to this specific operation.\n\
   \ \n\
   \  {ul\n\
   \        {-  You must meet the prerequisites for using tag policies. For information, see \
-   {{:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_tag-policies-prereqs.html}Prerequisites \
-   and Permissions for Using Tag Policies} in the {i Organizations User Guide.} \n\
+   {{:https://docs.aws.amazon.com/tag-editor/latest/userguide/tag-policies-orgs.html#tag-policies-prereqs}Prerequisites \
+   and permissions} in the {i Tagging Amazon Web Services resources and Tag Editor} user guide. \n\
   \            \n\
   \             }\n\
   \        {-  You must enable the tag policies service principal \
@@ -271,7 +278,8 @@ type nonrec concurrent_modification_exception = {
   message : exception_message option; [@ocaml.doc ""]
 }
 [@@ocaml.doc
-  "The target of the operation is currently being modified by a different request. Try again later.\n"]
+  "The request failed because the target of the operation is currently being modified by a \
+   different request. Try again later.\n"]
 
 type nonrec start_date = string [@@ocaml.doc ""]
 
@@ -281,11 +289,17 @@ type nonrec resources_per_page = int [@@ocaml.doc ""]
 
 type nonrec resource_type_filter_list = amazon_resource_type list [@@ocaml.doc ""]
 
+type nonrec resource_type = string [@@ocaml.doc ""]
+
 type nonrec compliance_status = bool [@@ocaml.doc ""]
 
 type nonrec compliance_details = {
   compliance_status : compliance_status option;
       [@ocaml.doc "Whether a resource is compliant with the effective tag policy.\n"]
+  missing_tag_keys : tag_key_list option;
+      [@ocaml.doc
+        "These tag keys are defined as required in the [report_required_tag_for] block of the \
+         effective tag policy, but are missing from the resource.\n"]
   keys_with_noncompliant_values : tag_key_list option;
       [@ocaml.doc
         "These are keys defined in the effective policy that are on the resource with either \
@@ -316,10 +330,55 @@ type nonrec pagination_token_expired_exception = {
   message : exception_message option; [@ocaml.doc ""]
 }
 [@@ocaml.doc
-  "A [PaginationToken] is valid for a maximum of 15 minutes. Your request was denied because the \
-   specified [PaginationToken] has expired.\n"]
+  "The request failed because the specified [PaginationToken] has expired. A [PaginationToken] is \
+   valid for a maximum of 15 minutes.\n"]
+
+type nonrec cloud_formation_resource_type = string [@@ocaml.doc ""]
+
+type nonrec cloud_formation_resource_types = cloud_formation_resource_type list [@@ocaml.doc ""]
+
+type nonrec reporting_tag_keys = tag_key list [@@ocaml.doc ""]
+
+type nonrec required_tag = {
+  reporting_tag_keys : reporting_tag_keys option;
+      [@ocaml.doc
+        "These tag keys are marked as [required] in the [report_required_tag_for] block of the \
+         effective tag policy.\n"]
+  cloud_formation_resource_types : cloud_formation_resource_types option;
+      [@ocaml.doc "Describes the CloudFormation resource type assigned the required tag keys.\n"]
+  resource_type : resource_type option;
+      [@ocaml.doc "Describes the resource type for the required tag keys.\n"]
+}
+[@@ocaml.doc "Information that describes the required tags for a given resource type.\n"]
+
+type nonrec required_tags_for_list_required_tags = required_tag list [@@ocaml.doc ""]
 
 type nonrec pagination_token = string [@@ocaml.doc ""]
+
+type nonrec list_required_tags_output = {
+  next_token : pagination_token option;
+      [@ocaml.doc
+        "A token for requesting another page of required tags if the [NextToken] response element \
+         indicates that more required tags are available. Use the value of the returned \
+         [NextToken] element in your request until the token comes back as null. Pass null if this \
+         is the first call.\n"]
+  required_tags : required_tags_for_list_required_tags option; [@ocaml.doc "The required tags.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec max_results_for_list_required_tags = int [@@ocaml.doc ""]
+
+type nonrec list_required_tags_input = {
+  max_results : max_results_for_list_required_tags option;
+      [@ocaml.doc "The maximum number of required tags.\n"]
+  next_token : pagination_token option;
+      [@ocaml.doc
+        "A token for requesting another page of required tags if the [NextToken] response element \
+         indicates that more required tags are available. Use the value of the returned \
+         [NextToken] element in your request until the token comes back as null. Pass null if this \
+         is the first call.\n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec get_tag_values_output = {
   tag_values : tag_values_output_list option;
@@ -385,18 +444,25 @@ type nonrec resource_arn_list_for_get = resource_ar_n list [@@ocaml.doc ""]
 type nonrec get_resources_input = {
   resource_arn_list : resource_arn_list_for_get option;
       [@ocaml.doc
-        "Specifies a list of ARNs of resources for which you want to retrieve tag data. You can't \
-         specify both this parameter and any of the pagination parameters ([ResourcesPerPage], \
-         [TagsPerPage], [PaginationToken]) in the same request. If you specify both, you get an \
-         [Invalid Parameter] exception.\n\n\
-        \ If a resource specified by this parameter doesn't exist, it doesn't generate an error; \
-         it simply isn't included in the response.\n\
+        "Specifies a list of ARNs of resources for which you want to retrieve tag data.\n\n\
+        \ You can't specify both this parameter and the [ResourceTypeFilters] parameter in the \
+         same request. If you do, you get an [Invalid Parameter] exception.\n\
         \ \n\
-        \  An ARN (Amazon Resource Name) uniquely identifies a resource. For more information, see \
-         {{:https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html}Amazon \
+        \  You can't specify both this parameter and the [TagFilters] parameter in the same \
+         request. If you do, you get an [Invalid Parameter] exception.\n\
+        \  \n\
+        \   You can't specify both this parameter and any of the pagination parameters \
+         ([ResourcesPerPage], [TagsPerPage], [PaginationToken]) in the same request. If you do, \
+         you get an [Invalid Parameter] exception.\n\
+        \   \n\
+        \    If a resource specified by this parameter doesn't exist, it doesn't generate an \
+         error; it simply isn't included in the response.\n\
+        \    \n\
+        \     An ARN (Amazon Resource Name) uniquely identifies a resource. For more information, \
+         see {{:https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html}Amazon \
          Resource Names (ARNs) and Amazon Web Services Service Namespaces} in the {i Amazon Web \
          Services General Reference}.\n\
-        \  "]
+        \     "]
   exclude_compliant_resources : exclude_compliant_resources option;
       [@ocaml.doc
         "Specifies whether to exclude resources that are compliant with the tag policy. Set this \
@@ -413,22 +479,31 @@ type nonrec get_resources_input = {
   resource_type_filters : resource_type_filter_list option;
       [@ocaml.doc
         "Specifies the resource types that you want included in the response. The format of each \
-         resource type is [service\\[:resourceType\\]]. For example, specifying a resource type of \
-         [ec2] returns all Amazon EC2 resources (which includes EC2 instances). Specifying a \
-         resource type of [ec2:instance] returns only EC2 instances. \n\n\
-        \ The string for each service name and resource type is the same as that embedded in a \
-         resource's Amazon Resource Name (ARN). For the list of services whose resources you can \
-         use in this parameter, see \
-         {{:https://docs.aws.amazon.com/resourcegroupstagging/latest/APIReference/supported-services.html}Services \
-         that support the Resource Groups Tagging API}.\n\
+         resource type is [service\\[:resourceType\\]]. For example, specifying a service of [ec2] \
+         returns all Amazon EC2 resources (which includes EC2 instances). Specifying a resource \
+         type of [ec2:instance] returns only EC2 instances. \n\n\
+        \ You can't specify both this parameter and the [ResourceArnList] parameter in the same \
+         request. If you do, you get an [Invalid Parameter] exception.\n\
         \ \n\
-        \  You can specify multiple resource types by using an array. The array can include up to \
-         100 items. Note that the length constraint requirement applies to each resource type \
+        \  The string for each service name and resource type is the same as that embedded in a \
+         resource's Amazon Resource Name (ARN).\n\
+        \  \n\
+        \    For the list of services whose resources you can tag using the Resource Groups \
+         Tagging API, see \
+         {{:https://docs.aws.amazon.com/resourcegroupstagging/latest/APIReference/supported-services.html}Services \
+         that support the Resource Groups Tagging API}. If an Amazon Web Services service isn't \
+         listed on that page, you might still be able to tag that service's resources by using \
+         that service's native tagging operations instead of using Resource Groups Tagging API \
+         operations. All tagged resources, whether the tagging used the Resource Groups Tagging \
+         API or not, are returned by the [Get*] operation.\n\
+        \    \n\
+        \      You can specify multiple resource types by using an array. The array can include up \
+         to 100 items. Note that the length constraint requirement applies to each resource type \
          filter. For example, the following string would limit the response to only Amazon EC2 \
          instances, Amazon S3 buckets, or any Audit Manager resource:\n\
-        \  \n\
-        \    [ec2:instance,s3:bucket,auditmanager] \n\
-        \   "]
+        \      \n\
+        \        [ec2:instance,s3:bucket,auditmanager] \n\
+        \       "]
   tags_per_page : tags_per_page option;
       [@ocaml.doc
         "Amazon Web Services recommends using [ResourcesPerPage] instead of this parameter.\n\n\
@@ -459,51 +534,55 @@ type nonrec get_resources_input = {
          resources that have tags with the specified keys and, if included, the specified values. \
          Each [TagFilter] must contain a key with values optional. A request can include up to 50 \
          keys, and each key can include up to 20 values. \n\n\
-        \ Note the following when deciding how to use TagFilters:\n\
+        \ You can't specify both this parameter and the [ResourceArnList] parameter in the same \
+         request. If you do, you get an [Invalid Parameter] exception.\n\
         \ \n\
-        \  {ul\n\
-        \        {-  If you {i don't} specify a [TagFilter], the response includes all resources \
-         that are currently tagged or ever had a tag. Resources that currently don't have tags are \
-         shown with an empty tag set, like this: [\"Tags\": \\[\\]].\n\
-        \            \n\
-        \             }\n\
-        \        {-  If you specify more than one filter in a single request, the response returns \
-         only those resources that satisfy all filters.\n\
-        \            \n\
-        \             }\n\
-        \        {-  If you specify a filter that contains more than one value for a key, the \
-         response returns resources that match {i any} of the specified values for that key.\n\
-        \            \n\
-        \             }\n\
-        \        {-  If you don't specify a value for a key, the response returns all resources \
-         that are tagged with that key, with any or no value.\n\
-        \            \n\
-        \             For example, for the following filters: [filter1= {keyA,{value1}}], \
-         [filter2={keyB,{value2,value3,value4}}], [filter3=\n\
-        \                        {keyC}]:\n\
+        \  Note the following when deciding how to use TagFilters:\n\
+        \  \n\
+        \   {ul\n\
+        \         {-  If you {i don't} specify a [TagFilter], the response includes all resources \
+         that are currently tagged or ever had a tag. Resources that were previously tagged, {i \
+         but do not currently} have tags, are shown with an empty tag set, like this: [\"Tags\":\n\
+        \                    \\[\\]].\n\
         \             \n\
-        \              {ul\n\
-        \                    {-   [GetResources({filter1})] returns resources tagged with \
+        \              }\n\
+        \         {-  If you specify more than one filter in a single request, the response \
+         returns only those resources that satisfy all filters.\n\
+        \             \n\
+        \              }\n\
+        \         {-  If you specify a filter that contains more than one value for a key, the \
+         response returns resources that match {i any} of the specified values for that key.\n\
+        \             \n\
+        \              }\n\
+        \         {-  If you don't specify a value for a key, the response returns all resources \
+         that are tagged with that key, with any or no value.\n\
+        \             \n\
+        \              For example, for the following filters: [filter1= {key1,{value1}}], \
+         [filter2={key2,{value2,value3,value4}}], [filter3=\n\
+        \                        {key3}]:\n\
+        \              \n\
+        \               {ul\n\
+        \                     {-   [GetResources({filter1})] returns resources tagged with \
          [key1=value1] \n\
-        \                        \n\
-        \                         }\n\
-        \                    {-   [GetResources({filter2})] returns resources tagged with \
+        \                         \n\
+        \                          }\n\
+        \                     {-   [GetResources({filter2})] returns resources tagged with \
          [key2=value2] or [key2=value3] or [key2=value4] \n\
-        \                        \n\
-        \                         }\n\
-        \                    {-   [GetResources({filter3})] returns resources tagged with any tag \
+        \                         \n\
+        \                          }\n\
+        \                     {-   [GetResources({filter3})] returns resources tagged with any tag \
          with the key [key3], and with any or no value\n\
-        \                        \n\
-        \                         }\n\
-        \                    {-   [GetResources({filter1,filter2,filter3})] returns resources \
+        \                         \n\
+        \                          }\n\
+        \                     {-   [GetResources({filter1,filter2,filter3})] returns resources \
          tagged with [(key1=value1) and (key2=value2 or key2=value3 or\n\
         \                                key2=value4) and (key3, any or no value)] \n\
-        \                        \n\
-        \                         }\n\
-        \                    \n\
-        \         }\n\
+        \                         \n\
+        \                          }\n\
+        \                     \n\
         \          }\n\
-        \        }\n\
+        \           }\n\
+        \         }\n\
         \  "]
   pagination_token : pagination_token option;
       [@ocaml.doc
@@ -584,10 +663,19 @@ type nonrec get_compliance_summary_input = {
         \            \n\
         \             }\n\
         \        }\n\
-        \   You can specify multiple resource types by using a comma separated array. The array \
+        \    For the list of services whose resources you can tag using the Resource Groups \
+         Tagging API, see \
+         {{:https://docs.aws.amazon.com/resourcegroupstagging/latest/APIReference/supported-services.html}Services \
+         that support the Resource Groups Tagging API}. If an Amazon Web Services service isn't \
+         listed on that page, you might still be able to tag that service's resources by using \
+         that service's native tagging operations instead of using Resource Groups Tagging API \
+         operations. All tagged resources, whether the tagging used the Resource Groups Tagging \
+         API or not, are returned by the [Get*] operation.\n\
+        \    \n\
+        \      You can specify multiple resource types by using a comma separated array. The array \
          can include up to 100 items. Note that the length constraint requirement applies to each \
          resource type filter. \n\
-        \   "]
+        \      "]
   region_filters : region_filter_list option;
       [@ocaml.doc
         "Specifies a list of Amazon Web Services Regions to limit the output to. If you use this \

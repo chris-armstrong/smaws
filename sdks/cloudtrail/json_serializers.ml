@@ -464,6 +464,14 @@ let trail_already_exists_exception_to_yojson (x : trail_already_exists_exception
   assoc_to_yojson [ ("Message", option_to_yojson error_message_to_yojson x.message) ]
 
 let timestamps_to_yojson tree = list_to_yojson date_to_yojson tree
+
+let template_to_yojson (x : template) =
+  match x with
+  | USER_ACTIONS -> `String "USER_ACTIONS"
+  | RESOURCE_ACCESS -> `String "RESOURCE_ACCESS"
+  | API_ACTIVITY -> `String "API_ACTIVITY"
+
+let templates_to_yojson tree = list_to_yojson template_to_yojson tree
 let tag_key_to_yojson = string_to_yojson
 let tag_value_to_yojson = string_to_yojson
 
@@ -631,6 +639,11 @@ let start_dashboard_refresh_request_to_yojson (x : start_dashboard_refresh_reque
         option_to_yojson query_parameter_values_to_yojson x.query_parameter_values );
       ("DashboardId", Some (dashboard_arn_to_yojson x.dashboard_id));
     ]
+
+let source_event_category_to_yojson (x : source_event_category) =
+  match x with Data -> `String "Data" | Management -> `String "Management"
+
+let source_event_categories_to_yojson tree = list_to_yojson source_event_category_to_yojson tree
 
 let source_config_to_yojson (x : source_config) =
   assoc_to_yojson
@@ -858,7 +871,11 @@ let insight_type_to_yojson (x : insight_type) =
   | ApiCallRateInsight -> `String "ApiCallRateInsight"
 
 let insight_selector_to_yojson (x : insight_selector) =
-  assoc_to_yojson [ ("InsightType", option_to_yojson insight_type_to_yojson x.insight_type) ]
+  assoc_to_yojson
+    [
+      ("EventCategories", option_to_yojson source_event_categories_to_yojson x.event_categories);
+      ("InsightType", option_to_yojson insight_type_to_yojson x.insight_type);
+    ]
 
 let insight_selectors_to_yojson tree = list_to_yojson insight_selector_to_yojson tree
 
@@ -938,21 +955,41 @@ let context_key_selector_to_yojson (x : context_key_selector) =
 
 let context_key_selectors_to_yojson tree = list_to_yojson context_key_selector_to_yojson tree
 
+let event_category_aggregation_to_yojson (x : event_category_aggregation) =
+  match x with Data -> `String "Data"
+
+let aggregation_configuration_to_yojson (x : aggregation_configuration) =
+  assoc_to_yojson
+    [
+      ("EventCategory", Some (event_category_aggregation_to_yojson x.event_category));
+      ("Templates", Some (templates_to_yojson x.templates));
+    ]
+
+let aggregation_configurations_to_yojson tree =
+  list_to_yojson aggregation_configuration_to_yojson tree
+
 let put_event_configuration_response_to_yojson (x : put_event_configuration_response) =
   assoc_to_yojson
     [
+      ( "AggregationConfigurations",
+        option_to_yojson aggregation_configurations_to_yojson x.aggregation_configurations );
       ( "ContextKeySelectors",
         option_to_yojson context_key_selectors_to_yojson x.context_key_selectors );
       ("MaxEventSize", option_to_yojson max_event_size_to_yojson x.max_event_size);
       ("EventDataStoreArn", option_to_yojson event_data_store_arn_to_yojson x.event_data_store_arn);
+      ("TrailARN", option_to_yojson string__to_yojson x.trail_ar_n);
     ]
 
 let put_event_configuration_request_to_yojson (x : put_event_configuration_request) =
   assoc_to_yojson
     [
-      ("ContextKeySelectors", Some (context_key_selectors_to_yojson x.context_key_selectors));
-      ("MaxEventSize", Some (max_event_size_to_yojson x.max_event_size));
+      ( "AggregationConfigurations",
+        option_to_yojson aggregation_configurations_to_yojson x.aggregation_configurations );
+      ( "ContextKeySelectors",
+        option_to_yojson context_key_selectors_to_yojson x.context_key_selectors );
+      ("MaxEventSize", option_to_yojson max_event_size_to_yojson x.max_event_size);
       ("EventDataStore", option_to_yojson string__to_yojson x.event_data_store);
+      ("TrailName", option_to_yojson string__to_yojson x.trail_name);
     ]
 
 let byte_buffer_to_yojson = blob_to_yojson
@@ -1145,6 +1182,7 @@ let list_insights_metric_data_response_to_yojson (x : list_insights_metric_data_
       ("InsightType", option_to_yojson insight_type_to_yojson x.insight_type);
       ("EventName", option_to_yojson event_name_to_yojson x.event_name);
       ("EventSource", option_to_yojson event_source_to_yojson x.event_source);
+      ("TrailARN", option_to_yojson string__to_yojson x.trail_ar_n);
     ]
 
 let insights_metric_period_to_yojson = int_to_yojson
@@ -1167,6 +1205,43 @@ let list_insights_metric_data_request_to_yojson (x : list_insights_metric_data_r
       ("InsightType", Some (insight_type_to_yojson x.insight_type));
       ("EventName", Some (event_name_to_yojson x.event_name));
       ("EventSource", Some (event_source_to_yojson x.event_source));
+      ("TrailName", option_to_yojson string__to_yojson x.trail_name);
+    ]
+
+let list_insights_data_type_to_yojson (x : list_insights_data_type) =
+  match x with INSIGHTS_EVENTS -> `String "InsightsEvents"
+
+let list_insights_data_response_to_yojson (x : list_insights_data_response) =
+  assoc_to_yojson
+    [
+      ("NextToken", option_to_yojson pagination_token_to_yojson x.next_token);
+      ("Events", option_to_yojson events_list_to_yojson x.events);
+    ]
+
+let list_insights_data_dimension_value_to_yojson = string_to_yojson
+
+let list_insights_data_dimension_key_to_yojson (x : list_insights_data_dimension_key) =
+  match x with
+  | EVENT_SOURCE -> `String "EventSource"
+  | EVENT_NAME -> `String "EventName"
+  | EVENT_ID -> `String "EventId"
+
+let list_insights_data_dimensions_to_yojson tree =
+  map_to_yojson list_insights_data_dimension_key_to_yojson
+    list_insights_data_dimension_value_to_yojson tree
+
+let list_insights_data_max_results_count_to_yojson = int_to_yojson
+
+let list_insights_data_request_to_yojson (x : list_insights_data_request) =
+  assoc_to_yojson
+    [
+      ("NextToken", option_to_yojson pagination_token_to_yojson x.next_token);
+      ("MaxResults", option_to_yojson list_insights_data_max_results_count_to_yojson x.max_results);
+      ("EndTime", option_to_yojson date_to_yojson x.end_time);
+      ("StartTime", option_to_yojson date_to_yojson x.start_time);
+      ("Dimensions", option_to_yojson list_insights_data_dimensions_to_yojson x.dimensions);
+      ("DataType", Some (list_insights_data_type_to_yojson x.data_type));
+      ("InsightSource", Some (resource_arn_to_yojson x.insight_source));
     ]
 
 let imports_list_item_to_yojson (x : imports_list_item) =
@@ -1490,14 +1565,21 @@ let get_event_data_store_request_to_yojson (x : get_event_data_store_request) =
 let get_event_configuration_response_to_yojson (x : get_event_configuration_response) =
   assoc_to_yojson
     [
+      ( "AggregationConfigurations",
+        option_to_yojson aggregation_configurations_to_yojson x.aggregation_configurations );
       ( "ContextKeySelectors",
         option_to_yojson context_key_selectors_to_yojson x.context_key_selectors );
       ("MaxEventSize", option_to_yojson max_event_size_to_yojson x.max_event_size);
       ("EventDataStoreArn", option_to_yojson event_data_store_arn_to_yojson x.event_data_store_arn);
+      ("TrailARN", option_to_yojson string__to_yojson x.trail_ar_n);
     ]
 
 let get_event_configuration_request_to_yojson (x : get_event_configuration_request) =
-  assoc_to_yojson [ ("EventDataStore", option_to_yojson string__to_yojson x.event_data_store) ]
+  assoc_to_yojson
+    [
+      ("EventDataStore", option_to_yojson string__to_yojson x.event_data_store);
+      ("TrailName", option_to_yojson string__to_yojson x.trail_name);
+    ]
 
 let dashboard_status_to_yojson (x : dashboard_status) =
   match x with

@@ -731,9 +731,25 @@ let table_class_summary_of_yojson tree path =
    }
     : table_class_summary)
 
+let global_table_settings_replication_mode_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "ENABLED_WITH_OVERRIDES" -> ENABLED_WITH_OVERRIDES
+    | `String "DISABLED" -> DISABLED
+    | `String "ENABLED" -> ENABLED
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "GlobalTableSettingsReplicationMode" value)
+    | _ -> raise (deserialize_wrong_type_error path "GlobalTableSettingsReplicationMode")
+     : global_table_settings_replication_mode)
+    : global_table_settings_replication_mode)
+
 let replica_description_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     global_table_settings_replication_mode =
+       option_of_yojson
+         (value_for_key global_table_settings_replication_mode_of_yojson
+            "GlobalTableSettingsReplicationMode")
+         _list path;
      replica_table_class_summary =
        option_of_yojson
          (value_for_key table_class_summary_of_yojson "ReplicaTableClassSummary")
@@ -767,6 +783,7 @@ let replica_description_of_yojson tree path =
        option_of_yojson
          (value_for_key replica_status_description_of_yojson "ReplicaStatusDescription")
          _list path;
+     replica_arn = option_of_yojson (value_for_key string__of_yojson "ReplicaArn") _list path;
      replica_status =
        option_of_yojson (value_for_key replica_status_of_yojson "ReplicaStatus") _list path;
      region_name = option_of_yojson (value_for_key region_name_of_yojson "RegionName") _list path;
@@ -892,6 +909,11 @@ let table_description_of_yojson tree path =
        option_of_yojson (value_for_key sse_description_of_yojson "SSEDescription") _list path;
      restore_summary =
        option_of_yojson (value_for_key restore_summary_of_yojson "RestoreSummary") _list path;
+     global_table_settings_replication_mode =
+       option_of_yojson
+         (value_for_key global_table_settings_replication_mode_of_yojson
+            "GlobalTableSettingsReplicationMode")
+         _list path;
      global_table_witnesses =
        option_of_yojson
          (value_for_key global_table_witness_description_list_of_yojson "GlobalTableWitnesses")
@@ -1153,6 +1175,11 @@ let global_table_witness_group_update_list_of_yojson tree path =
 let update_table_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     global_table_settings_replication_mode =
+       option_of_yojson
+         (value_for_key global_table_settings_replication_mode_of_yojson
+            "GlobalTableSettingsReplicationMode")
+         _list path;
      warm_throughput =
        option_of_yojson (value_for_key warm_throughput_of_yojson "WarmThroughput") _list path;
      on_demand_throughput =
@@ -1524,9 +1551,42 @@ let transaction_conflict_exception_of_yojson tree path =
   ({ message = option_of_yojson (value_for_key error_message_of_yojson "message") _list path }
     : transaction_conflict_exception)
 
+let availability_error_message_of_yojson = string_of_yojson
+let reason_of_yojson = string_of_yojson
+let resource_of_yojson = string_of_yojson
+
+let throttling_reason_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     resource = option_of_yojson (value_for_key resource_of_yojson "resource") _list path;
+     reason = option_of_yojson (value_for_key reason_of_yojson "reason") _list path;
+   }
+    : throttling_reason)
+
+let throttling_reason_list_of_yojson tree path =
+  list_of_yojson throttling_reason_of_yojson tree path
+
+let throttling_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     throttling_reasons =
+       option_of_yojson
+         (value_for_key throttling_reason_list_of_yojson "throttlingReasons")
+         _list path;
+     message =
+       option_of_yojson (value_for_key availability_error_message_of_yojson "message") _list path;
+   }
+    : throttling_exception)
+
 let request_limit_exceeded_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ message = option_of_yojson (value_for_key error_message_of_yojson "message") _list path }
+  ({
+     throttling_reasons =
+       option_of_yojson
+         (value_for_key throttling_reason_list_of_yojson "ThrottlingReasons")
+         _list path;
+     message = option_of_yojson (value_for_key error_message_of_yojson "message") _list path;
+   }
     : request_limit_exceeded)
 
 let replicated_write_conflict_exception_of_yojson tree path =
@@ -1536,7 +1596,13 @@ let replicated_write_conflict_exception_of_yojson tree path =
 
 let provisioned_throughput_exceeded_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ message = option_of_yojson (value_for_key error_message_of_yojson "message") _list path }
+  ({
+     throttling_reasons =
+       option_of_yojson
+         (value_for_key throttling_reason_list_of_yojson "ThrottlingReasons")
+         _list path;
+     message = option_of_yojson (value_for_key error_message_of_yojson "message") _list path;
+   }
     : provisioned_throughput_exceeded_exception)
 
 let item_collection_size_limit_exceeded_exception_of_yojson tree path =
@@ -1836,9 +1902,23 @@ let contributor_insights_status_of_yojson (tree : t) path =
      : contributor_insights_status)
     : contributor_insights_status)
 
+let contributor_insights_mode_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "THROTTLED_KEYS" -> THROTTLED_KEYS
+    | `String "ACCESSED_AND_THROTTLED_KEYS" -> ACCESSED_AND_THROTTLED_KEYS
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "ContributorInsightsMode" value)
+    | _ -> raise (deserialize_wrong_type_error path "ContributorInsightsMode")
+     : contributor_insights_mode)
+    : contributor_insights_mode)
+
 let update_contributor_insights_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     contributor_insights_mode =
+       option_of_yojson
+         (value_for_key contributor_insights_mode_of_yojson "ContributorInsightsMode")
+         _list path;
      contributor_insights_status =
        option_of_yojson
          (value_for_key contributor_insights_status_of_yojson "ContributorInsightsStatus")
@@ -1861,6 +1941,10 @@ let contributor_insights_action_of_yojson (tree : t) path =
 let update_contributor_insights_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     contributor_insights_mode =
+       option_of_yojson
+         (value_for_key contributor_insights_mode_of_yojson "ContributorInsightsMode")
+         _list path;
      contributor_insights_action =
        value_for_key contributor_insights_action_of_yojson "ContributorInsightsAction" _list path;
      index_name = option_of_yojson (value_for_key index_name_of_yojson "IndexName") _list path;
@@ -3098,6 +3182,10 @@ let list_exports_input_of_yojson tree path =
 let contributor_insights_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     contributor_insights_mode =
+       option_of_yojson
+         (value_for_key contributor_insights_mode_of_yojson "ContributorInsightsMode")
+         _list path;
      contributor_insights_status =
        option_of_yojson
          (value_for_key contributor_insights_status_of_yojson "ContributorInsightsStatus")
@@ -3858,6 +3946,10 @@ let contributor_insights_rule_list_of_yojson tree path =
 let describe_contributor_insights_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     contributor_insights_mode =
+       option_of_yojson
+         (value_for_key contributor_insights_mode_of_yojson "ContributorInsightsMode")
+         _list path;
      failure_exception =
        option_of_yojson (value_for_key failure_exception_of_yojson "FailureException") _list path;
      last_update_date_time =
@@ -4051,6 +4143,13 @@ let create_table_output_of_yojson tree path =
 let create_table_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     global_table_settings_replication_mode =
+       option_of_yojson
+         (value_for_key global_table_settings_replication_mode_of_yojson
+            "GlobalTableSettingsReplicationMode")
+         _list path;
+     global_table_source_arn =
+       option_of_yojson (value_for_key table_arn_of_yojson "GlobalTableSourceArn") _list path;
      on_demand_throughput =
        option_of_yojson
          (value_for_key on_demand_throughput_of_yojson "OnDemandThroughput")
@@ -4084,10 +4183,12 @@ let create_table_input_of_yojson tree path =
        option_of_yojson
          (value_for_key local_secondary_index_list_of_yojson "LocalSecondaryIndexes")
          _list path;
-     key_schema = value_for_key key_schema_of_yojson "KeySchema" _list path;
+     key_schema = option_of_yojson (value_for_key key_schema_of_yojson "KeySchema") _list path;
      table_name = value_for_key table_arn_of_yojson "TableName" _list path;
      attribute_definitions =
-       value_for_key attribute_definitions_of_yojson "AttributeDefinitions" _list path;
+       option_of_yojson
+         (value_for_key attribute_definitions_of_yojson "AttributeDefinitions")
+         _list path;
    }
     : create_table_input)
 

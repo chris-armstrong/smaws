@@ -206,6 +206,26 @@ end
 [@@ocaml.doc
   "Retrieve metrics of the specified types that can be queried for a specified DB instance. \n"]
 
+module ListPerformanceAnalysisReportRecommendations : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceError of internal_service_error
+    | `InvalidArgumentException of invalid_argument_exception
+    | `NotAuthorizedException of not_authorized_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_performance_analysis_report_recommendations_request ->
+    ( list_performance_analysis_report_recommendations_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `NotAuthorizedException of not_authorized_exception ] )
+    result
+end
+[@@ocaml.doc "Retrieves recommendations for a performance analysis report.\n"]
+
 module ListPerformanceAnalysisReports : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error

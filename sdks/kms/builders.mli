@@ -1,6 +1,7 @@
 open Types
 
 val make_xks_proxy_configuration_type :
+  ?vpc_endpoint_service_owner:account_id_type ->
   ?vpc_endpoint_service_name:xks_proxy_vpc_endpoint_service_name_type ->
   ?uri_path:xks_proxy_uri_path_type ->
   ?uri_endpoint:xks_proxy_uri_endpoint_type ->
@@ -63,6 +64,7 @@ val make_update_custom_key_store_response : unit -> unit
 val make_update_custom_key_store_request :
   ?xks_proxy_connectivity:xks_proxy_connectivity_type ->
   ?xks_proxy_authentication_credential:xks_proxy_authentication_credential_type ->
+  ?xks_proxy_vpc_endpoint_service_owner:account_id_type ->
   ?xks_proxy_vpc_endpoint_service_name:xks_proxy_vpc_endpoint_service_name_type ->
   ?xks_proxy_uri_path:xks_proxy_uri_path_type ->
   ?xks_proxy_uri_endpoint:xks_proxy_uri_endpoint_type ->
@@ -201,6 +203,7 @@ val make_re_encrypt_response :
   re_encrypt_response
 
 val make_re_encrypt_request :
+  ?dry_run_modifiers:dry_run_modifier_list ->
   ?dry_run:nullable_boolean_type ->
   ?grant_tokens:grant_token_list ->
   ?destination_encryption_algorithm:encryption_algorithm_spec ->
@@ -208,8 +211,8 @@ val make_re_encrypt_request :
   ?destination_encryption_context:encryption_context_type ->
   ?source_key_id:key_id_type ->
   ?source_encryption_context:encryption_context_type ->
+  ?ciphertext_blob:ciphertext_type ->
   destination_key_id:key_id_type ->
-  ciphertext_blob:ciphertext_type ->
   unit ->
   re_encrypt_request
 
@@ -222,12 +225,15 @@ val make_put_key_policy_request :
   put_key_policy_request
 
 val make_grant_constraints :
+  ?source_arn:grant_constraint_source_arn_type ->
   ?encryption_context_equals:encryption_context_type ->
   ?encryption_context_subset:encryption_context_type ->
   unit ->
   grant_constraints
 
 val make_grant_list_entry :
+  ?retiring_service_principal:service_principal_type ->
+  ?grantee_service_principal:service_principal_type ->
   ?constraints:grant_constraints ->
   ?operations:grant_operation_list ->
   ?issuing_account:principal_id_type ->
@@ -248,9 +254,10 @@ val make_list_grants_response :
   list_grants_response
 
 val make_list_retirable_grants_request :
+  ?retiring_service_principal:service_principal_type ->
+  ?retiring_principal:principal_id_type ->
   ?marker:marker_type ->
   ?limit:limit_type ->
-  retiring_principal:principal_id_type ->
   unit ->
   list_retirable_grants_request
 
@@ -322,6 +329,7 @@ val make_list_key_policies_request :
   list_key_policies_request
 
 val make_list_grants_request :
+  ?grantee_service_principal:service_principal_type ->
   ?grantee_principal:principal_id_type ->
   ?grant_id:grant_id_type ->
   ?marker:marker_type ->
@@ -414,6 +422,24 @@ val make_get_key_policy_response :
 
 val make_get_key_policy_request :
   ?policy_name:policy_name_type -> key_id:key_id_type -> unit -> get_key_policy_request
+
+val make_key_last_usage_data :
+  ?kms_request_id:kms_request_id_type ->
+  ?cloud_trail_event_id:cloud_trail_event_id_type ->
+  ?timestamp:date_type ->
+  ?operation:key_last_usage_tracking_operation ->
+  unit ->
+  key_last_usage_data
+
+val make_get_key_last_usage_response :
+  ?key_creation_date:date_type ->
+  ?tracking_start_date:date_type ->
+  ?key_last_usage:key_last_usage_data ->
+  ?key_id:key_id_type ->
+  unit ->
+  get_key_last_usage_response
+
+val make_get_key_last_usage_request : key_id:key_id_type -> unit -> get_key_last_usage_request
 
 val make_generate_random_response :
   ?ciphertext_for_recipient:ciphertext_type ->
@@ -638,13 +664,14 @@ val make_decrypt_response :
   decrypt_response
 
 val make_decrypt_request :
+  ?dry_run_modifiers:dry_run_modifier_list ->
   ?dry_run:nullable_boolean_type ->
   ?recipient:recipient_info ->
   ?encryption_algorithm:encryption_algorithm_spec ->
   ?key_id:key_id_type ->
   ?grant_tokens:grant_token_list ->
   ?encryption_context:encryption_context_type ->
-  ciphertext_blob:ciphertext_type ->
+  ?ciphertext_blob:ciphertext_type ->
   unit ->
   decrypt_request
 
@@ -669,13 +696,15 @@ val make_create_grant_response :
   ?grant_id:grant_id_type -> ?grant_token:grant_token_type -> unit -> create_grant_response
 
 val make_create_grant_request :
+  ?retiring_service_principal:service_principal_type ->
+  ?grantee_service_principal:service_principal_type ->
   ?dry_run:nullable_boolean_type ->
   ?name:grant_name_type ->
   ?grant_tokens:grant_token_list ->
   ?constraints:grant_constraints ->
   ?retiring_principal:principal_id_type ->
+  ?grantee_principal:principal_id_type ->
   operations:grant_operation_list ->
-  grantee_principal:principal_id_type ->
   key_id:key_id_type ->
   unit ->
   create_grant_request
@@ -686,6 +715,7 @@ val make_create_custom_key_store_response :
 val make_create_custom_key_store_request :
   ?xks_proxy_connectivity:xks_proxy_connectivity_type ->
   ?xks_proxy_authentication_credential:xks_proxy_authentication_credential_type ->
+  ?xks_proxy_vpc_endpoint_service_owner:account_id_type ->
   ?xks_proxy_vpc_endpoint_service_name:xks_proxy_vpc_endpoint_service_name_type ->
   ?xks_proxy_uri_path:xks_proxy_uri_path_type ->
   ?xks_proxy_uri_endpoint:xks_proxy_uri_endpoint_type ->

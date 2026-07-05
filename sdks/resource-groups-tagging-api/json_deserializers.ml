@@ -183,6 +183,7 @@ let resources_per_page_of_yojson = int_of_yojson
 let resource_type_filter_list_of_yojson tree path =
   list_of_yojson amazon_resource_type_of_yojson tree path
 
+let resource_type_of_yojson = string_of_yojson
 let compliance_status_of_yojson = bool_of_yojson
 
 let compliance_details_of_yojson tree path =
@@ -190,6 +191,8 @@ let compliance_details_of_yojson tree path =
   ({
      compliance_status =
        option_of_yojson (value_for_key compliance_status_of_yojson "ComplianceStatus") _list path;
+     missing_tag_keys =
+       option_of_yojson (value_for_key tag_key_list_of_yojson "MissingTagKeys") _list path;
      keys_with_noncompliant_values =
        option_of_yojson
          (value_for_key tag_key_list_of_yojson "KeysWithNoncompliantValues")
@@ -218,7 +221,55 @@ let pagination_token_expired_exception_of_yojson tree path =
   ({ message = option_of_yojson (value_for_key exception_message_of_yojson "Message") _list path }
     : pagination_token_expired_exception)
 
+let cloud_formation_resource_type_of_yojson = string_of_yojson
+
+let cloud_formation_resource_types_of_yojson tree path =
+  list_of_yojson cloud_formation_resource_type_of_yojson tree path
+
+let reporting_tag_keys_of_yojson tree path = list_of_yojson tag_key_of_yojson tree path
+
+let required_tag_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     reporting_tag_keys =
+       option_of_yojson (value_for_key reporting_tag_keys_of_yojson "ReportingTagKeys") _list path;
+     cloud_formation_resource_types =
+       option_of_yojson
+         (value_for_key cloud_formation_resource_types_of_yojson "CloudFormationResourceTypes")
+         _list path;
+     resource_type =
+       option_of_yojson (value_for_key resource_type_of_yojson "ResourceType") _list path;
+   }
+    : required_tag)
+
+let required_tags_for_list_required_tags_of_yojson tree path =
+  list_of_yojson required_tag_of_yojson tree path
+
 let pagination_token_of_yojson = string_of_yojson
+
+let list_required_tags_output_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_token = option_of_yojson (value_for_key pagination_token_of_yojson "NextToken") _list path;
+     required_tags =
+       option_of_yojson
+         (value_for_key required_tags_for_list_required_tags_of_yojson "RequiredTags")
+         _list path;
+   }
+    : list_required_tags_output)
+
+let max_results_for_list_required_tags_of_yojson = int_of_yojson
+
+let list_required_tags_input_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     max_results =
+       option_of_yojson
+         (value_for_key max_results_for_list_required_tags_of_yojson "MaxResults")
+         _list path;
+     next_token = option_of_yojson (value_for_key pagination_token_of_yojson "NextToken") _list path;
+   }
+    : list_required_tags_input)
 
 let get_tag_values_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in

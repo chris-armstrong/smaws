@@ -392,6 +392,7 @@ val make_alarm_state_information :
   state:external_alarm_state -> name:alarm_name -> unit -> alarm_state_information
 
 val make_association_description :
+  ?association_dispatch_assume_role:association_dispatch_assume_role_arn ->
   ?triggered_alarms:alarm_state_information_list ->
   ?alarm_configuration:alarm_configuration ->
   ?target_maps:target_maps ->
@@ -432,6 +433,7 @@ val make_update_association_status_request :
   update_association_status_request
 
 val make_update_association_request :
+  ?association_dispatch_assume_role:association_dispatch_assume_role_arn ->
   ?alarm_configuration:alarm_configuration ->
   ?target_maps:target_maps ->
   ?duration:duration ->
@@ -1661,6 +1663,7 @@ val make_list_associations_request :
   list_associations_request
 
 val make_association_version_info :
+  ?association_dispatch_assume_role:association_dispatch_assume_role_arn ->
   ?target_maps:target_maps ->
   ?duration:duration ->
   ?schedule_offset:schedule_offset ->
@@ -2083,6 +2086,7 @@ val make_baseline_override :
   baseline_override
 
 val make_get_deployable_patch_snapshot_for_instance_request :
+  ?use_s3_dual_stack_endpoint:boolean_ ->
   ?baseline_override:baseline_override ->
   snapshot_id:snapshot_id ->
   instance_id:instance_id ->
@@ -2758,6 +2762,7 @@ val make_create_document_request :
   create_document_request
 
 val make_create_association_request :
+  ?association_dispatch_assume_role:association_dispatch_assume_role_arn ->
   ?alarm_configuration:alarm_configuration ->
   ?tags:tag_list ->
   ?target_maps:target_maps ->
@@ -2783,7 +2788,10 @@ val make_create_association_request :
   create_association_request
 
 val make_create_association_batch_request :
-  entries:create_association_batch_request_entries -> unit -> create_association_batch_request
+  ?association_dispatch_assume_role:association_dispatch_assume_role_arn ->
+  entries:create_association_batch_request_entries ->
+  unit ->
+  create_association_batch_request
 
 val make_create_activation_request :
   ?registration_metadata:registration_metadata_list ->

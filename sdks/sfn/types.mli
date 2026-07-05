@@ -477,6 +477,8 @@ type nonrec too_many_tags = {
 
 type nonrec timeout_in_seconds = int [@@ocaml.doc ""]
 
+type nonrec test_state_state_name = string [@@ocaml.doc ""]
+
 type nonrec sensitive_data = string [@@ocaml.doc ""]
 
 type nonrec sensitive_error = string [@@ocaml.doc ""]
@@ -522,7 +524,52 @@ type nonrec inspection_data_response = {
    processing flow, and HTTP response information. The [inspectionLevel] request parameter \
    specifies which details are returned.\n"]
 
+type nonrec exception_handler_index = int [@@ocaml.doc ""]
+
+type nonrec retry_backoff_interval_seconds = int [@@ocaml.doc ""]
+
+type nonrec inspection_error_details = {
+  retry_backoff_interval_seconds : retry_backoff_interval_seconds option;
+      [@ocaml.doc
+        "The duration in seconds of the backoff for a retry on a failed state invocation.\n"]
+  retry_index : exception_handler_index option;
+      [@ocaml.doc "The array index of the Retry which handled the exception.\n"]
+  catch_index : exception_handler_index option;
+      [@ocaml.doc "The array index of the Catch which handled the exception.\n"]
+}
+[@@ocaml.doc "An object containing data about a handled exception in the tested state.\n"]
+
+type nonrec inspection_tolerated_failure_count = int [@@ocaml.doc ""]
+
+type nonrec inspection_tolerated_failure_percentage = float [@@ocaml.doc ""]
+
+type nonrec inspection_max_concurrency = int [@@ocaml.doc ""]
+
 type nonrec inspection_data = {
+  max_concurrency : inspection_max_concurrency option;
+      [@ocaml.doc "The max concurrency of the Map state.\n"]
+  tolerated_failure_percentage : inspection_tolerated_failure_percentage option;
+      [@ocaml.doc
+        "The tolerated failure threshold for a Map state as defined in percentage of Map state \
+         iterations.\n"]
+  tolerated_failure_count : inspection_tolerated_failure_count option;
+      [@ocaml.doc
+        "The tolerated failure threshold for a Map state as defined in number of Map state \
+         iterations.\n"]
+  after_items_pointer : sensitive_data option;
+      [@ocaml.doc "The effective input after the ItemsPointer filter is applied in a Map state.\n"]
+  after_item_batcher : sensitive_data option;
+      [@ocaml.doc "The effective input after the ItemBatcher filter is applied in a Map state.\n"]
+  after_item_selector : sensitive_data option;
+      [@ocaml.doc
+        "An array containing the inputs for each Map iteration, transformed by the ItemSelector \
+         specified in a Map state.\n"]
+  after_items_path : sensitive_data option;
+      [@ocaml.doc
+        "The effective input after the ItemsPath filter is applied. Not populated when the \
+         QueryLanguage is JSONata.\n"]
+  error_details : inspection_error_details option;
+      [@ocaml.doc "An object containing data about a handled exception in the tested state.\n"]
   variables : sensitive_data option;
       [@ocaml.doc
         "JSON string that contains the set of workflow variables after execution of the state. The \
@@ -577,8 +624,7 @@ type nonrec test_state_output = {
   next_state : state_name option;
       [@ocaml.doc
         "The name of the next state to transition to. If you haven't defined a next state in your \
-         definition or if the execution of the state fails, this \239\172\129eld doesn't contain a \
-         value.\n"]
+         definition or if the execution of the state fails, this field doesn't contain a value.\n"]
   inspection_data : inspection_data option;
       [@ocaml.doc
         "Returns additional details about the state's execution, including its input and output \
@@ -604,7 +650,90 @@ type nonrec inspection_level =
 
 type nonrec reveal_secrets = bool [@@ocaml.doc ""]
 
+type nonrec mock_error_output = {
+  cause : sensitive_cause option;
+      [@ocaml.doc
+        "A string containing the cause of the exception thrown when executing the state's logic.\n"]
+  error : sensitive_error option;
+      [@ocaml.doc
+        "A string denoting the error code of the exception thrown when invoking the tested state. \
+         This field is required if [mock.errorOutput] is specified.\n"]
+}
+[@@ocaml.doc "A JSON object that contains a mocked error.\n"]
+
+type nonrec mock_response_validation_mode =
+  | NONE [@ocaml.doc ""]
+  | PRESENT [@ocaml.doc ""]
+  | STRICT [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec mock_input = {
+  field_validation_mode : mock_response_validation_mode option;
+      [@ocaml.doc
+        "Determines the level of strictness when validating mocked results against their \
+         respective API models. Values include:\n\n\
+        \ {ul\n\
+        \       {-   [STRICT]: All required fields must be present, and all present fields must \
+         conform to the API's schema.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [PRESENT]: All present fields must conform to the API's schema.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [NONE]: No validation is performed.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \   If no value is specified, the default value is [STRICT].\n\
+        \   "]
+  error_output : mock_error_output option;
+      [@ocaml.doc
+        "The mocked error output when calling TestState. When specified, the mocked response is \
+         returned as a JSON object that contains an [error] and [cause] field.\n"]
+  result : sensitive_data option;
+      [@ocaml.doc "A JSON string containing the mocked result of the state invocation.\n"]
+}
+[@@ocaml.doc "A JSON object that contains a mocked [result] or [errorOutput].\n"]
+
+type nonrec retrier_retry_count = int [@@ocaml.doc ""]
+
+type nonrec map_iteration_failure_count = int [@@ocaml.doc ""]
+
+type nonrec test_state_configuration = {
+  map_item_reader_data : sensitive_data option;
+      [@ocaml.doc
+        "The data read by ItemReader in Distributed Map states as found in its original source.\n"]
+  map_iteration_failure_count : map_iteration_failure_count option;
+      [@ocaml.doc
+        "The number of Map state iterations that failed during the Map state invocation.\n"]
+  error_caused_by_state : test_state_state_name option;
+      [@ocaml.doc
+        "The name of the state from which an error originates when an error is mocked for a Map or \
+         Parallel state.\n"]
+  retrier_retry_count : retrier_retry_count option;
+      [@ocaml.doc
+        "The number of retry attempts that have occurred for the state's Retry that applies to the \
+         mocked error.\n"]
+}
+[@@ocaml.doc "Contains configurations for the tested state.\n"]
+
 type nonrec test_state_input = {
+  state_configuration : test_state_configuration option;
+      [@ocaml.doc "Contains configurations for the state under test.\n"]
+  context : sensitive_data option;
+      [@ocaml.doc
+        "A JSON string representing a valid Context object for the state under test. This field \
+         may only be specified if a mock is specified in the same request.\n"]
+  mock : mock_input option;
+      [@ocaml.doc
+        "Defines a mocked result or error for the state under test.\n\n\
+        \ A mock can only be specified for Task, Map, or Parallel states. If it is specified for \
+         another state type, an exception will be thrown.\n\
+        \ "]
+  state_name : test_state_state_name option;
+      [@ocaml.doc
+        "Denotes the particular state within a state machine definition to be tested. If this \
+         field is specified, the [definition] must contain a fully-formed state machine definition.\n"]
   variables : sensitive_data option;
       [@ocaml.doc
         "JSON object literal that sets variables used in the state under test. Object keys are the \
@@ -655,7 +784,7 @@ type nonrec test_state_input = {
       [@ocaml.doc
         "The \
          {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html}Amazon \
-         States Language} (ASL) definition of the state.\n"]
+         States Language} (ASL) definition of the state or state machine.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -890,7 +1019,13 @@ type nonrec state_machine_list_item = {
         \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
         \            \n\
         \             }\n\
-        \        {-  control characters ([U+0000-001F], [U+007F-009F])\n\
+        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  surrogates ([U+D800-DFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  invalid characters ([ U+10FFFF])\n\
         \            \n\
         \             }\n\
         \        }\n\
@@ -965,7 +1100,13 @@ type nonrec state_exited_event_details = {
         \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
         \            \n\
         \             }\n\
-        \        {-  control characters ([U+0000-001F], [U+007F-009F])\n\
+        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  surrogates ([U+D800-DFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  invalid characters ([ U+10FFFF])\n\
         \            \n\
         \             }\n\
         \        }\n\
@@ -1012,7 +1153,15 @@ type nonrec start_sync_execution_output = {
         "An object that describes workflow billing details, including billed duration and memory \
          use.\n"]
   trace_header : trace_header option;
-      [@ocaml.doc "The X-Ray trace header that was passed to the execution.\n"]
+      [@ocaml.doc
+        "The X-Ray trace header that was passed to the execution.\n\n\
+        \   For X-Ray traces, all Amazon Web Services services use the [X-Amzn-Trace-Id] header \
+         from the HTTP request. Using the header is the preferred mechanism to identify a trace. \
+         [StartExecution] and [StartSyncExecution] API operations can also use [traceHeader] from \
+         the body of the request payload. If {b both} sources are provided, Step Functions will \
+         use the {b header value} (preferred) over the value in the request body. \n\
+        \  \n\
+        \   "]
   output_details : cloud_watch_events_execution_data_details option; [@ocaml.doc ""]
   output : sensitive_data option;
       [@ocaml.doc
@@ -1053,14 +1202,22 @@ type nonrec start_sync_execution_input = {
          definition.\n"]
   trace_header : trace_header option;
       [@ocaml.doc
-        "Passes the X-Ray trace header. The trace header can also be passed in the request payload.\n"]
+        "Passes the X-Ray trace header. The trace header can also be passed in the request \
+         payload.\n\n\
+        \   For X-Ray traces, all Amazon Web Services services use the [X-Amzn-Trace-Id] header \
+         from the HTTP request. Using the header is the preferred mechanism to identify a trace. \
+         [StartExecution] and [StartSyncExecution] API operations can also use [traceHeader] from \
+         the body of the request payload. If {b both} sources are provided, Step Functions will \
+         use the {b header value} (preferred) over the value in the request body. \n\
+        \  \n\
+        \   "]
   input : sensitive_data option;
       [@ocaml.doc
         "The string that contains the JSON input data for the execution, for example:\n\n\
-        \  [\"input\": \"{\\\"first_name\\\" : \\\"test\\\"}\"] \n\
+        \  [\"{\\\"first_name\\\" : \\\"Alejandro\\\"}\"] \n\
         \ \n\
         \   If you don't include any JSON input data, you still must include the two braces, for \
-         example: [\"input\": \"{}\"] \n\
+         example: [\"{}\"] \n\
         \   \n\
         \     Length constraints apply to the payload size, and are expressed as bytes in UTF-8 \
          encoding.\n\
@@ -1083,14 +1240,22 @@ type nonrec start_execution_output = {
 type nonrec start_execution_input = {
   trace_header : trace_header option;
       [@ocaml.doc
-        "Passes the X-Ray trace header. The trace header can also be passed in the request payload.\n"]
+        "Passes the X-Ray trace header. The trace header can also be passed in the request \
+         payload.\n\n\
+        \   For X-Ray traces, all Amazon Web Services services use the [X-Amzn-Trace-Id] header \
+         from the HTTP request. Using the header is the preferred mechanism to identify a trace. \
+         [StartExecution] and [StartSyncExecution] API operations can also use [traceHeader] from \
+         the body of the request payload. If {b both} sources are provided, Step Functions will \
+         use the {b header value} (preferred) over the value in the request body. \n\
+        \  \n\
+        \   "]
   input : sensitive_data option;
       [@ocaml.doc
         "The string that contains the JSON input data for the execution, for example:\n\n\
-        \  [\"input\": \"{\\\"first_name\\\" : \\\"test\\\"}\"] \n\
+        \  [\"{\\\"first_name\\\" : \\\"Alejandro\\\"}\"] \n\
         \ \n\
         \   If you don't include any JSON input data, you still must include the two braces, for \
-         example: [\"input\": \"{}\"] \n\
+         example: [\"{}\"] \n\
         \   \n\
         \     Length constraints apply to the payload size, and are expressed as bytes in UTF-8 \
          encoding.\n\
@@ -1119,7 +1284,13 @@ type nonrec start_execution_input = {
         \         {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
         \             \n\
         \              }\n\
-        \         {-  control characters ([U+0000-001F], [U+007F-009F])\n\
+        \         {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \             \n\
+        \              }\n\
+        \         {-  surrogates ([U+D800-DFFF])\n\
+        \             \n\
+        \              }\n\
+        \         {-  invalid characters ([ U+10FFFF])\n\
         \             \n\
         \              }\n\
         \         }\n\
@@ -1680,7 +1851,13 @@ type nonrec execution_list_item = {
         \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
         \            \n\
         \             }\n\
-        \        {-  control characters ([U+0000-001F], [U+007F-009F])\n\
+        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  surrogates ([U+D800-DFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  invalid characters ([ U+10FFFF])\n\
         \            \n\
         \             }\n\
         \        }\n\
@@ -1750,7 +1927,15 @@ type nonrec list_executions_input = {
   status_filter : execution_status option;
       [@ocaml.doc
         "If specified, only list the executions whose current execution status matches the given \
-         filter.\n"]
+         filter.\n\n\
+        \ If you provide a [PENDING_REDRIVE] statusFilter, you must specify [mapRunArn]. For more \
+         information, see \
+         {{:https://docs.aws.amazon.com/step-functions/latest/dg/redrive-map-run.html#redrive-child-workflow-behavior}Child \
+         workflow execution redrive behaviour} in the {i Step Functions Developer Guide}. \n\
+        \ \n\
+        \  If you provide a stateMachineArn and a [PENDING_REDRIVE] statusFilter, the API returns \
+         a validation exception.\n\
+        \  "]
   state_machine_arn : arn option;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) of the state machine whose executions is listed.\n\n\
@@ -1785,7 +1970,13 @@ type nonrec activity_list_item = {
         \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
         \            \n\
         \             }\n\
-        \        {-  control characters ([U+0000-001F], [U+007F-009F])\n\
+        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  surrogates ([U+D800-DFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  invalid characters ([ U+10FFFF])\n\
         \            \n\
         \             }\n\
         \        }\n\
@@ -2163,7 +2354,11 @@ type nonrec history_event = {
   id : event_id;
       [@ocaml.doc "The id of the event. Events are numbered sequentially, starting at one.\n"]
   type_ : history_event_type; [@ocaml.doc "The type of the event.\n"]
-  timestamp : timestamp; [@ocaml.doc "The date and time the event occurred.\n"]
+  timestamp : timestamp;
+      [@ocaml.doc
+        "The date and time the event occurred, expressed in seconds and fractional milliseconds \
+         since the Unix epoch, which is defined as January 1, 1970, at 00:00:00 Coordinated \
+         Universal Time (UTC).\n"]
 }
 [@@ocaml.doc "Contains details about the events of an execution.\n"]
 
@@ -2307,7 +2502,13 @@ type nonrec describe_state_machine_output = {
         \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
         \            \n\
         \             }\n\
-        \        {-  control characters ([U+0000-001F], [U+007F-009F])\n\
+        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  surrogates ([U+D800-DFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  invalid characters ([ U+10FFFF])\n\
         \            \n\
         \             }\n\
         \        }\n\
@@ -2364,9 +2565,9 @@ type nonrec describe_state_machine_for_execution_output = {
         \ "]
   label : map_run_label option;
       [@ocaml.doc
-        "A user-defined or an auto-generated string that identifies a [Map] state. This \
-         \239\172\129eld is returned only if the [executionArn] is a child workflow execution that \
-         was started by a Distributed Map state.\n"]
+        "A user-defined or an auto-generated string that identifies a [Map] state. This field is \
+         returned only if the [executionArn] is a child workflow execution that was started by a \
+         Distributed Map state.\n"]
   map_run_arn : long_arn option;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) of the Map Run that started the child workflow execution. \
@@ -2576,7 +2777,15 @@ type nonrec describe_execution_output = {
       [@ocaml.doc
         "The Amazon Resource Name (ARN) that identifies a Map Run, which dispatched this execution.\n"]
   trace_header : trace_header option;
-      [@ocaml.doc "The X-Ray trace header that was passed to the execution.\n"]
+      [@ocaml.doc
+        "The X-Ray trace header that was passed to the execution.\n\n\
+        \   For X-Ray traces, all Amazon Web Services services use the [X-Amzn-Trace-Id] header \
+         from the HTTP request. Using the header is the preferred mechanism to identify a trace. \
+         [StartExecution] and [StartSyncExecution] API operations can also use [traceHeader] from \
+         the body of the request payload. If {b both} sources are provided, Step Functions will \
+         use the {b header value} (preferred) over the value in the request body. \n\
+        \  \n\
+        \   "]
   output_details : cloud_watch_events_execution_data_details option; [@ocaml.doc ""]
   output : sensitive_data option;
       [@ocaml.doc
@@ -2613,7 +2822,13 @@ type nonrec describe_execution_output = {
         \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
         \            \n\
         \             }\n\
-        \        {-  control characters ([U+0000-001F], [U+007F-009F])\n\
+        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  surrogates ([U+D800-DFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  invalid characters ([ U+10FFFF])\n\
         \            \n\
         \             }\n\
         \        }\n\
@@ -2659,7 +2874,13 @@ type nonrec describe_activity_output = {
         \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
         \            \n\
         \             }\n\
-        \        {-  control characters ([U+0000-001F], [U+007F-009F])\n\
+        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  surrogates ([U+D800-DFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  invalid characters ([ U+10FFFF])\n\
         \            \n\
         \             }\n\
         \        }\n\
@@ -2781,7 +3002,13 @@ type nonrec create_state_machine_input = {
         \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
         \            \n\
         \             }\n\
-        \        {-  control characters ([U+0000-001F], [U+007F-009F])\n\
+        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  surrogates ([U+D800-DFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  invalid characters ([ U+10FFFF])\n\
         \            \n\
         \             }\n\
         \        }\n\
@@ -2862,7 +3089,13 @@ type nonrec create_activity_input = {
         \        {-  special characters [\" # % \\ ^ | ~ ` $ & , ; : /] \n\
         \            \n\
         \             }\n\
-        \        {-  control characters ([U+0000-001F], [U+007F-009F])\n\
+        \        {-  control characters ([U+0000-001F], [U+007F-009F], [U+FFFE-FFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  surrogates ([U+D800-DFFF])\n\
+        \            \n\
+        \             }\n\
+        \        {-  invalid characters ([ U+10FFFF])\n\
         \            \n\
         \             }\n\
         \        }\n\

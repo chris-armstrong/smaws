@@ -160,7 +160,10 @@ val make_captcha_action : ?custom_request_handling:custom_request_handling -> un
 val make_challenge_action :
   ?custom_request_handling:custom_request_handling -> unit -> challenge_action
 
+val make_monetize_action : ?price_multiplier:price_multiplier -> unit -> monetize_action
+
 val make_rule_action :
+  ?monetize:monetize_action ->
   ?challenge:challenge_action ->
   ?captcha:captcha_action ->
   ?count:count_action ->
@@ -494,8 +497,22 @@ val make_application_attribute :
   ?values:attribute_values -> ?name:attribute_name -> unit -> application_attribute
 
 val make_application_config : ?attributes:application_attributes -> unit -> application_config
+val make_price : currency:crypto_currency -> amount:price_amount -> unit -> price
+
+val make_payment_network :
+  prices:prices ->
+  wallet_address:wallet_address ->
+  chain:blockchain_chain ->
+  unit ->
+  payment_network
+
+val make_crypto_config : payment_networks:payment_networks -> unit -> crypto_config
+
+val make_monetization_config :
+  ?currency_mode:currency_mode -> ?crypto_config:crypto_config -> unit -> monetization_config
 
 val make_web_ac_l :
+  ?monetization_config:monetization_config ->
   ?application_config:application_config ->
   ?on_source_d_do_s_protection_config:on_source_d_do_s_protection_config ->
   ?retrofitted_by_firewall_manager:boolean_ ->
@@ -520,6 +537,12 @@ val make_web_ac_l :
   unit ->
   web_ac_l
 
+val make_disallowed_feature :
+  ?required_pricing_plan:required_pricing_plan_name ->
+  ?feature:pricing_plan_feature_name ->
+  unit ->
+  disallowed_feature
+
 val make_version_to_publish :
   ?forecasted_lifetime:time_window_day ->
   ?associated_rule_group_arn:resource_arn ->
@@ -529,6 +552,8 @@ val make_version_to_publish :
 val make_update_web_acl_response : ?next_lock_token:lock_token -> unit -> update_web_acl_response
 
 val make_update_web_acl_request :
+  ?monetization_config:monetization_config ->
+  ?application_config:application_config ->
   ?on_source_d_do_s_protection_config:on_source_d_do_s_protection_config ->
   ?association_config:association_config ->
   ?token_domains:token_domains ->
@@ -551,6 +576,7 @@ val make_update_rule_group_response :
   ?next_lock_token:lock_token -> unit -> update_rule_group_response
 
 val make_update_rule_group_request :
+  ?monetization_config:monetization_config ->
   ?custom_response_bodies:custom_response_bodies ->
   ?rules:rules ->
   ?description:entity_description ->
@@ -619,6 +645,40 @@ val make_tag_resource_request :
 val make_tag_info_for_resource :
   ?tag_list:tag_list -> ?resource_ar_n:resource_arn -> unit -> tag_info_for_resource
 
+val make_source_statistics :
+  ?group_by_value:filter_string ->
+  ?verified:verified_status ->
+  ?organization:filter_string ->
+  ?intent:filter_string ->
+  ?source_category:filter_string ->
+  request_count:request_count ->
+  amount:monetization_amount_value ->
+  percentage:percentage_value ->
+  source_name:filter_string ->
+  unit ->
+  source_statistics
+
+val make_settlement_record :
+  ?request_timestamp:timestamp ->
+  ?web_acl_arn:resource_arn ->
+  ?content_path:filter_string ->
+  ?verified:verified_status ->
+  ?intent:filter_string ->
+  ?source_category:filter_string ->
+  ?organization:filter_string ->
+  ?source_name:filter_string ->
+  ?request_id:settlement_filter_string ->
+  ?transaction_id:settlement_id_string ->
+  ?network:settlement_filter_string ->
+  ?currency:currency ->
+  ?wallet_address:settlement_filter_string ->
+  ?payer_address:settlement_filter_string ->
+  amount:monetization_amount_value ->
+  status:settlement_status ->
+  timestamp:timestamp ->
+  unit ->
+  settlement_record
+
 val make_http_header : ?value:header_value -> ?name:header_name -> unit -> http_header
 
 val make_http_request :
@@ -674,6 +734,7 @@ val make_rule_group_summary :
 val make_label_summary : ?name:label_name -> unit -> label_summary
 
 val make_rule_group :
+  ?monetization_config:monetization_config ->
   ?consumed_labels:label_summaries ->
   ?available_labels:label_summaries ->
   ?custom_response_bodies:custom_response_bodies ->
@@ -687,6 +748,24 @@ val make_rule_group :
   name:entity_name ->
   unit ->
   rule_group
+
+val make_revenue_path_statistics :
+  request_count:request_count ->
+  amount:monetization_amount_value ->
+  percentage:percentage_value ->
+  path:path_string ->
+  unit ->
+  revenue_path_statistics
+
+val make_revenue_breakdown :
+  ?total_monetize_served:request_count ->
+  ?total_settled:request_count ->
+  ?currency:currency ->
+  ?unverified_amount:monetization_amount_value ->
+  ?verified_amount:monetization_amount_value ->
+  ?total_amount:monetization_amount_value ->
+  unit ->
+  revenue_breakdown
 
 val make_release_summary :
   ?timestamp:timestamp -> ?release_version:version_key_string -> unit -> release_summary
@@ -779,6 +858,35 @@ val make_managed_rule_set_version :
   unit ->
   managed_rule_set_version
 
+val make_filter_source :
+  ?bot_name:filter_string ->
+  ?bot_organization:filter_string ->
+  ?bot_category:filter_string ->
+  unit ->
+  filter_source
+
+val make_bot_statistics :
+  percentage:percentage_value ->
+  request_count:request_count ->
+  bot_name:filter_string ->
+  unit ->
+  bot_statistics
+
+val make_path_statistics :
+  ?top_bots:bot_statistics_list ->
+  ?source:filter_source ->
+  percentage:percentage_value ->
+  request_count:request_count ->
+  path:path_string ->
+  unit ->
+  path_statistics
+
+val make_monetization_filter :
+  values:monetization_filter_value_list ->
+  name:monetization_filter_name ->
+  unit ->
+  monetization_filter
+
 val make_mobile_sdk_release :
   ?tags:tag_list ->
   ?release_notes:release_notes ->
@@ -854,6 +962,24 @@ val make_list_tags_for_resource_request :
   resource_ar_n:resource_arn ->
   unit ->
   list_tags_for_resource_request
+
+val make_list_settlement_records_response :
+  ?next_marker:next_marker ->
+  ?settlements:settlement_record_list ->
+  unit ->
+  list_settlement_records_response
+
+val make_list_settlement_records_request :
+  ?next_marker:next_marker ->
+  ?limit:settlement_record_limit ->
+  ?sort_order:sort_order ->
+  ?sort_by:settlement_sort_by ->
+  ?filters:monetization_filter_list ->
+  currency:currency ->
+  scope:scope ->
+  time_window:time_window ->
+  unit ->
+  list_settlement_records_request
 
 val make_list_rule_groups_response :
   ?rule_groups:rule_group_summaries -> ?next_marker:next_marker -> unit -> list_rule_groups_response
@@ -1024,6 +1150,28 @@ val make_get_web_acl_for_resource_response :
 val make_get_web_acl_for_resource_request :
   resource_arn:resource_arn -> unit -> get_web_acl_for_resource_request
 
+val make_get_top_path_statistics_by_traffic_response :
+  ?top_categories:path_statistics_list ->
+  ?next_marker:next_marker ->
+  total_request_count:request_count ->
+  path_statistics:path_statistics_list ->
+  unit ->
+  get_top_path_statistics_by_traffic_response
+
+val make_get_top_path_statistics_by_traffic_request :
+  ?next_marker:next_marker ->
+  ?bot_name:filter_string ->
+  ?bot_organization:filter_string ->
+  ?bot_category:filter_string ->
+  ?uri_path_prefix:uri_path_prefix_string ->
+  number_of_top_traffic_bots_per_path:number_of_top_traffic_bots_per_path ->
+  limit:path_statistics_limit ->
+  time_window:time_window ->
+  scope:scope ->
+  web_acl_arn:resource_arn ->
+  unit ->
+  get_top_path_statistics_by_traffic_request
+
 val make_get_sampled_requests_response :
   ?time_window:time_window ->
   ?population_size:population_size ->
@@ -1050,6 +1198,68 @@ val make_get_rule_group_request :
   ?name:entity_name ->
   unit ->
   get_rule_group_request
+
+val make_data_point_entry :
+  ?group_by_value:filter_string ->
+  ?intent:filter_string ->
+  ?category:filter_string ->
+  ?total_amount:monetization_amount_value ->
+  ?settled_count:request_count ->
+  ?monetize_served_count:request_count ->
+  ?date:timestamp ->
+  unit ->
+  data_point_entry
+
+val make_get_revenue_statistics_time_series_response :
+  ?next_marker:next_marker ->
+  ?data_points:data_points_list ->
+  unit ->
+  get_revenue_statistics_time_series_response
+
+val make_get_revenue_statistics_time_series_request :
+  ?next_marker:next_marker ->
+  ?limit:max_data_points ->
+  ?filters:monetization_filter_list ->
+  ?group_by:group_by_type ->
+  currency:currency ->
+  interval:interval_type ->
+  scope:scope ->
+  time_window:time_window ->
+  statistic_type:time_series_statistic_type ->
+  unit ->
+  get_revenue_statistics_time_series_request
+
+val make_get_revenue_statistics_summary_response :
+  ?revenue_breakdown:revenue_breakdown -> unit -> get_revenue_statistics_summary_response
+
+val make_get_revenue_statistics_summary_request :
+  ?filters:monetization_filter_list ->
+  currency:currency ->
+  scope:scope ->
+  time_window:time_window ->
+  unit ->
+  get_revenue_statistics_summary_request
+
+val make_get_revenue_statistics_response :
+  ?next_marker:next_marker ->
+  ?revenue_path_statistics:revenue_path_statistics_list ->
+  ?source_statistics:source_statistics_list ->
+  unit ->
+  get_revenue_statistics_response
+
+val make_get_revenue_statistics_request :
+  ?sort_order:sort_order ->
+  ?sort_by:ranking_sort_by ->
+  ?limit:path_statistics_limit ->
+  ?next_marker:next_marker ->
+  ?filters:monetization_filter_list ->
+  ?group_by:group_by_type ->
+  currency:currency ->
+  scope:scope ->
+  time_window:time_window ->
+  statistic_type:ranking_statistic_type ->
+  unit ->
+  get_revenue_statistics_request
 
 val make_get_regex_pattern_set_response :
   ?lock_token:lock_token ->
@@ -1236,6 +1446,7 @@ val make_delete_api_key_request : api_key:api_key -> scope:scope -> unit -> dele
 val make_create_web_acl_response : ?summary:web_acl_summary -> unit -> create_web_acl_response
 
 val make_create_web_acl_request :
+  ?monetization_config:monetization_config ->
   ?application_config:application_config ->
   ?on_source_d_do_s_protection_config:on_source_d_do_s_protection_config ->
   ?association_config:association_config ->
@@ -1258,6 +1469,7 @@ val make_create_rule_group_response :
   ?summary:rule_group_summary -> unit -> create_rule_group_response
 
 val make_create_rule_group_request :
+  ?monetization_config:monetization_config ->
   ?custom_response_bodies:custom_response_bodies ->
   ?tags:tag_list ->
   ?rules:rules ->
@@ -1309,9 +1521,12 @@ val make_associate_web_acl_request :
 module AssociateWebACL : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFFeatureNotIncludedInPricingPlanException of
+      waf_feature_not_included_in_pricing_plan_exception
     | `WAFInternalErrorException of waf_internal_error_exception
     | `WAFInvalidOperationException of waf_invalid_operation_exception
     | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
     | `WAFNonexistentItemException of waf_nonexistent_item_exception
     | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] ->
     string
@@ -1321,9 +1536,12 @@ module AssociateWebACL : sig
     associate_web_acl_request ->
     ( associate_web_acl_response,
       [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFFeatureNotIncludedInPricingPlanException of
+        waf_feature_not_included_in_pricing_plan_exception
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] )
     result
@@ -2236,6 +2454,87 @@ module GetRegexPatternSet : sig
 end
 [@@ocaml.doc "Retrieves the specified [RegexPatternSet].\n"]
 
+module GetRevenueStatistics : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_revenue_statistics_request ->
+    ( get_revenue_statistics_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves ranked monetization statistics. Use the [StatisticType] parameter to specify the \
+   ranking: [TOP_SOURCES_BY_REVENUE] for top sources by revenue, or [TOP_PATHS_BY_REVENUE] for top \
+   content paths by revenue. This operation is only available for [CLOUDFRONT] scope. The maximum \
+   supported time window is 90 days. When no [CurrencyMode] filter is provided, results default to \
+   [REAL]. To retrieve test data, include a [CurrencyMode] filter with the value [TEST].\n"]
+
+module GetRevenueStatisticsSummary : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_revenue_statistics_summary_request ->
+    ( get_revenue_statistics_summary_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves a summary of monetization revenue for the specified time window. Returns total \
+   revenue, revenue by verification tier, total settlements, and total HTTP 402 responses served. \
+   This operation is only available for [CLOUDFRONT] scope. The maximum supported time window is \
+   90 days. When no [CurrencyMode] filter is provided, results default to [REAL]. To retrieve test \
+   data, include a [CurrencyMode] filter with the value [TEST].\n"]
+
+module GetRevenueStatisticsTimeSeries : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_revenue_statistics_time_series_request ->
+    ( get_revenue_statistics_time_series_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves time series data for monetization revenue. Returns data points aggregated at the \
+   specified interval for the given time window. This operation is only available for [CLOUDFRONT] \
+   scope. The maximum supported time window is 90 days. When no [CurrencyMode] filter is provided, \
+   results default to [REAL]. To retrieve test data, include a [CurrencyMode] filter with the \
+   value [TEST].\n"]
+
 module GetRuleGroup : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -2287,6 +2586,37 @@ end
    range. This new time range indicates the actual period during which WAF selected the requests \
    in the sample.\n\
   \ "]
+
+module GetTopPathStatisticsByTraffic : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFFeatureNotIncludedInPricingPlanException of
+      waf_feature_not_included_in_pricing_plan_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_top_path_statistics_by_traffic_request ->
+    ( get_top_path_statistics_by_traffic_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFFeatureNotIncludedInPricingPlanException of
+        waf_feature_not_included_in_pricing_plan_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves aggregated statistics about the top URI paths accessed by bot traffic for a specified \
+   web ACL and time window. You can use this operation to analyze which paths on your web \
+   application receive the most bot traffic and identify the specific bots accessing those paths. \
+   The operation supports filtering by bot category, organization, or name, and allows you to \
+   drill down into specific path prefixes to view detailed URI-level statistics.\n"]
 
 module GetWebACL : sig
   val error_to_string :
@@ -2602,6 +2932,33 @@ end
 [@@ocaml.doc
   "Retrieves an array of [RuleGroupSummary] objects for the rule groups that you manage. \n"]
 
+module ListSettlementRecords : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_settlement_records_request ->
+    ( list_settlement_records_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves individual settlement transaction records for monetization. Each record represents a \
+   single payment transaction between a client and your protected resource. This operation is only \
+   available for [CLOUDFRONT] scope. The maximum supported time window is 90 days. When no \
+   [CurrencyMode] filter is provided, results default to [REAL]. To retrieve test data, include a \
+   [CurrencyMode] filter with the value [TEST].\n"]
+
 module ListTagsForResource : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -2659,6 +3016,8 @@ end
 module PutLoggingConfiguration : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFFeatureNotIncludedInPricingPlanException of
+      waf_feature_not_included_in_pricing_plan_exception
     | `WAFInternalErrorException of waf_internal_error_exception
     | `WAFInvalidOperationException of waf_invalid_operation_exception
     | `WAFInvalidParameterException of waf_invalid_parameter_exception
@@ -2674,6 +3033,8 @@ module PutLoggingConfiguration : sig
     put_logging_configuration_request ->
     ( put_logging_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFFeatureNotIncludedInPricingPlanException of
+        waf_feature_not_included_in_pricing_plan_exception
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
@@ -3166,6 +3527,8 @@ module UpdateWebACL : sig
     | `WAFDuplicateItemException of waf_duplicate_item_exception
     | `WAFExpiredManagedRuleGroupVersionException of
       waf_expired_managed_rule_group_version_exception
+    | `WAFFeatureNotIncludedInPricingPlanException of
+      waf_feature_not_included_in_pricing_plan_exception
     | `WAFInternalErrorException of waf_internal_error_exception
     | `WAFInvalidOperationException of waf_invalid_operation_exception
     | `WAFInvalidParameterException of waf_invalid_parameter_exception
@@ -3186,6 +3549,8 @@ module UpdateWebACL : sig
       | `WAFDuplicateItemException of waf_duplicate_item_exception
       | `WAFExpiredManagedRuleGroupVersionException of
         waf_expired_managed_rule_group_version_exception
+      | `WAFFeatureNotIncludedInPricingPlanException of
+        waf_feature_not_included_in_pricing_plan_exception
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception

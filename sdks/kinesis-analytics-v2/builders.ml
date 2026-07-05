@@ -453,7 +453,14 @@ let make_application_system_rollback_configuration_description
     ~rollback_enabled:(rollback_enabled_ : boolean_object) () =
   ({ rollback_enabled = rollback_enabled_ } : application_system_rollback_configuration_description)
 
+let make_application_encryption_configuration_description ?key_id:(key_id_ : key_id option)
+    ~key_type:(key_type_ : key_type) () =
+  ({ key_type = key_type_; key_id = key_id_ } : application_encryption_configuration_description)
+
 let make_application_configuration_description
+    ?application_encryption_configuration_description:
+      (application_encryption_configuration_description_ :
+         application_encryption_configuration_description option)
     ?zeppelin_application_configuration_description:
       (zeppelin_application_configuration_description_ :
          zeppelin_application_configuration_description option)
@@ -479,6 +486,8 @@ let make_application_configuration_description
       (sql_application_configuration_description_ : sql_application_configuration_description option)
     () =
   ({
+     application_encryption_configuration_description =
+       application_encryption_configuration_description_;
      zeppelin_application_configuration_description =
        zeppelin_application_configuration_description_;
      vpc_configuration_descriptions = vpc_configuration_descriptions_;
@@ -776,7 +785,15 @@ let make_application_system_rollback_configuration_update
   ({ rollback_enabled_update = rollback_enabled_update_ }
     : application_system_rollback_configuration_update)
 
+let make_application_encryption_configuration_update ?key_id_update:(key_id_update_ : key_id option)
+    ~key_type_update:(key_type_update_ : key_type) () =
+  ({ key_type_update = key_type_update_; key_id_update = key_id_update_ }
+    : application_encryption_configuration_update)
+
 let make_application_configuration_update
+    ?application_encryption_configuration_update:
+      (application_encryption_configuration_update_ :
+         application_encryption_configuration_update option)
     ?zeppelin_application_configuration_update:
       (zeppelin_application_configuration_update_ : zeppelin_application_configuration_update option)
     ?vpc_configuration_updates:(vpc_configuration_updates_ : vpc_configuration_updates option)
@@ -794,6 +811,7 @@ let make_application_configuration_update
     ?sql_application_configuration_update:
       (sql_application_configuration_update_ : sql_application_configuration_update option) () =
   ({
+     application_encryption_configuration_update = application_encryption_configuration_update_;
      zeppelin_application_configuration_update = zeppelin_application_configuration_update_;
      vpc_configuration_updates = vpc_configuration_updates_;
      application_system_rollback_configuration_update =
@@ -1008,12 +1026,18 @@ let make_sql_application_configuration
   ({ reference_data_sources = reference_data_sources_; outputs = outputs_; inputs = inputs_ }
     : sql_application_configuration)
 
-let make_snapshot_details ?runtime_environment:(runtime_environment_ : runtime_environment option)
+let make_snapshot_details
+    ?application_encryption_configuration_description:
+      (application_encryption_configuration_description_ :
+         application_encryption_configuration_description option)
+    ?runtime_environment:(runtime_environment_ : runtime_environment option)
     ?snapshot_creation_timestamp:(snapshot_creation_timestamp_ : timestamp option)
     ~application_version_id:(application_version_id_ : application_version_id)
     ~snapshot_status:(snapshot_status_ : snapshot_status)
     ~snapshot_name:(snapshot_name_ : snapshot_name) () =
   ({
+     application_encryption_configuration_description =
+       application_encryption_configuration_description_;
      runtime_environment = runtime_environment_;
      snapshot_creation_timestamp = snapshot_creation_timestamp_;
      application_version_id = application_version_id_;
@@ -1462,7 +1486,13 @@ let make_application_system_rollback_configuration
     ~rollback_enabled:(rollback_enabled_ : boolean_object) () =
   ({ rollback_enabled = rollback_enabled_ } : application_system_rollback_configuration)
 
+let make_application_encryption_configuration ?key_id:(key_id_ : key_id option)
+    ~key_type:(key_type_ : key_type) () =
+  ({ key_type = key_type_; key_id = key_id_ } : application_encryption_configuration)
+
 let make_application_configuration
+    ?application_encryption_configuration:
+      (application_encryption_configuration_ : application_encryption_configuration option)
     ?zeppelin_application_configuration:
       (zeppelin_application_configuration_ : zeppelin_application_configuration option)
     ?vpc_configurations:(vpc_configurations_ : vpc_configurations option)
@@ -1478,6 +1508,7 @@ let make_application_configuration
     ?sql_application_configuration:
       (sql_application_configuration_ : sql_application_configuration option) () =
   ({
+     application_encryption_configuration = application_encryption_configuration_;
      zeppelin_application_configuration = zeppelin_application_configuration_;
      vpc_configurations = vpc_configurations_;
      application_system_rollback_configuration = application_system_rollback_configuration_;

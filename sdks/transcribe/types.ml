@@ -26,6 +26,7 @@ type nonrec language_code =
   | SW_BI [@ocaml.doc ""]
   | SU_ID [@ocaml.doc ""]
   | SR_RS [@ocaml.doc ""]
+  | SQ_AL [@ocaml.doc ""]
   | SO_SO [@ocaml.doc ""]
   | SL_SI [@ocaml.doc ""]
   | SK_SK [@ocaml.doc ""]
@@ -36,6 +37,7 @@ type nonrec language_code =
   | PL_PL [@ocaml.doc ""]
   | PA_IN [@ocaml.doc ""]
   | OR_IN [@ocaml.doc ""]
+  | NE_NP [@ocaml.doc ""]
   | NO_NO [@ocaml.doc ""]
   | MT_MT [@ocaml.doc ""]
   | MR_IN [@ocaml.doc ""]
@@ -92,16 +94,24 @@ type nonrec language_code =
   | PT_BR [@ocaml.doc ""]
   | NL_NL [@ocaml.doc ""]
   | MS_MY [@ocaml.doc ""]
+  | MY_MM [@ocaml.doc ""]
   | KO_KR [@ocaml.doc ""]
+  | KM_KH [@ocaml.doc ""]
+  | JV_ID [@ocaml.doc ""]
   | JA_JP [@ocaml.doc ""]
   | IT_IT [@ocaml.doc ""]
   | ID_ID [@ocaml.doc ""]
+  | HT_HT [@ocaml.doc ""]
   | HI_IN [@ocaml.doc ""]
   | HE_IL [@ocaml.doc ""]
+  | GD_GB [@ocaml.doc ""]
+  | GA_IE [@ocaml.doc ""]
   | FR_FR [@ocaml.doc ""]
   | FR_CA [@ocaml.doc ""]
   | FA_IR [@ocaml.doc ""]
+  | FA_AF [@ocaml.doc ""]
   | ES_US [@ocaml.doc ""]
+  | ES_MX [@ocaml.doc ""]
   | ES_ES [@ocaml.doc ""]
   | EN_WL [@ocaml.doc ""]
   | EN_US [@ocaml.doc ""]
@@ -113,6 +123,8 @@ type nonrec language_code =
   | DE_DE [@ocaml.doc ""]
   | DE_CH [@ocaml.doc ""]
   | DA_DK [@ocaml.doc ""]
+  | CY_GB [@ocaml.doc ""]
+  | AM_ET [@ocaml.doc ""]
   | AR_SA [@ocaml.doc ""]
   | AR_AE [@ocaml.doc ""]
   | AF_ZA [@ocaml.doc ""]
@@ -1721,48 +1733,21 @@ type nonrec start_transcription_job_request = {
          keys in KMS}.\n"]
   output_encryption_kms_key_id : kms_key_id option;
       [@ocaml.doc
-        "The KMS key you want to use to encrypt your transcription output.\n\n\
-        \ If using a key located in the {b current} Amazon Web Services account, you can specify \
-         your KMS key in one of four ways:\n\
+        "The Amazon Resource Name (ARN) of a KMS key that you want to use to encrypt your \
+         transcription output.\n\n\
+        \ KMS key ARNs have the format [arn:partition:kms:region:account:key/key-id]. For example: \
+         [arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab]. For more \
+         information, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN} \
+         KMS key ARNs}.\n\
         \ \n\
-        \  {ol\n\
-        \        {-  Use the KMS key ID itself. For example, [1234abcd-12ab-34cd-56ef-1234567890ab].\n\
-        \            \n\
-        \             }\n\
-        \        {-  Use an alias for the KMS key ID. For example, [alias/ExampleAlias].\n\
-        \            \n\
-        \             }\n\
-        \        {-  Use the Amazon Resource Name (ARN) for the KMS key ID. For example, \
-         [arn:aws:kms:region:account-ID:key/1234abcd-12ab-34cd-56ef-1234567890ab].\n\
-        \            \n\
-        \             }\n\
-        \        {-  Use the ARN for the KMS key alias. For example, \
-         [arn:aws:kms:region:account-ID:alias/ExampleAlias].\n\
-        \            \n\
-        \             }\n\
-        \        }\n\
-        \   If using a key located in a {b different} Amazon Web Services account than the current \
-         Amazon Web Services account, you can specify your KMS key in one of two ways:\n\
-        \   \n\
-        \    {ol\n\
-        \          {-  Use the ARN for the KMS key ID. For example, \
-         [arn:aws:kms:region:account-ID:key/1234abcd-12ab-34cd-56ef-1234567890ab].\n\
-        \              \n\
-        \               }\n\
-        \          {-  Use the ARN for the KMS key alias. For example, \
-         [arn:aws:kms:region:account-ID:alias/ExampleAlias].\n\
-        \              \n\
-        \               }\n\
-        \          }\n\
-        \   If you do not specify an encryption key, your output is encrypted with the default \
+        \  If you do not specify an encryption key, your output is encrypted with the default \
          Amazon S3 key (SSE-S3).\n\
-        \   \n\
-        \    If you specify a KMS key to encrypt your output, you must also specify an output \
-         location using the [OutputLocation] parameter.\n\
-        \    \n\
-        \     Note that the role making the request must have permission to use the specified KMS \
-         key.\n\
-        \     "]
+        \  \n\
+        \   Note that the role making the request and the role specified in the \
+         [DataAccessRoleArn] request parameter (if present) must have permission to use the \
+         specified KMS key.\n\
+        \   "]
   output_key : output_key option;
       [@ocaml.doc
         "Use in combination with [OutputBucketName] to specify the output location of your \
@@ -2132,48 +2117,21 @@ type nonrec start_medical_transcription_job_request = {
          keys in KMS}.\n"]
   output_encryption_kms_key_id : kms_key_id option;
       [@ocaml.doc
-        "The KMS key you want to use to encrypt your medical transcription output.\n\n\
-        \ If using a key located in the {b current} Amazon Web Services account, you can specify \
-         your KMS key in one of four ways:\n\
+        "The Amazon Resource Name (ARN) of a KMS key that you want to use to encrypt your medical \
+         transcription output.\n\n\
+        \ KMS key ARNs have the format [arn:partition:kms:region:account:key/key-id]. For example: \
+         [arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab]. For more \
+         information, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN} \
+         KMS key ARNs}.\n\
         \ \n\
-        \  {ol\n\
-        \        {-  Use the KMS key ID itself. For example, [1234abcd-12ab-34cd-56ef-1234567890ab].\n\
-        \            \n\
-        \             }\n\
-        \        {-  Use an alias for the KMS key ID. For example, [alias/ExampleAlias].\n\
-        \            \n\
-        \             }\n\
-        \        {-  Use the Amazon Resource Name (ARN) for the KMS key ID. For example, \
-         [arn:aws:kms:region:account-ID:key/1234abcd-12ab-34cd-56ef-1234567890ab].\n\
-        \            \n\
-        \             }\n\
-        \        {-  Use the ARN for the KMS key alias. For example, \
-         [arn:aws:kms:region:account-ID:alias/ExampleAlias].\n\
-        \            \n\
-        \             }\n\
-        \        }\n\
-        \   If using a key located in a {b different} Amazon Web Services account than the current \
-         Amazon Web Services account, you can specify your KMS key in one of two ways:\n\
-        \   \n\
-        \    {ol\n\
-        \          {-  Use the ARN for the KMS key ID. For example, \
-         [arn:aws:kms:region:account-ID:key/1234abcd-12ab-34cd-56ef-1234567890ab].\n\
-        \              \n\
-        \               }\n\
-        \          {-  Use the ARN for the KMS key alias. For example, \
-         [arn:aws:kms:region:account-ID:alias/ExampleAlias].\n\
-        \              \n\
-        \               }\n\
-        \          }\n\
-        \   If you do not specify an encryption key, your output is encrypted with the default \
+        \  If you do not specify an encryption key, your output is encrypted with the default \
          Amazon S3 key (SSE-S3).\n\
-        \   \n\
-        \    If you specify a KMS key to encrypt your output, you must also specify an output \
-         location using the [OutputLocation] parameter.\n\
-        \    \n\
-        \     Note that the role making the request must have permission to use the specified KMS \
-         key.\n\
-        \     "]
+        \  \n\
+        \   Note that the role making the request and the role specified in the \
+         [DataAccessRoleArn] request parameter (if present) must have permission to use the \
+         specified KMS key.\n\
+        \   "]
   output_key : output_key option;
       [@ocaml.doc
         "Use in combination with [OutputBucketName] to specify the output location of your \
@@ -2408,11 +2366,15 @@ type nonrec medical_scribe_channel_definitions = medical_scribe_channel_definiti
 type nonrec medical_scribe_job = {
   tags : tag_list option;
       [@ocaml.doc
-        "Adds one or more custom tags, each in the form of a key:value pair, to the Medica Scribe \
+        "Adds one or more custom tags, each in the form of a key:value pair, to the Medical Scribe \
          job.\n\n\
         \ To learn more about using tags with Amazon Transcribe, refer to \
          {{:https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html}Tagging resources}.\n\
         \ "]
+  medical_scribe_context_provided : boolean_ option;
+      [@ocaml.doc
+        "Indicates whether the [MedicalScribeContext] object was provided when the Medical Scribe \
+         job was started.\n"]
   channel_definitions : medical_scribe_channel_definitions option;
       [@ocaml.doc
         "Makes it possible to specify which speaker is on which channel. For example, if the \
@@ -2510,10 +2472,37 @@ type nonrec start_medical_scribe_job_response = {
 }
 [@@ocaml.doc ""]
 
+type nonrec pronouns =
+  | THEY_THEM [@ocaml.doc ""]
+  | SHE_HER [@ocaml.doc ""]
+  | HE_HIM [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec medical_scribe_patient_context = {
+  pronouns : pronouns option;
+      [@ocaml.doc
+        "The patient's preferred pronouns that the user wants to provide as a context for clinical \
+         note generation.\n"]
+}
+[@@ocaml.doc
+  "Contains patient-specific information used to customize the clinical note generation.\n"]
+
+type nonrec medical_scribe_context = {
+  patient_context : medical_scribe_patient_context option;
+      [@ocaml.doc "Contains patient-specific information.\n"]
+}
+[@@ocaml.doc
+  "The [MedicalScribeContext] object that contains contextual information used to generate \
+   customized clinical notes.\n"]
+
 type nonrec start_medical_scribe_job_request = {
+  medical_scribe_context : medical_scribe_context option;
+      [@ocaml.doc
+        "The [MedicalScribeContext] object that contains contextual information which is used \
+         during clinical note generation to add relevant context to the note.\n"]
   tags : tag_list option;
       [@ocaml.doc
-        "Adds one or more custom tags, each in the form of a key:value pair, to the Medica Scribe \
+        "Adds one or more custom tags, each in the form of a key:value pair, to the Medical Scribe \
          job.\n\n\
         \ To learn more about using tags with Amazon Transcribe, refer to \
          {{:https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html}Tagging resources}.\n\
@@ -2560,45 +2549,21 @@ type nonrec start_medical_scribe_job_request = {
          keys in KMS}.\n"]
   output_encryption_kms_key_id : kms_key_id option;
       [@ocaml.doc
-        "The KMS key you want to use to encrypt your Medical Scribe output.\n\n\
-        \ If using a key located in the {b current} Amazon Web Services account, you can specify \
-         your KMS key in one of four ways:\n\
+        "The Amazon Resource Name (ARN) of a KMS key that you want to use to encrypt your Medical \
+         Scribe output.\n\n\
+        \ KMS key ARNs have the format [arn:partition:kms:region:account:key/key-id]. For example: \
+         [arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab]. For more \
+         information, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN} \
+         KMS key ARNs}.\n\
         \ \n\
-        \  {ol\n\
-        \        {-  Use the KMS key ID itself. For example, [1234abcd-12ab-34cd-56ef-1234567890ab].\n\
-        \            \n\
-        \             }\n\
-        \        {-  Use an alias for the KMS key ID. For example, [alias/ExampleAlias].\n\
-        \            \n\
-        \             }\n\
-        \        {-  Use the Amazon Resource Name (ARN) for the KMS key ID. For example, \
-         [arn:aws:kms:region:account-ID:key/1234abcd-12ab-34cd-56ef-1234567890ab].\n\
-        \            \n\
-        \             }\n\
-        \        {-  Use the ARN for the KMS key alias. For example, \
-         [arn:aws:kms:region:account-ID:alias/ExampleAlias].\n\
-        \            \n\
-        \             }\n\
-        \        }\n\
-        \   If using a key located in a {b different} Amazon Web Services account than the current \
-         Amazon Web Services account, you can specify your KMS key in one of two ways:\n\
-        \   \n\
-        \    {ol\n\
-        \          {-  Use the ARN for the KMS key ID. For example, \
-         [arn:aws:kms:region:account-ID:key/1234abcd-12ab-34cd-56ef-1234567890ab].\n\
-        \              \n\
-        \               }\n\
-        \          {-  Use the ARN for the KMS key alias. For example, \
-         [arn:aws:kms:region:account-ID:alias/ExampleAlias].\n\
-        \              \n\
-        \               }\n\
-        \          }\n\
-        \   If you do not specify an encryption key, your output is encrypted with the default \
+        \  If you do not specify an encryption key, your output is encrypted with the default \
          Amazon S3 key (SSE-S3).\n\
-        \   \n\
-        \    Note that the role specified in the [DataAccessRoleArn] request parameter must have \
-         permission to use the specified KMS key.\n\
-        \    "]
+        \  \n\
+        \   Note that the role making the request and the role specified in the \
+         [DataAccessRoleArn] request parameter (if present) must have permission to use the \
+         specified KMS key.\n\
+        \   "]
   output_bucket_name : output_bucket_name;
       [@ocaml.doc
         "The name of the Amazon S3 bucket where you want your Medical Scribe output stored. Do not \
@@ -2977,48 +2942,21 @@ type nonrec start_call_analytics_job_request = {
         \  "]
   output_encryption_kms_key_id : kms_key_id option;
       [@ocaml.doc
-        "The KMS key you want to use to encrypt your Call Analytics output.\n\n\
-        \ If using a key located in the {b current} Amazon Web Services account, you can specify \
-         your KMS key in one of four ways:\n\
+        "The Amazon Resource Name (ARN) of a KMS key that you want to use to encrypt your Call \
+         Analytics output.\n\n\
+        \ KMS key ARNs have the format [arn:partition:kms:region:account:key/key-id]. For example: \
+         [arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab]. For more \
+         information, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN} \
+         KMS key ARNs}.\n\
         \ \n\
-        \  {ol\n\
-        \        {-  Use the KMS key ID itself. For example, [1234abcd-12ab-34cd-56ef-1234567890ab].\n\
-        \            \n\
-        \             }\n\
-        \        {-  Use an alias for the KMS key ID. For example, [alias/ExampleAlias].\n\
-        \            \n\
-        \             }\n\
-        \        {-  Use the Amazon Resource Name (ARN) for the KMS key ID. For example, \
-         [arn:aws:kms:region:account-ID:key/1234abcd-12ab-34cd-56ef-1234567890ab].\n\
-        \            \n\
-        \             }\n\
-        \        {-  Use the ARN for the KMS key alias. For example, \
-         [arn:aws:kms:region:account-ID:alias/ExampleAlias].\n\
-        \            \n\
-        \             }\n\
-        \        }\n\
-        \   If using a key located in a {b different} Amazon Web Services account than the current \
-         Amazon Web Services account, you can specify your KMS key in one of two ways:\n\
-        \   \n\
-        \    {ol\n\
-        \          {-  Use the ARN for the KMS key ID. For example, \
-         [arn:aws:kms:region:account-ID:key/1234abcd-12ab-34cd-56ef-1234567890ab].\n\
-        \              \n\
-        \               }\n\
-        \          {-  Use the ARN for the KMS key alias. For example, \
-         [arn:aws:kms:region:account-ID:alias/ExampleAlias].\n\
-        \              \n\
-        \               }\n\
-        \          }\n\
-        \   If you do not specify an encryption key, your output is encrypted with the default \
+        \  If you do not specify an encryption key, your output is encrypted with the default \
          Amazon S3 key (SSE-S3).\n\
-        \   \n\
-        \    If you specify a KMS key to encrypt your output, you must also specify an output \
-         location using the [OutputLocation] parameter.\n\
-        \    \n\
-        \     Note that the role making the request must have permission to use the specified KMS \
-         key.\n\
-        \     "]
+        \  \n\
+        \   Note that the role making the request and the role specified in the \
+         [DataAccessRoleArn] request parameter (if present) must have permission to use the \
+         specified KMS key.\n\
+        \   "]
   output_location : uri option;
       [@ocaml.doc
         "The Amazon S3 location where you want your Call Analytics transcription output stored. \

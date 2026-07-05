@@ -3,9 +3,19 @@ open Types
 
 let string__to_yojson = string_to_yojson
 
+let network_type_to_yojson (x : network_type) =
+  match x with
+  | DUAL_STACK -> `String "dual_stack"
+  | IPV6 -> `String "ipv6"
+  | IPV4 -> `String "ipv4"
+
+let network_type_list_to_yojson tree = list_to_yojson network_type_to_yojson tree
+
 let subnet_to_yojson (x : subnet) =
   assoc_to_yojson
     [
+      ( "SupportedNetworkTypes",
+        option_to_yojson network_type_list_to_yojson x.supported_network_types );
       ("SubnetAvailabilityZone", option_to_yojson string__to_yojson x.subnet_availability_zone);
       ("SubnetIdentifier", option_to_yojson string__to_yojson x.subnet_identifier);
     ]
@@ -15,6 +25,8 @@ let subnet_list_to_yojson tree = list_to_yojson subnet_to_yojson tree
 let subnet_group_to_yojson (x : subnet_group) =
   assoc_to_yojson
     [
+      ( "SupportedNetworkTypes",
+        option_to_yojson network_type_list_to_yojson x.supported_network_types );
       ("Subnets", option_to_yojson subnet_list_to_yojson x.subnets);
       ("VpcId", option_to_yojson string__to_yojson x.vpc_id);
       ("Description", option_to_yojson string__to_yojson x.description);
@@ -37,6 +49,9 @@ let update_subnet_group_request_to_yojson (x : update_subnet_group_request) =
 let exception_message_to_yojson = string_to_yojson
 
 let subnet_quota_exceeded_fault_to_yojson (x : subnet_quota_exceeded_fault) =
+  assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
+
+let subnet_not_allowed_fault_to_yojson (x : subnet_not_allowed_fault) =
   assoc_to_yojson [ ("message", option_to_yojson exception_message_to_yojson x.message) ]
 
 let subnet_in_use_to_yojson (x : subnet_in_use) =
@@ -161,6 +176,7 @@ let cluster_endpoint_encryption_type_to_yojson (x : cluster_endpoint_encryption_
 let cluster_to_yojson (x : cluster) =
   assoc_to_yojson
     [
+      ("NetworkType", option_to_yojson network_type_to_yojson x.network_type);
       ( "ClusterEndpointEncryptionType",
         option_to_yojson cluster_endpoint_encryption_type_to_yojson
           x.cluster_endpoint_encryption_type );
@@ -543,6 +559,7 @@ let create_cluster_response_to_yojson (x : create_cluster_response) =
 let create_cluster_request_to_yojson (x : create_cluster_request) =
   assoc_to_yojson
     [
+      ("NetworkType", option_to_yojson network_type_to_yojson x.network_type);
       ( "ClusterEndpointEncryptionType",
         option_to_yojson cluster_endpoint_encryption_type_to_yojson
           x.cluster_endpoint_encryption_type );

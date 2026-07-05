@@ -661,11 +661,36 @@ let query_no_input_and_no_output () =
       check Alcotest.unit "expected output" expected result
   | Error error -> failwith (NoInputAndNoOutput.error_to_string error)
 
+let query_no_input_and_no_output_with_response_metadata () =
+  Eio.Switch.run ~name:"QueryNoInputAndNoOutputWithResponseMetadata" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<NoInputAndNoOutputResponse>\n\
+         \    <ResponseMetadata>\n\
+         \        <RequestId>abc-123</RequestId>\n\
+         \    </ResponseMetadata>\n\
+          </NoInputAndNoOutputResponse>\n")
+    ~status:200 ~headers:[] ();
+  let response = NoInputAndNoOutput.request ctx () in
+  match response with
+  | Ok result ->
+      let expected = () in
+      check Alcotest.unit "expected output" expected result
+  | Error error -> failwith (NoInputAndNoOutput.error_to_string error)
+
 let no_input_and_no_output_test_suite : unit Alcotest.test =
   ( "aws.protocoltests.query#NoInputAndNoOutput",
     [
       ("QueryNoInputAndNoOutput", `Quick, query_no_input_and_no_output);
       ("QueryNoInputAndNoOutput", `Quick, query_no_input_and_no_output);
+      ( "QueryNoInputAndNoOutputWithResponseMetadata",
+        `Quick,
+        query_no_input_and_no_output_with_response_metadata );
     ] )
 
 let query_no_input_and_output () =

@@ -1354,8 +1354,7 @@ end
    Services service integration} request and response\n\
   \           \n\
   \            }\n\
-  \       {-  An \
-   {{:https://docs.aws.amazon.com/step-functions/latest/dg/connect-third-party-apis.html}HTTP \
+  \       {-  An {{:https://docs.aws.amazon.com/step-functions/latest/dg/call-https-apis.html}HTTP \
    Task} request and response\n\
   \           \n\
   \            }\n\
@@ -1400,7 +1399,7 @@ end
   \    The [TestState] API can run for up to five minutes. If the execution of a state exceeds \
    this duration, it fails with the [States.Timeout] error.\n\
   \    \n\
-  \      [TestState] doesn't support \
+  \      [TestState] only supports the following when a mock is specified: \
    {{:https://docs.aws.amazon.com/step-functions/latest/dg/concepts-activities.html}Activity \
    tasks}, [.sync] or [.waitForTaskToken] \
    {{:https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html}service \

@@ -1,14 +1,21 @@
 open Types
 
-let make_subnet ?subnet_availability_zone:(subnet_availability_zone_ : string_ option)
+let make_subnet ?supported_network_types:(supported_network_types_ : network_type_list option)
+    ?subnet_availability_zone:(subnet_availability_zone_ : string_ option)
     ?subnet_identifier:(subnet_identifier_ : string_ option) () =
-  ({ subnet_availability_zone = subnet_availability_zone_; subnet_identifier = subnet_identifier_ }
+  ({
+     supported_network_types = supported_network_types_;
+     subnet_availability_zone = subnet_availability_zone_;
+     subnet_identifier = subnet_identifier_;
+   }
     : subnet)
 
-let make_subnet_group ?subnets:(subnets_ : subnet_list option) ?vpc_id:(vpc_id_ : string_ option)
+let make_subnet_group ?supported_network_types:(supported_network_types_ : network_type_list option)
+    ?subnets:(subnets_ : subnet_list option) ?vpc_id:(vpc_id_ : string_ option)
     ?description:(description_ : string_ option)
     ?subnet_group_name:(subnet_group_name_ : string_ option) () =
   ({
+     supported_network_types = supported_network_types_;
      subnets = subnets_;
      vpc_id = vpc_id_;
      description = description_;
@@ -85,7 +92,7 @@ let make_parameter_group_status
 let make_sse_description ?status:(status_ : sse_status option) () =
   ({ status = status_ } : sse_description)
 
-let make_cluster
+let make_cluster ?network_type:(network_type_ : network_type option)
     ?cluster_endpoint_encryption_type:
       (cluster_endpoint_encryption_type_ : cluster_endpoint_encryption_type option)
     ?sse_description:(sse_description_ : sse_description option)
@@ -104,6 +111,7 @@ let make_cluster
     ?cluster_arn:(cluster_arn_ : string_ option) ?description:(description_ : string_ option)
     ?cluster_name:(cluster_name_ : string_ option) () =
   ({
+     network_type = network_type_;
      cluster_endpoint_encryption_type = cluster_endpoint_encryption_type_;
      sse_description = sse_description_;
      parameter_group = parameter_group_;
@@ -365,7 +373,7 @@ let make_create_parameter_group_request ?description:(description_ : string_ opt
 let make_create_cluster_response ?cluster:(cluster_ : cluster option) () =
   ({ cluster = cluster_ } : create_cluster_response)
 
-let make_create_cluster_request
+let make_create_cluster_request ?network_type:(network_type_ : network_type option)
     ?cluster_endpoint_encryption_type:
       (cluster_endpoint_encryption_type_ : cluster_endpoint_encryption_type option)
     ?sse_specification:(sse_specification_ : sse_specification option)
@@ -379,6 +387,7 @@ let make_create_cluster_request
     ~replication_factor:(replication_factor_ : integer) ~node_type:(node_type_ : string_)
     ~cluster_name:(cluster_name_ : string_) () =
   ({
+     network_type = network_type_;
      cluster_endpoint_encryption_type = cluster_endpoint_encryption_type_;
      sse_specification = sse_specification_;
      tags = tags_;

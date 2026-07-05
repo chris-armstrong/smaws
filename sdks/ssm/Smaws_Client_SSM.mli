@@ -400,6 +400,7 @@ val make_alarm_state_information :
   state:external_alarm_state -> name:alarm_name -> unit -> alarm_state_information
 
 val make_association_description :
+  ?association_dispatch_assume_role:association_dispatch_assume_role_arn ->
   ?triggered_alarms:alarm_state_information_list ->
   ?alarm_configuration:alarm_configuration ->
   ?target_maps:target_maps ->
@@ -440,6 +441,7 @@ val make_update_association_status_request :
   update_association_status_request
 
 val make_update_association_request :
+  ?association_dispatch_assume_role:association_dispatch_assume_role_arn ->
   ?alarm_configuration:alarm_configuration ->
   ?target_maps:target_maps ->
   ?duration:duration ->
@@ -1669,6 +1671,7 @@ val make_list_associations_request :
   list_associations_request
 
 val make_association_version_info :
+  ?association_dispatch_assume_role:association_dispatch_assume_role_arn ->
   ?target_maps:target_maps ->
   ?duration:duration ->
   ?schedule_offset:schedule_offset ->
@@ -2091,6 +2094,7 @@ val make_baseline_override :
   baseline_override
 
 val make_get_deployable_patch_snapshot_for_instance_request :
+  ?use_s3_dual_stack_endpoint:boolean_ ->
   ?baseline_override:baseline_override ->
   snapshot_id:snapshot_id ->
   instance_id:instance_id ->
@@ -2766,6 +2770,7 @@ val make_create_document_request :
   create_document_request
 
 val make_create_association_request :
+  ?association_dispatch_assume_role:association_dispatch_assume_role_arn ->
   ?alarm_configuration:alarm_configuration ->
   ?tags:tag_list ->
   ?target_maps:target_maps ->
@@ -2791,7 +2796,10 @@ val make_create_association_request :
   create_association_request
 
 val make_create_association_batch_request :
-  entries:create_association_batch_request_entries -> unit -> create_association_batch_request
+  ?association_dispatch_assume_role:association_dispatch_assume_role_arn ->
+  entries:create_association_batch_request_entries ->
+  unit ->
+  create_association_batch_request
 
 val make_create_activation_request :
   ?registration_metadata:registration_metadata_list ->
@@ -3108,6 +3116,7 @@ module CreateDocument : sig
     | `InvalidDocumentContent of invalid_document_content
     | `InvalidDocumentSchemaVersion of invalid_document_schema_version
     | `MaxDocumentSizeExceeded of max_document_size_exceeded
+    | `NoLongerSupportedException of no_longer_supported_exception
     | `TooManyUpdates of too_many_updates ] ->
     string
 
@@ -3122,6 +3131,7 @@ module CreateDocument : sig
       | `InvalidDocumentContent of invalid_document_content
       | `InvalidDocumentSchemaVersion of invalid_document_schema_version
       | `MaxDocumentSizeExceeded of max_document_size_exceeded
+      | `NoLongerSupportedException of no_longer_supported_exception
       | `TooManyUpdates of too_many_updates ] )
     result
 end
@@ -4310,11 +4320,15 @@ end
    values up to that point and a [NextToken]. You can specify the [NextToken] in a subsequent call \
    to get the next set of results.\n\
   \ \n\
-  \   If you change the KMS key alias for the KMS key used to encrypt a parameter, then you must \
+  \  Parameter names can't contain spaces. The service removes any spaces specified for the \
+   beginning or end of a parameter name. If the specified name for a parameter contains spaces \
+   between characters, the request fails with a [ValidationException] error.\n\
+  \  \n\
+  \    If you change the KMS key alias for the KMS key used to encrypt a parameter, then you must \
    also update the key alias the parameter uses to reference KMS. Otherwise, [DescribeParameters] \
    retrieves whatever the original key alias was referencing.\n\
-  \   \n\
-  \    "]
+  \    \n\
+  \     "]
 
 module DescribePatchBaselines : sig
   val error_to_string :
@@ -4934,9 +4948,13 @@ module GetParameter : sig
 end
 [@@ocaml.doc
   "Get information about a single parameter by specifying the parameter name.\n\n\
-  \  To get information about more than one parameter at a time, use the [GetParameters] operation.\n\
-  \  \n\
-  \   "]
+  \ Parameter names can't contain spaces. The service removes any spaces specified for the \
+   beginning or end of a parameter name. If the specified name for a parameter contains spaces \
+   between characters, the request fails with a [ValidationException] error.\n\
+  \ \n\
+  \   To get information about more than one parameter at a time, use the [GetParameters] operation.\n\
+  \   \n\
+  \    "]
 
 module GetParameterHistory : sig
   val error_to_string :
@@ -4960,11 +4978,15 @@ module GetParameterHistory : sig
 end
 [@@ocaml.doc
   "Retrieves the history of all changes to a parameter.\n\n\
-  \  If you change the KMS key alias for the KMS key used to encrypt a parameter, then you must \
+  \ Parameter names can't contain spaces. The service removes any spaces specified for the \
+   beginning or end of a parameter name. If the specified name for a parameter contains spaces \
+   between characters, the request fails with a [ValidationException] error.\n\
+  \ \n\
+  \   If you change the KMS key alias for the KMS key used to encrypt a parameter, then you must \
    also update the key alias the parameter uses to reference KMS. Otherwise, [GetParameterHistory] \
    retrieves whatever the original key alias was referencing.\n\
-  \  \n\
-  \   "]
+  \   \n\
+  \    "]
 
 module GetParameters : sig
   val error_to_string :
@@ -4986,7 +5008,10 @@ end
   "Get information about one or more parameters by specifying multiple parameter names.\n\n\
   \  To get information about a single parameter, you can use the [GetParameter] operation instead.\n\
   \  \n\
-  \   "]
+  \    Parameter names can't contain spaces. The service removes any spaces specified for the \
+   beginning or end of a parameter name. If the specified name for a parameter contains spaces \
+   between characters, the request fails with a [ValidationException] error.\n\
+  \    "]
 
 module GetParametersByPath : sig
   val error_to_string :
@@ -5020,7 +5045,11 @@ end
    internal limit while processing the results, it stops the operation and returns the matching \
    values up to that point and a [NextToken]. You can specify the [NextToken] in a subsequent call \
    to get the next set of results.\n\
-  \ "]
+  \ \n\
+  \  Parameter names can't contain spaces. The service removes any spaces specified for the \
+   beginning or end of a parameter name. If the specified name for a parameter contains spaces \
+   between characters, the request fails with a [ValidationException] error.\n\
+  \  "]
 
 module GetPatchBaseline : sig
   val error_to_string :
@@ -5167,6 +5196,11 @@ end
   \        {-  Labels can't begin with a number, \"[aws]\" or \"[ssm]\" (not case sensitive). If a \
    label fails to meet these requirements, then the label isn't associated with a parameter and \
    the system displays it in the list of InvalidLabels.\n\
+  \            \n\
+  \             }\n\
+  \        {-  Parameter names can't contain spaces. The service removes any spaces specified for \
+   the beginning or end of a parameter name. If the specified name for a parameter contains spaces \
+   between characters, the request fails with a [ValidationException] error.\n\
   \            \n\
   \             }\n\
   \        }\n\
@@ -5337,7 +5371,13 @@ module ListDocumentMetadataHistory : sig
     result
 end
 [@@ocaml.doc
-  "Information about approval reviews for a version of a change template in Change Manager.\n"]
+  " Amazon Web Services Systems Manager Change Manager is no longer open to new customers. \
+   Existing customers can continue to use the service as normal. For more information, see \
+   {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/change-manager-availability-change.html}Amazon \
+   Web Services Systems Manager Change Manager availability change}.\n\
+  \ \n\
+  \   Information about approval reviews for a version of a change template in Change Manager.\n\
+  \   "]
 
 module ListDocumentVersions : sig
   val error_to_string :
@@ -5671,7 +5711,13 @@ end
   \        {-  ExecutionTime. The time the patch, association, or custom compliance item was \
    applied to the managed node.\n\
   \            \n\
-  \             }\n\
+  \              For State Manager associations, this represents the time when compliance status \
+   was captured by the Systems Manager service during its internal compliance aggregation \
+   workflow, not necessarily when the association was executed on the managed node. State Manager \
+   updates compliance information for all associations on an instance whenever any association \
+   executes, which may result in multiple associations showing the same execution time.\n\
+  \              \n\
+  \                }\n\
   \        {-  Id: The patch, association, or custom compliance ID.\n\
   \            \n\
   \             }\n\
@@ -6196,7 +6242,8 @@ module StartChangeRequestExecution : sig
     | `IdempotentParameterMismatch of idempotent_parameter_mismatch
     | `InternalServerError of internal_server_error
     | `InvalidAutomationExecutionParametersException of
-      invalid_automation_execution_parameters_exception ] ->
+      invalid_automation_execution_parameters_exception
+    | `NoLongerSupportedException of no_longer_supported_exception ] ->
     string
 
   val request :
@@ -6212,12 +6259,19 @@ module StartChangeRequestExecution : sig
       | `IdempotentParameterMismatch of idempotent_parameter_mismatch
       | `InternalServerError of internal_server_error
       | `InvalidAutomationExecutionParametersException of
-        invalid_automation_execution_parameters_exception ] )
+        invalid_automation_execution_parameters_exception
+      | `NoLongerSupportedException of no_longer_supported_exception ] )
     result
 end
 [@@ocaml.doc
-  "Creates a change request for Change Manager. The Automation runbooks specified in the change \
-   request run only after all required approvals for the change request have been received.\n"]
+  " Amazon Web Services Systems Manager Change Manager is no longer open to new customers. \
+   Existing customers can continue to use the service as normal. For more information, see \
+   {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/change-manager-availability-change.html}Amazon \
+   Web Services Systems Manager Change Manager availability change}.\n\
+  \ \n\
+  \   Creates a change request for Change Manager. The Automation runbooks specified in the change \
+   request run only after all required approvals for the change request have been received.\n\
+  \   "]
 
 module StartExecutionPreview : sig
   val error_to_string :
@@ -6328,7 +6382,12 @@ module UnlabelParameterVersion : sig
       | `TooManyUpdates of too_many_updates ] )
     result
 end
-[@@ocaml.doc "Remove a label or labels from a parameter.\n"]
+[@@ocaml.doc
+  "Remove a label or labels from a parameter.\n\n\
+  \ Parameter names can't contain spaces. The service removes any spaces specified for the \
+   beginning or end of a parameter name. If the specified name for a parameter contains spaces \
+   between characters, the request fails with a [ValidationException] error.\n\
+  \ "]
 
 module UpdateAssociation : sig
   val error_to_string :
@@ -6508,8 +6567,14 @@ module UpdateDocumentMetadata : sig
     result
 end
 [@@ocaml.doc
-  "Updates information related to approval reviews for a specific version of a change template in \
-   Change Manager.\n"]
+  " Amazon Web Services Systems Manager Change Manager is no longer open to new customers. \
+   Existing customers can continue to use the service as normal. For more information, see \
+   {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/change-manager-availability-change.html}Amazon \
+   Web Services Systems Manager Change Manager availability change}.\n\
+  \ \n\
+  \   Updates information related to approval reviews for a specific version of a change template \
+   in Change Manager.\n\
+  \   "]
 
 module UpdateMaintenanceWindow : sig
   val error_to_string :

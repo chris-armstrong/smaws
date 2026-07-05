@@ -4,7 +4,8 @@ module BatchExecuteStatement : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `InternalServerError of internal_server_error
-    | `RequestLimitExceeded of request_limit_exceeded ] ->
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ThrottlingException of throttling_exception ] ->
     string
 
   val request :
@@ -13,7 +14,8 @@ module BatchExecuteStatement : sig
     ( batch_execute_statement_output,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `RequestLimitExceeded of request_limit_exceeded ] )
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ThrottlingException of throttling_exception ] )
     result
 end
 [@@ocaml.doc
@@ -40,7 +42,8 @@ module BatchGetItem : sig
     | `InvalidEndpointException of invalid_endpoint_exception
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception ] ->
     string
 
   val request :
@@ -52,7 +55,8 @@ module BatchGetItem : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
     result
 end
 [@@ocaml.doc
@@ -119,7 +123,8 @@ module BatchWriteItem : sig
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `ReplicatedWriteConflictException of replicated_write_conflict_exception
     | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception ] ->
     string
 
   val request :
@@ -133,7 +138,8 @@ module BatchWriteItem : sig
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `ReplicatedWriteConflictException of replicated_write_conflict_exception
       | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
     result
 end
 [@@ocaml.doc
@@ -454,6 +460,7 @@ module DeleteItem : sig
     | `ReplicatedWriteConflictException of replicated_write_conflict_exception
     | `RequestLimitExceeded of request_limit_exceeded
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
     | `TransactionConflictException of transaction_conflict_exception ] ->
     string
 
@@ -470,6 +477,7 @@ module DeleteItem : sig
       | `ReplicatedWriteConflictException of replicated_write_conflict_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `TransactionConflictException of transaction_conflict_exception ] )
     result
 end
@@ -994,6 +1002,7 @@ module ExecuteStatement : sig
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
     | `TransactionConflictException of transaction_conflict_exception ] ->
     string
 
@@ -1009,6 +1018,7 @@ module ExecuteStatement : sig
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `TransactionConflictException of transaction_conflict_exception ] )
     result
 end
@@ -1035,6 +1045,7 @@ module ExecuteTransaction : sig
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
     | `TransactionCanceledException of transaction_canceled_exception
     | `TransactionInProgressException of transaction_in_progress_exception ] ->
     string
@@ -1049,6 +1060,7 @@ module ExecuteTransaction : sig
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `TransactionCanceledException of transaction_canceled_exception
       | `TransactionInProgressException of transaction_in_progress_exception ] )
     result
@@ -1099,7 +1111,8 @@ module GetItem : sig
     | `InvalidEndpointException of invalid_endpoint_exception
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception ] ->
     string
 
   val request :
@@ -1111,7 +1124,8 @@ module GetItem : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
     result
 end
 [@@ocaml.doc
@@ -1266,7 +1280,8 @@ module ListExports : sig
       | `LimitExceededException of limit_exceeded_exception ] )
     result
 end
-[@@ocaml.doc "Lists completed exports within the past 90 days.\n"]
+[@@ocaml.doc
+  "Lists completed exports within the past 90 days, in reverse alphanumeric order of [ExportArn].\n"]
 
 module ListGlobalTables : sig
   val error_to_string :
@@ -1373,6 +1388,7 @@ module PutItem : sig
     | `ReplicatedWriteConflictException of replicated_write_conflict_exception
     | `RequestLimitExceeded of request_limit_exceeded
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
     | `TransactionConflictException of transaction_conflict_exception ] ->
     string
 
@@ -1389,6 +1405,7 @@ module PutItem : sig
       | `ReplicatedWriteConflictException of replicated_write_conflict_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `TransactionConflictException of transaction_conflict_exception ] )
     result
 end
@@ -1412,10 +1429,13 @@ end
    partition key for the table. Since every record must contain that attribute, the \
    [attribute_not_exists] function will only succeed if no matching item exists.\n\
   \     \n\
-  \       For more information about [PutItem], see \
+  \        To determine whether [PutItem] overwrote an existing item, use [ReturnValues] set to \
+   [ALL_OLD]. If the response includes the [Attributes] element, an existing item was overwritten.\n\
+  \        \n\
+  \          For more information about [PutItem], see \
    {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html}Working \
    with Items} in the {i Amazon DynamoDB Developer Guide}.\n\
-  \       "]
+  \          "]
 
 module PutResourcePolicy : sig
   val error_to_string :
@@ -1467,7 +1487,8 @@ module Query : sig
     | `InvalidEndpointException of invalid_endpoint_exception
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception ] ->
     string
 
   val request :
@@ -1479,7 +1500,8 @@ module Query : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
     result
 end
 [@@ocaml.doc
@@ -1674,7 +1696,8 @@ module Scan : sig
     | `InvalidEndpointException of invalid_endpoint_exception
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception ] ->
     string
 
   val request :
@@ -1686,7 +1709,8 @@ module Scan : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
     result
 end
 [@@ocaml.doc
@@ -1785,6 +1809,7 @@ module TransactGetItems : sig
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
     | `TransactionCanceledException of transaction_canceled_exception ] ->
     string
 
@@ -1798,6 +1823,7 @@ module TransactGetItems : sig
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `TransactionCanceledException of transaction_canceled_exception ] )
     result
 end
@@ -1835,6 +1861,7 @@ module TransactWriteItems : sig
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
     | `TransactionCanceledException of transaction_canceled_exception
     | `TransactionInProgressException of transaction_in_progress_exception ] ->
     string
@@ -1850,6 +1877,7 @@ module TransactWriteItems : sig
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `TransactionCanceledException of transaction_canceled_exception
       | `TransactionInProgressException of transaction_in_progress_exception ] )
     result
@@ -2144,6 +2172,7 @@ module UpdateItem : sig
     | `ReplicatedWriteConflictException of replicated_write_conflict_exception
     | `RequestLimitExceeded of request_limit_exceeded
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
     | `TransactionConflictException of transaction_conflict_exception ] ->
     string
 
@@ -2160,6 +2189,7 @@ module UpdateItem : sig
       | `ReplicatedWriteConflictException of replicated_write_conflict_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `TransactionConflictException of transaction_conflict_exception ] )
     result
 end

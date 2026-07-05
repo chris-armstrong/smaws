@@ -5,6 +5,8 @@ let saml_user_attribute_to_yojson = string_to_yojson
 let saml_metadata_to_yojson = string_to_yojson
 let saml_group_attribute_to_yojson = string_to_yojson
 let open_search_serverless_entity_id_to_yojson = string_to_yojson
+let iam_federation_user_attribute_to_yojson = string_to_yojson
+let iam_federation_group_attribute_to_yojson = string_to_yojson
 let vpc_id_to_yojson = string_to_yojson
 let vpc_endpoint_id_to_yojson = string_to_yojson
 let vpc_endpoint_name_to_yojson = string_to_yojson
@@ -67,6 +69,19 @@ let vpc_endpoint_detail_to_yojson (x : vpc_endpoint_detail) =
     ]
 
 let vpc_endpoint_details_to_yojson tree = list_to_yojson vpc_endpoint_detail_to_yojson tree
+
+let serverless_vector_acceleration_status_to_yojson (x : serverless_vector_acceleration_status) =
+  match x with
+  | ENABLED -> `String "ENABLED"
+  | DISABLED -> `String "DISABLED"
+  | ALLOWED -> `String "ALLOWED"
+
+let vector_options_to_yojson (x : vector_options) =
+  assoc_to_yojson
+    [
+      ( "ServerlessVectorAcceleration",
+        Some (serverless_vector_acceleration_status_to_yojson x.serverless_vector_acceleration) );
+    ]
 
 let validation_exception_to_yojson (x : validation_exception) =
   assoc_to_yojson
@@ -184,7 +199,10 @@ let resource_not_found_exception_to_yojson (x : resource_not_found_exception) =
 let security_config_id_to_yojson = string_to_yojson
 
 let security_config_type_to_yojson (x : security_config_type) =
-  match x with Saml -> `String "saml" | Iamidentitycenter -> `String "iamidentitycenter"
+  match x with
+  | Saml -> `String "saml"
+  | Iamidentitycenter -> `String "iamidentitycenter"
+  | Iamfederation -> `String "iamfederation"
 
 let config_description_to_yojson = string_to_yojson
 
@@ -232,6 +250,13 @@ let iam_identity_center_config_options_to_yojson (x : iam_identity_center_config
       ("instanceArn", option_to_yojson iam_identity_center_instance_arn_to_yojson x.instance_arn);
     ]
 
+let iam_federation_config_options_to_yojson (x : iam_federation_config_options) =
+  assoc_to_yojson
+    [
+      ("userAttribute", option_to_yojson iam_federation_user_attribute_to_yojson x.user_attribute);
+      ("groupAttribute", option_to_yojson iam_federation_group_attribute_to_yojson x.group_attribute);
+    ]
+
 let security_config_detail_to_yojson (x : security_config_detail) =
   assoc_to_yojson
     [
@@ -240,6 +265,8 @@ let security_config_detail_to_yojson (x : security_config_detail) =
       );
       ( "createdDate",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.long_to_yojson x.created_date );
+      ( "iamFederationOptions",
+        option_to_yojson iam_federation_config_options_to_yojson x.iam_federation_options );
       ( "iamIdentityCenterOptions",
         option_to_yojson iam_identity_center_config_options_to_yojson x.iam_identity_center_options
       );
@@ -271,6 +298,8 @@ let update_security_config_request_to_yojson (x : update_security_config_request
   assoc_to_yojson
     [
       ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "iamFederationOptions",
+        option_to_yojson iam_federation_config_options_to_yojson x.iam_federation_options );
       ( "iamIdentityCenterOptionsUpdates",
         option_to_yojson update_iam_identity_center_config_options_to_yojson
           x.iam_identity_center_options_updates );
@@ -316,15 +345,29 @@ let update_lifecycle_policy_request_to_yojson (x : update_lifecycle_policy_reque
       ("type", Some (lifecycle_policy_type_to_yojson x.type_));
     ]
 
+let update_index_response_to_yojson = unit_to_yojson
 let collection_id_to_yojson = string_to_yojson
+let index_name_to_yojson = string_to_yojson
+let index_schema_to_yojson = json_to_yojson
+
+let update_index_request_to_yojson (x : update_index_request) =
+  assoc_to_yojson
+    [
+      ("indexSchema", option_to_yojson index_schema_to_yojson x.index_schema);
+      ("indexName", Some (index_name_to_yojson x.index_name));
+      ("id", Some (collection_id_to_yojson x.id));
+    ]
+
 let collection_name_to_yojson = string_to_yojson
 
 let collection_status_to_yojson (x : collection_status) =
   match x with
   | CREATING -> `String "CREATING"
+  | UPDATING -> `String "UPDATING"
   | DELETING -> `String "DELETING"
   | ACTIVE -> `String "ACTIVE"
   | FAILED -> `String "FAILED"
+  | UPDATE_FAILED -> `String "UPDATE_FAILED"
 
 let collection_type_to_yojson (x : collection_type) =
   match x with
@@ -332,15 +375,20 @@ let collection_type_to_yojson (x : collection_type) =
   | TIMESERIES -> `String "TIMESERIES"
   | VECTORSEARCH -> `String "VECTORSEARCH"
 
+let deletion_protection_to_yojson (x : deletion_protection) =
+  match x with ENABLED -> `String "ENABLED" | DISABLED -> `String "DISABLED"
+
 let update_collection_detail_to_yojson (x : update_collection_detail) =
   assoc_to_yojson
     [
+      ("deletionProtection", option_to_yojson deletion_protection_to_yojson x.deletion_protection);
       ( "lastModifiedDate",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.long_to_yojson x.last_modified_date
       );
       ( "createdDate",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.long_to_yojson x.created_date );
       ("arn", option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.arn);
+      ("vectorOptions", option_to_yojson vector_options_to_yojson x.vector_options);
       ( "description",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.description );
       ("type", option_to_yojson collection_type_to_yojson x.type_);
@@ -360,9 +408,75 @@ let update_collection_request_to_yojson (x : update_collection_request) =
   assoc_to_yojson
     [
       ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ("deletionProtection", option_to_yojson deletion_protection_to_yojson x.deletion_protection);
+      ("vectorOptions", option_to_yojson vector_options_to_yojson x.vector_options);
       ( "description",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.description );
       ("id", Some (collection_id_to_yojson x.id));
+    ]
+
+let collection_group_id_to_yojson = string_to_yojson
+let collection_group_name_to_yojson = string_to_yojson
+let collection_group_max_indexing_capacity_value_to_yojson = float_to_yojson
+let collection_group_max_search_capacity_value_to_yojson = float_to_yojson
+let collection_group_min_indexing_capacity_value_to_yojson = float_to_yojson
+let collection_group_min_search_capacity_value_to_yojson = float_to_yojson
+
+let collection_group_capacity_limits_to_yojson (x : collection_group_capacity_limits) =
+  assoc_to_yojson
+    [
+      ( "minSearchCapacityInOCU",
+        option_to_yojson collection_group_min_search_capacity_value_to_yojson
+          x.min_search_capacity_in_oc_u );
+      ( "minIndexingCapacityInOCU",
+        option_to_yojson collection_group_min_indexing_capacity_value_to_yojson
+          x.min_indexing_capacity_in_oc_u );
+      ( "maxSearchCapacityInOCU",
+        option_to_yojson collection_group_max_search_capacity_value_to_yojson
+          x.max_search_capacity_in_oc_u );
+      ( "maxIndexingCapacityInOCU",
+        option_to_yojson collection_group_max_indexing_capacity_value_to_yojson
+          x.max_indexing_capacity_in_oc_u );
+    ]
+
+let serverless_generation_to_yojson (x : serverless_generation) =
+  match x with CLASSIC -> `String "CLASSIC" | NEXTGEN -> `String "NEXTGEN"
+
+let update_collection_group_detail_to_yojson (x : update_collection_group_detail) =
+  assoc_to_yojson
+    [
+      ("generation", option_to_yojson serverless_generation_to_yojson x.generation);
+      ( "lastModifiedDate",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.long_to_yojson x.last_modified_date
+      );
+      ( "createdDate",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.long_to_yojson x.created_date );
+      ( "capacityLimits",
+        option_to_yojson collection_group_capacity_limits_to_yojson x.capacity_limits );
+      ( "description",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.description );
+      ("name", option_to_yojson collection_group_name_to_yojson x.name);
+      ("arn", option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.arn);
+      ("id", option_to_yojson collection_group_id_to_yojson x.id);
+    ]
+
+let update_collection_group_response_to_yojson (x : update_collection_group_response) =
+  assoc_to_yojson
+    [
+      ( "updateCollectionGroupDetail",
+        option_to_yojson update_collection_group_detail_to_yojson x.update_collection_group_detail
+      );
+    ]
+
+let update_collection_group_request_to_yojson (x : update_collection_group_request) =
+  assoc_to_yojson
+    [
+      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "capacityLimits",
+        option_to_yojson collection_group_capacity_limits_to_yojson x.capacity_limits );
+      ( "description",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.description );
+      ("id", Some (collection_group_id_to_yojson x.id));
     ]
 
 let indexing_capacity_value_to_yojson = int_to_yojson
@@ -703,14 +817,106 @@ let batch_get_effective_lifecycle_policy_request_to_yojson
         Some (lifecycle_policy_resource_identifiers_to_yojson x.resource_identifiers) );
     ]
 
+let autoscaling_status_to_yojson (x : autoscaling_status) =
+  match x with
+  | ACTION_SCALING_UP -> `String "ACTION_SCALING_UP"
+  | ACTION_SCALING_DOWN -> `String "ACTION_SCALING_DOWN"
+  | NO_ACTION -> `String "NO_ACTION"
+
+let capacity_details_to_yojson (x : capacity_details) =
+  assoc_to_yojson
+    [
+      ("autoscalingStatus", option_to_yojson autoscaling_status_to_yojson x.autoscaling_status);
+      ( "capacityInOcu",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.float__to_yojson x.capacity_in_ocu );
+    ]
+
+let current_capacity_to_yojson (x : current_capacity) =
+  assoc_to_yojson
+    [
+      ("indexing", option_to_yojson capacity_details_to_yojson x.indexing);
+      ("search", option_to_yojson capacity_details_to_yojson x.search);
+    ]
+
+let collection_group_detail_to_yojson (x : collection_group_detail) =
+  assoc_to_yojson
+    [
+      ("generation", option_to_yojson serverless_generation_to_yojson x.generation);
+      ( "numberOfCollections",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.integer_to_yojson
+          x.number_of_collections );
+      ("currentCapacity", option_to_yojson current_capacity_to_yojson x.current_capacity);
+      ( "capacityLimits",
+        option_to_yojson collection_group_capacity_limits_to_yojson x.capacity_limits );
+      ( "createdDate",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.long_to_yojson x.created_date );
+      ("tags", option_to_yojson tags_to_yojson x.tags);
+      ( "description",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.description );
+      ("standbyReplicas", option_to_yojson standby_replicas_to_yojson x.standby_replicas);
+      ("name", option_to_yojson collection_group_name_to_yojson x.name);
+      ("arn", option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.arn);
+      ("id", option_to_yojson collection_group_id_to_yojson x.id);
+    ]
+
+let collection_group_details_to_yojson tree = list_to_yojson collection_group_detail_to_yojson tree
+
+let collection_group_error_detail_to_yojson (x : collection_group_error_detail) =
+  assoc_to_yojson
+    [
+      ( "errorCode",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.error_code );
+      ( "errorMessage",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.error_message );
+      ("name", option_to_yojson collection_group_name_to_yojson x.name);
+      ("id", option_to_yojson collection_group_id_to_yojson x.id);
+    ]
+
+let collection_group_error_details_to_yojson tree =
+  list_to_yojson collection_group_error_detail_to_yojson tree
+
+let batch_get_collection_group_response_to_yojson (x : batch_get_collection_group_response) =
+  assoc_to_yojson
+    [
+      ( "collectionGroupErrorDetails",
+        option_to_yojson collection_group_error_details_to_yojson x.collection_group_error_details
+      );
+      ( "collectionGroupDetails",
+        option_to_yojson collection_group_details_to_yojson x.collection_group_details );
+    ]
+
+let collection_group_ids_to_yojson tree = list_to_yojson collection_group_id_to_yojson tree
+let collection_group_names_to_yojson tree = list_to_yojson collection_group_name_to_yojson tree
+
+let batch_get_collection_group_request_to_yojson (x : batch_get_collection_group_request) =
+  assoc_to_yojson
+    [
+      ("names", option_to_yojson collection_group_names_to_yojson x.names);
+      ("ids", option_to_yojson collection_group_ids_to_yojson x.ids);
+    ]
+
+let fips_endpoints_to_yojson (x : fips_endpoints) =
+  assoc_to_yojson
+    [
+      ( "dashboardEndpoint",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson
+          x.dashboard_endpoint );
+      ( "collectionEndpoint",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson
+          x.collection_endpoint );
+    ]
+
 let collection_detail_to_yojson (x : collection_detail) =
   assoc_to_yojson
     [
+      ( "collectionGroupName",
+        option_to_yojson collection_group_name_to_yojson x.collection_group_name );
       ( "failureMessage",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.failure_message
       );
       ( "failureCode",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.failure_code );
+      ("fipsEndpoints", option_to_yojson fips_endpoints_to_yojson x.fips_endpoints);
       ( "dashboardEndpoint",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson
           x.dashboard_endpoint );
@@ -722,6 +928,8 @@ let collection_detail_to_yojson (x : collection_detail) =
       );
       ( "createdDate",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.long_to_yojson x.created_date );
+      ("vectorOptions", option_to_yojson vector_options_to_yojson x.vector_options);
+      ("deletionProtection", option_to_yojson deletion_protection_to_yojson x.deletion_protection);
       ("standbyReplicas", option_to_yojson standby_replicas_to_yojson x.standby_replicas);
       ( "kmsKeyArn",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.kms_key_arn );
@@ -872,6 +1080,10 @@ let list_lifecycle_policies_request_to_yojson (x : list_lifecycle_policies_reque
 let collection_summary_to_yojson (x : collection_summary) =
   assoc_to_yojson
     [
+      ( "collectionGroupName",
+        option_to_yojson collection_group_name_to_yojson x.collection_group_name );
+      ( "kmsKeyArn",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.kms_key_arn );
       ("arn", option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.arn);
       ("status", option_to_yojson collection_status_to_yojson x.status);
       ("name", option_to_yojson collection_name_to_yojson x.name);
@@ -891,6 +1103,8 @@ let list_collections_response_to_yojson (x : list_collections_response) =
 let collection_filters_to_yojson (x : collection_filters) =
   assoc_to_yojson
     [
+      ( "collectionGroupName",
+        option_to_yojson collection_group_name_to_yojson x.collection_group_name );
       ("status", option_to_yojson collection_status_to_yojson x.status);
       ("name", option_to_yojson collection_name_to_yojson x.name);
     ]
@@ -903,6 +1117,43 @@ let list_collections_request_to_yojson (x : list_collections_request) =
       ( "nextToken",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.next_token );
       ("collectionFilters", option_to_yojson collection_filters_to_yojson x.collection_filters);
+    ]
+
+let collection_group_summary_to_yojson (x : collection_group_summary) =
+  assoc_to_yojson
+    [
+      ("generation", option_to_yojson serverless_generation_to_yojson x.generation);
+      ( "capacityLimits",
+        option_to_yojson collection_group_capacity_limits_to_yojson x.capacity_limits );
+      ( "createdDate",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.long_to_yojson x.created_date );
+      ( "numberOfCollections",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.integer_to_yojson
+          x.number_of_collections );
+      ("name", option_to_yojson collection_group_name_to_yojson x.name);
+      ("arn", option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.arn);
+      ("id", option_to_yojson collection_group_id_to_yojson x.id);
+    ]
+
+let collection_group_summaries_to_yojson tree =
+  list_to_yojson collection_group_summary_to_yojson tree
+
+let list_collection_groups_response_to_yojson (x : list_collection_groups_response) =
+  assoc_to_yojson
+    [
+      ( "nextToken",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.next_token );
+      ( "collectionGroupSummaries",
+        option_to_yojson collection_group_summaries_to_yojson x.collection_group_summaries );
+    ]
+
+let list_collection_groups_request_to_yojson (x : list_collection_groups_request) =
+  assoc_to_yojson
+    [
+      ( "maxResults",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.integer_to_yojson x.max_results );
+      ( "nextToken",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.next_token );
     ]
 
 let access_policy_summary_to_yojson (x : access_policy_summary) =
@@ -965,6 +1216,16 @@ let get_security_config_response_to_yojson (x : get_security_config_response) =
 let get_security_config_request_to_yojson (x : get_security_config_request) =
   assoc_to_yojson [ ("id", Some (security_config_id_to_yojson x.id)) ]
 
+let get_index_response_to_yojson (x : get_index_response) =
+  assoc_to_yojson [ ("indexSchema", option_to_yojson index_schema_to_yojson x.index_schema) ]
+
+let get_index_request_to_yojson (x : get_index_request) =
+  assoc_to_yojson
+    [
+      ("indexName", Some (index_name_to_yojson x.index_name));
+      ("id", Some (collection_id_to_yojson x.id));
+    ]
+
 let get_access_policy_response_to_yojson (x : get_access_policy_response) =
   assoc_to_yojson
     [
@@ -976,6 +1237,16 @@ let get_access_policy_request_to_yojson (x : get_access_policy_request) =
     [
       ("name", Some (policy_name_to_yojson x.name));
       ("type", Some (access_policy_type_to_yojson x.type_));
+    ]
+
+let encryption_config_to_yojson (x : encryption_config) =
+  assoc_to_yojson
+    [
+      ( "kmsKeyArn",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.kms_key_arn );
+      ( "aWSOwnedKey",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.boolean__to_yojson x.a_ws_owned_key
+      );
     ]
 
 let delete_vpc_endpoint_detail_to_yojson (x : delete_vpc_endpoint_detail) =
@@ -1029,9 +1300,19 @@ let delete_lifecycle_policy_request_to_yojson (x : delete_lifecycle_policy_reque
       ("type", Some (lifecycle_policy_type_to_yojson x.type_));
     ]
 
+let delete_index_response_to_yojson = unit_to_yojson
+
+let delete_index_request_to_yojson (x : delete_index_request) =
+  assoc_to_yojson
+    [
+      ("indexName", Some (index_name_to_yojson x.index_name));
+      ("id", Some (collection_id_to_yojson x.id));
+    ]
+
 let delete_collection_detail_to_yojson (x : delete_collection_detail) =
   assoc_to_yojson
     [
+      ("deletionProtection", option_to_yojson deletion_protection_to_yojson x.deletion_protection);
       ("status", option_to_yojson collection_status_to_yojson x.status);
       ("name", option_to_yojson collection_name_to_yojson x.name);
       ("id", option_to_yojson collection_id_to_yojson x.id);
@@ -1049,6 +1330,15 @@ let delete_collection_request_to_yojson (x : delete_collection_request) =
     [
       ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
       ("id", Some (collection_id_to_yojson x.id));
+    ]
+
+let delete_collection_group_response_to_yojson = unit_to_yojson
+
+let delete_collection_group_request_to_yojson (x : delete_collection_group_request) =
+  assoc_to_yojson
+    [
+      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ("id", Some (collection_group_id_to_yojson x.id));
     ]
 
 let delete_access_policy_response_to_yojson = unit_to_yojson
@@ -1110,6 +1400,8 @@ let create_security_config_request_to_yojson (x : create_security_config_request
   assoc_to_yojson
     [
       ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "iamFederationOptions",
+        option_to_yojson iam_federation_config_options_to_yojson x.iam_federation_options );
       ( "iamIdentityCenterOptions",
         option_to_yojson create_iam_identity_center_config_options_to_yojson
           x.iam_identity_center_options );
@@ -1119,14 +1411,28 @@ let create_security_config_request_to_yojson (x : create_security_config_request
       ("type", Some (security_config_type_to_yojson x.type_));
     ]
 
+let create_index_response_to_yojson = unit_to_yojson
+
+let create_index_request_to_yojson (x : create_index_request) =
+  assoc_to_yojson
+    [
+      ("indexSchema", option_to_yojson index_schema_to_yojson x.index_schema);
+      ("indexName", Some (index_name_to_yojson x.index_name));
+      ("id", Some (collection_id_to_yojson x.id));
+    ]
+
 let create_collection_detail_to_yojson (x : create_collection_detail) =
   assoc_to_yojson
     [
+      ( "collectionGroupName",
+        option_to_yojson collection_group_name_to_yojson x.collection_group_name );
       ( "lastModifiedDate",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.long_to_yojson x.last_modified_date
       );
       ( "createdDate",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.long_to_yojson x.created_date );
+      ("vectorOptions", option_to_yojson vector_options_to_yojson x.vector_options);
+      ("deletionProtection", option_to_yojson deletion_protection_to_yojson x.deletion_protection);
       ("standbyReplicas", option_to_yojson standby_replicas_to_yojson x.standby_replicas);
       ( "kmsKeyArn",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.kms_key_arn );
@@ -1150,12 +1456,56 @@ let create_collection_request_to_yojson (x : create_collection_request) =
   assoc_to_yojson
     [
       ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ("deletionProtection", option_to_yojson deletion_protection_to_yojson x.deletion_protection);
+      ("encryptionConfig", option_to_yojson encryption_config_to_yojson x.encryption_config);
+      ( "collectionGroupName",
+        option_to_yojson collection_group_name_to_yojson x.collection_group_name );
+      ("vectorOptions", option_to_yojson vector_options_to_yojson x.vector_options);
       ("standbyReplicas", option_to_yojson standby_replicas_to_yojson x.standby_replicas);
       ("tags", option_to_yojson tags_to_yojson x.tags);
       ( "description",
         option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.description );
       ("type", option_to_yojson collection_type_to_yojson x.type_);
       ("name", Some (collection_name_to_yojson x.name));
+    ]
+
+let create_collection_group_detail_to_yojson (x : create_collection_group_detail) =
+  assoc_to_yojson
+    [
+      ("generation", option_to_yojson serverless_generation_to_yojson x.generation);
+      ( "capacityLimits",
+        option_to_yojson collection_group_capacity_limits_to_yojson x.capacity_limits );
+      ( "createdDate",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.long_to_yojson x.created_date );
+      ("tags", option_to_yojson tags_to_yojson x.tags);
+      ( "description",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.description );
+      ("standbyReplicas", option_to_yojson standby_replicas_to_yojson x.standby_replicas);
+      ("name", option_to_yojson collection_group_name_to_yojson x.name);
+      ("arn", option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.arn);
+      ("id", option_to_yojson collection_group_id_to_yojson x.id);
+    ]
+
+let create_collection_group_response_to_yojson (x : create_collection_group_response) =
+  assoc_to_yojson
+    [
+      ( "createCollectionGroupDetail",
+        option_to_yojson create_collection_group_detail_to_yojson x.create_collection_group_detail
+      );
+    ]
+
+let create_collection_group_request_to_yojson (x : create_collection_group_request) =
+  assoc_to_yojson
+    [
+      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ("generation", option_to_yojson serverless_generation_to_yojson x.generation);
+      ( "capacityLimits",
+        option_to_yojson collection_group_capacity_limits_to_yojson x.capacity_limits );
+      ("tags", option_to_yojson tags_to_yojson x.tags);
+      ( "description",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.description );
+      ("standbyReplicas", Some (standby_replicas_to_yojson x.standby_replicas));
+      ("name", Some (collection_group_name_to_yojson x.name));
     ]
 
 let create_access_policy_response_to_yojson (x : create_access_policy_response) =

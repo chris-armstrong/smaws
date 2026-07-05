@@ -127,12 +127,14 @@ let start_date_to_yojson = string_to_yojson
 let s3_location_to_yojson = string_to_yojson
 let resources_per_page_to_yojson = int_to_yojson
 let resource_type_filter_list_to_yojson tree = list_to_yojson amazon_resource_type_to_yojson tree
+let resource_type_to_yojson = string_to_yojson
 let compliance_status_to_yojson = bool_to_yojson
 
 let compliance_details_to_yojson (x : compliance_details) =
   assoc_to_yojson
     [
       ("ComplianceStatus", option_to_yojson compliance_status_to_yojson x.compliance_status);
+      ("MissingTagKeys", option_to_yojson tag_key_list_to_yojson x.missing_tag_keys);
       ( "KeysWithNoncompliantValues",
         option_to_yojson tag_key_list_to_yojson x.keys_with_noncompliant_values );
       ("NoncompliantKeys", option_to_yojson tag_key_list_to_yojson x.noncompliant_keys);
@@ -151,7 +153,42 @@ let resource_tag_mapping_list_to_yojson tree = list_to_yojson resource_tag_mappi
 let pagination_token_expired_exception_to_yojson (x : pagination_token_expired_exception) =
   assoc_to_yojson [ ("Message", option_to_yojson exception_message_to_yojson x.message) ]
 
+let cloud_formation_resource_type_to_yojson = string_to_yojson
+
+let cloud_formation_resource_types_to_yojson tree =
+  list_to_yojson cloud_formation_resource_type_to_yojson tree
+
+let reporting_tag_keys_to_yojson tree = list_to_yojson tag_key_to_yojson tree
+
+let required_tag_to_yojson (x : required_tag) =
+  assoc_to_yojson
+    [
+      ("ReportingTagKeys", option_to_yojson reporting_tag_keys_to_yojson x.reporting_tag_keys);
+      ( "CloudFormationResourceTypes",
+        option_to_yojson cloud_formation_resource_types_to_yojson x.cloud_formation_resource_types
+      );
+      ("ResourceType", option_to_yojson resource_type_to_yojson x.resource_type);
+    ]
+
+let required_tags_for_list_required_tags_to_yojson tree = list_to_yojson required_tag_to_yojson tree
 let pagination_token_to_yojson = string_to_yojson
+
+let list_required_tags_output_to_yojson (x : list_required_tags_output) =
+  assoc_to_yojson
+    [
+      ("NextToken", option_to_yojson pagination_token_to_yojson x.next_token);
+      ( "RequiredTags",
+        option_to_yojson required_tags_for_list_required_tags_to_yojson x.required_tags );
+    ]
+
+let max_results_for_list_required_tags_to_yojson = int_to_yojson
+
+let list_required_tags_input_to_yojson (x : list_required_tags_input) =
+  assoc_to_yojson
+    [
+      ("MaxResults", option_to_yojson max_results_for_list_required_tags_to_yojson x.max_results);
+      ("NextToken", option_to_yojson pagination_token_to_yojson x.next_token);
+    ]
 
 let get_tag_values_output_to_yojson (x : get_tag_values_output) =
   assoc_to_yojson

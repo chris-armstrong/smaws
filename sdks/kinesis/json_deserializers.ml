@@ -1,6 +1,18 @@
 open Smaws_Lib.Json.DeserializeHelpers
 open Types
 
+let natural_integer_object_of_yojson = int_of_yojson
+
+let warm_throughput_object_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     current_mi_bps =
+       option_of_yojson (value_for_key natural_integer_object_of_yojson "CurrentMiBps") _list path;
+     target_mi_bps =
+       option_of_yojson (value_for_key natural_integer_object_of_yojson "TargetMiBps") _list path;
+   }
+    : warm_throughput_object)
+
 let error_message_of_yojson = string_of_yojson
 
 let validation_exception_of_yojson tree path =
@@ -9,29 +21,30 @@ let validation_exception_of_yojson tree path =
     : validation_exception)
 
 let stream_ar_n_of_yojson = string_of_yojson
+let stream_name_of_yojson = string_of_yojson
 
-let stream_mode_of_yojson (tree : t) path =
-  ((match tree with
-    | `String "ON_DEMAND" -> ON_DEMAND
-    | `String "PROVISIONED" -> PROVISIONED
-    | `String value -> raise (deserialize_unknown_enum_value_error path "StreamMode" value)
-    | _ -> raise (deserialize_wrong_type_error path "StreamMode")
-     : stream_mode)
-    : stream_mode)
-
-let stream_mode_details_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  ({ stream_mode = value_for_key stream_mode_of_yojson "StreamMode" _list path }
-    : stream_mode_details)
-
-let update_stream_mode_input_of_yojson tree path =
+let update_stream_warm_throughput_output_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     stream_mode_details =
-       value_for_key stream_mode_details_of_yojson "StreamModeDetails" _list path;
-     stream_ar_n = value_for_key stream_ar_n_of_yojson "StreamARN" _list path;
+     warm_throughput =
+       option_of_yojson (value_for_key warm_throughput_object_of_yojson "WarmThroughput") _list path;
+     stream_name = option_of_yojson (value_for_key stream_name_of_yojson "StreamName") _list path;
+     stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
    }
-    : update_stream_mode_input)
+    : update_stream_warm_throughput_output)
+
+let stream_id_of_yojson = string_of_yojson
+
+let update_stream_warm_throughput_input_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     warm_throughput_mi_bps =
+       value_for_key natural_integer_object_of_yojson "WarmThroughputMiBps" _list path;
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
+     stream_name = option_of_yojson (value_for_key stream_name_of_yojson "StreamName") _list path;
+     stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
+   }
+    : update_stream_warm_throughput_input)
 
 let resource_not_found_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -53,7 +66,39 @@ let invalid_argument_exception_of_yojson tree path =
   ({ message = option_of_yojson (value_for_key error_message_of_yojson "message") _list path }
     : invalid_argument_exception)
 
-let stream_name_of_yojson = string_of_yojson
+let access_denied_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({ message = option_of_yojson (value_for_key error_message_of_yojson "message") _list path }
+    : access_denied_exception)
+
+let stream_mode_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "ON_DEMAND" -> ON_DEMAND
+    | `String "PROVISIONED" -> PROVISIONED
+    | `String value -> raise (deserialize_unknown_enum_value_error path "StreamMode" value)
+    | _ -> raise (deserialize_wrong_type_error path "StreamMode")
+     : stream_mode)
+    : stream_mode)
+
+let stream_mode_details_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({ stream_mode = value_for_key stream_mode_of_yojson "StreamMode" _list path }
+    : stream_mode_details)
+
+let update_stream_mode_input_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     warm_throughput_mi_bps =
+       option_of_yojson
+         (value_for_key natural_integer_object_of_yojson "WarmThroughputMiBps")
+         _list path;
+     stream_mode_details =
+       value_for_key stream_mode_details_of_yojson "StreamModeDetails" _list path;
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
+     stream_ar_n = value_for_key stream_ar_n_of_yojson "StreamARN" _list path;
+   }
+    : update_stream_mode_input)
+
 let positive_integer_object_of_yojson = int_of_yojson
 
 let update_shard_count_output_of_yojson tree path =
@@ -83,6 +128,7 @@ let scaling_type_of_yojson (tree : t) path =
 let update_shard_count_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      scaling_type = value_for_key scaling_type_of_yojson "ScalingType" _list path;
      target_shard_count =
@@ -91,10 +137,87 @@ let update_shard_count_input_of_yojson tree path =
    }
     : update_shard_count_input)
 
-let access_denied_exception_of_yojson tree path =
+let max_record_size_in_ki_b_of_yojson = int_of_yojson
+
+let update_max_record_size_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ message = option_of_yojson (value_for_key error_message_of_yojson "message") _list path }
-    : access_denied_exception)
+  ({
+     max_record_size_in_ki_b =
+       value_for_key max_record_size_in_ki_b_of_yojson "MaxRecordSizeInKiB" _list path;
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
+     stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
+   }
+    : update_max_record_size_input)
+
+let minimum_throughput_billing_commitment_output_status_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "ENABLED_UNTIL_EARLIEST_ALLOWED_END" -> ENABLED_UNTIL_EARLIEST_ALLOWED_END
+    | `String "DISABLED" -> DISABLED
+    | `String "ENABLED" -> ENABLED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path
+             "MinimumThroughputBillingCommitmentOutputStatus" value)
+    | _ ->
+        raise (deserialize_wrong_type_error path "MinimumThroughputBillingCommitmentOutputStatus")
+     : minimum_throughput_billing_commitment_output_status)
+    : minimum_throughput_billing_commitment_output_status)
+
+let timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
+
+let minimum_throughput_billing_commitment_output_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     earliest_allowed_end_at =
+       option_of_yojson (value_for_key timestamp_of_yojson "EarliestAllowedEndAt") _list path;
+     ended_at = option_of_yojson (value_for_key timestamp_of_yojson "EndedAt") _list path;
+     started_at = option_of_yojson (value_for_key timestamp_of_yojson "StartedAt") _list path;
+     status =
+       value_for_key minimum_throughput_billing_commitment_output_status_of_yojson "Status" _list
+         path;
+   }
+    : minimum_throughput_billing_commitment_output)
+
+let update_account_settings_output_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     minimum_throughput_billing_commitment =
+       option_of_yojson
+         (value_for_key minimum_throughput_billing_commitment_output_of_yojson
+            "MinimumThroughputBillingCommitment")
+         _list path;
+   }
+    : update_account_settings_output)
+
+let minimum_throughput_billing_commitment_input_status_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "DISABLED" -> DISABLED
+    | `String "ENABLED" -> ENABLED
+    | `String value ->
+        raise
+          (deserialize_unknown_enum_value_error path "MinimumThroughputBillingCommitmentInputStatus"
+             value)
+    | _ -> raise (deserialize_wrong_type_error path "MinimumThroughputBillingCommitmentInputStatus")
+     : minimum_throughput_billing_commitment_input_status)
+    : minimum_throughput_billing_commitment_input_status)
+
+let minimum_throughput_billing_commitment_input_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     status =
+       value_for_key minimum_throughput_billing_commitment_input_status_of_yojson "Status" _list
+         path;
+   }
+    : minimum_throughput_billing_commitment_input)
+
+let update_account_settings_input_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     minimum_throughput_billing_commitment =
+       value_for_key minimum_throughput_billing_commitment_input_of_yojson
+         "MinimumThroughputBillingCommitment" _list path;
+   }
+    : update_account_settings_input)
 
 let tag_key_of_yojson = string_of_yojson
 let tag_key_list_of_yojson tree path = list_of_yojson tag_key_of_yojson tree path
@@ -103,18 +226,19 @@ let resource_ar_n_of_yojson = string_of_yojson
 let untag_resource_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      resource_ar_n = value_for_key resource_ar_n_of_yojson "ResourceARN" _list path;
      tag_keys = value_for_key tag_key_list_of_yojson "TagKeys" _list path;
    }
     : untag_resource_input)
 
-let timestamp_of_yojson = timestamp_epoch_seconds_of_yojson
 let tag_value_of_yojson = string_of_yojson
 let tag_map_of_yojson tree path = map_of_yojson tag_key_of_yojson tag_value_of_yojson tree path
 
 let tag_resource_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      resource_ar_n = value_for_key resource_ar_n_of_yojson "ResourceARN" _list path;
      tags = value_for_key tag_map_of_yojson "Tags" _list path;
    }
@@ -293,6 +417,7 @@ let subscribe_to_shard_input_of_yojson tree path =
   ({
      starting_position = value_for_key starting_position_of_yojson "StartingPosition" _list path;
      shard_id = value_for_key shard_id_of_yojson "ShardId" _list path;
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      consumer_ar_n = value_for_key consumer_ar_n_of_yojson "ConsumerARN" _list path;
    }
     : subscribe_to_shard_input)
@@ -360,6 +485,12 @@ let consumer_count_object_of_yojson = int_of_yojson
 let stream_description_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     max_record_size_in_ki_b =
+       option_of_yojson
+         (value_for_key max_record_size_in_ki_b_of_yojson "MaxRecordSizeInKiB")
+         _list path;
+     warm_throughput =
+       option_of_yojson (value_for_key warm_throughput_object_of_yojson "WarmThroughput") _list path;
      consumer_count =
        option_of_yojson (value_for_key consumer_count_object_of_yojson "ConsumerCount") _list path;
      open_shard_count = value_for_key shard_count_object_of_yojson "OpenShardCount" _list path;
@@ -375,6 +506,7 @@ let stream_description_summary_of_yojson tree path =
      stream_mode_details =
        option_of_yojson (value_for_key stream_mode_details_of_yojson "StreamModeDetails") _list path;
      stream_status = value_for_key stream_status_of_yojson "StreamStatus" _list path;
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = value_for_key stream_ar_n_of_yojson "StreamARN" _list path;
      stream_name = value_for_key stream_name_of_yojson "StreamName" _list path;
    }
@@ -432,6 +564,7 @@ let stream_description_of_yojson tree path =
 let stop_stream_encryption_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      key_id = value_for_key key_id_of_yojson "KeyId" _list path;
      encryption_type = value_for_key encryption_type_of_yojson "EncryptionType" _list path;
@@ -442,6 +575,7 @@ let stop_stream_encryption_input_of_yojson tree path =
 let start_stream_encryption_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      key_id = value_for_key key_id_of_yojson "KeyId" _list path;
      encryption_type = value_for_key encryption_type_of_yojson "EncryptionType" _list path;
@@ -452,6 +586,7 @@ let start_stream_encryption_input_of_yojson tree path =
 let split_shard_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      new_starting_hash_key = value_for_key hash_key_of_yojson "NewStartingHashKey" _list path;
      shard_to_split = value_for_key shard_id_of_yojson "ShardToSplit" _list path;
@@ -486,6 +621,7 @@ let shard_filter_of_yojson tree path =
 let remove_tags_from_stream_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      tag_keys = value_for_key tag_key_list_of_yojson "TagKeys" _list path;
      stream_name = option_of_yojson (value_for_key stream_name_of_yojson "StreamName") _list path;
@@ -524,6 +660,7 @@ let register_stream_consumer_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      tags = option_of_yojson (value_for_key tag_map_of_yojson "Tags") _list path;
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      consumer_name = value_for_key consumer_name_of_yojson "ConsumerName" _list path;
      stream_ar_n = value_for_key stream_ar_n_of_yojson "StreamARN" _list path;
    }
@@ -535,6 +672,7 @@ let put_resource_policy_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      policy = value_for_key policy_of_yojson "Policy" _list path;
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      resource_ar_n = value_for_key resource_ar_n_of_yojson "ResourceARN" _list path;
    }
     : put_resource_policy_input)
@@ -585,6 +723,7 @@ let put_records_output_of_yojson tree path =
 let put_records_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      stream_name = option_of_yojson (value_for_key stream_name_of_yojson "StreamName") _list path;
      records = value_for_key put_records_request_entry_list_of_yojson "Records" _list path;
@@ -609,6 +748,7 @@ let put_record_output_of_yojson tree path =
 let put_record_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      sequence_number_for_ordering =
        option_of_yojson
@@ -629,6 +769,7 @@ let next_token_of_yojson = string_of_yojson
 let merge_shards_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      adjacent_shard_to_merge = value_for_key shard_id_of_yojson "AdjacentShardToMerge" _list path;
      shard_to_merge = value_for_key shard_id_of_yojson "ShardToMerge" _list path;
@@ -649,6 +790,7 @@ let list_tags_for_stream_input_limit_of_yojson = int_of_yojson
 let list_tags_for_stream_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      limit =
        option_of_yojson
@@ -667,7 +809,10 @@ let list_tags_for_resource_output_of_yojson tree path =
 
 let list_tags_for_resource_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ resource_ar_n = value_for_key resource_ar_n_of_yojson "ResourceARN" _list path }
+  ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
+     resource_ar_n = value_for_key resource_ar_n_of_yojson "ResourceARN" _list path;
+   }
     : list_tags_for_resource_input)
 
 let list_streams_output_of_yojson tree path =
@@ -713,6 +858,7 @@ let list_stream_consumers_input_limit_of_yojson = int_of_yojson
 let list_stream_consumers_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_creation_timestamp =
        option_of_yojson (value_for_key timestamp_of_yojson "StreamCreationTimestamp") _list path;
      max_results =
@@ -737,6 +883,7 @@ let list_shards_input_limit_of_yojson = int_of_yojson
 let list_shards_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      shard_filter = option_of_yojson (value_for_key shard_filter_of_yojson "ShardFilter") _list path;
      stream_creation_timestamp =
@@ -753,6 +900,7 @@ let list_shards_input_of_yojson tree path =
 let increase_stream_retention_period_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      retention_period_hours =
        value_for_key retention_period_hours_of_yojson "RetentionPeriodHours" _list path;
@@ -771,6 +919,7 @@ let get_shard_iterator_output_of_yojson tree path =
 let get_shard_iterator_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      timestamp = option_of_yojson (value_for_key timestamp_of_yojson "Timestamp") _list path;
      starting_sequence_number =
@@ -790,7 +939,10 @@ let get_resource_policy_output_of_yojson tree path =
 
 let get_resource_policy_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ resource_ar_n = value_for_key resource_ar_n_of_yojson "ResourceARN" _list path }
+  ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
+     resource_ar_n = value_for_key resource_ar_n_of_yojson "ResourceARN" _list path;
+   }
     : get_resource_policy_input)
 
 let expired_iterator_exception_of_yojson tree path =
@@ -818,6 +970,7 @@ let get_records_input_limit_of_yojson = int_of_yojson
 let get_records_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      limit = option_of_yojson (value_for_key get_records_input_limit_of_yojson "Limit") _list path;
      shard_iterator = value_for_key shard_iterator_of_yojson "ShardIterator" _list path;
@@ -843,6 +996,7 @@ let enhanced_monitoring_output_of_yojson tree path =
 let enable_enhanced_monitoring_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      shard_level_metrics = value_for_key metrics_name_list_of_yojson "ShardLevelMetrics" _list path;
      stream_name = option_of_yojson (value_for_key stream_name_of_yojson "StreamName") _list path;
@@ -852,6 +1006,7 @@ let enable_enhanced_monitoring_input_of_yojson tree path =
 let disable_enhanced_monitoring_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      shard_level_metrics = value_for_key metrics_name_list_of_yojson "ShardLevelMetrics" _list path;
      stream_name = option_of_yojson (value_for_key stream_name_of_yojson "StreamName") _list path;
@@ -869,6 +1024,7 @@ let describe_stream_summary_output_of_yojson tree path =
 let describe_stream_summary_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      stream_name = option_of_yojson (value_for_key stream_name_of_yojson "StreamName") _list path;
    }
@@ -897,6 +1053,7 @@ let describe_stream_consumer_output_of_yojson tree path =
 let describe_stream_consumer_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      consumer_ar_n =
        option_of_yojson (value_for_key consumer_ar_n_of_yojson "ConsumerARN") _list path;
      consumer_name =
@@ -917,6 +1074,7 @@ let describe_stream_input_limit_of_yojson = int_of_yojson
 let describe_stream_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      exclusive_start_shard_id =
        option_of_yojson (value_for_key shard_id_of_yojson "ExclusiveStartShardId") _list path;
@@ -943,9 +1101,25 @@ let describe_limits_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   (() : unit)
 
+let describe_account_settings_output_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     minimum_throughput_billing_commitment =
+       option_of_yojson
+         (value_for_key minimum_throughput_billing_commitment_output_of_yojson
+            "MinimumThroughputBillingCommitment")
+         _list path;
+   }
+    : describe_account_settings_output)
+
+let describe_account_settings_input_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  (() : unit)
+
 let deregister_stream_consumer_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      consumer_ar_n =
        option_of_yojson (value_for_key consumer_ar_n_of_yojson "ConsumerARN") _list path;
      consumer_name =
@@ -957,6 +1131,7 @@ let deregister_stream_consumer_input_of_yojson tree path =
 let delete_stream_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      enforce_consumer_deletion =
        option_of_yojson
@@ -968,12 +1143,16 @@ let delete_stream_input_of_yojson tree path =
 
 let delete_resource_policy_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ resource_ar_n = value_for_key resource_ar_n_of_yojson "ResourceARN" _list path }
+  ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
+     resource_ar_n = value_for_key resource_ar_n_of_yojson "ResourceARN" _list path;
+   }
     : delete_resource_policy_input)
 
 let decrease_stream_retention_period_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      retention_period_hours =
        value_for_key retention_period_hours_of_yojson "RetentionPeriodHours" _list path;
@@ -984,6 +1163,14 @@ let decrease_stream_retention_period_input_of_yojson tree path =
 let create_stream_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     max_record_size_in_ki_b =
+       option_of_yojson
+         (value_for_key max_record_size_in_ki_b_of_yojson "MaxRecordSizeInKiB")
+         _list path;
+     warm_throughput_mi_bps =
+       option_of_yojson
+         (value_for_key natural_integer_object_of_yojson "WarmThroughputMiBps")
+         _list path;
      tags = option_of_yojson (value_for_key tag_map_of_yojson "Tags") _list path;
      stream_mode_details =
        option_of_yojson (value_for_key stream_mode_details_of_yojson "StreamModeDetails") _list path;
@@ -996,6 +1183,7 @@ let create_stream_input_of_yojson tree path =
 let add_tags_to_stream_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     stream_id = option_of_yojson (value_for_key stream_id_of_yojson "StreamId") _list path;
      stream_ar_n = option_of_yojson (value_for_key stream_ar_n_of_yojson "StreamARN") _list path;
      tags = value_for_key tag_map_of_yojson "Tags" _list path;
      stream_name = option_of_yojson (value_for_key stream_name_of_yojson "StreamName") _list path;

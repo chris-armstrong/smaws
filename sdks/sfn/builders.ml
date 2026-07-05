@@ -145,7 +145,28 @@ let make_inspection_data_response ?body:(body_ : http_body option)
    }
     : inspection_data_response)
 
-let make_inspection_data ?variables:(variables_ : sensitive_data option)
+let make_inspection_error_details
+    ?retry_backoff_interval_seconds:
+      (retry_backoff_interval_seconds_ : retry_backoff_interval_seconds option)
+    ?retry_index:(retry_index_ : exception_handler_index option)
+    ?catch_index:(catch_index_ : exception_handler_index option) () =
+  ({
+     retry_backoff_interval_seconds = retry_backoff_interval_seconds_;
+     retry_index = retry_index_;
+     catch_index = catch_index_;
+   }
+    : inspection_error_details)
+
+let make_inspection_data ?max_concurrency:(max_concurrency_ : inspection_max_concurrency option)
+    ?tolerated_failure_percentage:
+      (tolerated_failure_percentage_ : inspection_tolerated_failure_percentage option)
+    ?tolerated_failure_count:(tolerated_failure_count_ : inspection_tolerated_failure_count option)
+    ?after_items_pointer:(after_items_pointer_ : sensitive_data option)
+    ?after_item_batcher:(after_item_batcher_ : sensitive_data option)
+    ?after_item_selector:(after_item_selector_ : sensitive_data option)
+    ?after_items_path:(after_items_path_ : sensitive_data option)
+    ?error_details:(error_details_ : inspection_error_details option)
+    ?variables:(variables_ : sensitive_data option)
     ?response:(response_ : inspection_data_response option)
     ?request:(request_ : inspection_data_request option)
     ?after_result_path:(after_result_path_ : sensitive_data option)
@@ -156,6 +177,14 @@ let make_inspection_data ?variables:(variables_ : sensitive_data option)
     ?after_arguments:(after_arguments_ : sensitive_data option)
     ?input:(input_ : sensitive_data option) () =
   ({
+     max_concurrency = max_concurrency_;
+     tolerated_failure_percentage = tolerated_failure_percentage_;
+     tolerated_failure_count = tolerated_failure_count_;
+     after_items_pointer = after_items_pointer_;
+     after_item_batcher = after_item_batcher_;
+     after_item_selector = after_item_selector_;
+     after_items_path = after_items_path_;
+     error_details = error_details_;
      variables = variables_;
      response = response_;
      request = request_;
@@ -184,12 +213,48 @@ let make_test_state_output ?status:(status_ : test_execution_status option)
    }
     : test_state_output)
 
-let make_test_state_input ?variables:(variables_ : sensitive_data option)
+let make_mock_error_output ?cause:(cause_ : sensitive_cause option)
+    ?error:(error_ : sensitive_error option) () =
+  ({ cause = cause_; error = error_ } : mock_error_output)
+
+let make_mock_input
+    ?field_validation_mode:(field_validation_mode_ : mock_response_validation_mode option)
+    ?error_output:(error_output_ : mock_error_output option)
+    ?result:(result_ : sensitive_data option) () =
+  ({
+     field_validation_mode = field_validation_mode_;
+     error_output = error_output_;
+     result = result_;
+   }
+    : mock_input)
+
+let make_test_state_configuration
+    ?map_item_reader_data:(map_item_reader_data_ : sensitive_data option)
+    ?map_iteration_failure_count:(map_iteration_failure_count_ : map_iteration_failure_count option)
+    ?error_caused_by_state:(error_caused_by_state_ : test_state_state_name option)
+    ?retrier_retry_count:(retrier_retry_count_ : retrier_retry_count option) () =
+  ({
+     map_item_reader_data = map_item_reader_data_;
+     map_iteration_failure_count = map_iteration_failure_count_;
+     error_caused_by_state = error_caused_by_state_;
+     retrier_retry_count = retrier_retry_count_;
+   }
+    : test_state_configuration)
+
+let make_test_state_input
+    ?state_configuration:(state_configuration_ : test_state_configuration option)
+    ?context:(context_ : sensitive_data option) ?mock:(mock_ : mock_input option)
+    ?state_name:(state_name_ : test_state_state_name option)
+    ?variables:(variables_ : sensitive_data option)
     ?reveal_secrets:(reveal_secrets_ : reveal_secrets option)
     ?inspection_level:(inspection_level_ : inspection_level option)
     ?input:(input_ : sensitive_data option) ?role_arn:(role_arn_ : arn option)
     ~definition:(definition_ : definition) () =
   ({
+     state_configuration = state_configuration_;
+     context = context_;
+     mock = mock_;
+     state_name = state_name_;
      variables = variables_;
      reveal_secrets = reveal_secrets_;
      inspection_level = inspection_level_;

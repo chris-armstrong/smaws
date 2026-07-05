@@ -238,6 +238,7 @@ val make_table_class_summary :
   ?last_update_date_time:date -> ?table_class:table_class -> unit -> table_class_summary
 
 val make_replica_description :
+  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
   ?replica_table_class_summary:table_class_summary ->
   ?replica_inaccessible_date_time:date ->
   ?global_secondary_indexes:replica_global_secondary_index_description_list ->
@@ -247,6 +248,7 @@ val make_replica_description :
   ?kms_master_key_id:kms_master_key_id ->
   ?replica_status_percent_progress:replica_status_percent_progress ->
   ?replica_status_description:replica_status_description ->
+  ?replica_arn:string_ ->
   ?replica_status:replica_status ->
   ?region_name:region_name ->
   unit ->
@@ -290,6 +292,7 @@ val make_table_description :
   ?archival_summary:archival_summary ->
   ?sse_description:sse_description ->
   ?restore_summary:restore_summary ->
+  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
   ?global_table_witnesses:global_table_witness_description_list ->
   ?replicas:replica_description_list ->
   ?global_table_version:string_ ->
@@ -405,6 +408,7 @@ val make_global_table_witness_group_update :
   global_table_witness_group_update
 
 val make_update_table_input :
+  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
   ?warm_throughput:warm_throughput ->
   ?on_demand_throughput:on_demand_throughput ->
   ?global_table_witness_updates:global_table_witness_group_update_list ->
@@ -501,6 +505,8 @@ val make_update_item_input :
   unit ->
   update_item_input
 
+val make_throttling_reason : ?resource:resource -> ?reason:reason -> unit -> throttling_reason
+
 val make_replica_global_secondary_index_settings_description :
   ?provisioned_write_capacity_auto_scaling_settings:auto_scaling_settings_description ->
   ?provisioned_write_capacity_units:positive_long_object ->
@@ -590,6 +596,7 @@ val make_update_global_table_input :
   update_global_table_input
 
 val make_update_contributor_insights_output :
+  ?contributor_insights_mode:contributor_insights_mode ->
   ?contributor_insights_status:contributor_insights_status ->
   ?index_name:index_name ->
   ?table_name:table_name ->
@@ -597,6 +604,7 @@ val make_update_contributor_insights_output :
   update_contributor_insights_output
 
 val make_update_contributor_insights_input :
+  ?contributor_insights_mode:contributor_insights_mode ->
   ?index_name:index_name ->
   contributor_insights_action:contributor_insights_action ->
   table_name:table_arn ->
@@ -1055,6 +1063,7 @@ val make_list_exports_input :
   list_exports_input
 
 val make_contributor_insights_summary :
+  ?contributor_insights_mode:contributor_insights_mode ->
   ?contributor_insights_status:contributor_insights_status ->
   ?index_name:index_name ->
   ?table_name:table_name ->
@@ -1355,6 +1364,7 @@ val make_describe_endpoints_response : endpoints:endpoints -> unit -> describe_e
 val make_describe_endpoints_request : unit -> unit
 
 val make_describe_contributor_insights_output :
+  ?contributor_insights_mode:contributor_insights_mode ->
   ?failure_exception:failure_exception ->
   ?last_update_date_time:last_update_date_time ->
   ?contributor_insights_status:contributor_insights_status ->
@@ -1438,6 +1448,8 @@ val make_delete_backup_input : backup_arn:backup_arn -> unit -> delete_backup_in
 val make_create_table_output : ?table_description:table_description -> unit -> create_table_output
 
 val make_create_table_input :
+  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
+  ?global_table_source_arn:table_arn ->
   ?on_demand_throughput:on_demand_throughput ->
   ?resource_policy:resource_policy ->
   ?warm_throughput:warm_throughput ->
@@ -1450,9 +1462,9 @@ val make_create_table_input :
   ?billing_mode:billing_mode ->
   ?global_secondary_indexes:global_secondary_index_list ->
   ?local_secondary_indexes:local_secondary_index_list ->
-  key_schema:key_schema ->
+  ?key_schema:key_schema ->
+  ?attribute_definitions:attribute_definitions ->
   table_name:table_arn ->
-  attribute_definitions:attribute_definitions ->
   unit ->
   create_table_input
 
@@ -1514,7 +1526,8 @@ module BatchExecuteStatement : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `InternalServerError of internal_server_error
-    | `RequestLimitExceeded of request_limit_exceeded ] ->
+    | `RequestLimitExceeded of request_limit_exceeded
+    | `ThrottlingException of throttling_exception ] ->
     string
 
   val request :
@@ -1523,7 +1536,8 @@ module BatchExecuteStatement : sig
     ( batch_execute_statement_output,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `RequestLimitExceeded of request_limit_exceeded ] )
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ThrottlingException of throttling_exception ] )
     result
 end
 [@@ocaml.doc
@@ -1550,7 +1564,8 @@ module BatchGetItem : sig
     | `InvalidEndpointException of invalid_endpoint_exception
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception ] ->
     string
 
   val request :
@@ -1562,7 +1577,8 @@ module BatchGetItem : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
     result
 end
 [@@ocaml.doc
@@ -1629,7 +1645,8 @@ module BatchWriteItem : sig
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `ReplicatedWriteConflictException of replicated_write_conflict_exception
     | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception ] ->
     string
 
   val request :
@@ -1643,7 +1660,8 @@ module BatchWriteItem : sig
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `ReplicatedWriteConflictException of replicated_write_conflict_exception
       | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
     result
 end
 [@@ocaml.doc
@@ -1964,6 +1982,7 @@ module DeleteItem : sig
     | `ReplicatedWriteConflictException of replicated_write_conflict_exception
     | `RequestLimitExceeded of request_limit_exceeded
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
     | `TransactionConflictException of transaction_conflict_exception ] ->
     string
 
@@ -1980,6 +1999,7 @@ module DeleteItem : sig
       | `ReplicatedWriteConflictException of replicated_write_conflict_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `TransactionConflictException of transaction_conflict_exception ] )
     result
 end
@@ -2504,6 +2524,7 @@ module ExecuteStatement : sig
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
     | `TransactionConflictException of transaction_conflict_exception ] ->
     string
 
@@ -2519,6 +2540,7 @@ module ExecuteStatement : sig
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `TransactionConflictException of transaction_conflict_exception ] )
     result
 end
@@ -2545,6 +2567,7 @@ module ExecuteTransaction : sig
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
     | `TransactionCanceledException of transaction_canceled_exception
     | `TransactionInProgressException of transaction_in_progress_exception ] ->
     string
@@ -2559,6 +2582,7 @@ module ExecuteTransaction : sig
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `TransactionCanceledException of transaction_canceled_exception
       | `TransactionInProgressException of transaction_in_progress_exception ] )
     result
@@ -2609,7 +2633,8 @@ module GetItem : sig
     | `InvalidEndpointException of invalid_endpoint_exception
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception ] ->
     string
 
   val request :
@@ -2621,7 +2646,8 @@ module GetItem : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
     result
 end
 [@@ocaml.doc
@@ -2776,7 +2802,8 @@ module ListExports : sig
       | `LimitExceededException of limit_exceeded_exception ] )
     result
 end
-[@@ocaml.doc "Lists completed exports within the past 90 days.\n"]
+[@@ocaml.doc
+  "Lists completed exports within the past 90 days, in reverse alphanumeric order of [ExportArn].\n"]
 
 module ListGlobalTables : sig
   val error_to_string :
@@ -2883,6 +2910,7 @@ module PutItem : sig
     | `ReplicatedWriteConflictException of replicated_write_conflict_exception
     | `RequestLimitExceeded of request_limit_exceeded
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
     | `TransactionConflictException of transaction_conflict_exception ] ->
     string
 
@@ -2899,6 +2927,7 @@ module PutItem : sig
       | `ReplicatedWriteConflictException of replicated_write_conflict_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `TransactionConflictException of transaction_conflict_exception ] )
     result
 end
@@ -2922,10 +2951,13 @@ end
    partition key for the table. Since every record must contain that attribute, the \
    [attribute_not_exists] function will only succeed if no matching item exists.\n\
   \     \n\
-  \       For more information about [PutItem], see \
+  \        To determine whether [PutItem] overwrote an existing item, use [ReturnValues] set to \
+   [ALL_OLD]. If the response includes the [Attributes] element, an existing item was overwritten.\n\
+  \        \n\
+  \          For more information about [PutItem], see \
    {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html}Working \
    with Items} in the {i Amazon DynamoDB Developer Guide}.\n\
-  \       "]
+  \          "]
 
 module PutResourcePolicy : sig
   val error_to_string :
@@ -2977,7 +3009,8 @@ module Query : sig
     | `InvalidEndpointException of invalid_endpoint_exception
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception ] ->
     string
 
   val request :
@@ -2989,7 +3022,8 @@ module Query : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
     result
 end
 [@@ocaml.doc
@@ -3184,7 +3218,8 @@ module Scan : sig
     | `InvalidEndpointException of invalid_endpoint_exception
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception ] ->
     string
 
   val request :
@@ -3196,7 +3231,8 @@ module Scan : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
     result
 end
 [@@ocaml.doc
@@ -3295,6 +3331,7 @@ module TransactGetItems : sig
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
     | `TransactionCanceledException of transaction_canceled_exception ] ->
     string
 
@@ -3308,6 +3345,7 @@ module TransactGetItems : sig
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `TransactionCanceledException of transaction_canceled_exception ] )
     result
 end
@@ -3345,6 +3383,7 @@ module TransactWriteItems : sig
     | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
     | `RequestLimitExceeded of request_limit_exceeded
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
     | `TransactionCanceledException of transaction_canceled_exception
     | `TransactionInProgressException of transaction_in_progress_exception ] ->
     string
@@ -3360,6 +3399,7 @@ module TransactWriteItems : sig
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `TransactionCanceledException of transaction_canceled_exception
       | `TransactionInProgressException of transaction_in_progress_exception ] )
     result
@@ -3654,6 +3694,7 @@ module UpdateItem : sig
     | `ReplicatedWriteConflictException of replicated_write_conflict_exception
     | `RequestLimitExceeded of request_limit_exceeded
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
     | `TransactionConflictException of transaction_conflict_exception ] ->
     string
 
@@ -3670,6 +3711,7 @@ module UpdateItem : sig
       | `ReplicatedWriteConflictException of replicated_write_conflict_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `TransactionConflictException of transaction_conflict_exception ] )
     result
 end

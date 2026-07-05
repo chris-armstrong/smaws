@@ -309,7 +309,9 @@ let make_get_hypervisor_output ?hypervisor:(hypervisor_ : hypervisor_details opt
 let make_get_hypervisor_input ~hypervisor_arn:(hypervisor_arn_ : server_arn) () =
   ({ hypervisor_arn = hypervisor_arn_ } : get_hypervisor_input)
 
-let make_gateway_details ?vpc_endpoint:(vpc_endpoint_ : vpc_endpoint option)
+let make_gateway_details ?software_version:(software_version_ : name option)
+    ?deprecation_date:(deprecation_date_ : time option)
+    ?vpc_endpoint:(vpc_endpoint_ : vpc_endpoint option)
     ?next_update_availability_time:(next_update_availability_time_ : time option)
     ?maintenance_start_time:(maintenance_start_time_ : maintenance_start_time option)
     ?last_seen_time:(last_seen_time_ : time option)
@@ -318,6 +320,8 @@ let make_gateway_details ?vpc_endpoint:(vpc_endpoint_ : vpc_endpoint option)
     ?gateway_display_name:(gateway_display_name_ : name option)
     ?gateway_arn:(gateway_arn_ : gateway_arn option) () =
   ({
+     software_version = software_version_;
+     deprecation_date = deprecation_date_;
      vpc_endpoint = vpc_endpoint_;
      next_update_availability_time = next_update_availability_time_;
      maintenance_start_time = maintenance_start_time_;

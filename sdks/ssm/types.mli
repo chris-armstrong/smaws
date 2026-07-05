@@ -330,10 +330,36 @@ type nonrec patch_rule = {
       [@ocaml.doc
         "The cutoff date for auto approval of released patches. Any patches released on or before \
          this date are installed automatically.\n\n\
-        \ Enter dates in the format [YYYY-MM-DD]. For example, [2024-12-31].\n\
+        \ Enter dates in the format [YYYY-MM-DD]. For example, [2025-11-16].\n\
+        \ \n\
+        \  Patch Manager evaluates patch release dates using Coordinated Universal Time (UTC). If \
+         you enter the date [2025-11-16], patches released between [2025-11-16T00:00:00Z] and \
+         [2025-11-16T23:59:59Z] will be included in the approval.\n\
+        \  \n\
+        \   This parameter is marked as [Required: No], but your request must include a value for \
+         either [ApproveUntilDate] or [ApproveAfterDays].\n\
+        \   \n\
+        \    Not supported for Debian Server or Ubuntu Server.\n\
+        \    \n\
+        \      Use caution when setting this value for Windows Server patch baselines. Because \
+         patch updates that are replaced by later updates are removed, setting too broad a value \
+         for this parameter can result in crucial patches not being installed. For more \
+         information, see the {b Windows Server} tab in the topic \
+         {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-selecting-patches.html}How \
+         security patches are selected} in the {i Amazon Web Services Systems Manager User Guide}.\n\
+        \      \n\
+        \       "]
+  approve_after_days : approve_after_days option;
+      [@ocaml.doc
+        "The number of days after the release date of each patch matched by the rule that the \
+         patch is marked as approved in the patch baseline. For example, a value of [7] means that \
+         patches are approved seven days after they are released.\n\n\
+        \ Patch Manager evaluates patch release dates using Coordinated Universal Time (UTC). If \
+         the day represented by [7] is [2025-11-16], patches released between \
+         [2025-11-16T00:00:00Z] and [2025-11-16T23:59:59Z] will be included in the approval.\n\
         \ \n\
         \  This parameter is marked as [Required: No], but your request must include a value for \
-         either [ApproveUntilDate] or [ApproveAfterDays].\n\
+         either [ApproveAfterDays] or [ApproveUntilDate].\n\
         \  \n\
         \   Not supported for Debian Server or Ubuntu Server.\n\
         \   \n\
@@ -345,24 +371,6 @@ type nonrec patch_rule = {
          security patches are selected} in the {i Amazon Web Services Systems Manager User Guide}.\n\
         \     \n\
         \      "]
-  approve_after_days : approve_after_days option;
-      [@ocaml.doc
-        "The number of days after the release date of each patch matched by the rule that the \
-         patch is marked as approved in the patch baseline. For example, a value of [7] means that \
-         patches are approved seven days after they are released.\n\n\
-        \ This parameter is marked as [Required: No], but your request must include a value for \
-         either [ApproveAfterDays] or [ApproveUntilDate].\n\
-        \ \n\
-        \  Not supported for Debian Server or Ubuntu Server.\n\
-        \  \n\
-        \    Use caution when setting this value for Windows Server patch baselines. Because patch \
-         updates that are replaced by later updates are removed, setting too broad a value for \
-         this parameter can result in crucial patches not being installed. For more information, \
-         see the {b Windows Server} tab in the topic \
-         {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-selecting-patches.html}How \
-         security patches are selected} in the {i Amazon Web Services Systems Manager User Guide}.\n\
-        \    \n\
-        \     "]
   compliance_level : patch_compliance_level option;
       [@ocaml.doc "A compliance severity level for all approved patches in a patch baseline.\n"]
   patch_filter_group : patch_filter_group;
@@ -399,19 +407,35 @@ type nonrec patch_source_configuration = string [@@ocaml.doc ""]
 type nonrec patch_source = {
   configuration : patch_source_configuration;
       [@ocaml.doc
-        "The value of the yum repo configuration. For example:\n\n\
-        \  [\\[main\\]] \n\
+        "The value of the repo configuration.\n\n\
+        \  {b Example for yum repositories} \n\
         \ \n\
-        \   [name=MyCustomRepository] \n\
+        \   [\\[main\\]] \n\
         \  \n\
-        \    [baseurl=https://my-custom-repository] \n\
+        \    [name=MyCustomRepository] \n\
         \   \n\
-        \     [enabled=1] \n\
+        \     [baseurl=https://my-custom-repository] \n\
         \    \n\
+        \      [enabled=1] \n\
+        \     \n\
         \      For information about other options available for your yum repository \
-         configuration, see {{:https://man7.org/linux/man-pages/man5/dnf.conf.5.html}dnf.conf(5)}.\n\
+         configuration, see {{:https://man7.org/linux/man-pages/man5/dnf.conf.5.html}dnf.conf(5)} \
+         on the {i man7.org} website.\n\
         \      \n\
-        \       "]
+        \        {b Examples for Ubuntu Server and Debian Server} \n\
+        \       \n\
+        \         [deb http://security.ubuntu.com/ubuntu jammy main] \n\
+        \        \n\
+        \          [deb https://site.example.com/debian distribution component1 component2 \
+         component3] \n\
+        \         \n\
+        \          Repo information for Ubuntu Server repositories must be specifed in a single \
+         line. For more examples and information, see \
+         {{:https://manpages.ubuntu.com/manpages/jammy/man5/sources.list.5.html}jammy (5) \
+         sources.list.5.gz} on the {i Ubuntu Server Manuals} website and \
+         {{:https://wiki.debian.org/SourcesList#sources.list_format}sources.list format} on the {i \
+         Debian Wiki}.\n\
+        \          "]
   products : patch_source_product_list;
       [@ocaml.doc
         "The specific operating system versions a patch repository applies to, such as \
@@ -510,11 +534,25 @@ type nonrec update_patch_baseline_request = {
         \                        \n\
         \                          BLOCK   {b All OSs}: Packages in the rejected patches list, and \
          packages that include them as dependencies, aren't installed by Patch Manager under any \
-         circumstances. If a package was installed before it was added to the rejected patches \
-         list, or is installed outside of Patch Manager afterward, it's considered noncompliant \
-         with the patch baseline and its status is reported as [INSTALLED_REJECTED].\n\
+         circumstances. \n\
         \                                 \n\
-        \                                   "]
+        \                                  State value assignment for patch compliance:\n\
+        \                                  \n\
+        \                                   {ul\n\
+        \                                         {-  If a package was installed before it was \
+         added to the rejected patches list, or is installed outside of Patch Manager afterward, \
+         it's considered noncompliant with the patch baseline and its status is reported as \
+         [INSTALLED_REJECTED].\n\
+        \                                             \n\
+        \                                              }\n\
+        \                                         {-  If an update attempts to install a \
+         dependency package that is now rejected by the baseline, when previous versions of the \
+         package were not rejected, the package being updated is reported as [MISSING] for [SCAN] \
+         operations and as [FAILED] for [INSTALL] operations.\n\
+        \                                             \n\
+        \                                              }\n\
+        \                                         }\n\
+        \    "]
   rejected_patches : patch_id_list option;
       [@ocaml.doc
         "A list of explicitly rejected patches for the baseline.\n\n\
@@ -2248,7 +2286,10 @@ type nonrec target_location = {
   include_child_organization_units : boolean_ option;
       [@ocaml.doc
         "Indicates whether to include child organizational units (OUs) that are children of the \
-         targeted OUs. The default is [false].\n"]
+         targeted OUs. The default is [false].\n\n\
+        \  This parameter is not supported by State Manager.\n\
+        \  \n\
+        \   "]
   target_location_alarm_configuration : alarm_configuration option; [@ocaml.doc ""]
   execution_role_name : execution_role_name option;
       [@ocaml.doc
@@ -2257,11 +2298,13 @@ type nonrec target_location = {
   target_location_max_errors : max_errors option;
       [@ocaml.doc
         "The maximum number of errors allowed before the system stops queueing additional \
-         Automation executions for the currently running Automation.\n"]
+         Automation executions for the currently running Automation. [TargetLocationMaxErrors] has \
+         a default value of 0.\n"]
   target_location_max_concurrency : max_concurrency option;
       [@ocaml.doc
         "The maximum number of Amazon Web Services Regions and Amazon Web Services accounts \
-         allowed to run the Automation concurrently.\n"]
+         allowed to run the Automation concurrently. [TargetLocationMaxConcurrency] has a default \
+         value of 1.\n"]
   regions : regions option;
       [@ocaml.doc "The Amazon Web Services Regions targeted by the current Automation execution.\n"]
   accounts : accounts option;
@@ -2299,7 +2342,15 @@ type nonrec alarm_state_information = {
 
 type nonrec alarm_state_information_list = alarm_state_information list [@@ocaml.doc ""]
 
+type nonrec association_dispatch_assume_role_arn = string [@@ocaml.doc ""]
+
 type nonrec association_description = {
+  association_dispatch_assume_role : association_dispatch_assume_role_arn option;
+      [@ocaml.doc
+        "A role used by association to take actions on your behalf. State Manager will assume this \
+         role and call required APIs when dispatching configurations to nodes. If not specified, \
+         {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/using-service-linked-roles.html} \
+         service-linked role for Systems Manager} will be used by default. \n"]
   triggered_alarms : alarm_state_information_list option;
       [@ocaml.doc "The CloudWatch alarm that was invoked during the association.\n"]
   alarm_configuration : alarm_configuration option; [@ocaml.doc ""]
@@ -2426,6 +2477,19 @@ type nonrec update_association_result = {
 [@@ocaml.doc ""]
 
 type nonrec update_association_request = {
+  association_dispatch_assume_role : association_dispatch_assume_role_arn option;
+      [@ocaml.doc
+        "A role used by association to take actions on your behalf. State Manager will assume this \
+         role and call required APIs when dispatching configurations to nodes. If not specified, \
+         {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/using-service-linked-roles.html} \
+         service-linked role for Systems Manager} will be used by default. \n\n\
+        \  It is recommended that you define a custom IAM role so that you have full control of \
+         the permissions that State Manager has when taking actions on your behalf.\n\
+        \  \n\
+        \   Service-linked role support in State Manager is being phased out. Associations relying \
+         on service-linked role may require updates in the future to continue functioning properly.\n\
+        \   \n\
+        \    "]
   alarm_configuration : alarm_configuration option; [@ocaml.doc ""]
   target_maps : target_maps option;
       [@ocaml.doc
@@ -2473,7 +2537,10 @@ type nonrec update_association_request = {
       [@ocaml.doc
         "A location is a combination of Amazon Web Services Regions and Amazon Web Services \
          accounts where you want to run the association. Use this action to update an association \
-         in multiple Regions and multiple accounts.\n"]
+         in multiple Regions and multiple accounts.\n\n\
+        \  The [IncludeChildOrganizationUnits] parameter is not supported by State Manager.\n\
+        \  \n\
+        \   "]
   calendar_names : calendar_name_or_arn_list option;
       [@ocaml.doc
         "The names or Amazon Resource Names (ARNs) of the Change Calendar type documents you want \
@@ -3250,6 +3317,9 @@ type nonrec start_change_request_execution_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec no_longer_supported_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc "The requested operation is no longer supported by Systems Manager.\n"]
+
 type nonrec invalid_automation_execution_parameters_exception = {
   message : string_ option; [@ocaml.doc ""]
 }
@@ -3543,7 +3613,7 @@ type nonrec session = {
         " [Standard] access type is the default for Session Manager sessions. [JustInTime] is the \
          access type for \
          {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-just-in-time-node-access.html}Just-in-time \
-         node access}. \n"]
+         node access}.\n"]
   max_session_duration : max_session_duration option;
       [@ocaml.doc "The maximum duration of a session before it terminates.\n"]
   output_url : session_manager_output_url option; [@ocaml.doc "Reserved for future use.\n"]
@@ -4342,7 +4412,14 @@ type nonrec compliance_execution_summary = {
   execution_time : date_time;
       [@ocaml.doc
         "The time the execution ran as a datetime object that is saved in the following format: \
-         [yyyy-MM-dd'T'HH:mm:ss'Z'] \n"]
+         [yyyy-MM-dd'T'HH:mm:ss'Z'] \n\n\
+        \  For State Manager associations, this timestamp represents when the compliance status \
+         was captured and reported by the Systems Manager service, not when the underlying \
+         association was actually executed on the managed node. To track actual association \
+         execution times, use the [DescribeAssociationExecutionTargets] command or check the \
+         association execution history in the Systems Manager console.\n\
+        \  \n\
+        \   "]
 }
 [@@ocaml.doc
   "A summary of the call execution that includes an execution ID, the type of execution (for \
@@ -5118,7 +5195,10 @@ type nonrec put_parameter_request = {
          in parameter names. For example: [/Dev/Production/East/Project-ABC/MyParameter] \n\
         \                 \n\
         \                  }\n\
-        \            {-  A parameter name can't include spaces.\n\
+        \            {-  Parameter names can't contain spaces. The service removes any spaces \
+         specified for the beginning or end of a parameter name. If the specified name for a \
+         parameter contains spaces between characters, the request fails with a \
+         [ValidationException] error.\n\
         \                \n\
         \                 }\n\
         \            {-  Parameter hierarchies are limited to a maximum depth of fifteen levels.\n\
@@ -7321,14 +7401,45 @@ type nonrec inventory_filter = {
          inventory data} in the {i Amazon Web Services Systems Manager User Guide}.\n\
         \  \n\
         \   "]
-  values : inventory_filter_value_list;
-      [@ocaml.doc
-        "Inventory filter values. Example: inventory filter where managed node IDs are specified \
-         as values [Key=AWS:InstanceInformation.InstanceId,Values= i-a12b3c4d5e6g,\n\
-        \    i-1a2b3c4d5e6,Type=Equal]. \n"]
+  values : inventory_filter_value_list; [@ocaml.doc "Inventory filter values.\n"]
   key : inventory_filter_key; [@ocaml.doc "The name of the filter key.\n"]
 }
-[@@ocaml.doc "One or more filters. Use a filter to return a more specific list of results.\n"]
+[@@ocaml.doc
+  "One or more filters. Use a filter to return a more specific list of results.\n\n\
+  \  {b Example formats for the [aws ssm get-inventory] command:} \n\
+  \ \n\
+  \   [--filters\n\
+  \    Key=AWS:InstanceInformation.AgentType,Values=amazon-ssm-agent,Type=Equal] \n\
+  \  \n\
+  \    [--filters\n\
+  \   Key=AWS:InstanceInformation.AgentVersion,Values=3.3.2299.0,Type=Equal] \n\
+  \   \n\
+  \     [--filters\n\
+  \    \
+   Key=AWS:InstanceInformation.ComputerName,Values=ip-192.0.2.0.us-east-2.compute.internal,Type=Equal] \n\
+  \    \n\
+  \      [--filters\n\
+  \    \
+   Key=AWS:InstanceInformation.InstanceId,Values=i-0a4cd6ceffEXAMPLE,i-1a2b3c4d5e6EXAMPLE,Type=Equal] \n\
+  \     \n\
+  \       [--filters\n\
+  \   Key=AWS:InstanceInformation.InstanceStatus,Values=Active,Type=Equal] \n\
+  \      \n\
+  \        [--filters\n\
+  \   Key=AWS:InstanceInformation.IpAddress,Values=198.51.100.0,Type=Equal] \n\
+  \       \n\
+  \         [--filters Key=AWS:InstanceInformation.PlatformName,Values=\"Amazon\n\
+  \    Linux\",Type=Equal] \n\
+  \        \n\
+  \          [--filters\n\
+  \   Key=AWS:InstanceInformation.PlatformType,Values=Linux,Type=Equal] \n\
+  \         \n\
+  \           [--filters\n\
+  \    Key=AWS:InstanceInformation.PlatformVersion,Values=2023,Type=BeginWith] \n\
+  \          \n\
+  \            [--filters\n\
+  \    Key=AWS:InstanceInformation.ResourceType,Values=EC2Instance,Type=Equal] \n\
+  \           "]
 
 type nonrec inventory_filter_list = inventory_filter list [@@ocaml.doc ""]
 
@@ -7715,7 +7826,15 @@ type nonrec compliance_item = {
   execution_summary : compliance_execution_summary option;
       [@ocaml.doc
         "A summary for the compliance item. The summary includes an execution ID, the execution \
-         type (for example, command), and the execution time.\n"]
+         type (for example, command), and the execution time.\n\n\
+        \  For State Manager associations, the [ExecutionTime] value represents when the \
+         compliance status was captured and aggregated by the Systems Manager service, not \
+         necessarily when the underlying association was executed on the managed node. State \
+         Manager updates compliance status for all associations on an instance whenever any \
+         association executes, which means multiple associations may show the same execution time \
+         even if they were executed at different times.\n\
+        \  \n\
+        \   "]
   severity : compliance_severity option;
       [@ocaml.doc
         "The severity of the compliance status. Severity can be one of the following: Critical, \
@@ -8375,6 +8494,12 @@ type nonrec list_associations_request = {
 [@@ocaml.doc ""]
 
 type nonrec association_version_info = {
+  association_dispatch_assume_role : association_dispatch_assume_role_arn option;
+      [@ocaml.doc
+        "A role used by association to take actions on your behalf. State Manager will assume this \
+         role and call required APIs when dispatching configurations to nodes. If not specified, \
+         {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/using-service-linked-roles.html} \
+         service-linked role for Systems Manager} will be used by default. \n"]
   target_maps : target_maps option;
       [@ocaml.doc
         "A key-value mapping of document parameters to target resources. Both Targets and \
@@ -10247,6 +10372,12 @@ type nonrec baseline_override = {
 [@@ocaml.doc "Defines the basic information about a patch baseline override.\n"]
 
 type nonrec get_deployable_patch_snapshot_for_instance_request = {
+  use_s3_dual_stack_endpoint : boolean_ option;
+      [@ocaml.doc
+        "Specifies whether to use S3 dualstack endpoints for the patch snapshot download URL. Set \
+         to [true] to receive a presigned URL that supports both IPv4 and IPv6 connectivity. Set \
+         to [false] to use standard IPv4-only endpoints. Default is [false]. This parameter is \
+         required for managed nodes in IPv6-only environments. \n"]
   baseline_override : baseline_override option;
       [@ocaml.doc "Defines the basic information about a patch baseline override.\n"]
   snapshot_id : snapshot_id;
@@ -12686,11 +12817,25 @@ type nonrec create_patch_baseline_request = {
         \                        \n\
         \                          BLOCK   {b All OSs}: Packages in the rejected patches list, and \
          packages that include them as dependencies, aren't installed by Patch Manager under any \
-         circumstances. If a package was installed before it was added to the rejected patches \
-         list, or is installed outside of Patch Manager afterward, it's considered noncompliant \
-         with the patch baseline and its status is reported as [INSTALLED_REJECTED].\n\
+         circumstances. \n\
         \                                 \n\
-        \                                   "]
+        \                                  State value assignment for patch compliance:\n\
+        \                                  \n\
+        \                                   {ul\n\
+        \                                         {-  If a package was installed before it was \
+         added to the rejected patches list, or is installed outside of Patch Manager afterward, \
+         it's considered noncompliant with the patch baseline and its status is reported as \
+         [INSTALLED_REJECTED].\n\
+        \                                             \n\
+        \                                              }\n\
+        \                                         {-  If an update attempts to install a \
+         dependency package that is now rejected by the baseline, when previous versions of the \
+         package were not rejected, the package being updated is reported as [MISSING] for [SCAN] \
+         operations and as [FAILED] for [INSTALL] operations.\n\
+        \                                             \n\
+        \                                              }\n\
+        \                                         }\n\
+        \    "]
   rejected_patches : patch_id_list option;
       [@ocaml.doc
         "A list of explicitly rejected patches for the baseline.\n\n\
@@ -12862,18 +13007,24 @@ type nonrec create_ops_item_request = {
         \            This type of OpsItem is used for default OpsItems created by OpsCenter. \n\
         \            \n\
         \             }\n\
-        \       {-   [/aws/changerequest] \n\
-        \           \n\
-        \            This type of OpsItem is used by Change Manager for reviewing and approving or \
-         rejecting change requests. \n\
-        \            \n\
-        \             }\n\
         \       {-   [/aws/insight] \n\
         \           \n\
         \            This type of OpsItem is used by OpsCenter for aggregating and reporting on \
          duplicate OpsItems. \n\
         \            \n\
         \             }\n\
+        \       {-   [/aws/changerequest] \n\
+        \           \n\
+        \            This type of OpsItem is used by Change Manager for reviewing and approving or \
+         rejecting change requests. \n\
+        \            \n\
+        \              Amazon Web Services Systems Manager Change Manager is no longer open to new \
+         customers. Existing customers can continue to use the service as normal. For more \
+         information, see \
+         {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/change-manager-availability-change.html}Amazon \
+         Web Services Systems Manager Change Manager availability change}.\n\
+        \              \n\
+        \                }\n\
         \       }\n\
         \  "]
   description : ops_item_description;
@@ -13101,6 +13252,19 @@ type nonrec create_association_result = {
 [@@ocaml.doc ""]
 
 type nonrec create_association_request = {
+  association_dispatch_assume_role : association_dispatch_assume_role_arn option;
+      [@ocaml.doc
+        "A role used by association to take actions on your behalf. State Manager will assume this \
+         role and call required APIs when dispatching configurations to nodes. If not specified, \
+         {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/using-service-linked-roles.html} \
+         service-linked role for Systems Manager} will be used by default. \n\n\
+        \  It is recommended that you define a custom IAM role so that you have full control of \
+         the permissions that State Manager has when taking actions on your behalf.\n\
+        \  \n\
+        \   Service-linked role support in State Manager is being phased out. Associations relying \
+         on service-linked role may require updates in the future to continue functioning properly.\n\
+        \   \n\
+        \    "]
   alarm_configuration : alarm_configuration option; [@ocaml.doc ""]
   tags : tag_list option;
       [@ocaml.doc
@@ -13154,7 +13318,10 @@ type nonrec create_association_request = {
       [@ocaml.doc
         "A location is a combination of Amazon Web Services Regions and Amazon Web Services \
          accounts where you want to run the association. Use this action to create an association \
-         in multiple Regions and multiple accounts.\n"]
+         in multiple Regions and multiple accounts.\n\n\
+        \  The [IncludeChildOrganizationUnits] parameter is not supported by State Manager.\n\
+        \  \n\
+        \   "]
   calendar_names : calendar_name_or_arn_list option;
       [@ocaml.doc
         "The names of Amazon Resource Names (ARNs) of the Change Calendar type documents you want \
@@ -13307,6 +13474,19 @@ type nonrec create_association_batch_request_entries = create_association_batch_
 [@@ocaml.doc ""]
 
 type nonrec create_association_batch_request = {
+  association_dispatch_assume_role : association_dispatch_assume_role_arn option;
+      [@ocaml.doc
+        "A role used by association to take actions on your behalf. State Manager will assume this \
+         role and call required APIs when dispatching configurations to nodes. If not specified, \
+         {{:https://docs.aws.amazon.com/systems-manager/latest/userguide/using-service-linked-roles.html} \
+         service-linked role for Systems Manager} will be used by default. \n\n\
+        \  It is recommended that you define a custom IAM role so that you have full control of \
+         the permissions that State Manager has when taking actions on your behalf.\n\
+        \  \n\
+        \   Service-linked role support in State Manager is being phased out. Associations relying \
+         on service-linked role may require updates in the future to continue functioning properly.\n\
+        \   \n\
+        \    "]
   entries : create_association_batch_request_entries; [@ocaml.doc "One or more associations.\n"]
 }
 [@@ocaml.doc ""]

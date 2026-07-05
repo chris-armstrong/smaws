@@ -271,6 +271,7 @@ val make_conformance_pack_input_parameter :
   conformance_pack_input_parameter
 
 val make_put_organization_conformance_pack_request :
+  ?tags:tags_list ->
   ?excluded_accounts:excluded_accounts ->
   ?conformance_pack_input_parameters:conformance_pack_input_parameters ->
   ?delivery_s3_key_prefix:delivery_s3_key_prefix ->
@@ -292,7 +293,7 @@ val make_organization_managed_rule_metadata :
   ?resource_id_scope:string_with_char_limit768 ->
   ?resource_types_scope:resource_types_scope ->
   ?maximum_execution_frequency:maximum_execution_frequency ->
-  ?input_parameters:string_with_char_limit2048 ->
+  ?input_parameters:string_with_char_limit1024 ->
   ?description:string_with_char_limit256_min0 ->
   rule_identifier:string_with_char_limit256 ->
   unit ->
@@ -304,7 +305,7 @@ val make_organization_custom_rule_metadata :
   ?resource_id_scope:string_with_char_limit768 ->
   ?resource_types_scope:resource_types_scope ->
   ?maximum_execution_frequency:maximum_execution_frequency ->
-  ?input_parameters:string_with_char_limit2048 ->
+  ?input_parameters:string_with_char_limit1024 ->
   ?description:string_with_char_limit256_min0 ->
   organization_config_rule_trigger_types:organization_config_rule_trigger_types ->
   lambda_function_arn:string_with_char_limit256 ->
@@ -318,7 +319,7 @@ val make_organization_custom_policy_rule_metadata :
   ?resource_id_scope:string_with_char_limit768 ->
   ?resource_types_scope:resource_types_scope ->
   ?maximum_execution_frequency:maximum_execution_frequency ->
-  ?input_parameters:string_with_char_limit2048 ->
+  ?input_parameters:string_with_char_limit1024 ->
   ?organization_config_rule_trigger_types:organization_config_rule_trigger_type_no_s_ns ->
   ?description:string_with_char_limit256_min0 ->
   policy_text:policy_text ->
@@ -327,6 +328,7 @@ val make_organization_custom_policy_rule_metadata :
   organization_custom_policy_rule_metadata
 
 val make_put_organization_config_rule_request :
+  ?tags:tags_list ->
   ?organization_custom_policy_rule_metadata:organization_custom_policy_rule_metadata ->
   ?excluded_accounts:excluded_accounts ->
   ?organization_custom_rule_metadata:organization_custom_rule_metadata ->
@@ -391,6 +393,7 @@ val make_put_conformance_pack_response :
   ?conformance_pack_arn:conformance_pack_arn -> unit -> put_conformance_pack_response
 
 val make_put_conformance_pack_request :
+  ?tags:tags_list ->
   ?template_ssm_document_details:template_ssm_document_details ->
   ?conformance_pack_input_parameters:conformance_pack_input_parameters ->
   ?delivery_s3_key_prefix:delivery_s3_key_prefix ->
@@ -504,6 +507,7 @@ val make_put_configuration_aggregator_request :
   put_configuration_aggregator_request
 
 val make_scope :
+  ?service_principals:service_principals ->
   ?compliance_resource_id:base_resource_id ->
   ?tag_value:string_with_char_limit256 ->
   ?tag_key:string_with_char_limit128 ->
@@ -537,6 +541,7 @@ val make_evaluation_mode_configuration :
   ?mode:evaluation_mode -> unit -> evaluation_mode_configuration
 
 val make_config_rule :
+  ?rule_evaluation_visibility:rule_evaluation_visibility ->
   ?evaluation_modes:evaluation_modes ->
   ?created_by:string_with_char_limit256 ->
   ?config_rule_state:config_rule_state ->
@@ -1272,7 +1277,7 @@ val make_organization_custom_policy_rule_metadata_no_policy :
   ?resource_id_scope:string_with_char_limit768 ->
   ?resource_types_scope:resource_types_scope ->
   ?maximum_execution_frequency:maximum_execution_frequency ->
-  ?input_parameters:string_with_char_limit2048 ->
+  ?input_parameters:string_with_char_limit1024 ->
   ?organization_config_rule_trigger_types:organization_config_rule_trigger_type_no_s_ns ->
   ?description:string_with_char_limit256_min0 ->
   unit ->
@@ -1503,7 +1508,10 @@ val make_describe_config_rules_response :
   ?next_token:string_ -> ?config_rules:config_rules -> unit -> describe_config_rules_response
 
 val make_describe_config_rules_filters :
-  ?evaluation_mode:evaluation_mode -> unit -> describe_config_rules_filters
+  ?rule_evaluation_visibility:rule_evaluation_visibility ->
+  ?evaluation_mode:evaluation_mode ->
+  unit ->
+  describe_config_rules_filters
 
 val make_describe_config_rules_request :
   ?filters:describe_config_rules_filters ->
@@ -1950,29 +1958,23 @@ end
   \ \n\
   \  You can check the state of a rule by using the [DescribeConfigRules] request.\n\
   \  \n\
-  \     {b Recommendation: Stop recording resource compliance before deleting rules} \n\
+  \     {b Recommendation: Consider excluding the [AWS::Config::ResourceCompliance] resource type \
+   from recording before deleting rules} \n\
   \    \n\
-  \     It is highly recommended that you stop recording for the [AWS::Config::ResourceCompliance] \
-   resource type before you delete rules in your account. Deleting rules creates CIs for \
-   [AWS::Config::ResourceCompliance] and can affect your Config \
-   {{:https://docs.aws.amazon.com/config/latest/developerguide/stop-start-recorder.html}configuration \
-   recorder} costs. If you are deleting rules which evaluate a large number of resource types, \
-   this can lead to a spike in the number of CIs recorded.\n\
+  \     Deleting rules creates configuration items (CIs) for [AWS::Config::ResourceCompliance] \
+   that can affect your costs for the configuration recorder. If you are deleting rules which \
+   evaluate a large number of resource types, this can lead to a spike in the number of CIs \
+   recorded.\n\
   \     \n\
-  \      Best practice:\n\
+  \      To avoid the associated costs, you can opt to disable recording for the \
+   [AWS::Config::ResourceCompliance] resource type before deleting rules, and re-enable recording \
+   after the rules have been deleted.\n\
   \      \n\
-  \       {ol\n\
-  \             {-  Stop recording [AWS::Config::ResourceCompliance] \n\
-  \                 \n\
-  \                  }\n\
-  \             {-  Delete rule(s)\n\
-  \                 \n\
-  \                  }\n\
-  \             {-  Turn on recording for [AWS::Config::ResourceCompliance] \n\
-  \                 \n\
-  \                  }\n\
-  \             }\n\
-  \   "]
+  \       However, since deleting rules is an asynchronous process, it might take an hour or more \
+   to complete. During the time when recording is disabled for [AWS::Config::ResourceCompliance], \
+   rule evaluations will not be recorded in the associated resource\226\128\153s history.\n\
+  \       \n\
+  \        "]
 
 module DeleteConfigurationAggregator : sig
   val error_to_string :
@@ -2038,7 +2040,23 @@ end
    evaluation results within that conformance pack.\n\n\
   \ Config sets the conformance pack to [DELETE_IN_PROGRESS] until the deletion is complete. You \
    cannot update a conformance pack while it is in this state.\n\
-  \ "]
+  \ \n\
+  \    {b Recommendation: Consider excluding the [AWS::Config::ResourceCompliance] resource type \
+   from recording before deleting rules} \n\
+  \   \n\
+  \    Deleting rules creates configuration items (CIs) for [AWS::Config::ResourceCompliance] that \
+   can affect your costs for the configuration recorder. If you are deleting rules which evaluate \
+   a large number of resource types, this can lead to a spike in the number of CIs recorded.\n\
+  \    \n\
+  \     To avoid the associated costs, you can opt to disable recording for the \
+   [AWS::Config::ResourceCompliance] resource type before deleting rules, and re-enable recording \
+   after the rules have been deleted.\n\
+  \     \n\
+  \      However, since deleting rules is an asynchronous process, it might take an hour or more \
+   to complete. During the time when recording is disabled for [AWS::Config::ResourceCompliance], \
+   rule evaluations will not be recorded in the associated resource\226\128\153s history.\n\
+  \      \n\
+  \       "]
 
 module DeleteDeliveryChannel : sig
   val error_to_string :
@@ -2112,7 +2130,24 @@ end
   \ \n\
   \  Config sets the state of a rule to DELETE_IN_PROGRESS until the deletion is complete. You \
    cannot update a rule while it is in this state.\n\
-  \  "]
+  \  \n\
+  \     {b Recommendation: Consider excluding the [AWS::Config::ResourceCompliance] resource type \
+   from recording before deleting rules} \n\
+  \    \n\
+  \     Deleting rules creates configuration items (CIs) for [AWS::Config::ResourceCompliance] \
+   that can affect your costs for the configuration recorder. If you are deleting rules which \
+   evaluate a large number of resource types, this can lead to a spike in the number of CIs \
+   recorded.\n\
+  \     \n\
+  \      To avoid the associated costs, you can opt to disable recording for the \
+   [AWS::Config::ResourceCompliance] resource type before deleting rules, and re-enable recording \
+   after the rules have been deleted.\n\
+  \      \n\
+  \       However, since deleting rules is an asynchronous process, it might take an hour or more \
+   to complete. During the time when recording is disabled for [AWS::Config::ResourceCompliance], \
+   rule evaluations will not be recorded in the associated resource\226\128\153s history.\n\
+  \       \n\
+  \        "]
 
 module DeleteOrganizationConformancePack : sig
   val error_to_string :
@@ -2142,7 +2177,24 @@ end
   \ \n\
   \  Config sets the state of a conformance pack to DELETE_IN_PROGRESS until the deletion is \
    complete. You cannot update a conformance pack while it is in this state. \n\
-  \  "]
+  \  \n\
+  \     {b Recommendation: Consider excluding the [AWS::Config::ResourceCompliance] resource type \
+   from recording before deleting rules} \n\
+  \    \n\
+  \     Deleting rules creates configuration items (CIs) for [AWS::Config::ResourceCompliance] \
+   that can affect your costs for the configuration recorder. If you are deleting rules which \
+   evaluate a large number of resource types, this can lead to a spike in the number of CIs \
+   recorded.\n\
+  \     \n\
+  \      To avoid the associated costs, you can opt to disable recording for the \
+   [AWS::Config::ResourceCompliance] resource type before deleting rules, and re-enable recording \
+   after the rules have been deleted.\n\
+  \      \n\
+  \       However, since deleting rules is an asynchronous process, it might take an hour or more \
+   to complete. During the time when recording is disabled for [AWS::Config::ResourceCompliance], \
+   rule evaluations will not be recorded in the associated resource\226\128\153s history.\n\
+  \       \n\
+  \        "]
 
 module DeletePendingAggregationRequest : sig
   val error_to_string :
@@ -3504,26 +3556,33 @@ module GetResourceConfigHistory : sig
 end
 [@@ocaml.doc
   " For accurate reporting on the compliance status, you must record the \
-   [AWS::Config::ResourceCompliance] resource type. For more information, see \
-   {{:https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html}Selecting \
-   Which Resources Config Records}.\n\
+   [AWS::Config::ResourceCompliance] resource type.\n\
   \ \n\
-  \   Returns a list of [ConfigurationItems] for the specified resource. The list contains details \
-   about each state of the resource during the specified time interval. If you specified a \
-   retention period to retain your [ConfigurationItems] between a minimum of 30 days and a maximum \
-   of 7 years (2557 days), Config returns the [ConfigurationItems] for the specified retention \
+  \  For more information, see \
+   {{:https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html}Recording \
+   Amazon Web Services Resources} in the {i Config Resources Developer Guide}.\n\
+  \  \n\
+  \    Returns a list of configurations items (CIs) for the specified resource.\n\
+  \    \n\
+  \      {b Contents} \n\
+  \     \n\
+  \      The list contains details about each state of the resource during the specified time \
+   interval. If you specified a retention period to retain your CIs between a minimum of 30 days \
+   and a maximum of 7 years (2557 days), Config returns the CIs for the specified retention \
    period. \n\
-  \   \n\
-  \    The response is paginated. By default, Config returns a limit of 10 configuration items per \
-   page. You can customize this number with the [limit] parameter. The response includes a \
+  \      \n\
+  \        {b Pagination} \n\
+  \       \n\
+  \        The response is paginated. By default, Config returns a limit of 10 configuration items \
+   per page. You can customize this number with the [limit] parameter. The response includes a \
    [nextToken] string. To get the next page of results, run the request again and specify the \
    string for the [nextToken] parameter.\n\
-  \    \n\
-  \      Each call to the API is limited to span a duration of seven days. It is likely that the \
-   number of records returned is smaller than the specified [limit]. In such cases, you can make \
-   another call, using the [nextToken].\n\
-  \      \n\
-  \       "]
+  \        \n\
+  \          Each call to the API is limited to span a duration of seven days. It is likely that \
+   the number of records returned is smaller than the specified [limit]. In such cases, you can \
+   make another call, using the [nextToken].\n\
+  \          \n\
+  \           "]
 
 module GetResourceEvaluationSummary : sig
   val error_to_string :
@@ -3665,17 +3724,45 @@ module ListDiscoveredResources : sig
     result
 end
 [@@ocaml.doc
-  "Accepts a resource type and returns a list of resource identifiers for the resources of that \
-   type. A resource identifier includes the resource type, ID, and (if available) the custom \
-   resource name. The results consist of resources that Config has discovered, including those \
-   that Config is not currently recording. You can narrow the results to include only resources \
-   that have specific resource IDs or a resource name.\n\n\
-  \  You can specify either resource IDs or a resource name, but not both, in the same request.\n\
-  \  \n\
-  \    The response is paginated. By default, Config lists 100 resource identifiers on each page. \
-   You can customize this number with the [limit] parameter. The response includes a [nextToken] \
-   string. To get the next page of results, run the request again and specify the string for the \
-   [nextToken] parameter.\n\
+  "Returns a list of resource resource identifiers for the specified resource types for the \
+   resources of that type. A {i resource identifier} includes the resource type, ID, and (if \
+   available) the custom resource name.\n\n\
+  \ The results consist of resources that Config has {i discovered}, including those that Config \
+   is not currently recording. You can narrow the results to include only resources that have \
+   specific resource IDs or a resource name.\n\
+  \ \n\
+  \   You can specify either resource IDs or a resource name, but not both, in the same request.\n\
+  \   \n\
+  \       {i CloudFormation stack recording behavior in Config} \n\
+  \      \n\
+  \       When a CloudFormation stack fails to create (for example, it enters the \
+   [ROLLBACK_FAILED] state), Config does not record a configuration item (CI) for that stack. \
+   Configuration items are only recorded for stacks that reach the following states:\n\
+  \       \n\
+  \        {ul\n\
+  \              {-   [CREATE_COMPLETE] \n\
+  \                  \n\
+  \                   }\n\
+  \              {-   [UPDATE_COMPLETE] \n\
+  \                  \n\
+  \                   }\n\
+  \              {-   [UPDATE_ROLLBACK_COMPLETE] \n\
+  \                  \n\
+  \                   }\n\
+  \              {-   [UPDATE_ROLLBACK_FAILED] \n\
+  \                  \n\
+  \                   }\n\
+  \              {-   [DELETE_FAILED] \n\
+  \                  \n\
+  \                   }\n\
+  \              {-   [DELETE_COMPLETE] \n\
+  \                  \n\
+  \                   }\n\
+  \              }\n\
+  \   Because no CI is created for a failed stack creation, you won't see configuration history \
+   for that stack in Config, even after the stack is deleted. This helps make sure that Config \
+   only tracks resources that were successfully provisioned.\n\
+  \   \n\
   \    "]
 
 module ListResourceEvaluations : sig
@@ -4007,13 +4094,34 @@ end
    on how many conformance packs you can have per account, see \
    {{:https://docs.aws.amazon.com/config/latest/developerguide/configlimits.html} {b Service \
    Limits} } in the {i Config Developer Guide}.\n\n\
-  \ This API creates a service-linked role [AWSServiceRoleForConfigConforms] in your account. The \
-   service-linked role is created only when the role does not exist in your account. \n\
-  \ \n\
-  \   You must specify only one of the follow parameters: [TemplateS3Uri], [TemplateBody] or \
-   [TemplateSSMDocumentDetails].\n\
+  \  When you use [PutConformancePack] to deploy conformance packs in your account, the operation \
+   can create Config rules and remediation actions without requiring [config:PutConfigRule] or \
+   [config:PutRemediationConfigurations] permissions in your account IAM policies.\n\
+  \  \n\
+  \   This API uses the [AWSServiceRoleForConfigConforms] service-linked role in your account to \
+   create conformance pack resources. This service-linked role includes the permissions to create \
+   Config rules and remediation configurations, even if your account IAM policies explicitly deny \
+   these actions.\n\
   \   \n\
-  \    "]
+  \     This API creates a service-linked role [AWSServiceRoleForConfigConforms] in your account. \
+   The service-linked role is created only when the role does not exist in your account. \n\
+  \     \n\
+  \       You must specify only one of the follow parameters: [TemplateS3Uri], [TemplateBody] or \
+   [TemplateSSMDocumentDetails].\n\
+  \       \n\
+  \           {b Tags are added at creation and cannot be updated with this operation} \n\
+  \          \n\
+  \            [PutConformancePack] is an idempotent API. Subsequent requests won't create a \
+   duplicate resource if one was already created. If a following request has different [tags] \
+   values, Config will ignore these differences and treat it as an idempotent request of the \
+   previous. In this case, [tags] will not be updated, even if they are different.\n\
+  \           \n\
+  \            Use \
+   {{:https://docs.aws.amazon.com/config/latest/APIReference/API_TagResource.html}TagResource} and \
+   {{:https://docs.aws.amazon.com/config/latest/APIReference/API_UntagResource.html}UntagResource} \
+   to update tags after creation.\n\
+  \            \n\
+  \             "]
 
 module PutDeliveryChannel : sig
   val error_to_string :
@@ -4231,26 +4339,36 @@ end
    API with a delegated administrator, you must ensure Organizations [ListDelegatedAdministrator] \
    permissions are added. An organization can have up to 3 delegated administrators.\n\
   \ \n\
-  \  This API enables organization service access for [config-multiaccountsetup.amazonaws.com] \
+  \   When you use [PutOrganizationConformancePack] to deploy conformance packs across member \
+   accounts, the operation can create Config rules and remediation actions without requiring \
+   [config:PutConfigRule] or [config:PutRemediationConfigurations] permissions in member account \
+   IAM policies.\n\
+  \   \n\
+  \    This API uses the [AWSServiceRoleForConfigConforms] service-linked role in each member \
+   account to create conformance pack resources. This service-linked role includes the permissions \
+   to create Config rules and remediation configurations, even if member account IAM policies \
+   explicitly deny these actions.\n\
+  \    \n\
+  \      This API enables organization service access for [config-multiaccountsetup.amazonaws.com] \
    through the [EnableAWSServiceAccess] action and creates a service-linked role \
    [AWSServiceRoleForConfigMultiAccountSetup] in the management or delegated administrator account \
    of your organization. The service-linked role is created only when the role does not exist in \
    the caller account. To use this API with delegated administrator, register a delegated \
    administrator by calling Amazon Web Services Organization [register-delegate-admin] for \
    [config-multiaccountsetup.amazonaws.com].\n\
-  \  \n\
-  \    Prerequisite: Ensure you call [EnableAllFeatures] API to enable all features in an \
-   organization.\n\
-  \    \n\
-  \     You must specify either the [TemplateS3Uri] or the [TemplateBody] parameter, but not both. \
-   If you provide both Config uses the [TemplateS3Uri] parameter and ignores the [TemplateBody] \
-   parameter.\n\
-  \     \n\
-  \      Config sets the state of a conformance pack to CREATE_IN_PROGRESS and UPDATE_IN_PROGRESS \
-   until the conformance pack is created or updated. You cannot update a conformance pack while it \
-   is in this state.\n\
   \      \n\
-  \       "]
+  \        Prerequisite: Ensure you call [EnableAllFeatures] API to enable all features in an \
+   organization.\n\
+  \        \n\
+  \         You must specify either the [TemplateS3Uri] or the [TemplateBody] parameter, but not \
+   both. If you provide both Config uses the [TemplateS3Uri] parameter and ignores the \
+   [TemplateBody] parameter.\n\
+  \         \n\
+  \          Config sets the state of a conformance pack to CREATE_IN_PROGRESS and \
+   UPDATE_IN_PROGRESS until the conformance pack is created or updated. You cannot update a \
+   conformance pack while it is in this state.\n\
+  \          \n\
+  \           "]
 
 module PutRemediationConfigurations : sig
   val error_to_string :
@@ -4462,7 +4580,7 @@ end
   \ The configuration recorder's [name], [recordingGroup], [recordingMode], and [recordingScope] \
    is set by the service that is linked to the configuration recorder.\n\
   \ \n\
-  \  For more information, see \
+  \  For more information and a list of supported services/service principals, see \
    {{:https://docs.aws.amazon.com/config/latest/developerguide/stop-start-recorder.html} {b \
    Working with the Configuration Recorder} } in the {i Config Developer Guide}.\n\
   \  \n\

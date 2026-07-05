@@ -550,6 +550,8 @@ let get_hypervisor_input_of_yojson tree path =
 let gateway_details_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     software_version = option_of_yojson (value_for_key name_of_yojson "SoftwareVersion") _list path;
+     deprecation_date = option_of_yojson (value_for_key time_of_yojson "DeprecationDate") _list path;
      vpc_endpoint = option_of_yojson (value_for_key vpc_endpoint_of_yojson "VpcEndpoint") _list path;
      next_update_availability_time =
        option_of_yojson (value_for_key time_of_yojson "NextUpdateAvailabilityTime") _list path;

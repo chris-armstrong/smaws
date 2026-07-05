@@ -1169,9 +1169,14 @@ let alarm_state_information_to_yojson (x : alarm_state_information) =
 let alarm_state_information_list_to_yojson tree =
   list_to_yojson alarm_state_information_to_yojson tree
 
+let association_dispatch_assume_role_arn_to_yojson = string_to_yojson
+
 let association_description_to_yojson (x : association_description) =
   assoc_to_yojson
     [
+      ( "AssociationDispatchAssumeRole",
+        option_to_yojson association_dispatch_assume_role_arn_to_yojson
+          x.association_dispatch_assume_role );
       ("TriggeredAlarms", option_to_yojson alarm_state_information_list_to_yojson x.triggered_alarms);
       ("AlarmConfiguration", option_to_yojson alarm_configuration_to_yojson x.alarm_configuration);
       ("TargetMaps", option_to_yojson target_maps_to_yojson x.target_maps);
@@ -1240,6 +1245,9 @@ let update_association_result_to_yojson (x : update_association_result) =
 let update_association_request_to_yojson (x : update_association_request) =
   assoc_to_yojson
     [
+      ( "AssociationDispatchAssumeRole",
+        option_to_yojson association_dispatch_assume_role_arn_to_yojson
+          x.association_dispatch_assume_role );
       ("AlarmConfiguration", option_to_yojson alarm_configuration_to_yojson x.alarm_configuration);
       ("TargetMaps", option_to_yojson target_maps_to_yojson x.target_maps);
       ("Duration", option_to_yojson duration_to_yojson x.duration);
@@ -1642,6 +1650,9 @@ let start_change_request_execution_request_to_yojson (x : start_change_request_e
       ("DocumentName", Some (document_ar_n_to_yojson x.document_name));
       ("ScheduledTime", option_to_yojson date_time_to_yojson x.scheduled_time);
     ]
+
+let no_longer_supported_exception_to_yojson (x : no_longer_supported_exception) =
+  assoc_to_yojson [ ("Message", option_to_yojson string__to_yojson x.message) ]
 
 let invalid_automation_execution_parameters_exception_to_yojson
     (x : invalid_automation_execution_parameters_exception) =
@@ -4174,6 +4185,9 @@ let list_associations_request_to_yojson (x : list_associations_request) =
 let association_version_info_to_yojson (x : association_version_info) =
   assoc_to_yojson
     [
+      ( "AssociationDispatchAssumeRole",
+        option_to_yojson association_dispatch_assume_role_arn_to_yojson
+          x.association_dispatch_assume_role );
       ("TargetMaps", option_to_yojson target_maps_to_yojson x.target_maps);
       ("Duration", option_to_yojson duration_to_yojson x.duration);
       ("ScheduleOffset", option_to_yojson schedule_offset_to_yojson x.schedule_offset);
@@ -5186,6 +5200,7 @@ let get_deployable_patch_snapshot_for_instance_request_to_yojson
     (x : get_deployable_patch_snapshot_for_instance_request) =
   assoc_to_yojson
     [
+      ("UseS3DualStackEndpoint", option_to_yojson boolean__to_yojson x.use_s3_dual_stack_endpoint);
       ("BaselineOverride", option_to_yojson baseline_override_to_yojson x.baseline_override);
       ("SnapshotId", Some (snapshot_id_to_yojson x.snapshot_id));
       ("InstanceId", Some (instance_id_to_yojson x.instance_id));
@@ -6529,6 +6544,9 @@ let create_association_result_to_yojson (x : create_association_result) =
 let create_association_request_to_yojson (x : create_association_request) =
   assoc_to_yojson
     [
+      ( "AssociationDispatchAssumeRole",
+        option_to_yojson association_dispatch_assume_role_arn_to_yojson
+          x.association_dispatch_assume_role );
       ("AlarmConfiguration", option_to_yojson alarm_configuration_to_yojson x.alarm_configuration);
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);
       ("TargetMaps", option_to_yojson target_maps_to_yojson x.target_maps);
@@ -6572,7 +6590,12 @@ let create_association_batch_request_entries_to_yojson tree =
 
 let create_association_batch_request_to_yojson (x : create_association_batch_request) =
   assoc_to_yojson
-    [ ("Entries", Some (create_association_batch_request_entries_to_yojson x.entries)) ]
+    [
+      ( "AssociationDispatchAssumeRole",
+        option_to_yojson association_dispatch_assume_role_arn_to_yojson
+          x.association_dispatch_assume_role );
+      ("Entries", Some (create_association_batch_request_entries_to_yojson x.entries));
+    ]
 
 let association_limit_exceeded_to_yojson = unit_to_yojson
 let association_already_exists_to_yojson = unit_to_yojson

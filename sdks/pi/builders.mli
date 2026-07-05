@@ -28,6 +28,7 @@ val make_response_resource_metric_key :
 val make_response_partition_key : dimensions:dimension_map -> unit -> response_partition_key
 
 val make_recommendation :
+  ?recommendation_details:markdown_string ->
   ?recommendation_description:markdown_string ->
   ?recommendation_id:string_ ->
   unit ->
@@ -65,6 +66,22 @@ val make_list_performance_analysis_reports_request :
   service_type:service_type ->
   unit ->
   list_performance_analysis_reports_request
+
+val make_list_performance_analysis_report_recommendations_response :
+  ?next_token:next_token ->
+  ?recommendations:recommendation_list ->
+  unit ->
+  list_performance_analysis_report_recommendations_response
+
+val make_list_performance_analysis_report_recommendations_request :
+  ?next_token:next_token ->
+  ?max_results:max_results ->
+  ?recommendation_ids:recommendation_id_list ->
+  analysis_report_id:analysis_report_id ->
+  identifier:identifier_string ->
+  service_type:service_type ->
+  unit ->
+  list_performance_analysis_report_recommendations_request
 
 val make_list_available_resource_metrics_response :
   ?next_token:next_token ->
@@ -269,7 +286,7 @@ val make_create_performance_analysis_report_response :
 
 val make_create_performance_analysis_report_request :
   ?tags:tag_list ->
-  end_time:iso_timestamp ->
+  ?end_time:iso_timestamp ->
   start_time:iso_timestamp ->
   identifier:identifier_string ->
   service_type:service_type ->

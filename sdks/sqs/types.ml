@@ -143,7 +143,7 @@ type nonrec set_queue_attributes_request = {
         \             }\n\
         \        {-   [MaximumMessageSize] \226\128\147 The limit of how many bytes a message can \
          contain before Amazon SQS rejects it. Valid values: An integer from 1,024 bytes (1 KiB) \
-         up to 262,144 bytes (256 KiB). Default: 262,144 (256 KiB). \n\
+         up to 1,048,576 bytes (1 MiB). Default: 1,048,576 bytes (1 MiB). \n\
         \            \n\
         \             }\n\
         \        {-   [MessageRetentionPeriod] \226\128\147 The length of time, in seconds, for \
@@ -454,7 +454,7 @@ type nonrec message_attribute_value = {
   \ \n\n\
   \  [Name], [type], [value] and the message body must not be empty or null. All parts of the \
    message attribute, including [Name], [Type], and [Value], are part of the message size \
-   restriction (256 KiB or 262,144 bytes).\n\
+   restriction (1 MiB or 1,048,576 bytes).\n\
   \ "]
 
 type nonrec message_body_attribute_map = (string_ * message_attribute_value) list [@@ocaml.doc ""]
@@ -502,35 +502,49 @@ type nonrec message_body_system_attribute_map =
 type nonrec send_message_request = {
   message_group_id : string_ option;
       [@ocaml.doc
-        "This parameter applies only to FIFO (first-in-first-out) queues.\n\n\
-        \ The tag that specifies that a message belongs to a specific message group. Messages that \
-         belong to the same message group are processed in a FIFO manner (however, messages in \
-         different message groups might be processed out of order). To interleave multiple ordered \
-         streams within a single queue, use [MessageGroupId] values (for example, session data for \
-         multiple users). In this scenario, multiple consumers can process the queue, but the \
-         session data of each user is processed in a FIFO fashion.\n\
-        \ \n\
-        \  {ul\n\
-        \        {-  You must associate a non-empty [MessageGroupId] with a message. If you don't \
-         provide a [MessageGroupId], the action fails.\n\
+        " [MessageGroupId] is an attribute used in Amazon SQS FIFO (First-In-First-Out) and \
+         standard queues. In FIFO queues, [MessageGroupId] organizes messages into distinct \
+         groups. Messages within the same message group are always processed one at a time, in \
+         strict order, ensuring that no two messages from the same group are processed \
+         simultaneously. In standard queues, using [MessageGroupId] enables fair queues. It is \
+         used to identify the tenant a message belongs to, helping maintain consistent message \
+         dwell time across all tenants during noisy neighbor events. Unlike FIFO queues, messages \
+         with the same [MessageGroupId] can be processed in parallel, maintaining the high \
+         throughput of standard queues.\n\n\
+        \ {ul\n\
+        \       {-   {b FIFO queues:} [MessageGroupId] acts as the tag that specifies that a \
+         message belongs to a specific message group. Messages that belong to the same message \
+         group are processed in a FIFO manner (however, messages in different message groups might \
+         be processed out of order). To interleave multiple ordered streams within a single queue, \
+         use [MessageGroupId] values (for example, session data for multiple users). In this \
+         scenario, multiple consumers can process the queue, but the session data of each user is \
+         processed in a FIFO fashion.\n\
+        \           \n\
+        \            If you do not provide a [MessageGroupId] when sending a message to a FIFO \
+         queue, the action fails.\n\
         \            \n\
-        \             }\n\
-        \        {-   [ReceiveMessage] might return messages with multiple [MessageGroupId] \
-         values. For each [MessageGroupId], the messages are sorted by time sent. The caller can't \
-         specify a [MessageGroupId].\n\
-        \            \n\
-        \             }\n\
-        \        }\n\
-        \   The maximum length of [MessageGroupId] is 128 characters. Valid values: alphanumeric \
+        \              [ReceiveMessage] might return messages with multiple [MessageGroupId] \
+         values. For each [MessageGroupId], the messages are sorted by time sent.\n\
+        \             \n\
+        \              }\n\
+        \       {-   {b Standard queues:}Use [MessageGroupId] in standard queues to enable fair \
+         queues. The [MessageGroupId] identifies the tenant a message belongs to. A tenant can be \
+         any entity that shares a queue with others, such as your customer, a client application, \
+         or a request type. When one tenant sends a disproportionately large volume of messages or \
+         has messages that require longer processing time, fair queues ensure other tenants' \
+         messages maintain low dwell time. This preserves quality of service for all tenants while \
+         maintaining the scalability and throughput of standard queues. We recommend that you \
+         include a [MessageGroupId] in all messages when using fair queues.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \   The length of [MessageGroupId] is 128 characters. Valid values: alphanumeric \
          characters and punctuation [(!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~)].\n\
         \   \n\
         \    For best practices of using [MessageGroupId], see \
          {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-messagegroupid-property.html}Using \
          the MessageGroupId Property} in the {i Amazon SQS Developer Guide}.\n\
-        \    \n\
-        \       [MessageGroupId] is required for FIFO queues. You can't use it for Standard queues.\n\
-        \      \n\
-        \       "]
+        \    "]
   message_deduplication_id : string_ option;
       [@ocaml.doc
         "This parameter applies only to FIFO (first-in-first-out) queues.\n\n\
@@ -629,7 +643,8 @@ type nonrec send_message_request = {
         \   "]
   message_body : string_;
       [@ocaml.doc
-        "The message to send. The minimum size is one character. The maximum size is 256 KiB.\n\n\
+        "The message to send. The minimum size is one character. The maximum size is 1 MiB or \
+         1,048,576 bytes\n\n\
         \  A message can include only XML, JSON, and unformatted text. The following Unicode \
          characters are allowed. For more information, see the \
          {{:http://www.w3.org/TR/REC-xml/#charsets}W3C specification for characters}.\n\
@@ -637,10 +652,9 @@ type nonrec send_message_request = {
         \    [#x9] | [#xA] | [#xD] | [#x20] to [#xD7FF] | [#xE000] to [#xFFFD] | [#x10000] to \
          [#x10FFFF] \n\
         \   \n\
-        \    Amazon SQS does not throw an exception or completely reject the message if it \
-         contains invalid characters. Instead, it replaces those invalid characters with [U+FFFD] \
-         before storing the message in the queue, as long as the message body contains at least \
-         one valid character.\n\
+        \    If a message contains characters outside the allowed set, Amazon SQS rejects the \
+         message and returns an InvalidMessageContents error. Ensure that your message body \
+         includes only valid characters to avoid this exception.\n\
         \    \n\
         \     "]
   queue_url : string_;
@@ -732,35 +746,49 @@ type nonrec send_message_batch_result = {
 type nonrec send_message_batch_request_entry = {
   message_group_id : string_ option;
       [@ocaml.doc
-        "This parameter applies only to FIFO (first-in-first-out) queues.\n\n\
-        \ The tag that specifies that a message belongs to a specific message group. Messages that \
-         belong to the same message group are processed in a FIFO manner (however, messages in \
-         different message groups might be processed out of order). To interleave multiple ordered \
-         streams within a single queue, use [MessageGroupId] values (for example, session data for \
-         multiple users). In this scenario, multiple consumers can process the queue, but the \
-         session data of each user is processed in a FIFO fashion.\n\
-        \ \n\
-        \  {ul\n\
-        \        {-  You must associate a non-empty [MessageGroupId] with a message. If you don't \
-         provide a [MessageGroupId], the action fails.\n\
+        " [MessageGroupId] is an attribute used in Amazon SQS FIFO (First-In-First-Out) and \
+         standard queues. In FIFO queues, [MessageGroupId] organizes messages into distinct \
+         groups. Messages within the same message group are always processed one at a time, in \
+         strict order, ensuring that no two messages from the same group are processed \
+         simultaneously. In standard queues, using [MessageGroupId] enables fair queues. It is \
+         used to identify the tenant a message belongs to, helping maintain consistent message \
+         dwell time across all tenants during noisy neighbor events. Unlike FIFO queues, messages \
+         with the same [MessageGroupId] can be processed in parallel, maintaining the high \
+         throughput of standard queues.\n\n\
+        \ {ul\n\
+        \       {-   {b FIFO queues:} [MessageGroupId] acts as the tag that specifies that a \
+         message belongs to a specific message group. Messages that belong to the same message \
+         group are processed in a FIFO manner (however, messages in different message groups might \
+         be processed out of order). To interleave multiple ordered streams within a single queue, \
+         use [MessageGroupId] values (for example, session data for multiple users). In this \
+         scenario, multiple consumers can process the queue, but the session data of each user is \
+         processed in a FIFO fashion.\n\
+        \           \n\
+        \            If you do not provide a [MessageGroupId] when sending a message to a FIFO \
+         queue, the action fails.\n\
         \            \n\
-        \             }\n\
-        \        {-   [ReceiveMessage] might return messages with multiple [MessageGroupId] \
-         values. For each [MessageGroupId], the messages are sorted by time sent. The caller can't \
-         specify a [MessageGroupId].\n\
-        \            \n\
-        \             }\n\
-        \        }\n\
+        \              [ReceiveMessage] might return messages with multiple [MessageGroupId] \
+         values. For each [MessageGroupId], the messages are sorted by time sent.\n\
+        \             \n\
+        \              }\n\
+        \       {-   {b Standard queues:}Use [MessageGroupId] in standard queues to enable fair \
+         queues. The [MessageGroupId] identifies the tenant a message belongs to. A tenant can be \
+         any entity that shares a queue with others, such as your customer, a client application, \
+         or a request type. When one tenant sends a disproportionately large volume of messages or \
+         has messages that require longer processing time, fair queues ensure other tenants' \
+         messages maintain low dwell time. This preserves quality of service for all tenants while \
+         maintaining the scalability and throughput of standard queues. We recommend that you \
+         include a [MessageGroupId] in all messages when using fair queues.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
         \   The length of [MessageGroupId] is 128 characters. Valid values: alphanumeric \
          characters and punctuation [(!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~)].\n\
         \   \n\
         \    For best practices of using [MessageGroupId], see \
          {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-messagegroupid-property.html}Using \
          the MessageGroupId Property} in the {i Amazon SQS Developer Guide}.\n\
-        \    \n\
-        \       [MessageGroupId] is required for FIFO queues. You can't use it for Standard queues.\n\
-        \      \n\
-        \       "]
+        \    "]
   message_deduplication_id : string_ option;
       [@ocaml.doc
         "This parameter applies only to FIFO (first-in-first-out) queues.\n\n\
@@ -1088,8 +1116,8 @@ type nonrec receive_message_request = {
         \                 }\n\
         \        {-  While messages with a particular [MessageGroupId] are invisible, no more \
          messages belonging to the same [MessageGroupId] are returned until the visibility timeout \
-         expires. You can still receive messages with another [MessageGroupId] as long as it is \
-         also visible.\n\
+         expires. You can still receive messages with another [MessageGroupId] from your FIFO \
+         queue as long as they are visible.\n\
         \            \n\
         \             }\n\
         \        {-  If a caller of [ReceiveMessage] can't track the [ReceiveRequestAttemptId], no \
@@ -1248,7 +1276,7 @@ type nonrec receive_message_request = {
         \           {[\n\
         \            [SendMessage] \n\
         \           ]}\n\
-        \            action. Messages with the same [MessageGroupId] are returned in sequence.\n\
+        \            action.\n\
         \           \n\
         \            }\n\
         \       {-   [SequenceNumber] \226\128\147 Returns the value provided by Amazon SQS.\n\
@@ -1319,7 +1347,7 @@ type nonrec receive_message_request = {
         \              {[\n\
         \               [SendMessage] \n\
         \              ]}\n\
-        \               action. Messages with the same [MessageGroupId] are returned in sequence.\n\
+        \               action. \n\
         \              \n\
         \               }\n\
         \          {-   [SequenceNumber] \226\128\147 Returns the value provided by Amazon SQS.\n\
@@ -1880,7 +1908,7 @@ type nonrec create_queue_request = {
         \             }\n\
         \        {-   [MaximumMessageSize] \226\128\147 The limit of how many bytes a message can \
          contain before Amazon SQS rejects it. Valid values: An integer from 1,024 bytes (1 KiB) \
-         to 262,144 bytes (256 KiB). Default: 262,144 (256 KiB). \n\
+         to 1,048,576 bytes (1 MiB). Default: 1,048,576 bytes (1 MiB). \n\
         \            \n\
         \             }\n\
         \        {-   [MessageRetentionPeriod] \226\128\147 The length of time, in seconds, for \

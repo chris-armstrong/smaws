@@ -6,6 +6,10 @@ type nonrec saml_group_attribute = string [@@ocaml.doc ""]
 
 type nonrec open_search_serverless_entity_id = string [@@ocaml.doc ""]
 
+type nonrec iam_federation_user_attribute = string [@@ocaml.doc ""]
+
+type nonrec iam_federation_group_attribute = string [@@ocaml.doc ""]
+
 type nonrec vpc_id = string [@@ocaml.doc ""]
 
 type nonrec vpc_endpoint_id = string [@@ocaml.doc ""]
@@ -79,6 +83,20 @@ type nonrec vpc_endpoint_details = vpc_endpoint_detail list [@@ocaml.doc ""]
 
 type nonrec vpc_endpoint = Smaws_Lib.CoreTypes.Resource.t [@@ocaml.doc ""]
 
+type nonrec serverless_vector_acceleration_status =
+  | ENABLED [@ocaml.doc ""]
+  | DISABLED [@ocaml.doc ""]
+  | ALLOWED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec vector_options = {
+  serverless_vector_acceleration : serverless_vector_acceleration_status;
+      [@ocaml.doc
+        "Specifies whether serverless vector acceleration is enabled for the collection.\n"]
+}
+[@@ocaml.doc
+  "Configuration options for vector search capabilities in an OpenSearch Serverless collection.\n"]
+
 type nonrec validation_exception = {
   message : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
 }
@@ -136,8 +154,8 @@ type nonrec conflict_exception = {
 }
 [@@ocaml.doc
   "When creating a resource, thrown when a resource with the same name already exists or is being \
-   created. When deleting a resource, thrown when the resource is not in the ACTIVE or FAILED \
-   state.\n"]
+   created. When deleting a resource, thrown when the resource is not in the ACTIVE, FAILED, or \
+   UPDATE_FAILED state.\n"]
 
 type nonrec security_policy_type = Encryption [@ocaml.doc ""] | Network [@ocaml.doc ""]
 [@@ocaml.doc ""]
@@ -206,7 +224,10 @@ type nonrec resource_not_found_exception = {
 
 type nonrec security_config_id = string [@@ocaml.doc ""]
 
-type nonrec security_config_type = Saml [@ocaml.doc ""] | Iamidentitycenter [@ocaml.doc ""]
+type nonrec security_config_type =
+  | Saml [@ocaml.doc ""]
+  | Iamidentitycenter [@ocaml.doc ""]
+  | Iamfederation [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
 type nonrec config_description = string [@@ocaml.doc ""]
@@ -216,7 +237,7 @@ type nonrec saml_config_options = {
       [@ocaml.doc "The session timeout, in minutes. Default is 60 minutes (12 hours).\n"]
   open_search_serverless_entity_id : open_search_serverless_entity_id option;
       [@ocaml.doc
-        "Custom entity id attribute to override default entity id for this saml integration.\n"]
+        "Custom entity ID attribute to override the default entity ID for this SAML integration.\n"]
   group_attribute : saml_group_attribute option;
       [@ocaml.doc "The group attribute for this SAML integration.\n"]
   user_attribute : saml_user_attribute option;
@@ -270,11 +291,31 @@ type nonrec iam_identity_center_config_options = {
   "Describes IAM Identity Center options for an OpenSearch Serverless security configuration in \
    the form of a key-value map.\n"]
 
+type nonrec iam_federation_config_options = {
+  user_attribute : iam_federation_user_attribute option;
+      [@ocaml.doc
+        "The user attribute for this IAM federation integration. This attribute is used to \
+         identify users in the federated authentication process.\n"]
+  group_attribute : iam_federation_group_attribute option;
+      [@ocaml.doc
+        "The group attribute for this IAM federation integration. This attribute is used to map \
+         identity provider groups to OpenSearch Serverless permissions.\n"]
+}
+[@@ocaml.doc
+  "Describes IAM federation options for an OpenSearch Serverless security configuration in the \
+   form of a key-value map. These options define how OpenSearch Serverless integrates with \
+   external identity providers using federation.\n"]
+
 type nonrec security_config_detail = {
   last_modified_date : Smaws_Lib.Smithy_api.Types.long option;
       [@ocaml.doc "The timestamp of when the configuration was last modified.\n"]
   created_date : Smaws_Lib.Smithy_api.Types.long option;
       [@ocaml.doc "The date the configuration was created.\n"]
+  iam_federation_options : iam_federation_config_options option;
+      [@ocaml.doc
+        "Describes IAM federation options in the form of a key-value map. Contains configuration \
+         details about how OpenSearch Serverless integrates with external identity providers \
+         through federation.\n"]
   iam_identity_center_options : iam_identity_center_config_options option;
       [@ocaml.doc "Describes IAM Identity Center options in the form of a key-value map.\n"]
   saml_options : saml_config_options option;
@@ -287,7 +328,7 @@ type nonrec security_config_detail = {
   id : security_config_id option;
       [@ocaml.doc "The unique identifier of the security configuration.\n"]
 }
-[@@ocaml.doc "Details about a security configuration for OpenSearch Serverless. \n"]
+[@@ocaml.doc "Details about a security configuration for OpenSearch Serverless.\n"]
 
 type nonrec update_security_config_response = {
   security_config_detail : security_config_detail option;
@@ -310,6 +351,11 @@ type nonrec update_iam_identity_center_config_options = {
 type nonrec update_security_config_request = {
   client_token : client_token option;
       [@ocaml.doc "Unique, case-sensitive identifier to ensure idempotency of the request.\n"]
+  iam_federation_options : iam_federation_config_options option;
+      [@ocaml.doc
+        "Describes IAM federation options in the form of a key-value map for updating an existing \
+         security configuration. Use this field to modify IAM federation settings for the security \
+         configuration.\n"]
   iam_identity_center_options_updates : update_iam_identity_center_config_options option;
       [@ocaml.doc "Describes IAM Identity Center options in the form of a key-value map.\n"]
   saml_options : saml_config_options option;
@@ -361,15 +407,33 @@ type nonrec update_lifecycle_policy_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec update_index_response = unit [@@ocaml.doc ""]
+
 type nonrec collection_id = string [@@ocaml.doc ""]
+
+type nonrec index_name = string [@@ocaml.doc ""]
+
+type nonrec index_schema = Smaws_Lib.CoreTypes.Document.t [@@ocaml.doc ""]
+
+type nonrec update_index_request = {
+  index_schema : index_schema option;
+      [@ocaml.doc
+        "The updated JSON schema definition for the index, including field mappings and settings. \n"]
+  index_name : index_name; [@ocaml.doc "The name of the index to update.\n"]
+  id : collection_id;
+      [@ocaml.doc "The unique identifier of the collection containing the index to update.\n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec collection_name = string [@@ocaml.doc ""]
 
 type nonrec collection_status =
   | CREATING [@ocaml.doc ""]
+  | UPDATING [@ocaml.doc ""]
   | DELETING [@ocaml.doc ""]
   | ACTIVE [@ocaml.doc ""]
   | FAILED [@ocaml.doc ""]
+  | UPDATE_FAILED [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
 type nonrec collection_type =
@@ -378,13 +442,21 @@ type nonrec collection_type =
   | VECTORSEARCH [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
+type nonrec deletion_protection = ENABLED [@ocaml.doc ""] | DISABLED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
 type nonrec update_collection_detail = {
+  deletion_protection : deletion_protection option;
+      [@ocaml.doc
+        "Indicates whether deletion protection is [ENABLED] or [DISABLED] for the collection.\n"]
   last_modified_date : Smaws_Lib.Smithy_api.Types.long option;
       [@ocaml.doc "The date and time when the collection was last modified.\n"]
   created_date : Smaws_Lib.Smithy_api.Types.long option;
       [@ocaml.doc "The date and time when the collection was created.\n"]
   arn : Smaws_Lib.Smithy_api.Types.string_ option;
       [@ocaml.doc "The Amazon Resource Name (ARN) of the collection.\n"]
+  vector_options : vector_options option;
+      [@ocaml.doc "Configuration options for vector search capabilities in the collection.\n"]
   description : Smaws_Lib.Smithy_api.Types.string_ option;
       [@ocaml.doc "The description of the collection.\n"]
   type_ : collection_type option; [@ocaml.doc "The collection type.\n"]
@@ -403,9 +475,82 @@ type nonrec update_collection_response = {
 type nonrec update_collection_request = {
   client_token : client_token option;
       [@ocaml.doc "Unique, case-sensitive identifier to ensure idempotency of the request.\n"]
+  deletion_protection : deletion_protection option;
+      [@ocaml.doc
+        "Indicates whether to enable or disable deletion protection for the collection. When set \
+         to [ENABLED], the collection cannot be deleted.\n"]
+  vector_options : vector_options option;
+      [@ocaml.doc "Configuration options for vector search capabilities in the collection.\n"]
   description : Smaws_Lib.Smithy_api.Types.string_ option;
       [@ocaml.doc "A description of the collection.\n"]
   id : collection_id; [@ocaml.doc "The unique identifier of the collection.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec collection_group_id = string [@@ocaml.doc ""]
+
+type nonrec collection_group_name = string [@@ocaml.doc ""]
+
+type nonrec collection_group_max_indexing_capacity_value = float [@@ocaml.doc ""]
+
+type nonrec collection_group_max_search_capacity_value = float [@@ocaml.doc ""]
+
+type nonrec collection_group_min_indexing_capacity_value = float [@@ocaml.doc ""]
+
+type nonrec collection_group_min_search_capacity_value = float [@@ocaml.doc ""]
+
+type nonrec collection_group_capacity_limits = {
+  min_search_capacity_in_oc_u : collection_group_min_search_capacity_value option;
+      [@ocaml.doc "The minimum search capacity for collections in the group.\n"]
+  min_indexing_capacity_in_oc_u : collection_group_min_indexing_capacity_value option;
+      [@ocaml.doc "The minimum indexing capacity for collections in the group.\n"]
+  max_search_capacity_in_oc_u : collection_group_max_search_capacity_value option;
+      [@ocaml.doc "The maximum search capacity for collections in the group.\n"]
+  max_indexing_capacity_in_oc_u : collection_group_max_indexing_capacity_value option;
+      [@ocaml.doc "The maximum indexing capacity for collections in the group.\n"]
+}
+[@@ocaml.doc
+  "Capacity limits for a collection group. These limits define the minimum and maximum OpenSearch \
+   Compute Units (OCUs) for indexing and search operations that can be used by collections in the \
+   group.\n"]
+
+type nonrec serverless_generation = CLASSIC [@ocaml.doc ""] | NEXTGEN [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec update_collection_group_detail = {
+  generation : serverless_generation option;
+      [@ocaml.doc "The generation of Amazon OpenSearch Serverless for the collection group.\n"]
+  last_modified_date : Smaws_Lib.Smithy_api.Types.long option;
+      [@ocaml.doc "The date and time when the collection group was last modified.\n"]
+  created_date : Smaws_Lib.Smithy_api.Types.long option;
+      [@ocaml.doc "The Epoch time when the collection group was created.\n"]
+  capacity_limits : collection_group_capacity_limits option;
+      [@ocaml.doc
+        "The capacity limits for the collection group, in OpenSearch Compute Units (OCUs).\n"]
+  description : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The description of the collection group.\n"]
+  name : collection_group_name option; [@ocaml.doc "The name of the collection group.\n"]
+  arn : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the collection group.\n"]
+  id : collection_group_id option; [@ocaml.doc "The unique identifier of the collection group.\n"]
+}
+[@@ocaml.doc "Details about the updated collection group.\n"]
+
+type nonrec update_collection_group_response = {
+  update_collection_group_detail : update_collection_group_detail option;
+      [@ocaml.doc "Details about the updated collection group.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec update_collection_group_request = {
+  client_token : client_token option;
+      [@ocaml.doc "Unique, case-sensitive identifier to ensure idempotency of the request.\n"]
+  capacity_limits : collection_group_capacity_limits option;
+      [@ocaml.doc
+        "Updated capacity limits for the collection group, in OpenSearch Compute Units (OCUs).\n"]
+  description : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "A new description for the collection group.\n"]
+  id : collection_group_id; [@ocaml.doc "The unique identifier of the collection group to update.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -432,7 +577,7 @@ type nonrec account_settings_detail = { capacity_limits : capacity_limits option
 type nonrec update_account_settings_response = {
   account_settings_detail : account_settings_detail option;
       [@ocaml.doc
-        "OpenSearch Serverless-related settings for the current Amazon Web Services account. \n"]
+        "OpenSearch Serverless-related settings for the current Amazon Web Services account.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -780,11 +925,128 @@ type nonrec batch_get_effective_lifecycle_policy_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec autoscaling_status =
+  | ACTION_SCALING_UP [@ocaml.doc ""]
+  | ACTION_SCALING_DOWN [@ocaml.doc ""]
+  | NO_ACTION [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec capacity_details = {
+  autoscaling_status : autoscaling_status option;
+      [@ocaml.doc "The current autoscaling status for the collection group.\n"]
+  capacity_in_ocu : Smaws_Lib.Smithy_api.Types.float_ option;
+      [@ocaml.doc "The current capacity in OpenSearch Compute Units (OCUs).\n"]
+}
+[@@ocaml.doc
+  "Capacity details for an OpenSearch Serverless collection group, including the current capacity \
+   and autoscaling status.\n"]
+
+type nonrec current_capacity = {
+  indexing : capacity_details option;
+      [@ocaml.doc "The indexing capacity for the collection group.\n"]
+  search : capacity_details option; [@ocaml.doc "The search capacity for the collection group.\n"]
+}
+[@@ocaml.doc
+  "Current search and indexing capacity for an OpenSearch Serverless collection group. Measured in \
+   OpenSearch Compute Units (OCUs).\n"]
+
+type nonrec collection_group_detail = {
+  generation : serverless_generation option;
+      [@ocaml.doc "The generation of Amazon OpenSearch Serverless for the collection group.\n"]
+  number_of_collections : Smaws_Lib.Smithy_api.Types.integer option;
+      [@ocaml.doc "The number of collections associated with the collection group.\n"]
+  current_capacity : current_capacity option;
+      [@ocaml.doc "Current search and indexing capacity for the collection group.\n"]
+  capacity_limits : collection_group_capacity_limits option;
+      [@ocaml.doc
+        "The capacity limits for the collection group, in OpenSearch Compute Units (OCUs).\n"]
+  created_date : Smaws_Lib.Smithy_api.Types.long option;
+      [@ocaml.doc "The Epoch time when the collection group was created.\n"]
+  tags : tags option;
+      [@ocaml.doc "A map of key-value pairs associated with the collection group.\n"]
+  description : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The description of the collection group.\n"]
+  standby_replicas : standby_replicas option;
+      [@ocaml.doc "Indicates whether standby replicas are used for the collection group.\n"]
+  name : collection_group_name option; [@ocaml.doc "The name of the collection group.\n"]
+  arn : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the collection group.\n"]
+  id : collection_group_id option; [@ocaml.doc "The unique identifier of the collection group.\n"]
+}
+[@@ocaml.doc "Details about a collection group.\n"]
+
+type nonrec collection_group_details = collection_group_detail list [@@ocaml.doc ""]
+
+type nonrec collection_group_error_detail = {
+  error_code : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The error code for the request. For example, [NOT_FOUND].\n"]
+  error_message : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc
+        "A description of the error. For example, [The specified Collection Group is not found.] \n"]
+  name : collection_group_name option;
+      [@ocaml.doc
+        "If the request contains collection group names, the response includes the names provided \
+         in the request.\n"]
+  id : collection_group_id option;
+      [@ocaml.doc
+        "If the request contains collection group IDs, the response includes the IDs provided in \
+         the request.\n"]
+}
+[@@ocaml.doc "Error details for a collection group operation.\n"]
+
+type nonrec collection_group_error_details = collection_group_error_detail list [@@ocaml.doc ""]
+
+type nonrec batch_get_collection_group_response = {
+  collection_group_error_details : collection_group_error_details option;
+      [@ocaml.doc "Error information for the request.\n"]
+  collection_group_details : collection_group_details option;
+      [@ocaml.doc "Details about each collection group.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec collection_group_ids = collection_group_id list [@@ocaml.doc ""]
+
+type nonrec collection_group_names = collection_group_name list [@@ocaml.doc ""]
+
+type nonrec batch_get_collection_group_request = {
+  names : collection_group_names option;
+      [@ocaml.doc
+        "A list of collection group names. You can't provide names and IDs in the same request.\n"]
+  ids : collection_group_ids option;
+      [@ocaml.doc
+        "A list of collection group IDs. You can't provide names and IDs in the same request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec fips_endpoints = {
+  dashboard_endpoint : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc
+        "FIPS-compliant endpoint used to access OpenSearch Dashboards. This endpoint uses FIPS \
+         140-3 validated cryptography and is required for federal government workloads that need \
+         dashboard visualization capabilities.\n"]
+  collection_endpoint : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc
+        "FIPS-compliant collection endpoint used to submit index, search, and data upload requests \
+         to an OpenSearch Serverless collection. This endpoint uses FIPS 140-3 validated \
+         cryptography and is required for federal government workloads.\n"]
+}
+[@@ocaml.doc
+  "FIPS-compliant endpoint URLs for an OpenSearch Serverless collection. These endpoints ensure \
+   all data transmission uses FIPS 140-3 validated cryptographic implementations, meeting federal \
+   security requirements for government workloads.\n"]
+
 type nonrec collection_detail = {
+  collection_group_name : collection_group_name option;
+      [@ocaml.doc "The name of the collection group that contains this collection.\n"]
   failure_message : Smaws_Lib.Smithy_api.Types.string_ option;
       [@ocaml.doc "A message associated with the failure code.\n"]
   failure_code : Smaws_Lib.Smithy_api.Types.string_ option;
       [@ocaml.doc "A failure code associated with the request.\n"]
+  fips_endpoints : fips_endpoints option;
+      [@ocaml.doc
+        "FIPS-compliant endpoints for the collection. These endpoints use FIPS 140-3 validated \
+         cryptographic modules and are required for federal government workloads that must comply \
+         with FedRAMP security standards.\n"]
   dashboard_endpoint : Smaws_Lib.Smithy_api.Types.string_ option;
       [@ocaml.doc "Collection-specific endpoint used to access OpenSearch Dashboards.\n"]
   collection_endpoint : Smaws_Lib.Smithy_api.Types.string_ option;
@@ -795,6 +1057,11 @@ type nonrec collection_detail = {
       [@ocaml.doc "The date and time when the collection was last modified.\n"]
   created_date : Smaws_Lib.Smithy_api.Types.long option;
       [@ocaml.doc "The Epoch time when the collection was created.\n"]
+  vector_options : vector_options option;
+      [@ocaml.doc "Configuration options for vector search capabilities in the collection.\n"]
+  deletion_protection : deletion_protection option;
+      [@ocaml.doc
+        "Indicates whether deletion protection is [ENABLED] or [DISABLED] for the collection.\n"]
   standby_replicas : standby_replicas option;
       [@ocaml.doc "Details about an OpenSearch Serverless collection.\n"]
   kms_key_arn : Smaws_Lib.Smithy_api.Types.string_ option;
@@ -809,8 +1076,8 @@ type nonrec collection_detail = {
   id : collection_id option; [@ocaml.doc "A unique identifier for the collection.\n"]
 }
 [@@ocaml.doc
-  "Details about each OpenSearch Serverless collection, including the collection endpoint and the \
-   OpenSearch Dashboards endpoint.\n"]
+  "Details about each OpenSearch Serverless collection, including the collection endpoint, the \
+   OpenSearch Dashboards endpoint, and FIPS-compliant endpoints for federal government workloads.\n"]
 
 type nonrec collection_details = collection_detail list [@@ocaml.doc ""]
 
@@ -819,8 +1086,7 @@ type nonrec collection_error_detail = {
       [@ocaml.doc "The error code for the request. For example, [NOT_FOUND].\n"]
   error_message : Smaws_Lib.Smithy_api.Types.string_ option;
       [@ocaml.doc
-        "A description of the error. For example, [The specified Collection is not\n\
-        \                found.] \n"]
+        "A description of the error. For example, [The specified Collection is not found.] \n"]
   name : collection_name option;
       [@ocaml.doc
         "If the request contains collection names, the response includes the names provided in the \
@@ -913,7 +1179,7 @@ type nonrec list_security_policies_request = {
       [@ocaml.doc
         "If your initial [ListSecurityPolicies] operation returns a [nextToken], you can include \
          the returned [nextToken] in subsequent [ListSecurityPolicies] operations, which returns \
-         results in the next page. \n"]
+         results in the next page.\n"]
   resource : resource_filter option;
       [@ocaml.doc "Resource filters (can be collection or indexes) that policies can apply to. \n"]
   type_ : security_policy_type; [@ocaml.doc "The type of policy.\n"]
@@ -940,7 +1206,7 @@ type nonrec list_security_configs_request = {
       [@ocaml.doc
         "If your initial [ListSecurityConfigs] operation returns a [nextToken], you can include \
          the returned [nextToken] in subsequent [ListSecurityConfigs] operations, which returns \
-         results in the next page. \n"]
+         results in the next page.\n"]
   type_ : security_config_type; [@ocaml.doc "The type of security configuration.\n"]
 }
 [@@ocaml.doc ""]
@@ -993,6 +1259,12 @@ type nonrec list_lifecycle_policies_request = {
 [@@ocaml.doc ""]
 
 type nonrec collection_summary = {
+  collection_group_name : collection_group_name option;
+      [@ocaml.doc "The name of the collection group that contains this collection.\n"]
+  kms_key_arn : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc
+        "The ARN of the Amazon Web Services Key Management Service key used to encrypt the \
+         collection.\n"]
   arn : Smaws_Lib.Smithy_api.Types.string_ option;
       [@ocaml.doc "The Amazon Resource Name (ARN) of the collection.\n"]
   status : collection_status option; [@ocaml.doc "The current status of the collection.\n"]
@@ -1014,6 +1286,8 @@ type nonrec list_collections_response = {
 [@@ocaml.doc ""]
 
 type nonrec collection_filters = {
+  collection_group_name : collection_group_name option;
+      [@ocaml.doc "The name of the collection group to filter by.\n"]
   status : collection_status option; [@ocaml.doc "The current status of the collection.\n"]
   name : collection_name option; [@ocaml.doc "The name of the collection.\n"]
 }
@@ -1033,6 +1307,47 @@ type nonrec list_collections_request = {
          the next page.\n"]
   collection_filters : collection_filters option;
       [@ocaml.doc " A list of filter names and values that you can use for requests.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec collection_group_summary = {
+  generation : serverless_generation option;
+      [@ocaml.doc "The generation of Amazon OpenSearch Serverless for the collection group.\n"]
+  capacity_limits : collection_group_capacity_limits option; [@ocaml.doc ""]
+  created_date : Smaws_Lib.Smithy_api.Types.long option;
+      [@ocaml.doc "The Epoch time when the collection group was created.\n"]
+  number_of_collections : Smaws_Lib.Smithy_api.Types.integer option;
+      [@ocaml.doc "The number of collections within the collection group.\n"]
+  name : collection_group_name option; [@ocaml.doc "The name of the collection group.\n"]
+  arn : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the collection group.\n"]
+  id : collection_group_id option; [@ocaml.doc "The unique identifier of the collection group.\n"]
+}
+[@@ocaml.doc "Summary information about a collection group.\n"]
+
+type nonrec collection_group_summaries = collection_group_summary list [@@ocaml.doc ""]
+
+type nonrec list_collection_groups_response = {
+  next_token : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc
+        "When [nextToken] is returned, there are more results available. The value of [nextToken] \
+         is a unique pagination token for each page. Make the call again using the returned token \
+         to retrieve the next page.\n"]
+  collection_group_summaries : collection_group_summaries option;
+      [@ocaml.doc "Details about each collection group.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_collection_groups_request = {
+  max_results : Smaws_Lib.Smithy_api.Types.integer option;
+      [@ocaml.doc
+        "The maximum number of results to return. Default is 20. You can use [nextToken] to get \
+         the next page of results.\n"]
+  next_token : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc
+        "If your initial [ListCollectionGroups] operation returns a [nextToken], you can include \
+         the returned [nextToken] in subsequent [ListCollectionGroups] operations, which returns \
+         results in the next page.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -1071,7 +1386,7 @@ type nonrec list_access_policies_request = {
       [@ocaml.doc
         "If your initial [ListAccessPolicies] operation returns a [nextToken], you can include the \
          returned [nextToken] in subsequent [ListAccessPolicies] operations, which returns results \
-         in the next page. \n"]
+         in the next page.\n"]
   resource : resource_filter option;
       [@ocaml.doc "Resource filters (can be collections or indexes) that policies can apply to.\n"]
   type_ : access_policy_type; [@ocaml.doc "The type of access policy.\n"]
@@ -1079,6 +1394,8 @@ type nonrec list_access_policies_request = {
 [@@ocaml.doc ""]
 
 type nonrec lifecycle_policy = Smaws_Lib.CoreTypes.Resource.t [@@ocaml.doc ""]
+
+type nonrec index = Smaws_Lib.CoreTypes.Resource.t [@@ocaml.doc ""]
 
 type nonrec get_security_policy_response = {
   security_policy_detail : security_policy_detail option;
@@ -1103,6 +1420,19 @@ type nonrec get_security_config_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec get_index_response = {
+  index_schema : index_schema option;
+      [@ocaml.doc
+        "The JSON schema definition for the index, including field mappings and settings.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_index_request = {
+  index_name : index_name; [@ocaml.doc "The name of the index to retrieve information about.\n"]
+  id : collection_id; [@ocaml.doc "The unique identifier of the collection containing the index.\n"]
+}
+[@@ocaml.doc ""]
+
 type nonrec get_access_policy_response = {
   access_policy_detail : access_policy_detail option;
       [@ocaml.doc "Details about the requested access policy.\n"]
@@ -1115,6 +1445,16 @@ type nonrec get_access_policy_request = {
       [@ocaml.doc "Tye type of policy. Currently, the only supported value is [data].\n"]
 }
 [@@ocaml.doc ""]
+
+type nonrec encryption_config = {
+  kms_key_arn : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc
+        "The ARN of the Amazon Web Services Key Management Service key used to encrypt the \
+         collection.\n"]
+  a_ws_owned_key : Smaws_Lib.Smithy_api.Types.boolean_ option;
+      [@ocaml.doc "Indicates whether to use an Amazon Web Services-owned key for encryption.\n"]
+}
+[@@ocaml.doc "Encryption settings for a collection.\n"]
 
 type nonrec delete_vpc_endpoint_detail = {
   status : vpc_endpoint_status option;
@@ -1169,7 +1509,19 @@ type nonrec delete_lifecycle_policy_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec delete_index_response = unit [@@ocaml.doc ""]
+
+type nonrec delete_index_request = {
+  index_name : index_name; [@ocaml.doc "The name of the index to delete.\n"]
+  id : collection_id;
+      [@ocaml.doc "The unique identifier of the collection containing the index to delete.\n"]
+}
+[@@ocaml.doc ""]
+
 type nonrec delete_collection_detail = {
+  deletion_protection : deletion_protection option;
+      [@ocaml.doc
+        "Indicates whether deletion protection is [ENABLED] or [DISABLED] for the collection.\n"]
   status : collection_status option; [@ocaml.doc "The current status of the collection.\n"]
   name : collection_name option; [@ocaml.doc "The name of the collection.\n"]
   id : collection_id option; [@ocaml.doc "The unique identifier of the collection.\n"]
@@ -1191,6 +1543,15 @@ type nonrec delete_collection_request = {
          the collection endpoint. You can also retrieve it using the \
          {{:https://docs.aws.amazon.com/opensearch-service/latest/ServerlessAPIReference/API_ListCollections.html}ListCollections} \
          API.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec delete_collection_group_response = unit [@@ocaml.doc ""]
+
+type nonrec delete_collection_group_request = {
+  client_token : client_token option;
+      [@ocaml.doc "Unique, case-sensitive identifier to ensure idempotency of the request.\n"]
+  id : collection_group_id; [@ocaml.doc "The unique identifier of the collection group to delete.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -1239,7 +1600,7 @@ type nonrec create_vpc_endpoint_request = {
 
 type nonrec create_security_config_response = {
   security_config_detail : security_config_detail option;
-      [@ocaml.doc "Details about the created security configuration. \n"]
+      [@ocaml.doc "Details about the created security configuration.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -1263,14 +1624,18 @@ type nonrec create_iam_identity_center_config_options = {
 type nonrec create_security_config_request = {
   client_token : client_token option;
       [@ocaml.doc "Unique, case-sensitive identifier to ensure idempotency of the request.\n"]
+  iam_federation_options : iam_federation_config_options option;
+      [@ocaml.doc
+        "Describes IAM federation options in the form of a key-value map. This field is required \
+         if you specify [iamFederation] for the [type] parameter.\n"]
   iam_identity_center_options : create_iam_identity_center_config_options option;
       [@ocaml.doc
         "Describes IAM Identity Center options in the form of a key-value map. This field is \
-         required if you specify iamidentitycenter for the type parameter.\n"]
+         required if you specify [iamidentitycenter] for the [type] parameter.\n"]
   saml_options : saml_config_options option;
       [@ocaml.doc
-        "Describes SAML options in in the form of a key-value map. This field is required if you \
-         specify [saml] for the [type] parameter.\n"]
+        "Describes SAML options in the form of a key-value map. This field is required if you \
+         specify [SAML] for the [type] parameter.\n"]
   description : config_description option;
       [@ocaml.doc "A description of the security configuration.\n"]
   name : config_name; [@ocaml.doc "The name of the security configuration.\n"]
@@ -1278,11 +1643,33 @@ type nonrec create_security_config_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec create_index_response = unit [@@ocaml.doc ""]
+
+type nonrec create_index_request = {
+  index_schema : index_schema option;
+      [@ocaml.doc
+        "The JSON schema definition for the index, including field mappings and settings.\n"]
+  index_name : index_name;
+      [@ocaml.doc
+        "The name of the index to create. Index names must be lowercase and can't begin with \
+         underscores (_) or hyphens (-).\n"]
+  id : collection_id;
+      [@ocaml.doc "The unique identifier of the collection in which to create the index.\n"]
+}
+[@@ocaml.doc ""]
+
 type nonrec create_collection_detail = {
+  collection_group_name : collection_group_name option;
+      [@ocaml.doc "The name of the collection group that contains this collection.\n"]
   last_modified_date : Smaws_Lib.Smithy_api.Types.long option;
       [@ocaml.doc "The date and time when the collection was last modified.\n"]
   created_date : Smaws_Lib.Smithy_api.Types.long option;
       [@ocaml.doc "The Epoch time when the collection was created.\n"]
+  vector_options : vector_options option;
+      [@ocaml.doc "Configuration options for vector search capabilities in the collection.\n"]
+  deletion_protection : deletion_protection option;
+      [@ocaml.doc
+        "Indicates whether deletion protection is [ENABLED] or [DISABLED] for the collection.\n"]
   standby_replicas : standby_replicas option;
       [@ocaml.doc "Creates details about an OpenSearch Serverless collection.\n"]
   kms_key_arn : Smaws_Lib.Smithy_api.Types.string_ option;
@@ -1308,6 +1695,16 @@ type nonrec create_collection_response = {
 type nonrec create_collection_request = {
   client_token : client_token option;
       [@ocaml.doc "Unique, case-sensitive identifier to ensure idempotency of the request.\n"]
+  deletion_protection : deletion_protection option;
+      [@ocaml.doc
+        "Indicates whether to enable deletion protection for the collection. When set to \
+         [ENABLED], the collection cannot be deleted.\n"]
+  encryption_config : encryption_config option;
+      [@ocaml.doc "Encryption settings for the collection.\n"]
+  collection_group_name : collection_group_name option;
+      [@ocaml.doc "The name of the collection group to associate with the collection.\n"]
+  vector_options : vector_options option;
+      [@ocaml.doc "Configuration options for vector search capabilities in the collection.\n"]
   standby_replicas : standby_replicas option;
       [@ocaml.doc "Indicates whether standby replicas should be used for a collection.\n"]
   tags : tags option;
@@ -1318,6 +1715,56 @@ type nonrec create_collection_request = {
       [@ocaml.doc "Description of the collection.\n"]
   type_ : collection_type option; [@ocaml.doc "The type of collection.\n"]
   name : collection_name; [@ocaml.doc "Name of the collection.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec create_collection_group_detail = {
+  generation : serverless_generation option;
+      [@ocaml.doc "The generation of Amazon OpenSearch Serverless for the collection group.\n"]
+  capacity_limits : collection_group_capacity_limits option;
+      [@ocaml.doc
+        "The capacity limits for the collection group, in OpenSearch Compute Units (OCUs).\n"]
+  created_date : Smaws_Lib.Smithy_api.Types.long option;
+      [@ocaml.doc "The Epoch time when the collection group was created.\n"]
+  tags : tags option;
+      [@ocaml.doc "A map of key-value pairs associated with the collection group.\n"]
+  description : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The description of the collection group.\n"]
+  standby_replicas : standby_replicas option;
+      [@ocaml.doc "Indicates whether standby replicas are used for the collection group.\n"]
+  name : collection_group_name option; [@ocaml.doc "The name of the collection group.\n"]
+  arn : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the collection group.\n"]
+  id : collection_group_id option; [@ocaml.doc "The unique identifier of the collection group.\n"]
+}
+[@@ocaml.doc "Details about the created collection group.\n"]
+
+type nonrec create_collection_group_response = {
+  create_collection_group_detail : create_collection_group_detail option;
+      [@ocaml.doc "Details about the created collection group.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec create_collection_group_request = {
+  client_token : client_token option;
+      [@ocaml.doc "Unique, case-sensitive identifier to ensure idempotency of the request.\n"]
+  generation : serverless_generation option;
+      [@ocaml.doc
+        "The generation of Amazon OpenSearch Serverless for the collection group. Valid values are \
+         [CLASSIC] and [NEXTGEN].\n"]
+  capacity_limits : collection_group_capacity_limits option;
+      [@ocaml.doc
+        "The capacity limits for the collection group, in OpenSearch Compute Units (OCUs). These \
+         limits control the maximum and minimum capacity for collections within the group.\n"]
+  tags : tags option;
+      [@ocaml.doc
+        "An arbitrary set of tags (key\226\128\147value pairs) to associate with the OpenSearch \
+         Serverless collection group.\n"]
+  description : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "A description of the collection group.\n"]
+  standby_replicas : standby_replicas;
+      [@ocaml.doc "Indicates whether standby replicas should be used for a collection group.\n"]
+  name : collection_group_name; [@ocaml.doc "The name of the collection group.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -1340,6 +1787,8 @@ type nonrec create_access_policy_request = {
   type_ : access_policy_type; [@ocaml.doc "The type of policy.\n"]
 }
 [@@ocaml.doc ""]
+
+type nonrec collection_group = Smaws_Lib.CoreTypes.Resource.t [@@ocaml.doc ""]
 
 type nonrec collection = Smaws_Lib.CoreTypes.Resource.t [@@ocaml.doc ""]
 

@@ -659,6 +659,18 @@ let trail_already_exists_exception_of_yojson tree path =
     : trail_already_exists_exception)
 
 let timestamps_of_yojson tree path = list_of_yojson date_of_yojson tree path
+
+let template_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "USER_ACTIONS" -> USER_ACTIONS
+    | `String "RESOURCE_ACCESS" -> RESOURCE_ACCESS
+    | `String "API_ACTIVITY" -> API_ACTIVITY
+    | `String value -> raise (deserialize_unknown_enum_value_error path "Template" value)
+    | _ -> raise (deserialize_wrong_type_error path "Template")
+     : template)
+    : template)
+
+let templates_of_yojson tree path = list_of_yojson template_of_yojson tree path
 let tag_key_of_yojson = string_of_yojson
 let tag_value_of_yojson = string_of_yojson
 
@@ -890,6 +902,18 @@ let start_dashboard_refresh_request_of_yojson tree path =
      dashboard_id = value_for_key dashboard_arn_of_yojson "DashboardId" _list path;
    }
     : start_dashboard_refresh_request)
+
+let source_event_category_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "Data" -> Data
+    | `String "Management" -> Management
+    | `String value -> raise (deserialize_unknown_enum_value_error path "SourceEventCategory" value)
+    | _ -> raise (deserialize_wrong_type_error path "SourceEventCategory")
+     : source_event_category)
+    : source_event_category)
+
+let source_event_categories_of_yojson tree path =
+  list_of_yojson source_event_category_of_yojson tree path
 
 let source_config_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1200,6 +1224,10 @@ let insight_type_of_yojson (tree : t) path =
 let insight_selector_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     event_categories =
+       option_of_yojson
+         (value_for_key source_event_categories_of_yojson "EventCategories")
+         _list path;
      insight_type = option_of_yojson (value_for_key insight_type_of_yojson "InsightType") _list path;
    }
     : insight_selector)
@@ -1321,9 +1349,33 @@ let context_key_selector_of_yojson tree path =
 let context_key_selectors_of_yojson tree path =
   list_of_yojson context_key_selector_of_yojson tree path
 
+let event_category_aggregation_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "Data" -> Data
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "EventCategoryAggregation" value)
+    | _ -> raise (deserialize_wrong_type_error path "EventCategoryAggregation")
+     : event_category_aggregation)
+    : event_category_aggregation)
+
+let aggregation_configuration_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     event_category = value_for_key event_category_aggregation_of_yojson "EventCategory" _list path;
+     templates = value_for_key templates_of_yojson "Templates" _list path;
+   }
+    : aggregation_configuration)
+
+let aggregation_configurations_of_yojson tree path =
+  list_of_yojson aggregation_configuration_of_yojson tree path
+
 let put_event_configuration_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     aggregation_configurations =
+       option_of_yojson
+         (value_for_key aggregation_configurations_of_yojson "AggregationConfigurations")
+         _list path;
      context_key_selectors =
        option_of_yojson
          (value_for_key context_key_selectors_of_yojson "ContextKeySelectors")
@@ -1334,17 +1386,26 @@ let put_event_configuration_response_of_yojson tree path =
        option_of_yojson
          (value_for_key event_data_store_arn_of_yojson "EventDataStoreArn")
          _list path;
+     trail_ar_n = option_of_yojson (value_for_key string__of_yojson "TrailARN") _list path;
    }
     : put_event_configuration_response)
 
 let put_event_configuration_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     aggregation_configurations =
+       option_of_yojson
+         (value_for_key aggregation_configurations_of_yojson "AggregationConfigurations")
+         _list path;
      context_key_selectors =
-       value_for_key context_key_selectors_of_yojson "ContextKeySelectors" _list path;
-     max_event_size = value_for_key max_event_size_of_yojson "MaxEventSize" _list path;
+       option_of_yojson
+         (value_for_key context_key_selectors_of_yojson "ContextKeySelectors")
+         _list path;
+     max_event_size =
+       option_of_yojson (value_for_key max_event_size_of_yojson "MaxEventSize") _list path;
      event_data_store =
        option_of_yojson (value_for_key string__of_yojson "EventDataStore") _list path;
+     trail_name = option_of_yojson (value_for_key string__of_yojson "TrailName") _list path;
    }
     : put_event_configuration_request)
 
@@ -1594,6 +1655,7 @@ let list_insights_metric_data_response_of_yojson tree path =
      insight_type = option_of_yojson (value_for_key insight_type_of_yojson "InsightType") _list path;
      event_name = option_of_yojson (value_for_key event_name_of_yojson "EventName") _list path;
      event_source = option_of_yojson (value_for_key event_source_of_yojson "EventSource") _list path;
+     trail_ar_n = option_of_yojson (value_for_key string__of_yojson "TrailARN") _list path;
    }
     : list_insights_metric_data_response)
 
@@ -1629,8 +1691,64 @@ let list_insights_metric_data_request_of_yojson tree path =
      insight_type = value_for_key insight_type_of_yojson "InsightType" _list path;
      event_name = value_for_key event_name_of_yojson "EventName" _list path;
      event_source = value_for_key event_source_of_yojson "EventSource" _list path;
+     trail_name = option_of_yojson (value_for_key string__of_yojson "TrailName") _list path;
    }
     : list_insights_metric_data_request)
+
+let list_insights_data_type_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "InsightsEvents" -> INSIGHTS_EVENTS
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "ListInsightsDataType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ListInsightsDataType")
+     : list_insights_data_type)
+    : list_insights_data_type)
+
+let list_insights_data_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_token = option_of_yojson (value_for_key pagination_token_of_yojson "NextToken") _list path;
+     events = option_of_yojson (value_for_key events_list_of_yojson "Events") _list path;
+   }
+    : list_insights_data_response)
+
+let list_insights_data_dimension_value_of_yojson = string_of_yojson
+
+let list_insights_data_dimension_key_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "EventSource" -> EVENT_SOURCE
+    | `String "EventName" -> EVENT_NAME
+    | `String "EventId" -> EVENT_ID
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "ListInsightsDataDimensionKey" value)
+    | _ -> raise (deserialize_wrong_type_error path "ListInsightsDataDimensionKey")
+     : list_insights_data_dimension_key)
+    : list_insights_data_dimension_key)
+
+let list_insights_data_dimensions_of_yojson tree path =
+  map_of_yojson list_insights_data_dimension_key_of_yojson
+    list_insights_data_dimension_value_of_yojson tree path
+
+let list_insights_data_max_results_count_of_yojson = int_of_yojson
+
+let list_insights_data_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_token = option_of_yojson (value_for_key pagination_token_of_yojson "NextToken") _list path;
+     max_results =
+       option_of_yojson
+         (value_for_key list_insights_data_max_results_count_of_yojson "MaxResults")
+         _list path;
+     end_time = option_of_yojson (value_for_key date_of_yojson "EndTime") _list path;
+     start_time = option_of_yojson (value_for_key date_of_yojson "StartTime") _list path;
+     dimensions =
+       option_of_yojson
+         (value_for_key list_insights_data_dimensions_of_yojson "Dimensions")
+         _list path;
+     data_type = value_for_key list_insights_data_type_of_yojson "DataType" _list path;
+     insight_source = value_for_key resource_arn_of_yojson "InsightSource" _list path;
+   }
+    : list_insights_data_request)
 
 let imports_list_item_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -2095,6 +2213,10 @@ let get_event_data_store_request_of_yojson tree path =
 let get_event_configuration_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     aggregation_configurations =
+       option_of_yojson
+         (value_for_key aggregation_configurations_of_yojson "AggregationConfigurations")
+         _list path;
      context_key_selectors =
        option_of_yojson
          (value_for_key context_key_selectors_of_yojson "ContextKeySelectors")
@@ -2105,6 +2227,7 @@ let get_event_configuration_response_of_yojson tree path =
        option_of_yojson
          (value_for_key event_data_store_arn_of_yojson "EventDataStoreArn")
          _list path;
+     trail_ar_n = option_of_yojson (value_for_key string__of_yojson "TrailARN") _list path;
    }
     : get_event_configuration_response)
 
@@ -2113,6 +2236,7 @@ let get_event_configuration_request_of_yojson tree path =
   ({
      event_data_store =
        option_of_yojson (value_for_key string__of_yojson "EventDataStore") _list path;
+     trail_name = option_of_yojson (value_for_key string__of_yojson "TrailName") _list path;
    }
     : get_event_configuration_request)
 

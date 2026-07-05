@@ -2,9 +2,9 @@ type nonrec boolean_ = bool [@@ocaml.doc ""]
 
 type nonrec wireless_connection = {
   is_wifi_enabled : boolean_ option;
-      [@ocaml.doc "Enables the Wi-Fi adapter on an Snowcone device.\n"]
+      [@ocaml.doc "Enables the Wi-Fi adapter on an Snowball Edge device.\n"]
 }
-[@@ocaml.doc "Configures the wireless connection on an Snowcone device.\n"]
+[@@ocaml.doc "Configures the wireless connection on an Snowball Edge device.\n"]
 
 type nonrec update_long_term_pricing_result = unit [@@ocaml.doc ""]
 
@@ -482,9 +482,9 @@ type nonrec tax_documents = { in_d : ind_tax_documents option [@ocaml.doc ""] }
 
 type nonrec snowcone_device_configuration = {
   wireless_connection : wireless_connection option;
-      [@ocaml.doc "Configures the wireless connection for the Snowcone device.\n"]
+      [@ocaml.doc "Configures the wireless connection for the Snowball Edge device.\n"]
 }
-[@@ocaml.doc "Specifies the device configuration for an Snowcone job.\n"]
+[@@ocaml.doc "Specifies the device configuration for an Snowball Edge job.\n"]
 
 type nonrec snowball_type =
   | RACK_5U_C [@ocaml.doc ""]
@@ -970,7 +970,7 @@ type nonrec job_logs = {
 
 type nonrec device_configuration = {
   snowcone_device_configuration : snowcone_device_configuration option;
-      [@ocaml.doc "Returns information about the device configuration for an Snowcone job.\n"]
+      [@ocaml.doc "Returns information about the device configuration for an Snowball Edge job.\n"]
 }
 [@@ocaml.doc "The container for [SnowconeDeviceConfiguration]. \n"]
 
@@ -1246,7 +1246,7 @@ type nonrec cluster_metadata = {
   creation_date : timestamp option; [@ocaml.doc "The creation date for this cluster.\n"]
   snowball_type : snowball_type option;
       [@ocaml.doc
-        "The type of Snowcone device to use for this cluster. \n\n\
+        "The type of Snowball Edge device to use for this cluster. \n\n\
         \  For cluster jobs, Amazon Web Services Snow Family currently supports only the [EDGE] \
          device type.\n\
         \  \n\
@@ -1385,7 +1385,7 @@ type nonrec create_job_request = {
          will not be available on the device. \n"]
   device_configuration : device_configuration option;
       [@ocaml.doc
-        "Defines the device configuration for an Snowcone job.\n\n\
+        "Defines the device configuration for an Snowball Edge job.\n\n\
         \ For more information, see \
          \"https://docs.aws.amazon.com/snowball/latest/snowcone-guide/snow-device-types.html\" \
          (Snow Family Devices and Capacity) in the {i Snowcone User Guide} or \

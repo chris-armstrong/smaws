@@ -93,6 +93,8 @@ let update_value_of_yojson tree path =
 
 let update_type_of_yojson (tree : t) path =
   ((match tree with
+    | `String "SIZE" -> SIZE
+    | `String "NETWORK" -> NETWORK
     | `String "OS" -> OS
     | `String value -> raise (deserialize_unknown_enum_value_error path "UpdateType" value)
     | _ -> raise (deserialize_wrong_type_error path "UpdateType")
@@ -244,6 +246,8 @@ let radius_settings_of_yojson tree path =
      radius_timeout =
        option_of_yojson (value_for_key radius_timeout_of_yojson "RadiusTimeout") _list path;
      radius_port = option_of_yojson (value_for_key port_number_of_yojson "RadiusPort") _list path;
+     radius_servers_ipv6 =
+       option_of_yojson (value_for_key servers_of_yojson "RadiusServersIpv6") _list path;
      radius_servers = option_of_yojson (value_for_key servers_of_yojson "RadiusServers") _list path;
    }
     : radius_settings)
@@ -303,9 +307,105 @@ let update_info_entry_of_yojson tree path =
    }
     : update_info_entry)
 
+let assessment_id_of_yojson = string_of_yojson
+
+let update_hybrid_ad_result_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     assessment_id =
+       option_of_yojson (value_for_key assessment_id_of_yojson "AssessmentId") _list path;
+     directory_id = option_of_yojson (value_for_key directory_id_of_yojson "DirectoryId") _list path;
+   }
+    : update_hybrid_ad_result)
+
+let secret_arn_of_yojson = string_of_yojson
+
+let hybrid_administrator_account_update_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({ secret_arn = value_for_key secret_arn_of_yojson "SecretArn" _list path }
+    : hybrid_administrator_account_update)
+
+let ip_addr_of_yojson = string_of_yojson
+let customer_dns_ips_of_yojson tree path = list_of_yojson ip_addr_of_yojson tree path
+let assessment_instance_id_of_yojson = string_of_yojson
+
+let assessment_instance_ids_of_yojson tree path =
+  list_of_yojson assessment_instance_id_of_yojson tree path
+
+let hybrid_customer_instances_settings_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     instance_ids = value_for_key assessment_instance_ids_of_yojson "InstanceIds" _list path;
+     customer_dns_ips = value_for_key customer_dns_ips_of_yojson "CustomerDnsIps" _list path;
+   }
+    : hybrid_customer_instances_settings)
+
+let update_hybrid_ad_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     self_managed_instances_settings =
+       option_of_yojson
+         (value_for_key hybrid_customer_instances_settings_of_yojson "SelfManagedInstancesSettings")
+         _list path;
+     hybrid_administrator_account_update =
+       option_of_yojson
+         (value_for_key hybrid_administrator_account_update_of_yojson
+            "HybridAdministratorAccountUpdate")
+         _list path;
+     directory_id = value_for_key directory_id_of_yojson "DirectoryId" _list path;
+   }
+    : update_hybrid_ad_request)
+
+let ad_assessment_limit_exceeded_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     request_id = option_of_yojson (value_for_key request_id_of_yojson "RequestId") _list path;
+     message = option_of_yojson (value_for_key exception_message_of_yojson "Message") _list path;
+   }
+    : ad_assessment_limit_exceeded_exception)
+
 let update_directory_setup_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   (() : unit)
+
+let directory_size_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "Large" -> LARGE
+    | `String "Small" -> SMALL
+    | `String value -> raise (deserialize_unknown_enum_value_error path "DirectorySize" value)
+    | _ -> raise (deserialize_wrong_type_error path "DirectorySize")
+     : directory_size)
+    : directory_size)
+
+let directory_size_update_settings_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     directory_size =
+       option_of_yojson (value_for_key directory_size_of_yojson "DirectorySize") _list path;
+   }
+    : directory_size_update_settings)
+
+let network_type_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "IPv6" -> IPV6_ONLY
+    | `String "IPv4" -> IPV4_ONLY
+    | `String "Dual-stack" -> DUAL_STACK
+    | `String value -> raise (deserialize_unknown_enum_value_error path "NetworkType" value)
+    | _ -> raise (deserialize_wrong_type_error path "NetworkType")
+     : network_type)
+    : network_type)
+
+let ipv6_addr_of_yojson = string_of_yojson
+let dns_ipv6_addrs_of_yojson tree path = list_of_yojson ipv6_addr_of_yojson tree path
+
+let network_update_settings_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     customer_dns_ips_v6 =
+       option_of_yojson (value_for_key dns_ipv6_addrs_of_yojson "CustomerDnsIpsV6") _list path;
+     network_type = option_of_yojson (value_for_key network_type_of_yojson "NetworkType") _list path;
+   }
+    : network_update_settings)
 
 let create_snapshot_before_update_of_yojson = bool_of_yojson
 
@@ -315,6 +415,14 @@ let update_directory_setup_request_of_yojson tree path =
      create_snapshot_before_update =
        option_of_yojson
          (value_for_key create_snapshot_before_update_of_yojson "CreateSnapshotBeforeUpdate")
+         _list path;
+     network_update_settings =
+       option_of_yojson
+         (value_for_key network_update_settings_of_yojson "NetworkUpdateSettings")
+         _list path;
+     directory_size_update_settings =
+       option_of_yojson
+         (value_for_key directory_size_update_settings_of_yojson "DirectorySizeUpdateSettings")
          _list path;
      os_update_settings =
        option_of_yojson (value_for_key os_update_settings_of_yojson "OSUpdateSettings") _list path;
@@ -352,13 +460,14 @@ let update_conditional_forwarder_result_of_yojson tree path =
   (() : unit)
 
 let remote_domain_name_of_yojson = string_of_yojson
-let ip_addr_of_yojson = string_of_yojson
 let dns_ip_addrs_of_yojson tree path = list_of_yojson ip_addr_of_yojson tree path
 
 let update_conditional_forwarder_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     dns_ip_addrs = value_for_key dns_ip_addrs_of_yojson "DnsIpAddrs" _list path;
+     dns_ipv6_addrs =
+       option_of_yojson (value_for_key dns_ipv6_addrs_of_yojson "DnsIpv6Addrs") _list path;
+     dns_ip_addrs = option_of_yojson (value_for_key dns_ip_addrs_of_yojson "DnsIpAddrs") _list path;
      remote_domain_name = value_for_key remote_domain_name_of_yojson "RemoteDomainName" _list path;
      directory_id = value_for_key directory_id_of_yojson "DirectoryId" _list path;
    }
@@ -553,6 +662,50 @@ let start_schema_extension_request_of_yojson tree path =
      directory_id = value_for_key directory_id_of_yojson "DirectoryId" _list path;
    }
     : start_schema_extension_request)
+
+let start_ad_assessment_result_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     assessment_id =
+       option_of_yojson (value_for_key assessment_id_of_yojson "AssessmentId") _list path;
+   }
+    : start_ad_assessment_result)
+
+let directory_name_of_yojson = string_of_yojson
+
+let directory_vpc_settings_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     subnet_ids = value_for_key subnet_ids_of_yojson "SubnetIds" _list path;
+     vpc_id = value_for_key vpc_id_of_yojson "VpcId" _list path;
+   }
+    : directory_vpc_settings)
+
+let security_group_id_of_yojson = string_of_yojson
+let security_group_ids_of_yojson tree path = list_of_yojson security_group_id_of_yojson tree path
+
+let assessment_configuration_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     security_group_ids =
+       option_of_yojson (value_for_key security_group_ids_of_yojson "SecurityGroupIds") _list path;
+     instance_ids = value_for_key assessment_instance_ids_of_yojson "InstanceIds" _list path;
+     vpc_settings = value_for_key directory_vpc_settings_of_yojson "VpcSettings" _list path;
+     dns_name = value_for_key directory_name_of_yojson "DnsName" _list path;
+     customer_dns_ips = value_for_key customer_dns_ips_of_yojson "CustomerDnsIps" _list path;
+   }
+    : assessment_configuration)
+
+let start_ad_assessment_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     directory_id = option_of_yojson (value_for_key directory_id_of_yojson "DirectoryId") _list path;
+     assessment_configuration =
+       option_of_yojson
+         (value_for_key assessment_configuration_of_yojson "AssessmentConfiguration")
+         _list path;
+   }
+    : start_ad_assessment_request)
 
 let stage_reason_of_yojson = string_of_yojson
 let sso_enabled_of_yojson = bool_of_yojson
@@ -798,7 +951,6 @@ let setting_entry_of_yojson tree path =
     : setting_entry)
 
 let setting_entries_of_yojson tree path = list_of_yojson setting_entry_of_yojson tree path
-let security_group_id_of_yojson = string_of_yojson
 
 let schema_extension_status_of_yojson (tree : t) path =
   ((match tree with
@@ -916,11 +1068,14 @@ let remove_ip_routes_result_of_yojson tree path =
 
 let cidr_ip_of_yojson = string_of_yojson
 let cidr_ips_of_yojson tree path = list_of_yojson cidr_ip_of_yojson tree path
+let cidr_ipv6_of_yojson = string_of_yojson
+let cidr_ipv6s_of_yojson tree path = list_of_yojson cidr_ipv6_of_yojson tree path
 
 let remove_ip_routes_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     cidr_ips = value_for_key cidr_ips_of_yojson "CidrIps" _list path;
+     cidr_ipv6s = option_of_yojson (value_for_key cidr_ipv6s_of_yojson "CidrIpv6s") _list path;
+     cidr_ips = option_of_yojson (value_for_key cidr_ips_of_yojson "CidrIps") _list path;
      directory_id = value_for_key directory_id_of_yojson "DirectoryId" _list path;
    }
     : remove_ip_routes_request)
@@ -1057,14 +1212,6 @@ let directory_stage_of_yojson (tree : t) path =
      : directory_stage)
     : directory_stage)
 
-let directory_vpc_settings_of_yojson tree path =
-  let _list = assoc_of_yojson tree path in
-  ({
-     subnet_ids = value_for_key subnet_ids_of_yojson "SubnetIds" _list path;
-     vpc_id = value_for_key vpc_id_of_yojson "VpcId" _list path;
-   }
-    : directory_vpc_settings)
-
 let launch_time_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let region_description_of_yojson tree path =
@@ -1113,6 +1260,7 @@ let radius_status_of_yojson (tree : t) path =
      : radius_status)
     : radius_status)
 
+let pca_connector_arn_of_yojson = string_of_yojson
 let password_of_yojson = string_of_yojson
 let page_limit_of_yojson = int_of_yojson
 let availability_zone_of_yojson = string_of_yojson
@@ -1133,6 +1281,7 @@ let directory_vpc_settings_description_of_yojson tree path =
 let owner_directory_description_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     network_type = option_of_yojson (value_for_key network_type_of_yojson "NetworkType") _list path;
      radius_status =
        option_of_yojson (value_for_key radius_status_of_yojson "RadiusStatus") _list path;
      radius_settings =
@@ -1141,6 +1290,8 @@ let owner_directory_description_of_yojson tree path =
        option_of_yojson
          (value_for_key directory_vpc_settings_description_of_yojson "VpcSettings")
          _list path;
+     dns_ipv6_addrs =
+       option_of_yojson (value_for_key dns_ipv6_addrs_of_yojson "DnsIpv6Addrs") _list path;
      dns_ip_addrs = option_of_yojson (value_for_key dns_ip_addrs_of_yojson "DnsIpAddrs") _list path;
      account_id = option_of_yojson (value_for_key customer_id_of_yojson "AccountId") _list path;
      directory_id = option_of_yojson (value_for_key directory_id_of_yojson "DirectoryId") _list path;
@@ -1266,6 +1417,7 @@ let ip_route_info_of_yojson tree path =
        option_of_yojson (value_for_key added_date_time_of_yojson "AddedDateTime") _list path;
      ip_route_status_msg =
        option_of_yojson (value_for_key ip_route_status_msg_of_yojson "IpRouteStatusMsg") _list path;
+     cidr_ipv6 = option_of_yojson (value_for_key cidr_ipv6_of_yojson "CidrIpv6") _list path;
      cidr_ip = option_of_yojson (value_for_key cidr_ip_of_yojson "CidrIp") _list path;
      directory_id = option_of_yojson (value_for_key directory_id_of_yojson "DirectoryId") _list path;
    }
@@ -1344,6 +1496,53 @@ let list_certificates_request_of_yojson tree path =
    }
     : list_certificates_request)
 
+let assessment_start_time_of_yojson = timestamp_epoch_seconds_of_yojson
+let last_update_date_time_of_yojson = timestamp_epoch_seconds_of_yojson
+let assessment_status_of_yojson = string_of_yojson
+let assessment_report_type_of_yojson = string_of_yojson
+
+let assessment_summary_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     report_type =
+       option_of_yojson (value_for_key assessment_report_type_of_yojson "ReportType") _list path;
+     customer_dns_ips =
+       option_of_yojson (value_for_key customer_dns_ips_of_yojson "CustomerDnsIps") _list path;
+     status = option_of_yojson (value_for_key assessment_status_of_yojson "Status") _list path;
+     last_update_date_time =
+       option_of_yojson
+         (value_for_key last_update_date_time_of_yojson "LastUpdateDateTime")
+         _list path;
+     start_time =
+       option_of_yojson (value_for_key assessment_start_time_of_yojson "StartTime") _list path;
+     dns_name = option_of_yojson (value_for_key directory_name_of_yojson "DnsName") _list path;
+     directory_id = option_of_yojson (value_for_key directory_id_of_yojson "DirectoryId") _list path;
+     assessment_id =
+       option_of_yojson (value_for_key assessment_id_of_yojson "AssessmentId") _list path;
+   }
+    : assessment_summary)
+
+let assessments_of_yojson tree path = list_of_yojson assessment_summary_of_yojson tree path
+
+let list_ad_assessments_result_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+     assessments = option_of_yojson (value_for_key assessments_of_yojson "Assessments") _list path;
+   }
+    : list_ad_assessments_result)
+
+let assessment_limit_of_yojson = int_of_yojson
+
+let list_ad_assessments_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     limit = option_of_yojson (value_for_key assessment_limit_of_yojson "Limit") _list path;
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+     directory_id = option_of_yojson (value_for_key directory_id_of_yojson "DirectoryId") _list path;
+   }
+    : list_ad_assessments_request)
+
 let ldaps_type_of_yojson (tree : t) path =
   ((match tree with
     | `String "Client" -> CLIENT
@@ -1379,11 +1578,13 @@ let ldaps_setting_info_of_yojson tree path =
     : ldaps_setting_info)
 
 let ldaps_settings_info_of_yojson tree path = list_of_yojson ldaps_setting_info_of_yojson tree path
+let ip_v6_addrs_of_yojson tree path = list_of_yojson ipv6_addr_of_yojson tree path
 
 let ip_route_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      description = option_of_yojson (value_for_key description_of_yojson "Description") _list path;
+     cidr_ipv6 = option_of_yojson (value_for_key cidr_ipv6_of_yojson "CidrIpv6") _list path;
      cidr_ip = option_of_yojson (value_for_key cidr_ip_of_yojson "CidrIp") _list path;
    }
     : ip_route)
@@ -1423,6 +1624,74 @@ let insufficient_permissions_exception_of_yojson tree path =
      message = option_of_yojson (value_for_key exception_message_of_yojson "Message") _list path;
    }
     : insufficient_permissions_exception)
+
+let hybrid_update_value_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     dns_ips = option_of_yojson (value_for_key customer_dns_ips_of_yojson "DnsIps") _list path;
+     instance_ids =
+       option_of_yojson (value_for_key assessment_instance_ids_of_yojson "InstanceIds") _list path;
+   }
+    : hybrid_update_value)
+
+let hybrid_update_type_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "HybridAdministratorAccount" -> HYBRID_ADMINISTRATOR_ACCOUNT
+    | `String "SelfManagedInstances" -> SELF_MANAGED_INSTANCES
+    | `String value -> raise (deserialize_unknown_enum_value_error path "HybridUpdateType" value)
+    | _ -> raise (deserialize_wrong_type_error path "HybridUpdateType")
+     : hybrid_update_type)
+    : hybrid_update_type)
+
+let hybrid_update_info_entry_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     assessment_id =
+       option_of_yojson (value_for_key assessment_id_of_yojson "AssessmentId") _list path;
+     last_updated_date_time =
+       option_of_yojson
+         (value_for_key last_updated_date_time_of_yojson "LastUpdatedDateTime")
+         _list path;
+     start_time = option_of_yojson (value_for_key start_date_time_of_yojson "StartTime") _list path;
+     previous_value =
+       option_of_yojson (value_for_key hybrid_update_value_of_yojson "PreviousValue") _list path;
+     new_value =
+       option_of_yojson (value_for_key hybrid_update_value_of_yojson "NewValue") _list path;
+     initiated_by = option_of_yojson (value_for_key initiated_by_of_yojson "InitiatedBy") _list path;
+     status_reason =
+       option_of_yojson (value_for_key update_status_reason_of_yojson "StatusReason") _list path;
+     status = option_of_yojson (value_for_key update_status_of_yojson "Status") _list path;
+   }
+    : hybrid_update_info_entry)
+
+let hybrid_update_info_entries_of_yojson tree path =
+  list_of_yojson hybrid_update_info_entry_of_yojson tree path
+
+let hybrid_update_activities_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     hybrid_administrator_account =
+       option_of_yojson
+         (value_for_key hybrid_update_info_entries_of_yojson "HybridAdministratorAccount")
+         _list path;
+     self_managed_instances =
+       option_of_yojson
+         (value_for_key hybrid_update_info_entries_of_yojson "SelfManagedInstances")
+         _list path;
+   }
+    : hybrid_update_activities)
+
+let hybrid_settings_description_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     self_managed_instance_ids =
+       option_of_yojson
+         (value_for_key assessment_instance_ids_of_yojson "SelfManagedInstanceIds")
+         _list path;
+     self_managed_dns_ip_addrs =
+       option_of_yojson (value_for_key ip_addrs_of_yojson "SelfManagedDnsIpAddrs") _list path;
+   }
+    : hybrid_settings_description)
 
 let get_snapshot_limits_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1591,6 +1860,26 @@ let enable_client_authentication_request_of_yojson tree path =
    }
     : enable_client_authentication_request)
 
+let enable_ca_enrollment_policy_result_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  (() : unit)
+
+let enable_ca_enrollment_policy_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     pca_connector_arn = value_for_key pca_connector_arn_of_yojson "PcaConnectorArn" _list path;
+     directory_id = value_for_key directory_id_of_yojson "DirectoryId" _list path;
+   }
+    : enable_ca_enrollment_policy_request)
+
+let enable_already_in_progress_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     request_id = option_of_yojson (value_for_key request_id_of_yojson "RequestId") _list path;
+     message = option_of_yojson (value_for_key exception_message_of_yojson "Message") _list path;
+   }
+    : enable_already_in_progress_exception)
+
 let domain_controller_id_of_yojson = string_of_yojson
 
 let domain_controller_status_of_yojson (tree : t) path =
@@ -1629,6 +1918,7 @@ let domain_controller_of_yojson tree path =
        option_of_yojson (value_for_key availability_zone_of_yojson "AvailabilityZone") _list path;
      subnet_id = option_of_yojson (value_for_key subnet_id_of_yojson "SubnetId") _list path;
      vpc_id = option_of_yojson (value_for_key vpc_id_of_yojson "VpcId") _list path;
+     dns_ipv6_addr = option_of_yojson (value_for_key ipv6_addr_of_yojson "DnsIpv6Addr") _list path;
      dns_ip_addr = option_of_yojson (value_for_key ip_addr_of_yojson "DnsIpAddr") _list path;
      domain_controller_id =
        option_of_yojson
@@ -1698,6 +1988,23 @@ let disable_client_authentication_request_of_yojson tree path =
    }
     : disable_client_authentication_request)
 
+let disable_ca_enrollment_policy_result_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  (() : unit)
+
+let disable_ca_enrollment_policy_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({ directory_id = value_for_key directory_id_of_yojson "DirectoryId" _list path }
+    : disable_ca_enrollment_policy_request)
+
+let disable_already_in_progress_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     request_id = option_of_yojson (value_for_key request_id_of_yojson "RequestId") _list path;
+     message = option_of_yojson (value_for_key exception_message_of_yojson "Message") _list path;
+   }
+    : disable_already_in_progress_exception)
+
 let directory_type_of_yojson (tree : t) path =
   ((match tree with
     | `String "SharedMicrosoftAD" -> SHARED_MICROSOFT_AD
@@ -1708,15 +2015,6 @@ let directory_type_of_yojson (tree : t) path =
     | _ -> raise (deserialize_wrong_type_error path "DirectoryType")
      : directory_type)
     : directory_type)
-
-let directory_size_of_yojson (tree : t) path =
-  ((match tree with
-    | `String "Large" -> LARGE
-    | `String "Small" -> SMALL
-    | `String value -> raise (deserialize_unknown_enum_value_error path "DirectorySize" value)
-    | _ -> raise (deserialize_wrong_type_error path "DirectorySize")
-     : directory_size)
-    : directory_size)
 
 let directory_short_name_of_yojson = string_of_yojson
 
@@ -1856,6 +2154,27 @@ let describe_ldaps_settings_request_of_yojson tree path =
    }
     : describe_ldaps_settings_request)
 
+let describe_hybrid_ad_update_result_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+     update_activities =
+       option_of_yojson
+         (value_for_key hybrid_update_activities_of_yojson "UpdateActivities")
+         _list path;
+   }
+    : describe_hybrid_ad_update_result)
+
+let describe_hybrid_ad_update_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+     update_type =
+       option_of_yojson (value_for_key hybrid_update_type_of_yojson "UpdateType") _list path;
+     directory_id = value_for_key directory_id_of_yojson "DirectoryId" _list path;
+   }
+    : describe_hybrid_ad_update_request)
+
 let describe_event_topics_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1918,10 +2237,9 @@ let describe_directory_data_access_request_of_yojson tree path =
   ({ directory_id = value_for_key directory_id_of_yojson "DirectoryId" _list path }
     : describe_directory_data_access_request)
 
-let directory_name_of_yojson = string_of_yojson
-
 let directory_edition_of_yojson (tree : t) path =
   ((match tree with
+    | `String "Hybrid" -> HYBRID
     | `String "Standard" -> STANDARD
     | `String "Enterprise" -> ENTERPRISE
     | `String value -> raise (deserialize_unknown_enum_value_error path "DirectoryEdition" value)
@@ -1935,6 +2253,8 @@ let access_url_of_yojson = string_of_yojson
 let directory_connect_settings_description_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     connect_ips_v6 =
+       option_of_yojson (value_for_key ip_v6_addrs_of_yojson "ConnectIpsV6") _list path;
      connect_ips = option_of_yojson (value_for_key ip_addrs_of_yojson "ConnectIps") _list path;
      availability_zones =
        option_of_yojson (value_for_key availability_zones_of_yojson "AvailabilityZones") _list path;
@@ -1950,6 +2270,11 @@ let directory_connect_settings_description_of_yojson tree path =
 let directory_description_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     network_type = option_of_yojson (value_for_key network_type_of_yojson "NetworkType") _list path;
+     hybrid_settings =
+       option_of_yojson
+         (value_for_key hybrid_settings_description_of_yojson "HybridSettings")
+         _list path;
      os_version = option_of_yojson (value_for_key os_version_of_yojson "OsVersion") _list path;
      regions_info = option_of_yojson (value_for_key regions_info_of_yojson "RegionsInfo") _list path;
      owner_directory_description =
@@ -1985,6 +2310,8 @@ let directory_description_of_yojson tree path =
      share_method = option_of_yojson (value_for_key share_method_of_yojson "ShareMethod") _list path;
      share_status = option_of_yojson (value_for_key share_status_of_yojson "ShareStatus") _list path;
      stage = option_of_yojson (value_for_key directory_stage_of_yojson "Stage") _list path;
+     dns_ipv6_addrs =
+       option_of_yojson (value_for_key dns_ipv6_addrs_of_yojson "DnsIpv6Addrs") _list path;
      dns_ip_addrs = option_of_yojson (value_for_key dns_ip_addrs_of_yojson "DnsIpAddrs") _list path;
      description = option_of_yojson (value_for_key description_of_yojson "Description") _list path;
      access_url = option_of_yojson (value_for_key access_url_of_yojson "AccessUrl") _list path;
@@ -2027,6 +2354,8 @@ let conditional_forwarder_of_yojson tree path =
   ({
      replication_scope =
        option_of_yojson (value_for_key replication_scope_of_yojson "ReplicationScope") _list path;
+     dns_ipv6_addrs =
+       option_of_yojson (value_for_key dns_ipv6_addrs_of_yojson "DnsIpv6Addrs") _list path;
      dns_ip_addrs = option_of_yojson (value_for_key dns_ip_addrs_of_yojson "DnsIpAddrs") _list path;
      remote_domain_name =
        option_of_yojson (value_for_key remote_domain_name_of_yojson "RemoteDomainName") _list path;
@@ -2153,6 +2482,152 @@ let describe_certificate_request_of_yojson tree path =
    }
     : describe_certificate_request)
 
+let ca_enrollment_policy_status_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "Impaired" -> IMPAIRED
+    | `String "Disabled" -> DISABLED
+    | `String "Disabling" -> DISABLING
+    | `String "Failed" -> FAILED
+    | `String "Success" -> SUCCESS
+    | `String "InProgress" -> IN_PROGRESS
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "CaEnrollmentPolicyStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "CaEnrollmentPolicyStatus")
+     : ca_enrollment_policy_status)
+    : ca_enrollment_policy_status)
+
+let ca_enrollment_policy_status_reason_of_yojson = string_of_yojson
+
+let describe_ca_enrollment_policy_result_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     ca_enrollment_policy_status_reason =
+       option_of_yojson
+         (value_for_key ca_enrollment_policy_status_reason_of_yojson
+            "CaEnrollmentPolicyStatusReason")
+         _list path;
+     last_updated_date_time =
+       option_of_yojson
+         (value_for_key last_updated_date_time_of_yojson "LastUpdatedDateTime")
+         _list path;
+     ca_enrollment_policy_status =
+       option_of_yojson
+         (value_for_key ca_enrollment_policy_status_of_yojson "CaEnrollmentPolicyStatus")
+         _list path;
+     pca_connector_arn =
+       option_of_yojson (value_for_key pca_connector_arn_of_yojson "PcaConnectorArn") _list path;
+     directory_id = option_of_yojson (value_for_key directory_id_of_yojson "DirectoryId") _list path;
+   }
+    : describe_ca_enrollment_policy_result)
+
+let describe_ca_enrollment_policy_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({ directory_id = value_for_key directory_id_of_yojson "DirectoryId" _list path }
+    : describe_ca_enrollment_policy_request)
+
+let assessment_status_code_of_yojson = string_of_yojson
+let assessment_status_reason_of_yojson = string_of_yojson
+let assessment_version_of_yojson = string_of_yojson
+
+let assessment_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     version = option_of_yojson (value_for_key assessment_version_of_yojson "Version") _list path;
+     report_type =
+       option_of_yojson (value_for_key assessment_report_type_of_yojson "ReportType") _list path;
+     self_managed_instance_ids =
+       option_of_yojson
+         (value_for_key assessment_instance_ids_of_yojson "SelfManagedInstanceIds")
+         _list path;
+     security_group_ids =
+       option_of_yojson (value_for_key security_group_ids_of_yojson "SecurityGroupIds") _list path;
+     subnet_ids = option_of_yojson (value_for_key subnet_ids_of_yojson "SubnetIds") _list path;
+     vpc_id = option_of_yojson (value_for_key vpc_id_of_yojson "VpcId") _list path;
+     customer_dns_ips =
+       option_of_yojson (value_for_key customer_dns_ips_of_yojson "CustomerDnsIps") _list path;
+     status_reason =
+       option_of_yojson (value_for_key assessment_status_reason_of_yojson "StatusReason") _list path;
+     status_code =
+       option_of_yojson (value_for_key assessment_status_code_of_yojson "StatusCode") _list path;
+     status = option_of_yojson (value_for_key assessment_status_of_yojson "Status") _list path;
+     last_update_date_time =
+       option_of_yojson
+         (value_for_key last_update_date_time_of_yojson "LastUpdateDateTime")
+         _list path;
+     start_time =
+       option_of_yojson (value_for_key assessment_start_time_of_yojson "StartTime") _list path;
+     dns_name = option_of_yojson (value_for_key directory_name_of_yojson "DnsName") _list path;
+     directory_id = option_of_yojson (value_for_key directory_id_of_yojson "DirectoryId") _list path;
+     assessment_id =
+       option_of_yojson (value_for_key assessment_id_of_yojson "AssessmentId") _list path;
+   }
+    : assessment)
+
+let assessment_validation_category_of_yojson = string_of_yojson
+let assessment_validation_name_of_yojson = string_of_yojson
+let assessment_validation_status_of_yojson = string_of_yojson
+let assessment_validation_status_code_of_yojson = string_of_yojson
+let assessment_validation_status_reason_of_yojson = string_of_yojson
+let assessment_validation_time_stamp_of_yojson = timestamp_epoch_seconds_of_yojson
+
+let assessment_validation_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     last_update_date_time =
+       option_of_yojson
+         (value_for_key assessment_validation_time_stamp_of_yojson "LastUpdateDateTime")
+         _list path;
+     start_time =
+       option_of_yojson
+         (value_for_key assessment_validation_time_stamp_of_yojson "StartTime")
+         _list path;
+     status_reason =
+       option_of_yojson
+         (value_for_key assessment_validation_status_reason_of_yojson "StatusReason")
+         _list path;
+     status_code =
+       option_of_yojson
+         (value_for_key assessment_validation_status_code_of_yojson "StatusCode")
+         _list path;
+     status =
+       option_of_yojson (value_for_key assessment_validation_status_of_yojson "Status") _list path;
+     name = option_of_yojson (value_for_key assessment_validation_name_of_yojson "Name") _list path;
+     category =
+       option_of_yojson
+         (value_for_key assessment_validation_category_of_yojson "Category")
+         _list path;
+   }
+    : assessment_validation)
+
+let assessment_validations_of_yojson tree path =
+  list_of_yojson assessment_validation_of_yojson tree path
+
+let assessment_report_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     validations =
+       option_of_yojson (value_for_key assessment_validations_of_yojson "Validations") _list path;
+     domain_controller_ip =
+       option_of_yojson (value_for_key ip_addr_of_yojson "DomainControllerIp") _list path;
+   }
+    : assessment_report)
+
+let assessment_reports_of_yojson tree path = list_of_yojson assessment_report_of_yojson tree path
+
+let describe_ad_assessment_result_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     assessment_reports =
+       option_of_yojson (value_for_key assessment_reports_of_yojson "AssessmentReports") _list path;
+     assessment = option_of_yojson (value_for_key assessment_of_yojson "Assessment") _list path;
+   }
+    : describe_ad_assessment_result)
+
+let describe_ad_assessment_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({ assessment_id = value_for_key assessment_id_of_yojson "AssessmentId" _list path }
+    : describe_ad_assessment_request)
+
 let deregister_event_topic_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   (() : unit)
@@ -2247,6 +2722,19 @@ let delete_conditional_forwarder_request_of_yojson tree path =
    }
     : delete_conditional_forwarder_request)
 
+let delete_ad_assessment_result_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     assessment_id =
+       option_of_yojson (value_for_key assessment_id_of_yojson "AssessmentId") _list path;
+   }
+    : delete_ad_assessment_result)
+
+let delete_ad_assessment_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({ assessment_id = value_for_key assessment_id_of_yojson "AssessmentId" _list path }
+    : delete_ad_assessment_request)
+
 let create_trust_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({ trust_id = option_of_yojson (value_for_key trust_id_of_yojson "TrustId") _list path }
@@ -2257,6 +2745,10 @@ let create_trust_request_of_yojson tree path =
   ({
      selective_auth =
        option_of_yojson (value_for_key selective_auth_of_yojson "SelectiveAuth") _list path;
+     conditional_forwarder_ipv6_addrs =
+       option_of_yojson
+         (value_for_key dns_ipv6_addrs_of_yojson "ConditionalForwarderIpv6Addrs")
+         _list path;
      conditional_forwarder_ip_addrs =
        option_of_yojson
          (value_for_key dns_ip_addrs_of_yojson "ConditionalForwarderIpAddrs")
@@ -2300,6 +2792,7 @@ let create_microsoft_ad_result_of_yojson tree path =
 let create_microsoft_ad_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     network_type = option_of_yojson (value_for_key network_type_of_yojson "NetworkType") _list path;
      tags = option_of_yojson (value_for_key tags_of_yojson "Tags") _list path;
      edition = option_of_yojson (value_for_key directory_edition_of_yojson "Edition") _list path;
      vpc_settings = value_for_key directory_vpc_settings_of_yojson "VpcSettings" _list path;
@@ -2323,6 +2816,22 @@ let create_log_subscription_request_of_yojson tree path =
    }
     : create_log_subscription_request)
 
+let create_hybrid_ad_result_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     directory_id = option_of_yojson (value_for_key directory_id_of_yojson "DirectoryId") _list path;
+   }
+    : create_hybrid_ad_result)
+
+let create_hybrid_ad_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     tags = option_of_yojson (value_for_key tags_of_yojson "Tags") _list path;
+     assessment_id = value_for_key assessment_id_of_yojson "AssessmentId" _list path;
+     secret_arn = value_for_key secret_arn_of_yojson "SecretArn" _list path;
+   }
+    : create_hybrid_ad_request)
+
 let create_directory_result_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2333,6 +2842,7 @@ let create_directory_result_of_yojson tree path =
 let create_directory_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     network_type = option_of_yojson (value_for_key network_type_of_yojson "NetworkType") _list path;
      tags = option_of_yojson (value_for_key tags_of_yojson "Tags") _list path;
      vpc_settings =
        option_of_yojson (value_for_key directory_vpc_settings_of_yojson "VpcSettings") _list path;
@@ -2352,7 +2862,9 @@ let create_conditional_forwarder_result_of_yojson tree path =
 let create_conditional_forwarder_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     dns_ip_addrs = value_for_key dns_ip_addrs_of_yojson "DnsIpAddrs" _list path;
+     dns_ipv6_addrs =
+       option_of_yojson (value_for_key dns_ipv6_addrs_of_yojson "DnsIpv6Addrs") _list path;
+     dns_ip_addrs = option_of_yojson (value_for_key dns_ip_addrs_of_yojson "DnsIpAddrs") _list path;
      remote_domain_name = value_for_key remote_domain_name_of_yojson "RemoteDomainName" _list path;
      directory_id = value_for_key directory_id_of_yojson "DirectoryId" _list path;
    }
@@ -2432,7 +2944,10 @@ let directory_connect_settings_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      customer_user_name = value_for_key user_name_of_yojson "CustomerUserName" _list path;
-     customer_dns_ips = value_for_key dns_ip_addrs_of_yojson "CustomerDnsIps" _list path;
+     customer_dns_ips_v6 =
+       option_of_yojson (value_for_key dns_ipv6_addrs_of_yojson "CustomerDnsIpsV6") _list path;
+     customer_dns_ips =
+       option_of_yojson (value_for_key dns_ip_addrs_of_yojson "CustomerDnsIps") _list path;
      subnet_ids = value_for_key subnet_ids_of_yojson "SubnetIds" _list path;
      vpc_id = value_for_key vpc_id_of_yojson "VpcId" _list path;
    }
@@ -2441,6 +2956,7 @@ let directory_connect_settings_of_yojson tree path =
 let connect_directory_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     network_type = option_of_yojson (value_for_key network_type_of_yojson "NetworkType") _list path;
      tags = option_of_yojson (value_for_key tags_of_yojson "Tags") _list path;
      connect_settings =
        value_for_key directory_connect_settings_of_yojson "ConnectSettings" _list path;

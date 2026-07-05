@@ -554,6 +554,8 @@ let make_alarm_state_information ~state:(state_ : external_alarm_state) ~name:(n
   ({ state = state_; name = name_ } : alarm_state_information)
 
 let make_association_description
+    ?association_dispatch_assume_role:
+      (association_dispatch_assume_role_ : association_dispatch_assume_role_arn option)
     ?triggered_alarms:(triggered_alarms_ : alarm_state_information_list option)
     ?alarm_configuration:(alarm_configuration_ : alarm_configuration option)
     ?target_maps:(target_maps_ : target_maps option) ?duration:(duration_ : duration option)
@@ -582,6 +584,7 @@ let make_association_description
     ?association_version:(association_version_ : association_version option)
     ?instance_id:(instance_id_ : instance_id option) ?name:(name_ : document_ar_n option) () =
   ({
+     association_dispatch_assume_role = association_dispatch_assume_role_;
      triggered_alarms = triggered_alarms_;
      alarm_configuration = alarm_configuration_;
      target_maps = target_maps_;
@@ -621,6 +624,8 @@ let make_update_association_status_request
     : update_association_status_request)
 
 let make_update_association_request
+    ?association_dispatch_assume_role:
+      (association_dispatch_assume_role_ : association_dispatch_assume_role_arn option)
     ?alarm_configuration:(alarm_configuration_ : alarm_configuration option)
     ?target_maps:(target_maps_ : target_maps option) ?duration:(duration_ : duration option)
     ?schedule_offset:(schedule_offset_ : schedule_offset option)
@@ -642,6 +647,7 @@ let make_update_association_request
     ?parameters:(parameters_ : parameters option) ~association_id:(association_id_ : association_id)
     () =
   ({
+     association_dispatch_assume_role = association_dispatch_assume_role_;
      alarm_configuration = alarm_configuration_;
      target_maps = target_maps_;
      duration = duration_;
@@ -2376,8 +2382,10 @@ let make_list_associations_request ?next_token:(next_token_ : next_token option)
    }
     : list_associations_request)
 
-let make_association_version_info ?target_maps:(target_maps_ : target_maps option)
-    ?duration:(duration_ : duration option)
+let make_association_version_info
+    ?association_dispatch_assume_role:
+      (association_dispatch_assume_role_ : association_dispatch_assume_role_arn option)
+    ?target_maps:(target_maps_ : target_maps option) ?duration:(duration_ : duration option)
     ?schedule_offset:(schedule_offset_ : schedule_offset option)
     ?target_locations:(target_locations_ : target_locations option)
     ?calendar_names:(calendar_names_ : calendar_name_or_arn_list option)
@@ -2395,6 +2403,7 @@ let make_association_version_info ?target_maps:(target_maps_ : target_maps optio
     ?association_version:(association_version_ : association_version option)
     ?association_id:(association_id_ : association_id option) () =
   ({
+     association_dispatch_assume_role = association_dispatch_assume_role_;
      target_maps = target_maps_;
      duration = duration_;
      schedule_offset = schedule_offset_;
@@ -2968,9 +2977,11 @@ let make_baseline_override
     : baseline_override)
 
 let make_get_deployable_patch_snapshot_for_instance_request
+    ?use_s3_dual_stack_endpoint:(use_s3_dual_stack_endpoint_ : boolean_ option)
     ?baseline_override:(baseline_override_ : baseline_override option)
     ~snapshot_id:(snapshot_id_ : snapshot_id) ~instance_id:(instance_id_ : instance_id) () =
   ({
+     use_s3_dual_stack_endpoint = use_s3_dual_stack_endpoint_;
      baseline_override = baseline_override_;
      snapshot_id = snapshot_id_;
      instance_id = instance_id_;
@@ -3880,6 +3891,8 @@ let make_create_document_request ?tags:(tags_ : tag_list option)
     : create_document_request)
 
 let make_create_association_request
+    ?association_dispatch_assume_role:
+      (association_dispatch_assume_role_ : association_dispatch_assume_role_arn option)
     ?alarm_configuration:(alarm_configuration_ : alarm_configuration option)
     ?tags:(tags_ : tag_list option) ?target_maps:(target_maps_ : target_maps option)
     ?duration:(duration_ : duration option)
@@ -3901,6 +3914,7 @@ let make_create_association_request
     ?document_version:(document_version_ : document_version option) ~name:(name_ : document_ar_n) ()
     =
   ({
+     association_dispatch_assume_role = association_dispatch_assume_role_;
      alarm_configuration = alarm_configuration_;
      tags = tags_;
      target_maps = target_maps_;
@@ -3926,8 +3940,11 @@ let make_create_association_request
     : create_association_request)
 
 let make_create_association_batch_request
+    ?association_dispatch_assume_role:
+      (association_dispatch_assume_role_ : association_dispatch_assume_role_arn option)
     ~entries:(entries_ : create_association_batch_request_entries) () =
-  ({ entries = entries_ } : create_association_batch_request)
+  ({ association_dispatch_assume_role = association_dispatch_assume_role_; entries = entries_ }
+    : create_association_batch_request)
 
 let make_create_activation_request
     ?registration_metadata:(registration_metadata_ : registration_metadata_list option)

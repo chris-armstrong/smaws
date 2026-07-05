@@ -70,7 +70,8 @@ let update_value_to_yojson (x : update_value) =
   assoc_to_yojson
     [ ("OSUpdateSettings", option_to_yojson os_update_settings_to_yojson x.os_update_settings) ]
 
-let update_type_to_yojson (x : update_type) = match x with OS -> `String "OS"
+let update_type_to_yojson (x : update_type) =
+  match x with SIZE -> `String "SIZE" | NETWORK -> `String "NETWORK" | OS -> `String "OS"
 
 let update_trust_result_to_yojson (x : update_trust_result) =
   assoc_to_yojson
@@ -178,6 +179,7 @@ let radius_settings_to_yojson (x : radius_settings) =
       ("RadiusRetries", option_to_yojson radius_retries_to_yojson x.radius_retries);
       ("RadiusTimeout", option_to_yojson radius_timeout_to_yojson x.radius_timeout);
       ("RadiusPort", option_to_yojson port_number_to_yojson x.radius_port);
+      ("RadiusServersIpv6", option_to_yojson servers_to_yojson x.radius_servers_ipv6);
       ("RadiusServers", option_to_yojson servers_to_yojson x.radius_servers);
     ]
 
@@ -226,7 +228,75 @@ let update_info_entry_to_yojson (x : update_info_entry) =
       ("Region", option_to_yojson region_name_to_yojson x.region);
     ]
 
+let assessment_id_to_yojson = string_to_yojson
+
+let update_hybrid_ad_result_to_yojson (x : update_hybrid_ad_result) =
+  assoc_to_yojson
+    [
+      ("AssessmentId", option_to_yojson assessment_id_to_yojson x.assessment_id);
+      ("DirectoryId", option_to_yojson directory_id_to_yojson x.directory_id);
+    ]
+
+let secret_arn_to_yojson = string_to_yojson
+
+let hybrid_administrator_account_update_to_yojson (x : hybrid_administrator_account_update) =
+  assoc_to_yojson [ ("SecretArn", Some (secret_arn_to_yojson x.secret_arn)) ]
+
+let ip_addr_to_yojson = string_to_yojson
+let customer_dns_ips_to_yojson tree = list_to_yojson ip_addr_to_yojson tree
+let assessment_instance_id_to_yojson = string_to_yojson
+let assessment_instance_ids_to_yojson tree = list_to_yojson assessment_instance_id_to_yojson tree
+
+let hybrid_customer_instances_settings_to_yojson (x : hybrid_customer_instances_settings) =
+  assoc_to_yojson
+    [
+      ("InstanceIds", Some (assessment_instance_ids_to_yojson x.instance_ids));
+      ("CustomerDnsIps", Some (customer_dns_ips_to_yojson x.customer_dns_ips));
+    ]
+
+let update_hybrid_ad_request_to_yojson (x : update_hybrid_ad_request) =
+  assoc_to_yojson
+    [
+      ( "SelfManagedInstancesSettings",
+        option_to_yojson hybrid_customer_instances_settings_to_yojson
+          x.self_managed_instances_settings );
+      ( "HybridAdministratorAccountUpdate",
+        option_to_yojson hybrid_administrator_account_update_to_yojson
+          x.hybrid_administrator_account_update );
+      ("DirectoryId", Some (directory_id_to_yojson x.directory_id));
+    ]
+
+let ad_assessment_limit_exceeded_exception_to_yojson (x : ad_assessment_limit_exceeded_exception) =
+  assoc_to_yojson
+    [
+      ("RequestId", option_to_yojson request_id_to_yojson x.request_id);
+      ("Message", option_to_yojson exception_message_to_yojson x.message);
+    ]
+
 let update_directory_setup_result_to_yojson = unit_to_yojson
+
+let directory_size_to_yojson (x : directory_size) =
+  match x with LARGE -> `String "Large" | SMALL -> `String "Small"
+
+let directory_size_update_settings_to_yojson (x : directory_size_update_settings) =
+  assoc_to_yojson [ ("DirectorySize", option_to_yojson directory_size_to_yojson x.directory_size) ]
+
+let network_type_to_yojson (x : network_type) =
+  match x with
+  | IPV6_ONLY -> `String "IPv6"
+  | IPV4_ONLY -> `String "IPv4"
+  | DUAL_STACK -> `String "Dual-stack"
+
+let ipv6_addr_to_yojson = string_to_yojson
+let dns_ipv6_addrs_to_yojson tree = list_to_yojson ipv6_addr_to_yojson tree
+
+let network_update_settings_to_yojson (x : network_update_settings) =
+  assoc_to_yojson
+    [
+      ("CustomerDnsIpsV6", option_to_yojson dns_ipv6_addrs_to_yojson x.customer_dns_ips_v6);
+      ("NetworkType", option_to_yojson network_type_to_yojson x.network_type);
+    ]
+
 let create_snapshot_before_update_to_yojson = bool_to_yojson
 
 let update_directory_setup_request_to_yojson (x : update_directory_setup_request) =
@@ -234,6 +304,11 @@ let update_directory_setup_request_to_yojson (x : update_directory_setup_request
     [
       ( "CreateSnapshotBeforeUpdate",
         option_to_yojson create_snapshot_before_update_to_yojson x.create_snapshot_before_update );
+      ( "NetworkUpdateSettings",
+        option_to_yojson network_update_settings_to_yojson x.network_update_settings );
+      ( "DirectorySizeUpdateSettings",
+        option_to_yojson directory_size_update_settings_to_yojson x.directory_size_update_settings
+      );
       ("OSUpdateSettings", option_to_yojson os_update_settings_to_yojson x.os_update_settings);
       ("UpdateType", Some (update_type_to_yojson x.update_type));
       ("DirectoryId", Some (directory_id_to_yojson x.directory_id));
@@ -262,13 +337,13 @@ let access_denied_exception_to_yojson (x : access_denied_exception) =
 
 let update_conditional_forwarder_result_to_yojson = unit_to_yojson
 let remote_domain_name_to_yojson = string_to_yojson
-let ip_addr_to_yojson = string_to_yojson
 let dns_ip_addrs_to_yojson tree = list_to_yojson ip_addr_to_yojson tree
 
 let update_conditional_forwarder_request_to_yojson (x : update_conditional_forwarder_request) =
   assoc_to_yojson
     [
-      ("DnsIpAddrs", Some (dns_ip_addrs_to_yojson x.dns_ip_addrs));
+      ("DnsIpv6Addrs", option_to_yojson dns_ipv6_addrs_to_yojson x.dns_ipv6_addrs);
+      ("DnsIpAddrs", option_to_yojson dns_ip_addrs_to_yojson x.dns_ip_addrs);
       ("RemoteDomainName", Some (remote_domain_name_to_yojson x.remote_domain_name));
       ("DirectoryId", Some (directory_id_to_yojson x.directory_id));
     ]
@@ -406,6 +481,39 @@ let start_schema_extension_request_to_yojson (x : start_schema_extension_request
           (create_snapshot_before_schema_extension_to_yojson
              x.create_snapshot_before_schema_extension) );
       ("DirectoryId", Some (directory_id_to_yojson x.directory_id));
+    ]
+
+let start_ad_assessment_result_to_yojson (x : start_ad_assessment_result) =
+  assoc_to_yojson [ ("AssessmentId", option_to_yojson assessment_id_to_yojson x.assessment_id) ]
+
+let directory_name_to_yojson = string_to_yojson
+
+let directory_vpc_settings_to_yojson (x : directory_vpc_settings) =
+  assoc_to_yojson
+    [
+      ("SubnetIds", Some (subnet_ids_to_yojson x.subnet_ids));
+      ("VpcId", Some (vpc_id_to_yojson x.vpc_id));
+    ]
+
+let security_group_id_to_yojson = string_to_yojson
+let security_group_ids_to_yojson tree = list_to_yojson security_group_id_to_yojson tree
+
+let assessment_configuration_to_yojson (x : assessment_configuration) =
+  assoc_to_yojson
+    [
+      ("SecurityGroupIds", option_to_yojson security_group_ids_to_yojson x.security_group_ids);
+      ("InstanceIds", Some (assessment_instance_ids_to_yojson x.instance_ids));
+      ("VpcSettings", Some (directory_vpc_settings_to_yojson x.vpc_settings));
+      ("DnsName", Some (directory_name_to_yojson x.dns_name));
+      ("CustomerDnsIps", Some (customer_dns_ips_to_yojson x.customer_dns_ips));
+    ]
+
+let start_ad_assessment_request_to_yojson (x : start_ad_assessment_request) =
+  assoc_to_yojson
+    [
+      ("DirectoryId", option_to_yojson directory_id_to_yojson x.directory_id);
+      ( "AssessmentConfiguration",
+        option_to_yojson assessment_configuration_to_yojson x.assessment_configuration );
     ]
 
 let stage_reason_to_yojson = string_to_yojson
@@ -577,7 +685,6 @@ let setting_entry_to_yojson (x : setting_entry) =
     ]
 
 let setting_entries_to_yojson tree = list_to_yojson setting_entry_to_yojson tree
-let security_group_id_to_yojson = string_to_yojson
 
 let schema_extension_status_to_yojson (x : schema_extension_status) =
   match x with
@@ -653,11 +760,14 @@ let remove_region_request_to_yojson (x : remove_region_request) =
 let remove_ip_routes_result_to_yojson = unit_to_yojson
 let cidr_ip_to_yojson = string_to_yojson
 let cidr_ips_to_yojson tree = list_to_yojson cidr_ip_to_yojson tree
+let cidr_ipv6_to_yojson = string_to_yojson
+let cidr_ipv6s_to_yojson tree = list_to_yojson cidr_ipv6_to_yojson tree
 
 let remove_ip_routes_request_to_yojson (x : remove_ip_routes_request) =
   assoc_to_yojson
     [
-      ("CidrIps", Some (cidr_ips_to_yojson x.cidr_ips));
+      ("CidrIpv6s", option_to_yojson cidr_ipv6s_to_yojson x.cidr_ipv6s);
+      ("CidrIps", option_to_yojson cidr_ips_to_yojson x.cidr_ips);
       ("DirectoryId", Some (directory_id_to_yojson x.directory_id));
     ]
 
@@ -754,13 +864,6 @@ let directory_stage_to_yojson (x : directory_stage) =
   | CREATING -> `String "Creating"
   | REQUESTED -> `String "Requested"
 
-let directory_vpc_settings_to_yojson (x : directory_vpc_settings) =
-  assoc_to_yojson
-    [
-      ("SubnetIds", Some (subnet_ids_to_yojson x.subnet_ids));
-      ("VpcId", Some (vpc_id_to_yojson x.vpc_id));
-    ]
-
 let launch_time_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let region_description_to_yojson (x : region_description) =
@@ -796,6 +899,7 @@ let radius_status_to_yojson (x : radius_status) =
   | COMPLETED -> `String "Completed"
   | CREATING -> `String "Creating"
 
+let pca_connector_arn_to_yojson = string_to_yojson
 let password_to_yojson = string_to_yojson
 let page_limit_to_yojson = int_to_yojson
 let availability_zone_to_yojson = string_to_yojson
@@ -813,9 +917,11 @@ let directory_vpc_settings_description_to_yojson (x : directory_vpc_settings_des
 let owner_directory_description_to_yojson (x : owner_directory_description) =
   assoc_to_yojson
     [
+      ("NetworkType", option_to_yojson network_type_to_yojson x.network_type);
       ("RadiusStatus", option_to_yojson radius_status_to_yojson x.radius_status);
       ("RadiusSettings", option_to_yojson radius_settings_to_yojson x.radius_settings);
       ("VpcSettings", option_to_yojson directory_vpc_settings_description_to_yojson x.vpc_settings);
+      ("DnsIpv6Addrs", option_to_yojson dns_ipv6_addrs_to_yojson x.dns_ipv6_addrs);
       ("DnsIpAddrs", option_to_yojson dns_ip_addrs_to_yojson x.dns_ip_addrs);
       ("AccountId", option_to_yojson customer_id_to_yojson x.account_id);
       ("DirectoryId", option_to_yojson directory_id_to_yojson x.directory_id);
@@ -918,6 +1024,7 @@ let ip_route_info_to_yojson (x : ip_route_info) =
         option_to_yojson ip_route_status_reason_to_yojson x.ip_route_status_reason );
       ("AddedDateTime", option_to_yojson added_date_time_to_yojson x.added_date_time);
       ("IpRouteStatusMsg", option_to_yojson ip_route_status_msg_to_yojson x.ip_route_status_msg);
+      ("CidrIpv6", option_to_yojson cidr_ipv6_to_yojson x.cidr_ipv6);
       ("CidrIp", option_to_yojson cidr_ip_to_yojson x.cidr_ip);
       ("DirectoryId", option_to_yojson directory_id_to_yojson x.directory_id);
     ]
@@ -979,6 +1086,44 @@ let list_certificates_request_to_yojson (x : list_certificates_request) =
       ("DirectoryId", Some (directory_id_to_yojson x.directory_id));
     ]
 
+let assessment_start_time_to_yojson = timestamp_epoch_seconds_to_yojson
+let last_update_date_time_to_yojson = timestamp_epoch_seconds_to_yojson
+let assessment_status_to_yojson = string_to_yojson
+let assessment_report_type_to_yojson = string_to_yojson
+
+let assessment_summary_to_yojson (x : assessment_summary) =
+  assoc_to_yojson
+    [
+      ("ReportType", option_to_yojson assessment_report_type_to_yojson x.report_type);
+      ("CustomerDnsIps", option_to_yojson customer_dns_ips_to_yojson x.customer_dns_ips);
+      ("Status", option_to_yojson assessment_status_to_yojson x.status);
+      ( "LastUpdateDateTime",
+        option_to_yojson last_update_date_time_to_yojson x.last_update_date_time );
+      ("StartTime", option_to_yojson assessment_start_time_to_yojson x.start_time);
+      ("DnsName", option_to_yojson directory_name_to_yojson x.dns_name);
+      ("DirectoryId", option_to_yojson directory_id_to_yojson x.directory_id);
+      ("AssessmentId", option_to_yojson assessment_id_to_yojson x.assessment_id);
+    ]
+
+let assessments_to_yojson tree = list_to_yojson assessment_summary_to_yojson tree
+
+let list_ad_assessments_result_to_yojson (x : list_ad_assessments_result) =
+  assoc_to_yojson
+    [
+      ("NextToken", option_to_yojson next_token_to_yojson x.next_token);
+      ("Assessments", option_to_yojson assessments_to_yojson x.assessments);
+    ]
+
+let assessment_limit_to_yojson = int_to_yojson
+
+let list_ad_assessments_request_to_yojson (x : list_ad_assessments_request) =
+  assoc_to_yojson
+    [
+      ("Limit", option_to_yojson assessment_limit_to_yojson x.limit);
+      ("NextToken", option_to_yojson next_token_to_yojson x.next_token);
+      ("DirectoryId", option_to_yojson directory_id_to_yojson x.directory_id);
+    ]
+
 let ldaps_type_to_yojson (x : ldaps_type) = match x with CLIENT -> `String "Client"
 let ldaps_status_reason_to_yojson = string_to_yojson
 
@@ -999,11 +1144,13 @@ let ldaps_setting_info_to_yojson (x : ldaps_setting_info) =
     ]
 
 let ldaps_settings_info_to_yojson tree = list_to_yojson ldaps_setting_info_to_yojson tree
+let ip_v6_addrs_to_yojson tree = list_to_yojson ipv6_addr_to_yojson tree
 
 let ip_route_to_yojson (x : ip_route) =
   assoc_to_yojson
     [
       ("Description", option_to_yojson description_to_yojson x.description);
+      ("CidrIpv6", option_to_yojson cidr_ipv6_to_yojson x.cidr_ipv6);
       ("CidrIp", option_to_yojson cidr_ip_to_yojson x.cidr_ip);
     ]
 
@@ -1037,6 +1184,52 @@ let insufficient_permissions_exception_to_yojson (x : insufficient_permissions_e
     [
       ("RequestId", option_to_yojson request_id_to_yojson x.request_id);
       ("Message", option_to_yojson exception_message_to_yojson x.message);
+    ]
+
+let hybrid_update_value_to_yojson (x : hybrid_update_value) =
+  assoc_to_yojson
+    [
+      ("DnsIps", option_to_yojson customer_dns_ips_to_yojson x.dns_ips);
+      ("InstanceIds", option_to_yojson assessment_instance_ids_to_yojson x.instance_ids);
+    ]
+
+let hybrid_update_type_to_yojson (x : hybrid_update_type) =
+  match x with
+  | HYBRID_ADMINISTRATOR_ACCOUNT -> `String "HybridAdministratorAccount"
+  | SELF_MANAGED_INSTANCES -> `String "SelfManagedInstances"
+
+let hybrid_update_info_entry_to_yojson (x : hybrid_update_info_entry) =
+  assoc_to_yojson
+    [
+      ("AssessmentId", option_to_yojson assessment_id_to_yojson x.assessment_id);
+      ( "LastUpdatedDateTime",
+        option_to_yojson last_updated_date_time_to_yojson x.last_updated_date_time );
+      ("StartTime", option_to_yojson start_date_time_to_yojson x.start_time);
+      ("PreviousValue", option_to_yojson hybrid_update_value_to_yojson x.previous_value);
+      ("NewValue", option_to_yojson hybrid_update_value_to_yojson x.new_value);
+      ("InitiatedBy", option_to_yojson initiated_by_to_yojson x.initiated_by);
+      ("StatusReason", option_to_yojson update_status_reason_to_yojson x.status_reason);
+      ("Status", option_to_yojson update_status_to_yojson x.status);
+    ]
+
+let hybrid_update_info_entries_to_yojson tree =
+  list_to_yojson hybrid_update_info_entry_to_yojson tree
+
+let hybrid_update_activities_to_yojson (x : hybrid_update_activities) =
+  assoc_to_yojson
+    [
+      ( "HybridAdministratorAccount",
+        option_to_yojson hybrid_update_info_entries_to_yojson x.hybrid_administrator_account );
+      ( "SelfManagedInstances",
+        option_to_yojson hybrid_update_info_entries_to_yojson x.self_managed_instances );
+    ]
+
+let hybrid_settings_description_to_yojson (x : hybrid_settings_description) =
+  assoc_to_yojson
+    [
+      ( "SelfManagedInstanceIds",
+        option_to_yojson assessment_instance_ids_to_yojson x.self_managed_instance_ids );
+      ("SelfManagedDnsIpAddrs", option_to_yojson ip_addrs_to_yojson x.self_managed_dns_ip_addrs);
     ]
 
 let get_snapshot_limits_result_to_yojson (x : get_snapshot_limits_result) =
@@ -1152,6 +1345,22 @@ let enable_client_authentication_request_to_yojson (x : enable_client_authentica
       ("DirectoryId", Some (directory_id_to_yojson x.directory_id));
     ]
 
+let enable_ca_enrollment_policy_result_to_yojson = unit_to_yojson
+
+let enable_ca_enrollment_policy_request_to_yojson (x : enable_ca_enrollment_policy_request) =
+  assoc_to_yojson
+    [
+      ("PcaConnectorArn", Some (pca_connector_arn_to_yojson x.pca_connector_arn));
+      ("DirectoryId", Some (directory_id_to_yojson x.directory_id));
+    ]
+
+let enable_already_in_progress_exception_to_yojson (x : enable_already_in_progress_exception) =
+  assoc_to_yojson
+    [
+      ("RequestId", option_to_yojson request_id_to_yojson x.request_id);
+      ("Message", option_to_yojson exception_message_to_yojson x.message);
+    ]
+
 let domain_controller_id_to_yojson = string_to_yojson
 
 let domain_controller_status_to_yojson (x : domain_controller_status) =
@@ -1178,6 +1387,7 @@ let domain_controller_to_yojson (x : domain_controller) =
       ("AvailabilityZone", option_to_yojson availability_zone_to_yojson x.availability_zone);
       ("SubnetId", option_to_yojson subnet_id_to_yojson x.subnet_id);
       ("VpcId", option_to_yojson vpc_id_to_yojson x.vpc_id);
+      ("DnsIpv6Addr", option_to_yojson ipv6_addr_to_yojson x.dns_ipv6_addr);
       ("DnsIpAddr", option_to_yojson ip_addr_to_yojson x.dns_ip_addr);
       ("DomainControllerId", option_to_yojson domain_controller_id_to_yojson x.domain_controller_id);
       ("DirectoryId", option_to_yojson directory_id_to_yojson x.directory_id);
@@ -1223,15 +1433,24 @@ let disable_client_authentication_request_to_yojson (x : disable_client_authenti
       ("DirectoryId", Some (directory_id_to_yojson x.directory_id));
     ]
 
+let disable_ca_enrollment_policy_result_to_yojson = unit_to_yojson
+
+let disable_ca_enrollment_policy_request_to_yojson (x : disable_ca_enrollment_policy_request) =
+  assoc_to_yojson [ ("DirectoryId", Some (directory_id_to_yojson x.directory_id)) ]
+
+let disable_already_in_progress_exception_to_yojson (x : disable_already_in_progress_exception) =
+  assoc_to_yojson
+    [
+      ("RequestId", option_to_yojson request_id_to_yojson x.request_id);
+      ("Message", option_to_yojson exception_message_to_yojson x.message);
+    ]
+
 let directory_type_to_yojson (x : directory_type) =
   match x with
   | SHARED_MICROSOFT_AD -> `String "SharedMicrosoftAD"
   | MICROSOFT_AD -> `String "MicrosoftAD"
   | AD_CONNECTOR -> `String "ADConnector"
   | SIMPLE_AD -> `String "SimpleAD"
-
-let directory_size_to_yojson (x : directory_size) =
-  match x with LARGE -> `String "Large" | SMALL -> `String "Small"
 
 let directory_short_name_to_yojson = string_to_yojson
 
@@ -1348,6 +1567,21 @@ let describe_ldaps_settings_request_to_yojson (x : describe_ldaps_settings_reque
       ("DirectoryId", Some (directory_id_to_yojson x.directory_id));
     ]
 
+let describe_hybrid_ad_update_result_to_yojson (x : describe_hybrid_ad_update_result) =
+  assoc_to_yojson
+    [
+      ("NextToken", option_to_yojson next_token_to_yojson x.next_token);
+      ("UpdateActivities", option_to_yojson hybrid_update_activities_to_yojson x.update_activities);
+    ]
+
+let describe_hybrid_ad_update_request_to_yojson (x : describe_hybrid_ad_update_request) =
+  assoc_to_yojson
+    [
+      ("NextToken", option_to_yojson next_token_to_yojson x.next_token);
+      ("UpdateType", option_to_yojson hybrid_update_type_to_yojson x.update_type);
+      ("DirectoryId", Some (directory_id_to_yojson x.directory_id));
+    ]
+
 let describe_event_topics_result_to_yojson (x : describe_event_topics_result) =
   assoc_to_yojson [ ("EventTopics", option_to_yojson event_topics_to_yojson x.event_topics) ]
 
@@ -1390,10 +1624,11 @@ let describe_directory_data_access_result_to_yojson (x : describe_directory_data
 let describe_directory_data_access_request_to_yojson (x : describe_directory_data_access_request) =
   assoc_to_yojson [ ("DirectoryId", Some (directory_id_to_yojson x.directory_id)) ]
 
-let directory_name_to_yojson = string_to_yojson
-
 let directory_edition_to_yojson (x : directory_edition) =
-  match x with STANDARD -> `String "Standard" | ENTERPRISE -> `String "Enterprise"
+  match x with
+  | HYBRID -> `String "Hybrid"
+  | STANDARD -> `String "Standard"
+  | ENTERPRISE -> `String "Enterprise"
 
 let alias_name_to_yojson = string_to_yojson
 let access_url_to_yojson = string_to_yojson
@@ -1401,6 +1636,7 @@ let access_url_to_yojson = string_to_yojson
 let directory_connect_settings_description_to_yojson (x : directory_connect_settings_description) =
   assoc_to_yojson
     [
+      ("ConnectIpsV6", option_to_yojson ip_v6_addrs_to_yojson x.connect_ips_v6);
       ("ConnectIps", option_to_yojson ip_addrs_to_yojson x.connect_ips);
       ("AvailabilityZones", option_to_yojson availability_zones_to_yojson x.availability_zones);
       ("SecurityGroupId", option_to_yojson security_group_id_to_yojson x.security_group_id);
@@ -1412,6 +1648,8 @@ let directory_connect_settings_description_to_yojson (x : directory_connect_sett
 let directory_description_to_yojson (x : directory_description) =
   assoc_to_yojson
     [
+      ("NetworkType", option_to_yojson network_type_to_yojson x.network_type);
+      ("HybridSettings", option_to_yojson hybrid_settings_description_to_yojson x.hybrid_settings);
       ("OsVersion", option_to_yojson os_version_to_yojson x.os_version);
       ("RegionsInfo", option_to_yojson regions_info_to_yojson x.regions_info);
       ( "OwnerDirectoryDescription",
@@ -1434,6 +1672,7 @@ let directory_description_to_yojson (x : directory_description) =
       ("ShareMethod", option_to_yojson share_method_to_yojson x.share_method);
       ("ShareStatus", option_to_yojson share_status_to_yojson x.share_status);
       ("Stage", option_to_yojson directory_stage_to_yojson x.stage);
+      ("DnsIpv6Addrs", option_to_yojson dns_ipv6_addrs_to_yojson x.dns_ipv6_addrs);
       ("DnsIpAddrs", option_to_yojson dns_ip_addrs_to_yojson x.dns_ip_addrs);
       ("Description", option_to_yojson description_to_yojson x.description);
       ("AccessUrl", option_to_yojson access_url_to_yojson x.access_url);
@@ -1467,6 +1706,7 @@ let conditional_forwarder_to_yojson (x : conditional_forwarder) =
   assoc_to_yojson
     [
       ("ReplicationScope", option_to_yojson replication_scope_to_yojson x.replication_scope);
+      ("DnsIpv6Addrs", option_to_yojson dns_ipv6_addrs_to_yojson x.dns_ipv6_addrs);
       ("DnsIpAddrs", option_to_yojson dns_ip_addrs_to_yojson x.dns_ip_addrs);
       ("RemoteDomainName", option_to_yojson remote_domain_name_to_yojson x.remote_domain_name);
     ]
@@ -1558,6 +1798,102 @@ let describe_certificate_request_to_yojson (x : describe_certificate_request) =
       ("DirectoryId", Some (directory_id_to_yojson x.directory_id));
     ]
 
+let ca_enrollment_policy_status_to_yojson (x : ca_enrollment_policy_status) =
+  match x with
+  | IMPAIRED -> `String "Impaired"
+  | DISABLED -> `String "Disabled"
+  | DISABLING -> `String "Disabling"
+  | FAILED -> `String "Failed"
+  | SUCCESS -> `String "Success"
+  | IN_PROGRESS -> `String "InProgress"
+
+let ca_enrollment_policy_status_reason_to_yojson = string_to_yojson
+
+let describe_ca_enrollment_policy_result_to_yojson (x : describe_ca_enrollment_policy_result) =
+  assoc_to_yojson
+    [
+      ( "CaEnrollmentPolicyStatusReason",
+        option_to_yojson ca_enrollment_policy_status_reason_to_yojson
+          x.ca_enrollment_policy_status_reason );
+      ( "LastUpdatedDateTime",
+        option_to_yojson last_updated_date_time_to_yojson x.last_updated_date_time );
+      ( "CaEnrollmentPolicyStatus",
+        option_to_yojson ca_enrollment_policy_status_to_yojson x.ca_enrollment_policy_status );
+      ("PcaConnectorArn", option_to_yojson pca_connector_arn_to_yojson x.pca_connector_arn);
+      ("DirectoryId", option_to_yojson directory_id_to_yojson x.directory_id);
+    ]
+
+let describe_ca_enrollment_policy_request_to_yojson (x : describe_ca_enrollment_policy_request) =
+  assoc_to_yojson [ ("DirectoryId", Some (directory_id_to_yojson x.directory_id)) ]
+
+let assessment_status_code_to_yojson = string_to_yojson
+let assessment_status_reason_to_yojson = string_to_yojson
+let assessment_version_to_yojson = string_to_yojson
+
+let assessment_to_yojson (x : assessment) =
+  assoc_to_yojson
+    [
+      ("Version", option_to_yojson assessment_version_to_yojson x.version);
+      ("ReportType", option_to_yojson assessment_report_type_to_yojson x.report_type);
+      ( "SelfManagedInstanceIds",
+        option_to_yojson assessment_instance_ids_to_yojson x.self_managed_instance_ids );
+      ("SecurityGroupIds", option_to_yojson security_group_ids_to_yojson x.security_group_ids);
+      ("SubnetIds", option_to_yojson subnet_ids_to_yojson x.subnet_ids);
+      ("VpcId", option_to_yojson vpc_id_to_yojson x.vpc_id);
+      ("CustomerDnsIps", option_to_yojson customer_dns_ips_to_yojson x.customer_dns_ips);
+      ("StatusReason", option_to_yojson assessment_status_reason_to_yojson x.status_reason);
+      ("StatusCode", option_to_yojson assessment_status_code_to_yojson x.status_code);
+      ("Status", option_to_yojson assessment_status_to_yojson x.status);
+      ( "LastUpdateDateTime",
+        option_to_yojson last_update_date_time_to_yojson x.last_update_date_time );
+      ("StartTime", option_to_yojson assessment_start_time_to_yojson x.start_time);
+      ("DnsName", option_to_yojson directory_name_to_yojson x.dns_name);
+      ("DirectoryId", option_to_yojson directory_id_to_yojson x.directory_id);
+      ("AssessmentId", option_to_yojson assessment_id_to_yojson x.assessment_id);
+    ]
+
+let assessment_validation_category_to_yojson = string_to_yojson
+let assessment_validation_name_to_yojson = string_to_yojson
+let assessment_validation_status_to_yojson = string_to_yojson
+let assessment_validation_status_code_to_yojson = string_to_yojson
+let assessment_validation_status_reason_to_yojson = string_to_yojson
+let assessment_validation_time_stamp_to_yojson = timestamp_epoch_seconds_to_yojson
+
+let assessment_validation_to_yojson (x : assessment_validation) =
+  assoc_to_yojson
+    [
+      ( "LastUpdateDateTime",
+        option_to_yojson assessment_validation_time_stamp_to_yojson x.last_update_date_time );
+      ("StartTime", option_to_yojson assessment_validation_time_stamp_to_yojson x.start_time);
+      ( "StatusReason",
+        option_to_yojson assessment_validation_status_reason_to_yojson x.status_reason );
+      ("StatusCode", option_to_yojson assessment_validation_status_code_to_yojson x.status_code);
+      ("Status", option_to_yojson assessment_validation_status_to_yojson x.status);
+      ("Name", option_to_yojson assessment_validation_name_to_yojson x.name);
+      ("Category", option_to_yojson assessment_validation_category_to_yojson x.category);
+    ]
+
+let assessment_validations_to_yojson tree = list_to_yojson assessment_validation_to_yojson tree
+
+let assessment_report_to_yojson (x : assessment_report) =
+  assoc_to_yojson
+    [
+      ("Validations", option_to_yojson assessment_validations_to_yojson x.validations);
+      ("DomainControllerIp", option_to_yojson ip_addr_to_yojson x.domain_controller_ip);
+    ]
+
+let assessment_reports_to_yojson tree = list_to_yojson assessment_report_to_yojson tree
+
+let describe_ad_assessment_result_to_yojson (x : describe_ad_assessment_result) =
+  assoc_to_yojson
+    [
+      ("AssessmentReports", option_to_yojson assessment_reports_to_yojson x.assessment_reports);
+      ("Assessment", option_to_yojson assessment_to_yojson x.assessment);
+    ]
+
+let describe_ad_assessment_request_to_yojson (x : describe_ad_assessment_request) =
+  assoc_to_yojson [ ("AssessmentId", Some (assessment_id_to_yojson x.assessment_id)) ]
+
 let deregister_event_topic_result_to_yojson = unit_to_yojson
 
 let deregister_event_topic_request_to_yojson (x : deregister_event_topic_request) =
@@ -1623,6 +1959,12 @@ let delete_conditional_forwarder_request_to_yojson (x : delete_conditional_forwa
       ("DirectoryId", Some (directory_id_to_yojson x.directory_id));
     ]
 
+let delete_ad_assessment_result_to_yojson (x : delete_ad_assessment_result) =
+  assoc_to_yojson [ ("AssessmentId", option_to_yojson assessment_id_to_yojson x.assessment_id) ]
+
+let delete_ad_assessment_request_to_yojson (x : delete_ad_assessment_request) =
+  assoc_to_yojson [ ("AssessmentId", Some (assessment_id_to_yojson x.assessment_id)) ]
+
 let create_trust_result_to_yojson (x : create_trust_result) =
   assoc_to_yojson [ ("TrustId", option_to_yojson trust_id_to_yojson x.trust_id) ]
 
@@ -1630,6 +1972,8 @@ let create_trust_request_to_yojson (x : create_trust_request) =
   assoc_to_yojson
     [
       ("SelectiveAuth", option_to_yojson selective_auth_to_yojson x.selective_auth);
+      ( "ConditionalForwarderIpv6Addrs",
+        option_to_yojson dns_ipv6_addrs_to_yojson x.conditional_forwarder_ipv6_addrs );
       ( "ConditionalForwarderIpAddrs",
         option_to_yojson dns_ip_addrs_to_yojson x.conditional_forwarder_ip_addrs );
       ("TrustType", option_to_yojson trust_type_to_yojson x.trust_type);
@@ -1662,6 +2006,7 @@ let create_microsoft_ad_result_to_yojson (x : create_microsoft_ad_result) =
 let create_microsoft_ad_request_to_yojson (x : create_microsoft_ad_request) =
   assoc_to_yojson
     [
+      ("NetworkType", option_to_yojson network_type_to_yojson x.network_type);
       ("Tags", option_to_yojson tags_to_yojson x.tags);
       ("Edition", option_to_yojson directory_edition_to_yojson x.edition);
       ("VpcSettings", Some (directory_vpc_settings_to_yojson x.vpc_settings));
@@ -1680,12 +2025,24 @@ let create_log_subscription_request_to_yojson (x : create_log_subscription_reque
       ("DirectoryId", Some (directory_id_to_yojson x.directory_id));
     ]
 
+let create_hybrid_ad_result_to_yojson (x : create_hybrid_ad_result) =
+  assoc_to_yojson [ ("DirectoryId", option_to_yojson directory_id_to_yojson x.directory_id) ]
+
+let create_hybrid_ad_request_to_yojson (x : create_hybrid_ad_request) =
+  assoc_to_yojson
+    [
+      ("Tags", option_to_yojson tags_to_yojson x.tags);
+      ("AssessmentId", Some (assessment_id_to_yojson x.assessment_id));
+      ("SecretArn", Some (secret_arn_to_yojson x.secret_arn));
+    ]
+
 let create_directory_result_to_yojson (x : create_directory_result) =
   assoc_to_yojson [ ("DirectoryId", option_to_yojson directory_id_to_yojson x.directory_id) ]
 
 let create_directory_request_to_yojson (x : create_directory_request) =
   assoc_to_yojson
     [
+      ("NetworkType", option_to_yojson network_type_to_yojson x.network_type);
       ("Tags", option_to_yojson tags_to_yojson x.tags);
       ("VpcSettings", option_to_yojson directory_vpc_settings_to_yojson x.vpc_settings);
       ("Size", Some (directory_size_to_yojson x.size));
@@ -1700,7 +2057,8 @@ let create_conditional_forwarder_result_to_yojson = unit_to_yojson
 let create_conditional_forwarder_request_to_yojson (x : create_conditional_forwarder_request) =
   assoc_to_yojson
     [
-      ("DnsIpAddrs", Some (dns_ip_addrs_to_yojson x.dns_ip_addrs));
+      ("DnsIpv6Addrs", option_to_yojson dns_ipv6_addrs_to_yojson x.dns_ipv6_addrs);
+      ("DnsIpAddrs", option_to_yojson dns_ip_addrs_to_yojson x.dns_ip_addrs);
       ("RemoteDomainName", Some (remote_domain_name_to_yojson x.remote_domain_name));
       ("DirectoryId", Some (directory_id_to_yojson x.directory_id));
     ]
@@ -1764,7 +2122,8 @@ let directory_connect_settings_to_yojson (x : directory_connect_settings) =
   assoc_to_yojson
     [
       ("CustomerUserName", Some (user_name_to_yojson x.customer_user_name));
-      ("CustomerDnsIps", Some (dns_ip_addrs_to_yojson x.customer_dns_ips));
+      ("CustomerDnsIpsV6", option_to_yojson dns_ipv6_addrs_to_yojson x.customer_dns_ips_v6);
+      ("CustomerDnsIps", option_to_yojson dns_ip_addrs_to_yojson x.customer_dns_ips);
       ("SubnetIds", Some (subnet_ids_to_yojson x.subnet_ids));
       ("VpcId", Some (vpc_id_to_yojson x.vpc_id));
     ]
@@ -1772,6 +2131,7 @@ let directory_connect_settings_to_yojson (x : directory_connect_settings) =
 let connect_directory_request_to_yojson (x : connect_directory_request) =
   assoc_to_yojson
     [
+      ("NetworkType", option_to_yojson network_type_to_yojson x.network_type);
       ("Tags", option_to_yojson tags_to_yojson x.tags);
       ("ConnectSettings", Some (directory_connect_settings_to_yojson x.connect_settings));
       ("Size", Some (directory_size_to_yojson x.size));

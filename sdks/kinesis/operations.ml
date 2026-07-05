@@ -41,6 +41,7 @@ module CreateStream = struct
     | `InvalidArgumentException _ -> "com.amazonaws.kinesis#InvalidArgumentException"
     | `LimitExceededException _ -> "com.amazonaws.kinesis#LimitExceededException"
     | `ResourceInUseException _ -> "com.amazonaws.kinesis#ResourceInUseException"
+    | `ValidationException _ -> "com.amazonaws.kinesis#ValidationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -52,6 +53,8 @@ module CreateStream = struct
           `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
       | _, "ResourceInUseException" ->
           `ResourceInUseException (Json_deserializers.resource_in_use_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -197,6 +200,28 @@ module DeregisterStreamConsumer = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.DeregisterStreamConsumer"
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module DescribeAccountSettings = struct
+  let error_to_string = function
+    | `LimitExceededException _ -> "com.amazonaws.kinesis#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_account_settings_input) =
+    let input = Json_serializers.describe_account_settings_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.DescribeAccountSettings"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_account_settings_output_of_yojson
       ~error_deserializer
 end
 
@@ -1221,6 +1246,73 @@ module UntagResource = struct
       ~error_deserializer
 end
 
+module UpdateAccountSettings = struct
+  let error_to_string = function
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesis#InvalidArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.kinesis#LimitExceededException"
+    | `ValidationException _ -> "com.amazonaws.kinesis#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidArgumentException" ->
+          `InvalidArgumentException
+            (Json_deserializers.invalid_argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : update_account_settings_input) =
+    let input = Json_serializers.update_account_settings_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.UpdateAccountSettings"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_account_settings_output_of_yojson
+      ~error_deserializer
+end
+
+module UpdateMaxRecordSize = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.kinesis#AccessDeniedException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesis#InvalidArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.kinesis#LimitExceededException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesis#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesis#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.kinesis#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InvalidArgumentException" ->
+          `InvalidArgumentException
+            (Json_deserializers.invalid_argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "ResourceInUseException" ->
+          `ResourceInUseException (Json_deserializers.resource_in_use_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : update_max_record_size_input) =
+    let input = Json_serializers.update_max_record_size_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.UpdateMaxRecordSize" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
 module UpdateShardCount = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.kinesis#AccessDeniedException"
@@ -1265,6 +1357,7 @@ module UpdateStreamMode = struct
     | `LimitExceededException _ -> "com.amazonaws.kinesis#LimitExceededException"
     | `ResourceInUseException _ -> "com.amazonaws.kinesis#ResourceInUseException"
     | `ResourceNotFoundException _ -> "com.amazonaws.kinesis#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.kinesis#ValidationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -1279,6 +1372,8 @@ module UpdateStreamMode = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -1288,5 +1383,44 @@ module UpdateStreamMode = struct
     let input = Json_serializers.update_stream_mode_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.UpdateStreamMode" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module UpdateStreamWarmThroughput = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.kinesis#AccessDeniedException"
+    | `InvalidArgumentException _ -> "com.amazonaws.kinesis#InvalidArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.kinesis#LimitExceededException"
+    | `ResourceInUseException _ -> "com.amazonaws.kinesis#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.kinesis#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.kinesis#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InvalidArgumentException" ->
+          `InvalidArgumentException
+            (Json_deserializers.invalid_argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "ResourceInUseException" ->
+          `ResourceInUseException (Json_deserializers.resource_in_use_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : update_stream_warm_throughput_input) =
+    let input = Json_serializers.update_stream_warm_throughput_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.UpdateStreamWarmThroughput"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_stream_warm_throughput_output_of_yojson
       ~error_deserializer
 end

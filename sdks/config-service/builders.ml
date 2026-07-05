@@ -324,7 +324,7 @@ let make_conformance_pack_input_parameter ~parameter_value:(parameter_value_ : p
   ({ parameter_value = parameter_value_; parameter_name = parameter_name_ }
     : conformance_pack_input_parameter)
 
-let make_put_organization_conformance_pack_request
+let make_put_organization_conformance_pack_request ?tags:(tags_ : tags_list option)
     ?excluded_accounts:(excluded_accounts_ : excluded_accounts option)
     ?conformance_pack_input_parameters:
       (conformance_pack_input_parameters_ : conformance_pack_input_parameters option)
@@ -335,6 +335,7 @@ let make_put_organization_conformance_pack_request
     ~organization_conformance_pack_name:
       (organization_conformance_pack_name_ : organization_conformance_pack_name) () =
   ({
+     tags = tags_;
      excluded_accounts = excluded_accounts_;
      conformance_pack_input_parameters = conformance_pack_input_parameters_;
      delivery_s3_key_prefix = delivery_s3_key_prefix_;
@@ -357,7 +358,7 @@ let make_organization_managed_rule_metadata
     ?resource_id_scope:(resource_id_scope_ : string_with_char_limit768 option)
     ?resource_types_scope:(resource_types_scope_ : resource_types_scope option)
     ?maximum_execution_frequency:(maximum_execution_frequency_ : maximum_execution_frequency option)
-    ?input_parameters:(input_parameters_ : string_with_char_limit2048 option)
+    ?input_parameters:(input_parameters_ : string_with_char_limit1024 option)
     ?description:(description_ : string_with_char_limit256_min0 option)
     ~rule_identifier:(rule_identifier_ : string_with_char_limit256) () =
   ({
@@ -378,7 +379,7 @@ let make_organization_custom_rule_metadata
     ?resource_id_scope:(resource_id_scope_ : string_with_char_limit768 option)
     ?resource_types_scope:(resource_types_scope_ : resource_types_scope option)
     ?maximum_execution_frequency:(maximum_execution_frequency_ : maximum_execution_frequency option)
-    ?input_parameters:(input_parameters_ : string_with_char_limit2048 option)
+    ?input_parameters:(input_parameters_ : string_with_char_limit1024 option)
     ?description:(description_ : string_with_char_limit256_min0 option)
     ~organization_config_rule_trigger_types:
       (organization_config_rule_trigger_types_ : organization_config_rule_trigger_types)
@@ -403,7 +404,7 @@ let make_organization_custom_policy_rule_metadata
     ?resource_id_scope:(resource_id_scope_ : string_with_char_limit768 option)
     ?resource_types_scope:(resource_types_scope_ : resource_types_scope option)
     ?maximum_execution_frequency:(maximum_execution_frequency_ : maximum_execution_frequency option)
-    ?input_parameters:(input_parameters_ : string_with_char_limit2048 option)
+    ?input_parameters:(input_parameters_ : string_with_char_limit1024 option)
     ?organization_config_rule_trigger_types:
       (organization_config_rule_trigger_types_ :
          organization_config_rule_trigger_type_no_s_ns option)
@@ -425,7 +426,7 @@ let make_organization_custom_policy_rule_metadata
    }
     : organization_custom_policy_rule_metadata)
 
-let make_put_organization_config_rule_request
+let make_put_organization_config_rule_request ?tags:(tags_ : tags_list option)
     ?organization_custom_policy_rule_metadata:
       (organization_custom_policy_rule_metadata_ : organization_custom_policy_rule_metadata option)
     ?excluded_accounts:(excluded_accounts_ : excluded_accounts option)
@@ -436,6 +437,7 @@ let make_put_organization_config_rule_request
     ~organization_config_rule_name:(organization_config_rule_name_ : organization_config_rule_name)
     () =
   ({
+     tags = tags_;
      organization_custom_policy_rule_metadata = organization_custom_policy_rule_metadata_;
      excluded_accounts = excluded_accounts_;
      organization_custom_rule_metadata = organization_custom_rule_metadata_;
@@ -517,7 +519,7 @@ let make_put_conformance_pack_response
     ?conformance_pack_arn:(conformance_pack_arn_ : conformance_pack_arn option) () =
   ({ conformance_pack_arn = conformance_pack_arn_ } : put_conformance_pack_response)
 
-let make_put_conformance_pack_request
+let make_put_conformance_pack_request ?tags:(tags_ : tags_list option)
     ?template_ssm_document_details:
       (template_ssm_document_details_ : template_ssm_document_details option)
     ?conformance_pack_input_parameters:
@@ -528,6 +530,7 @@ let make_put_conformance_pack_request
     ?template_s3_uri:(template_s3_uri_ : template_s3_uri option)
     ~conformance_pack_name:(conformance_pack_name_ : conformance_pack_name) () =
   ({
+     tags = tags_;
      template_ssm_document_details = template_ssm_document_details_;
      conformance_pack_input_parameters = conformance_pack_input_parameters_;
      delivery_s3_key_prefix = delivery_s3_key_prefix_;
@@ -672,11 +675,13 @@ let make_put_configuration_aggregator_request
    }
     : put_configuration_aggregator_request)
 
-let make_scope ?compliance_resource_id:(compliance_resource_id_ : base_resource_id option)
+let make_scope ?service_principals:(service_principals_ : service_principals option)
+    ?compliance_resource_id:(compliance_resource_id_ : base_resource_id option)
     ?tag_value:(tag_value_ : string_with_char_limit256 option)
     ?tag_key:(tag_key_ : string_with_char_limit128 option)
     ?compliance_resource_types:(compliance_resource_types_ : compliance_resource_types option) () =
   ({
+     service_principals = service_principals_;
      compliance_resource_id = compliance_resource_id_;
      tag_value = tag_value_;
      tag_key = tag_key_;
@@ -721,7 +726,9 @@ let make_source ?custom_policy_details:(custom_policy_details_ : custom_policy_d
 let make_evaluation_mode_configuration ?mode:(mode_ : evaluation_mode option) () =
   ({ mode = mode_ } : evaluation_mode_configuration)
 
-let make_config_rule ?evaluation_modes:(evaluation_modes_ : evaluation_modes option)
+let make_config_rule
+    ?rule_evaluation_visibility:(rule_evaluation_visibility_ : rule_evaluation_visibility option)
+    ?evaluation_modes:(evaluation_modes_ : evaluation_modes option)
     ?created_by:(created_by_ : string_with_char_limit256 option)
     ?config_rule_state:(config_rule_state_ : config_rule_state option)
     ?maximum_execution_frequency:(maximum_execution_frequency_ : maximum_execution_frequency option)
@@ -732,6 +739,7 @@ let make_config_rule ?evaluation_modes:(evaluation_modes_ : evaluation_modes opt
     ?config_rule_arn:(config_rule_arn_ : string_with_char_limit256 option)
     ?config_rule_name:(config_rule_name_ : config_rule_name option) ~source:(source_ : source) () =
   ({
+     rule_evaluation_visibility = rule_evaluation_visibility_;
      evaluation_modes = evaluation_modes_;
      created_by = created_by_;
      config_rule_state = config_rule_state_;
@@ -1746,7 +1754,7 @@ let make_organization_custom_policy_rule_metadata_no_policy
     ?resource_id_scope:(resource_id_scope_ : string_with_char_limit768 option)
     ?resource_types_scope:(resource_types_scope_ : resource_types_scope option)
     ?maximum_execution_frequency:(maximum_execution_frequency_ : maximum_execution_frequency option)
-    ?input_parameters:(input_parameters_ : string_with_char_limit2048 option)
+    ?input_parameters:(input_parameters_ : string_with_char_limit1024 option)
     ?organization_config_rule_trigger_types:
       (organization_config_rule_trigger_types_ :
          organization_config_rule_trigger_type_no_s_ns option)
@@ -2090,9 +2098,11 @@ let make_describe_config_rules_response ?next_token:(next_token_ : string_ optio
     ?config_rules:(config_rules_ : config_rules option) () =
   ({ next_token = next_token_; config_rules = config_rules_ } : describe_config_rules_response)
 
-let make_describe_config_rules_filters ?evaluation_mode:(evaluation_mode_ : evaluation_mode option)
-    () =
-  ({ evaluation_mode = evaluation_mode_ } : describe_config_rules_filters)
+let make_describe_config_rules_filters
+    ?rule_evaluation_visibility:(rule_evaluation_visibility_ : rule_evaluation_visibility option)
+    ?evaluation_mode:(evaluation_mode_ : evaluation_mode option) () =
+  ({ rule_evaluation_visibility = rule_evaluation_visibility_; evaluation_mode = evaluation_mode_ }
+    : describe_config_rules_filters)
 
 let make_describe_config_rules_request ?filters:(filters_ : describe_config_rules_filters option)
     ?next_token:(next_token_ : string_ option)

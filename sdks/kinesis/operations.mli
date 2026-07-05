@@ -39,7 +39,8 @@ module CreateStream : sig
     [ Smaws_Lib.Protocols.AwsJson.error
     | `InvalidArgumentException of invalid_argument_exception
     | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception ] ->
+    | `ResourceInUseException of resource_in_use_exception
+    | `ValidationException of validation_exception ] ->
     string
 
   val request :
@@ -49,7 +50,8 @@ module CreateStream : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception ] )
+      | `ResourceInUseException of resource_in_use_exception
+      | `ValidationException of validation_exception ] )
     result
 end
 [@@ocaml.doc
@@ -60,35 +62,42 @@ end
   \ You can create your data stream using either on-demand or provisioned capacity mode. Data \
    streams with an on-demand mode require no capacity planning and automatically scale to handle \
    gigabytes of write and read throughput per minute. With the on-demand mode, Kinesis Data \
-   Streams automatically manages the shards in order to provide the necessary throughput. For the \
-   data streams with a provisioned mode, you must specify the number of shards for the data \
-   stream. Each shard can support reads up to five transactions per second, up to a maximum data \
-   read total of 2 MiB per second. Each shard can support writes up to 1,000 records per second, \
-   up to a maximum data write total of 1 MiB per second. If the amount of data input increases or \
-   decreases, you can add or remove shards.\n\
+   Streams automatically manages the shards in order to provide the necessary throughput.\n\
   \ \n\
-  \  The stream name identifies the stream. The name is scoped to the Amazon Web Services account \
-   used by the application. It is also scoped by Amazon Web Services Region. That is, two streams \
-   in two different accounts can have the same name, and two streams in the same account, but in \
-   two different Regions, can have the same name.\n\
+  \  If you'd still like to proactively scale your on-demand data stream\226\128\153s capacity, \
+   you can unlock the warm throughput feature for on-demand data streams by enabling \
+   [MinimumThroughputBillingCommitment] for your account. Once your account has \
+   [MinimumThroughputBillingCommitment] enabled, you can specify the warm throughput in MiB per \
+   second that your stream can support in writes.\n\
   \  \n\
-  \    [CreateStream] is an asynchronous operation. Upon receiving a [CreateStream] request, \
+  \   For the data streams with a provisioned mode, you must specify the number of shards for the \
+   data stream. Each shard can support reads up to five transactions per second, up to a maximum \
+   data read total of 2 MiB per second. Each shard can support writes up to 1,000 records per \
+   second, up to a maximum data write total of 1 MiB per second. If the amount of data input \
+   increases or decreases, you can add or remove shards.\n\
+  \   \n\
+  \    The stream name identifies the stream. The name is scoped to the Amazon Web Services \
+   account used by the application. It is also scoped by Amazon Web Services Region. That is, two \
+   streams in two different accounts can have the same name, and two streams in the same account, \
+   but in two different Regions, can have the same name.\n\
+  \    \n\
+  \      [CreateStream] is an asynchronous operation. Upon receiving a [CreateStream] request, \
    Kinesis Data Streams immediately returns and sets the stream status to [CREATING]. After the \
    stream is created, Kinesis Data Streams sets the stream status to [ACTIVE]. You should perform \
    read and write operations only on an [ACTIVE] stream. \n\
-  \   \n\
-  \    You receive a [LimitExceededException] when making a [CreateStream] request when you try to \
-   do one of the following:\n\
-  \    \n\
-  \     {ul\n\
-  \           {-  Have more than five streams in the [CREATING] state at any point in time.\n\
-  \               \n\
-  \                }\n\
-  \           {-  Create more shards than are authorized for your account.\n\
-  \               \n\
-  \                }\n\
-  \           }\n\
-  \   For the default shard limit for an Amazon Web Services account, see \
+  \     \n\
+  \      You receive a [LimitExceededException] when making a [CreateStream] request when you try \
+   to do one of the following:\n\
+  \      \n\
+  \       {ul\n\
+  \             {-  Have more than five streams in the [CREATING] state at any point in time.\n\
+  \                 \n\
+  \                  }\n\
+  \             {-  Create more shards than are authorized for your account.\n\
+  \                 \n\
+  \                  }\n\
+  \             }\n\
+  \   For the default shard or on-demand throughput limits for an Amazon Web Services account, see \
    {{:https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html}Amazon Kinesis \
    Data Streams Limits} in the {i Amazon Kinesis Data Streams Developer Guide}. To increase this \
    limit, {{:https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html}contact Amazon \
@@ -249,6 +258,27 @@ end
    operation to get a list of the descriptions of all the consumers that are currently registered \
    with a given data stream. The description of a consumer contains its name and ARN.\n\n\
   \ This operation has a limit of five transactions per second per stream.\n\
+  \ "]
+
+module DescribeAccountSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_account_settings_input ->
+    ( describe_account_settings_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
+    )
+    result
+end
+[@@ocaml.doc
+  "Describes the account-level settings for Amazon Kinesis Data Streams. This operation returns \
+   information about the minimum throughput billing commitments and other account-level \
+   configurations.\n\n\
+  \ This API has a call limit of 5 transactions per second (TPS) for each Amazon Web Services \
+   account. TPS over 5 will initiate the [LimitExceededException].\n\
   \ "]
 
 module DescribeLimits : sig
@@ -936,7 +966,7 @@ end
 [@@ocaml.doc
   "Writes a single data record into an Amazon Kinesis data stream. Call [PutRecord] to send data \
    into the stream for real-time ingestion and subsequent processing, one record at a time. Each \
-   shard can support writes up to 1,000 records per second, up to a maximum data write total of 1 \
+   shard can support writes up to 1,000 records per second, up to a maximum data write total of 10 \
    MiB per second.\n\n\
   \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
    both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
@@ -1023,9 +1053,9 @@ end
    both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
   \  \n\
   \    Each [PutRecords] request can support up to 500 records. Each record in the request can be \
-   as large as 1 MiB, up to a limit of 5 MiB for the entire request, including partition keys. \
+   as large as 10 MiB, up to a limit of 10 MiB for the entire request, including partition keys. \
    Each shard can support writes up to 1,000 records per second, up to a maximum data write total \
-   of 1 MiB per second.\n\
+   of 1 MB per second.\n\
   \    \n\
   \     You must specify the name of the stream that captures, stores, and transports the data; \
    and an array of request [Records], with each record in the array requiring a partition key and \
@@ -1160,8 +1190,10 @@ end
    permission for the consumer that will be registered. Tags will take effect from the [CREATING] \
    status of the consumer.\n\
   \ \n\
-  \  You can register up to 20 consumers per stream. A given consumer can only be registered with \
-   one stream at a time.\n\
+  \  With On-demand Advantage streams, you can register up to 50 consumers per stream to use \
+   Enhanced Fan-out. With On-demand Standard and Provisioned streams, you can register up to 20 \
+   consumers per stream to use Enhanced Fan-out. A given consumer can only be registered with one \
+   stream at a time.\n\
   \  \n\
   \   For an example of how to use this operation, see \
    {{:https://docs.aws.amazon.com/streams/latest/dev/building-enhanced-consumers-api.html}Enhanced \
@@ -1480,6 +1512,72 @@ end
   "Removes tags from the specified Kinesis resource. Removed tags are deleted and can't be \
    recovered after this operation completes successfully.\n"]
 
+module UpdateAccountSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_account_settings_input ->
+    ( update_account_settings_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Updates the account-level settings for Amazon Kinesis Data Streams.\n\n\
+  \ Updating account settings is a synchronous operation. Upon receiving the request, Kinesis Data \
+   Streams will return immediately with your account\226\128\153s updated settings.\n\
+  \ \n\
+  \   {b API limits} \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  Certain account configurations have minimum commitment windows. Attempting to \
+   update your settings prior to the end of the minimum commitment window might have certain \
+   restrictions.\n\
+  \             \n\
+  \              }\n\
+  \         {-  This API has a call limit of 5 transactions per second (TPS) for each Amazon Web \
+   Services account. TPS over 5 will initiate the [LimitExceededException].\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \  "]
+
+module UpdateMaxRecordSize : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_max_record_size_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "This allows you to update the [MaxRecordSize] of a single record that you can write to, and \
+   read from a stream. You can ingest and digest single records up to 10240 KiB.\n"]
+
 module UpdateShardCount : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1565,7 +1663,8 @@ module UpdateStreamMode : sig
     | `InvalidArgumentException of invalid_argument_exception
     | `LimitExceededException of limit_exceeded_exception
     | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
     string
 
   val request :
@@ -1576,10 +1675,78 @@ module UpdateStreamMode : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
     result
 end
 [@@ocaml.doc
   " Updates the capacity mode of the data stream. Currently, in Kinesis Data Streams, you can \
    choose between an {b on-demand} capacity mode and a {b provisioned} capacity mode for your data \
-   stream. \n"]
+   stream. \n\n\
+  \ If you'd still like to proactively scale your on-demand data stream\226\128\153s capacity, you \
+   can unlock the warm throughput feature for on-demand data streams by enabling \
+   [MinimumThroughputBillingCommitment] for your account. Once your account has \
+   [MinimumThroughputBillingCommitment] enabled, you can specify the warm throughput in MiB per \
+   second that your stream can support in writes.\n\
+  \ "]
+
+module UpdateStreamWarmThroughput : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_stream_warm_throughput_input ->
+    ( update_stream_warm_throughput_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Updates the warm throughput configuration for the specified Amazon Kinesis Data Streams \
+   on-demand data stream. This operation allows you to proactively scale your on-demand data \
+   stream to a specified throughput level, enabling better performance for sudden traffic spikes. \
+   \n\n\
+  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
+   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
+  \  \n\
+  \    Updating the warm throughput is an asynchronous operation. Upon receiving the request, \
+   Kinesis Data Streams returns immediately and sets the status of the stream to [UPDATING]. After \
+   the update is complete, Kinesis Data Streams sets the status of the stream back to [ACTIVE]. \
+   Depending on the size of the stream, the scaling action could take a few minutes to complete. \
+   You can continue to read and write data to your stream while its status is [UPDATING].\n\
+  \    \n\
+  \     This operation is only supported for data streams with the on-demand capacity mode in \
+   accounts that have [MinimumThroughputBillingCommitment] enabled. Provisioned capacity mode \
+   streams do not support warm throughput configuration.\n\
+  \     \n\
+  \      This operation has the following default limits. By default, you cannot do the following:\n\
+  \      \n\
+  \       {ul\n\
+  \             {-  Scale to more than 10 GiBps for an on-demand stream.\n\
+  \                 \n\
+  \                  }\n\
+  \             {-  This API has a call limit of 5 transactions per second (TPS) for each Amazon \
+   Web Services account. TPS over 5 will initiate the [LimitExceededException].\n\
+  \                 \n\
+  \                  }\n\
+  \             }\n\
+  \   For the default limits for an Amazon Web Services account, see \
+   {{:https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html}Streams Limits} \
+   in the {i Amazon Kinesis Data Streams Developer Guide}. To request an increase in the call rate \
+   limit, the shard limit for this API, or your overall shard limit, use the \
+   {{:https://console.aws.amazon.com/support/v1#/case/create?issueType=service-limit-increase&limitType=service-code-kinesis}limits \
+   form}.\n\
+  \   "]

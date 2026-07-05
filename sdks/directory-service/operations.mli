@@ -304,6 +304,42 @@ end
    Service API Permissions: Actions, Resources, and Conditions Reference}.\n\
   \ "]
 
+module CreateHybridAD : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ADAssessmentLimitExceededException of ad_assessment_limit_exceeded_exception
+    | `ClientException of client_exception
+    | `DirectoryLimitExceededException of directory_limit_exceeded_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_hybrid_ad_request ->
+    ( create_hybrid_ad_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ADAssessmentLimitExceededException of ad_assessment_limit_exceeded_exception
+      | `ClientException of client_exception
+      | `DirectoryLimitExceededException of directory_limit_exceeded_exception
+      | `EntityDoesNotExistException of entity_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Creates a hybrid directory that connects your self-managed Active Directory (AD) infrastructure \
+   and Amazon Web Services.\n\n\
+  \ You must have a successful directory assessment using [StartADAssessment] to validate your \
+   environment compatibility before you use this operation.\n\
+  \ \n\
+  \  Updates are applied asynchronously. Use [DescribeDirectories] to monitor the progress of \
+   directory creation.\n\
+  \  "]
+
 module CreateLogSubscription : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -425,6 +461,35 @@ end
   \ This action initiates the creation of the Amazon Web Services side of a trust relationship \
    between an Managed Microsoft AD directory and an external domain. You can create either a \
    forest trust or an external trust.\n\
+  \ "]
+
+module DeleteADAssessment : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_ad_assessment_request ->
+    ( delete_ad_assessment_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClientException of client_exception
+      | `EntityDoesNotExistException of entity_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Deletes a directory assessment and all associated data. This operation permanently removes the \
+   assessment results, validation reports, and configuration information.\n\n\
+  \ You cannot delete system-initiated assessments. You can delete customer-created assessments \
+   even if they are in progress.\n\
   \ "]
 
 module DeleteConditionalForwarder : sig
@@ -604,6 +669,58 @@ module DeregisterEventTopic : sig
     result
 end
 [@@ocaml.doc "Removes the specified directory as a publisher to the specified Amazon SNS topic.\n"]
+
+module DescribeADAssessment : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_ad_assessment_request ->
+    ( describe_ad_assessment_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClientException of client_exception
+      | `EntityDoesNotExistException of entity_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves detailed information about a directory assessment, including its current status, \
+   validation results, and configuration details. Use this operation to monitor assessment \
+   progress and review results.\n"]
+
+module DescribeCAEnrollmentPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_ca_enrollment_policy_request ->
+    ( describe_ca_enrollment_policy_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClientException of client_exception
+      | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves detailed information about the certificate authority (CA) enrollment policy for the \
+   specified directory. This policy determines how client certificates are automatically enrolled \
+   and managed through Amazon Web Services Private Certificate Authority. \n"]
 
 module DescribeCertificate : sig
   val error_to_string :
@@ -808,6 +925,35 @@ end
    all of the associations in the account.\n\
   \ "]
 
+module DescribeHybridADUpdate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidNextTokenException of invalid_next_token_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_hybrid_ad_update_request ->
+    ( describe_hybrid_ad_update_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClientException of client_exception
+      | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves information about update activities for a hybrid directory. This operation provides \
+   details about configuration changes, administrator account updates, and self-managed instance \
+   settings (IDs and DNS IPs).\n"]
+
 module DescribeLDAPSSettings : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1002,6 +1148,43 @@ module DescribeUpdateDirectory : sig
 end
 [@@ocaml.doc " Describes the updates of a directory for a particular update type. \n"]
 
+module DisableCAEnrollmentPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `DisableAlreadyInProgressException of disable_already_in_progress_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    disable_ca_enrollment_policy_request ->
+    ( disable_ca_enrollment_policy_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ClientException of client_exception
+      | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `DisableAlreadyInProgressException of disable_already_in_progress_exception
+      | `EntityDoesNotExistException of entity_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Disables the certificate authority (CA) enrollment policy for the specified directory. This \
+   stops automatic certificate enrollment and management for domain-joined clients, but does not \
+   affect existing certificates.\n\n\
+  \  Disabling the CA enrollment policy prevents new certificates from being automatically \
+   enrolled, but existing certificates remain valid and functional until they expire.\n\
+  \  \n\
+  \   "]
+
 module DisableClientAuthentication : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1133,6 +1316,46 @@ module DisableSso : sig
     result
 end
 [@@ocaml.doc "Disables single-sign on for a directory.\n"]
+
+module EnableCAEnrollmentPolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `DirectoryUnavailableException of directory_unavailable_exception
+    | `EnableAlreadyInProgressException of enable_already_in_progress_exception
+    | `EntityAlreadyExistsException of entity_already_exists_exception
+    | `EntityDoesNotExistException of entity_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    enable_ca_enrollment_policy_request ->
+    ( enable_ca_enrollment_policy_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ClientException of client_exception
+      | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+      | `DirectoryUnavailableException of directory_unavailable_exception
+      | `EnableAlreadyInProgressException of enable_already_in_progress_exception
+      | `EntityAlreadyExistsException of entity_already_exists_exception
+      | `EntityDoesNotExistException of entity_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Enables certificate authority (CA) enrollment policy for the specified directory. This allows \
+   domain-joined clients to automatically request and receive certificates from the specified \
+   Amazon Web Services Private Certificate Authority.\n\n\
+  \  Before enabling CA enrollment, ensure that the PCA connector is properly configured and \
+   accessible from the directory. The connector must be in an active state and have the necessary \
+   permissions.\n\
+  \  \n\
+  \   "]
 
 module EnableClientAuthentication : sig
   val error_to_string :
@@ -1316,6 +1539,32 @@ module GetSnapshotLimits : sig
     result
 end
 [@@ocaml.doc "Obtains the manual snapshot limits for a directory.\n"]
+
+module ListADAssessments : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_ad_assessments_request ->
+    ( list_ad_assessments_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClientException of client_exception
+      | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves a list of directory assessments for the specified directory or all assessments in \
+   your account. Use this operation to monitor assessment status and manage multiple assessments.\n"]
 
 module ListCertificates : sig
   val error_to_string :
@@ -1724,6 +1973,49 @@ end
    sharing request to the directory consumer. \n\
   \   "]
 
+module StartADAssessment : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ADAssessmentLimitExceededException of ad_assessment_limit_exceeded_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    start_ad_assessment_request ->
+    ( start_ad_assessment_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ADAssessmentLimitExceededException of ad_assessment_limit_exceeded_exception
+      | `ClientException of client_exception
+      | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Initiates a directory assessment to validate your self-managed AD environment for hybrid domain \
+   join. The assessment checks compatibility and connectivity of the self-managed AD environment.\n\n\
+  \ A directory assessment is automatically created when you create a hybrid directory. There are \
+   two types of assessments: [CUSTOMER] and [SYSTEM]. Your Amazon Web Services account has a limit \
+   of 100 [CUSTOMER] directory assessments.\n\
+  \ \n\
+  \  The assessment process typically takes 30 minutes or more to complete. The assessment process \
+   is asynchronous and you can monitor it with [DescribeADAssessment].\n\
+  \  \n\
+  \   The [InstanceIds] must have a one-to-one correspondence with [CustomerDnsIps], meaning that \
+   if the IP address for instance i-10243410 is 10.24.34.100 and the IP address for instance \
+   i-10243420 is 10.24.34.200, then the input arrays must maintain the same order relationship, \
+   either \\[10.24.34.100, 10.24.34.200\\] paired with \\[i-10243410, i-10243420\\] or \
+   \\[10.24.34.200, 10.24.34.100\\] paired with \\[i-10243420, i-10243410\\].\n\
+  \   \n\
+  \    Note: You must provide exactly one [DirectoryId] or [AssessmentConfiguration].\n\
+  \    "]
+
 module StartSchemaExtension : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1831,7 +2123,49 @@ module UpdateDirectorySetup : sig
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
 end
-[@@ocaml.doc " Updates the directory for a particular update type. \n"]
+[@@ocaml.doc "Updates directory configuration for the specified update type.\n"]
+
+module UpdateHybridAD : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ADAssessmentLimitExceededException of ad_assessment_limit_exceeded_exception
+    | `ClientException of client_exception
+    | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `ServiceException of service_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_hybrid_ad_request ->
+    ( update_hybrid_ad_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ADAssessmentLimitExceededException of ad_assessment_limit_exceeded_exception
+      | `ClientException of client_exception
+      | `DirectoryDoesNotExistException of directory_does_not_exist_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ServiceException of service_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Updates the configuration of an existing hybrid directory. You can recover hybrid directory \
+   administrator account or modify self-managed instance settings.\n\n\
+  \ Updates are applied asynchronously. Use [DescribeHybridADUpdate] to monitor the progress of \
+   configuration changes.\n\
+  \ \n\
+  \  The [InstanceIds] must have a one-to-one correspondence with [CustomerDnsIps], meaning that \
+   if the IP address for instance i-10243410 is 10.24.34.100 and the IP address for instance \
+   i-10243420 is 10.24.34.200, then the input arrays must maintain the same order relationship, \
+   either \\[10.24.34.100, 10.24.34.200\\] paired with \\[i-10243410, i-10243420\\] or \
+   \\[10.24.34.200, 10.24.34.100\\] paired with \\[i-10243420, i-10243410\\].\n\
+  \  \n\
+  \    You must provide at least one update to \
+   [UpdateHybridADRequest$HybridAdministratorAccountUpdate] or \
+   [UpdateHybridADRequest$SelfManagedInstancesSettings].\n\
+  \    \n\
+  \     "]
 
 module UpdateNumberOfDomainControllers : sig
   val error_to_string :

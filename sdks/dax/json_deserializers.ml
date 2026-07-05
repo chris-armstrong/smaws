@@ -3,9 +3,25 @@ open Types
 
 let string__of_yojson = string_of_yojson
 
+let network_type_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "dual_stack" -> DUAL_STACK
+    | `String "ipv6" -> IPV6
+    | `String "ipv4" -> IPV4
+    | `String value -> raise (deserialize_unknown_enum_value_error path "NetworkType" value)
+    | _ -> raise (deserialize_wrong_type_error path "NetworkType")
+     : network_type)
+    : network_type)
+
+let network_type_list_of_yojson tree path = list_of_yojson network_type_of_yojson tree path
+
 let subnet_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     supported_network_types =
+       option_of_yojson
+         (value_for_key network_type_list_of_yojson "SupportedNetworkTypes")
+         _list path;
      subnet_availability_zone =
        option_of_yojson (value_for_key string__of_yojson "SubnetAvailabilityZone") _list path;
      subnet_identifier =
@@ -18,6 +34,10 @@ let subnet_list_of_yojson tree path = list_of_yojson subnet_of_yojson tree path
 let subnet_group_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     supported_network_types =
+       option_of_yojson
+         (value_for_key network_type_list_of_yojson "SupportedNetworkTypes")
+         _list path;
      subnets = option_of_yojson (value_for_key subnet_list_of_yojson "Subnets") _list path;
      vpc_id = option_of_yojson (value_for_key string__of_yojson "VpcId") _list path;
      description = option_of_yojson (value_for_key string__of_yojson "Description") _list path;
@@ -51,6 +71,11 @@ let subnet_quota_exceeded_fault_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({ message = option_of_yojson (value_for_key exception_message_of_yojson "message") _list path }
     : subnet_quota_exceeded_fault)
+
+let subnet_not_allowed_fault_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({ message = option_of_yojson (value_for_key exception_message_of_yojson "message") _list path }
+    : subnet_not_allowed_fault)
 
 let subnet_in_use_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -231,6 +256,7 @@ let cluster_endpoint_encryption_type_of_yojson (tree : t) path =
 let cluster_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     network_type = option_of_yojson (value_for_key network_type_of_yojson "NetworkType") _list path;
      cluster_endpoint_encryption_type =
        option_of_yojson
          (value_for_key cluster_endpoint_encryption_type_of_yojson "ClusterEndpointEncryptionType")
@@ -777,6 +803,7 @@ let create_cluster_response_of_yojson tree path =
 let create_cluster_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     network_type = option_of_yojson (value_for_key network_type_of_yojson "NetworkType") _list path;
      cluster_endpoint_encryption_type =
        option_of_yojson
          (value_for_key cluster_endpoint_encryption_type_of_yojson "ClusterEndpointEncryptionType")

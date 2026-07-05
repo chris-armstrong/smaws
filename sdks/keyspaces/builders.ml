@@ -1,5 +1,24 @@
 open Types
 
+let make_warm_throughput_specification_summary ~status:(status_ : warm_throughput_status)
+    ~write_units_per_second:(write_units_per_second_ : Smaws_Lib.Smithy_api.Types.long)
+    ~read_units_per_second:(read_units_per_second_ : Smaws_Lib.Smithy_api.Types.long) () =
+  ({
+     status = status_;
+     write_units_per_second = write_units_per_second_;
+     read_units_per_second = read_units_per_second_;
+   }
+    : warm_throughput_specification_summary)
+
+let make_warm_throughput_specification
+    ?write_units_per_second:(write_units_per_second_ : Smaws_Lib.Smithy_api.Types.long option)
+    ?read_units_per_second:(read_units_per_second_ : Smaws_Lib.Smithy_api.Types.long option) () =
+  ({
+     write_units_per_second = write_units_per_second_;
+     read_units_per_second = read_units_per_second_;
+   }
+    : warm_throughput_specification)
+
 let make_update_table_response ~resource_arn:(resource_arn_ : ar_n) () =
   ({ resource_arn = resource_arn_ } : update_table_response)
 
@@ -91,7 +110,10 @@ let make_cdc_specification ?propagate_tags:(propagate_tags_ : cdc_propagate_tags
   ({ propagate_tags = propagate_tags_; tags = tags_; view_type = view_type_; status = status_ }
     : cdc_specification)
 
-let make_update_table_request ?cdc_specification:(cdc_specification_ : cdc_specification option)
+let make_update_table_request
+    ?warm_throughput_specification:
+      (warm_throughput_specification_ : warm_throughput_specification option)
+    ?cdc_specification:(cdc_specification_ : cdc_specification option)
     ?replica_specifications:(replica_specifications_ : replica_specification_list option)
     ?auto_scaling_specification:(auto_scaling_specification_ : auto_scaling_specification option)
     ?client_side_timestamps:(client_side_timestamps_ : client_side_timestamps option)
@@ -103,6 +125,7 @@ let make_update_table_request ?cdc_specification:(cdc_specification_ : cdc_speci
     ?add_columns:(add_columns_ : column_definition_list option)
     ~table_name:(table_name_ : table_name) ~keyspace_name:(keyspace_name_ : keyspace_name) () =
   ({
+     warm_throughput_specification = warm_throughput_specification_;
      cdc_specification = cdc_specification_;
      replica_specifications = replica_specifications_;
      auto_scaling_specification = auto_scaling_specification_;
@@ -228,9 +251,16 @@ let make_capacity_specification_summary
     : capacity_specification_summary)
 
 let make_replica_specification_summary
+    ?warm_throughput_specification:
+      (warm_throughput_specification_ : warm_throughput_specification_summary option)
     ?capacity_specification:(capacity_specification_ : capacity_specification_summary option)
     ?status:(status_ : table_status option) ?region:(region_ : region option) () =
-  ({ capacity_specification = capacity_specification_; status = status_; region = region_ }
+  ({
+     warm_throughput_specification = warm_throughput_specification_;
+     capacity_specification = capacity_specification_;
+     status = status_;
+     region = region_;
+   }
     : replica_specification_summary)
 
 let make_replica_auto_scaling_specification
@@ -348,6 +378,8 @@ let make_cdc_specification_summary ?view_type:(view_type_ : view_type option)
   ({ view_type = view_type_; status = status_ } : cdc_specification_summary)
 
 let make_get_table_response
+    ?warm_throughput_specification:
+      (warm_throughput_specification_ : warm_throughput_specification_summary option)
     ?cdc_specification:(cdc_specification_ : cdc_specification_summary option)
     ?latest_stream_arn:(latest_stream_arn_ : stream_arn option)
     ?replica_specifications:(replica_specifications_ : replica_specification_summary_list option)
@@ -364,6 +396,7 @@ let make_get_table_response
     ~resource_arn:(resource_arn_ : ar_n) ~table_name:(table_name_ : table_name)
     ~keyspace_name:(keyspace_name_ : keyspace_name) () =
   ({
+     warm_throughput_specification = warm_throughput_specification_;
      cdc_specification = cdc_specification_;
      latest_stream_arn = latest_stream_arn_;
      replica_specifications = replica_specifications_;
@@ -439,7 +472,10 @@ let make_create_type_request ~field_definitions:(field_definitions_ : field_list
 let make_create_table_response ~resource_arn:(resource_arn_ : ar_n) () =
   ({ resource_arn = resource_arn_ } : create_table_response)
 
-let make_create_table_request ?cdc_specification:(cdc_specification_ : cdc_specification option)
+let make_create_table_request
+    ?warm_throughput_specification:
+      (warm_throughput_specification_ : warm_throughput_specification option)
+    ?cdc_specification:(cdc_specification_ : cdc_specification option)
     ?replica_specifications:(replica_specifications_ : replica_specification_list option)
     ?auto_scaling_specification:(auto_scaling_specification_ : auto_scaling_specification option)
     ?client_side_timestamps:(client_side_timestamps_ : client_side_timestamps option)
@@ -452,6 +488,7 @@ let make_create_table_request ?cdc_specification:(cdc_specification_ : cdc_speci
     ?comment:(comment_ : comment option) ~schema_definition:(schema_definition_ : schema_definition)
     ~table_name:(table_name_ : table_name) ~keyspace_name:(keyspace_name_ : keyspace_name) () =
   ({
+     warm_throughput_specification = warm_throughput_specification_;
      cdc_specification = cdc_specification_;
      replica_specifications = replica_specifications_;
      auto_scaling_specification = auto_scaling_specification_;

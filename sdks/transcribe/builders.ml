@@ -552,6 +552,7 @@ let make_medical_scribe_channel_definition
     : medical_scribe_channel_definition)
 
 let make_medical_scribe_job ?tags:(tags_ : tag_list option)
+    ?medical_scribe_context_provided:(medical_scribe_context_provided_ : boolean_ option)
     ?channel_definitions:(channel_definitions_ : medical_scribe_channel_definitions option)
     ?data_access_role_arn:(data_access_role_arn_ : data_access_role_arn option)
     ?settings:(settings_ : medical_scribe_settings option)
@@ -565,6 +566,7 @@ let make_medical_scribe_job ?tags:(tags_ : tag_list option)
     ?medical_scribe_job_name:(medical_scribe_job_name_ : transcription_job_name option) () =
   ({
      tags = tags_;
+     medical_scribe_context_provided = medical_scribe_context_provided_;
      channel_definitions = channel_definitions_;
      data_access_role_arn = data_access_role_arn_;
      settings = settings_;
@@ -584,7 +586,16 @@ let make_start_medical_scribe_job_response
     ?medical_scribe_job:(medical_scribe_job_ : medical_scribe_job option) () =
   ({ medical_scribe_job = medical_scribe_job_ } : start_medical_scribe_job_response)
 
-let make_start_medical_scribe_job_request ?tags:(tags_ : tag_list option)
+let make_medical_scribe_patient_context ?pronouns:(pronouns_ : pronouns option) () =
+  ({ pronouns = pronouns_ } : medical_scribe_patient_context)
+
+let make_medical_scribe_context
+    ?patient_context:(patient_context_ : medical_scribe_patient_context option) () =
+  ({ patient_context = patient_context_ } : medical_scribe_context)
+
+let make_start_medical_scribe_job_request
+    ?medical_scribe_context:(medical_scribe_context_ : medical_scribe_context option)
+    ?tags:(tags_ : tag_list option)
     ?channel_definitions:(channel_definitions_ : medical_scribe_channel_definitions option)
     ?kms_encryption_context:(kms_encryption_context_ : kms_encryption_context_map option)
     ?output_encryption_kms_key_id:(output_encryption_kms_key_id_ : kms_key_id option)
@@ -593,6 +604,7 @@ let make_start_medical_scribe_job_request ?tags:(tags_ : tag_list option)
     ~output_bucket_name:(output_bucket_name_ : output_bucket_name) ~media:(media_ : media)
     ~medical_scribe_job_name:(medical_scribe_job_name_ : transcription_job_name) () =
   ({
+     medical_scribe_context = medical_scribe_context_;
      tags = tags_;
      channel_definitions = channel_definitions_;
      settings = settings_;

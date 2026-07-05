@@ -91,7 +91,14 @@ type nonrec xks_proxy_connectivity_type =
 
 type nonrec xks_proxy_authentication_access_key_id_type = string [@@ocaml.doc ""]
 
+type nonrec account_id_type = string [@@ocaml.doc ""]
+
 type nonrec xks_proxy_configuration_type = {
+  vpc_endpoint_service_owner : account_id_type option;
+      [@ocaml.doc
+        "The Amazon Web Services account ID that owns the Amazon VPC endpoint service used to \
+         communicate with the external key store proxy (XKS). This field appears only when the XKS \
+         uses an VPC endpoint service to communicate with KMS.\n"]
   vpc_endpoint_service_name : xks_proxy_vpc_endpoint_service_name_type option;
       [@ocaml.doc
         "The Amazon VPC endpoint service used to communicate with the external key store proxy. \
@@ -202,6 +209,8 @@ type nonrec key_id_type = string [@@ocaml.doc ""]
 type nonrec boolean_type = bool [@@ocaml.doc ""]
 
 type nonrec signing_algorithm_spec =
+  | ED25519_PH_SHA_512 [@ocaml.doc ""]
+  | ED25519_SHA_512 [@ocaml.doc ""]
   | ML_DSA_SHAKE_256 [@ocaml.doc ""]
   | SM2DSA [@ocaml.doc ""]
   | ECDSA_SHA_512 [@ocaml.doc ""]
@@ -286,42 +295,57 @@ type nonrec verify_request = {
          is a message digest. If you use the [DIGEST] value with an unhashed message, the security \
          of the signing operation can be compromised.\n\
         \   \n\
-        \     When the value of [MessageType] is [DIGEST], the length of the [Message] value must \
-         match the length of hashed messages for the specified signing algorithm.\n\
+        \     When using ECC_NIST_EDWARDS25519 KMS keys:\n\
         \     \n\
-        \      When the value of [MessageType] is [EXTERNAL_MU] the length of the [Message] value \
-         must be 64 bytes.\n\
+        \      {ul\n\
+        \            {-  ED25519_SHA_512 signing algorithm requires KMS [MessageType:RAW] \n\
+        \                \n\
+        \                 }\n\
+        \            {-  ED25519_PH_SHA_512 signing algorithm requires KMS [MessageType:DIGEST] \n\
+        \                \n\
+        \                 }\n\
+        \            }\n\
+        \    When you specify the ED25519_PH_SHA_512 signing algorithm with [MessageType:DIGEST], \
+         KMS still performs the SHA-512 prehash described in \
+         {{:https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-5.pdf#page=39}Step 1 of Section \
+         7.8.1 in FIPS 186-5}. This means the input is hashed twice: once by you and once by KMS. \n\
+        \    \n\
+        \      When the value of [MessageType] is [DIGEST], the length of the [Message] value must \
+         match the length of hashed messages for the specified signing algorithm.\n\
         \      \n\
-        \       You can submit a message digest and omit the [MessageType] or specify [RAW] so the \
-         digest is hashed again while signing. However, if the signed message is hashed once while \
-         signing, but twice while verifying, verification fails, even when the message hasn't \
-         changed.\n\
+        \       When the value of [MessageType] is [EXTERNAL_MU] the length of the [Message] value \
+         must be 64 bytes.\n\
         \       \n\
-        \        The hashing algorithm that [Verify] uses is based on the [SigningAlgorithm] value.\n\
+        \        You can submit a message digest and omit the [MessageType] or specify [RAW] so \
+         the digest is hashed again while signing. However, if the signed message is hashed once \
+         while signing, but twice while verifying, verification fails, even when the message \
+         hasn't changed.\n\
         \        \n\
-        \         {ul\n\
-        \               {-  Signing algorithms that end in SHA_256 use the SHA_256 hashing \
+        \         The hashing algorithm that [Verify] uses is based on the [SigningAlgorithm] value.\n\
+        \         \n\
+        \          {ul\n\
+        \                {-  Signing algorithms that end in SHA_256 use the SHA_256 hashing \
          algorithm.\n\
-        \                   \n\
-        \                    }\n\
-        \               {-  Signing algorithms that end in SHA_384 use the SHA_384 hashing \
+        \                    \n\
+        \                     }\n\
+        \                {-  Signing algorithms that end in SHA_384 use the SHA_384 hashing \
          algorithm.\n\
-        \                   \n\
-        \                    }\n\
-        \               {-  Signing algorithms that end in SHA_512 use the SHA_512 hashing \
+        \                    \n\
+        \                     }\n\
+        \                {-  Signing algorithms that end in SHA_512 use the SHA_512 hashing \
          algorithm.\n\
-        \                   \n\
-        \                    }\n\
-        \               {-  Signing algorithms that end in SHAKE_256 use the SHAKE_256 hashing \
+        \                    \n\
+        \                     }\n\
+        \                {-  Signing algorithms that end in SHAKE_256 use the SHAKE_256 hashing \
          algorithm.\n\
-        \                   \n\
-        \                    }\n\
-        \               {-  SM2DSA uses the SM3 hashing algorithm. For details, see \
+        \                    \n\
+        \                     }\n\
+        \                {-  SM2DSA uses the SM3 hashing algorithm. For details, see \
          {{:https://docs.aws.amazon.com/kms/latest/developerguide/offline-operations.html#key-spec-sm-offline-verification}Offline \
          verification with SM2 key pairs}.\n\
-        \                   \n\
-        \                    }\n\
-        \               }\n\
+        \                    \n\
+        \                     }\n\
+        \                }\n\
         \  "]
   message : plaintext_type;
       [@ocaml.doc
@@ -630,6 +654,14 @@ type nonrec update_custom_key_store_request = {
         \  \n\
         \   You can change this value when the external key store is connected or disconnected.\n\
         \   "]
+  xks_proxy_vpc_endpoint_service_owner : account_id_type option;
+      [@ocaml.doc
+        "Changes the Amazon Web Services account ID that KMS uses to identify the Amazon VPC \
+         endpoint service for your external key store proxy (XKS proxy). This parameter is \
+         optional. If not specified, the current Amazon Web Services account ID for the VPC \
+         endpoint service will not be updated.\n\n\
+        \ To change this value, the external key store must be disconnected.\n\
+        \ "]
   xks_proxy_vpc_endpoint_service_name : xks_proxy_vpc_endpoint_service_name_type option;
       [@ocaml.doc
         "Changes the name that KMS uses to identify the Amazon VPC endpoint service for your \
@@ -707,8 +739,7 @@ type nonrec update_custom_key_store_request = {
         \  Do not include confidential or sensitive information in this field. This field may be \
          displayed in plaintext in CloudTrail logs and other output.\n\
         \  \n\
-        \    To change this value, an CloudHSM key store must be disconnected. An external key \
-         store can be connected or disconnected.\n\
+        \    To change this value, the custom key store can be connected or disconnected.\n\
         \    "]
   custom_key_store_id : custom_key_store_id_type;
       [@ocaml.doc
@@ -758,8 +789,9 @@ type nonrec custom_key_store_invalid_state_exception = {
   \            \n\
   \             }\n\
   \        {-  You requested the [UpdateCustomKeyStore] or [DeleteCustomKeyStore] operation on a \
-   custom key store that is not disconnected. This operation is valid only when the custom key \
-   store [ConnectionState] is [DISCONNECTED].\n\
+   custom key store that is not disconnected. [UpdateCustomKeyStore] can be called on a custom key \
+   store in the [CONNECTED] state only to update [NewCustomKeyStoreName]. For all other \
+   properties, the custom key store [ConnectionState] must be [DISCONNECTED].\n\
   \            \n\
   \             }\n\
   \        {-  You requested the [GenerateRandom] operation in an CloudHSM key store that is not \
@@ -854,10 +886,10 @@ type nonrec update_alias_request = {
   target_key_id : key_id_type;
       [@ocaml.doc
         "Identifies the \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk}customer \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-mgn-key}customer \
          managed key} to associate with the alias. You don't have permission to associate an alias \
          with an \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}Amazon \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-key}Amazon \
          Web Services managed key}.\n\n\
         \ The KMS key must be in the same Amazon Web Services account and Region as the alias. \
          Also, the new target KMS key must be the same type as the current target KMS key (both \
@@ -1053,41 +1085,56 @@ type nonrec sign_request = {
          is a message digest. If you use the [DIGEST] value with an unhashed message, the security \
          of the signing operation can be compromised.\n\
         \   \n\
-        \     When the value of [MessageType] is [DIGEST], the length of the [Message] value must \
-         match the length of hashed messages for the specified signing algorithm.\n\
+        \     When using ECC_NIST_EDWARDS25519 KMS keys:\n\
         \     \n\
-        \      When the value of [MessageType] is [EXTERNAL_MU] the length of the [Message] value \
-         must be 64 bytes.\n\
+        \      {ul\n\
+        \            {-  ED25519_SHA_512 signing algorithm requires KMS [MessageType:RAW] \n\
+        \                \n\
+        \                 }\n\
+        \            {-  ED25519_PH_SHA_512 signing algorithm requires KMS [MessageType:DIGEST] \n\
+        \                \n\
+        \                 }\n\
+        \            }\n\
+        \    When you specify the ED25519_PH_SHA_512 signing algorithm with [MessageType:DIGEST], \
+         KMS still performs the SHA-512 prehash described in \
+         {{:https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-5.pdf#page=39}Step 1 of Section \
+         7.8.1 in FIPS 186-5}. This means the input is hashed twice: once by you and once by KMS. \n\
+        \    \n\
+        \      When the value of [MessageType] is [DIGEST], the length of the [Message] value must \
+         match the length of hashed messages for the specified signing algorithm.\n\
         \      \n\
-        \       You can submit a message digest and omit the [MessageType] or specify [RAW] so the \
-         digest is hashed again while signing. However, this can cause verification failures when \
-         verifying with a system that assumes a single hash.\n\
+        \       When the value of [MessageType] is [EXTERNAL_MU] the length of the [Message] value \
+         must be 64 bytes.\n\
         \       \n\
-        \        The hashing algorithm that [Sign] uses is based on the [SigningAlgorithm] value.\n\
+        \        You can submit a message digest and omit the [MessageType] or specify [RAW] so \
+         the digest is hashed again while signing. However, this can cause verification failures \
+         when verifying with a system that assumes a single hash.\n\
         \        \n\
-        \         {ul\n\
-        \               {-  Signing algorithms that end in SHA_256 use the SHA_256 hashing \
+        \         The hashing algorithm that [Sign] uses is based on the [SigningAlgorithm] value.\n\
+        \         \n\
+        \          {ul\n\
+        \                {-  Signing algorithms that end in SHA_256 use the SHA_256 hashing \
          algorithm.\n\
-        \                   \n\
-        \                    }\n\
-        \               {-  Signing algorithms that end in SHA_384 use the SHA_384 hashing \
+        \                    \n\
+        \                     }\n\
+        \                {-  Signing algorithms that end in SHA_384 use the SHA_384 hashing \
          algorithm.\n\
-        \                   \n\
-        \                    }\n\
-        \               {-  Signing algorithms that end in SHA_512 use the SHA_512 hashing \
+        \                    \n\
+        \                     }\n\
+        \                {-  Signing algorithms that end in SHA_512 use the SHA_512 hashing \
          algorithm.\n\
-        \                   \n\
-        \                    }\n\
-        \               {-  Signing algorithms that end in SHAKE_256 use the SHAKE_256 hashing \
+        \                    \n\
+        \                     }\n\
+        \                {-  Signing algorithms that end in SHAKE_256 use the SHAKE_256 hashing \
          algorithm.\n\
-        \                   \n\
-        \                    }\n\
-        \               {-  SM2DSA uses the SM3 hashing algorithm. For details, see \
+        \                    \n\
+        \                     }\n\
+        \                {-  SM2DSA uses the SM3 hashing algorithm. For details, see \
          {{:https://docs.aws.amazon.com/kms/latest/developerguide/offline-operations.html#key-spec-sm-offline-verification}Offline \
          verification with SM2 key pairs}.\n\
-        \                   \n\
-        \                    }\n\
-        \               }\n\
+        \                    \n\
+        \                     }\n\
+        \                }\n\
         \  "]
   message : plaintext_type;
       [@ocaml.doc
@@ -1384,6 +1431,7 @@ type nonrec customer_master_key_spec =
 [@@ocaml.doc ""]
 
 type nonrec key_spec =
+  | ECC_NIST_EDWARDS25519 [@ocaml.doc ""]
   | ML_DSA_87 [@ocaml.doc ""]
   | ML_DSA_65 [@ocaml.doc ""]
   | ML_DSA_44 [@ocaml.doc ""]
@@ -1457,10 +1505,10 @@ type nonrec key_metadata = {
   current_key_material_id : backing_key_id_type option;
       [@ocaml.doc
         "Identifies the current key material. This value is present for symmetric encryption keys \
-         with [AWS_KMS] origin and single-Region, symmetric encryption keys with [EXTERNAL] \
-         origin. These KMS keys support automatic or on-demand key rotation and can have multiple \
-         key materials associated with them. KMS uses the current key material for both encryption \
-         and decryption, and the non-current key material for decryption operations only.\n"]
+         with [AWS_KMS] or [EXTERNAL] origin. These KMS keys support automatic or on-demand key \
+         rotation and can have multiple key materials associated with them. KMS uses the current \
+         key material for both encryption and decryption, and the non-current key material for \
+         decryption operations only.\n"]
   xks_key_configuration : xks_key_configuration_type option;
       [@ocaml.doc
         "Information about the external key that is associated with a KMS key in an external key \
@@ -1844,7 +1892,23 @@ type nonrec encryption_context_key = string [@@ocaml.doc ""]
 type nonrec encryption_context_type = (encryption_context_key * encryption_context_value) list
 [@@ocaml.doc ""]
 
+type nonrec dry_run_modifier_type = IGNORE_CIPHERTEXT [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec dry_run_modifier_list = dry_run_modifier_type list [@@ocaml.doc ""]
+
 type nonrec re_encrypt_request = {
+  dry_run_modifiers : dry_run_modifier_list option;
+      [@ocaml.doc
+        "Specifies the modifiers to apply to the dry run operation. [DryRunModifiers] is an \
+         optional parameter that only applies when [DryRun] is set to [true].\n\n\
+        \ When set to [IGNORE_CIPHERTEXT], KMS performs only authorization validation without \
+         ciphertext validation. This allows you to test permissions without requiring a valid \
+         ciphertext blob.\n\
+        \ \n\
+        \  To learn more about how to use this parameter, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/testing-permissions.html}Testing \
+         your permissions} in the {i Key Management Service Developer Guide}.\n\
+        \  "]
   dry_run : nullable_boolean_type option;
       [@ocaml.doc
         "Checks if your request will succeed. [DryRun] is an optional parameter. \n\n\
@@ -1939,13 +2003,14 @@ type nonrec re_encrypt_request = {
          different KMS key, the [ReEncrypt] operation throws an [IncorrectKeyException].\n\
         \ \n\
         \  This parameter is required only when the ciphertext was encrypted under an asymmetric \
-         KMS key. If you used a symmetric encryption KMS key, KMS can get the KMS key from \
-         metadata that it adds to the symmetric ciphertext blob. However, it is always recommended \
-         as a best practice. This practice ensures that you use the KMS key that you intend.\n\
+         KMS key or when [DryRun] is [true] and [DryRunModifiers] is set to [IGNORE_CIPHERTEXT]. \
+         If you used a symmetric encryption KMS key, KMS can get the KMS key from metadata that it \
+         adds to the symmetric ciphertext blob. However, it is always recommended as a best \
+         practice. This practice ensures that you use the KMS key that you intend.\n\
         \  \n\
         \   To specify a KMS key, use its key ID, key ARN, alias name, or alias ARN. When using an \
          alias name, prefix it with [\"alias/\"]. To specify a KMS key in a different Amazon Web \
-         Services account, you must use the key ARN or alias ARN.\n\
+         Services account, you should use the key ARN or alias ARN.\n\
         \   \n\
         \    For example:\n\
         \    \n\
@@ -1982,7 +2047,12 @@ type nonrec re_encrypt_request = {
          {{:https://docs.aws.amazon.com/kms/latest/developerguide/encrypt_context.html}Encryption \
          context} in the {i Key Management Service Developer Guide}.\n\
         \  "]
-  ciphertext_blob : ciphertext_type; [@ocaml.doc "Ciphertext of the data to reencrypt.\n"]
+  ciphertext_blob : ciphertext_type option;
+      [@ocaml.doc
+        "Ciphertext of the data to reencrypt.\n\n\
+        \ This parameter is required in all cases except when [DryRun] is [true] and \
+         [DryRunModifiers] is set to [IGNORE_CIPHERTEXT].\n\
+        \ "]
 }
 [@@ocaml.doc ""]
 
@@ -2120,7 +2190,17 @@ type nonrec grant_operation =
 
 type nonrec grant_operation_list = grant_operation list [@@ocaml.doc ""]
 
+type nonrec grant_constraint_source_arn_type = string [@@ocaml.doc ""]
+
 type nonrec grant_constraints = {
+  source_arn : grant_constraint_source_arn_type option;
+      [@ocaml.doc
+        "The {{:https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html} Amazon \
+         Resource Name (ARN)} of an Amazon Web Services resource on behalf of which the request is \
+         made. This is effectively the same as having the \
+         {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcearn}aws:SourceArn} \
+         global condition key in the grant. The SourceArn constraint ensures that the principal \
+         can use the KMS key only when the request is made on behalf of the specified resource.\n"]
   encryption_context_equals : encryption_context_type option;
       [@ocaml.doc
         "A list of key-value pairs that must match the encryption context in the \
@@ -2138,35 +2218,62 @@ type nonrec grant_constraints = {
 [@@ocaml.doc
   "Use this structure to allow \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/kms-cryptography.html#cryptographic-operations}cryptographic \
-   operations} in the grant only when the operation request includes the specified \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/encrypt_context.html}encryption \
-   context}. \n\n\
-  \ KMS applies the grant constraints only to cryptographic operations that support an encryption \
-   context, that is, all cryptographic operations with a symmetric KMS key. Grant constraints are \
-   not applied to operations that do not support an encryption context, such as cryptographic \
-   operations with asymmetric KMS keys and management operations, such as [DescribeKey] or \
-   [RetireGrant].\n\
+   operations} in the grant only when the operation request meets the specified constraints.\n\n\
+  \ KMS supports the following grant constraints:\n\
   \ \n\
-  \   In a cryptographic operation, the encryption context in the decryption operation must be an \
-   exact, case-sensitive match for the keys and values in the encryption context of the encryption \
-   operation. Only the order of the pairs can vary.\n\
-  \   \n\
-  \    However, in a grant constraint, the key in each key-value pair is not case sensitive, but \
-   the value is case sensitive.\n\
-  \    \n\
-  \     To avoid confusion, do not use multiple encryption context pairs that differ only by case. \
-   To require a fully case-sensitive encryption context, use the [kms:EncryptionContext:] and \
-   [kms:EncryptionContextKeys] conditions in an IAM or key policy. For details, see \
+  \  {ul\n\
+  \        {-   [EncryptionContextEquals] and [EncryptionContextSubset] \226\128\148 These \
+   encryption context constraints apply only to cryptographic operations that support an \
+   encryption context, that is, all cryptographic operations with a symmetric KMS key. Encryption \
+   context grant constraints are not applied to operations that do not support an encryption \
+   context, such as cryptographic operations with asymmetric KMS keys and management operations, \
+   such as [DescribeKey] or [RetireGrant].\n\
+  \            \n\
+  \              In a cryptographic operation, the encryption context in the decryption operation \
+   must be an exact, case-sensitive match for the keys and values in the encryption context of the \
+   encryption operation. Only the order of the pairs can vary.\n\
+  \              \n\
+  \               However, in a grant constraint, the key in each key-value pair is not case \
+   sensitive, but the value is case sensitive.\n\
+  \               \n\
+  \                To avoid confusion, do not use multiple encryption context pairs that differ \
+   only by case. To require a fully case-sensitive encryption context, use the \
+   [kms:EncryptionContext:] and [kms:EncryptionContextKeys] conditions in an IAM or key policy. \
+   For details, see \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/conditions-kms.html#conditions-kms-encryption-context}kms:EncryptionContext:context-key} \
    in the {i  {i Key Management Service Developer Guide} }.\n\
-  \     \n\
-  \      "]
+  \                \n\
+  \                  }\n\
+  \        {-   [SourceArn] \226\128\148 This grant constraint allows the permissions in the grant \
+   only when the request is made on behalf of a specific Amazon Web Services resource, identified \
+   by its {{:https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html}Amazon \
+   Resource Name (ARN)}. This is effectively the same as having the \
+   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcearn}aws:SourceArn} \
+   global condition key in the grant. The SourceArn constraint is supported on grants for all \
+   types of KMS keys and can also be applied to the [DescribeKey] operation when specified in the \
+   request. However, it does not apply to [RetireGrant] operation.\n\
+  \            \n\
+  \             }\n\
+  \        }\n\
+  \  "]
+
+type nonrec service_principal_type = string [@@ocaml.doc ""]
 
 type nonrec grant_list_entry = {
+  retiring_service_principal : service_principal_type option;
+      [@ocaml.doc
+        "The Amazon Web Services \
+         {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services}service \
+         principal} that can retire the grant.\n"]
+  grantee_service_principal : service_principal_type option;
+      [@ocaml.doc
+        "The Amazon Web Services \
+         {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services}service \
+         principal} that gets the permissions in the grant.\n"]
   constraints : grant_constraints option;
       [@ocaml.doc
-        "A list of key-value pairs that must be present in the encryption context of certain \
-         subsequent operations that the grant allows.\n"]
+        "The constraints on the grant, such as encryption context pairs or a SourceArn, that \
+         restrict the subsequent operations the grant allows.\n"]
   operations : grant_operation_list option;
       [@ocaml.doc "The list of operations permitted by the grant.\n"]
   issuing_account : principal_id_type option;
@@ -2176,12 +2283,13 @@ type nonrec grant_list_entry = {
   grantee_principal : principal_id_type option;
       [@ocaml.doc
         "The identity that gets the permissions in the grant.\n\n\
-        \ The [GranteePrincipal] field in the [ListGrants] response usually contains the user or \
-         role designated as the grantee principal in the grant. However, when the grantee \
-         principal in the grant is an Amazon Web Services service, the [GranteePrincipal] field \
-         contains the \
+        \ When a grant is created with the [GranteePrincipal] field, the [ListGrants] response \
+         usually contains the user or role designated as the grantee principal in the grant. \
+         However, if the grantee principal is an Amazon Web Services service, the \
+         [GranteePrincipal] field contains an Amazon Web Services \
          {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services}service \
-         principal}, which might represent several different grantee principals.\n\
+         principal}, which might correspond to several different grantee principals, such as an \
+         IAM user, IAM role, or Amazon Web Services account.\n\
         \ "]
   creation_date : date_type option; [@ocaml.doc "The date and time when the grant was created.\n"]
   name : grant_name_type option;
@@ -2215,7 +2323,13 @@ type nonrec list_grants_response = {
 type nonrec limit_type = int [@@ocaml.doc ""]
 
 type nonrec list_retirable_grants_request = {
-  retiring_principal : principal_id_type;
+  retiring_service_principal : service_principal_type option;
+      [@ocaml.doc
+        "The retiring service principal for which to list grants. This filter is only usable by \
+         callers in a service principal.\n\n\
+        \ You must specify either [RetiringPrincipal] or [RetiringServicePrincipal], but not both.\n\
+        \ "]
+  retiring_principal : principal_id_type option;
       [@ocaml.doc
         "The retiring principal for which to list grants. Enter a principal in your Amazon Web \
          Services account.\n\n\
@@ -2226,7 +2340,9 @@ type nonrec list_retirable_grants_request = {
          help with the ARN syntax for a principal, see \
          {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-arns}IAM \
          ARNs} in the {i  {i Identity and Access Management User Guide} }.\n\
-        \ "]
+        \ \n\
+        \  You must specify either [RetiringPrincipal] or [RetiringServicePrincipal], but not both.\n\
+        \  "]
   marker : marker_type option;
       [@ocaml.doc
         "Use this parameter in a subsequent request after you receive a response with truncated \
@@ -2349,6 +2465,7 @@ type nonrec import_state = PENDING_IMPORT [@ocaml.doc ""] | IMPORTED [@ocaml.doc
 [@@ocaml.doc ""]
 
 type nonrec key_material_state =
+  | PENDING_MULTI_REGION_IMPORT_AND_ROTATION [@ocaml.doc ""]
   | PENDING_ROTATION [@ocaml.doc ""]
   | CURRENT [@ocaml.doc ""]
   | NON_CURRENT [@ocaml.doc ""]
@@ -2384,13 +2501,20 @@ type nonrec rotations_list_entry = {
          KMS keys with [EXTERNAL] origin.\n"]
   key_material_state : key_material_state option;
       [@ocaml.doc
-        "There are three possible values for this field: [CURRENT], [NON_CURRENT] and \
-         [PENDING_ROTATION]. KMS uses [CURRENT] key material for both encryption and decryption \
-         and [NON_CURRENT] key material only for decryption. [PENDING_ROTATION] identifies key \
-         material that has been imported for on-demand key rotation but the rotation hasn't \
-         completed. Key material in [PENDING_ROTATION] is not permanently associated with the KMS \
-         key. You can delete this key material and import different key material in its place. The \
-         [PENDING_ROTATION] value is only used in symmetric encryption keys with imported key \
+        "There are four possible values for this field: [CURRENT], [NON_CURRENT], \
+         [PENDING_MULTI_REGION_IMPORT_AND_ROTATION] and [PENDING_ROTATION]. KMS uses [CURRENT] key \
+         material for both encryption and decryption and [NON_CURRENT] key material only for \
+         decryption. [PENDING_ROTATION] identifies key material that has been imported for \
+         on-demand key rotation but the rotation hasn't completed. The key material state \
+         [PENDING_MULTI_REGION_IMPORT_AND_ROTATION] is unique to multi-region, symmetric \
+         encryption keys with imported key material. It indicates key material that has been \
+         imported into the primary Region key but not all of the replica Region keys. When this \
+         key material is imported in to all of the replica Region keys, the key material state \
+         will change to [PENDING_ROTATION]. Key material in \
+         [PENDING_MULTI_REGION_IMPORT_AND_ROTATION] or [PENDING_ROTATION] state is not permanently \
+         associated with the KMS key. You can delete this key material and import different key \
+         material in its place. The [PENDING_MULTI_REGION_IMPORT_AND_ROTATION] and \
+         [PENDING_ROTATION] values are only used in symmetric encryption keys with imported key \
          material. The other values, [CURRENT] and [NON_CURRENT], are used for all KMS keys that \
          support automatic or on-demand key rotation.\n"]
   import_state : import_state option;
@@ -2533,9 +2657,18 @@ type nonrec list_key_policies_request = {
 [@@ocaml.doc ""]
 
 type nonrec list_grants_request = {
+  grantee_service_principal : service_principal_type option;
+      [@ocaml.doc
+        "Returns only grants where the specified Amazon Web Services service principal is the \
+         grantee service principal for the grant. This filter is only usable by callers in a \
+         service principal.\n\n\
+        \ You can specify either [GranteePrincipal] or [GranteeServicePrincipal], but not both.\n\
+        \ "]
   grantee_principal : principal_id_type option;
       [@ocaml.doc
-        "Returns only grants where the specified principal is the grantee principal for the grant.\n"]
+        "Returns only grants where the specified principal is the grantee principal for the grant.\n\n\
+        \ You can specify either [GranteePrincipal] or [GranteeServicePrincipal], but not both.\n\
+        \ "]
   grant_id : grant_id_type option;
       [@ocaml.doc
         "Returns only the grant with the specified grant ID. The grant ID uniquely identifies the \
@@ -2716,7 +2849,12 @@ type nonrec import_key_material_request = {
          key or not. This parameter is optional and only usable with symmetric encryption keys. If \
          no key material has ever been imported into the KMS key, and this parameter is omitted, \
          the parameter defaults to [NEW_KEY_MATERIAL]. After the first key material is imported, \
-         if this parameter is omitted then the parameter defaults to [EXISTING_KEY_MATERIAL].\n"]
+         if this parameter is omitted then the parameter defaults to [EXISTING_KEY_MATERIAL].\n\n\
+        \ For multi-Region keys, you must first import new key material into the primary Region \
+         key. You should use the [NEW_KEY_MATERIAL] import type when importing key material into \
+         the primary Region key. Then, you can import the same key material into the replica \
+         Region key. The import type for the replica Region key should be [EXISTING_KEY_MATERIAL].\n\
+        \ "]
   expiration_model : expiration_model_type option;
       [@ocaml.doc
         "Specifies whether the key material expires. The default is [KEY_MATERIAL_EXPIRES]. For \
@@ -3070,18 +3208,98 @@ type nonrec get_key_policy_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec key_last_usage_tracking_operation =
+  | VerifyMac [@ocaml.doc ""]
+  | Verify [@ocaml.doc ""]
+  | Sign [@ocaml.doc ""]
+  | ReEncrypt [@ocaml.doc ""]
+  | GenerateMac [@ocaml.doc ""]
+  | GenerateDataKeyWithoutPlaintext [@ocaml.doc ""]
+  | GenerateDataKeyPairWithoutPlaintext [@ocaml.doc ""]
+  | GenerateDataKeyPair [@ocaml.doc ""]
+  | GenerateDataKey [@ocaml.doc ""]
+  | Encrypt [@ocaml.doc ""]
+  | DeriveSharedSecret [@ocaml.doc ""]
+  | Decrypt [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec cloud_trail_event_id_type = string [@@ocaml.doc ""]
+
+type nonrec kms_request_id_type = string [@@ocaml.doc ""]
+
+type nonrec key_last_usage_data = {
+  kms_request_id : kms_request_id_type option;
+      [@ocaml.doc
+        "The KMS request ID associated with the last successful cryptographic operation. Absent if \
+         the key has not been used since KMS began tracking.\n"]
+  cloud_trail_event_id : cloud_trail_event_id_type option;
+      [@ocaml.doc
+        "The CloudTrail [eventId] associated with the last successful cryptographic operation. \
+         Absent if the key has not been used since KMS began tracking.\n"]
+  timestamp : date_type option;
+      [@ocaml.doc
+        "The date and time when the KMS key was most recently used for a successful cryptographic \
+         operation. Absent if the key has not been used since KMS began tracking.\n"]
+  operation : key_last_usage_tracking_operation option;
+      [@ocaml.doc
+        "The last successful cryptographic operation the KMS key was used for. Absent if the key \
+         has not been used since KMS began tracking.\n"]
+}
+[@@ocaml.doc
+  "Contains usage information about the last time the KMS key was used for a successful \
+   cryptographic operation.\n"]
+
+type nonrec get_key_last_usage_response = {
+  key_creation_date : date_type option;
+      [@ocaml.doc "The date and time when the KMS key was created.\n"]
+  tracking_start_date : date_type option;
+      [@ocaml.doc
+        "The date from which KMS began recording cryptographic activity for this key, or the date \
+         the KMS key was created, whichever is later.\n"]
+  key_last_usage : key_last_usage_data option;
+      [@ocaml.doc
+        "Contains usage information about the last time the KMS key was used for a successful \
+         cryptographic operation. If the key has not been used since tracking began, this response \
+         element is empty.\n"]
+  key_id : key_id_type option; [@ocaml.doc "The globally unique identifier for the KMS key.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_key_last_usage_request = {
+  key_id : key_id_type;
+      [@ocaml.doc
+        "Identifies the KMS key to get usage information for. To specify a KMS key, use its key ID \
+         or key ARN. Alias names are not supported.\n\n\
+        \ Specify the key ID or key ARN of the KMS key.\n\
+        \ \n\
+        \  For example:\n\
+        \  \n\
+        \   {ul\n\
+        \         {-  Key ID: [1234abcd-12ab-34cd-56ef-1234567890ab] \n\
+        \             \n\
+        \              }\n\
+        \         {-  Key ARN: \
+         [arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab] \n\
+        \             \n\
+        \              }\n\
+        \         }\n\
+        \   To get the key ID and key ARN for a KMS key, use [ListKeys] or [DescribeKey].\n\
+        \   "]
+}
+[@@ocaml.doc ""]
+
 type nonrec generate_random_response = {
   ciphertext_for_recipient : ciphertext_type option;
       [@ocaml.doc
-        "The plaintext random bytes encrypted with the public key from the Nitro enclave. This \
-         ciphertext can be decrypted only by using a private key in the Nitro enclave. \n\n\
+        "The plaintext random bytes encrypted with the public key from the attestation document. \
+         This ciphertext can be decrypted only by using a private key from the attested \
+         environment. \n\n\
         \ This field is included in the response only when the [Recipient] parameter in the \
-         request includes a valid attestation document from an Amazon Web Services Nitro enclave. \
-         For information about the interaction between KMS and Amazon Web Services Nitro Enclaves, \
-         see \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html}How \
-         Amazon Web Services Nitro Enclaves uses KMS} in the {i Key Management Service Developer \
-         Guide}.\n\
+         request includes a valid attestation document from an Amazon Web Services Nitro enclave \
+         or NitroTPM. For information about the interaction between KMS and Amazon Web Services \
+         Nitro Enclaves or Amazon Web Services NitroTPM, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html}Cryptographic \
+         attestation support in KMS} in the {i Key Management Service Developer Guide}.\n\
         \ "]
   plaintext : plaintext_type option;
       [@ocaml.doc
@@ -3102,21 +3320,22 @@ type nonrec attestation_document_type = bytes [@@ocaml.doc ""]
 type nonrec recipient_info = {
   attestation_document : attestation_document_type option;
       [@ocaml.doc
-        "The attestation document for an Amazon Web Services Nitro Enclave. This document includes \
-         the enclave's public key.\n"]
+        "The attestation document for an Amazon Web Services Nitro Enclave or a NitroTPM. This \
+         document includes the enclave's public key.\n"]
   key_encryption_algorithm : key_encryption_mechanism option;
       [@ocaml.doc
         "The encryption algorithm that KMS should use with the public key for an Amazon Web \
-         Services Nitro Enclave to encrypt plaintext values for the response. The only valid value \
-         is [RSAES_OAEP_SHA_256].\n"]
+         Services Nitro Enclave or NitroTPM to encrypt plaintext values for the response. The only \
+         valid value is [RSAES_OAEP_SHA_256].\n"]
 }
 [@@ocaml.doc
   "Contains information about the party that receives the response from the API operation.\n\n\
-  \ This data type is designed to support Amazon Web Services Nitro Enclaves, which lets you \
-   create an isolated compute environment in Amazon EC2. For information about the interaction \
-   between KMS and Amazon Web Services Nitro Enclaves, see \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html}How \
-   Amazon Web Services Nitro Enclaves uses KMS} in the {i Key Management Service Developer Guide}.\n\
+  \ This data type is designed to support Amazon Web Services Nitro Enclaves and Amazon Web \
+   Services NitroTPM, which lets you create an attested environment in Amazon EC2. For information \
+   about the interaction between KMS and Amazon Web Services Nitro Enclaves or Amazon Web Services \
+   NitroTPM, see \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html}Cryptographic \
+   attestation support in KMS} in the {i Key Management Service Developer Guide}.\n\
   \ "]
 
 type nonrec generate_random_request = {
@@ -3124,25 +3343,24 @@ type nonrec generate_random_request = {
       [@ocaml.doc
         "A signed \
          {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nitro-enclave-how.html#term-attestdoc}attestation \
-         document} from an Amazon Web Services Nitro enclave and the encryption algorithm to use \
-         with the enclave's public key. The only valid encryption algorithm is \
-         [RSAES_OAEP_SHA_256]. \n\n\
-        \ This parameter only supports attestation documents for Amazon Web Services Nitro \
-         Enclaves. To include this parameter, use the \
+         document} from an Amazon Web Services Nitro enclave or NitroTPM, and the encryption \
+         algorithm to use with the public key in the attestation document. The only valid \
+         encryption algorithm is [RSAES_OAEP_SHA_256]. \n\n\
+        \ This parameter supports the \
          {{:https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk}Amazon \
-         Web Services Nitro Enclaves SDK} or any Amazon Web Services SDK.\n\
+         Web Services Nitro Enclaves SDK} or any Amazon Web Services SDK for Amazon Web Services \
+         Nitro Enclaves. It supports any Amazon Web Services SDK for Amazon Web Services NitroTPM. \n\
         \ \n\
         \  When you use this parameter, instead of returning plaintext bytes, KMS encrypts the \
          plaintext bytes under the public key in the attestation document, and returns the \
          resulting ciphertext in the [CiphertextForRecipient] field in the response. This \
-         ciphertext can be decrypted only with the private key in the enclave. The [Plaintext] \
-         field in the response is null or empty.\n\
+         ciphertext can be decrypted only with the private key in the attested environment. The \
+         [Plaintext] field in the response is null or empty.\n\
         \  \n\
         \   For information about the interaction between KMS and Amazon Web Services Nitro \
-         Enclaves, see \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html}How \
-         Amazon Web Services Nitro Enclaves uses KMS} in the {i Key Management Service Developer \
-         Guide}.\n\
+         Enclaves or Amazon Web Services NitroTPM, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html}Cryptographic \
+         attestation support in KMS} in the {i Key Management Service Developer Guide}.\n\
         \   "]
   custom_key_store_id : custom_key_store_id_type option;
       [@ocaml.doc
@@ -3308,6 +3526,7 @@ type nonrec generate_data_key_without_plaintext_request = {
 [@@ocaml.doc ""]
 
 type nonrec data_key_pair_spec =
+  | ECC_NIST_EDWARDS25519 [@ocaml.doc ""]
   | SM2 [@ocaml.doc ""]
   | ECC_SECG_P256K1 [@ocaml.doc ""]
   | ECC_NIST_P521 [@ocaml.doc ""]
@@ -3421,15 +3640,15 @@ type nonrec generate_data_key_pair_response = {
       [@ocaml.doc "The identifier of the key material used to encrypt the private key.\n"]
   ciphertext_for_recipient : ciphertext_type option;
       [@ocaml.doc
-        "The plaintext private data key encrypted with the public key from the Nitro enclave. This \
-         ciphertext can be decrypted only by using a private key in the Nitro enclave. \n\n\
+        "The plaintext private data key encrypted with the public key from the attestation \
+         document. This ciphertext can be decrypted only by using a private key from the attested \
+         environment. \n\n\
         \ This field is included in the response only when the [Recipient] parameter in the \
-         request includes a valid attestation document from an Amazon Web Services Nitro enclave. \
-         For information about the interaction between KMS and Amazon Web Services Nitro Enclaves, \
-         see \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html}How \
-         Amazon Web Services Nitro Enclaves uses KMS} in the {i Key Management Service Developer \
-         Guide}.\n\
+         request includes a valid attestation document from an Amazon Web Services Nitro enclave \
+         or NitroTPM. For information about the interaction between KMS and Amazon Web Services \
+         Nitro Enclaves or Amazon Web Services NitroTPM, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html}Cryptographic \
+         attestation support in KMS} in the {i Key Management Service Developer Guide}.\n\
         \ "]
   key_pair_spec : data_key_pair_spec option;
       [@ocaml.doc "The type of data key pair that was generated.\n"]
@@ -3468,29 +3687,31 @@ type nonrec generate_data_key_pair_request = {
       [@ocaml.doc
         "A signed \
          {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nitro-enclave-how.html#term-attestdoc}attestation \
-         document} from an Amazon Web Services Nitro enclave and the encryption algorithm to use \
-         with the enclave's public key. The only valid encryption algorithm is \
-         [RSAES_OAEP_SHA_256]. \n\n\
+         document} from an Amazon Web Services Nitro enclave or NitroTPM, and the encryption \
+         algorithm to use with the public key in the attestation document. The only valid \
+         encryption algorithm is [RSAES_OAEP_SHA_256]. \n\n\
         \ This parameter only supports attestation documents for Amazon Web Services Nitro \
-         Enclaves. To call DeriveSharedSecret for an Amazon Web Services Nitro Enclaves, use the \
+         Enclaves or Amazon Web Services NitroTPM. To call GenerateDataKeyPair generate an \
+         attestation document use either \
          {{:https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk}Amazon \
-         Web Services Nitro Enclaves SDK} to generate the attestation document and then use the \
-         Recipient parameter from any Amazon Web Services SDK to provide the attestation document \
-         for the enclave.\n\
+         Web Services Nitro Enclaves SDK} for an Amazon Web Services Nitro Enclaves or \
+         {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/attestation-get-doc.html}Amazon \
+         Web Services NitroTPM tools} for Amazon Web Services NitroTPM. Then use the Recipient \
+         parameter from any Amazon Web Services SDK to provide the attestation document for the \
+         attested environment.\n\
         \ \n\
         \  When you use this parameter, instead of returning a plaintext copy of the private data \
          key, KMS encrypts the plaintext private data key under the public key in the attestation \
          document, and returns the resulting ciphertext in the [CiphertextForRecipient] field in \
-         the response. This ciphertext can be decrypted only with the private key in the enclave. \
-         The [CiphertextBlob] field in the response contains a copy of the private data key \
-         encrypted under the KMS key specified by the [KeyId] parameter. The [PrivateKeyPlaintext] \
-         field in the response is null or empty.\n\
+         the response. This ciphertext can be decrypted only with the private key in the attested \
+         environment. The [CiphertextBlob] field in the response contains a copy of the private \
+         data key encrypted under the KMS key specified by the [KeyId] parameter. The \
+         [PrivateKeyPlaintext] field in the response is null or empty.\n\
         \  \n\
         \   For information about the interaction between KMS and Amazon Web Services Nitro \
-         Enclaves, see \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html}How \
-         Amazon Web Services Nitro Enclaves uses KMS} in the {i Key Management Service Developer \
-         Guide}.\n\
+         Enclaves or Amazon Web Services NitroTPM, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html}Cryptographic \
+         attestation support in KMS} in the {i Key Management Service Developer Guide}.\n\
         \   "]
   grant_tokens : grant_token_list option;
       [@ocaml.doc
@@ -3568,15 +3789,14 @@ type nonrec generate_data_key_response = {
          the request includes the [Recipient] parameter.\n"]
   ciphertext_for_recipient : ciphertext_type option;
       [@ocaml.doc
-        "The plaintext data key encrypted with the public key from the Nitro enclave. This \
-         ciphertext can be decrypted only by using a private key in the Nitro enclave. \n\n\
+        "The plaintext data key encrypted with the public key from the attestation document. This \
+         ciphertext can be decrypted only by using a private key from the attested environment. \n\n\
         \ This field is included in the response only when the [Recipient] parameter in the \
-         request includes a valid attestation document from an Amazon Web Services Nitro enclave. \
-         For information about the interaction between KMS and Amazon Web Services Nitro Enclaves, \
-         see \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html}How \
-         Amazon Web Services Nitro Enclaves uses KMS} in the {i Key Management Service Developer \
-         Guide}.\n\
+         request includes a valid attestation document from an Amazon Web Services Nitro enclave \
+         or NitroTPM. For information about the interaction between KMS and Amazon Web Services \
+         Nitro Enclaves or Amazon Web Services NitroTPM, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html}Cryptographic \
+         attestation support in KMS} in the {i Key Management Service Developer Guide}.\n\
         \ "]
   key_id : key_id_type option;
       [@ocaml.doc
@@ -3610,13 +3830,13 @@ type nonrec generate_data_key_request = {
       [@ocaml.doc
         "A signed \
          {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nitro-enclave-how.html#term-attestdoc}attestation \
-         document} from an Amazon Web Services Nitro enclave and the encryption algorithm to use \
-         with the enclave's public key. The only valid encryption algorithm is \
-         [RSAES_OAEP_SHA_256]. \n\n\
-        \ This parameter only supports attestation documents for Amazon Web Services Nitro \
-         Enclaves. To include this parameter, use the \
+         document} from an Amazon Web Services Nitro enclave or NitroTPM, and the encryption \
+         algorithm to use with the public key in the attestation document. The only valid \
+         encryption algorithm is [RSAES_OAEP_SHA_256]. \n\n\
+        \ This parameter supports the \
          {{:https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk}Amazon \
-         Web Services Nitro Enclaves SDK} or any Amazon Web Services SDK.\n\
+         Web Services Nitro Enclaves SDK} or any Amazon Web Services SDK for Amazon Web Services \
+         Nitro Enclaves. It supports any Amazon Web Services SDK for Amazon Web Services NitroTPM. \n\
         \ \n\
         \  When you use this parameter, instead of returning the plaintext data key, KMS encrypts \
          the plaintext data key under the public key in the attestation document, and returns the \
@@ -3627,10 +3847,9 @@ type nonrec generate_data_key_request = {
          null or empty.\n\
         \  \n\
         \   For information about the interaction between KMS and Amazon Web Services Nitro \
-         Enclaves, see \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html}How \
-         Amazon Web Services Nitro Enclaves uses KMS} in the {i Key Management Service Developer \
-         Guide}.\n\
+         Enclaves or Amazon Web Services NitroTPM, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html}Cryptographic \
+         attestation support in KMS} in the {i Key Management Service Developer Guide}.\n\
         \   "]
   grant_tokens : grant_token_list option;
       [@ocaml.doc
@@ -3954,7 +4173,7 @@ type nonrec describe_key_request = {
         "Describes the specified KMS key. \n\n\
         \ If you specify a predefined Amazon Web Services alias (an Amazon Web Services alias with \
          no key ID), KMS associates the alias with an \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html##aws-managed-cmk}Amazon \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-key}Amazon \
          Web Services managed key} and returns its [KeyId] and [Arn] in the response.\n\
         \ \n\
         \  To specify a KMS key, use its key ID, key ARN, alias name, or alias ARN. When using an \
@@ -4318,14 +4537,15 @@ type nonrec derive_shared_secret_response = {
       [@ocaml.doc "Identifies the key agreement algorithm used to derive the shared secret.\n"]
   ciphertext_for_recipient : ciphertext_type option;
       [@ocaml.doc
-        "The plaintext shared secret encrypted with the public key in the attestation document.\n\n\
+        "The plaintext shared secret encrypted with the public key from the attestation document. \
+         This ciphertext can be decrypted only by using a private key from the attested \
+         environment. \n\n\
         \ This field is included in the response only when the [Recipient] parameter in the \
-         request includes a valid attestation document from an Amazon Web Services Nitro enclave. \
-         For information about the interaction between KMS and Amazon Web Services Nitro Enclaves, \
-         see \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html}How \
-         Amazon Web Services Nitro Enclaves uses KMS} in the {i Key Management Service Developer \
-         Guide}.\n\
+         request includes a valid attestation document from an Amazon Web Services Nitro enclave \
+         or NitroTPM. For information about the interaction between KMS and Amazon Web Services \
+         Nitro Enclaves or Amazon Web Services NitroTPM, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html}Cryptographic \
+         attestation support in KMS} in the {i Key Management Service Developer Guide}.\n\
         \ "]
   shared_secret : plaintext_type option;
       [@ocaml.doc
@@ -4344,29 +4564,32 @@ type nonrec derive_shared_secret_request = {
       [@ocaml.doc
         "A signed \
          {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nitro-enclave-how.html#term-attestdoc}attestation \
-         document} from an Amazon Web Services Nitro enclave and the encryption algorithm to use \
-         with the enclave's public key. The only valid encryption algorithm is \
-         [RSAES_OAEP_SHA_256]. \n\n\
+         document} from an Amazon Web Services Nitro enclave or NitroTPM, and the encryption \
+         algorithm to use with the public key in the attestation document. The only valid \
+         encryption algorithm is [RSAES_OAEP_SHA_256]. \n\n\
         \ This parameter only supports attestation documents for Amazon Web Services Nitro \
-         Enclaves. To call DeriveSharedSecret for an Amazon Web Services Nitro Enclaves, use the \
+         Enclaves or Amazon Web Services NitroTPM. To call DeriveSharedSecret generate an \
+         attestation document use either \
          {{:https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk}Amazon \
-         Web Services Nitro Enclaves SDK} to generate the attestation document and then use the \
-         Recipient parameter from any Amazon Web Services SDK to provide the attestation document \
-         for the enclave.\n\
+         Web Services Nitro Enclaves SDK} for an Amazon Web Services Nitro Enclaves or \
+         {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/attestation-get-doc.html}Amazon \
+         Web Services NitroTPM tools} for Amazon Web Services NitroTPM. Then use the Recipient \
+         parameter from any Amazon Web Services SDK to provide the attestation document for the \
+         attested environment.\n\
         \ \n\
         \  When you use this parameter, instead of returning a plaintext copy of the shared \
          secret, KMS encrypts the plaintext shared secret under the public key in the attestation \
          document, and returns the resulting ciphertext in the [CiphertextForRecipient] field in \
-         the response. This ciphertext can be decrypted only with the private key in the enclave. \
-         The [CiphertextBlob] field in the response contains the encrypted shared secret derived \
-         from the KMS key specified by the [KeyId] parameter and public key specified by the \
-         [PublicKey] parameter. The [SharedSecret] field in the response is null or empty.\n\
+         the response. This ciphertext can be decrypted only with the private key in the attested \
+         environment. The [CiphertextBlob] field in the response contains the encrypted shared \
+         secret derived from the KMS key specified by the [KeyId] parameter and public key \
+         specified by the [PublicKey] parameter. The [SharedSecret] field in the response is null \
+         or empty.\n\
         \  \n\
         \   For information about the interaction between KMS and Amazon Web Services Nitro \
-         Enclaves, see \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html}How \
-         Amazon Web Services Nitro Enclaves uses KMS} in the {i Key Management Service Developer \
-         Guide}.\n\
+         Enclaves or Amazon Web Services NitroTPM, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html}Cryptographic \
+         attestation support in KMS} in the {i Key Management Service Developer Guide}.\n\
         \   "]
   dry_run : nullable_boolean_type option;
       [@ocaml.doc
@@ -4387,8 +4610,8 @@ type nonrec derive_shared_secret_request = {
         \ "]
   public_key : public_key_type;
       [@ocaml.doc
-        "Specifies the public key in your peer's NIST-recommended elliptic curve (ECC) or SM2 \
-         (China Regions only) key pair.\n\n\
+        "Specifies the public key in your peer's NIST-standard elliptic curve (ECC) or SM2 (China \
+         Regions only) key pair.\n\n\
         \ The public key must be a DER-encoded X.509 public key, also known as \
          [SubjectPublicKeyInfo] (SPKI), as defined in {{:https://tools.ietf.org/html/rfc5280}RFC \
          5280}.\n\
@@ -4414,9 +4637,9 @@ type nonrec derive_shared_secret_request = {
          value is [ECDH].\n"]
   key_id : key_id_type;
       [@ocaml.doc
-        "Identifies an asymmetric NIST-recommended ECC or SM2 (China Regions only) KMS key. KMS \
-         uses the private key in the specified key pair to derive the shared secret. The key usage \
-         of the KMS key must be [KEY_AGREEMENT]. To find the [KeyUsage] of a KMS key, use the \
+        "Identifies an asymmetric NIST-standard ECC or SM2 (China Regions only) KMS key. KMS uses \
+         the private key in the specified key pair to derive the shared secret. The key usage of \
+         the KMS key must be [KEY_AGREEMENT]. To find the [KeyUsage] of a KMS key, use the \
          [DescribeKey] operation.\n\n\
         \ To specify a KMS key, use its key ID, key ARN, alias name, or alias ARN. When using an \
          alias name, prefix it with [\"alias/\"]. To specify a KMS key in a different Amazon Web \
@@ -4522,14 +4745,14 @@ type nonrec decrypt_response = {
          request includes the [Recipient] parameter.\n"]
   ciphertext_for_recipient : ciphertext_type option;
       [@ocaml.doc
-        "The plaintext data encrypted with the public key in the attestation document. \n\n\
+        "The plaintext data encrypted with the public key from the attestation document. This \
+         ciphertext can be decrypted only by using a private key from the attested environment. \n\n\
         \ This field is included in the response only when the [Recipient] parameter in the \
-         request includes a valid attestation document from an Amazon Web Services Nitro enclave. \
-         For information about the interaction between KMS and Amazon Web Services Nitro Enclaves, \
-         see \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html}How \
-         Amazon Web Services Nitro Enclaves uses KMS} in the {i Key Management Service Developer \
-         Guide}.\n\
+         request includes a valid attestation document from an Amazon Web Services Nitro enclave \
+         or NitroTPM. For information about the interaction between KMS and Amazon Web Services \
+         Nitro Enclaves or Amazon Web Services NitroTPM, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html}Cryptographic \
+         attestation support in KMS} in the {i Key Management Service Developer Guide}.\n\
         \ "]
   encryption_algorithm : encryption_algorithm_spec option;
       [@ocaml.doc "The encryption algorithm that was used to decrypt the ciphertext.\n"]
@@ -4549,6 +4772,18 @@ type nonrec decrypt_response = {
 [@@ocaml.doc ""]
 
 type nonrec decrypt_request = {
+  dry_run_modifiers : dry_run_modifier_list option;
+      [@ocaml.doc
+        "Specifies the modifiers to apply to the dry run operation. [DryRunModifiers] is an \
+         optional parameter that only applies when [DryRun] is set to [true].\n\n\
+        \ When set to [IGNORE_CIPHERTEXT], KMS performs only authorization validation without \
+         ciphertext validation. This allows you to test permissions without requiring a valid \
+         ciphertext blob.\n\
+        \ \n\
+        \  To learn more about how to use this parameter, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/testing-permissions.html}Testing \
+         your permissions} in the {i Key Management Service Developer Guide}.\n\
+        \  "]
   dry_run : nullable_boolean_type option;
       [@ocaml.doc
         "Checks if your request will succeed. [DryRun] is an optional parameter. \n\n\
@@ -4560,25 +4795,24 @@ type nonrec decrypt_request = {
       [@ocaml.doc
         "A signed \
          {{:https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave-concepts.html#term-attestdoc}attestation \
-         document} from an Amazon Web Services Nitro enclave and the encryption algorithm to use \
-         with the enclave's public key. The only valid encryption algorithm is \
-         [RSAES_OAEP_SHA_256]. \n\n\
-        \ This parameter only supports attestation documents for Amazon Web Services Nitro \
-         Enclaves. To include this parameter, use the \
+         document} from an Amazon Web Services Nitro enclave or NitroTPM, and the encryption \
+         algorithm to use with the public key in the attestation document. The only valid \
+         encryption algorithm is [RSAES_OAEP_SHA_256]. \n\n\
+        \ This parameter supports the \
          {{:https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk}Amazon \
-         Web Services Nitro Enclaves SDK} or any Amazon Web Services SDK.\n\
+         Web Services Nitro Enclaves SDK} or any Amazon Web Services SDK for Amazon Web Services \
+         Nitro Enclaves. It supports any Amazon Web Services SDK for Amazon Web Services NitroTPM. \n\
         \ \n\
         \  When you use this parameter, instead of returning the plaintext data, KMS encrypts the \
          plaintext data with the public key in the attestation document, and returns the resulting \
          ciphertext in the [CiphertextForRecipient] field in the response. This ciphertext can be \
-         decrypted only with the private key in the enclave. The [Plaintext] field in the response \
-         is null or empty.\n\
+         decrypted only with the private key in the attested environment. The [Plaintext] field in \
+         the response is null or empty.\n\
         \  \n\
         \   For information about the interaction between KMS and Amazon Web Services Nitro \
-         Enclaves, see \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html}How \
-         Amazon Web Services Nitro Enclaves uses KMS} in the {i Key Management Service Developer \
-         Guide}.\n\
+         Enclaves or Amazon Web Services NitroTPM, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html}Cryptographic \
+         attestation support in KMS} in the {i Key Management Service Developer Guide}.\n\
         \   "]
   encryption_algorithm : encryption_algorithm_spec option;
       [@ocaml.doc
@@ -4596,13 +4830,14 @@ type nonrec decrypt_request = {
          different KMS key, the [Decrypt] operation throws an [IncorrectKeyException].\n\
         \ \n\
         \  This parameter is required only when the ciphertext was encrypted under an asymmetric \
-         KMS key. If you used a symmetric encryption KMS key, KMS can get the KMS key from \
-         metadata that it adds to the symmetric ciphertext blob. However, it is always recommended \
-         as a best practice. This practice ensures that you use the KMS key that you intend.\n\
+         KMS key or when [DryRun] is [true] and [DryRunModifiers] is set to [IGNORE_CIPHERTEXT]. \
+         If you used a symmetric encryption KMS key, KMS can get the KMS key from metadata that it \
+         adds to the symmetric ciphertext blob. However, it is always recommended as a best \
+         practice. This practice ensures that you use the KMS key that you intend.\n\
         \  \n\
         \   To specify a KMS key, use its key ID, key ARN, alias name, or alias ARN. When using an \
          alias name, prefix it with [\"alias/\"]. To specify a KMS key in a different Amazon Web \
-         Services account, you must use the key ARN or alias ARN.\n\
+         Services account, you should use the key ARN or alias ARN.\n\
         \   \n\
         \    For example:\n\
         \    \n\
@@ -4652,8 +4887,12 @@ type nonrec decrypt_request = {
          {{:https://docs.aws.amazon.com/kms/latest/developerguide/encrypt_context.html}Encryption \
          context} in the {i Key Management Service Developer Guide}.\n\
         \  "]
-  ciphertext_blob : ciphertext_type;
-      [@ocaml.doc "Ciphertext to be decrypted. The blob includes metadata.\n"]
+  ciphertext_blob : ciphertext_type option;
+      [@ocaml.doc
+        "Ciphertext to be decrypted. The blob includes metadata.\n\n\
+        \ This parameter is required in all cases except when [DryRun] is [true] and \
+         [DryRunModifiers] is set to [IGNORE_CIPHERTEXT].\n\
+        \ "]
 }
 [@@ocaml.doc ""]
 
@@ -4867,7 +5106,7 @@ type nonrec create_key_request = {
         \                       \n\
         \             }\n\
         \              }\n\
-        \            {-  Asymmetric NIST-recommended elliptic curve key pairs (signing and \
+        \            {-  Asymmetric NIST-standard elliptic curve key pairs (signing and \
          verification -or- deriving shared secrets)\n\
         \                \n\
         \                 {ul\n\
@@ -4880,6 +5119,21 @@ type nonrec create_key_request = {
         \                       {-   [ECC_NIST_P521] (secp521r1)\n\
         \                           \n\
         \                            }\n\
+        \                       {-   [ECC_NIST_EDWARDS25519] (ed25519) - signing and verification \
+         only\n\
+        \                           \n\
+        \                            {ul\n\
+        \                                  {-   {b Note:} For ECC_NIST_EDWARDS25519 KMS keys, the \
+         ED25519_SHA_512 signing algorithm requires \
+         {{:kms/latest/APIReference/API_Sign.html#KMS-Sign-request-MessageType} [MessageType:RAW] \
+         }, while ED25519_PH_SHA_512 requires \
+         {{:kms/latest/APIReference/API_Sign.html#KMS-Sign-request-MessageType} \
+         [MessageType:DIGEST] }. These message types cannot be used interchangeably.\n\
+        \                                      \n\
+        \                                       }\n\
+        \                                  \n\
+        \                        }\n\
+        \                         }\n\
         \                       \n\
         \             }\n\
         \              }\n\
@@ -4933,8 +5187,12 @@ type nonrec create_key_request = {
          {{:https://docs.aws.amazon.com/kms/latest/developerguide/kms-cryptography.html#cryptographic-operations}cryptographic \
          operations} for which you can use the KMS key. The default value is [ENCRYPT_DECRYPT]. \
          This parameter is optional when you are creating a symmetric encryption KMS key; \
-         otherwise, it is required. You can't change the [KeyUsage] value after the KMS key is \
-         created.\n\n\
+         otherwise, it is required. You can't change the \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html#key-usage} \
+         [KeyUsage] } value after the KMS key is created. Each KMS key can have only one key \
+         usage. This follows key usage best practices according to \
+         {{:https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final}NIST SP 800-57 Recommendations for \
+         Key Management}, section 5.2, Key usage.\n\n\
         \ Select only one valid value.\n\
         \ \n\
         \  {ul\n\
@@ -4949,8 +5207,8 @@ type nonrec create_key_request = {
          [SIGN_VERIFY].\n\
         \            \n\
         \             }\n\
-        \        {-  For asymmetric KMS keys with NIST-recommended elliptic curve key pairs, \
-         specify [SIGN_VERIFY] or [KEY_AGREEMENT].\n\
+        \        {-  For asymmetric KMS keys with NIST-standard elliptic curve key pairs, specify \
+         [SIGN_VERIFY] or [KEY_AGREEMENT].\n\
         \            \n\
         \             }\n\
         \        {-  For asymmetric KMS keys with [ECC_SECG_P256K1] key pairs, specify \
@@ -5045,6 +5303,24 @@ type nonrec create_grant_response = {
 [@@ocaml.doc ""]
 
 type nonrec create_grant_request = {
+  retiring_service_principal : service_principal_type option;
+      [@ocaml.doc
+        "The Amazon Web Services \
+         {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services}service \
+         principal} that has permission to use the [RetireGrant] operation to retire the grant.\n\n\
+        \ You can specify either [RetiringPrincipal] or [RetiringServicePrincipal], but not both.\n\
+        \ "]
+  grantee_service_principal : service_principal_type option;
+      [@ocaml.doc
+        "The Amazon Web Services \
+         {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services}service \
+         principal} that gets the permissions specified in the grant. \n\n\
+        \ When you specify a [GranteeServicePrincipal], you must also specify a [SourceArn] grant \
+         constraint. In addition, you must specify either a [RetiringPrincipal] or a \
+         [RetiringServicePrincipal]. \n\
+        \ \n\
+        \  You must specify either [GranteePrincipal] or [GranteeServicePrincipal], but not both.\n\
+        \  "]
   dry_run : nullable_boolean_type option;
       [@ocaml.doc
         "Checks if your request will succeed. [DryRun] is an optional parameter. \n\n\
@@ -5085,33 +5361,49 @@ type nonrec create_grant_request = {
         \  Do not include confidential or sensitive information in this field. This field may be \
          displayed in plaintext in CloudTrail logs and other output.\n\
         \  \n\
-        \    KMS supports the [EncryptionContextEquals] and [EncryptionContextSubset] grant \
-         constraints, which allow the permissions in the grant only when the encryption context in \
-         the request matches ([EncryptionContextEquals]) or includes ([EncryptionContextSubset]) \
-         the encryption context specified in the constraint. \n\
+        \    KMS supports the following grant constraints.\n\
         \    \n\
-        \     The encryption context grant constraints are supported only on \
+        \     {ul\n\
+        \           {-   [EncryptionContextEquals] and [EncryptionContextSubset] \226\128\148 \
+         These encryption context grant constraints allow the permissions in the grant only when \
+         the encryption context in the request matches ([EncryptionContextEquals]) or includes \
+         ([EncryptionContextSubset]) the encryption context specified in the constraint.\n\
+        \               \n\
+        \                Encryption context grant constraints are supported only on \
          {{:https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#terms-grant-operations}grant \
          operations} that include an [EncryptionContext] parameter, such as cryptographic \
-         operations on symmetric encryption KMS keys. Grants with grant constraints can include \
-         the [DescribeKey] and [RetireGrant] operations, but the constraint doesn't apply to these \
-         operations. If a grant with a grant constraint includes the [CreateGrant] operation, the \
-         constraint requires that any grants created with the [CreateGrant] permission have an \
-         equally strict or stricter encryption context constraint.\n\
-        \     \n\
-        \      You cannot use an encryption context grant constraint for cryptographic operations \
-         with asymmetric KMS keys or HMAC KMS keys. Operations with these keys don't support an \
-         encryption context.\n\
-        \      \n\
-        \       Each constraint value can include up to 8 encryption context pairs. The encryption \
-         context value in each constraint cannot exceed 384 characters. For information about \
-         grant constraints, see \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/create-grant-overview.html#grant-constraints}Using \
-         grant constraints} in the {i Key Management Service Developer Guide}. For more \
+         operations on symmetric encryption KMS keys. You cannot use an encryption context grant \
+         constraint for cryptographic operations with asymmetric KMS keys or HMAC KMS keys. \
+         Operations with these keys don't support an encryption context. Grants with encryption \
+         context grant constraints can include the [DescribeKey] and [RetireGrant] operations, but \
+         the constraint doesn't apply to these operations. If a grant with an encryption context \
+         grant constraint includes the [CreateGrant] operation, the constraint requires that any \
+         grants created with the [CreateGrant] permission have an equally strict or stricter \
+         encryption context constraint. \n\
+        \                \n\
+        \                 Each constraint value can include up to 8 encryption context pairs. The \
+         encryption context value in each constraint cannot exceed 384 characters. For more \
          information about encryption context, see \
          {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context}Encryption \
-         context} in the {i  {i Key Management Service Developer Guide} }. \n\
-        \       "]
+         context} in the {i  {i Key Management Service Developer Guide} }.\n\
+        \                 \n\
+        \                  }\n\
+        \           {-   [SourceArn] \226\128\148 This grant constraint allows the permissions in \
+         the grant only when the request is made on behalf of a specific Amazon Web Services \
+         resource, identified by its \
+         {{:https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html}Amazon \
+         Resource Name (ARN)}. This is effectively the same as having the \
+         {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-sourcearn}aws:SourceArn} \
+         global condition key in the grant. The SourceArn constraint is supported on grants for \
+         all types of KMS keys and can also be applied to the [DescribeKey] operation when \
+         specified in the request. However, it does not apply to [RetireGrant] operation.\n\
+        \               \n\
+        \                }\n\
+        \           }\n\
+        \   For information about grant constraints, see \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/create-grant-overview.html#grant-constraints}Using \
+         grant constraints} in the {i Key Management Service Developer Guide}. \n\
+        \   "]
   operations : grant_operation_list;
       [@ocaml.doc
         "A list of operations that the grant permits. \n\n\
@@ -5139,8 +5431,10 @@ type nonrec create_grant_request = {
          retire the grant or revoke the grant. For details, see [RevokeGrant] and \
          {{:https://docs.aws.amazon.com/kms/latest/developerguide/grant-delete.html}Retiring and \
          revoking grants} in the {i Key Management Service Developer Guide}. \n\
-        \  "]
-  grantee_principal : principal_id_type;
+        \  \n\
+        \   You can specify either [RetiringPrincipal] or [RetiringServicePrincipal], but not both.\n\
+        \   "]
+  grantee_principal : principal_id_type option;
       [@ocaml.doc
         "The identity that gets the permissions specified in the grant.\n\n\
         \ To specify the grantee principal, use the Amazon Resource Name (ARN) of an Amazon Web \
@@ -5149,7 +5443,9 @@ type nonrec create_grant_request = {
          principal, see \
          {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-arns}IAM \
          ARNs} in the {i  {i Identity and Access Management User Guide} }.\n\
-        \ "]
+        \ \n\
+        \  You must specify either [GranteePrincipal] or [GranteeServicePrincipal], but not both.\n\
+        \  "]
   key_id : key_id_type;
       [@ocaml.doc
         "Identifies the KMS key for the grant. The grant gives principals permission to use this \
@@ -5245,6 +5541,12 @@ type nonrec create_custom_key_store_request = {
          If you rotate your proxy authentication credential, use the [UpdateCustomKeyStore] \
          operation to provide the new credential to KMS.\n\
         \   "]
+  xks_proxy_vpc_endpoint_service_owner : account_id_type option;
+      [@ocaml.doc
+        "Specifies the Amazon Web Services account ID that owns the Amazon VPC service endpoint \
+         for the interface that is used to communicate with your external key store proxy (XKS \
+         proxy). This parameter is optional. If not provided, the Amazon Web Services account ID \
+         calling the action will be used.\n"]
   xks_proxy_vpc_endpoint_service_name : xks_proxy_vpc_endpoint_service_name_type option;
       [@ocaml.doc
         "Specifies the name of the Amazon VPC endpoint service for interface endpoints that is \
@@ -5387,7 +5689,7 @@ type nonrec create_alias_request = {
   target_key_id : key_id_type;
       [@ocaml.doc
         "Associates the alias with the specified \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk}customer \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-mgn-key}customer \
          managed key}. The KMS key must be in the same Amazon Web Services Region. \n\n\
         \ A valid key ID is required. If you supply a null or empty string value, this operation \
          returns an error.\n\
@@ -5421,7 +5723,7 @@ type nonrec create_alias_request = {
         \    The [AliasName] value must be string of 1-256 characters. It can contain only \
          alphanumeric characters, forward slashes (/), underscores (_), and dashes (-). The alias \
          name cannot begin with [alias/aws/]. The [alias/aws/] prefix is reserved for \
-         {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}Amazon \
+         {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-key}Amazon \
          Web Services managed keys}.\n\
         \    "]
 }

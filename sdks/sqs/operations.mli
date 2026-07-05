@@ -273,7 +273,7 @@ end
    application or delete your existing standard queue and recreate it as a FIFO queue. For more \
    information, see \
    {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html#FIFO-queues-moving}Moving \
-   From a Standard Queue to a FIFO Queue} in the {i Amazon SQS Developer Guide}. \n\
+   From a standard queue to a FIFO queue} in the {i Amazon SQS Developer Guide}. \n\
   \             \n\
   \               }\n\
   \       {-  If you don't provide a value for an attribute, the queue is created with the default \
@@ -879,9 +879,9 @@ end
   \  \n\
   \    [#x9] | [#xA] | [#xD] | [#x20] to [#xD7FF] | [#xE000] to [#xFFFD] | [#x10000] to [#x10FFFF] \n\
   \   \n\
-  \    Amazon SQS does not throw an exception or completely reject the message if it contains \
-   invalid characters. Instead, it replaces those invalid characters with [U+FFFD] before storing \
-   the message in the queue, as long as the message body contains at least one valid character.\n\
+  \    If a message contains characters outside the allowed set, Amazon SQS rejects the message \
+   and returns an InvalidMessageContents error. Ensure that your message body includes only valid \
+   characters to avoid this exception.\n\
   \    \n\
   \     "]
 
@@ -945,7 +945,7 @@ end
    for batch errors even when the call returns an HTTP status code of [200].\n\
   \ \n\
   \  The maximum allowed individual message size and the maximum total payload size (the sum of \
-   the individual lengths of all of the batched messages) are both 256 KiB (262,144 bytes).\n\
+   the individual lengths of all of the batched messages) are both 1 MiB 1,048,576 bytes.\n\
   \  \n\
   \    A message can include only XML, JSON, and unformatted text. The following Unicode \
    characters are allowed. For more information, see the \
@@ -954,9 +954,9 @@ end
   \      [#x9] | [#xA] | [#xD] | [#x20] to [#xD7FF] | [#xE000] to [#xFFFD] | [#x10000] to \
    [#x10FFFF] \n\
   \     \n\
-  \      Amazon SQS does not throw an exception or completely reject the message if it contains \
-   invalid characters. Instead, it replaces those invalid characters with [U+FFFD] before storing \
-   the message in the queue, as long as the message body contains at least one valid character.\n\
+  \      If a message contains characters outside the allowed set, Amazon SQS rejects the message \
+   and returns an InvalidMessageContents error. Ensure that your message body includes only valid \
+   characters to avoid this exception.\n\
   \      \n\
   \        If you don't specify the [DelaySeconds] parameter for an entry, Amazon SQS uses the \
    default value for the queue.\n\

@@ -33,6 +33,7 @@ let language_code_of_yojson (tree : t) path =
     | `String "sw-BI" -> SW_BI
     | `String "su-ID" -> SU_ID
     | `String "sr-RS" -> SR_RS
+    | `String "sq-AL" -> SQ_AL
     | `String "so-SO" -> SO_SO
     | `String "sl-SI" -> SL_SI
     | `String "sk-SK" -> SK_SK
@@ -43,6 +44,7 @@ let language_code_of_yojson (tree : t) path =
     | `String "pl-PL" -> PL_PL
     | `String "pa-IN" -> PA_IN
     | `String "or-IN" -> OR_IN
+    | `String "ne-NP" -> NE_NP
     | `String "no-NO" -> NO_NO
     | `String "mt-MT" -> MT_MT
     | `String "mr-IN" -> MR_IN
@@ -99,16 +101,24 @@ let language_code_of_yojson (tree : t) path =
     | `String "pt-BR" -> PT_BR
     | `String "nl-NL" -> NL_NL
     | `String "ms-MY" -> MS_MY
+    | `String "my-MM" -> MY_MM
     | `String "ko-KR" -> KO_KR
+    | `String "km-KH" -> KM_KH
+    | `String "jv-ID" -> JV_ID
     | `String "ja-JP" -> JA_JP
     | `String "it-IT" -> IT_IT
     | `String "id-ID" -> ID_ID
+    | `String "ht-HT" -> HT_HT
     | `String "hi-IN" -> HI_IN
     | `String "he-IL" -> HE_IL
+    | `String "gd-GB" -> GD_GB
+    | `String "ga-IE" -> GA_IE
     | `String "fr-FR" -> FR_FR
     | `String "fr-CA" -> FR_CA
     | `String "fa-IR" -> FA_IR
+    | `String "fa-AF" -> FA_AF
     | `String "es-US" -> ES_US
+    | `String "es-MX" -> ES_MX
     | `String "es-ES" -> ES_ES
     | `String "en-WL" -> EN_WL
     | `String "en-US" -> EN_US
@@ -120,6 +130,8 @@ let language_code_of_yojson (tree : t) path =
     | `String "de-DE" -> DE_DE
     | `String "de-CH" -> DE_CH
     | `String "da-DK" -> DA_DK
+    | `String "cy-GB" -> CY_GB
+    | `String "am-ET" -> AM_ET
     | `String "ar-SA" -> AR_SA
     | `String "ar-AE" -> AR_AE
     | `String "af-ZA" -> AF_ZA
@@ -1175,6 +1187,8 @@ let medical_scribe_job_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
+     medical_scribe_context_provided =
+       option_of_yojson (value_for_key boolean__of_yojson "MedicalScribeContextProvided") _list path;
      channel_definitions =
        option_of_yojson
          (value_for_key medical_scribe_channel_definitions_of_yojson "ChannelDefinitions")
@@ -1219,9 +1233,38 @@ let start_medical_scribe_job_response_of_yojson tree path =
    }
     : start_medical_scribe_job_response)
 
+let pronouns_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "THEY_THEM" -> THEY_THEM
+    | `String "SHE_HER" -> SHE_HER
+    | `String "HE_HIM" -> HE_HIM
+    | `String value -> raise (deserialize_unknown_enum_value_error path "Pronouns" value)
+    | _ -> raise (deserialize_wrong_type_error path "Pronouns")
+     : pronouns)
+    : pronouns)
+
+let medical_scribe_patient_context_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({ pronouns = option_of_yojson (value_for_key pronouns_of_yojson "Pronouns") _list path }
+    : medical_scribe_patient_context)
+
+let medical_scribe_context_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     patient_context =
+       option_of_yojson
+         (value_for_key medical_scribe_patient_context_of_yojson "PatientContext")
+         _list path;
+   }
+    : medical_scribe_context)
+
 let start_medical_scribe_job_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     medical_scribe_context =
+       option_of_yojson
+         (value_for_key medical_scribe_context_of_yojson "MedicalScribeContext")
+         _list path;
      tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
      channel_definitions =
        option_of_yojson

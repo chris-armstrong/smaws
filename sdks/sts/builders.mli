@@ -6,6 +6,20 @@ val make_policy_descriptor_type : ?arn:arn_type -> unit -> policy_descriptor_typ
 val make_provided_context :
   ?context_assertion:context_assertion_type -> ?provider_arn:arn_type -> unit -> provided_context
 
+val make_get_web_identity_token_response :
+  ?expiration:date_type ->
+  ?web_identity_token:web_identity_token_type ->
+  unit ->
+  get_web_identity_token_response
+
+val make_get_web_identity_token_request :
+  ?tags:tag_list_type ->
+  ?duration_seconds:web_identity_token_duration_seconds_type ->
+  signing_algorithm:jwt_algorithm_type ->
+  audience:web_identity_token_audience_list_type ->
+  unit ->
+  get_web_identity_token_request
+
 val make_credentials :
   expiration:date_type ->
   session_token:token_type ->
@@ -41,6 +55,16 @@ val make_get_federation_token_request :
   name:user_name_type ->
   unit ->
   get_federation_token_request
+
+val make_get_delegated_access_token_response :
+  ?assumed_principal:arn_type ->
+  ?packed_policy_size:non_negative_integer_type ->
+  ?credentials:credentials ->
+  unit ->
+  get_delegated_access_token_response
+
+val make_get_delegated_access_token_request :
+  trade_in_token:trade_in_token_type -> unit -> get_delegated_access_token_request
 
 val make_get_caller_identity_response :
   ?arn:arn_type ->

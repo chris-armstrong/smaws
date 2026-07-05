@@ -48,10 +48,13 @@ let xks_proxy_connectivity_type_to_yojson (x : xks_proxy_connectivity_type) =
   | PUBLIC_ENDPOINT -> `String "PUBLIC_ENDPOINT"
 
 let xks_proxy_authentication_access_key_id_type_to_yojson = string_to_yojson
+let account_id_type_to_yojson = string_to_yojson
 
 let xks_proxy_configuration_type_to_yojson (x : xks_proxy_configuration_type) =
   assoc_to_yojson
     [
+      ( "VpcEndpointServiceOwner",
+        option_to_yojson account_id_type_to_yojson x.vpc_endpoint_service_owner );
       ( "VpcEndpointServiceName",
         option_to_yojson xks_proxy_vpc_endpoint_service_name_type_to_yojson
           x.vpc_endpoint_service_name );
@@ -101,6 +104,8 @@ let boolean_type_to_yojson = bool_to_yojson
 
 let signing_algorithm_spec_to_yojson (x : signing_algorithm_spec) =
   match x with
+  | ED25519_PH_SHA_512 -> `String "ED25519_PH_SHA_512"
+  | ED25519_SHA_512 -> `String "ED25519_SHA_512"
   | ML_DSA_SHAKE_256 -> `String "ML_DSA_SHAKE_256"
   | SM2DSA -> `String "SM2DSA"
   | ECDSA_SHA_512 -> `String "ECDSA_SHA_512"
@@ -243,6 +248,8 @@ let update_custom_key_store_request_to_yojson (x : update_custom_key_store_reque
       ( "XksProxyAuthenticationCredential",
         option_to_yojson xks_proxy_authentication_credential_type_to_yojson
           x.xks_proxy_authentication_credential );
+      ( "XksProxyVpcEndpointServiceOwner",
+        option_to_yojson account_id_type_to_yojson x.xks_proxy_vpc_endpoint_service_owner );
       ( "XksProxyVpcEndpointServiceName",
         option_to_yojson xks_proxy_vpc_endpoint_service_name_type_to_yojson
           x.xks_proxy_vpc_endpoint_service_name );
@@ -454,6 +461,7 @@ let customer_master_key_spec_to_yojson (x : customer_master_key_spec) =
 
 let key_spec_to_yojson (x : key_spec) =
   match x with
+  | ECC_NIST_EDWARDS25519 -> `String "ECC_NIST_EDWARDS25519"
   | ML_DSA_87 -> `String "ML_DSA_87"
   | ML_DSA_65 -> `String "ML_DSA_65"
   | ML_DSA_44 -> `String "ML_DSA_44"
@@ -604,9 +612,15 @@ let encryption_context_key_to_yojson = string_to_yojson
 let encryption_context_type_to_yojson tree =
   map_to_yojson encryption_context_key_to_yojson encryption_context_value_to_yojson tree
 
+let dry_run_modifier_type_to_yojson (x : dry_run_modifier_type) =
+  match x with IGNORE_CIPHERTEXT -> `String "IGNORE_CIPHERTEXT"
+
+let dry_run_modifier_list_to_yojson tree = list_to_yojson dry_run_modifier_type_to_yojson tree
+
 let re_encrypt_request_to_yojson (x : re_encrypt_request) =
   assoc_to_yojson
     [
+      ("DryRunModifiers", option_to_yojson dry_run_modifier_list_to_yojson x.dry_run_modifiers);
       ("DryRun", option_to_yojson nullable_boolean_type_to_yojson x.dry_run);
       ("GrantTokens", option_to_yojson grant_token_list_to_yojson x.grant_tokens);
       ( "DestinationEncryptionAlgorithm",
@@ -619,7 +633,7 @@ let re_encrypt_request_to_yojson (x : re_encrypt_request) =
       ("SourceKeyId", option_to_yojson key_id_type_to_yojson x.source_key_id);
       ( "SourceEncryptionContext",
         option_to_yojson encryption_context_type_to_yojson x.source_encryption_context );
-      ("CiphertextBlob", Some (ciphertext_type_to_yojson x.ciphertext_blob));
+      ("CiphertextBlob", option_to_yojson ciphertext_type_to_yojson x.ciphertext_blob);
     ]
 
 let policy_name_type_to_yojson = string_to_yojson
@@ -661,19 +675,27 @@ let grant_operation_to_yojson (x : grant_operation) =
   | Decrypt -> `String "Decrypt"
 
 let grant_operation_list_to_yojson tree = list_to_yojson grant_operation_to_yojson tree
+let grant_constraint_source_arn_type_to_yojson = string_to_yojson
 
 let grant_constraints_to_yojson (x : grant_constraints) =
   assoc_to_yojson
     [
+      ("SourceArn", option_to_yojson grant_constraint_source_arn_type_to_yojson x.source_arn);
       ( "EncryptionContextEquals",
         option_to_yojson encryption_context_type_to_yojson x.encryption_context_equals );
       ( "EncryptionContextSubset",
         option_to_yojson encryption_context_type_to_yojson x.encryption_context_subset );
     ]
 
+let service_principal_type_to_yojson = string_to_yojson
+
 let grant_list_entry_to_yojson (x : grant_list_entry) =
   assoc_to_yojson
     [
+      ( "RetiringServicePrincipal",
+        option_to_yojson service_principal_type_to_yojson x.retiring_service_principal );
+      ( "GranteeServicePrincipal",
+        option_to_yojson service_principal_type_to_yojson x.grantee_service_principal );
       ("Constraints", option_to_yojson grant_constraints_to_yojson x.constraints);
       ("Operations", option_to_yojson grant_operation_list_to_yojson x.operations);
       ("IssuingAccount", option_to_yojson principal_id_type_to_yojson x.issuing_account);
@@ -701,7 +723,9 @@ let limit_type_to_yojson = int_to_yojson
 let list_retirable_grants_request_to_yojson (x : list_retirable_grants_request) =
   assoc_to_yojson
     [
-      ("RetiringPrincipal", Some (principal_id_type_to_yojson x.retiring_principal));
+      ( "RetiringServicePrincipal",
+        option_to_yojson service_principal_type_to_yojson x.retiring_service_principal );
+      ("RetiringPrincipal", option_to_yojson principal_id_type_to_yojson x.retiring_principal);
       ("Marker", option_to_yojson marker_type_to_yojson x.marker);
       ("Limit", option_to_yojson limit_type_to_yojson x.limit);
     ]
@@ -753,6 +777,7 @@ let import_state_to_yojson (x : import_state) =
 
 let key_material_state_to_yojson (x : key_material_state) =
   match x with
+  | PENDING_MULTI_REGION_IMPORT_AND_ROTATION -> `String "PENDING_MULTI_REGION_IMPORT_AND_ROTATION"
   | PENDING_ROTATION -> `String "PENDING_ROTATION"
   | CURRENT -> `String "CURRENT"
   | NON_CURRENT -> `String "NON_CURRENT"
@@ -820,6 +845,8 @@ let list_key_policies_request_to_yojson (x : list_key_policies_request) =
 let list_grants_request_to_yojson (x : list_grants_request) =
   assoc_to_yojson
     [
+      ( "GranteeServicePrincipal",
+        option_to_yojson service_principal_type_to_yojson x.grantee_service_principal );
       ("GranteePrincipal", option_to_yojson principal_id_type_to_yojson x.grantee_principal);
       ("GrantId", option_to_yojson grant_id_type_to_yojson x.grant_id);
       ("KeyId", Some (key_id_type_to_yojson x.key_id));
@@ -973,6 +1000,46 @@ let get_key_policy_request_to_yojson (x : get_key_policy_request) =
       ("KeyId", Some (key_id_type_to_yojson x.key_id));
     ]
 
+let key_last_usage_tracking_operation_to_yojson (x : key_last_usage_tracking_operation) =
+  match x with
+  | VerifyMac -> `String "VerifyMac"
+  | Verify -> `String "Verify"
+  | Sign -> `String "Sign"
+  | ReEncrypt -> `String "ReEncrypt"
+  | GenerateMac -> `String "GenerateMac"
+  | GenerateDataKeyWithoutPlaintext -> `String "GenerateDataKeyWithoutPlaintext"
+  | GenerateDataKeyPairWithoutPlaintext -> `String "GenerateDataKeyPairWithoutPlaintext"
+  | GenerateDataKeyPair -> `String "GenerateDataKeyPair"
+  | GenerateDataKey -> `String "GenerateDataKey"
+  | Encrypt -> `String "Encrypt"
+  | DeriveSharedSecret -> `String "DeriveSharedSecret"
+  | Decrypt -> `String "Decrypt"
+
+let cloud_trail_event_id_type_to_yojson = string_to_yojson
+let kms_request_id_type_to_yojson = string_to_yojson
+
+let key_last_usage_data_to_yojson (x : key_last_usage_data) =
+  assoc_to_yojson
+    [
+      ("KmsRequestId", option_to_yojson kms_request_id_type_to_yojson x.kms_request_id);
+      ( "CloudTrailEventId",
+        option_to_yojson cloud_trail_event_id_type_to_yojson x.cloud_trail_event_id );
+      ("Timestamp", option_to_yojson date_type_to_yojson x.timestamp);
+      ("Operation", option_to_yojson key_last_usage_tracking_operation_to_yojson x.operation);
+    ]
+
+let get_key_last_usage_response_to_yojson (x : get_key_last_usage_response) =
+  assoc_to_yojson
+    [
+      ("KeyCreationDate", option_to_yojson date_type_to_yojson x.key_creation_date);
+      ("TrackingStartDate", option_to_yojson date_type_to_yojson x.tracking_start_date);
+      ("KeyLastUsage", option_to_yojson key_last_usage_data_to_yojson x.key_last_usage);
+      ("KeyId", option_to_yojson key_id_type_to_yojson x.key_id);
+    ]
+
+let get_key_last_usage_request_to_yojson (x : get_key_last_usage_request) =
+  assoc_to_yojson [ ("KeyId", Some (key_id_type_to_yojson x.key_id)) ]
+
 let generate_random_response_to_yojson (x : generate_random_response) =
   assoc_to_yojson
     [
@@ -1049,6 +1116,7 @@ let generate_data_key_without_plaintext_request_to_yojson
 
 let data_key_pair_spec_to_yojson (x : data_key_pair_spec) =
   match x with
+  | ECC_NIST_EDWARDS25519 -> `String "ECC_NIST_EDWARDS25519"
   | SM2 -> `String "SM2"
   | ECC_SECG_P256K1 -> `String "ECC_SECG_P256K1"
   | ECC_NIST_P521 -> `String "ECC_NIST_P521"
@@ -1326,6 +1394,7 @@ let decrypt_response_to_yojson (x : decrypt_response) =
 let decrypt_request_to_yojson (x : decrypt_request) =
   assoc_to_yojson
     [
+      ("DryRunModifiers", option_to_yojson dry_run_modifier_list_to_yojson x.dry_run_modifiers);
       ("DryRun", option_to_yojson nullable_boolean_type_to_yojson x.dry_run);
       ("Recipient", option_to_yojson recipient_info_to_yojson x.recipient);
       ( "EncryptionAlgorithm",
@@ -1333,7 +1402,7 @@ let decrypt_request_to_yojson (x : decrypt_request) =
       ("KeyId", option_to_yojson key_id_type_to_yojson x.key_id);
       ("GrantTokens", option_to_yojson grant_token_list_to_yojson x.grant_tokens);
       ("EncryptionContext", option_to_yojson encryption_context_type_to_yojson x.encryption_context);
-      ("CiphertextBlob", Some (ciphertext_type_to_yojson x.ciphertext_blob));
+      ("CiphertextBlob", option_to_yojson ciphertext_type_to_yojson x.ciphertext_blob);
     ]
 
 let create_key_response_to_yojson (x : create_key_response) =
@@ -1367,13 +1436,17 @@ let create_grant_response_to_yojson (x : create_grant_response) =
 let create_grant_request_to_yojson (x : create_grant_request) =
   assoc_to_yojson
     [
+      ( "RetiringServicePrincipal",
+        option_to_yojson service_principal_type_to_yojson x.retiring_service_principal );
+      ( "GranteeServicePrincipal",
+        option_to_yojson service_principal_type_to_yojson x.grantee_service_principal );
       ("DryRun", option_to_yojson nullable_boolean_type_to_yojson x.dry_run);
       ("Name", option_to_yojson grant_name_type_to_yojson x.name);
       ("GrantTokens", option_to_yojson grant_token_list_to_yojson x.grant_tokens);
       ("Constraints", option_to_yojson grant_constraints_to_yojson x.constraints);
       ("Operations", Some (grant_operation_list_to_yojson x.operations));
       ("RetiringPrincipal", option_to_yojson principal_id_type_to_yojson x.retiring_principal);
-      ("GranteePrincipal", Some (principal_id_type_to_yojson x.grantee_principal));
+      ("GranteePrincipal", option_to_yojson principal_id_type_to_yojson x.grantee_principal);
       ("KeyId", Some (key_id_type_to_yojson x.key_id));
     ]
 
@@ -1397,6 +1470,8 @@ let create_custom_key_store_request_to_yojson (x : create_custom_key_store_reque
       ( "XksProxyAuthenticationCredential",
         option_to_yojson xks_proxy_authentication_credential_type_to_yojson
           x.xks_proxy_authentication_credential );
+      ( "XksProxyVpcEndpointServiceOwner",
+        option_to_yojson account_id_type_to_yojson x.xks_proxy_vpc_endpoint_service_owner );
       ( "XksProxyVpcEndpointServiceName",
         option_to_yojson xks_proxy_vpc_endpoint_service_name_type_to_yojson
           x.xks_proxy_vpc_endpoint_service_name );

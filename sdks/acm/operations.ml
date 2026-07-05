@@ -10,6 +10,7 @@ module AddTagsToCertificate = struct
     | `TagPolicyException _ -> "com.amazonaws.acm#TagPolicyException"
     | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
     | `TooManyTagsException _ -> "com.amazonaws.acm#TooManyTagsException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -30,6 +31,8 @@ module AddTagsToCertificate = struct
           `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _, "TooManyTagsException" ->
           `TooManyTagsException (Json_deserializers.too_many_tags_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -43,6 +46,233 @@ module AddTagsToCertificate = struct
       ~error_deserializer
 end
 
+module CreateAcmeDomainValidation = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.acm#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.acm#ServiceQuotaExceededException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ServiceQuotaExceededException" ->
+          `ServiceQuotaExceededException
+            (Json_deserializers.service_quota_exceeded_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_acme_domain_validation_request) =
+    let input = Json_serializers.create_acme_domain_validation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.CreateAcmeDomainValidation"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_acme_domain_validation_response_of_yojson
+      ~error_deserializer
+end
+
+module CreateAcmeEndpoint = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.acm#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.acm#ServiceQuotaExceededException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ServiceQuotaExceededException" ->
+          `ServiceQuotaExceededException
+            (Json_deserializers.service_quota_exceeded_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_acme_endpoint_request) =
+    let input = Json_serializers.create_acme_endpoint_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.CreateAcmeEndpoint" ~service
+      ~context ~input
+      ~output_deserializer:Json_deserializers.create_acme_endpoint_response_of_yojson
+      ~error_deserializer
+end
+
+module CreateAcmeExternalAccountBinding = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.acm#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.acm#ServiceQuotaExceededException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ServiceQuotaExceededException" ->
+          `ServiceQuotaExceededException
+            (Json_deserializers.service_quota_exceeded_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_acme_external_account_binding_request) =
+    let input = Json_serializers.create_acme_external_account_binding_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CertificateManager.CreateAcmeExternalAccountBinding" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.create_acme_external_account_binding_response_of_yojson
+      ~error_deserializer
+end
+
+module DeleteAcmeDomainValidation = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.acm#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_acme_domain_validation_request) =
+    let input = Json_serializers.delete_acme_domain_validation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.DeleteAcmeDomainValidation"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module DeleteAcmeEndpoint = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.acm#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_acme_endpoint_request) =
+    let input = Json_serializers.delete_acme_endpoint_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.DeleteAcmeEndpoint" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module DeleteAcmeExternalAccountBinding = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_acme_external_account_binding_request) =
+    let input = Json_serializers.delete_acme_external_account_binding_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CertificateManager.DeleteAcmeExternalAccountBinding" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
 module DeleteCertificate = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
@@ -51,6 +281,7 @@ module DeleteCertificate = struct
     | `ResourceInUseException _ -> "com.amazonaws.acm#ResourceInUseException"
     | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
     | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -68,6 +299,8 @@ module DeleteCertificate = struct
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
       | _, "ThrottlingException" ->
           `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -80,10 +313,156 @@ module DeleteCertificate = struct
       ~error_deserializer
 end
 
+module DescribeAcmeAccount = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_acme_account_request) =
+    let input = Json_serializers.describe_acme_account_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.DescribeAcmeAccount"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_acme_account_response_of_yojson
+      ~error_deserializer
+end
+
+module DescribeAcmeDomainValidation = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_acme_domain_validation_request) =
+    let input = Json_serializers.describe_acme_domain_validation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CertificateManager.DescribeAcmeDomainValidation" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_acme_domain_validation_response_of_yojson
+      ~error_deserializer
+end
+
+module DescribeAcmeEndpoint = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_acme_endpoint_request) =
+    let input = Json_serializers.describe_acme_endpoint_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.DescribeAcmeEndpoint"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_acme_endpoint_response_of_yojson
+      ~error_deserializer
+end
+
+module DescribeAcmeExternalAccountBinding = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_acme_external_account_binding_request) =
+    let input = Json_serializers.describe_acme_external_account_binding_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CertificateManager.DescribeAcmeExternalAccountBinding" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_acme_external_account_binding_response_of_yojson
+      ~error_deserializer
+end
+
 module DescribeCertificate = struct
   let error_to_string = function
     | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
     | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -93,6 +472,8 @@ module DescribeCertificate = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -111,6 +492,8 @@ module ExportCertificate = struct
     | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
     | `RequestInProgressException _ -> "com.amazonaws.acm#RequestInProgressException"
     | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -123,6 +506,10 @@ module ExportCertificate = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -160,11 +547,52 @@ module GetAccountConfiguration = struct
       ~error_deserializer
 end
 
+module GetAcmeExternalAccountBindingCredentials = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_acme_external_account_binding_credentials_request) =
+    let input =
+      Json_serializers.get_acme_external_account_binding_credentials_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CertificateManager.GetAcmeExternalAccountBindingCredentials" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.get_acme_external_account_binding_credentials_response_of_yojson
+      ~error_deserializer
+end
+
 module GetCertificate = struct
   let error_to_string = function
     | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
     | `RequestInProgressException _ -> "com.amazonaws.acm#RequestInProgressException"
     | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -177,6 +605,8 @@ module GetCertificate = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -191,6 +621,7 @@ end
 
 module ImportCertificate = struct
   let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.acm#ConflictException"
     | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
     | `InvalidParameterException _ -> "com.amazonaws.acm#InvalidParameterException"
     | `InvalidTagException _ -> "com.amazonaws.acm#InvalidTagException"
@@ -198,10 +629,13 @@ module ImportCertificate = struct
     | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
     | `TagPolicyException _ -> "com.amazonaws.acm#TagPolicyException"
     | `TooManyTagsException _ -> "com.amazonaws.acm#TooManyTagsException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
     let handler handler tree path = function
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
       | _, "InvalidArnException" ->
           `InvalidArnException (Json_deserializers.invalid_arn_exception_of_yojson tree path)
       | _, "InvalidParameterException" ->
@@ -218,6 +652,8 @@ module ImportCertificate = struct
           `TagPolicyException (Json_deserializers.tag_policy_exception_of_yojson tree path)
       | _, "TooManyTagsException" ->
           `TooManyTagsException (Json_deserializers.too_many_tags_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -227,6 +663,144 @@ module ImportCertificate = struct
     let input = Json_serializers.import_certificate_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ImportCertificate" ~service
       ~context ~input ~output_deserializer:Json_deserializers.import_certificate_response_of_yojson
+      ~error_deserializer
+end
+
+module ListAcmeAccounts = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_acme_accounts_request) =
+    let input = Json_serializers.list_acme_accounts_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ListAcmeAccounts" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_acme_accounts_response_of_yojson
+      ~error_deserializer
+end
+
+module ListAcmeDomainValidations = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_acme_domain_validations_request) =
+    let input = Json_serializers.list_acme_domain_validations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ListAcmeDomainValidations"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_acme_domain_validations_response_of_yojson
+      ~error_deserializer
+end
+
+module ListAcmeEndpoints = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_acme_endpoints_request) =
+    let input = Json_serializers.list_acme_endpoints_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ListAcmeEndpoints" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_acme_endpoints_response_of_yojson
+      ~error_deserializer
+end
+
+module ListAcmeExternalAccountBindings = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_acme_external_account_bindings_request) =
+    let input = Json_serializers.list_acme_external_account_bindings_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CertificateManager.ListAcmeExternalAccountBindings" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_acme_external_account_bindings_response_of_yojson
       ~error_deserializer
 end
 
@@ -258,6 +832,7 @@ module ListTagsForCertificate = struct
   let error_to_string = function
     | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
     | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -267,6 +842,8 @@ module ListTagsForCertificate = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -277,6 +854,32 @@ module ListTagsForCertificate = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ListTagsForCertificate"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_certificate_response_of_yojson
+      ~error_deserializer
+end
+
+module ListTagsForResource = struct
+  let error_to_string = function
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_tags_for_resource_request) =
+    let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ListTagsForResource"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
       ~error_deserializer
 end
 
@@ -319,6 +922,7 @@ module RemoveTagsFromCertificate = struct
     | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
     | `TagPolicyException _ -> "com.amazonaws.acm#TagPolicyException"
     | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -337,6 +941,8 @@ module RemoveTagsFromCertificate = struct
           `TagPolicyException (Json_deserializers.tag_policy_exception_of_yojson tree path)
       | _, "ThrottlingException" ->
           `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -355,6 +961,7 @@ module RenewCertificate = struct
     | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
     | `RequestInProgressException _ -> "com.amazonaws.acm#RequestInProgressException"
     | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -367,6 +974,8 @@ module RenewCertificate = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -428,6 +1037,7 @@ module ResendValidationEmail = struct
         "com.amazonaws.acm#InvalidDomainValidationOptionsException"
     | `InvalidStateException _ -> "com.amazonaws.acm#InvalidStateException"
     | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -442,6 +1052,8 @@ module ResendValidationEmail = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -455,6 +1067,83 @@ module ResendValidationEmail = struct
       ~error_deserializer
 end
 
+module RevokeAcmeAccount = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.acm#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : revoke_acme_account_request) =
+    let input = Json_serializers.revoke_acme_account_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.RevokeAcmeAccount" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module RevokeAcmeExternalAccountBinding = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.acm#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : revoke_acme_external_account_binding_request) =
+    let input = Json_serializers.revoke_acme_external_account_binding_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CertificateManager.RevokeAcmeExternalAccountBinding" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
 module RevokeCertificate = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
@@ -463,6 +1152,7 @@ module RevokeCertificate = struct
     | `ResourceInUseException _ -> "com.amazonaws.acm#ResourceInUseException"
     | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
     | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -480,6 +1170,8 @@ module RevokeCertificate = struct
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
       | _, "ThrottlingException" ->
           `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -492,12 +1184,171 @@ module RevokeCertificate = struct
       ~error_deserializer
 end
 
+module SearchCertificates = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : search_certificates_request) =
+    let input = Json_serializers.search_certificates_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.SearchCertificates" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.search_certificates_response_of_yojson
+      ~error_deserializer
+end
+
+module TagResource = struct
+  let error_to_string = function
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ServiceQuotaExceededException _ -> "com.amazonaws.acm#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ServiceQuotaExceededException" ->
+          `ServiceQuotaExceededException
+            (Json_deserializers.service_quota_exceeded_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : tag_resource_request) =
+    let input = Json_serializers.tag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.TagResource" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module UntagResource = struct
+  let error_to_string = function
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : untag_resource_request) =
+    let input = Json_serializers.untag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.UntagResource" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module UpdateAcmeDomainValidation = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.acm#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : update_acme_domain_validation_request) =
+    let input = Json_serializers.update_acme_domain_validation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.UpdateAcmeDomainValidation"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module UpdateAcmeEndpoint = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.acm#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.acm#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.acm#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.acm#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : update_acme_endpoint_request) =
+    let input = Json_serializers.update_acme_endpoint_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.UpdateAcmeEndpoint" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
 module UpdateCertificateOptions = struct
   let error_to_string = function
     | `InvalidArnException _ -> "com.amazonaws.acm#InvalidArnException"
     | `InvalidStateException _ -> "com.amazonaws.acm#InvalidStateException"
     | `LimitExceededException _ -> "com.amazonaws.acm#LimitExceededException"
     | `ResourceNotFoundException _ -> "com.amazonaws.acm#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.acm#ValidationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -511,6 +1362,8 @@ module UpdateCertificateOptions = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(

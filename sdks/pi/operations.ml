@@ -267,6 +267,39 @@ module ListAvailableResourceMetrics = struct
       ~error_deserializer
 end
 
+module ListPerformanceAnalysisReportRecommendations = struct
+  let error_to_string = function
+    | `InternalServiceError _ -> "com.amazonaws.pi#InternalServiceError"
+    | `InvalidArgumentException _ -> "com.amazonaws.pi#InvalidArgumentException"
+    | `NotAuthorizedException _ -> "com.amazonaws.pi#NotAuthorizedException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServiceError" ->
+          `InternalServiceError (Json_deserializers.internal_service_error_of_yojson tree path)
+      | _, "InvalidArgumentException" ->
+          `InvalidArgumentException
+            (Json_deserializers.invalid_argument_exception_of_yojson tree path)
+      | _, "NotAuthorizedException" ->
+          `NotAuthorizedException (Json_deserializers.not_authorized_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_performance_analysis_report_recommendations_request) =
+    let input =
+      Json_serializers.list_performance_analysis_report_recommendations_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"PerformanceInsightsv20180227.ListPerformanceAnalysisReportRecommendations"
+      ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.list_performance_analysis_report_recommendations_response_of_yojson
+      ~error_deserializer
+end
+
 module ListPerformanceAnalysisReports = struct
   let error_to_string = function
     | `InternalServiceError _ -> "com.amazonaws.pi#InternalServiceError"

@@ -353,6 +353,8 @@ let make_table_class_summary ?last_update_date_time:(last_update_date_time_ : da
     : table_class_summary)
 
 let make_replica_description
+    ?global_table_settings_replication_mode:
+      (global_table_settings_replication_mode_ : global_table_settings_replication_mode option)
     ?replica_table_class_summary:(replica_table_class_summary_ : table_class_summary option)
     ?replica_inaccessible_date_time:(replica_inaccessible_date_time_ : date option)
     ?global_secondary_indexes:
@@ -366,9 +368,11 @@ let make_replica_description
     ?replica_status_percent_progress:
       (replica_status_percent_progress_ : replica_status_percent_progress option)
     ?replica_status_description:(replica_status_description_ : replica_status_description option)
+    ?replica_arn:(replica_arn_ : string_ option)
     ?replica_status:(replica_status_ : replica_status option)
     ?region_name:(region_name_ : region_name option) () =
   ({
+     global_table_settings_replication_mode = global_table_settings_replication_mode_;
      replica_table_class_summary = replica_table_class_summary_;
      replica_inaccessible_date_time = replica_inaccessible_date_time_;
      global_secondary_indexes = global_secondary_indexes_;
@@ -378,6 +382,7 @@ let make_replica_description
      kms_master_key_id = kms_master_key_id_;
      replica_status_percent_progress = replica_status_percent_progress_;
      replica_status_description = replica_status_description_;
+     replica_arn = replica_arn_;
      replica_status = replica_status_;
      region_name = region_name_;
    }
@@ -431,6 +436,8 @@ let make_table_description
     ?archival_summary:(archival_summary_ : archival_summary option)
     ?sse_description:(sse_description_ : sse_description option)
     ?restore_summary:(restore_summary_ : restore_summary option)
+    ?global_table_settings_replication_mode:
+      (global_table_settings_replication_mode_ : global_table_settings_replication_mode option)
     ?global_table_witnesses:(global_table_witnesses_ : global_table_witness_description_list option)
     ?replicas:(replicas_ : replica_description_list option)
     ?global_table_version:(global_table_version_ : string_ option)
@@ -459,6 +466,7 @@ let make_table_description
      archival_summary = archival_summary_;
      sse_description = sse_description_;
      restore_summary = restore_summary_;
+     global_table_settings_replication_mode = global_table_settings_replication_mode_;
      global_table_witnesses = global_table_witnesses_;
      replicas = replicas_;
      global_table_version = global_table_version_;
@@ -606,7 +614,10 @@ let make_global_table_witness_group_update
     ?create:(create_ : create_global_table_witness_group_member_action option) () =
   ({ delete = delete_; create = create_ } : global_table_witness_group_update)
 
-let make_update_table_input ?warm_throughput:(warm_throughput_ : warm_throughput option)
+let make_update_table_input
+    ?global_table_settings_replication_mode:
+      (global_table_settings_replication_mode_ : global_table_settings_replication_mode option)
+    ?warm_throughput:(warm_throughput_ : warm_throughput option)
     ?on_demand_throughput:(on_demand_throughput_ : on_demand_throughput option)
     ?global_table_witness_updates:
       (global_table_witness_updates_ : global_table_witness_group_update_list option)
@@ -623,6 +634,7 @@ let make_update_table_input ?warm_throughput:(warm_throughput_ : warm_throughput
     ?attribute_definitions:(attribute_definitions_ : attribute_definitions option)
     ~table_name:(table_name_ : table_arn) () =
   ({
+     global_table_settings_replication_mode = global_table_settings_replication_mode_;
      warm_throughput = warm_throughput_;
      on_demand_throughput = on_demand_throughput_;
      global_table_witness_updates = global_table_witness_updates_;
@@ -768,6 +780,10 @@ let make_update_item_input
      table_name = table_name_;
    }
     : update_item_input)
+
+let make_throttling_reason ?resource:(resource_ : resource option) ?reason:(reason_ : reason option)
+    () =
+  ({ resource = resource_; reason = reason_ } : throttling_reason)
 
 let make_replica_global_secondary_index_settings_description
     ?provisioned_write_capacity_auto_scaling_settings:
@@ -938,19 +954,24 @@ let make_update_global_table_input ~replica_updates:(replica_updates_ : replica_
     : update_global_table_input)
 
 let make_update_contributor_insights_output
+    ?contributor_insights_mode:(contributor_insights_mode_ : contributor_insights_mode option)
     ?contributor_insights_status:(contributor_insights_status_ : contributor_insights_status option)
     ?index_name:(index_name_ : index_name option) ?table_name:(table_name_ : table_name option) () =
   ({
+     contributor_insights_mode = contributor_insights_mode_;
      contributor_insights_status = contributor_insights_status_;
      index_name = index_name_;
      table_name = table_name_;
    }
     : update_contributor_insights_output)
 
-let make_update_contributor_insights_input ?index_name:(index_name_ : index_name option)
+let make_update_contributor_insights_input
+    ?contributor_insights_mode:(contributor_insights_mode_ : contributor_insights_mode option)
+    ?index_name:(index_name_ : index_name option)
     ~contributor_insights_action:(contributor_insights_action_ : contributor_insights_action)
     ~table_name:(table_name_ : table_arn) () =
   ({
+     contributor_insights_mode = contributor_insights_mode_;
      contributor_insights_action = contributor_insights_action_;
      index_name = index_name_;
      table_name = table_name_;
@@ -1603,9 +1624,11 @@ let make_list_exports_input ?next_token:(next_token_ : export_next_token option)
     : list_exports_input)
 
 let make_contributor_insights_summary
+    ?contributor_insights_mode:(contributor_insights_mode_ : contributor_insights_mode option)
     ?contributor_insights_status:(contributor_insights_status_ : contributor_insights_status option)
     ?index_name:(index_name_ : index_name option) ?table_name:(table_name_ : table_name option) () =
   ({
+     contributor_insights_mode = contributor_insights_mode_;
      contributor_insights_status = contributor_insights_status_;
      index_name = index_name_;
      table_name = table_name_;
@@ -2059,6 +2082,7 @@ let make_describe_endpoints_response ~endpoints:(endpoints_ : endpoints) () =
 let make_describe_endpoints_request () = (() : unit)
 
 let make_describe_contributor_insights_output
+    ?contributor_insights_mode:(contributor_insights_mode_ : contributor_insights_mode option)
     ?failure_exception:(failure_exception_ : failure_exception option)
     ?last_update_date_time:(last_update_date_time_ : last_update_date_time option)
     ?contributor_insights_status:(contributor_insights_status_ : contributor_insights_status option)
@@ -2066,6 +2090,7 @@ let make_describe_contributor_insights_output
       (contributor_insights_rule_list_ : contributor_insights_rule_list option)
     ?index_name:(index_name_ : index_name option) ?table_name:(table_name_ : table_name option) () =
   ({
+     contributor_insights_mode = contributor_insights_mode_;
      failure_exception = failure_exception_;
      last_update_date_time = last_update_date_time_;
      contributor_insights_status = contributor_insights_status_;
@@ -2189,6 +2214,9 @@ let make_create_table_output ?table_description:(table_description_ : table_desc
   ({ table_description = table_description_ } : create_table_output)
 
 let make_create_table_input
+    ?global_table_settings_replication_mode:
+      (global_table_settings_replication_mode_ : global_table_settings_replication_mode option)
+    ?global_table_source_arn:(global_table_source_arn_ : table_arn option)
     ?on_demand_throughput:(on_demand_throughput_ : on_demand_throughput option)
     ?resource_policy:(resource_policy_ : resource_policy option)
     ?warm_throughput:(warm_throughput_ : warm_throughput option)
@@ -2200,9 +2228,12 @@ let make_create_table_input
     ?billing_mode:(billing_mode_ : billing_mode option)
     ?global_secondary_indexes:(global_secondary_indexes_ : global_secondary_index_list option)
     ?local_secondary_indexes:(local_secondary_indexes_ : local_secondary_index_list option)
-    ~key_schema:(key_schema_ : key_schema) ~table_name:(table_name_ : table_arn)
-    ~attribute_definitions:(attribute_definitions_ : attribute_definitions) () =
+    ?key_schema:(key_schema_ : key_schema option)
+    ?attribute_definitions:(attribute_definitions_ : attribute_definitions option)
+    ~table_name:(table_name_ : table_arn) () =
   ({
+     global_table_settings_replication_mode = global_table_settings_replication_mode_;
+     global_table_source_arn = global_table_source_arn_;
      on_demand_throughput = on_demand_throughput_;
      resource_policy = resource_policy_;
      warm_throughput = warm_throughput_;

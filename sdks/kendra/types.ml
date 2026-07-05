@@ -45,31 +45,30 @@ type nonrec data_source_to_index_field_mapping_list = data_source_to_index_field
 type nonrec work_docs_configuration = {
   field_mappings : data_source_to_index_field_mapping_list option;
       [@ocaml.doc
-        "A list of [DataSourceToIndexFieldMapping] objects that map Amazon WorkDocs data source \
+        "A list of [DataSourceToIndexFieldMapping] objects that map WorkDocs data source \
          attributes or field names to Amazon Kendra index field names. To create custom fields, \
-         use the [UpdateIndex] API before you map to Amazon WorkDocs fields. For more information, \
-         see {{:https://docs.aws.amazon.com/kendra/latest/dg/field-mapping.html}Mapping data \
-         source fields}. The Amazon WorkDocs data source field names must exist in your Amazon \
-         WorkDocs custom metadata.\n"]
+         use the [UpdateIndex] API before you map to WorkDocs fields. For more information, see \
+         {{:https://docs.aws.amazon.com/kendra/latest/dg/field-mapping.html}Mapping data source \
+         fields}. The WorkDocs data source field names must exist in your WorkDocs custom metadata.\n"]
   exclusion_patterns : data_source_inclusions_exclusions_strings option;
       [@ocaml.doc
-        "A list of regular expression patterns to exclude certain files in your Amazon WorkDocs \
-         site repository. Files that match the patterns are excluded from the index. Files that \
+        "A list of regular expression patterns to exclude certain files in your WorkDocs site \
+         repository. Files that match the patterns are excluded from the index. Files that \
          don\226\128\153t match the patterns are included in the index. If a file matches both an \
          inclusion and exclusion pattern, the exclusion pattern takes precedence and the file \
          isn't included in the index.\n"]
   inclusion_patterns : data_source_inclusions_exclusions_strings option;
       [@ocaml.doc
-        "A list of regular expression patterns to include certain files in your Amazon WorkDocs \
-         site repository. Files that match the patterns are included in the index. Files that \
-         don't match the patterns are excluded from the index. If a file matches both an inclusion \
-         and exclusion pattern, the exclusion pattern takes precedence and the file isn't included \
-         in the index.\n"]
+        "A list of regular expression patterns to include certain files in your WorkDocs site \
+         repository. Files that match the patterns are included in the index. Files that don't \
+         match the patterns are excluded from the index. If a file matches both an inclusion and \
+         exclusion pattern, the exclusion pattern takes precedence and the file isn't included in \
+         the index.\n"]
   use_change_log : boolean_ option;
       [@ocaml.doc
-        " [TRUE] to use the Amazon WorkDocs change log to determine which documents require \
-         updating in the index. Depending on the change log's size, it may take longer for Amazon \
-         Kendra to use the change log than to scan all of your documents in Amazon WorkDocs.\n"]
+        " [TRUE] to use the WorkDocs change log to determine which documents require updating in \
+         the index. Depending on the change log's size, it may take longer for Amazon Kendra to \
+         use the change log than to scan all of your documents in WorkDocs.\n"]
   crawl_comments : boolean_ option;
       [@ocaml.doc
         " [TRUE] to include comments on documents in your index. Including comments in your index \
@@ -78,19 +77,18 @@ type nonrec work_docs_configuration = {
         \ "]
   organization_id : organization_id;
       [@ocaml.doc
-        "The identifier of the directory corresponding to your Amazon WorkDocs site repository.\n\n\
+        "The identifier of the directory corresponding to your WorkDocs site repository.\n\n\
         \ You can find the organization ID in the \
          {{:https://console.aws.amazon.com/directoryservicev2/}Directory Service} by going to {b \
-         Active Directory}, then {b Directories}. Your Amazon WorkDocs site directory has an ID, \
-         which is the organization ID. You can also set up a new Amazon WorkDocs directory in the \
-         Directory Service console and enable a Amazon WorkDocs site for the directory in the \
-         Amazon WorkDocs console.\n\
+         Active Directory}, then {b Directories}. Your WorkDocs site directory has an ID, which is \
+         the organization ID. You can also set up a new WorkDocs directory in the Directory \
+         Service console and enable a WorkDocs site for the directory in the WorkDocs console.\n\
         \ "]
 }
 [@@ocaml.doc
-  "Provides the configuration information to connect to Amazon WorkDocs as your data source.\n\n\
-  \ Amazon WorkDocs connector is available in Oregon, North Virginia, Sydney, Singapore and \
-   Ireland regions.\n\
+  "Provides the configuration information to connect to WorkDocs as your data source.\n\n\
+  \ WorkDocs connector is available in Oregon, North Virginia, Sydney, Singapore and Ireland \
+   regions.\n\
   \ "]
 
 type nonrec web_crawler_mode =
@@ -3218,7 +3216,7 @@ type nonrec data_source_configuration = {
         \      "]
   work_docs_configuration : work_docs_configuration option;
       [@ocaml.doc
-        "Provides the configuration information to connect to Amazon WorkDocs as your data source.\n"]
+        "Provides the configuration information to connect to WorkDocs as your data source.\n"]
   web_crawler_configuration : web_crawler_configuration option; [@ocaml.doc ""]
   google_drive_configuration : google_drive_configuration option;
       [@ocaml.doc

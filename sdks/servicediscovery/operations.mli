@@ -455,7 +455,7 @@ module ListNamespaces : sig
 end
 [@@ocaml.doc
   "Lists summary information about the namespaces that were created by the current Amazon Web \
-   Services account.\n"]
+   Services account and shared with the current Amazon Web Services account.\n"]
 
 module ListOperations : sig
   val error_to_string :
@@ -747,9 +747,21 @@ end
   \              \n\
   \               }\n\
   \          }\n\
-  \   When you update settings for a service, Cloud Map also updates the corresponding settings in \
-   all the records and health checks that were created by using the specified service.\n\
-  \   "]
+  \    You can't call [UpdateService] and update settings in the following scenarios:\n\
+  \    \n\
+  \     {ul\n\
+  \           {-  When the service is associated with an HTTP namespace\n\
+  \               \n\
+  \                }\n\
+  \           {-  When the service is associated with a shared namespace and contains instances \
+   that were registered by Amazon Web Services accounts other than the account making the \
+   [UpdateService] call\n\
+  \               \n\
+  \                }\n\
+  \           }\n\
+  \    When you update settings for a service, Cloud Map also updates the corresponding settings \
+   in all the records and health checks that were created by using the specified service.\n\
+  \    "]
 
 module UpdateServiceAttributes : sig
   val error_to_string :

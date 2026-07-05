@@ -415,6 +415,53 @@ module CreateDirectory = struct
       ~output_deserializer:Json_deserializers.create_directory_result_of_yojson ~error_deserializer
 end
 
+module CreateHybridAD = struct
+  let error_to_string = function
+    | `ADAssessmentLimitExceededException _ ->
+        "com.amazonaws.directoryservice#ADAssessmentLimitExceededException"
+    | `ClientException _ -> "com.amazonaws.directoryservice#ClientException"
+    | `DirectoryLimitExceededException _ ->
+        "com.amazonaws.directoryservice#DirectoryLimitExceededException"
+    | `EntityDoesNotExistException _ -> "com.amazonaws.directoryservice#EntityDoesNotExistException"
+    | `InvalidParameterException _ -> "com.amazonaws.directoryservice#InvalidParameterException"
+    | `ServiceException _ -> "com.amazonaws.directoryservice#ServiceException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.directoryservice#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ADAssessmentLimitExceededException" ->
+          `ADAssessmentLimitExceededException
+            (Json_deserializers.ad_assessment_limit_exceeded_exception_of_yojson tree path)
+      | _, "ClientException" ->
+          `ClientException (Json_deserializers.client_exception_of_yojson tree path)
+      | _, "DirectoryLimitExceededException" ->
+          `DirectoryLimitExceededException
+            (Json_deserializers.directory_limit_exceeded_exception_of_yojson tree path)
+      | _, "EntityDoesNotExistException" ->
+          `EntityDoesNotExistException
+            (Json_deserializers.entity_does_not_exist_exception_of_yojson tree path)
+      | _, "InvalidParameterException" ->
+          `InvalidParameterException
+            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "ServiceException" ->
+          `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
+      | _, "UnsupportedOperationException" ->
+          `UnsupportedOperationException
+            (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_hybrid_ad_request) =
+    let input = Json_serializers.create_hybrid_ad_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.CreateHybridAD"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_hybrid_ad_result_of_yojson ~error_deserializer
+end
+
 module CreateLogSubscription = struct
   let error_to_string = function
     | `ClientException _ -> "com.amazonaws.directoryservice#ClientException"
@@ -574,6 +621,44 @@ module CreateTrust = struct
     let input = Json_serializers.create_trust_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.CreateTrust" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_trust_result_of_yojson
+      ~error_deserializer
+end
+
+module DeleteADAssessment = struct
+  let error_to_string = function
+    | `ClientException _ -> "com.amazonaws.directoryservice#ClientException"
+    | `EntityDoesNotExistException _ -> "com.amazonaws.directoryservice#EntityDoesNotExistException"
+    | `InvalidParameterException _ -> "com.amazonaws.directoryservice#InvalidParameterException"
+    | `ServiceException _ -> "com.amazonaws.directoryservice#ServiceException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.directoryservice#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ClientException" ->
+          `ClientException (Json_deserializers.client_exception_of_yojson tree path)
+      | _, "EntityDoesNotExistException" ->
+          `EntityDoesNotExistException
+            (Json_deserializers.entity_does_not_exist_exception_of_yojson tree path)
+      | _, "InvalidParameterException" ->
+          `InvalidParameterException
+            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "ServiceException" ->
+          `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
+      | _, "UnsupportedOperationException" ->
+          `UnsupportedOperationException
+            (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_ad_assessment_request) =
+    let input = Json_serializers.delete_ad_assessment_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DeleteADAssessment"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_ad_assessment_result_of_yojson
       ~error_deserializer
 end
 
@@ -834,6 +919,79 @@ module DeregisterEventTopic = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DeregisterEventTopic"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.deregister_event_topic_result_of_yojson
+      ~error_deserializer
+end
+
+module DescribeADAssessment = struct
+  let error_to_string = function
+    | `ClientException _ -> "com.amazonaws.directoryservice#ClientException"
+    | `EntityDoesNotExistException _ -> "com.amazonaws.directoryservice#EntityDoesNotExistException"
+    | `InvalidParameterException _ -> "com.amazonaws.directoryservice#InvalidParameterException"
+    | `ServiceException _ -> "com.amazonaws.directoryservice#ServiceException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.directoryservice#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ClientException" ->
+          `ClientException (Json_deserializers.client_exception_of_yojson tree path)
+      | _, "EntityDoesNotExistException" ->
+          `EntityDoesNotExistException
+            (Json_deserializers.entity_does_not_exist_exception_of_yojson tree path)
+      | _, "InvalidParameterException" ->
+          `InvalidParameterException
+            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "ServiceException" ->
+          `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
+      | _, "UnsupportedOperationException" ->
+          `UnsupportedOperationException
+            (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_ad_assessment_request) =
+    let input = Json_serializers.describe_ad_assessment_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DescribeADAssessment"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_ad_assessment_result_of_yojson
+      ~error_deserializer
+end
+
+module DescribeCAEnrollmentPolicy = struct
+  let error_to_string = function
+    | `ClientException _ -> "com.amazonaws.directoryservice#ClientException"
+    | `DirectoryDoesNotExistException _ ->
+        "com.amazonaws.directoryservice#DirectoryDoesNotExistException"
+    | `ServiceException _ -> "com.amazonaws.directoryservice#ServiceException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.directoryservice#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ClientException" ->
+          `ClientException (Json_deserializers.client_exception_of_yojson tree path)
+      | _, "DirectoryDoesNotExistException" ->
+          `DirectoryDoesNotExistException
+            (Json_deserializers.directory_does_not_exist_exception_of_yojson tree path)
+      | _, "ServiceException" ->
+          `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
+      | _, "UnsupportedOperationException" ->
+          `UnsupportedOperationException
+            (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_ca_enrollment_policy_request) =
+    let input = Json_serializers.describe_ca_enrollment_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DirectoryService_20150416.DescribeCAEnrollmentPolicy" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_ca_enrollment_policy_result_of_yojson
       ~error_deserializer
 end
 
@@ -1117,6 +1275,49 @@ module DescribeEventTopics = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DescribeEventTopics"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_event_topics_result_of_yojson
+      ~error_deserializer
+end
+
+module DescribeHybridADUpdate = struct
+  let error_to_string = function
+    | `ClientException _ -> "com.amazonaws.directoryservice#ClientException"
+    | `DirectoryDoesNotExistException _ ->
+        "com.amazonaws.directoryservice#DirectoryDoesNotExistException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.directoryservice#InvalidNextTokenException"
+    | `InvalidParameterException _ -> "com.amazonaws.directoryservice#InvalidParameterException"
+    | `ServiceException _ -> "com.amazonaws.directoryservice#ServiceException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.directoryservice#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ClientException" ->
+          `ClientException (Json_deserializers.client_exception_of_yojson tree path)
+      | _, "DirectoryDoesNotExistException" ->
+          `DirectoryDoesNotExistException
+            (Json_deserializers.directory_does_not_exist_exception_of_yojson tree path)
+      | _, "InvalidNextTokenException" ->
+          `InvalidNextTokenException
+            (Json_deserializers.invalid_next_token_exception_of_yojson tree path)
+      | _, "InvalidParameterException" ->
+          `InvalidParameterException
+            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "ServiceException" ->
+          `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
+      | _, "UnsupportedOperationException" ->
+          `UnsupportedOperationException
+            (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_hybrid_ad_update_request) =
+    let input = Json_serializers.describe_hybrid_ad_update_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DirectoryService_20150416.DescribeHybridADUpdate" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_hybrid_ad_update_result_of_yojson
       ~error_deserializer
 end
 
@@ -1411,6 +1612,57 @@ module DescribeUpdateDirectory = struct
       ~error_deserializer
 end
 
+module DisableCAEnrollmentPolicy = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.directoryservice#AccessDeniedException"
+    | `ClientException _ -> "com.amazonaws.directoryservice#ClientException"
+    | `DirectoryDoesNotExistException _ ->
+        "com.amazonaws.directoryservice#DirectoryDoesNotExistException"
+    | `DirectoryUnavailableException _ ->
+        "com.amazonaws.directoryservice#DirectoryUnavailableException"
+    | `DisableAlreadyInProgressException _ ->
+        "com.amazonaws.directoryservice#DisableAlreadyInProgressException"
+    | `EntityDoesNotExistException _ -> "com.amazonaws.directoryservice#EntityDoesNotExistException"
+    | `InvalidParameterException _ -> "com.amazonaws.directoryservice#InvalidParameterException"
+    | `ServiceException _ -> "com.amazonaws.directoryservice#ServiceException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "ClientException" ->
+          `ClientException (Json_deserializers.client_exception_of_yojson tree path)
+      | _, "DirectoryDoesNotExistException" ->
+          `DirectoryDoesNotExistException
+            (Json_deserializers.directory_does_not_exist_exception_of_yojson tree path)
+      | _, "DirectoryUnavailableException" ->
+          `DirectoryUnavailableException
+            (Json_deserializers.directory_unavailable_exception_of_yojson tree path)
+      | _, "DisableAlreadyInProgressException" ->
+          `DisableAlreadyInProgressException
+            (Json_deserializers.disable_already_in_progress_exception_of_yojson tree path)
+      | _, "EntityDoesNotExistException" ->
+          `EntityDoesNotExistException
+            (Json_deserializers.entity_does_not_exist_exception_of_yojson tree path)
+      | _, "InvalidParameterException" ->
+          `InvalidParameterException
+            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "ServiceException" ->
+          `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : disable_ca_enrollment_policy_request) =
+    let input = Json_serializers.disable_ca_enrollment_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DirectoryService_20150416.DisableCAEnrollmentPolicy" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.disable_ca_enrollment_policy_result_of_yojson
+      ~error_deserializer
+end
+
 module DisableClientAuthentication = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.directoryservice#AccessDeniedException"
@@ -1612,6 +1864,62 @@ module DisableSso = struct
     let input = Json_serializers.disable_sso_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DisableSso" ~service
       ~context ~input ~output_deserializer:Json_deserializers.disable_sso_result_of_yojson
+      ~error_deserializer
+end
+
+module EnableCAEnrollmentPolicy = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.directoryservice#AccessDeniedException"
+    | `ClientException _ -> "com.amazonaws.directoryservice#ClientException"
+    | `DirectoryDoesNotExistException _ ->
+        "com.amazonaws.directoryservice#DirectoryDoesNotExistException"
+    | `DirectoryUnavailableException _ ->
+        "com.amazonaws.directoryservice#DirectoryUnavailableException"
+    | `EnableAlreadyInProgressException _ ->
+        "com.amazonaws.directoryservice#EnableAlreadyInProgressException"
+    | `EntityAlreadyExistsException _ ->
+        "com.amazonaws.directoryservice#EntityAlreadyExistsException"
+    | `EntityDoesNotExistException _ -> "com.amazonaws.directoryservice#EntityDoesNotExistException"
+    | `InvalidParameterException _ -> "com.amazonaws.directoryservice#InvalidParameterException"
+    | `ServiceException _ -> "com.amazonaws.directoryservice#ServiceException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "ClientException" ->
+          `ClientException (Json_deserializers.client_exception_of_yojson tree path)
+      | _, "DirectoryDoesNotExistException" ->
+          `DirectoryDoesNotExistException
+            (Json_deserializers.directory_does_not_exist_exception_of_yojson tree path)
+      | _, "DirectoryUnavailableException" ->
+          `DirectoryUnavailableException
+            (Json_deserializers.directory_unavailable_exception_of_yojson tree path)
+      | _, "EnableAlreadyInProgressException" ->
+          `EnableAlreadyInProgressException
+            (Json_deserializers.enable_already_in_progress_exception_of_yojson tree path)
+      | _, "EntityAlreadyExistsException" ->
+          `EntityAlreadyExistsException
+            (Json_deserializers.entity_already_exists_exception_of_yojson tree path)
+      | _, "EntityDoesNotExistException" ->
+          `EntityDoesNotExistException
+            (Json_deserializers.entity_does_not_exist_exception_of_yojson tree path)
+      | _, "InvalidParameterException" ->
+          `InvalidParameterException
+            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "ServiceException" ->
+          `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : enable_ca_enrollment_policy_request) =
+    let input = Json_serializers.enable_ca_enrollment_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DirectoryService_20150416.EnableCAEnrollmentPolicy" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.enable_ca_enrollment_policy_result_of_yojson
       ~error_deserializer
 end
 
@@ -1893,6 +2201,45 @@ module GetSnapshotLimits = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.GetSnapshotLimits"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_snapshot_limits_result_of_yojson
+      ~error_deserializer
+end
+
+module ListADAssessments = struct
+  let error_to_string = function
+    | `ClientException _ -> "com.amazonaws.directoryservice#ClientException"
+    | `DirectoryDoesNotExistException _ ->
+        "com.amazonaws.directoryservice#DirectoryDoesNotExistException"
+    | `InvalidParameterException _ -> "com.amazonaws.directoryservice#InvalidParameterException"
+    | `ServiceException _ -> "com.amazonaws.directoryservice#ServiceException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.directoryservice#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ClientException" ->
+          `ClientException (Json_deserializers.client_exception_of_yojson tree path)
+      | _, "DirectoryDoesNotExistException" ->
+          `DirectoryDoesNotExistException
+            (Json_deserializers.directory_does_not_exist_exception_of_yojson tree path)
+      | _, "InvalidParameterException" ->
+          `InvalidParameterException
+            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "ServiceException" ->
+          `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
+      | _, "UnsupportedOperationException" ->
+          `UnsupportedOperationException
+            (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_ad_assessments_request) =
+    let input = Json_serializers.list_ad_assessments_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.ListADAssessments"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_ad_assessments_result_of_yojson
       ~error_deserializer
 end
 
@@ -2453,6 +2800,50 @@ module ShareDirectory = struct
       ~output_deserializer:Json_deserializers.share_directory_result_of_yojson ~error_deserializer
 end
 
+module StartADAssessment = struct
+  let error_to_string = function
+    | `ADAssessmentLimitExceededException _ ->
+        "com.amazonaws.directoryservice#ADAssessmentLimitExceededException"
+    | `ClientException _ -> "com.amazonaws.directoryservice#ClientException"
+    | `DirectoryDoesNotExistException _ ->
+        "com.amazonaws.directoryservice#DirectoryDoesNotExistException"
+    | `InvalidParameterException _ -> "com.amazonaws.directoryservice#InvalidParameterException"
+    | `ServiceException _ -> "com.amazonaws.directoryservice#ServiceException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.directoryservice#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ADAssessmentLimitExceededException" ->
+          `ADAssessmentLimitExceededException
+            (Json_deserializers.ad_assessment_limit_exceeded_exception_of_yojson tree path)
+      | _, "ClientException" ->
+          `ClientException (Json_deserializers.client_exception_of_yojson tree path)
+      | _, "DirectoryDoesNotExistException" ->
+          `DirectoryDoesNotExistException
+            (Json_deserializers.directory_does_not_exist_exception_of_yojson tree path)
+      | _, "InvalidParameterException" ->
+          `InvalidParameterException
+            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "ServiceException" ->
+          `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
+      | _, "UnsupportedOperationException" ->
+          `UnsupportedOperationException
+            (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : start_ad_assessment_request) =
+    let input = Json_serializers.start_ad_assessment_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.StartADAssessment"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_ad_assessment_result_of_yojson
+      ~error_deserializer
+end
+
 module StartSchemaExtension = struct
   let error_to_string = function
     | `ClientException _ -> "com.amazonaws.directoryservice#ClientException"
@@ -2629,6 +3020,49 @@ module UpdateDirectorySetup = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_directory_setup_result_of_yojson
       ~error_deserializer
+end
+
+module UpdateHybridAD = struct
+  let error_to_string = function
+    | `ADAssessmentLimitExceededException _ ->
+        "com.amazonaws.directoryservice#ADAssessmentLimitExceededException"
+    | `ClientException _ -> "com.amazonaws.directoryservice#ClientException"
+    | `DirectoryDoesNotExistException _ ->
+        "com.amazonaws.directoryservice#DirectoryDoesNotExistException"
+    | `InvalidParameterException _ -> "com.amazonaws.directoryservice#InvalidParameterException"
+    | `ServiceException _ -> "com.amazonaws.directoryservice#ServiceException"
+    | `UnsupportedOperationException _ ->
+        "com.amazonaws.directoryservice#UnsupportedOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ADAssessmentLimitExceededException" ->
+          `ADAssessmentLimitExceededException
+            (Json_deserializers.ad_assessment_limit_exceeded_exception_of_yojson tree path)
+      | _, "ClientException" ->
+          `ClientException (Json_deserializers.client_exception_of_yojson tree path)
+      | _, "DirectoryDoesNotExistException" ->
+          `DirectoryDoesNotExistException
+            (Json_deserializers.directory_does_not_exist_exception_of_yojson tree path)
+      | _, "InvalidParameterException" ->
+          `InvalidParameterException
+            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "ServiceException" ->
+          `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
+      | _, "UnsupportedOperationException" ->
+          `UnsupportedOperationException
+            (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : update_hybrid_ad_request) =
+    let input = Json_serializers.update_hybrid_ad_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.UpdateHybridAD"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_hybrid_ad_result_of_yojson ~error_deserializer
 end
 
 module UpdateNumberOfDomainControllers = struct

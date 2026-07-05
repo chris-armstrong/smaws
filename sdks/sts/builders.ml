@@ -10,6 +10,23 @@ let make_provided_context ?context_assertion:(context_assertion_ : context_asser
     ?provider_arn:(provider_arn_ : arn_type option) () =
   ({ context_assertion = context_assertion_; provider_arn = provider_arn_ } : provided_context)
 
+let make_get_web_identity_token_response ?expiration:(expiration_ : date_type option)
+    ?web_identity_token:(web_identity_token_ : web_identity_token_type option) () =
+  ({ expiration = expiration_; web_identity_token = web_identity_token_ }
+    : get_web_identity_token_response)
+
+let make_get_web_identity_token_request ?tags:(tags_ : tag_list_type option)
+    ?duration_seconds:(duration_seconds_ : web_identity_token_duration_seconds_type option)
+    ~signing_algorithm:(signing_algorithm_ : jwt_algorithm_type)
+    ~audience:(audience_ : web_identity_token_audience_list_type) () =
+  ({
+     tags = tags_;
+     signing_algorithm = signing_algorithm_;
+     duration_seconds = duration_seconds_;
+     audience = audience_;
+   }
+    : get_web_identity_token_request)
+
 let make_credentials ~expiration:(expiration_ : date_type)
     ~session_token:(session_token_ : token_type)
     ~secret_access_key:(secret_access_key_ : access_key_secret_type)
@@ -62,6 +79,21 @@ let make_get_federation_token_request ?tags:(tags_ : tag_list_type option)
      name = name_;
    }
     : get_federation_token_request)
+
+let make_get_delegated_access_token_response
+    ?assumed_principal:(assumed_principal_ : arn_type option)
+    ?packed_policy_size:(packed_policy_size_ : non_negative_integer_type option)
+    ?credentials:(credentials_ : credentials option) () =
+  ({
+     assumed_principal = assumed_principal_;
+     packed_policy_size = packed_policy_size_;
+     credentials = credentials_;
+   }
+    : get_delegated_access_token_response)
+
+let make_get_delegated_access_token_request ~trade_in_token:(trade_in_token_ : trade_in_token_type)
+    () =
+  ({ trade_in_token = trade_in_token_ } : get_delegated_access_token_request)
 
 let make_get_caller_identity_response ?arn:(arn_ : arn_type option)
     ?account:(account_ : account_type option) ?user_id:(user_id_ : user_id_type option) () =

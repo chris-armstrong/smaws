@@ -1031,7 +1031,7 @@ end
   \          {-   [OutputBucketName]: The Amazon S3 bucket where you want your output files stored.\n\
   \              \n\
   \               }\n\
-  \          {-   [Settings]: A [MedicalScribeSettings] obect that must set exactly one of \
+  \          {-   [Settings]: A [MedicalScribeSettings] object that must set exactly one of \
    [ShowSpeakerLabels] or [ChannelIdentification] to true. If [ShowSpeakerLabels] is true, \
    [MaxSpeakerLabels] must also be set. \n\
   \              \n\

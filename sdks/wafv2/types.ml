@@ -1661,7 +1661,32 @@ type nonrec challenge_action = {
   \    This action option is available for rules. It isn't available for web ACL default actions. \n\
   \    "]
 
+type nonrec price_multiplier = string [@@ocaml.doc ""]
+
+type nonrec monetize_action = {
+  price_multiplier : price_multiplier option;
+      [@ocaml.doc
+        "An integer multiplier applied to the base price defined in the web ACL's \
+         [MonetizationConfig]. The effective price for the request is the base price multiplied by \
+         this value. Specify as a string. Valid values: 1 to 100.\n"]
+}
+[@@ocaml.doc
+  "Specifies the monetize action settings for a rule. When WAF applies this action, it returns an \
+   HTTP 402 Payment Required response containing pricing information that the requesting client \
+   uses to complete payment and gain access to the resource. This is a terminating action-if the \
+   client does not complete the 402 payment flow, the request is blocked. This action is available \
+   only for web ACLs associated with Amazon CloudFront distributions. You must configure a \
+   [MonetizationConfig] on the web ACL or rule group before adding rules that use this action. You \
+   cannot use the Monetize action for rate-based rules.\n"]
+
 type nonrec rule_action = {
+  monetize : monetize_action option;
+      [@ocaml.doc
+        "Instructs WAF to return an HTTP 402 Payment Required response with a price manifest. The \
+         requesting client can complete payment and resubmit the request to gain access. This is a \
+         terminating action-requests that do not complete payment are blocked. This action is \
+         available only for web ACLs associated with Amazon CloudFront distributions and requires \
+         a [MonetizationConfig] on the web ACL.\n"]
   challenge : challenge_action option;
       [@ocaml.doc "Instructs WAF to run a [Challenge] check against the web request.\n"]
   captcha : captcha_action option;
@@ -1685,18 +1710,21 @@ type nonrec rule_action_override = {
   name : entity_name;
       [@ocaml.doc
         "The name of the rule to override.\n\n\
-        \  Take care to verify the rule names in your overrides. If you provide a rule name that \
-         doesn't match the name of any rule in the rule group, WAF doesn't return an error and \
-         doesn't apply the override setting.\n\
+        \  Verify the rule names in your overrides carefully. With managed rule groups, WAF \
+         silently ignores any override that uses an invalid rule name. With customer-owned rule \
+         groups, invalid rule names in your overrides will cause web ACL updates to fail. An \
+         invalid rule name is any name that doesn't exactly match the case-sensitive name of an \
+         existing rule in the rule group.\n\
         \  \n\
         \   "]
 }
 [@@ocaml.doc
   "Action setting to use in the place of a rule action that is configured inside the rule group. \
    You specify one override for each rule whose action you want to change. \n\n\
-  \  Take care to verify the rule names in your overrides. If you provide a rule name that doesn't \
-   match the name of any rule in the rule group, WAF doesn't return an error and doesn't apply the \
-   override setting.\n\
+  \  Verify the rule names in your overrides carefully. With managed rule groups, WAF silently \
+   ignores any override that uses an invalid rule name. With customer-owned rule groups, invalid \
+   rule names in your overrides will cause web ACL updates to fail. An invalid rule name is any \
+   name that doesn't exactly match the case-sensitive name of an existing rule in the rule group.\n\
   \  \n\
   \    You can use overrides for testing, for example you can override all of rule actions to \
    [Count] and then monitor the resulting count metrics to understand how the rule group would \
@@ -4239,6 +4267,7 @@ type nonrec request_body_associated_resource_type_config = {
   \      "]
 
 type nonrec associated_resource_type =
+  | AGENTCORE_GATEWAY [@ocaml.doc ""]
   | VERIFIED_ACCESS_INSTANCE [@ocaml.doc ""]
   | APP_RUNNER_SERVICE [@ocaml.doc ""]
   | COGNITO_USER_POOL [@ocaml.doc ""]
@@ -4326,7 +4355,95 @@ type nonrec application_config = {
 }
 [@@ocaml.doc "A list of [ApplicationAttribute]s that contains information about the application.\n"]
 
+type nonrec blockchain_chain =
+  | SOLANA_DEVNET [@ocaml.doc ""]
+  | BASE_SEPOLIA [@ocaml.doc ""]
+  | SOLANA [@ocaml.doc ""]
+  | BASE [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec wallet_address = string [@@ocaml.doc ""]
+
+type nonrec price_amount = string [@@ocaml.doc ""]
+
+type nonrec crypto_currency = USDC [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec price = {
+  currency : crypto_currency;
+      [@ocaml.doc "The cryptocurrency for payment. Currently only [USDC] is supported.\n"]
+  amount : price_amount;
+      [@ocaml.doc
+        "The price per request as a decimal string in the specified currency. Minimum: 0.001. \
+         Maximum: 999999999.999. Supports up to 3 decimal places.\n"]
+}
+[@@ocaml.doc
+  "The price per request for a payment network, specifying the amount and cryptocurrency.\n"]
+
+type nonrec prices = price list [@@ocaml.doc ""]
+
+type nonrec payment_network = {
+  prices : prices;
+      [@ocaml.doc
+        "The price configuration for this payment network. Currently supports a single price entry \
+         in USDC.\n"]
+  wallet_address : wallet_address;
+      [@ocaml.doc
+        "Your wallet address on the specified blockchain where payments are sent. For EVM chains \
+         (Base, Base Sepolia), provide a valid Ethereum address (42 characters including 0x \
+         prefix). For Solana chains, provide a valid Base58-encoded public key (32-44 \
+         characters).\n\n\
+        \ For EVM addresses, WAF performs EIP-55 checksum validation for typo detection when the \
+         address uses a mix of lower and upper case letters. You can bypass this validation by \
+         providing the address in all lowercase or all uppercase.\n\
+        \ "]
+  chain : blockchain_chain;
+      [@ocaml.doc
+        "The blockchain network for receiving payments. Production networks: [BASE] (Base \
+         mainnet), [SOLANA] (Solana mainnet). Test networks: [BASE_SEPOLIA] (Base Sepolia \
+         testnet), [SOLANA_DEVNET] (Solana Devnet).\n"]
+}
+[@@ocaml.doc
+  "A blockchain payment network configuration for receiving AI bot monetization payments. \
+   Specifies the blockchain chain, your wallet address on that chain, and the price per request.\n"]
+
+type nonrec payment_networks = payment_network list [@@ocaml.doc ""]
+
+type nonrec crypto_config = {
+  payment_networks : payment_networks;
+      [@ocaml.doc
+        "The blockchain payment networks configured to receive payments. You can specify 1 to 2 \
+         networks. All networks must be in the same environment-either all production networks \
+         (Base, Solana) or all test networks (Base Sepolia, Solana Devnet).\n"]
+}
+[@@ocaml.doc
+  "The cryptocurrency payment configuration for AI bot monetization. Contains the list of \
+   blockchain payment networks where you receive payments.\n"]
+
+type nonrec currency_mode = TEST [@ocaml.doc ""] | REAL [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec monetization_config = {
+  currency_mode : currency_mode option;
+      [@ocaml.doc
+        "Specifies whether the configuration uses real or test currency. Set to [REAL] to settle \
+         payments in USDC on production blockchain networks (Base, Solana). Set to [TEST] to \
+         settle on testnet networks (Base Sepolia, Solana Devnet) with tokens that have no \
+         monetary value. If not specified, defaults to [REAL].\n"]
+  crypto_config : crypto_config option;
+      [@ocaml.doc
+        "The cryptocurrency payment configuration, including the blockchain networks and wallet \
+         addresses where you receive payments.\n"]
+}
+[@@ocaml.doc
+  "The monetization configuration for a web ACL or rule group. Specifies the cryptocurrency \
+   payment networks and currency mode for AI bot monetization. You must provide this configuration \
+   when any rule in the web ACL or rule group uses the [Monetize] action.\n"]
+
 type nonrec web_ac_l = {
+  monetization_config : monetization_config option;
+      [@ocaml.doc
+        "The monetization configuration for the web ACL. Required when any rule in the web ACL \
+         uses the [Monetize] action. Specifies the cryptocurrency payment networks and currency \
+         mode for AI bot monetization.\n"]
   application_config : application_config option;
       [@ocaml.doc "Returns a list of [ApplicationAttribute]s.\n"]
   on_source_d_do_s_protection_config : on_source_d_do_s_protection_config option;
@@ -4613,6 +4730,10 @@ type nonrec waf_invalid_permission_policy_exception = {
   \   "]
 
 type nonrec parameter_exception_field =
+  | PAYMENT_NETWORK [@ocaml.doc ""]
+  | PRICE_AMOUNT [@ocaml.doc ""]
+  | WALLET_ADDRESS [@ocaml.doc ""]
+  | MONETIZATION_CONFIG [@ocaml.doc ""]
   | LOW_REPUTATION_MODE [@ocaml.doc ""]
   | DATA_PROTECTION_CONFIG [@ocaml.doc ""]
   | ACP_RULE_SET_RESPONSE_INSPECTION [@ocaml.doc ""]
@@ -4728,6 +4849,30 @@ type nonrec waf_internal_error_exception = { message : error_message option [@oc
   "Your request is valid, but WAF couldn\226\128\153t perform the operation because of a system \
    problem. Retry your request. \n"]
 
+type nonrec pricing_plan_feature_name = string [@@ocaml.doc ""]
+
+type nonrec required_pricing_plan_name = string [@@ocaml.doc ""]
+
+type nonrec disallowed_feature = {
+  required_pricing_plan : required_pricing_plan_name option;
+      [@ocaml.doc "The name of the CloudFront pricing plan required to use the WAF feature.\n"]
+  feature : pricing_plan_feature_name option;
+      [@ocaml.doc "The name of the disallowed WAF feature.\n"]
+}
+[@@ocaml.doc
+  "A WAF feature that is not supported by the CloudFront pricing plan associated with the web ACL.\n"]
+
+type nonrec disallowed_features = disallowed_feature list [@@ocaml.doc ""]
+
+type nonrec waf_feature_not_included_in_pricing_plan_exception = {
+  disallowed_features : disallowed_features option;
+      [@ocaml.doc "The names of the disallowed WAF features.\n"]
+  message : error_message option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "The operation failed because the specified WAF feature isn't supported by the CloudFront \
+   pricing plan associated with the web ACL.\n"]
+
 type nonrec waf_expired_managed_rule_group_version_exception = {
   message : error_message option; [@ocaml.doc ""]
 }
@@ -4786,6 +4931,10 @@ type nonrec version_to_publish = {
 
 type nonrec versions_to_publish = (version_key_string * version_to_publish) list [@@ocaml.doc ""]
 
+type nonrec verified_status = bool [@@ocaml.doc ""]
+
+type nonrec uri_path_prefix_string = string [@@ocaml.doc ""]
+
 type nonrec update_web_acl_response = {
   next_lock_token : lock_token option;
       [@ocaml.doc
@@ -4797,6 +4946,27 @@ type nonrec update_web_acl_response = {
 type nonrec scope = REGIONAL [@ocaml.doc ""] | CLOUDFRONT [@ocaml.doc ""] [@@ocaml.doc ""]
 
 type nonrec update_web_acl_request = {
+  monetization_config : monetization_config option;
+      [@ocaml.doc
+        "The monetization configuration for the web ACL. Provide this when any rule in the web ACL \
+         uses the [Monetize] action.\n"]
+  application_config : application_config option;
+      [@ocaml.doc
+        "Configures the ability for the WAF console to store and retrieve application attributes. \
+         Application attributes help WAF give recommendations for protection packs.\n\n\
+        \ When using [UpdateWebACL], [ApplicationConfig] follows these rules:\n\
+        \ \n\
+        \  {ul\n\
+        \        {-  If you omit [ApplicationConfig] from the request, all existing entries in the \
+         web ACL are retained.\n\
+        \            \n\
+        \             }\n\
+        \        {-  If you include [ApplicationConfig], entries must match the existing values \
+         exactly. Any attempt to modify existing entries will result in an error.\n\
+        \            \n\
+        \             }\n\
+        \        }\n\
+        \  "]
   on_source_d_do_s_protection_config : on_source_d_do_s_protection_config option;
       [@ocaml.doc
         "Specifies the type of DDoS protection to apply to web request data for a web ACL. For \
@@ -4922,6 +5092,10 @@ type nonrec update_rule_group_response = {
 [@@ocaml.doc ""]
 
 type nonrec update_rule_group_request = {
+  monetization_config : monetization_config option;
+      [@ocaml.doc
+        "The monetization configuration for the rule group. Provide this when any rule in the rule \
+         group uses the [Monetize] action.\n"]
   custom_response_bodies : custom_response_bodies option;
       [@ocaml.doc
         "A map of custom response keys and content bodies. When you create a rule with a block \
@@ -5248,6 +5422,11 @@ type nonrec time_window = {
    that WAF received the 5,000th request.\n\
   \  "]
 
+type nonrec time_series_statistic_type =
+  | PAYMENT_TRAFFIC [@ocaml.doc ""]
+  | DATE_HISTOGRAM [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
 type nonrec tag_value = string [@@ocaml.doc ""]
 
 type nonrec tag_resource_response = unit [@@ocaml.doc ""]
@@ -5300,7 +5479,138 @@ type nonrec tag_info_for_resource = {
    groups, IP sets, and regex pattern sets. You can't manage or view tags through the WAF console. \n\
   \ "]
 
+type nonrec filter_string = string [@@ocaml.doc ""]
+
+type nonrec percentage_value = float [@@ocaml.doc ""]
+
+type nonrec monetization_amount_value = string [@@ocaml.doc ""]
+
+type nonrec request_count = int [@@ocaml.doc ""]
+
+type nonrec source_statistics = {
+  group_by_value : filter_string option;
+      [@ocaml.doc "The value for the group-by dimension, when grouping is applied.\n"]
+  verified : verified_status option;
+      [@ocaml.doc
+        "Indicates whether the AI bot's identity was verified \226\128\148 for example, through a \
+         cryptographically signed request (Web Bot Auth) or another published verification method. \
+         This value is meaningful only when GroupBy is NAME, where each result represents a \
+         single, identifiable bot. For all other GroupBy values (CATEGORY, INTENT, ORGANIZATION, \
+         or WEBACL), a result aggregates multiple bots that may have different verification \
+         states, so Verified is always returned as false and should be ignored. Type and \
+         required-ness are unchanged (Boolean, optional).\n"]
+  organization : filter_string option; [@ocaml.doc "The organization associated with the AI bot.\n"]
+  intent : filter_string option;
+      [@ocaml.doc "The declared intent of the AI bot (for example, summarize, index, or train).\n"]
+  source_category : filter_string option; [@ocaml.doc "The category of this AI bot source.\n"]
+  request_count : request_count; [@ocaml.doc "The number of monetized requests from this source.\n"]
+  amount : monetization_amount_value;
+      [@ocaml.doc "The total revenue amount from this source in the specified currency.\n"]
+  percentage : percentage_value; [@ocaml.doc "The percentage of total revenue from this source.\n"]
+  source_name : filter_string; [@ocaml.doc "The name of the AI bot.\n"]
+}
+[@@ocaml.doc
+  "Revenue statistics for a single AI bot source, including the bot name, revenue amount, request \
+   count, and verification status.\n"]
+
+type nonrec source_statistics_list = source_statistics list [@@ocaml.doc ""]
+
+type nonrec sort_order = DESC [@ocaml.doc ""] | ASC [@ocaml.doc ""] [@@ocaml.doc ""]
+
 type nonrec solve_timestamp = int [@@ocaml.doc ""]
+
+type nonrec settlement_status =
+  | DUPLICATE [@ocaml.doc ""]
+  | SKIPPED_ORIGIN_ERROR [@ocaml.doc ""]
+  | SERVICE_ERROR [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+  | PENDING [@ocaml.doc ""]
+  | SETTLED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec settlement_sort_by =
+  | STATUS [@ocaml.doc ""]
+  | NAME [@ocaml.doc ""]
+  | AMOUNT [@ocaml.doc ""]
+  | TIMESTAMP [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec settlement_filter_string = string [@@ocaml.doc ""]
+
+type nonrec currency = USDC [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec settlement_id_string = string [@@ocaml.doc ""]
+
+type nonrec settlement_record = {
+  request_timestamp : timestamp option; [@ocaml.doc "The timestamp of the original web request.\n"]
+  web_acl_arn : resource_arn option;
+      [@ocaml.doc "The ARN of the web ACL that processed the request.\n"]
+  content_path : filter_string option; [@ocaml.doc "The content path that was accessed.\n"]
+  verified : verified_status option; [@ocaml.doc "Whether the AI bot's identity was verified.\n"]
+  intent : filter_string option; [@ocaml.doc "The declared intent of the AI bot request.\n"]
+  source_category : filter_string option; [@ocaml.doc "The category of the AI bot source.\n"]
+  organization : filter_string option; [@ocaml.doc "The organization associated with the AI bot.\n"]
+  source_name : filter_string option; [@ocaml.doc "The name of the AI bot that made the payment.\n"]
+  request_id : settlement_filter_string option;
+      [@ocaml.doc "The WAF request ID associated with this settlement.\n"]
+  transaction_id : settlement_id_string option;
+      [@ocaml.doc
+        "The blockchain transaction identifier. You can use this to verify the transaction on a \
+         blockchain explorer.\n"]
+  network : settlement_filter_string option;
+      [@ocaml.doc "The blockchain network on which the settlement occurred.\n"]
+  currency : currency option; [@ocaml.doc "The currency of the payment amount.\n"]
+  amount : monetization_amount_value; [@ocaml.doc "The payment amount in the specified currency.\n"]
+  status : settlement_status;
+      [@ocaml.doc
+        "The status of the settlement. Possible values:\n\n\
+        \ {ul\n\
+        \       {-   [SETTLED] - The payment was successfully settled on the blockchain and the \
+         transfer from the payer's wallet to the publisher's wallet is confirmed. The \
+         [TransactionId] field contains the on-chain transaction hash. Content is served to the \
+         client.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [PENDING] - The blockchain transaction has been submitted but not yet \
+         confirmed on-chain. This is a transient state that automatically resolves to either \
+         [SETTLED] or [FAILED]. No action is required. While pending, content is not served and \
+         the API returns a 402 response. Clients can retry the request.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [FAILED] - The payment settlement was attempted but failed. Possible causes \
+         include insufficient funds, an expired payment authorization, or a reverted blockchain \
+         transaction. The [failureReason] field contains a machine-readable error code. Content is \
+         not served.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [SERVICE_ERROR] - Settlement could not be completed due to an internal \
+         service issue or an issue with the payment network. Content is not served. The client's \
+         payment authorization remains valid and the request can be retried.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [SKIPPED_ORIGIN_ERROR] - The origin returned a non-2xx response, so \
+         settlement was intentionally skipped. The client is not charged.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [DUPLICATE] - A prior request with the same payment payload has already been \
+         settled. This status typically appears when a previous attempt timed out but the payment \
+         was ultimately processed. The client is not charged again.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \  "]
+  wallet_address : settlement_filter_string option; [@ocaml.doc "Your receiving wallet address.\n"]
+  payer_address : settlement_filter_string option;
+      [@ocaml.doc "The blockchain wallet address of the paying AI agent.\n"]
+  timestamp : timestamp; [@ocaml.doc "The timestamp when the settlement was recorded.\n"]
+}
+[@@ocaml.doc
+  "A single settlement transaction record for AI bot monetization. Contains details about the \
+   payment including timestamp, amount, status, and the parties involved.\n"]
+
+type nonrec settlement_record_list = settlement_record list [@@ocaml.doc ""]
+
+type nonrec settlement_record_limit = int [@@ocaml.doc ""]
 
 type nonrec ip_string = string [@@ocaml.doc ""]
 
@@ -5528,6 +5838,12 @@ type nonrec label_summary = {
 type nonrec label_summaries = label_summary list [@@ocaml.doc ""]
 
 type nonrec rule_group = {
+  monetization_config : monetization_config option;
+      [@ocaml.doc
+        "The monetization configuration for the rule group. Required when any rule in the rule \
+         group uses the [Monetize] action. When a rule group with a [MonetizationConfig] is used \
+         in a web ACL, the rule group's configuration applies to rules within that group unless \
+         overridden at the web ACL level.\n"]
   consumed_labels : label_summaries option;
       [@ocaml.doc
         "The labels that one or more rules in this rule group match against in label match \
@@ -5620,7 +5936,40 @@ type nonrec rule_group = {
    update a rule group, you must stay within the capacity. This allows others to reuse the rule \
    group with confidence in its capacity requirements. \n"]
 
+type nonrec path_string = string [@@ocaml.doc ""]
+
+type nonrec revenue_path_statistics = {
+  request_count : request_count; [@ocaml.doc "The number of monetized requests to this path.\n"]
+  amount : monetization_amount_value;
+      [@ocaml.doc "The total revenue amount from this path in the specified currency.\n"]
+  percentage : percentage_value; [@ocaml.doc "The percentage of total revenue from this path.\n"]
+  path : path_string; [@ocaml.doc "The URI path.\n"]
+}
+[@@ocaml.doc
+  "Revenue statistics for a single content path, including the path, revenue amount, and request \
+   count.\n"]
+
+type nonrec revenue_path_statistics_list = revenue_path_statistics list [@@ocaml.doc ""]
+
+type nonrec revenue_breakdown = {
+  total_monetize_served : request_count option;
+      [@ocaml.doc "The total number of HTTP 402 Payment Required responses served to AI agents.\n"]
+  total_settled : request_count option;
+      [@ocaml.doc "The total number of successfully settled payment transactions.\n"]
+  currency : currency option; [@ocaml.doc "The currency of the revenue amounts.\n"]
+  unverified_amount : monetization_amount_value option;
+      [@ocaml.doc "The revenue amount from unverified AI bots.\n"]
+  verified_amount : monetization_amount_value option;
+      [@ocaml.doc "The revenue amount from verified AI bots.\n"]
+  total_amount : monetization_amount_value option;
+      [@ocaml.doc "The total revenue amount in the specified currency.\n"]
+}
+[@@ocaml.doc
+  "A summary of AI bot monetization revenue, including total revenue, revenue by verification \
+   tier, and request counts.\n"]
+
 type nonrec resource_type =
+  | AGENTCORE_GATEWAY [@ocaml.doc ""]
   | AMPLIFY [@ocaml.doc ""]
   | VERIFIED_ACCESS_INSTANCE [@ocaml.doc ""]
   | APP_RUNNER_SERVICE [@ocaml.doc ""]
@@ -5714,6 +6063,17 @@ type nonrec rate_based_statement_managed_keys_ip_set = {
    instance is 10,000. If more than 10,000 addresses exceed the rate limit, WAF limits those with \
    the highest rates. \n\
   \  "]
+
+type nonrec ranking_statistic_type =
+  | TOP_PATHS_BY_REVENUE [@ocaml.doc ""]
+  | TOP_SOURCES_BY_REVENUE [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec ranking_sort_by =
+  | NAME [@ocaml.doc ""]
+  | PERCENTAGE [@ocaml.doc ""]
+  | REVENUE [@ocaml.doc ""]
+[@@ocaml.doc ""]
 
 type nonrec put_permission_policy_response = unit [@@ocaml.doc ""]
 
@@ -5823,6 +6183,7 @@ type nonrec filter_requirement = MEETS_ANY [@ocaml.doc ""] | MEETS_ALL [@ocaml.d
 
 type nonrec action_value =
   | EXCLUDED_AS_COUNT [@ocaml.doc ""]
+  | MONETIZE [@ocaml.doc ""]
   | CHALLENGE [@ocaml.doc ""]
   | CAPTCHA [@ocaml.doc ""]
   | COUNT [@ocaml.doc ""]
@@ -5897,7 +6258,11 @@ type nonrec logging_filter = {
 
 type nonrec log_type = WAF_LOGS [@ocaml.doc ""] [@@ocaml.doc ""]
 
-type nonrec log_scope = SECURITY_LAKE [@ocaml.doc ""] | CUSTOMER [@ocaml.doc ""] [@@ocaml.doc ""]
+type nonrec log_scope =
+  | CLOUDWATCH_TELEMETRY_RULE_MANAGED [@ocaml.doc ""]
+  | SECURITY_LAKE [@ocaml.doc ""]
+  | CUSTOMER [@ocaml.doc ""]
+[@@ocaml.doc ""]
 
 type nonrec logging_configuration = {
   log_scope : log_scope option;
@@ -5910,8 +6275,14 @@ type nonrec logging_configuration = {
          {{:https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html}Collecting \
          data from Amazon Web Services services} in the {i Amazon Security Lake user guide}. \n\
         \ \n\
-        \  Default: [CUSTOMER] \n\
-        \  "]
+        \  The log scope [CLOUDWATCH_TELEMETRY_RULE_MANAGED] indicates a configuration that is \
+         managed through Amazon CloudWatch Logs for telemetry data collection and analysis. For \
+         information, see \
+         {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html}What \
+         is Amazon CloudWatch Logs ?} in the {i Amazon CloudWatch Logs user guide}. \n\
+        \  \n\
+        \   Default: [CUSTOMER] \n\
+        \   "]
   log_type : log_type option;
       [@ocaml.doc
         "Used to distinguish between various logging options. Currently, there is one option.\n\n\
@@ -6082,11 +6453,177 @@ type nonrec population_size = int [@@ocaml.doc ""]
 
 type nonrec platform = ANDROID [@ocaml.doc ""] | IOS [@ocaml.doc ""] [@@ocaml.doc ""]
 
+type nonrec filter_source = {
+  bot_name : filter_string option;
+      [@ocaml.doc
+        "The bot name that was used to filter the results. For example, [gptbot] or [googlebot].\n"]
+  bot_organization : filter_string option;
+      [@ocaml.doc
+        "The bot organization that was used to filter the results. For example, [OpenAI] or \
+         [Google].\n"]
+  bot_category : filter_string option;
+      [@ocaml.doc
+        "The bot category that was used to filter the results. For example, [ai] or [search_engine].\n"]
+}
+[@@ocaml.doc
+  "Information about the bot filter that was applied to the request. This structure is populated \
+   in the response when you filter by bot category, organization, or name.\n"]
+
+type nonrec bot_statistics = {
+  percentage : percentage_value;
+      [@ocaml.doc
+        "The percentage of total requests to the associated path that came from this bot.\n"]
+  request_count : request_count;
+      [@ocaml.doc
+        "The number of requests from this bot to the associated path within the specified time \
+         window.\n"]
+  bot_name : filter_string;
+      [@ocaml.doc "The name of the bot. For example, [gptbot] or [googlebot].\n"]
+}
+[@@ocaml.doc
+  "Statistics about a specific bot's traffic to a path, including the bot name, request count, and \
+   percentage of traffic.\n"]
+
+type nonrec bot_statistics_list = bot_statistics list [@@ocaml.doc ""]
+
+type nonrec path_statistics = {
+  top_bots : bot_statistics_list option;
+      [@ocaml.doc
+        "The list of top bots accessing this path, ordered by request count. The number of bots \
+         included is determined by the [NumberOfTopTrafficBotsPerPath] parameter in the request.\n"]
+  percentage : percentage_value;
+      [@ocaml.doc "The percentage of total requests that were made to this path.\n"]
+  request_count : request_count;
+      [@ocaml.doc "The number of requests to this path within the specified time window.\n"]
+  path : path_string; [@ocaml.doc "The URI path. For example, [/api/] or [/api/v1/users].\n"]
+  source : filter_source option;
+      [@ocaml.doc
+        "Information about the bot filter that was applied to generate these statistics. This \
+         field is only populated when you filter by bot category, organization, or name.\n"]
+}
+[@@ocaml.doc
+  "Statistics about bot traffic to a specific URI path, including the path, request count, \
+   percentage of total traffic, and the top bots accessing that path.\n"]
+
+type nonrec path_statistics_list = path_statistics list [@@ocaml.doc ""]
+
+type nonrec path_statistics_limit = int [@@ocaml.doc ""]
+
 type nonrec pagination_limit = int [@@ocaml.doc ""]
 
 type nonrec output_url = string [@@ocaml.doc ""]
 
+type nonrec number_of_top_traffic_bots_per_path = int [@@ocaml.doc ""]
+
 type nonrec next_marker = string [@@ocaml.doc ""]
+
+type nonrec monetization_filter_value = string [@@ocaml.doc ""]
+
+type nonrec monetization_filter_value_list = monetization_filter_value list [@@ocaml.doc ""]
+
+type nonrec monetization_filter_name = string [@@ocaml.doc ""]
+
+type nonrec monetization_filter = {
+  values : monetization_filter_value_list;
+      [@ocaml.doc
+        "The values to filter on. Specify as a list of strings. Results match any of the specified \
+         values (OR logic). Duplicate values are silently deduplicated. Maximum: 20 values per \
+         filter.\n"]
+  name : monetization_filter_name;
+      [@ocaml.doc
+        "The filter name. Format: Key is a string, Value is a list of strings.\n\n\
+        \ Enum-restricted (invalid values rejected):\n\
+        \ \n\
+        \  {ul\n\
+        \        {-   [CurrencyMode]: [REAL], [TEST] \n\
+        \            \n\
+        \             }\n\
+        \        {-   [ChainName]: [BASE], [SOLANA], [BASE_SEPOLIA], [SOLANA_DEVNET] \n\
+        \            \n\
+        \             }\n\
+        \        {-   [SettlementStatus]: [SETTLED], [PENDING], [FAILED], [SERVICE_ERROR], \
+         [SKIPPED_ORIGIN_ERROR], [DUPLICATE] \n\
+        \            \n\
+        \             }\n\
+        \        {-   [HttpSourceName]: [CF], [ALB], [APIGW], [APPRUNNER], [COGNITO], \
+         [VERIFIED_ACCESS] \n\
+        \            \n\
+        \             }\n\
+        \        } ARN-validated:\n\
+        \          \n\
+        \           {ul\n\
+        \                 {-   [WebACLArn]: valid WAFv2 web ACL ARN\n\
+        \                     \n\
+        \                      }\n\
+        \                 }\n\
+        \   Free-text (any string up to 256 chars):\n\
+        \   \n\
+        \    {ul\n\
+        \          {-   [SourceName]: The name of the bot. Populated from Bot Control verified bot \
+         labels.\n\
+        \              \n\
+        \               }\n\
+        \          {-   [SourceCategory]: The category classification of the bot. From Bot Control \
+         categorization.\n\
+        \              \n\
+        \               }\n\
+        \          {-   [Intent]: The declared intent of the bot request.\n\
+        \              \n\
+        \               }\n\
+        \          {-   [Organization]: The organization operating the bot.\n\
+        \              \n\
+        \               }\n\
+        \          {-   [UriPathPrefix]: The URI path of the request that was monetized.\n\
+        \              \n\
+        \               }\n\
+        \          {-   [RequestId]: The WAF request ID associated with the transaction. Matches \
+         the requestId in WAF logs. Pattern: [^\\[a-zA-Z0-9:._\\-=+/\\]+$] \n\
+        \              \n\
+        \               }\n\
+        \          {-   [TransactionId]: The blockchain transaction identifier. Pattern: \
+         [^\\[a-zA-Z0-9:._\\-=+/\\]+$] \n\
+        \              \n\
+        \               }\n\
+        \          {-   [TerminatingRuleName]: The name of the WAF rule that triggered the \
+         Monetize action.\n\
+        \              \n\
+        \               }\n\
+        \          {-   [PayerAddress]: The blockchain wallet address of the paying client. \
+         Pattern: [^\\[a-zA-Z0-9:._\\-=+/\\]+$] \n\
+        \              \n\
+        \               }\n\
+        \          {-   [HttpSourceId]: The identifier of the Amazon Web Services resource \
+         associated with the web ACL (for example, CloudFront distribution ID).\n\
+        \              \n\
+        \               }\n\
+        \          }\n\
+        \  "]
+}
+[@@ocaml.doc
+  "A filter for narrowing monetization statistics and settlement record results. Specify a filter \
+   name and one or more values to match.\n\n\
+  \ Filter behavior:\n\
+  \ \n\
+  \  {ul\n\
+  \        {-  Multiple values within one filter: OR (match any)\n\
+  \            \n\
+  \             }\n\
+  \        {-  Multiple filters: AND (all must match)\n\
+  \            \n\
+  \             }\n\
+  \        {-  No duplicate filter names allowed (rejected with error)\n\
+  \            \n\
+  \             }\n\
+  \        {-  Duplicate values within a filter are silently deduplicated\n\
+  \            \n\
+  \             }\n\
+  \        {-  If no [CurrencyMode] filter is specified, defaults to [REAL] \n\
+  \            \n\
+  \             }\n\
+  \        }\n\
+  \  "]
+
+type nonrec monetization_filter_list = monetization_filter list [@@ocaml.doc ""]
 
 type nonrec mobile_sdk_release = {
   tags : tag_list option; [@ocaml.doc "Tags that are associated with the release. \n"]
@@ -6102,6 +6639,8 @@ type nonrec mobile_sdk_release = {
    {{:https://docs.aws.amazon.com/waf/latest/developerguide/waf-application-integration.html}WAF \
    client application integration} in the {i WAF Developer Guide}.\n\
   \ "]
+
+type nonrec max_data_points = int [@@ocaml.doc ""]
 
 type nonrec managed_rule_set_summary = {
   label_namespace : label_name option;
@@ -6396,6 +6935,41 @@ type nonrec list_tags_for_resource_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec list_settlement_records_response = {
+  next_marker : next_marker option;
+      [@ocaml.doc
+        "When you get a paginated response, this marker indicates that additional results are \
+         available.\n"]
+  settlements : settlement_record_list option; [@ocaml.doc "The list of settlement records.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_settlement_records_request = {
+  next_marker : next_marker option;
+      [@ocaml.doc
+        "When you get a paginated response, this marker indicates that additional results are \
+         available.\n"]
+  limit : settlement_record_limit option;
+      [@ocaml.doc "The maximum number of settlement records to return. Minimum: 1. Maximum: 100.\n"]
+  sort_order : sort_order option;
+      [@ocaml.doc "The sort order: [ASC] for ascending or [DESC] for descending.\n"]
+  sort_by : settlement_sort_by option;
+      [@ocaml.doc
+        "The field to sort settlement records by: [TIMESTAMP], [AMOUNT], [NAME], or [STATUS].\n"]
+  filters : monetization_filter_list option;
+      [@ocaml.doc
+        "Optional filters to narrow the results. You can filter by payer address, status, source \
+         name, network, or other settlement fields.\n"]
+  currency : currency; [@ocaml.doc "The currency for the amounts in the response.\n"]
+  scope : scope;
+      [@ocaml.doc
+        "Specifies whether this is for a Amazon CloudFront distribution ([CLOUDFRONT]) or for a \
+         regional application ([REGIONAL]).\n"]
+  time_window : time_window;
+      [@ocaml.doc "The time range for the query. Specify start and end timestamps.\n"]
+}
+[@@ocaml.doc ""]
+
 type nonrec list_rule_groups_response = {
   rule_groups : rule_group_summaries option;
       [@ocaml.doc
@@ -6615,8 +7189,14 @@ type nonrec list_logging_configurations_request = {
          {{:https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html}Collecting \
          data from Amazon Web Services services} in the {i Amazon Security Lake user guide}. \n\
         \ \n\
-        \  Default: [CUSTOMER] \n\
-        \  "]
+        \  The log scope [CLOUDWATCH_TELEMETRY_RULE_MANAGED] indicates a configuration that is \
+         managed through Amazon CloudWatch Logs for telemetry data collection and analysis. For \
+         information, see \
+         {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html}What \
+         is Amazon CloudWatch Logs ?} in the {i Amazon CloudWatch Logs user guide}. \n\
+        \  \n\
+        \   Default: [CUSTOMER] \n\
+        \   "]
   limit : pagination_limit option;
       [@ocaml.doc
         "The maximum number of objects that you want WAF to return for this request. If more \
@@ -6899,6 +7479,13 @@ type nonrec list_api_keys_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec interval_type =
+  | DAILY [@ocaml.doc ""]
+  | HOURLY [@ocaml.doc ""]
+  | FIVE_MINUTELY [@ocaml.doc ""]
+  | MINUTELY [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
 type nonrec ip_set = {
   addresses : ip_addresses;
       [@ocaml.doc
@@ -6972,6 +7559,14 @@ type nonrec ip_set = {
   \ WAF assigns an ARN to each [IPSet] that you create. To use an IP set in a rule, you provide \
    the ARN to the [Rule] statement [IPSetReferenceStatement]. \n\
   \ "]
+
+type nonrec group_by_type =
+  | WEBACL [@ocaml.doc ""]
+  | ORGANIZATION [@ocaml.doc ""]
+  | INTENT [@ocaml.doc ""]
+  | CATEGORY [@ocaml.doc ""]
+  | NAME [@ocaml.doc ""]
+[@@ocaml.doc ""]
 
 type nonrec get_web_acl_response = {
   application_integration_ur_l : output_url option;
@@ -7099,8 +7694,92 @@ type nonrec get_web_acl_for_resource_request = {
         \             \n\
         \            \n\
         \             }\n\
+        \        {-  For an Amazon Bedrock AgentCore Gateway: \n\
+        \            {[\n\
+        \            arn:{i partition}:bedrock-agentcore:{i region}:{i account-id}:gateway/{i \
+         gateway-id} \n\
+        \            ]}\n\
+        \             \n\
+        \            \n\
+        \             }\n\
         \        }\n\
         \  "]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_top_path_statistics_by_traffic_response = {
+  top_categories : path_statistics_list option;
+      [@ocaml.doc
+        "Category-level aggregations for visualizing bot category to path relationships. This \
+         field is only populated when no bot filters are applied to the request. Each entry \
+         includes the bot category and the paths accessed by bots in that category.\n"]
+  next_marker : next_marker option;
+      [@ocaml.doc
+        "When you request a list of objects with a [Limit] setting, if the number of objects that \
+         are still available for retrieval exceeds the limit, WAF returns a [NextMarker] value in \
+         the response. To retrieve the next batch of objects, provide the marker from the prior \
+         call in your next request.\n"]
+  total_request_count : request_count;
+      [@ocaml.doc
+        "The total number of requests that match the query criteria within the specified time \
+         window.\n"]
+  path_statistics : path_statistics_list;
+      [@ocaml.doc
+        "The list of path statistics, ordered by request count. Each entry includes the path, \
+         request count, percentage of total traffic, and the top bots accessing that path.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_top_path_statistics_by_traffic_request = {
+  next_marker : next_marker option;
+      [@ocaml.doc
+        "When you request a list of objects with a [Limit] setting, if the number of objects that \
+         are still available for retrieval exceeds the limit, WAF returns a [NextMarker] value in \
+         the response. To retrieve the next batch of objects, provide the marker from the prior \
+         call in your next request.\n"]
+  number_of_top_traffic_bots_per_path : number_of_top_traffic_bots_per_path;
+      [@ocaml.doc
+        "The maximum number of top bots to include in the statistics for each path. Valid values \
+         are 1 to 10.\n"]
+  limit : path_statistics_limit;
+      [@ocaml.doc "The maximum number of path statistics to return. Valid values are 1 to 100.\n"]
+  bot_name : filter_string option;
+      [@ocaml.doc
+        "Filters the results to include only traffic from the specified bot. For example, you can \
+         filter by [gptbot] or [googlebot]. When you apply this filter, the [Source] field is \
+         populated in the response.\n"]
+  bot_organization : filter_string option;
+      [@ocaml.doc
+        "Filters the results to include only traffic from bots belonging to the specified \
+         organization. For example, you can filter by [openai] or [google]. When you apply this \
+         filter, the [Source] field is populated in the response.\n"]
+  bot_category : filter_string option;
+      [@ocaml.doc
+        "Filters the results to include only traffic from bots in the specified category. For \
+         example, you can filter by [ai] to see only AI crawler traffic, or [search_engine] to see \
+         only search engine bot traffic. When you apply this filter, the [Source] field is \
+         populated in the response.\n"]
+  time_window : time_window;
+      [@ocaml.doc
+        "The time window for which you want to retrieve path statistics. The time window must be \
+         within the data retention period for your web ACL.\n"]
+  uri_path_prefix : uri_path_prefix_string option;
+      [@ocaml.doc
+        "A URI path prefix to filter the results. When you specify this parameter, the operation \
+         returns statistics for individual URIs within the specified path prefix. For example, if \
+         you specify [/api], the response includes statistics for paths like [/api/v1/users] and \
+         [/api/v2/orders]. If you don't specify this parameter, the operation returns top-level \
+         path statistics.\n"]
+  scope : scope;
+      [@ocaml.doc
+        "Specifies whether the web ACL is for an Amazon Web Services CloudFront distribution or \
+         for a regional application. A regional application can be an Application Load Balancer, \
+         an AppSync GraphQL API, an Amazon Cognito user pool, an Amazon Web Services App Runner \
+         service, or an Amazon Web Services Verified Access instance.\n"]
+  web_acl_arn : resource_arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the web ACL for which you want to retrieve path \
+         statistics.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -7205,6 +7884,140 @@ type nonrec get_rule_group_request = {
   name : entity_name option;
       [@ocaml.doc
         "The name of the rule group. You cannot change the name of a rule group after you create it.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec data_point_entry = {
+  group_by_value : filter_string option;
+      [@ocaml.doc "The group-by dimension value for this data point.\n"]
+  intent : filter_string option;
+      [@ocaml.doc "The intent classification for this data point, when grouped by intent.\n"]
+  category : filter_string option;
+      [@ocaml.doc "The bot category for this data point, when grouped by category.\n"]
+  total_amount : monetization_amount_value option;
+      [@ocaml.doc "The total revenue amount during this interval in the specified currency.\n"]
+  settled_count : request_count option;
+      [@ocaml.doc "The number of successfully settled payments during this interval.\n"]
+  monetize_served_count : request_count option;
+      [@ocaml.doc
+        "The number of HTTP 402 Payment Required responses served during this interval.\n"]
+  date : timestamp option; [@ocaml.doc "The timestamp for this data point.\n"]
+}
+[@@ocaml.doc
+  "A single data point in a revenue time series, representing aggregated monetization metrics for \
+   a specific time interval.\n"]
+
+type nonrec data_points_list = data_point_entry list [@@ocaml.doc ""]
+
+type nonrec get_revenue_statistics_time_series_response = {
+  next_marker : next_marker option;
+      [@ocaml.doc
+        "When you get a paginated response, this marker indicates that additional results are \
+         available.\n"]
+  data_points : data_points_list option; [@ocaml.doc "The list of time series data points.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_revenue_statistics_time_series_request = {
+  next_marker : next_marker option;
+      [@ocaml.doc
+        "When you get a paginated response, this marker indicates that additional results are \
+         available.\n"]
+  limit : max_data_points option;
+      [@ocaml.doc "The maximum number of data points to return. Minimum: 1. Maximum: 10000.\n"]
+  filters : monetization_filter_list option;
+      [@ocaml.doc "Optional filters to narrow the results.\n"]
+  group_by : group_by_type option; [@ocaml.doc "The dimension to group results by.\n"]
+  currency : currency; [@ocaml.doc "The currency for the amounts in the response.\n"]
+  interval : interval_type;
+      [@ocaml.doc
+        "The time interval for aggregating data points: [MINUTELY], [FIVE_MINUTELY], [HOURLY], or \
+         [DAILY].\n"]
+  scope : scope;
+      [@ocaml.doc
+        "Specifies whether this is for a Amazon CloudFront distribution ([CLOUDFRONT]) or for a \
+         regional application ([REGIONAL]).\n"]
+  time_window : time_window;
+      [@ocaml.doc "The time range for the query. Specify start and end timestamps.\n"]
+  statistic_type : time_series_statistic_type;
+      [@ocaml.doc
+        "The type of time series data to retrieve: [DATE_HISTOGRAM] for revenue over time, or \
+         [PAYMENT_TRAFFIC] for payment traffic patterns.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_revenue_statistics_summary_response = {
+  revenue_breakdown : revenue_breakdown option;
+      [@ocaml.doc "The revenue breakdown summary for the specified time window and filters.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_revenue_statistics_summary_request = {
+  filters : monetization_filter_list option;
+      [@ocaml.doc
+        "Optional filters to narrow the results. You can filter by source name, category, \
+         organization, intent, verified status, content path, web ACL ARN, or currency mode.\n"]
+  currency : currency;
+      [@ocaml.doc
+        "The currency for the revenue amounts in the response. Currently only [USDC] is supported.\n"]
+  scope : scope;
+      [@ocaml.doc
+        "Specifies whether this is for a Amazon CloudFront distribution ([CLOUDFRONT]) or for a \
+         regional application ([REGIONAL]). AI bot monetization is only available for [CLOUDFRONT] \
+         scope.\n"]
+  time_window : time_window;
+      [@ocaml.doc
+        "The time range for the revenue summary query. Specify start and end timestamps.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_revenue_statistics_response = {
+  next_marker : next_marker option;
+      [@ocaml.doc
+        "When you get a paginated response, this marker indicates that additional results are \
+         available.\n"]
+  revenue_path_statistics : revenue_path_statistics_list option;
+      [@ocaml.doc
+        "Statistics for top revenue paths. Populated when [StatisticType] is [TOP_PATHS_BY_REVENUE].\n"]
+  source_statistics : source_statistics_list option;
+      [@ocaml.doc
+        "Statistics for top revenue sources (AI bots). Populated when [StatisticType] is \
+         [TOP_SOURCES_BY_REVENUE].\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_revenue_statistics_request = {
+  sort_order : sort_order option;
+      [@ocaml.doc "The sort order: [ASC] for ascending or [DESC] for descending.\n"]
+  sort_by : ranking_sort_by option;
+      [@ocaml.doc "The field to sort results by: [REVENUE], [PERCENTAGE], or [NAME].\n"]
+  limit : path_statistics_limit option; [@ocaml.doc "The maximum number of results to return.\n"]
+  next_marker : next_marker option;
+      [@ocaml.doc
+        "When you get a paginated response, this marker indicates that additional results are \
+         available. Use it in a subsequent request to retrieve the next page of results.\n"]
+  filters : monetization_filter_list option;
+      [@ocaml.doc "Optional filters to narrow the results.\n"]
+  group_by : group_by_type option;
+      [@ocaml.doc
+        "The dimension to group results by: [NAME], [CATEGORY], [INTENT], [ORGANIZATION], or \
+         [WEBACL]. Required when [StatisticType] is [TOP_SOURCES_BY_REVENUE]. Not required for \
+         [TOP_PATHS_BY_REVENUE], where results are grouped by content path. If [StatisticType] is \
+         [TOP_SOURCES_BY_REVENUE] and [GroupBy] is omitted, the request is rejected with a \
+         [WAFInvalidParameterException].\n"]
+  currency : currency; [@ocaml.doc "The currency for the revenue amounts in the response.\n"]
+  scope : scope;
+      [@ocaml.doc
+        "Specifies whether this is for a Amazon CloudFront distribution ([CLOUDFRONT]) or for a \
+         regional application ([REGIONAL]).\n"]
+  time_window : time_window;
+      [@ocaml.doc "The time range for the query. Specify start and end timestamps.\n"]
+  statistic_type : ranking_statistic_type;
+      [@ocaml.doc
+        " [TOP_SOURCES_BY_REVENUE] ranks revenue from AI bot traffic, grouped by the dimension you \
+         specify in the [GroupBy] parameter ([NAME], [CATEGORY], [INTENT], [ORGANIZATION], or \
+         [WEBACL]); [GroupBy] is required for this statistic type. [TOP_PATHS_BY_REVENUE] ranks \
+         revenue by path.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -7384,8 +8197,14 @@ type nonrec get_logging_configuration_request = {
          {{:https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html}Collecting \
          data from Amazon Web Services services} in the {i Amazon Security Lake user guide}. \n\
         \ \n\
-        \  Default: [CUSTOMER] \n\
-        \  "]
+        \  The log scope [CLOUDWATCH_TELEMETRY_RULE_MANAGED] indicates a configuration that is \
+         managed through Amazon CloudWatch Logs for telemetry data collection and analysis. For \
+         information, see \
+         {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html}What \
+         is Amazon CloudWatch Logs ?} in the {i Amazon CloudWatch Logs user guide}. \n\
+        \  \n\
+        \   Default: [CUSTOMER] \n\
+        \   "]
   log_type : log_type option;
       [@ocaml.doc
         "Used to distinguish between various logging options. Currently, there is one option.\n\n\
@@ -7544,6 +8363,14 @@ type nonrec disassociate_web_acl_request = {
         \        {-  For an Amplify application: \n\
         \            {[\n\
         \            arn:{i partition}:amplify:{i region}:{i account-id}:apps/{i app-id} \n\
+        \            ]}\n\
+        \             \n\
+        \            \n\
+        \             }\n\
+        \        {-  For an Amazon Bedrock AgentCore Gateway: \n\
+        \            {[\n\
+        \            arn:{i partition}:bedrock-agentcore:{i region}:{i account-id}:gateway/{i \
+         gateway-id} \n\
         \            ]}\n\
         \             \n\
         \            \n\
@@ -7852,8 +8679,14 @@ type nonrec delete_logging_configuration_request = {
          {{:https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html}Collecting \
          data from Amazon Web Services services} in the {i Amazon Security Lake user guide}. \n\
         \ \n\
-        \  Default: [CUSTOMER] \n\
-        \  "]
+        \  The log scope [CLOUDWATCH_TELEMETRY_RULE_MANAGED] indicates a configuration that is \
+         managed through Amazon CloudWatch Logs for telemetry data collection and analysis. For \
+         information, see \
+         {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html}What \
+         is Amazon CloudWatch Logs ?} in the {i Amazon CloudWatch Logs user guide}. \n\
+        \  \n\
+        \   Default: [CUSTOMER] \n\
+        \   "]
   log_type : log_type option;
       [@ocaml.doc
         "Used to distinguish between various logging options. Currently, there is one option.\n\n\
@@ -7966,6 +8799,10 @@ type nonrec create_web_acl_response = {
 [@@ocaml.doc ""]
 
 type nonrec create_web_acl_request = {
+  monetization_config : monetization_config option;
+      [@ocaml.doc
+        "The monetization configuration for the web ACL. Provide this when any rule in the web ACL \
+         uses the [Monetize] action.\n"]
   application_config : application_config option;
       [@ocaml.doc
         "Configures the ability for the WAF console to store and retrieve application attributes \
@@ -8087,6 +8924,10 @@ type nonrec create_rule_group_response = {
 [@@ocaml.doc ""]
 
 type nonrec create_rule_group_request = {
+  monetization_config : monetization_config option;
+      [@ocaml.doc
+        "The monetization configuration for the rule group. Provide this when any rule in the rule \
+         group uses the [Monetize] action.\n"]
   custom_response_bodies : custom_response_bodies option;
       [@ocaml.doc
         "A map of custom response keys and content bodies. When you create a rule with a block \
@@ -8407,6 +9248,14 @@ type nonrec associate_web_acl_request = {
         \        {-  For an Amplify application: \n\
         \            {[\n\
         \            arn:{i partition}:amplify:{i region}:{i account-id}:apps/{i app-id} \n\
+        \            ]}\n\
+        \             \n\
+        \            \n\
+        \             }\n\
+        \        {-  For an Amazon Bedrock AgentCore Gateway: \n\
+        \            {[\n\
+        \            arn:{i partition}:bedrock-agentcore:{i region}:{i account-id}:gateway/{i \
+         gateway-id} \n\
         \            ]}\n\
         \             \n\
         \            \n\

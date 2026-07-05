@@ -395,6 +395,7 @@ let too_many_tags_of_yojson tree path =
     : too_many_tags)
 
 let timeout_in_seconds_of_yojson = long_of_yojson
+let test_state_state_name_of_yojson = string_of_yojson
 let sensitive_data_of_yojson = string_of_yojson
 let sensitive_error_of_yojson = string_of_yojson
 let sensitive_cause_of_yojson = string_of_yojson
@@ -430,9 +431,53 @@ let inspection_data_response_of_yojson tree path =
    }
     : inspection_data_response)
 
+let exception_handler_index_of_yojson = int_of_yojson
+let retry_backoff_interval_seconds_of_yojson = int_of_yojson
+
+let inspection_error_details_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     retry_backoff_interval_seconds =
+       option_of_yojson
+         (value_for_key retry_backoff_interval_seconds_of_yojson "retryBackoffIntervalSeconds")
+         _list path;
+     retry_index =
+       option_of_yojson (value_for_key exception_handler_index_of_yojson "retryIndex") _list path;
+     catch_index =
+       option_of_yojson (value_for_key exception_handler_index_of_yojson "catchIndex") _list path;
+   }
+    : inspection_error_details)
+
+let inspection_tolerated_failure_count_of_yojson = int_of_yojson
+let inspection_tolerated_failure_percentage_of_yojson = float_of_yojson
+let inspection_max_concurrency_of_yojson = int_of_yojson
+
 let inspection_data_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     max_concurrency =
+       option_of_yojson
+         (value_for_key inspection_max_concurrency_of_yojson "maxConcurrency")
+         _list path;
+     tolerated_failure_percentage =
+       option_of_yojson
+         (value_for_key inspection_tolerated_failure_percentage_of_yojson
+            "toleratedFailurePercentage")
+         _list path;
+     tolerated_failure_count =
+       option_of_yojson
+         (value_for_key inspection_tolerated_failure_count_of_yojson "toleratedFailureCount")
+         _list path;
+     after_items_pointer =
+       option_of_yojson (value_for_key sensitive_data_of_yojson "afterItemsPointer") _list path;
+     after_item_batcher =
+       option_of_yojson (value_for_key sensitive_data_of_yojson "afterItemBatcher") _list path;
+     after_item_selector =
+       option_of_yojson (value_for_key sensitive_data_of_yojson "afterItemSelector") _list path;
+     after_items_path =
+       option_of_yojson (value_for_key sensitive_data_of_yojson "afterItemsPath") _list path;
+     error_details =
+       option_of_yojson (value_for_key inspection_error_details_of_yojson "errorDetails") _list path;
      variables = option_of_yojson (value_for_key sensitive_data_of_yojson "variables") _list path;
      response =
        option_of_yojson (value_for_key inspection_data_response_of_yojson "response") _list path;
@@ -489,9 +534,70 @@ let inspection_level_of_yojson (tree : t) path =
 
 let reveal_secrets_of_yojson = bool_of_yojson
 
+let mock_error_output_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     cause = option_of_yojson (value_for_key sensitive_cause_of_yojson "cause") _list path;
+     error = option_of_yojson (value_for_key sensitive_error_of_yojson "error") _list path;
+   }
+    : mock_error_output)
+
+let mock_response_validation_mode_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "NONE" -> NONE
+    | `String "PRESENT" -> PRESENT
+    | `String "STRICT" -> STRICT
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "MockResponseValidationMode" value)
+    | _ -> raise (deserialize_wrong_type_error path "MockResponseValidationMode")
+     : mock_response_validation_mode)
+    : mock_response_validation_mode)
+
+let mock_input_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     field_validation_mode =
+       option_of_yojson
+         (value_for_key mock_response_validation_mode_of_yojson "fieldValidationMode")
+         _list path;
+     error_output =
+       option_of_yojson (value_for_key mock_error_output_of_yojson "errorOutput") _list path;
+     result = option_of_yojson (value_for_key sensitive_data_of_yojson "result") _list path;
+   }
+    : mock_input)
+
+let retrier_retry_count_of_yojson = int_of_yojson
+let map_iteration_failure_count_of_yojson = int_of_yojson
+
+let test_state_configuration_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     map_item_reader_data =
+       option_of_yojson (value_for_key sensitive_data_of_yojson "mapItemReaderData") _list path;
+     map_iteration_failure_count =
+       option_of_yojson
+         (value_for_key map_iteration_failure_count_of_yojson "mapIterationFailureCount")
+         _list path;
+     error_caused_by_state =
+       option_of_yojson
+         (value_for_key test_state_state_name_of_yojson "errorCausedByState")
+         _list path;
+     retrier_retry_count =
+       option_of_yojson (value_for_key retrier_retry_count_of_yojson "retrierRetryCount") _list path;
+   }
+    : test_state_configuration)
+
 let test_state_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     state_configuration =
+       option_of_yojson
+         (value_for_key test_state_configuration_of_yojson "stateConfiguration")
+         _list path;
+     context = option_of_yojson (value_for_key sensitive_data_of_yojson "context") _list path;
+     mock = option_of_yojson (value_for_key mock_input_of_yojson "mock") _list path;
+     state_name =
+       option_of_yojson (value_for_key test_state_state_name_of_yojson "stateName") _list path;
      variables = option_of_yojson (value_for_key sensitive_data_of_yojson "variables") _list path;
      reveal_secrets =
        option_of_yojson (value_for_key reveal_secrets_of_yojson "revealSecrets") _list path;

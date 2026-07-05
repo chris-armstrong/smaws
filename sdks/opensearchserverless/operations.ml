@@ -72,6 +72,72 @@ module CreateCollection = struct
       ~error_deserializer
 end
 
+module CreateCollectionGroup = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.opensearchserverless#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.opensearchserverless#InternalServerException"
+    | `ServiceQuotaExceededException _ ->
+        "com.amazonaws.opensearchserverless#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.opensearchserverless#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ServiceQuotaExceededException" ->
+          `ServiceQuotaExceededException
+            (Json_deserializers.service_quota_exceeded_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_collection_group_request) =
+    let input = Json_serializers.create_collection_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"OpenSearchServerless.CreateCollectionGroup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_collection_group_response_of_yojson
+      ~error_deserializer
+end
+
+module CreateIndex = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.opensearchserverless#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.opensearchserverless#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.opensearchserverless#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.opensearchserverless#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_index_request) =
+    let input = Json_serializers.create_index_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"OpenSearchServerless.CreateIndex" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.create_index_response_of_yojson
+      ~error_deserializer
+end
+
 module CreateSecurityConfig = struct
   let error_to_string = function
     | `ConflictException _ -> "com.amazonaws.opensearchserverless#ConflictException"
@@ -202,6 +268,68 @@ module DeleteCollection = struct
     let input = Json_serializers.delete_collection_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"OpenSearchServerless.DeleteCollection" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_collection_response_of_yojson
+      ~error_deserializer
+end
+
+module DeleteCollectionGroup = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.opensearchserverless#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.opensearchserverless#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.opensearchserverless#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.opensearchserverless#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_collection_group_request) =
+    let input = Json_serializers.delete_collection_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"OpenSearchServerless.DeleteCollectionGroup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_collection_group_response_of_yojson
+      ~error_deserializer
+end
+
+module DeleteIndex = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.opensearchserverless#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.opensearchserverless#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.opensearchserverless#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_index_request) =
+    let input = Json_serializers.delete_index_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"OpenSearchServerless.DeleteIndex" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.delete_index_response_of_yojson
       ~error_deserializer
 end
 
@@ -366,6 +494,35 @@ module GetAccessPolicy = struct
       ~error_deserializer
 end
 
+module GetIndex = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.opensearchserverless#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.opensearchserverless#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.opensearchserverless#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_index_request) =
+    let input = Json_serializers.get_index_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"OpenSearchServerless.GetIndex" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_index_response_of_yojson
+      ~error_deserializer
+end
+
 module GetSecurityConfig = struct
   let error_to_string = function
     | `InternalServerException _ -> "com.amazonaws.opensearchserverless#InternalServerException"
@@ -449,6 +606,32 @@ module ListAccessPolicies = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"OpenSearchServerless.ListAccessPolicies"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_access_policies_response_of_yojson
+      ~error_deserializer
+end
+
+module ListCollectionGroups = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.opensearchserverless#InternalServerException"
+    | `ValidationException _ -> "com.amazonaws.opensearchserverless#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_collection_groups_request) =
+    let input = Json_serializers.list_collection_groups_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"OpenSearchServerless.ListCollectionGroups"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_collection_groups_response_of_yojson
       ~error_deserializer
 end
 
@@ -603,6 +786,32 @@ module BatchGetCollection = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"OpenSearchServerless.BatchGetCollection"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.batch_get_collection_response_of_yojson
+      ~error_deserializer
+end
+
+module BatchGetCollectionGroup = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.opensearchserverless#InternalServerException"
+    | `ValidationException _ -> "com.amazonaws.opensearchserverless#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : batch_get_collection_group_request) =
+    let input = Json_serializers.batch_get_collection_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"OpenSearchServerless.BatchGetCollectionGroup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_collection_group_response_of_yojson
       ~error_deserializer
 end
 
@@ -936,6 +1145,8 @@ end
 module UpdateAccountSettings = struct
   let error_to_string = function
     | `InternalServerException _ -> "com.amazonaws.opensearchserverless#InternalServerException"
+    | `ServiceQuotaExceededException _ ->
+        "com.amazonaws.opensearchserverless#ServiceQuotaExceededException"
     | `ValidationException _ -> "com.amazonaws.opensearchserverless#ValidationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
@@ -944,6 +1155,9 @@ module UpdateAccountSettings = struct
       | _, "InternalServerException" ->
           `InternalServerException
             (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ServiceQuotaExceededException" ->
+          `ServiceQuotaExceededException
+            (Json_deserializers.service_quota_exceeded_exception_of_yojson tree path)
       | _, "ValidationException" ->
           `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
       | _type -> handler tree path _type
@@ -984,6 +1198,69 @@ module UpdateCollection = struct
     let input = Json_serializers.update_collection_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"OpenSearchServerless.UpdateCollection" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_collection_response_of_yojson
+      ~error_deserializer
+end
+
+module UpdateCollectionGroup = struct
+  let error_to_string = function
+    | `ConflictException _ -> "com.amazonaws.opensearchserverless#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.opensearchserverless#InternalServerException"
+    | `ServiceQuotaExceededException _ ->
+        "com.amazonaws.opensearchserverless#ServiceQuotaExceededException"
+    | `ValidationException _ -> "com.amazonaws.opensearchserverless#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ServiceQuotaExceededException" ->
+          `ServiceQuotaExceededException
+            (Json_deserializers.service_quota_exceeded_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : update_collection_group_request) =
+    let input = Json_serializers.update_collection_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"OpenSearchServerless.UpdateCollectionGroup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_collection_group_response_of_yojson
+      ~error_deserializer
+end
+
+module UpdateIndex = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.opensearchserverless#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.opensearchserverless#ResourceNotFoundException"
+    | `ValidationException _ -> "com.amazonaws.opensearchserverless#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : update_index_request) =
+    let input = Json_serializers.update_index_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"OpenSearchServerless.UpdateIndex" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.update_index_response_of_yojson
       ~error_deserializer
 end
 

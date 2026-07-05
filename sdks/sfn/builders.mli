@@ -109,7 +109,22 @@ val make_inspection_data_response :
   unit ->
   inspection_data_response
 
+val make_inspection_error_details :
+  ?retry_backoff_interval_seconds:retry_backoff_interval_seconds ->
+  ?retry_index:exception_handler_index ->
+  ?catch_index:exception_handler_index ->
+  unit ->
+  inspection_error_details
+
 val make_inspection_data :
+  ?max_concurrency:inspection_max_concurrency ->
+  ?tolerated_failure_percentage:inspection_tolerated_failure_percentage ->
+  ?tolerated_failure_count:inspection_tolerated_failure_count ->
+  ?after_items_pointer:sensitive_data ->
+  ?after_item_batcher:sensitive_data ->
+  ?after_item_selector:sensitive_data ->
+  ?after_items_path:sensitive_data ->
+  ?error_details:inspection_error_details ->
   ?variables:sensitive_data ->
   ?response:inspection_data_response ->
   ?request:inspection_data_request ->
@@ -133,7 +148,29 @@ val make_test_state_output :
   unit ->
   test_state_output
 
+val make_mock_error_output :
+  ?cause:sensitive_cause -> ?error:sensitive_error -> unit -> mock_error_output
+
+val make_mock_input :
+  ?field_validation_mode:mock_response_validation_mode ->
+  ?error_output:mock_error_output ->
+  ?result:sensitive_data ->
+  unit ->
+  mock_input
+
+val make_test_state_configuration :
+  ?map_item_reader_data:sensitive_data ->
+  ?map_iteration_failure_count:map_iteration_failure_count ->
+  ?error_caused_by_state:test_state_state_name ->
+  ?retrier_retry_count:retrier_retry_count ->
+  unit ->
+  test_state_configuration
+
 val make_test_state_input :
+  ?state_configuration:test_state_configuration ->
+  ?context:sensitive_data ->
+  ?mock:mock_input ->
+  ?state_name:test_state_state_name ->
   ?variables:sensitive_data ->
   ?reveal_secrets:reveal_secrets ->
   ?inspection_level:inspection_level ->

@@ -527,7 +527,7 @@ let put_email_monitoring_configuration_request_to_yojson
   assoc_to_yojson
     [
       ("LogGroupArn", Some (log_group_arn_to_yojson x.log_group_arn));
-      ("RoleArn", Some (role_arn_to_yojson x.role_arn));
+      ("RoleArn", option_to_yojson role_arn_to_yojson x.role_arn);
       ("OrganizationId", Some (organization_id_to_yojson x.organization_id));
     ]
 

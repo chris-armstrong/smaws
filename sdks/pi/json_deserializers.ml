@@ -135,6 +135,8 @@ let markdown_string_of_yojson = string_of_yojson
 let recommendation_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     recommendation_details =
+       option_of_yojson (value_for_key markdown_string_of_yojson "RecommendationDetails") _list path;
      recommendation_description =
        option_of_yojson
          (value_for_key markdown_string_of_yojson "RecommendationDescription")
@@ -145,6 +147,7 @@ let recommendation_of_yojson tree path =
     : recommendation)
 
 let recommendation_list_of_yojson tree path = list_of_yojson recommendation_of_yojson tree path
+let recommendation_id_list_of_yojson tree path = list_of_yojson string__of_yojson tree path
 
 let period_alignment_of_yojson (tree : t) path =
   ((match tree with
@@ -223,6 +226,32 @@ let list_performance_analysis_reports_request_of_yojson tree path =
      service_type = value_for_key service_type_of_yojson "ServiceType" _list path;
    }
     : list_performance_analysis_reports_request)
+
+let list_performance_analysis_report_recommendations_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+     recommendations =
+       option_of_yojson (value_for_key recommendation_list_of_yojson "Recommendations") _list path;
+   }
+    : list_performance_analysis_report_recommendations_response)
+
+let analysis_report_id_of_yojson = string_of_yojson
+
+let list_performance_analysis_report_recommendations_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
+     max_results = option_of_yojson (value_for_key max_results_of_yojson "MaxResults") _list path;
+     recommendation_ids =
+       option_of_yojson
+         (value_for_key recommendation_id_list_of_yojson "RecommendationIds")
+         _list path;
+     analysis_report_id = value_for_key analysis_report_id_of_yojson "AnalysisReportId" _list path;
+     identifier = value_for_key identifier_string_of_yojson "Identifier" _list path;
+     service_type = value_for_key service_type_of_yojson "ServiceType" _list path;
+   }
+    : list_performance_analysis_report_recommendations_request)
 
 let list_available_resource_metrics_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -439,8 +468,6 @@ let get_resource_metadata_request_of_yojson tree path =
      service_type = value_for_key service_type_of_yojson "ServiceType" _list path;
    }
     : get_resource_metadata_request)
-
-let analysis_report_id_of_yojson = string_of_yojson
 
 let context_type_of_yojson (tree : t) path =
   ((match tree with
@@ -679,7 +706,7 @@ let create_performance_analysis_report_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
-     end_time = value_for_key iso_timestamp_of_yojson "EndTime" _list path;
+     end_time = option_of_yojson (value_for_key iso_timestamp_of_yojson "EndTime") _list path;
      start_time = value_for_key iso_timestamp_of_yojson "StartTime" _list path;
      identifier = value_for_key identifier_string_of_yojson "Identifier" _list path;
      service_type = value_for_key service_type_of_yojson "ServiceType" _list path;

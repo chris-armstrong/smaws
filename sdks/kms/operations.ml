@@ -1149,6 +1149,37 @@ module GenerateRandom = struct
       ~error_deserializer
 end
 
+module GetKeyLastUsage = struct
+  let error_to_string = function
+    | `DependencyTimeoutException _ -> "com.amazonaws.kms#DependencyTimeoutException"
+    | `InvalidArnException _ -> "com.amazonaws.kms#InvalidArnException"
+    | `KMSInternalException _ -> "com.amazonaws.kms#KMSInternalException"
+    | `NotFoundException _ -> "com.amazonaws.kms#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "DependencyTimeoutException" ->
+          `DependencyTimeoutException
+            (Json_deserializers.dependency_timeout_exception_of_yojson tree path)
+      | _, "InvalidArnException" ->
+          `InvalidArnException (Json_deserializers.invalid_arn_exception_of_yojson tree path)
+      | _, "KMSInternalException" ->
+          `KMSInternalException (Json_deserializers.kms_internal_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_key_last_usage_request) =
+    let input = Json_serializers.get_key_last_usage_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.GetKeyLastUsage" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.get_key_last_usage_response_of_yojson
+      ~error_deserializer
+end
+
 module GetKeyPolicy = struct
   let error_to_string = function
     | `DependencyTimeoutException _ -> "com.amazonaws.kms#DependencyTimeoutException"

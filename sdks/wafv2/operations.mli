@@ -3,9 +3,12 @@ open Types
 module AssociateWebACL : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFFeatureNotIncludedInPricingPlanException of
+      waf_feature_not_included_in_pricing_plan_exception
     | `WAFInternalErrorException of waf_internal_error_exception
     | `WAFInvalidOperationException of waf_invalid_operation_exception
     | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFLimitsExceededException of waf_limits_exceeded_exception
     | `WAFNonexistentItemException of waf_nonexistent_item_exception
     | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] ->
     string
@@ -15,9 +18,12 @@ module AssociateWebACL : sig
     associate_web_acl_request ->
     ( associate_web_acl_response,
       [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFFeatureNotIncludedInPricingPlanException of
+        waf_feature_not_included_in_pricing_plan_exception
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] )
     result
@@ -930,6 +936,87 @@ module GetRegexPatternSet : sig
 end
 [@@ocaml.doc "Retrieves the specified [RegexPatternSet].\n"]
 
+module GetRevenueStatistics : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_revenue_statistics_request ->
+    ( get_revenue_statistics_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves ranked monetization statistics. Use the [StatisticType] parameter to specify the \
+   ranking: [TOP_SOURCES_BY_REVENUE] for top sources by revenue, or [TOP_PATHS_BY_REVENUE] for top \
+   content paths by revenue. This operation is only available for [CLOUDFRONT] scope. The maximum \
+   supported time window is 90 days. When no [CurrencyMode] filter is provided, results default to \
+   [REAL]. To retrieve test data, include a [CurrencyMode] filter with the value [TEST].\n"]
+
+module GetRevenueStatisticsSummary : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_revenue_statistics_summary_request ->
+    ( get_revenue_statistics_summary_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves a summary of monetization revenue for the specified time window. Returns total \
+   revenue, revenue by verification tier, total settlements, and total HTTP 402 responses served. \
+   This operation is only available for [CLOUDFRONT] scope. The maximum supported time window is \
+   90 days. When no [CurrencyMode] filter is provided, results default to [REAL]. To retrieve test \
+   data, include a [CurrencyMode] filter with the value [TEST].\n"]
+
+module GetRevenueStatisticsTimeSeries : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_revenue_statistics_time_series_request ->
+    ( get_revenue_statistics_time_series_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves time series data for monetization revenue. Returns data points aggregated at the \
+   specified interval for the given time window. This operation is only available for [CLOUDFRONT] \
+   scope. The maximum supported time window is 90 days. When no [CurrencyMode] filter is provided, \
+   results default to [REAL]. To retrieve test data, include a [CurrencyMode] filter with the \
+   value [TEST].\n"]
+
 module GetRuleGroup : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -981,6 +1068,37 @@ end
    range. This new time range indicates the actual period during which WAF selected the requests \
    in the sample.\n\
   \ "]
+
+module GetTopPathStatisticsByTraffic : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFFeatureNotIncludedInPricingPlanException of
+      waf_feature_not_included_in_pricing_plan_exception
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_top_path_statistics_by_traffic_request ->
+    ( get_top_path_statistics_by_traffic_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFFeatureNotIncludedInPricingPlanException of
+        waf_feature_not_included_in_pricing_plan_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves aggregated statistics about the top URI paths accessed by bot traffic for a specified \
+   web ACL and time window. You can use this operation to analyze which paths on your web \
+   application receive the most bot traffic and identify the specific bots accessing those paths. \
+   The operation supports filtering by bot category, organization, or name, and allows you to \
+   drill down into specific path prefixes to view detailed URI-level statistics.\n"]
 
 module GetWebACL : sig
   val error_to_string :
@@ -1296,6 +1414,33 @@ end
 [@@ocaml.doc
   "Retrieves an array of [RuleGroupSummary] objects for the rule groups that you manage. \n"]
 
+module ListSettlementRecords : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFInternalErrorException of waf_internal_error_exception
+    | `WAFInvalidOperationException of waf_invalid_operation_exception
+    | `WAFInvalidParameterException of waf_invalid_parameter_exception
+    | `WAFNonexistentItemException of waf_nonexistent_item_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_settlement_records_request ->
+    ( list_settlement_records_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves individual settlement transaction records for monetization. Each record represents a \
+   single payment transaction between a client and your protected resource. This operation is only \
+   available for [CLOUDFRONT] scope. The maximum supported time window is 90 days. When no \
+   [CurrencyMode] filter is provided, results default to [REAL]. To retrieve test data, include a \
+   [CurrencyMode] filter with the value [TEST].\n"]
+
 module ListTagsForResource : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1353,6 +1498,8 @@ end
 module PutLoggingConfiguration : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
+    | `WAFFeatureNotIncludedInPricingPlanException of
+      waf_feature_not_included_in_pricing_plan_exception
     | `WAFInternalErrorException of waf_internal_error_exception
     | `WAFInvalidOperationException of waf_invalid_operation_exception
     | `WAFInvalidParameterException of waf_invalid_parameter_exception
@@ -1368,6 +1515,8 @@ module PutLoggingConfiguration : sig
     put_logging_configuration_request ->
     ( put_logging_configuration_response,
       [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFFeatureNotIncludedInPricingPlanException of
+        waf_feature_not_included_in_pricing_plan_exception
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
@@ -1859,6 +2008,8 @@ module UpdateWebACL : sig
     | `WAFDuplicateItemException of waf_duplicate_item_exception
     | `WAFExpiredManagedRuleGroupVersionException of
       waf_expired_managed_rule_group_version_exception
+    | `WAFFeatureNotIncludedInPricingPlanException of
+      waf_feature_not_included_in_pricing_plan_exception
     | `WAFInternalErrorException of waf_internal_error_exception
     | `WAFInvalidOperationException of waf_invalid_operation_exception
     | `WAFInvalidParameterException of waf_invalid_parameter_exception
@@ -1879,6 +2030,8 @@ module UpdateWebACL : sig
       | `WAFDuplicateItemException of waf_duplicate_item_exception
       | `WAFExpiredManagedRuleGroupVersionException of
         waf_expired_managed_rule_group_version_exception
+      | `WAFFeatureNotIncludedInPricingPlanException of
+        waf_feature_not_included_in_pricing_plan_exception
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception

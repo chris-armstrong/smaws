@@ -330,6 +330,7 @@ let application_name_of_yojson = string_of_yojson
 
 let runtime_environment_of_yojson (tree : t) path =
   ((match tree with
+    | `String "FLINK-2_2" -> FLINK_2_2
     | `String "FLINK-1_20" -> FLINK_1_20
     | `String "FLINK-1_19" -> FLINK_1_19
     | `String "FLINK-1_18" -> FLINK_1_18
@@ -879,9 +880,33 @@ let application_system_rollback_configuration_description_of_yojson tree path =
   ({ rollback_enabled = value_for_key boolean_object_of_yojson "RollbackEnabled" _list path }
     : application_system_rollback_configuration_description)
 
+let key_id_of_yojson = string_of_yojson
+
+let key_type_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "CUSTOMER_MANAGED_KEY" -> CUSTOMER_MANAGED_KEY
+    | `String "AWS_OWNED_KEY" -> AWS_OWNED_KEY
+    | `String value -> raise (deserialize_unknown_enum_value_error path "KeyType" value)
+    | _ -> raise (deserialize_wrong_type_error path "KeyType")
+     : key_type)
+    : key_type)
+
+let application_encryption_configuration_description_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     key_type = value_for_key key_type_of_yojson "KeyType" _list path;
+     key_id = option_of_yojson (value_for_key key_id_of_yojson "KeyId") _list path;
+   }
+    : application_encryption_configuration_description)
+
 let application_configuration_description_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     application_encryption_configuration_description =
+       option_of_yojson
+         (value_for_key application_encryption_configuration_description_of_yojson
+            "ApplicationEncryptionConfigurationDescription")
+         _list path;
      zeppelin_application_configuration_description =
        option_of_yojson
          (value_for_key zeppelin_application_configuration_description_of_yojson
@@ -1324,9 +1349,22 @@ let application_system_rollback_configuration_update_of_yojson tree path =
    }
     : application_system_rollback_configuration_update)
 
+let application_encryption_configuration_update_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     key_type_update = value_for_key key_type_of_yojson "KeyTypeUpdate" _list path;
+     key_id_update = option_of_yojson (value_for_key key_id_of_yojson "KeyIdUpdate") _list path;
+   }
+    : application_encryption_configuration_update)
+
 let application_configuration_update_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     application_encryption_configuration_update =
+       option_of_yojson
+         (value_for_key application_encryption_configuration_update_of_yojson
+            "ApplicationEncryptionConfigurationUpdate")
+         _list path;
      zeppelin_application_configuration_update =
        option_of_yojson
          (value_for_key zeppelin_application_configuration_update_of_yojson
@@ -1766,6 +1804,11 @@ let snapshot_status_of_yojson (tree : t) path =
 let snapshot_details_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     application_encryption_configuration_description =
+       option_of_yojson
+         (value_for_key application_encryption_configuration_description_of_yojson
+            "ApplicationEncryptionConfigurationDescription")
+         _list path;
      runtime_environment =
        option_of_yojson
          (value_for_key runtime_environment_of_yojson "RuntimeEnvironment")
@@ -2429,9 +2472,22 @@ let application_system_rollback_configuration_of_yojson tree path =
   ({ rollback_enabled = value_for_key boolean_object_of_yojson "RollbackEnabled" _list path }
     : application_system_rollback_configuration)
 
+let application_encryption_configuration_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     key_type = value_for_key key_type_of_yojson "KeyType" _list path;
+     key_id = option_of_yojson (value_for_key key_id_of_yojson "KeyId") _list path;
+   }
+    : application_encryption_configuration)
+
 let application_configuration_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     application_encryption_configuration =
+       option_of_yojson
+         (value_for_key application_encryption_configuration_of_yojson
+            "ApplicationEncryptionConfiguration")
+         _list path;
      zeppelin_application_configuration =
        option_of_yojson
          (value_for_key zeppelin_application_configuration_of_yojson

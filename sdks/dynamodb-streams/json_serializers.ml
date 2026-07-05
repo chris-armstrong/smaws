@@ -139,6 +139,16 @@ let shard_iterator_type_to_yojson (x : shard_iterator_type) =
 
 let shard_iterator_to_yojson = string_to_yojson
 
+let shard_filter_type_to_yojson (x : shard_filter_type) =
+  match x with CHILD_SHARDS -> `String "CHILD_SHARDS"
+
+let shard_filter_to_yojson (x : shard_filter) =
+  assoc_to_yojson
+    [
+      ("ShardId", option_to_yojson shard_id_to_yojson x.shard_id);
+      ("Type", option_to_yojson shard_filter_type_to_yojson x.type_);
+    ]
+
 let resource_not_found_exception_to_yojson (x : resource_not_found_exception) =
   assoc_to_yojson [ ("message", option_to_yojson error_message_to_yojson x.message) ]
 
@@ -227,6 +237,7 @@ let describe_stream_output_to_yojson (x : describe_stream_output) =
 let describe_stream_input_to_yojson (x : describe_stream_input) =
   assoc_to_yojson
     [
+      ("ShardFilter", option_to_yojson shard_filter_to_yojson x.shard_filter);
       ("ExclusiveStartShardId", option_to_yojson shard_id_to_yojson x.exclusive_start_shard_id);
       ("Limit", option_to_yojson positive_integer_object_to_yojson x.limit);
       ("StreamArn", Some (stream_arn_to_yojson x.stream_arn));
