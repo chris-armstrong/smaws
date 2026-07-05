@@ -24,11 +24,26 @@ module Serialize = struct
   let int_field path v = string_field path (string_of_int v)
   let bool_field path v = string_field path (string_of_bool v)
 
+  (* Shortest round-trip-safe decimal representation of a float. Starts at the
+     6-sig-fig default of %g (so common values like 10.8 emit "10.8", matching
+     the smithy fixtures) and increases precision until [Float.of_string] of the
+     output equals the input, capping at %.17g (the round-trip bound for IEEE
+     doubles). %g's lossy 6-sig-fig truncation silently corrupted high-precision
+     doubles such as 1.234567890123456789 -> "1.23457". *)
+  let float_to_string v =
+    let rec loop p =
+      if p > 17 then Printf.sprintf "%.17g" v
+      else
+        let s = Printf.sprintf "%.*g" p v in
+        if Float.equal (Float.of_string s) v then s else loop (p + 1)
+    in
+    loop 6
+
   let float_field path v =
     let s =
       if Float.is_nan v then "NaN"
       else if Float.is_infinite v then if v > 0.0 then "Infinity" else "-Infinity"
-      else Printf.sprintf "%g" v
+      else float_to_string v
     in
     string_field path s
 
@@ -46,7 +61,7 @@ module Serialize = struct
     let posix = Ptime.to_float_s v in
     let s =
       if Float.is_integer posix then string_of_int (int_of_float posix)
-      else Printf.sprintf "%g" posix
+      else float_to_string posix
     in
     string_field path s
 
