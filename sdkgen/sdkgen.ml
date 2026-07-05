@@ -229,11 +229,6 @@ let write_service ~output_dir t =
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
       SmithyHelpers.printServiceDetails shapes)
 
-let is_query_service (service : Ast.Shape.serviceShapeDetails) =
-  Ast.Trait.hasTrait service.traits (function
-    | Ast.Trait.AwsProtocolAwsQueryTrait -> true
-    | _ -> false)
-
 let empty_service : Ast.Shape.serviceShapeDetails =
   { version = ""; operations = None; traits = None }
 
@@ -254,7 +249,11 @@ let write_serialisers ~output_dir t =
       ~namespace_module_mapping
   in
   let service = Option.value_map service_details ~default:empty_service ~f:(fun (_n, s, _t) -> s) in
-  let filename = if is_query_service service then "query_serializers" else "json_serializers" in
+  let filename =
+    match SmithyHelpers.protocol_of_traits service.traits with
+    | Query -> "query_serializers"
+    | Json -> "json_serializers"
+  in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
       Gen_serialisers.generate ~service ~operation_shapes ~structure_shapes ~shape_resolver
         ~namespace_resolver output_fmt)
@@ -266,8 +265,8 @@ let write_query_serialisers ~output_dir t =
       ~namespace_module_mapping
   in
   write_output ~output_dir ~filename:"query_serializers.ml" (fun output_fmt ->
-      Gen_serialisers.generate ~is_query_override:true ~service:empty_service ~operation_shapes:[]
-        ~structure_shapes ~shape_resolver ~namespace_resolver output_fmt)
+      Gen_serialisers.generate ~protocol_override:SmithyHelpers.Query ~service:empty_service
+        ~operation_shapes:[] ~structure_shapes ~shape_resolver ~namespace_resolver output_fmt)
 
 let write_query_deserialisers ~output_dir t =
   let { namespace; structure_shapes; namespace_module_mapping; shape_resolver; _ } = t in
@@ -276,8 +275,8 @@ let write_query_deserialisers ~output_dir t =
       ~namespace_module_mapping
   in
   write_output ~output_dir ~filename:"query_deserializers.ml" (fun output_fmt ->
-      Gen_deserialisers.generate ~is_query_override:true ~service:empty_service ~operation_shapes:[]
-        ~structure_shapes ~shape_resolver ~namespace_resolver output_fmt)
+      Gen_deserialisers.generate ~protocol_override:SmithyHelpers.Query ~service:empty_service
+        ~operation_shapes:[] ~structure_shapes ~shape_resolver ~namespace_resolver output_fmt)
 
 let write_deserialisers ~output_dir t =
   let {
@@ -296,7 +295,11 @@ let write_deserialisers ~output_dir t =
       ~namespace_module_mapping
   in
   let service = Option.value_map service_details ~default:empty_service ~f:(fun (_n, s, _t) -> s) in
-  let filename = if is_query_service service then "query_deserializers" else "json_deserializers" in
+  let filename =
+    match SmithyHelpers.protocol_of_traits service.traits with
+    | Query -> "query_deserializers"
+    | Json -> "json_deserializers"
+  in
   write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
       Gen_deserialisers.generate ~service ~operation_shapes ~structure_shapes ~shape_resolver
         ~namespace_resolver output_fmt)
@@ -341,15 +344,15 @@ let write_module ~output_dir ~filename t =
       ~namespace_module_mapping
   in
   let service = Option.value_map service_details ~default:empty_service ~f:(fun (_n, s, _t) -> s) in
-  let is_query = is_query_service service in
+  let protocol = SmithyHelpers.protocol_of_traits service.traits in
   let r1 =
     write_output ~output_dir ~filename:(filename ^ ".ml") (fun output_fmt ->
-        Gen_module.generate ~service_details ~is_query output_fmt)
+        Gen_module.generate ~service_details ~protocol output_fmt)
   in
   let r2 =
     write_output ~output_dir ~filename:(filename ^ ".mli") (fun output_fmt ->
         Gen_module.generate_mli ~service_details ~namespace_resolver ~operation_shapes
-          ~structure_shapes ~alias_context ~is_query output_fmt)
+          ~structure_shapes ~alias_context ~protocol output_fmt)
   in
   Result.all_unit [ r1; r2 ]
 

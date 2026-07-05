@@ -504,6 +504,32 @@ module Deserialiser = struct
          [ B.value_binding ~pat:(B.ppat_var (Location.mknoloc "v")) ~expr:val_expr ]
          (B.pexp_tuple [ exp_ident "k"; exp_ident "v" ]))
 
+  (* Body that reads a list's items, where [item_tag] is the per-item element name:
+     primitives become a (possibly mapped) list of parsed values; complex items are read
+     via their _of_xml function through Read.sequences. Shared by flattened lists, wrapped
+     lists, and the top-level list deserialiser. *)
+  let list_items_body ~namespace_resolver target item_tag =
+    match parse_primitive_from_string target (read_element item_tag) with
+    | Some _ -> (
+        let elements = read_elements item_tag in
+        match target with
+        | "smithy.api#String" -> elements
+        | _ ->
+            B.pexp_apply
+              (B.pexp_ident (Location.mknoloc (make_lident ~names:[ "List"; "map" ])))
+              [
+                ( Nolabel,
+                  B.pexp_fun Nolabel None
+                    (B.ppat_var (Location.mknoloc "s"))
+                    (Option.value_exn (parse_primitive_from_string target (exp_ident "s"))) );
+                (Nolabel, elements);
+              ])
+    | None ->
+        let item_func =
+          B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver target))
+        in
+        read_sequences item_tag (B.pexp_apply item_func [ (Nolabel, exp_ident "i") ])
+
   (* Reader expression for a member inside scanSequence.
      Returns (tag_name, expr) where expr reads+assigns to the ref.
      For primitives: reads the element text.
@@ -548,63 +574,11 @@ module Deserialiser = struct
             | Some (Shape.ListShape ls) when is_flattened member_traits ->
                 (* Flattened list: repeated <xml_tag> elements, each holding a member value
                directly (no member wrapper, no container). *)
-                let list_body =
-                  match parse_primitive_from_string ls.target (read_element xml_tag) with
-                  | Some _ -> (
-                      let elements = read_elements xml_tag in
-                      match ls.target with
-                      | "smithy.api#String" -> elements
-                      | _ ->
-                          B.pexp_apply
-                            (B.pexp_ident (Location.mknoloc (make_lident ~names:[ "List"; "map" ])))
-                            [
-                              ( Nolabel,
-                                B.pexp_fun Nolabel None
-                                  (B.ppat_var (Location.mknoloc "s"))
-                                  (Option.value_exn
-                                     (parse_primitive_from_string ls.target (exp_ident "s"))) );
-                              (Nolabel, elements);
-                            ])
-                  | None ->
-                      let item_func =
-                        B.pexp_ident
-                          (Location.mknoloc (func_longident ~namespace_resolver ls.target))
-                      in
-                      read_sequences xml_tag (B.pexp_apply item_func [ (Nolabel, exp_ident "i") ])
-                in
-                assign list_body
+                assign (list_items_body ~namespace_resolver ls.target xml_tag)
             | Some (Shape.ListShape ls) ->
                 let member_tag = xml_name ls.memberTraits "member" in
-                (* Check if element type is primitive *)
-                let list_body =
-                  match parse_primitive_from_string ls.target (read_element member_tag) with
-                  | Some _ -> (
-                      (* List of primitives: Read.elements *)
-                      let elements = read_elements member_tag in
-                      (* Map elements to parsed values *)
-                      match ls.target with
-                      | "smithy.api#String" -> elements
-                      | _ ->
-                          B.pexp_apply
-                            (B.pexp_ident (Location.mknoloc (make_lident ~names:[ "List"; "map" ])))
-                            [
-                              ( Nolabel,
-                                B.pexp_fun Nolabel None
-                                  (B.ppat_var (Location.mknoloc "s"))
-                                  (Option.value_exn
-                                     (parse_primitive_from_string ls.target (exp_ident "s"))) );
-                              (Nolabel, elements);
-                            ])
-                  | None ->
-                      (* List of complex types *)
-                      let item_func =
-                        B.pexp_ident
-                          (Location.mknoloc (func_longident ~namespace_resolver ls.target))
-                      in
-                      read_sequences member_tag
-                        (B.pexp_apply item_func [ (Nolabel, exp_ident "i") ])
-                in
-                assign (read_sequence xml_tag list_body)
+                assign
+                  (read_sequence xml_tag (list_items_body ~namespace_resolver ls.target member_tag))
             | Some (Shape.SetShape ss) ->
                 let set_body = read_elements "member" in
                 assign (read_sequence xml_tag set_body)
@@ -624,6 +598,66 @@ module Deserialiser = struct
                 assign (read_sequence xml_tag (B.pexp_apply item_func [ (Nolabel, exp_ident "i") ]))
             ))
 
+  (* Each member gets a "r_<name>" ref, populated while scanning and read back once
+     when building the record. *)
+  let member_ref_name (mem : Shape.member) = "r_" ^ SafeNames.safeMemberName mem.name
+
+  (* let r_foo = ref None and ... *)
+  let structure_ref_bindings (members : Shape.member list) =
+    List.map members ~f:(fun mem ->
+        B.value_binding
+          ~pat:(B.ppat_var (Location.mknoloc (member_ref_name mem)))
+          ~expr:
+            (B.pexp_apply (exp_ident "ref")
+               [ (Nolabel, B.pexp_construct (lident_noloc "None") None) ]))
+
+  (* scanSequence match case per member: reads the member's value and stores it in its ref. *)
+  let structure_scan_cases ~namespace_resolver ~shape_resolver (members : Shape.member list) =
+    List.map members ~f:(fun (mem : Shape.member) ->
+        let xml_tag = xml_name mem.traits mem.name in
+        let reader =
+          member_reader_expr ~namespace_resolver ~shape_resolver ~member_traits:mem.traits xml_tag
+            mem.target (member_ref_name mem)
+        in
+        B.case ~lhs:(pat_const_str xml_tag) ~guard:None ~rhs:reader)
+
+  (* i |> Xml.Parse.Structure.scanSequence [tags] (fun i tag -> match tag with ... | _ -> skip) *)
+  let structure_scan_call ~namespace_resolver ~shape_resolver (members : Shape.member list) =
+    let xml_tags = List.map members ~f:(fun (mem : Shape.member) -> xml_name mem.traits mem.name) in
+    let cases = structure_scan_cases ~namespace_resolver ~shape_resolver members in
+    let wildcard_case = B.case ~lhs:B.ppat_any ~guard:None ~rhs:skip_element_expr in
+    xml_call xml_struct_mod "scanSequence"
+      [
+        (Nolabel, exp_ident "i");
+        (Nolabel, B.elist (List.map xml_tags ~f:const_str));
+        ( Nolabel,
+          B.pexp_fun Nolabel None
+            (B.ppat_var (Location.mknoloc "tag"))
+            (B.pexp_fun Nolabel None B.ppat_any
+               (B.pexp_match (exp_ident "tag") (cases @ [ wildcard_case ]))) );
+      ]
+
+  (* (field_name, !r_field) record fields, wrapping required fields in Xml.Parse.required
+     so a missing element raises rather than silently producing None. *)
+  let structure_record_fields (members : Shape.member list) =
+    List.map members ~f:(fun (mem : Shape.member) ->
+        let is_required = Trait.hasTrait mem.traits Trait.isRequiredTrait in
+        let field_key = lident_noloc (SafeNames.safeMemberName mem.name) in
+        let deref =
+          B.pexp_apply (exp_ident "( ! )") [ (Nolabel, exp_ident (member_ref_name mem)) ]
+        in
+        let field_val =
+          if is_required then
+            xml_call [ "Smaws_Lib"; "Xml"; "Parse" ] "required"
+              [
+                (Nolabel, const_str (xml_name mem.traits mem.name));
+                (Nolabel, deref);
+                (Nolabel, exp_ident "i");
+              ]
+          else deref
+        in
+        (field_key, field_val))
+
   let structure_func_body name (descriptor : Shape.structureShapeDetails) ~namespace_resolver
       ~shape_resolver () =
     let type_name_str = SafeNames.safeTypeName name in
@@ -631,64 +665,9 @@ module Deserialiser = struct
     let members = descriptor.members in
     if List.is_empty members then exp_fun_untyped "i" [%expr ((() : unit) : [%t type_name])]
     else begin
-      (* Generate a ref for each member *)
-      let ref_bindings =
-        List.map members ~f:(fun (mem : Shape.member) ->
-            let ref_name = "r_" ^ SafeNames.safeMemberName mem.name in
-            B.value_binding
-              ~pat:(B.ppat_var (Location.mknoloc ref_name))
-              ~expr:
-                (B.pexp_apply (exp_ident "ref")
-                   [ (Nolabel, B.pexp_construct (lident_noloc "None") None) ]))
-      in
-      (* Generate match cases for scanSequence *)
-      let xml_tags =
-        List.map members ~f:(fun (mem : Shape.member) -> xml_name mem.traits mem.name)
-      in
-      let cases =
-        List.map members ~f:(fun (mem : Shape.member) ->
-            let xml_tag = xml_name mem.traits mem.name in
-            let ref_name = "r_" ^ SafeNames.safeMemberName mem.name in
-            let reader =
-              member_reader_expr ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
-                xml_tag mem.target ref_name
-            in
-            B.case ~lhs:(pat_const_str xml_tag) ~guard:None ~rhs:reader)
-      in
-      let wildcard_case = B.case ~lhs:B.ppat_any ~guard:None ~rhs:skip_element_expr in
-      let scan_call =
-        xml_call xml_struct_mod "scanSequence"
-          [
-            (Nolabel, exp_ident "i");
-            (Nolabel, B.elist (List.map xml_tags ~f:const_str));
-            ( Nolabel,
-              B.pexp_fun Nolabel None
-                (B.ppat_var (Location.mknoloc "tag"))
-                (B.pexp_fun Nolabel None B.ppat_any
-                   (B.pexp_match (exp_ident "tag") (cases @ [ wildcard_case ]))) );
-          ]
-      in
-      (* Build the record expression *)
-      let record_fields =
-        List.map members ~f:(fun (mem : Shape.member) ->
-            let is_required = Trait.hasTrait mem.traits Trait.isRequiredTrait in
-            let ref_name = "r_" ^ SafeNames.safeMemberName mem.name in
-            let field_key = lident_noloc (SafeNames.safeMemberName mem.name) in
-            let deref = B.pexp_apply (exp_ident "( ! )") [ (Nolabel, exp_ident ref_name) ] in
-            let field_val =
-              if is_required then
-                (* Xml.Parse.required "Tag" !r_tag i *)
-                xml_call [ "Smaws_Lib"; "Xml"; "Parse" ] "required"
-                  [
-                    (Nolabel, const_str (xml_name mem.traits mem.name));
-                    (Nolabel, deref);
-                    (Nolabel, exp_ident "i");
-                  ]
-              else deref
-            in
-            (field_key, field_val))
-      in
-      let record_expr = B.pexp_record record_fields None in
+      let ref_bindings = structure_ref_bindings members in
+      let scan_call = structure_scan_call ~namespace_resolver ~shape_resolver members in
+      let record_expr = B.pexp_record (structure_record_fields members) None in
       let typed_record = B.pexp_constraint record_expr type_name in
       let body =
         List.fold_right ref_bindings ~init:(B.pexp_sequence scan_call typed_record)
@@ -699,29 +678,7 @@ module Deserialiser = struct
 
   let list_func_body (x : Shape.listShapeDetails) ~namespace_resolver ~shape_resolver () =
     let member_tag = xml_name x.memberTraits "member" in
-    let body =
-      match parse_primitive_from_string x.target (read_element member_tag) with
-      | Some _ -> (
-          let elements = read_elements member_tag in
-          match x.target with
-          | "smithy.api#String" -> elements
-          | _ ->
-              B.pexp_apply
-                (B.pexp_ident (Location.mknoloc (make_lident ~names:[ "List"; "map" ])))
-                [
-                  ( Nolabel,
-                    B.pexp_fun Nolabel None
-                      (B.ppat_var (Location.mknoloc "s"))
-                      (Option.value_exn (parse_primitive_from_string x.target (exp_ident "s"))) );
-                  (Nolabel, elements);
-                ])
-      | None ->
-          let item_func =
-            B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver x.target))
-          in
-          read_sequences member_tag (B.pexp_apply item_func [ (Nolabel, exp_ident "i") ])
-    in
-    exp_fun_untyped "i" body
+    exp_fun_untyped "i" (list_items_body ~namespace_resolver x.target member_tag)
 
   let set_func_body (x : Shape.setShapeDetails) ~namespace_resolver ~shape_resolver () =
     let body = read_elements "member" in

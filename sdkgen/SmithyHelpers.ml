@@ -1,6 +1,25 @@
 open Base
 open Smithy_ast
 
+(** The wire protocols the code generator knows how to emit code for. restJson1, restXml and
+    ec2Query are recognised traits but generation for them is not implemented yet, so
+    [protocol_of_traits] fails loudly on them rather than silently falling back to JSON. *)
+type protocol = Query | Json
+
+let protocol_of_traits (traits : Trait.t list option) : protocol =
+  traits |> Option.value ~default:[]
+  |> List.find_map ~f:(function
+       | Trait.AwsProtocolAwsQueryTrait -> Some Query
+       | Trait.AwsProtocolAwsJson1_0Trait | Trait.AwsProtocolAwsJson1_1Trait -> Some Json
+       | Trait.AwsProtocolRestJson1Trait ->
+           failwith "code generation for the restJson1 protocol is not yet supported"
+       | Trait.AwsProtocolRestXmlTrait ->
+           failwith "code generation for the restXml protocol is not yet supported"
+       | Trait.AwsProtocolEc2QueryTrait ->
+           failwith "code generation for the ec2Query protocol is not yet supported"
+       | _ -> None)
+  |> Option.value ~default:Json
+
 let printProtocol (traits : Trait.t list option) =
   traits |> Option.value ~default:[]
   |> List.find_map ~f:(function
