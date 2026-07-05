@@ -48,12 +48,16 @@ tests) in `model_tests/protocols/query/`, mirroring what already exists for `aws
 
 | Phase | Status | Notes |
 |-------|--------|-------|
-| Phase 1 | ✅ Done | `smithy_ast/Trait.ml` + `smaws_parse/Smithy.ml` |
-| Phase 2 | ✅ Done | `smaws_lib/protocols_impl/AwsQuery.ml` rewritten with context API + Serialize helpers |
-| Phase 8 | ✅ Done | `smaws_test_support_lib/alcotest_http.ml` + `input_body_form_testable` |
-| Xml.ml | ✅ Done | `Xml.Parse.Read.skip_element` added |
-| Phase 3 | 🔄 In progress | `codegen/AwsProtocolQuery.ml` Serialiser |
-| Phases 4–7, 9 | ⬜ Pending | |
+| Phase 1 | ✅ Done | `smithy_ast/Trait.ml` + `smaws_parse/Smithy.ml` (incl. `awsQueryError` payload) |
+| Phase 2 | ✅ Done | `smaws_lib/protocols_impl/AwsQuery.ml` context-based API + Serialize/Deserialize helpers + `Response.parse_error_struct` |
+| Phase 3 | ✅ Done | `codegen/AwsProtocolQuery.ml` Serialiser |
+| Phase 4 | ✅ Done | `codegen/AwsProtocolQuery.ml` Deserialiser |
+| Phase 5 | ✅ Done | `codegen/AwsProtocolQuery.ml` Operations (incl. typed error variants + `awsQueryError.code` override) |
+| Phase 6 | ✅ Done | `sdkgen/gen_serialisers.ml`, `gen_deserialisers.ml`, `gen_operations.ml` wiring |
+| Phase 7 | ✅ Done | `sdkgen/gen_protocol_tests.ml` request + response + error-response test generation |
+| Phase 8 | ✅ Done | `smaws_test_support_lib/alcotest_http.ml` `input_body_form_testable` |
+| Phase 9 | ✅ Done | `model_tests/protocols/query/` (73 conformance tests passing) |
+| Xml.ml | ✅ Done | `Xml.Parse.Read.skip_element` / `skip_to_end` |
 
 ---
 
@@ -551,6 +555,21 @@ tests should also have one (initially empty, add as needed).
 10. `dune runtest model_tests` — iterate until green
 
 ---
+
+## Known gaps (not implemented)
+
+These are acknowledged in `sdkgen/gen_protocol_tests.ml`'s `bannedTests` and
+documented here for visibility:
+
+- **Union shapes** — the serialiser emits an empty list stub and the
+  deserialiser raises; awsQuery unions are not supported.
+- **Idempotency-token auto-fill** — `@idempotencyToken` members are not
+  auto-populated (`QueryProtocolIdempotencyTokenAutoFill` is banned).
+- **Request compression** — `@requestCompression` gzip is not implemented
+  (`SDKAppliedContentEncoding_awsQuery`, `SDKAppendsGzipAndIgnoresHttpProvidedEncoding_awsQuery`
+  are banned).
+- **awsJson error-response tests** — `make_error_response_test_str` is
+  awsQuery-only; awsJson error fixtures would need a JSON error reader.
 
 ## What's Out of Scope (for later)
 

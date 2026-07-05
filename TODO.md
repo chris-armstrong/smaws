@@ -45,6 +45,6 @@
 
 * [x] AwsJson1.0
 * [x] AwsJson1.1
-* [ ] AwsQuery 
+* [x] AwsQuery (core: serialise/deserialise/typed errors; passes smithy conformance suite. Pending: unions, idempotency-token auto-fill, request compression)
 * [ ] REST
 * [ ] S3

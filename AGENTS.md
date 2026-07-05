@@ -72,7 +72,7 @@ There is no separate lint step — `dune build` catches type errors and `dune fm
 |----------|-----------|--------------|--------|
 | AwsJson 1.0 | Done | `smaws_lib/protocols_impl/AwsJson.ml` | ~32 services (SQS, DynamoDB, …) |
 | AwsJson 1.1 | Done | same | ~138 services total with 1.0 |
-| AwsQuery | Partial | `smaws_lib/protocols_impl/AwsQuery.ml` | CloudFormation, IAM, SNS, … |
+| AwsQuery | Done (core) | `smaws_lib/protocols_impl/AwsQuery.ml` | STS generated; CloudFormation, IAM, SNS, … pending. Passes smithy `aws.protocoltests.query` suite. Pending: unions, idempotency-token auto-fill, request compression |
 | restJson 1 | Not started | — | ~224 services |
 | restXml | Not started | — | S3, CloudFront |
 | EC2 Query | Not started | — | EC2 |
