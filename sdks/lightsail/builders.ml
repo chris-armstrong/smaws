@@ -1,37 +1,36 @@
 open Types
-let make_setup_request
-  ?certificate_provider:(certificate_provider_ : certificate_provider option)
-  ?domain_names:(domain_names_ : setup_domain_name_list option)
-  ?instance_name:(instance_name_ : resource_name option) () =
+
+let make_setup_request ?certificate_provider:(certificate_provider_ : certificate_provider option)
+    ?domain_names:(domain_names_ : setup_domain_name_list option)
+    ?instance_name:(instance_name_ : resource_name option) () =
   ({
      certificate_provider = certificate_provider_;
      domain_names = domain_names_;
-     instance_name = instance_name_
-   } : setup_request)
+     instance_name = instance_name_;
+   }
+    : setup_request)
+
 let make_resource_location ?region_name:(region_name_ : region_name option)
-  ?availability_zone:(availability_zone_ : string_ option) () =
-  ({ region_name = region_name_; availability_zone = availability_zone_ } : 
-  resource_location)
-let make_setup_history_resource
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+    ?availability_zone:(availability_zone_ : string_ option) () =
+  ({ region_name = region_name_; availability_zone = availability_zone_ } : resource_location)
+
+let make_setup_history_resource ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option) () =
   ({
      resource_type = resource_type_;
      location = location_;
      created_at = created_at_;
      arn = arn_;
-     name = name_
-   } : setup_history_resource)
+     name = name_;
+   }
+    : setup_history_resource)
+
 let make_setup_execution_details ?version:(version_ : string_ option)
-  ?standard_output:(standard_output_ : string_ option)
-  ?standard_error:(standard_error_ : string_ option)
-  ?status:(status_ : setup_status option)
-  ?name:(name_ : non_empty_string option)
-  ?date_time:(date_time_ : iso_date option)
-  ?command:(command_ : string_ option) () =
+    ?standard_output:(standard_output_ : string_ option)
+    ?standard_error:(standard_error_ : string_ option) ?status:(status_ : setup_status option)
+    ?name:(name_ : non_empty_string option) ?date_time:(date_time_ : iso_date option)
+    ?command:(command_ : string_ option) () =
   ({
      version = version_;
      standard_output = standard_output_;
@@ -39,33 +38,33 @@ let make_setup_execution_details ?version:(version_ : string_ option)
      status = status_;
      name = name_;
      date_time = date_time_;
-     command = command_
-   } : setup_execution_details)
+     command = command_;
+   }
+    : setup_execution_details)
+
 let make_setup_history ?status:(status_ : setup_status option)
-  ?execution_details:(execution_details_ :
-                       setup_execution_details_list option)
-  ?resource:(resource_ : setup_history_resource option)
-  ?request:(request_ : setup_request option)
-  ?operation_id:(operation_id_ : non_empty_string option) () =
+    ?execution_details:(execution_details_ : setup_execution_details_list option)
+    ?resource:(resource_ : setup_history_resource option) ?request:(request_ : setup_request option)
+    ?operation_id:(operation_id_ : non_empty_string option) () =
   ({
      status = status_;
      execution_details = execution_details_;
      resource = resource_;
      request = request_;
-     operation_id = operation_id_
-   } : setup_history)
+     operation_id = operation_id_;
+   }
+    : setup_history)
+
 let make_operation ?error_details:(error_details_ : string_ option)
-  ?error_code:(error_code_ : string_ option)
-  ?status_changed_at:(status_changed_at_ : iso_date option)
-  ?status:(status_ : operation_status option)
-  ?operation_type:(operation_type_ : operation_type option)
-  ?operation_details:(operation_details_ : string_ option)
-  ?is_terminal:(is_terminal_ : boolean_ option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?resource_name:(resource_name_ : resource_name option)
-  ?id:(id_ : non_empty_string option) () =
+    ?error_code:(error_code_ : string_ option)
+    ?status_changed_at:(status_changed_at_ : iso_date option)
+    ?status:(status_ : operation_status option)
+    ?operation_type:(operation_type_ : operation_type option)
+    ?operation_details:(operation_details_ : string_ option)
+    ?is_terminal:(is_terminal_ : boolean_ option) ?location:(location_ : resource_location option)
+    ?created_at:(created_at_ : iso_date option)
+    ?resource_type:(resource_type_ : resource_type option)
+    ?resource_name:(resource_name_ : resource_name option) ?id:(id_ : non_empty_string option) () =
   ({
      error_details = error_details_;
      error_code = error_code_;
@@ -78,23 +77,22 @@ let make_operation ?error_details:(error_details_ : string_ option)
      created_at = created_at_;
      resource_type = resource_type_;
      resource_name = resource_name_;
-     id = id_
-   } : operation)
+     id = id_;
+   }
+    : operation)
+
 let make_update_relational_database_request
-  ?relational_database_blueprint_id:(relational_database_blueprint_id_ :
-                                      string_ option)
-  ?ca_certificate_identifier:(ca_certificate_identifier_ : string_ option)
-  ?apply_immediately:(apply_immediately_ : boolean_ option)
-  ?publicly_accessible:(publicly_accessible_ : boolean_ option)
-  ?disable_backup_retention:(disable_backup_retention_ : boolean_ option)
-  ?enable_backup_retention:(enable_backup_retention_ : boolean_ option)
-  ?preferred_maintenance_window:(preferred_maintenance_window_ :
-                                  string_ option)
-  ?preferred_backup_window:(preferred_backup_window_ : string_ option)
-  ?rotate_master_user_password:(rotate_master_user_password_ :
-                                 boolean_ option)
-  ?master_user_password:(master_user_password_ : sensitive_string option)
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
+    ?relational_database_blueprint_id:(relational_database_blueprint_id_ : string_ option)
+    ?ca_certificate_identifier:(ca_certificate_identifier_ : string_ option)
+    ?apply_immediately:(apply_immediately_ : boolean_ option)
+    ?publicly_accessible:(publicly_accessible_ : boolean_ option)
+    ?disable_backup_retention:(disable_backup_retention_ : boolean_ option)
+    ?enable_backup_retention:(enable_backup_retention_ : boolean_ option)
+    ?preferred_maintenance_window:(preferred_maintenance_window_ : string_ option)
+    ?preferred_backup_window:(preferred_backup_window_ : string_ option)
+    ?rotate_master_user_password:(rotate_master_user_password_ : boolean_ option)
+    ?master_user_password:(master_user_password_ : sensitive_string option)
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
   ({
      relational_database_blueprint_id = relational_database_blueprint_id_;
      ca_certificate_identifier = ca_certificate_identifier_;
@@ -106,17 +104,16 @@ let make_update_relational_database_request
      preferred_backup_window = preferred_backup_window_;
      rotate_master_user_password = rotate_master_user_password_;
      master_user_password = master_user_password_;
-     relational_database_name = relational_database_name_
-   } : update_relational_database_request)
-let make_relational_database_parameter
-  ?parameter_value:(parameter_value_ : string_ option)
-  ?parameter_name:(parameter_name_ : string_ option)
-  ?is_modifiable:(is_modifiable_ : boolean_ option)
-  ?description:(description_ : string_ option)
-  ?data_type:(data_type_ : string_ option)
-  ?apply_type:(apply_type_ : string_ option)
-  ?apply_method:(apply_method_ : string_ option)
-  ?allowed_values:(allowed_values_ : string_ option) () =
+     relational_database_name = relational_database_name_;
+   }
+    : update_relational_database_request)
+
+let make_relational_database_parameter ?parameter_value:(parameter_value_ : string_ option)
+    ?parameter_name:(parameter_name_ : string_ option)
+    ?is_modifiable:(is_modifiable_ : boolean_ option) ?description:(description_ : string_ option)
+    ?data_type:(data_type_ : string_ option) ?apply_type:(apply_type_ : string_ option)
+    ?apply_method:(apply_method_ : string_ option)
+    ?allowed_values:(allowed_values_ : string_ option) () =
   ({
      parameter_value = parameter_value_;
      parameter_name = parameter_name_;
@@ -125,91 +122,95 @@ let make_relational_database_parameter
      data_type = data_type_;
      apply_type = apply_type_;
      apply_method = apply_method_;
-     allowed_values = allowed_values_
-   } : relational_database_parameter)
+     allowed_values = allowed_values_;
+   }
+    : relational_database_parameter)
+
 let make_update_relational_database_parameters_request
-  ~parameters:(parameters_ : relational_database_parameter_list)
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
-  ({
-     parameters = parameters_;
-     relational_database_name = relational_database_name_
-   } : update_relational_database_parameters_request)
-let make_update_load_balancer_attribute_request
-  ~attribute_value:(attribute_value_ : string_max256)
-  ~attribute_name:(attribute_name_ : load_balancer_attribute_name)
-  ~load_balancer_name:(load_balancer_name_ : resource_name) () =
+    ~parameters:(parameters_ : relational_database_parameter_list)
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
+  ({ parameters = parameters_; relational_database_name = relational_database_name_ }
+    : update_relational_database_parameters_request)
+
+let make_update_load_balancer_attribute_request ~attribute_value:(attribute_value_ : string_max256)
+    ~attribute_name:(attribute_name_ : load_balancer_attribute_name)
+    ~load_balancer_name:(load_balancer_name_ : resource_name) () =
   ({
      attribute_value = attribute_value_;
      attribute_name = attribute_name_;
-     load_balancer_name = load_balancer_name_
-   } : update_load_balancer_attribute_request)
+     load_balancer_name = load_balancer_name_;
+   }
+    : update_load_balancer_attribute_request)
+
 let make_update_instance_metadata_options_request
-  ?http_protocol_ipv6:(http_protocol_ipv6_ : http_protocol_ipv6 option)
-  ?http_put_response_hop_limit:(http_put_response_hop_limit_ :
-                                 integer option)
-  ?http_endpoint:(http_endpoint_ : http_endpoint option)
-  ?http_tokens:(http_tokens_ : http_tokens option)
-  ~instance_name:(instance_name_ : resource_name) () =
+    ?http_protocol_ipv6:(http_protocol_ipv6_ : http_protocol_ipv6 option)
+    ?http_put_response_hop_limit:(http_put_response_hop_limit_ : integer option)
+    ?http_endpoint:(http_endpoint_ : http_endpoint option)
+    ?http_tokens:(http_tokens_ : http_tokens option) ~instance_name:(instance_name_ : resource_name)
+    () =
   ({
      http_protocol_ipv6 = http_protocol_ipv6_;
      http_put_response_hop_limit = http_put_response_hop_limit_;
      http_endpoint = http_endpoint_;
      http_tokens = http_tokens_;
-     instance_name = instance_name_
-   } : update_instance_metadata_options_request)
+     instance_name = instance_name_;
+   }
+    : update_instance_metadata_options_request)
+
 let make_domain_entry ?options:(options_ : domain_entry_options option)
-  ?type_:(type__ : domain_entry_type option)
-  ?is_alias:(is_alias_ : boolean_ option) ?target:(target_ : string_ option)
-  ?name:(name_ : domain_name option) ?id:(id_ : non_empty_string option) () =
+    ?type_:(type__ : domain_entry_type option) ?is_alias:(is_alias_ : boolean_ option)
+    ?target:(target_ : string_ option) ?name:(name_ : domain_name option)
+    ?id:(id_ : non_empty_string option) () =
   ({
      options = options_;
      type_ = type__;
      is_alias = is_alias_;
      target = target_;
      name = name_;
-     id = id_
-   } : domain_entry)
-let make_update_domain_entry_request
-  ~domain_entry:(domain_entry_ : domain_entry)
-  ~domain_name:(domain_name_ : domain_name) () =
+     id = id_;
+   }
+    : domain_entry)
+
+let make_update_domain_entry_request ~domain_entry:(domain_entry_ : domain_entry)
+    ~domain_name:(domain_name_ : domain_name) () =
   ({ domain_entry = domain_entry_; domain_name = domain_name_ } : update_domain_entry_request)
+
 let make_input_origin ?response_timeout:(response_timeout_ : integer option)
-  ?protocol_policy:(protocol_policy_ : origin_protocol_policy_enum option)
-  ?region_name:(region_name_ : region_name option)
-  ?name:(name_ : resource_name option) () =
+    ?protocol_policy:(protocol_policy_ : origin_protocol_policy_enum option)
+    ?region_name:(region_name_ : region_name option) ?name:(name_ : resource_name option) () =
   ({
      response_timeout = response_timeout_;
      protocol_policy = protocol_policy_;
      region_name = region_name_;
-     name = name_
-   } : input_origin)
+     name = name_;
+   }
+    : input_origin)
+
 let make_cache_behavior ?behavior:(behavior_ : behavior_enum option) () =
   ({ behavior = behavior_ } : cache_behavior)
-let make_cookie_object
-  ?cookies_allow_list:(cookies_allow_list_ : string_list option)
-  ?option_:(option__ : forward_values option) () =
-  ({ cookies_allow_list = cookies_allow_list_; option_ = option__ } : 
-  cookie_object)
-let make_header_object
-  ?headers_allow_list:(headers_allow_list_ : header_forward_list option)
-  ?option_:(option__ : forward_values option) () =
-  ({ headers_allow_list = headers_allow_list_; option_ = option__ } : 
-  header_object)
+
+let make_cookie_object ?cookies_allow_list:(cookies_allow_list_ : string_list option)
+    ?option_:(option__ : forward_values option) () =
+  ({ cookies_allow_list = cookies_allow_list_; option_ = option__ } : cookie_object)
+
+let make_header_object ?headers_allow_list:(headers_allow_list_ : header_forward_list option)
+    ?option_:(option__ : forward_values option) () =
+  ({ headers_allow_list = headers_allow_list_; option_ = option__ } : header_object)
+
 let make_query_string_object
-  ?query_strings_allow_list:(query_strings_allow_list_ : string_list option)
-  ?option_:(option__ : boolean_ option) () =
-  ({ query_strings_allow_list = query_strings_allow_list_; option_ = option__
-   } : query_string_object)
+    ?query_strings_allow_list:(query_strings_allow_list_ : string_list option)
+    ?option_:(option__ : boolean_ option) () =
+  ({ query_strings_allow_list = query_strings_allow_list_; option_ = option__ }
+    : query_string_object)
+
 let make_cache_settings
-  ?forwarded_query_strings:(forwarded_query_strings_ :
-                             query_string_object option)
-  ?forwarded_headers:(forwarded_headers_ : header_object option)
-  ?forwarded_cookies:(forwarded_cookies_ : cookie_object option)
-  ?cached_http_methods:(cached_http_methods_ : non_empty_string option)
-  ?allowed_http_methods:(allowed_http_methods_ : non_empty_string option)
-  ?maximum_tt_l:(maximum_tt_l_ : long option)
-  ?minimum_tt_l:(minimum_tt_l_ : long option)
-  ?default_tt_l:(default_tt_l_ : long option) () =
+    ?forwarded_query_strings:(forwarded_query_strings_ : query_string_object option)
+    ?forwarded_headers:(forwarded_headers_ : header_object option)
+    ?forwarded_cookies:(forwarded_cookies_ : cookie_object option)
+    ?cached_http_methods:(cached_http_methods_ : non_empty_string option)
+    ?allowed_http_methods:(allowed_http_methods_ : non_empty_string option)
+    ?maximum_tt_l:(maximum_tt_l_ : long option) ?minimum_tt_l:(minimum_tt_l_ : long option)
+    ?default_tt_l:(default_tt_l_ : long option) () =
   ({
      forwarded_query_strings = forwarded_query_strings_;
      forwarded_headers = forwarded_headers_;
@@ -218,128 +219,121 @@ let make_cache_settings
      allowed_http_methods = allowed_http_methods_;
      maximum_tt_l = maximum_tt_l_;
      minimum_tt_l = minimum_tt_l_;
-     default_tt_l = default_tt_l_
-   } : cache_settings)
+     default_tt_l = default_tt_l_;
+   }
+    : cache_settings)
+
 let make_cache_behavior_per_path ?behavior:(behavior_ : behavior_enum option)
-  ?path:(path_ : string_ option) () =
+    ?path:(path_ : string_ option) () =
   ({ behavior = behavior_; path = path_ } : cache_behavior_per_path)
+
 let make_update_distribution_request
-  ?use_default_certificate:(use_default_certificate_ : boolean_ option)
-  ?certificate_name:(certificate_name_ : resource_name option)
-  ?viewer_minimum_tls_protocol_version:(viewer_minimum_tls_protocol_version_
-                                         :
-                                         viewer_minimum_tls_protocol_version_enum
-                                           option)
-  ?is_enabled:(is_enabled_ : boolean_ option)
-  ?cache_behaviors:(cache_behaviors_ : cache_behavior_list option)
-  ?cache_behavior_settings:(cache_behavior_settings_ : cache_settings option)
-  ?default_cache_behavior:(default_cache_behavior_ : cache_behavior option)
-  ?origin:(origin_ : input_origin option)
-  ~distribution_name:(distribution_name_ : resource_name) () =
+    ?use_default_certificate:(use_default_certificate_ : boolean_ option)
+    ?certificate_name:(certificate_name_ : resource_name option)
+    ?viewer_minimum_tls_protocol_version:
+      (viewer_minimum_tls_protocol_version_ : viewer_minimum_tls_protocol_version_enum option)
+    ?is_enabled:(is_enabled_ : boolean_ option)
+    ?cache_behaviors:(cache_behaviors_ : cache_behavior_list option)
+    ?cache_behavior_settings:(cache_behavior_settings_ : cache_settings option)
+    ?default_cache_behavior:(default_cache_behavior_ : cache_behavior option)
+    ?origin:(origin_ : input_origin option) ~distribution_name:(distribution_name_ : resource_name)
+    () =
   ({
      use_default_certificate = use_default_certificate_;
      certificate_name = certificate_name_;
-     viewer_minimum_tls_protocol_version =
-       viewer_minimum_tls_protocol_version_;
+     viewer_minimum_tls_protocol_version = viewer_minimum_tls_protocol_version_;
      is_enabled = is_enabled_;
      cache_behaviors = cache_behaviors_;
      cache_behavior_settings = cache_behavior_settings_;
      default_cache_behavior = default_cache_behavior_;
      origin = origin_;
-     distribution_name = distribution_name_
-   } : update_distribution_request)
-let make_update_distribution_bundle_request
-  ?bundle_id:(bundle_id_ : string_ option)
-  ?distribution_name:(distribution_name_ : resource_name option) () =
-  ({ bundle_id = bundle_id_; distribution_name = distribution_name_ } : 
-  update_distribution_bundle_request)
-let make_tag ?value:(value_ : tag_value option) ?key:(key_ : tag_key option)
-  () = ({ value = value_; key = key_ } : tag)
+     distribution_name = distribution_name_;
+   }
+    : update_distribution_request)
+
+let make_update_distribution_bundle_request ?bundle_id:(bundle_id_ : string_ option)
+    ?distribution_name:(distribution_name_ : resource_name option) () =
+  ({ bundle_id = bundle_id_; distribution_name = distribution_name_ }
+    : update_distribution_bundle_request)
+
+let make_tag ?value:(value_ : tag_value option) ?key:(key_ : tag_key option) () =
+  ({ value = value_; key = key_ } : tag)
+
 let make_container_service_state_detail ?message:(message_ : string_ option)
-  ?code:(code_ : container_service_state_detail_code option) () =
+    ?code:(code_ : container_service_state_detail_code option) () =
   ({ message = message_; code = code_ } : container_service_state_detail)
+
 let make_container ?ports:(ports_ : port_map option)
-  ?environment:(environment_ : environment option)
-  ?command:(command_ : string_list option) ?image:(image_ : string_ option)
-  () =
-  ({
-     ports = ports_;
-     environment = environment_;
-     command = command_;
-     image = image_
-   } : container)
-let make_container_service_health_check_config
-  ?success_codes:(success_codes_ : string_ option)
-  ?path:(path_ : string_ option)
-  ?interval_seconds:(interval_seconds_ : integer option)
-  ?timeout_seconds:(timeout_seconds_ : integer option)
-  ?unhealthy_threshold:(unhealthy_threshold_ : integer option)
-  ?healthy_threshold:(healthy_threshold_ : integer option) () =
+    ?environment:(environment_ : environment option) ?command:(command_ : string_list option)
+    ?image:(image_ : string_ option) () =
+  ({ ports = ports_; environment = environment_; command = command_; image = image_ } : container)
+
+let make_container_service_health_check_config ?success_codes:(success_codes_ : string_ option)
+    ?path:(path_ : string_ option) ?interval_seconds:(interval_seconds_ : integer option)
+    ?timeout_seconds:(timeout_seconds_ : integer option)
+    ?unhealthy_threshold:(unhealthy_threshold_ : integer option)
+    ?healthy_threshold:(healthy_threshold_ : integer option) () =
   ({
      success_codes = success_codes_;
      path = path_;
      interval_seconds = interval_seconds_;
      timeout_seconds = timeout_seconds_;
      unhealthy_threshold = unhealthy_threshold_;
-     healthy_threshold = healthy_threshold_
-   } : container_service_health_check_config)
+     healthy_threshold = healthy_threshold_;
+   }
+    : container_service_health_check_config)
+
 let make_container_service_endpoint
-  ?health_check:(health_check_ :
-                  container_service_health_check_config option)
-  ?container_port:(container_port_ : integer option)
-  ?container_name:(container_name_ : string_ option) () =
+    ?health_check:(health_check_ : container_service_health_check_config option)
+    ?container_port:(container_port_ : integer option)
+    ?container_name:(container_name_ : string_ option) () =
   ({
      health_check = health_check_;
      container_port = container_port_;
-     container_name = container_name_
-   } : container_service_endpoint)
-let make_container_service_deployment
-  ?created_at:(created_at_ : iso_date option)
-  ?public_endpoint:(public_endpoint_ : container_service_endpoint option)
-  ?containers:(containers_ : container_map option)
-  ?state:(state_ : container_service_deployment_state option)
-  ?version:(version_ : integer option) () =
+     container_name = container_name_;
+   }
+    : container_service_endpoint)
+
+let make_container_service_deployment ?created_at:(created_at_ : iso_date option)
+    ?public_endpoint:(public_endpoint_ : container_service_endpoint option)
+    ?containers:(containers_ : container_map option)
+    ?state:(state_ : container_service_deployment_state option) ?version:(version_ : integer option)
+    () =
   ({
      created_at = created_at_;
      public_endpoint = public_endpoint_;
      containers = containers_;
      state = state_;
-     version = version_
-   } : container_service_deployment)
-let make_container_service_ecr_image_puller_role
-  ?principal_arn:(principal_arn_ : string_ option)
-  ?is_active:(is_active_ : boolean_ option) () =
-  ({ principal_arn = principal_arn_; is_active = is_active_ } : container_service_ecr_image_puller_role)
+     version = version_;
+   }
+    : container_service_deployment)
+
+let make_container_service_ecr_image_puller_role ?principal_arn:(principal_arn_ : string_ option)
+    ?is_active:(is_active_ : boolean_ option) () =
+  ({ principal_arn = principal_arn_; is_active = is_active_ }
+    : container_service_ecr_image_puller_role)
+
 let make_private_registry_access
-  ?ecr_image_puller_role:(ecr_image_puller_role_ :
-                           container_service_ecr_image_puller_role option)
-  () =
+    ?ecr_image_puller_role:(ecr_image_puller_role_ : container_service_ecr_image_puller_role option)
+    () =
   ({ ecr_image_puller_role = ecr_image_puller_role_ } : private_registry_access)
+
 let make_container_service
-  ?private_registry_access:(private_registry_access_ :
-                             private_registry_access option)
-  ?url:(url_ : string_ option)
-  ?public_domain_names:(public_domain_names_ :
-                         container_service_public_domains option)
-  ?private_domain_name:(private_domain_name_ : string_ option)
-  ?principal_arn:(principal_arn_ : string_ option)
-  ?is_disabled:(is_disabled_ : boolean_ option)
-  ?next_deployment:(next_deployment_ : container_service_deployment option)
-  ?current_deployment:(current_deployment_ :
-                        container_service_deployment option)
-  ?scale:(scale_ : container_service_scale option)
-  ?state_detail:(state_detail_ : container_service_state_detail option)
-  ?state:(state_ : container_service_state option)
-  ?power_id:(power_id_ : string_ option)
-  ?power:(power_ : container_service_power_name option)
-  ?tags:(tags_ : tag_list option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?arn:(arn_ : non_empty_string option)
-  ?container_service_name:(container_service_name_ :
-                            container_service_name option)
-  () =
+    ?private_registry_access:(private_registry_access_ : private_registry_access option)
+    ?url:(url_ : string_ option)
+    ?public_domain_names:(public_domain_names_ : container_service_public_domains option)
+    ?private_domain_name:(private_domain_name_ : string_ option)
+    ?principal_arn:(principal_arn_ : string_ option) ?is_disabled:(is_disabled_ : boolean_ option)
+    ?next_deployment:(next_deployment_ : container_service_deployment option)
+    ?current_deployment:(current_deployment_ : container_service_deployment option)
+    ?scale:(scale_ : container_service_scale option)
+    ?state_detail:(state_detail_ : container_service_state_detail option)
+    ?state:(state_ : container_service_state option) ?power_id:(power_id_ : string_ option)
+    ?power:(power_ : container_service_power_name option) ?tags:(tags_ : tag_list option)
+    ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?arn:(arn_ : non_empty_string option)
+    ?container_service_name:(container_service_name_ : container_service_name option) () =
   ({
      private_registry_access = private_registry_access_;
      url = url_;
@@ -359,73 +353,63 @@ let make_container_service
      location = location_;
      created_at = created_at_;
      arn = arn_;
-     container_service_name = container_service_name_
-   } : container_service)
-let make_container_service_ecr_image_puller_role_request
-  ?is_active:(is_active_ : boolean_ option) () =
+     container_service_name = container_service_name_;
+   }
+    : container_service)
+
+let make_container_service_ecr_image_puller_role_request ?is_active:(is_active_ : boolean_ option)
+    () =
   ({ is_active = is_active_ } : container_service_ecr_image_puller_role_request)
+
 let make_private_registry_access_request
-  ?ecr_image_puller_role:(ecr_image_puller_role_ :
-                           container_service_ecr_image_puller_role_request
-                             option)
-  () =
+    ?ecr_image_puller_role:
+      (ecr_image_puller_role_ : container_service_ecr_image_puller_role_request option) () =
   ({ ecr_image_puller_role = ecr_image_puller_role_ } : private_registry_access_request)
+
 let make_update_container_service_request
-  ?private_registry_access:(private_registry_access_ :
-                             private_registry_access_request option)
-  ?public_domain_names:(public_domain_names_ :
-                         container_service_public_domains option)
-  ?is_disabled:(is_disabled_ : boolean_ option)
-  ?scale:(scale_ : container_service_scale option)
-  ?power:(power_ : container_service_power_name option)
-  ~service_name:(service_name_ : container_service_name) () =
+    ?private_registry_access:(private_registry_access_ : private_registry_access_request option)
+    ?public_domain_names:(public_domain_names_ : container_service_public_domains option)
+    ?is_disabled:(is_disabled_ : boolean_ option) ?scale:(scale_ : container_service_scale option)
+    ?power:(power_ : container_service_power_name option)
+    ~service_name:(service_name_ : container_service_name) () =
   ({
      private_registry_access = private_registry_access_;
      public_domain_names = public_domain_names_;
      is_disabled = is_disabled_;
      scale = scale_;
      power = power_;
-     service_name = service_name_
-   } : update_container_service_request)
-let make_access_rules
-  ?allow_public_overrides:(allow_public_overrides_ : boolean_ option)
-  ?get_object:(get_object_ : access_type option) () =
-  ({
-     allow_public_overrides = allow_public_overrides_;
-     get_object = get_object_
-   } : access_rules)
-let make_resource_receiving_access
-  ?resource_type:(resource_type_ : non_empty_string option)
-  ?name:(name_ : non_empty_string option) () =
+     service_name = service_name_;
+   }
+    : update_container_service_request)
+
+let make_access_rules ?allow_public_overrides:(allow_public_overrides_ : boolean_ option)
+    ?get_object:(get_object_ : access_type option) () =
+  ({ allow_public_overrides = allow_public_overrides_; get_object = get_object_ } : access_rules)
+
+let make_resource_receiving_access ?resource_type:(resource_type_ : non_empty_string option)
+    ?name:(name_ : non_empty_string option) () =
   ({ resource_type = resource_type_; name = name_ } : resource_receiving_access)
-let make_bucket_state ?message:(message_ : string_ option)
-  ?code:(code_ : non_empty_string option) () =
+
+let make_bucket_state ?message:(message_ : string_ option) ?code:(code_ : non_empty_string option)
+    () =
   ({ message = message_; code = code_ } : bucket_state)
-let make_bucket_access_log_config
-  ?prefix:(prefix_ : bucket_access_log_prefix option)
-  ?destination:(destination_ : bucket_name option)
-  ~enabled:(enabled_ : boolean_) () =
-  ({ prefix = prefix_; destination = destination_; enabled = enabled_ } : 
-  bucket_access_log_config)
-let make_bucket
-  ?access_log_config:(access_log_config_ : bucket_access_log_config option)
-  ?state:(state_ : bucket_state option)
-  ?resources_receiving_access:(resources_receiving_access_ :
-                                access_receiver_list option)
-  ?readonly_access_accounts:(readonly_access_accounts_ :
-                              partner_id_list option)
-  ?able_to_update_bundle:(able_to_update_bundle_ : boolean_ option)
-  ?object_versioning:(object_versioning_ : non_empty_string option)
-  ?tags:(tags_ : tag_list option)
-  ?support_code:(support_code_ : non_empty_string option)
-  ?name:(name_ : bucket_name option)
-  ?location:(location_ : resource_location option)
-  ?url:(url_ : non_empty_string option)
-  ?created_at:(created_at_ : iso_date option)
-  ?bundle_id:(bundle_id_ : non_empty_string option)
-  ?arn:(arn_ : non_empty_string option)
-  ?access_rules:(access_rules_ : access_rules option)
-  ?resource_type:(resource_type_ : non_empty_string option) () =
+
+let make_bucket_access_log_config ?prefix:(prefix_ : bucket_access_log_prefix option)
+    ?destination:(destination_ : bucket_name option) ~enabled:(enabled_ : boolean_) () =
+  ({ prefix = prefix_; destination = destination_; enabled = enabled_ } : bucket_access_log_config)
+
+let make_bucket ?access_log_config:(access_log_config_ : bucket_access_log_config option)
+    ?state:(state_ : bucket_state option)
+    ?resources_receiving_access:(resources_receiving_access_ : access_receiver_list option)
+    ?readonly_access_accounts:(readonly_access_accounts_ : partner_id_list option)
+    ?able_to_update_bundle:(able_to_update_bundle_ : boolean_ option)
+    ?object_versioning:(object_versioning_ : non_empty_string option)
+    ?tags:(tags_ : tag_list option) ?support_code:(support_code_ : non_empty_string option)
+    ?name:(name_ : bucket_name option) ?location:(location_ : resource_location option)
+    ?url:(url_ : non_empty_string option) ?created_at:(created_at_ : iso_date option)
+    ?bundle_id:(bundle_id_ : non_empty_string option) ?arn:(arn_ : non_empty_string option)
+    ?access_rules:(access_rules_ : access_rules option)
+    ?resource_type:(resource_type_ : non_empty_string option) () =
   ({
      access_log_config = access_log_config_;
      state = state_;
@@ -442,77 +426,74 @@ let make_bucket
      bundle_id = bundle_id_;
      arn = arn_;
      access_rules = access_rules_;
-     resource_type = resource_type_
-   } : bucket)
+     resource_type = resource_type_;
+   }
+    : bucket)
+
 let make_update_bucket_request
-  ?access_log_config:(access_log_config_ : bucket_access_log_config option)
-  ?readonly_access_accounts:(readonly_access_accounts_ :
-                              partner_id_list option)
-  ?versioning:(versioning_ : non_empty_string option)
-  ?access_rules:(access_rules_ : access_rules option)
-  ~bucket_name:(bucket_name_ : bucket_name) () =
+    ?access_log_config:(access_log_config_ : bucket_access_log_config option)
+    ?readonly_access_accounts:(readonly_access_accounts_ : partner_id_list option)
+    ?versioning:(versioning_ : non_empty_string option)
+    ?access_rules:(access_rules_ : access_rules option) ~bucket_name:(bucket_name_ : bucket_name) ()
+    =
   ({
      access_log_config = access_log_config_;
      readonly_access_accounts = readonly_access_accounts_;
      versioning = versioning_;
      access_rules = access_rules_;
-     bucket_name = bucket_name_
-   } : update_bucket_request)
-let make_update_bucket_bundle_request
-  ~bundle_id:(bundle_id_ : non_empty_string)
-  ~bucket_name:(bucket_name_ : bucket_name) () =
+     bucket_name = bucket_name_;
+   }
+    : update_bucket_request)
+
+let make_update_bucket_bundle_request ~bundle_id:(bundle_id_ : non_empty_string)
+    ~bucket_name:(bucket_name_ : bucket_name) () =
   ({ bundle_id = bundle_id_; bucket_name = bucket_name_ } : update_bucket_bundle_request)
-let make_untag_resource_request
-  ?resource_arn:(resource_arn_ : resource_arn option)
-  ~tag_keys:(tag_keys_ : tag_key_list)
-  ~resource_name:(resource_name_ : resource_name) () =
-  ({
-     tag_keys = tag_keys_;
-     resource_arn = resource_arn_;
-     resource_name = resource_name_
-   } : untag_resource_request)
+
+let make_untag_resource_request ?resource_arn:(resource_arn_ : resource_arn option)
+    ~tag_keys:(tag_keys_ : tag_key_list) ~resource_name:(resource_name_ : resource_name) () =
+  ({ tag_keys = tag_keys_; resource_arn = resource_arn_; resource_name = resource_name_ }
+    : untag_resource_request)
+
 let make_unpeer_vpc_request () = (() : unit)
-let make_time_period ?end_:(end__ : iso_date option)
-  ?start:(start_ : iso_date option) () =
+
+let make_time_period ?end_:(end__ : iso_date option) ?start:(start_ : iso_date option) () =
   ({ end_ = end__; start = start_ } : time_period)
-let make_test_alarm_request ~state:(state_ : alarm_state)
-  ~alarm_name:(alarm_name_ : resource_name) () =
+
+let make_test_alarm_request ~state:(state_ : alarm_state) ~alarm_name:(alarm_name_ : resource_name)
+    () =
   ({ state = state_; alarm_name = alarm_name_ } : test_alarm_request)
-let make_tag_resource_request
-  ?resource_arn:(resource_arn_ : resource_arn option)
-  ~tags:(tags_ : tag_list) ~resource_name:(resource_name_ : resource_name) ()
-  =
-  ({
-     tags = tags_;
-     resource_arn = resource_arn_;
-     resource_name = resource_name_
-   } : tag_resource_request)
+
+let make_tag_resource_request ?resource_arn:(resource_arn_ : resource_arn option)
+    ~tags:(tags_ : tag_list) ~resource_name:(resource_name_ : resource_name) () =
+  ({ tags = tags_; resource_arn = resource_arn_; resource_name = resource_name_ }
+    : tag_resource_request)
+
 let make_stop_relational_database_request
-  ?relational_database_snapshot_name:(relational_database_snapshot_name_ :
-                                       resource_name option)
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
+    ?relational_database_snapshot_name:(relational_database_snapshot_name_ : resource_name option)
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
   ({
      relational_database_snapshot_name = relational_database_snapshot_name_;
-     relational_database_name = relational_database_name_
-   } : stop_relational_database_request)
+     relational_database_name = relational_database_name_;
+   }
+    : stop_relational_database_request)
+
 let make_stop_instance_request ?force:(force_ : boolean_ option)
-  ~instance_name:(instance_name_ : resource_name) () =
+    ~instance_name:(instance_name_ : resource_name) () =
   ({ force = force_; instance_name = instance_name_ } : stop_instance_request)
+
 let make_stop_instance_on_idle_request ?duration:(duration_ : string_ option)
-  ?threshold:(threshold_ : string_ option) () =
+    ?threshold:(threshold_ : string_ option) () =
   ({ duration = duration_; threshold = threshold_ } : stop_instance_on_idle_request)
-let make_stop_gui_session_request
-  ~resource_name:(resource_name_ : resource_name) () =
+
+let make_stop_gui_session_request ~resource_name:(resource_name_ : resource_name) () =
   ({ resource_name = resource_name_ } : stop_gui_session_request)
+
 let make_static_ip ?is_attached:(is_attached_ : boolean_ option)
-  ?attached_to:(attached_to_ : resource_name option)
-  ?ip_address:(ip_address_ : ip_address option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?support_code:(support_code_ : string_ option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+    ?attached_to:(attached_to_ : resource_name option) ?ip_address:(ip_address_ : ip_address option)
+    ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?support_code:(support_code_ : string_ option) ?arn:(arn_ : non_empty_string option)
+    ?name:(name_ : resource_name option) () =
   ({
      is_attached = is_attached_;
      attached_to = attached_to_;
@@ -522,143 +503,144 @@ let make_static_ip ?is_attached:(is_attached_ : boolean_ option)
      created_at = created_at_;
      support_code = support_code_;
      arn = arn_;
-     name = name_
-   } : static_ip)
+     name = name_;
+   }
+    : static_ip)
+
 let make_start_relational_database_request
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
   ({ relational_database_name = relational_database_name_ } : start_relational_database_request)
-let make_start_instance_request
-  ~instance_name:(instance_name_ : resource_name) () =
+
+let make_start_instance_request ~instance_name:(instance_name_ : resource_name) () =
   ({ instance_name = instance_name_ } : start_instance_request)
-let make_start_gui_session_request
-  ~resource_name:(resource_name_ : resource_name) () =
+
+let make_start_gui_session_request ~resource_name:(resource_name_ : resource_name) () =
   ({ resource_name = resource_name_ } : start_gui_session_request)
+
 let make_setup_instance_https_request
-  ~certificate_provider:(certificate_provider_ : certificate_provider)
-  ~domain_names:(domain_names_ : setup_domain_name_list)
-  ~email_address:(email_address_ : email_address)
-  ~instance_name:(instance_name_ : resource_name) () =
+    ~certificate_provider:(certificate_provider_ : certificate_provider)
+    ~domain_names:(domain_names_ : setup_domain_name_list)
+    ~email_address:(email_address_ : email_address) ~instance_name:(instance_name_ : resource_name)
+    () =
   ({
      certificate_provider = certificate_provider_;
      domain_names = domain_names_;
      email_address = email_address_;
-     instance_name = instance_name_
-   } : setup_instance_https_request)
-let make_set_resource_access_for_bucket_request
-  ~access:(access_ : resource_bucket_access)
-  ~bucket_name:(bucket_name_ : bucket_name)
-  ~resource_name:(resource_name_ : resource_name) () =
-  ({
-     access = access_;
-     bucket_name = bucket_name_;
-     resource_name = resource_name_
-   } : set_resource_access_for_bucket_request)
-let make_set_ip_address_type_request
-  ?accept_bundle_update:(accept_bundle_update_ : boolean_ option)
-  ~ip_address_type:(ip_address_type_ : ip_address_type)
-  ~resource_name:(resource_name_ : resource_name)
-  ~resource_type:(resource_type_ : resource_type) () =
+     instance_name = instance_name_;
+   }
+    : setup_instance_https_request)
+
+let make_set_resource_access_for_bucket_request ~access:(access_ : resource_bucket_access)
+    ~bucket_name:(bucket_name_ : bucket_name) ~resource_name:(resource_name_ : resource_name) () =
+  ({ access = access_; bucket_name = bucket_name_; resource_name = resource_name_ }
+    : set_resource_access_for_bucket_request)
+
+let make_set_ip_address_type_request ?accept_bundle_update:(accept_bundle_update_ : boolean_ option)
+    ~ip_address_type:(ip_address_type_ : ip_address_type)
+    ~resource_name:(resource_name_ : resource_name) ~resource_type:(resource_type_ : resource_type)
+    () =
   ({
      accept_bundle_update = accept_bundle_update_;
      ip_address_type = ip_address_type_;
      resource_name = resource_name_;
-     resource_type = resource_type_
-   } : set_ip_address_type_request)
+     resource_type = resource_type_;
+   }
+    : set_ip_address_type_request)
+
 let make_session ?is_primary:(is_primary_ : boolean_ option)
-  ?url:(url_ : sensitive_non_empty_string option)
-  ?name:(name_ : non_empty_string option) () =
+    ?url:(url_ : sensitive_non_empty_string option) ?name:(name_ : non_empty_string option) () =
   ({ is_primary = is_primary_; url = url_; name = name_ } : session)
+
 let make_send_contact_method_verification_request
-  ~protocol:(protocol_ : contact_method_verification_protocol) () =
+    ~protocol:(protocol_ : contact_method_verification_protocol) () =
   ({ protocol = protocol_ } : send_contact_method_verification_request)
+
 let make_estimate_by_time ?time_period:(time_period_ : time_period option)
-  ?currency:(currency_ : currency option) ?unit_:(unit__ : double option)
-  ?pricing_unit:(pricing_unit_ : pricing_unit option)
-  ?usage_cost:(usage_cost_ : double option) () =
+    ?currency:(currency_ : currency option) ?unit_:(unit__ : double option)
+    ?pricing_unit:(pricing_unit_ : pricing_unit option) ?usage_cost:(usage_cost_ : double option) ()
+    =
   ({
      time_period = time_period_;
      currency = currency_;
      unit_ = unit__;
      pricing_unit = pricing_unit_;
-     usage_cost = usage_cost_
-   } : estimate_by_time)
-let make_cost_estimate
-  ?results_by_time:(results_by_time_ : estimates_by_time option)
-  ?usage_type:(usage_type_ : non_empty_string option) () =
-  ({ results_by_time = results_by_time_; usage_type = usage_type_ } : 
-  cost_estimate)
+     usage_cost = usage_cost_;
+   }
+    : estimate_by_time)
+
+let make_cost_estimate ?results_by_time:(results_by_time_ : estimates_by_time option)
+    ?usage_type:(usage_type_ : non_empty_string option) () =
+  ({ results_by_time = results_by_time_; usage_type = usage_type_ } : cost_estimate)
+
 let make_resource_budget_estimate ?end_time:(end_time_ : iso_date option)
-  ?start_time:(start_time_ : iso_date option)
-  ?cost_estimates:(cost_estimates_ : cost_estimates option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?resource_name:(resource_name_ : resource_name option) () =
+    ?start_time:(start_time_ : iso_date option)
+    ?cost_estimates:(cost_estimates_ : cost_estimates option)
+    ?resource_type:(resource_type_ : resource_type option)
+    ?resource_name:(resource_name_ : resource_name option) () =
   ({
      end_time = end_time_;
      start_time = start_time_;
      cost_estimates = cost_estimates_;
      resource_type = resource_type_;
-     resource_name = resource_name_
-   } : resource_budget_estimate)
-let make_resource_record ?value:(value_ : string_ option)
-  ?type_:(type__ : string_ option) ?name:(name_ : string_ option) () =
+     resource_name = resource_name_;
+   }
+    : resource_budget_estimate)
+
+let make_resource_record ?value:(value_ : string_ option) ?type_:(type__ : string_ option)
+    ?name:(name_ : string_ option) () =
   ({ value = value_; type_ = type__; name = name_ } : resource_record)
+
 let make_reset_distribution_cache_request
-  ?distribution_name:(distribution_name_ : resource_name option) () =
+    ?distribution_name:(distribution_name_ : resource_name option) () =
   ({ distribution_name = distribution_name_ } : reset_distribution_cache_request)
+
 let make_dns_record_creation_state ?message:(message_ : string_ option)
-  ?code:(code_ : dns_record_creation_state_code option) () =
+    ?code:(code_ : dns_record_creation_state_code option) () =
   ({ message = message_; code = code_ } : dns_record_creation_state)
+
 let make_domain_validation_record
-  ?validation_status:(validation_status_ :
-                       certificate_domain_validation_status option)
-  ?dns_record_creation_state:(dns_record_creation_state_ :
-                               dns_record_creation_state option)
-  ?resource_record:(resource_record_ : resource_record option)
-  ?domain_name:(domain_name_ : domain_name option) () =
+    ?validation_status:(validation_status_ : certificate_domain_validation_status option)
+    ?dns_record_creation_state:(dns_record_creation_state_ : dns_record_creation_state option)
+    ?resource_record:(resource_record_ : resource_record option)
+    ?domain_name:(domain_name_ : domain_name option) () =
   ({
      validation_status = validation_status_;
      dns_record_creation_state = dns_record_creation_state_;
      resource_record = resource_record_;
-     domain_name = domain_name_
-   } : domain_validation_record)
+     domain_name = domain_name_;
+   }
+    : domain_validation_record)
+
 let make_renewal_summary ?updated_at:(updated_at_ : iso_date option)
-  ?renewal_status_reason:(renewal_status_reason_ :
-                           renewal_status_reason option)
-  ?renewal_status:(renewal_status_ : renewal_status option)
-  ?domain_validation_records:(domain_validation_records_ :
-                               domain_validation_record_list option)
-  () =
+    ?renewal_status_reason:(renewal_status_reason_ : renewal_status_reason option)
+    ?renewal_status:(renewal_status_ : renewal_status option)
+    ?domain_validation_records:(domain_validation_records_ : domain_validation_record_list option)
+    () =
   ({
      updated_at = updated_at_;
      renewal_status_reason = renewal_status_reason_;
      renewal_status = renewal_status_;
-     domain_validation_records = domain_validation_records_
-   } : renewal_summary)
-let make_release_static_ip_request
-  ~static_ip_name:(static_ip_name_ : resource_name) () =
+     domain_validation_records = domain_validation_records_;
+   }
+    : renewal_summary)
+
+let make_release_static_ip_request ~static_ip_name:(static_ip_name_ : resource_name) () =
   ({ static_ip_name = static_ip_name_ } : release_static_ip_request)
+
 let make_relational_database_snapshot
-  ?from_relational_database_blueprint_id:(from_relational_database_blueprint_id_
-                                           : string_ option)
-  ?from_relational_database_bundle_id:(from_relational_database_bundle_id_ :
-                                        string_ option)
-  ?from_relational_database_arn:(from_relational_database_arn_ :
-                                  non_empty_string option)
-  ?from_relational_database_name:(from_relational_database_name_ :
-                                   non_empty_string option)
-  ?state:(state_ : non_empty_string option)
-  ?size_in_gb:(size_in_gb_ : integer option)
-  ?engine_version:(engine_version_ : non_empty_string option)
-  ?engine:(engine_ : non_empty_string option) ?tags:(tags_ : tag_list option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?support_code:(support_code_ : string_ option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+    ?from_relational_database_blueprint_id:(from_relational_database_blueprint_id_ : string_ option)
+    ?from_relational_database_bundle_id:(from_relational_database_bundle_id_ : string_ option)
+    ?from_relational_database_arn:(from_relational_database_arn_ : non_empty_string option)
+    ?from_relational_database_name:(from_relational_database_name_ : non_empty_string option)
+    ?state:(state_ : non_empty_string option) ?size_in_gb:(size_in_gb_ : integer option)
+    ?engine_version:(engine_version_ : non_empty_string option)
+    ?engine:(engine_ : non_empty_string option) ?tags:(tags_ : tag_list option)
+    ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?support_code:(support_code_ : string_ option) ?arn:(arn_ : non_empty_string option)
+    ?name:(name_ : resource_name option) () =
   ({
-     from_relational_database_blueprint_id =
-       from_relational_database_blueprint_id_;
+     from_relational_database_blueprint_id = from_relational_database_blueprint_id_;
      from_relational_database_bundle_id = from_relational_database_bundle_id_;
      from_relational_database_arn = from_relational_database_arn_;
      from_relational_database_name = from_relational_database_name_;
@@ -672,74 +654,63 @@ let make_relational_database_snapshot
      created_at = created_at_;
      support_code = support_code_;
      arn = arn_;
-     name = name_
-   } : relational_database_snapshot)
-let make_relational_database_hardware
-  ?ram_size_in_gb:(ram_size_in_gb_ : float_ option)
-  ?disk_size_in_gb:(disk_size_in_gb_ : integer option)
-  ?cpu_count:(cpu_count_ : integer option) () =
-  ({
-     ram_size_in_gb = ram_size_in_gb_;
-     disk_size_in_gb = disk_size_in_gb_;
-     cpu_count = cpu_count_
-   } : relational_database_hardware)
+     name = name_;
+   }
+    : relational_database_snapshot)
+
+let make_relational_database_hardware ?ram_size_in_gb:(ram_size_in_gb_ : float_ option)
+    ?disk_size_in_gb:(disk_size_in_gb_ : integer option) ?cpu_count:(cpu_count_ : integer option) ()
+    =
+  ({ ram_size_in_gb = ram_size_in_gb_; disk_size_in_gb = disk_size_in_gb_; cpu_count = cpu_count_ }
+    : relational_database_hardware)
+
 let make_pending_modified_relational_database_values
-  ?backup_retention_enabled:(backup_retention_enabled_ : boolean_ option)
-  ?engine_version:(engine_version_ : string_ option)
-  ?master_user_password:(master_user_password_ : string_ option) () =
+    ?backup_retention_enabled:(backup_retention_enabled_ : boolean_ option)
+    ?engine_version:(engine_version_ : string_ option)
+    ?master_user_password:(master_user_password_ : string_ option) () =
   ({
      backup_retention_enabled = backup_retention_enabled_;
      engine_version = engine_version_;
-     master_user_password = master_user_password_
-   } : pending_modified_relational_database_values)
-let make_relational_database_endpoint
-  ?address:(address_ : non_empty_string option)
-  ?port:(port_ : integer option) () =
+     master_user_password = master_user_password_;
+   }
+    : pending_modified_relational_database_values)
+
+let make_relational_database_endpoint ?address:(address_ : non_empty_string option)
+    ?port:(port_ : integer option) () =
   ({ address = address_; port = port_ } : relational_database_endpoint)
-let make_pending_maintenance_action
-  ?current_apply_date:(current_apply_date_ : iso_date option)
-  ?description:(description_ : non_empty_string option)
-  ?action:(action_ : non_empty_string option) () =
-  ({
-     current_apply_date = current_apply_date_;
-     description = description_;
-     action = action_
-   } : pending_maintenance_action)
+
+let make_pending_maintenance_action ?current_apply_date:(current_apply_date_ : iso_date option)
+    ?description:(description_ : non_empty_string option)
+    ?action:(action_ : non_empty_string option) () =
+  ({ current_apply_date = current_apply_date_; description = description_; action = action_ }
+    : pending_maintenance_action)
+
 let make_relational_database
-  ?ca_certificate_identifier:(ca_certificate_identifier_ : string_ option)
-  ?pending_maintenance_actions:(pending_maintenance_actions_ :
-                                 pending_maintenance_action_list option)
-  ?master_endpoint:(master_endpoint_ : relational_database_endpoint option)
-  ?publicly_accessible:(publicly_accessible_ : boolean_ option)
-  ?preferred_maintenance_window:(preferred_maintenance_window_ :
-                                  non_empty_string option)
-  ?preferred_backup_window:(preferred_backup_window_ :
-                             non_empty_string option)
-  ?parameter_apply_status:(parameter_apply_status_ : non_empty_string option)
-  ?master_username:(master_username_ : non_empty_string option)
-  ?latest_restorable_time:(latest_restorable_time_ : iso_date option)
-  ?engine_version:(engine_version_ : non_empty_string option)
-  ?engine:(engine_ : non_empty_string option)
-  ?pending_modified_values:(pending_modified_values_ :
-                             pending_modified_relational_database_values
-                               option)
-  ?backup_retention_enabled:(backup_retention_enabled_ : boolean_ option)
-  ?secondary_availability_zone:(secondary_availability_zone_ :
-                                 string_ option)
-  ?state:(state_ : non_empty_string option)
-  ?hardware:(hardware_ : relational_database_hardware option)
-  ?master_database_name:(master_database_name_ : string_ option)
-  ?relational_database_bundle_id:(relational_database_bundle_id_ :
-                                   non_empty_string option)
-  ?relational_database_blueprint_id:(relational_database_blueprint_id_ :
-                                      non_empty_string option)
-  ?tags:(tags_ : tag_list option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?support_code:(support_code_ : string_ option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+    ?ca_certificate_identifier:(ca_certificate_identifier_ : string_ option)
+    ?pending_maintenance_actions:
+      (pending_maintenance_actions_ : pending_maintenance_action_list option)
+    ?master_endpoint:(master_endpoint_ : relational_database_endpoint option)
+    ?publicly_accessible:(publicly_accessible_ : boolean_ option)
+    ?preferred_maintenance_window:(preferred_maintenance_window_ : non_empty_string option)
+    ?preferred_backup_window:(preferred_backup_window_ : non_empty_string option)
+    ?parameter_apply_status:(parameter_apply_status_ : non_empty_string option)
+    ?master_username:(master_username_ : non_empty_string option)
+    ?latest_restorable_time:(latest_restorable_time_ : iso_date option)
+    ?engine_version:(engine_version_ : non_empty_string option)
+    ?engine:(engine_ : non_empty_string option)
+    ?pending_modified_values:
+      (pending_modified_values_ : pending_modified_relational_database_values option)
+    ?backup_retention_enabled:(backup_retention_enabled_ : boolean_ option)
+    ?secondary_availability_zone:(secondary_availability_zone_ : string_ option)
+    ?state:(state_ : non_empty_string option)
+    ?hardware:(hardware_ : relational_database_hardware option)
+    ?master_database_name:(master_database_name_ : string_ option)
+    ?relational_database_bundle_id:(relational_database_bundle_id_ : non_empty_string option)
+    ?relational_database_blueprint_id:(relational_database_blueprint_id_ : non_empty_string option)
+    ?tags:(tags_ : tag_list option) ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?support_code:(support_code_ : string_ option) ?arn:(arn_ : non_empty_string option)
+    ?name:(name_ : resource_name option) () =
   ({
      ca_certificate_identifier = ca_certificate_identifier_;
      pending_maintenance_actions = pending_maintenance_actions_;
@@ -766,27 +737,27 @@ let make_relational_database
      created_at = created_at_;
      support_code = support_code_;
      arn = arn_;
-     name = name_
-   } : relational_database)
-let make_relational_database_event
-  ?event_categories:(event_categories_ : string_list option)
-  ?message:(message_ : string_ option)
-  ?created_at:(created_at_ : iso_date option)
-  ?resource:(resource_ : resource_name option) () =
+     name = name_;
+   }
+    : relational_database)
+
+let make_relational_database_event ?event_categories:(event_categories_ : string_list option)
+    ?message:(message_ : string_ option) ?created_at:(created_at_ : iso_date option)
+    ?resource:(resource_ : resource_name option) () =
   ({
      event_categories = event_categories_;
      message = message_;
      created_at = created_at_;
-     resource = resource_
-   } : relational_database_event)
+     resource = resource_;
+   }
+    : relational_database_event)
+
 let make_relational_database_bundle ?is_active:(is_active_ : boolean_ option)
-  ?is_encrypted:(is_encrypted_ : boolean_ option)
-  ?cpu_count:(cpu_count_ : integer option)
-  ?transfer_per_month_in_gb:(transfer_per_month_in_gb_ : integer option)
-  ?disk_size_in_gb:(disk_size_in_gb_ : integer option)
-  ?ram_size_in_gb:(ram_size_in_gb_ : float_ option)
-  ?price:(price_ : float_ option) ?name:(name_ : string_ option)
-  ?bundle_id:(bundle_id_ : string_ option) () =
+    ?is_encrypted:(is_encrypted_ : boolean_ option) ?cpu_count:(cpu_count_ : integer option)
+    ?transfer_per_month_in_gb:(transfer_per_month_in_gb_ : integer option)
+    ?disk_size_in_gb:(disk_size_in_gb_ : integer option)
+    ?ram_size_in_gb:(ram_size_in_gb_ : float_ option) ?price:(price_ : float_ option)
+    ?name:(name_ : string_ option) ?bundle_id:(bundle_id_ : string_ option) () =
   ({
      is_active = is_active_;
      is_encrypted = is_encrypted_;
@@ -796,105 +767,108 @@ let make_relational_database_bundle ?is_active:(is_active_ : boolean_ option)
      ram_size_in_gb = ram_size_in_gb_;
      price = price_;
      name = name_;
-     bundle_id = bundle_id_
-   } : relational_database_bundle)
-let make_relational_database_blueprint
-  ?is_engine_default:(is_engine_default_ : boolean_ option)
-  ?engine_version_description:(engine_version_description_ : string_ option)
-  ?engine_description:(engine_description_ : string_ option)
-  ?engine_version:(engine_version_ : string_ option)
-  ?engine:(engine_ : relational_database_engine option)
-  ?blueprint_id:(blueprint_id_ : string_ option) () =
+     bundle_id = bundle_id_;
+   }
+    : relational_database_bundle)
+
+let make_relational_database_blueprint ?is_engine_default:(is_engine_default_ : boolean_ option)
+    ?engine_version_description:(engine_version_description_ : string_ option)
+    ?engine_description:(engine_description_ : string_ option)
+    ?engine_version:(engine_version_ : string_ option)
+    ?engine:(engine_ : relational_database_engine option)
+    ?blueprint_id:(blueprint_id_ : string_ option) () =
   ({
      is_engine_default = is_engine_default_;
      engine_version_description = engine_version_description_;
      engine_description = engine_description_;
      engine_version = engine_version_;
      engine = engine_;
-     blueprint_id = blueprint_id_
-   } : relational_database_blueprint)
+     blueprint_id = blueprint_id_;
+   }
+    : relational_database_blueprint)
+
 let make_name_servers_update_state ?message:(message_ : string_ option)
-  ?code:(code_ : name_servers_update_state_code option) () =
+    ?code:(code_ : name_servers_update_state_code option) () =
   ({ message = message_; code = code_ } : name_servers_update_state)
+
 let make_r53_hosted_zone_deletion_state ?message:(message_ : string_ option)
-  ?code:(code_ : r53_hosted_zone_deletion_state_code option) () =
+    ?code:(code_ : r53_hosted_zone_deletion_state_code option) () =
   ({ message = message_; code = code_ } : r53_hosted_zone_deletion_state)
+
 let make_registered_domain_delegation_info
-  ?r53_hosted_zone_deletion_state:(r53_hosted_zone_deletion_state_ :
-                                    r53_hosted_zone_deletion_state option)
-  ?name_servers_update_state:(name_servers_update_state_ :
-                               name_servers_update_state option)
-  () =
+    ?r53_hosted_zone_deletion_state:
+      (r53_hosted_zone_deletion_state_ : r53_hosted_zone_deletion_state option)
+    ?name_servers_update_state:(name_servers_update_state_ : name_servers_update_state option) () =
   ({
      r53_hosted_zone_deletion_state = r53_hosted_zone_deletion_state_;
-     name_servers_update_state = name_servers_update_state_
-   } : registered_domain_delegation_info)
+     name_servers_update_state = name_servers_update_state_;
+   }
+    : registered_domain_delegation_info)
+
 let make_container_image ?created_at:(created_at_ : iso_date option)
-  ?digest:(digest_ : string_ option) ?image:(image_ : string_ option) () =
+    ?digest:(digest_ : string_ option) ?image:(image_ : string_ option) () =
   ({ created_at = created_at_; digest = digest_; image = image_ } : container_image)
+
 let make_register_container_image_request ~digest:(digest_ : string_)
-  ~label:(label_ : container_label)
-  ~service_name:(service_name_ : container_service_name) () =
-  ({ digest = digest_; label = label_; service_name = service_name_ } : 
-  register_container_image_request)
+    ~label:(label_ : container_label) ~service_name:(service_name_ : container_service_name) () =
+  ({ digest = digest_; label = label_; service_name = service_name_ }
+    : register_container_image_request)
+
 let make_availability_zone ?state:(state_ : non_empty_string option)
-  ?zone_name:(zone_name_ : non_empty_string option) () =
+    ?zone_name:(zone_name_ : non_empty_string option) () =
   ({ state = state_; zone_name = zone_name_ } : availability_zone)
+
 let make_region
-  ?relational_database_availability_zones:(relational_database_availability_zones_
-                                            : availability_zone_list option)
-  ?availability_zones:(availability_zones_ : availability_zone_list option)
-  ?name:(name_ : region_name option)
-  ?display_name:(display_name_ : string_ option)
-  ?description:(description_ : string_ option)
-  ?continent_code:(continent_code_ : string_ option) () =
+    ?relational_database_availability_zones:
+      (relational_database_availability_zones_ : availability_zone_list option)
+    ?availability_zones:(availability_zones_ : availability_zone_list option)
+    ?name:(name_ : region_name option) ?display_name:(display_name_ : string_ option)
+    ?description:(description_ : string_ option) ?continent_code:(continent_code_ : string_ option)
+    () =
   ({
-     relational_database_availability_zones =
-       relational_database_availability_zones_;
+     relational_database_availability_zones = relational_database_availability_zones_;
      availability_zones = availability_zones_;
      name = name_;
      display_name = display_name_;
      description = description_;
-     continent_code = continent_code_
-   } : region)
+     continent_code = continent_code_;
+   }
+    : region)
+
 let make_reboot_relational_database_request
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
   ({ relational_database_name = relational_database_name_ } : reboot_relational_database_request)
-let make_reboot_instance_request
-  ~instance_name:(instance_name_ : resource_name) () =
+
+let make_reboot_instance_request ~instance_name:(instance_name_ : resource_name) () =
   ({ instance_name = instance_name_ } : reboot_instance_request)
-let make_port_info
-  ?cidr_list_aliases:(cidr_list_aliases_ : string_list option)
-  ?ipv6_cidrs:(ipv6_cidrs_ : string_list option)
-  ?cidrs:(cidrs_ : string_list option)
-  ?protocol:(protocol_ : network_protocol option)
-  ?to_port:(to_port_ : port option) ?from_port:(from_port_ : port option) ()
-  =
+
+let make_port_info ?cidr_list_aliases:(cidr_list_aliases_ : string_list option)
+    ?ipv6_cidrs:(ipv6_cidrs_ : string_list option) ?cidrs:(cidrs_ : string_list option)
+    ?protocol:(protocol_ : network_protocol option) ?to_port:(to_port_ : port option)
+    ?from_port:(from_port_ : port option) () =
   ({
      cidr_list_aliases = cidr_list_aliases_;
      ipv6_cidrs = ipv6_cidrs_;
      cidrs = cidrs_;
      protocol = protocol_;
      to_port = to_port_;
-     from_port = from_port_
-   } : port_info)
-let make_put_instance_public_ports_request
-  ~instance_name:(instance_name_ : resource_name)
-  ~port_infos:(port_infos_ : port_info_list) () =
+     from_port = from_port_;
+   }
+    : port_info)
+
+let make_put_instance_public_ports_request ~instance_name:(instance_name_ : resource_name)
+    ~port_infos:(port_infos_ : port_info_list) () =
   ({ instance_name = instance_name_; port_infos = port_infos_ } : put_instance_public_ports_request)
-let make_put_alarm_request
-  ?notification_enabled:(notification_enabled_ : boolean_ option)
-  ?notification_triggers:(notification_triggers_ :
-                           notification_trigger_list option)
-  ?contact_protocols:(contact_protocols_ : contact_protocols_list option)
-  ?treat_missing_data:(treat_missing_data_ : treat_missing_data option)
-  ?datapoints_to_alarm:(datapoints_to_alarm_ : integer option)
-  ~evaluation_periods:(evaluation_periods_ : integer)
-  ~threshold:(threshold_ : double)
-  ~comparison_operator:(comparison_operator_ : comparison_operator)
-  ~monitored_resource_name:(monitored_resource_name_ : resource_name)
-  ~metric_name:(metric_name_ : metric_name)
-  ~alarm_name:(alarm_name_ : resource_name) () =
+
+let make_put_alarm_request ?notification_enabled:(notification_enabled_ : boolean_ option)
+    ?notification_triggers:(notification_triggers_ : notification_trigger_list option)
+    ?contact_protocols:(contact_protocols_ : contact_protocols_list option)
+    ?treat_missing_data:(treat_missing_data_ : treat_missing_data option)
+    ?datapoints_to_alarm:(datapoints_to_alarm_ : integer option)
+    ~evaluation_periods:(evaluation_periods_ : integer) ~threshold:(threshold_ : double)
+    ~comparison_operator:(comparison_operator_ : comparison_operator)
+    ~monitored_resource_name:(monitored_resource_name_ : resource_name)
+    ~metric_name:(metric_name_ : metric_name) ~alarm_name:(alarm_name_ : resource_name) () =
   ({
      notification_enabled = notification_enabled_;
      notification_triggers = notification_triggers_;
@@ -906,40 +880,44 @@ let make_put_alarm_request
      comparison_operator = comparison_operator_;
      monitored_resource_name = monitored_resource_name_;
      metric_name = metric_name_;
-     alarm_name = alarm_name_
-   } : put_alarm_request)
+     alarm_name = alarm_name_;
+   }
+    : put_alarm_request)
+
 let make_peer_vpc_request () = (() : unit)
+
 let make_password_data ?key_pair_name:(key_pair_name_ : resource_name option)
-  ?ciphertext:(ciphertext_ : string_ option) () =
+    ?ciphertext:(ciphertext_ : string_ option) () =
   ({ key_pair_name = key_pair_name_; ciphertext = ciphertext_ } : password_data)
+
 let make_origin ?response_timeout:(response_timeout_ : integer option)
-  ?protocol_policy:(protocol_policy_ : origin_protocol_policy_enum option)
-  ?region_name:(region_name_ : region_name option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?name:(name_ : resource_name option) () =
+    ?protocol_policy:(protocol_policy_ : origin_protocol_policy_enum option)
+    ?region_name:(region_name_ : region_name option)
+    ?resource_type:(resource_type_ : resource_type option) ?name:(name_ : resource_name option) () =
   ({
      response_timeout = response_timeout_;
      protocol_policy = protocol_policy_;
      region_name = region_name_;
      resource_type = resource_type_;
-     name = name_
-   } : origin)
-let make_open_instance_public_ports_request
-  ~instance_name:(instance_name_ : resource_name)
-  ~port_info:(port_info_ : port_info) () =
+     name = name_;
+   }
+    : origin)
+
+let make_open_instance_public_ports_request ~instance_name:(instance_name_ : resource_name)
+    ~port_info:(port_info_ : port_info) () =
   ({ instance_name = instance_name_; port_info = port_info_ } : open_instance_public_ports_request)
-let make_monthly_transfer
-  ?gb_per_month_allocated:(gb_per_month_allocated_ : integer option) () =
+
+let make_monthly_transfer ?gb_per_month_allocated:(gb_per_month_allocated_ : integer option) () =
   ({ gb_per_month_allocated = gb_per_month_allocated_ } : monthly_transfer)
-let make_monitored_resource_info
-  ?resource_type:(resource_type_ : resource_type option)
-  ?name:(name_ : resource_name option) ?arn:(arn_ : resource_arn option) () =
+
+let make_monitored_resource_info ?resource_type:(resource_type_ : resource_type option)
+    ?name:(name_ : resource_name option) ?arn:(arn_ : resource_arn option) () =
   ({ resource_type = resource_type_; name = name_; arn = arn_ } : monitored_resource_info)
+
 let make_metric_datapoint ?unit_:(unit__ : metric_unit option)
-  ?timestamp:(timestamp_ : timestamp option) ?sum:(sum_ : double option)
-  ?sample_count:(sample_count_ : double option)
-  ?minimum:(minimum_ : double option) ?maximum:(maximum_ : double option)
-  ?average:(average_ : double option) () =
+    ?timestamp:(timestamp_ : timestamp option) ?sum:(sum_ : double option)
+    ?sample_count:(sample_count_ : double option) ?minimum:(minimum_ : double option)
+    ?maximum:(maximum_ : double option) ?average:(average_ : double option) () =
   ({
      unit_ = unit__;
      timestamp = timestamp_;
@@ -947,100 +925,88 @@ let make_metric_datapoint ?unit_:(unit__ : metric_unit option)
      sample_count = sample_count_;
      minimum = minimum_;
      maximum = maximum_;
-     average = average_
-   } : metric_datapoint)
-let make_log_event ?message:(message_ : string_ option)
-  ?created_at:(created_at_ : iso_date option) () =
+     average = average_;
+   }
+    : metric_datapoint)
+
+let make_log_event ?message:(message_ : string_ option) ?created_at:(created_at_ : iso_date option)
+    () =
   ({ message = message_; created_at = created_at_ } : log_event)
+
 let make_load_balancer_tls_policy ?ciphers:(ciphers_ : string_list option)
-  ?protocols:(protocols_ : string_list option)
-  ?description:(description_ : string_ option)
-  ?is_default:(is_default_ : boolean_ option)
-  ?name:(name_ : resource_name option) () =
+    ?protocols:(protocols_ : string_list option) ?description:(description_ : string_ option)
+    ?is_default:(is_default_ : boolean_ option) ?name:(name_ : resource_name option) () =
   ({
      ciphers = ciphers_;
      protocols = protocols_;
      description = description_;
      is_default = is_default_;
-     name = name_
-   } : load_balancer_tls_policy)
-let make_load_balancer_tls_certificate_summary
-  ?is_attached:(is_attached_ : boolean_ option)
-  ?name:(name_ : resource_name option) () =
+     name = name_;
+   }
+    : load_balancer_tls_policy)
+
+let make_load_balancer_tls_certificate_summary ?is_attached:(is_attached_ : boolean_ option)
+    ?name:(name_ : resource_name option) () =
   ({ is_attached = is_attached_; name = name_ } : load_balancer_tls_certificate_summary)
+
 let make_load_balancer_tls_certificate_domain_validation_option
-  ?validation_status:(validation_status_ :
-                       load_balancer_tls_certificate_domain_status option)
-  ?domain_name:(domain_name_ : domain_name option) () =
-  ({ validation_status = validation_status_; domain_name = domain_name_ } : 
-  load_balancer_tls_certificate_domain_validation_option)
+    ?validation_status:(validation_status_ : load_balancer_tls_certificate_domain_status option)
+    ?domain_name:(domain_name_ : domain_name option) () =
+  ({ validation_status = validation_status_; domain_name = domain_name_ }
+    : load_balancer_tls_certificate_domain_validation_option)
+
 let make_load_balancer_tls_certificate_renewal_summary
-  ?domain_validation_options:(domain_validation_options_ :
-                               load_balancer_tls_certificate_domain_validation_option_list
-                                 option)
-  ?renewal_status:(renewal_status_ :
-                    load_balancer_tls_certificate_renewal_status option)
-  () =
-  ({
-     domain_validation_options = domain_validation_options_;
-     renewal_status = renewal_status_
-   } : load_balancer_tls_certificate_renewal_summary)
+    ?domain_validation_options:
+      (domain_validation_options_ :
+         load_balancer_tls_certificate_domain_validation_option_list option)
+    ?renewal_status:(renewal_status_ : load_balancer_tls_certificate_renewal_status option) () =
+  ({ domain_validation_options = domain_validation_options_; renewal_status = renewal_status_ }
+    : load_balancer_tls_certificate_renewal_summary)
+
 let make_load_balancer_tls_certificate_dns_record_creation_state
-  ?message:(message_ : string_ option)
-  ?code:(code_ :
-          load_balancer_tls_certificate_dns_record_creation_state_code option)
-  () =
+    ?message:(message_ : string_ option)
+    ?code:(code_ : load_balancer_tls_certificate_dns_record_creation_state_code option) () =
   ({ message = message_; code = code_ } : load_balancer_tls_certificate_dns_record_creation_state)
+
 let make_load_balancer_tls_certificate_domain_validation_record
-  ?dns_record_creation_state:(dns_record_creation_state_ :
-                               load_balancer_tls_certificate_dns_record_creation_state
-                                 option)
-  ?domain_name:(domain_name_ : domain_name option)
-  ?validation_status:(validation_status_ :
-                       load_balancer_tls_certificate_domain_status option)
-  ?value:(value_ : non_empty_string option)
-  ?type_:(type__ : non_empty_string option)
-  ?name:(name_ : non_empty_string option) () =
+    ?dns_record_creation_state:
+      (dns_record_creation_state_ : load_balancer_tls_certificate_dns_record_creation_state option)
+    ?domain_name:(domain_name_ : domain_name option)
+    ?validation_status:(validation_status_ : load_balancer_tls_certificate_domain_status option)
+    ?value:(value_ : non_empty_string option) ?type_:(type__ : non_empty_string option)
+    ?name:(name_ : non_empty_string option) () =
   ({
      dns_record_creation_state = dns_record_creation_state_;
      domain_name = domain_name_;
      validation_status = validation_status_;
      value = value_;
      type_ = type__;
-     name = name_
-   } : load_balancer_tls_certificate_domain_validation_record)
+     name = name_;
+   }
+    : load_balancer_tls_certificate_domain_validation_record)
+
 let make_load_balancer_tls_certificate
-  ?subject_alternative_names:(subject_alternative_names_ :
-                               string_list option)
-  ?subject:(subject_ : non_empty_string option)
-  ?signature_algorithm:(signature_algorithm_ : non_empty_string option)
-  ?serial:(serial_ : non_empty_string option)
-  ?revoked_at:(revoked_at_ : iso_date option)
-  ?revocation_reason:(revocation_reason_ :
-                       load_balancer_tls_certificate_revocation_reason option)
-  ?renewal_summary:(renewal_summary_ :
-                     load_balancer_tls_certificate_renewal_summary option)
-  ?not_before:(not_before_ : iso_date option)
-  ?not_after:(not_after_ : iso_date option)
-  ?key_algorithm:(key_algorithm_ : non_empty_string option)
-  ?issuer:(issuer_ : non_empty_string option)
-  ?issued_at:(issued_at_ : iso_date option)
-  ?failure_reason:(failure_reason_ :
-                    load_balancer_tls_certificate_failure_reason option)
-  ?domain_validation_records:(domain_validation_records_ :
-                               load_balancer_tls_certificate_domain_validation_record_list
-                                 option)
-  ?domain_name:(domain_name_ : domain_name option)
-  ?status:(status_ : load_balancer_tls_certificate_status option)
-  ?is_attached:(is_attached_ : boolean_ option)
-  ?load_balancer_name:(load_balancer_name_ : resource_name option)
-  ?tags:(tags_ : tag_list option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?support_code:(support_code_ : string_ option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+    ?subject_alternative_names:(subject_alternative_names_ : string_list option)
+    ?subject:(subject_ : non_empty_string option)
+    ?signature_algorithm:(signature_algorithm_ : non_empty_string option)
+    ?serial:(serial_ : non_empty_string option) ?revoked_at:(revoked_at_ : iso_date option)
+    ?revocation_reason:(revocation_reason_ : load_balancer_tls_certificate_revocation_reason option)
+    ?renewal_summary:(renewal_summary_ : load_balancer_tls_certificate_renewal_summary option)
+    ?not_before:(not_before_ : iso_date option) ?not_after:(not_after_ : iso_date option)
+    ?key_algorithm:(key_algorithm_ : non_empty_string option)
+    ?issuer:(issuer_ : non_empty_string option) ?issued_at:(issued_at_ : iso_date option)
+    ?failure_reason:(failure_reason_ : load_balancer_tls_certificate_failure_reason option)
+    ?domain_validation_records:
+      (domain_validation_records_ :
+         load_balancer_tls_certificate_domain_validation_record_list option)
+    ?domain_name:(domain_name_ : domain_name option)
+    ?status:(status_ : load_balancer_tls_certificate_status option)
+    ?is_attached:(is_attached_ : boolean_ option)
+    ?load_balancer_name:(load_balancer_name_ : resource_name option) ?tags:(tags_ : tag_list option)
+    ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?support_code:(support_code_ : string_ option) ?arn:(arn_ : non_empty_string option)
+    ?name:(name_ : resource_name option) () =
   ({
      subject_alternative_names = subject_alternative_names_;
      subject = subject_;
@@ -1066,42 +1032,37 @@ let make_load_balancer_tls_certificate
      created_at = created_at_;
      support_code = support_code_;
      arn = arn_;
-     name = name_
-   } : load_balancer_tls_certificate)
+     name = name_;
+   }
+    : load_balancer_tls_certificate)
+
 let make_instance_health_summary
-  ?instance_health_reason:(instance_health_reason_ :
-                            instance_health_reason option)
-  ?instance_health:(instance_health_ : instance_health_state option)
-  ?instance_name:(instance_name_ : resource_name option) () =
+    ?instance_health_reason:(instance_health_reason_ : instance_health_reason option)
+    ?instance_health:(instance_health_ : instance_health_state option)
+    ?instance_name:(instance_name_ : resource_name option) () =
   ({
      instance_health_reason = instance_health_reason_;
      instance_health = instance_health_;
-     instance_name = instance_name_
-   } : instance_health_summary)
-let make_load_balancer
-  ?tls_policy_name:(tls_policy_name_ : resource_name option)
-  ?https_redirection_enabled:(https_redirection_enabled_ : boolean_ option)
-  ?ip_address_type:(ip_address_type_ : ip_address_type option)
-  ?configuration_options:(configuration_options_ :
-                           load_balancer_configuration_options option)
-  ?tls_certificate_summaries:(tls_certificate_summaries_ :
-                               load_balancer_tls_certificate_summary_list
-                                 option)
-  ?instance_health_summary:(instance_health_summary_ :
-                             instance_health_summary_list option)
-  ?instance_port:(instance_port_ : integer option)
-  ?health_check_path:(health_check_path_ : non_empty_string option)
-  ?public_ports:(public_ports_ : port_list option)
-  ?protocol:(protocol_ : load_balancer_protocol option)
-  ?state:(state_ : load_balancer_state option)
-  ?dns_name:(dns_name_ : non_empty_string option)
-  ?tags:(tags_ : tag_list option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?support_code:(support_code_ : string_ option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+     instance_name = instance_name_;
+   }
+    : instance_health_summary)
+
+let make_load_balancer ?tls_policy_name:(tls_policy_name_ : resource_name option)
+    ?https_redirection_enabled:(https_redirection_enabled_ : boolean_ option)
+    ?ip_address_type:(ip_address_type_ : ip_address_type option)
+    ?configuration_options:(configuration_options_ : load_balancer_configuration_options option)
+    ?tls_certificate_summaries:
+      (tls_certificate_summaries_ : load_balancer_tls_certificate_summary_list option)
+    ?instance_health_summary:(instance_health_summary_ : instance_health_summary_list option)
+    ?instance_port:(instance_port_ : integer option)
+    ?health_check_path:(health_check_path_ : non_empty_string option)
+    ?public_ports:(public_ports_ : port_list option)
+    ?protocol:(protocol_ : load_balancer_protocol option)
+    ?state:(state_ : load_balancer_state option) ?dns_name:(dns_name_ : non_empty_string option)
+    ?tags:(tags_ : tag_list option) ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?support_code:(support_code_ : string_ option) ?arn:(arn_ : non_empty_string option)
+    ?name:(name_ : resource_name option) () =
   ({
      tls_policy_name = tls_policy_name_;
      https_redirection_enabled = https_redirection_enabled_;
@@ -1121,48 +1082,48 @@ let make_load_balancer
      created_at = created_at_;
      support_code = support_code_;
      arn = arn_;
-     name = name_
-   } : load_balancer)
+     name = name_;
+   }
+    : load_balancer)
+
 let make_is_vpc_peered_request () = (() : unit)
-let make_import_key_pair_request
-  ~public_key_base64:(public_key_base64_ : base64)
-  ~key_pair_name:(key_pair_name_ : resource_name) () =
-  ({ public_key_base64 = public_key_base64_; key_pair_name = key_pair_name_ } : 
-  import_key_pair_request)
-let make_get_static_ips_request ?page_token:(page_token_ : string_ option) ()
-  = ({ page_token = page_token_ } : get_static_ips_request)
-let make_get_static_ip_request
-  ~static_ip_name:(static_ip_name_ : resource_name) () =
+
+let make_import_key_pair_request ~public_key_base64:(public_key_base64_ : base64)
+    ~key_pair_name:(key_pair_name_ : resource_name) () =
+  ({ public_key_base64 = public_key_base64_; key_pair_name = key_pair_name_ }
+    : import_key_pair_request)
+
+let make_get_static_ips_request ?page_token:(page_token_ : string_ option) () =
+  ({ page_token = page_token_ } : get_static_ips_request)
+
+let make_get_static_ip_request ~static_ip_name:(static_ip_name_ : resource_name) () =
   ({ static_ip_name = static_ip_name_ } : get_static_ip_request)
-let make_get_setup_history_request
-  ?page_token:(page_token_ : setup_history_page_token option)
-  ~resource_name:(resource_name_ : resource_name) () =
+
+let make_get_setup_history_request ?page_token:(page_token_ : setup_history_page_token option)
+    ~resource_name:(resource_name_ : resource_name) () =
   ({ page_token = page_token_; resource_name = resource_name_ } : get_setup_history_request)
-let make_get_relational_database_snapshots_request
-  ?page_token:(page_token_ : string_ option) () =
+
+let make_get_relational_database_snapshots_request ?page_token:(page_token_ : string_ option) () =
   ({ page_token = page_token_ } : get_relational_database_snapshots_request)
+
 let make_get_relational_database_snapshot_request
-  ~relational_database_snapshot_name:(relational_database_snapshot_name_ :
-                                       resource_name)
-  () =
-  ({ relational_database_snapshot_name = relational_database_snapshot_name_ } : 
-  get_relational_database_snapshot_request)
-let make_get_relational_databases_request
-  ?page_token:(page_token_ : string_ option) () =
+    ~relational_database_snapshot_name:(relational_database_snapshot_name_ : resource_name) () =
+  ({ relational_database_snapshot_name = relational_database_snapshot_name_ }
+    : get_relational_database_snapshot_request)
+
+let make_get_relational_databases_request ?page_token:(page_token_ : string_ option) () =
   ({ page_token = page_token_ } : get_relational_databases_request)
-let make_get_relational_database_parameters_request
-  ?page_token:(page_token_ : string_ option)
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
-  ({
-     page_token = page_token_;
-     relational_database_name = relational_database_name_
-   } : get_relational_database_parameters_request)
+
+let make_get_relational_database_parameters_request ?page_token:(page_token_ : string_ option)
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
+  ({ page_token = page_token_; relational_database_name = relational_database_name_ }
+    : get_relational_database_parameters_request)
+
 let make_get_relational_database_metric_data_request
-  ~statistics:(statistics_ : metric_statistic_list)
-  ~unit_:(unit__ : metric_unit) ~end_time:(end_time_ : iso_date)
-  ~start_time:(start_time_ : iso_date) ~period:(period_ : metric_period)
-  ~metric_name:(metric_name_ : relational_database_metric_name)
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
+    ~statistics:(statistics_ : metric_statistic_list) ~unit_:(unit__ : metric_unit)
+    ~end_time:(end_time_ : iso_date) ~start_time:(start_time_ : iso_date)
+    ~period:(period_ : metric_period) ~metric_name:(metric_name_ : relational_database_metric_name)
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
   ({
      statistics = statistics_;
      unit_ = unit__;
@@ -1170,88 +1131,95 @@ let make_get_relational_database_metric_data_request
      start_time = start_time_;
      period = period_;
      metric_name = metric_name_;
-     relational_database_name = relational_database_name_
-   } : get_relational_database_metric_data_request)
+     relational_database_name = relational_database_name_;
+   }
+    : get_relational_database_metric_data_request)
+
 let make_get_relational_database_master_user_password_request
-  ?password_version:(password_version_ :
-                      relational_database_password_version option)
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
-  ({
-     password_version = password_version_;
-     relational_database_name = relational_database_name_
-   } : get_relational_database_master_user_password_request)
+    ?password_version:(password_version_ : relational_database_password_version option)
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
+  ({ password_version = password_version_; relational_database_name = relational_database_name_ }
+    : get_relational_database_master_user_password_request)
+
 let make_get_relational_database_log_streams_request
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
-  ({ relational_database_name = relational_database_name_ } : get_relational_database_log_streams_request)
-let make_get_relational_database_log_events_request
-  ?page_token:(page_token_ : string_ option)
-  ?start_from_head:(start_from_head_ : boolean_ option)
-  ?end_time:(end_time_ : iso_date option)
-  ?start_time:(start_time_ : iso_date option)
-  ~log_stream_name:(log_stream_name_ : string_)
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
+  ({ relational_database_name = relational_database_name_ }
+    : get_relational_database_log_streams_request)
+
+let make_get_relational_database_log_events_request ?page_token:(page_token_ : string_ option)
+    ?start_from_head:(start_from_head_ : boolean_ option) ?end_time:(end_time_ : iso_date option)
+    ?start_time:(start_time_ : iso_date option) ~log_stream_name:(log_stream_name_ : string_)
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
   ({
      page_token = page_token_;
      start_from_head = start_from_head_;
      end_time = end_time_;
      start_time = start_time_;
      log_stream_name = log_stream_name_;
-     relational_database_name = relational_database_name_
-   } : get_relational_database_log_events_request)
-let make_get_relational_database_events_request
-  ?page_token:(page_token_ : string_ option)
-  ?duration_in_minutes:(duration_in_minutes_ : integer option)
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
+     relational_database_name = relational_database_name_;
+   }
+    : get_relational_database_log_events_request)
+
+let make_get_relational_database_events_request ?page_token:(page_token_ : string_ option)
+    ?duration_in_minutes:(duration_in_minutes_ : integer option)
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
   ({
      page_token = page_token_;
      duration_in_minutes = duration_in_minutes_;
-     relational_database_name = relational_database_name_
-   } : get_relational_database_events_request)
+     relational_database_name = relational_database_name_;
+   }
+    : get_relational_database_events_request)
+
 let make_get_relational_database_bundles_request
-  ?include_inactive:(include_inactive_ : boolean_ option)
-  ?page_token:(page_token_ : string_ option) () =
-  ({ include_inactive = include_inactive_; page_token = page_token_ } : 
-  get_relational_database_bundles_request)
-let make_get_relational_database_blueprints_request
-  ?page_token:(page_token_ : string_ option) () =
+    ?include_inactive:(include_inactive_ : boolean_ option)
+    ?page_token:(page_token_ : string_ option) () =
+  ({ include_inactive = include_inactive_; page_token = page_token_ }
+    : get_relational_database_bundles_request)
+
+let make_get_relational_database_blueprints_request ?page_token:(page_token_ : string_ option) () =
   ({ page_token = page_token_ } : get_relational_database_blueprints_request)
+
 let make_get_relational_database_request
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
   ({ relational_database_name = relational_database_name_ } : get_relational_database_request)
+
 let make_get_regions_request
-  ?include_relational_database_availability_zones:(include_relational_database_availability_zones_
-                                                    : boolean_ option)
-  ?include_availability_zones:(include_availability_zones_ : boolean_ option)
-  () =
+    ?include_relational_database_availability_zones:
+      (include_relational_database_availability_zones_ : boolean_ option)
+    ?include_availability_zones:(include_availability_zones_ : boolean_ option) () =
   ({
      include_relational_database_availability_zones =
        include_relational_database_availability_zones_;
-     include_availability_zones = include_availability_zones_
-   } : get_regions_request)
-let make_get_operations_for_resource_request
-  ?page_token:(page_token_ : string_ option)
-  ~resource_name:(resource_name_ : resource_name) () =
-  ({ page_token = page_token_; resource_name = resource_name_ } : get_operations_for_resource_request)
-let make_get_operations_request ?page_token:(page_token_ : string_ option) ()
-  = ({ page_token = page_token_ } : get_operations_request)
-let make_get_operation_request
-  ~operation_id:(operation_id_ : non_empty_string) () =
+     include_availability_zones = include_availability_zones_;
+   }
+    : get_regions_request)
+
+let make_get_operations_for_resource_request ?page_token:(page_token_ : string_ option)
+    ~resource_name:(resource_name_ : resource_name) () =
+  ({ page_token = page_token_; resource_name = resource_name_ }
+    : get_operations_for_resource_request)
+
+let make_get_operations_request ?page_token:(page_token_ : string_ option) () =
+  ({ page_token = page_token_ } : get_operations_request)
+
+let make_get_operation_request ~operation_id:(operation_id_ : non_empty_string) () =
   ({ operation_id = operation_id_ } : get_operation_request)
-let make_get_load_balancer_tls_policies_request
-  ?page_token:(page_token_ : string_ option) () =
+
+let make_get_load_balancer_tls_policies_request ?page_token:(page_token_ : string_ option) () =
   ({ page_token = page_token_ } : get_load_balancer_tls_policies_request)
+
 let make_get_load_balancer_tls_certificates_request
-  ~load_balancer_name:(load_balancer_name_ : resource_name) () =
+    ~load_balancer_name:(load_balancer_name_ : resource_name) () =
   ({ load_balancer_name = load_balancer_name_ } : get_load_balancer_tls_certificates_request)
-let make_get_load_balancers_request
-  ?page_token:(page_token_ : string_ option) () =
+
+let make_get_load_balancers_request ?page_token:(page_token_ : string_ option) () =
   ({ page_token = page_token_ } : get_load_balancers_request)
-let make_get_load_balancer_metric_data_request
-  ~statistics:(statistics_ : metric_statistic_list)
-  ~unit_:(unit__ : metric_unit) ~end_time:(end_time_ : timestamp)
-  ~start_time:(start_time_ : timestamp) ~period:(period_ : metric_period)
-  ~metric_name:(metric_name_ : load_balancer_metric_name)
-  ~load_balancer_name:(load_balancer_name_ : resource_name) () =
+
+let make_get_load_balancer_metric_data_request ~statistics:(statistics_ : metric_statistic_list)
+    ~unit_:(unit__ : metric_unit) ~end_time:(end_time_ : timestamp)
+    ~start_time:(start_time_ : timestamp) ~period:(period_ : metric_period)
+    ~metric_name:(metric_name_ : load_balancer_metric_name)
+    ~load_balancer_name:(load_balancer_name_ : resource_name) () =
   ({
      statistics = statistics_;
      unit_ = unit__;
@@ -1259,19 +1227,18 @@ let make_get_load_balancer_metric_data_request
      start_time = start_time_;
      period = period_;
      metric_name = metric_name_;
-     load_balancer_name = load_balancer_name_
-   } : get_load_balancer_metric_data_request)
-let make_get_load_balancer_request
-  ~load_balancer_name:(load_balancer_name_ : resource_name) () =
+     load_balancer_name = load_balancer_name_;
+   }
+    : get_load_balancer_metric_data_request)
+
+let make_get_load_balancer_request ~load_balancer_name:(load_balancer_name_ : resource_name) () =
   ({ load_balancer_name = load_balancer_name_ } : get_load_balancer_request)
-let make_key_pair ?fingerprint:(fingerprint_ : base64 option)
-  ?tags:(tags_ : tag_list option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?support_code:(support_code_ : string_ option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+
+let make_key_pair ?fingerprint:(fingerprint_ : base64 option) ?tags:(tags_ : tag_list option)
+    ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?support_code:(support_code_ : string_ option) ?arn:(arn_ : non_empty_string option)
+    ?name:(name_ : resource_name option) () =
   ({
      fingerprint = fingerprint_;
      tags = tags_;
@@ -1280,54 +1247,49 @@ let make_key_pair ?fingerprint:(fingerprint_ : base64 option)
      created_at = created_at_;
      support_code = support_code_;
      arn = arn_;
-     name = name_
-   } : key_pair)
+     name = name_;
+   }
+    : key_pair)
+
 let make_get_key_pairs_request
-  ?include_default_key_pair:(include_default_key_pair_ : boolean_ option)
-  ?page_token:(page_token_ : string_ option) () =
-  ({
-     include_default_key_pair = include_default_key_pair_;
-     page_token = page_token_
-   } : get_key_pairs_request)
-let make_get_key_pair_request ~key_pair_name:(key_pair_name_ : resource_name)
-  () = ({ key_pair_name = key_pair_name_ } : get_key_pair_request)
-let make_instance_state ?name:(name_ : string_ option)
-  ?code:(code_ : integer option) () =
+    ?include_default_key_pair:(include_default_key_pair_ : boolean_ option)
+    ?page_token:(page_token_ : string_ option) () =
+  ({ include_default_key_pair = include_default_key_pair_; page_token = page_token_ }
+    : get_key_pairs_request)
+
+let make_get_key_pair_request ~key_pair_name:(key_pair_name_ : resource_name) () =
+  ({ key_pair_name = key_pair_name_ } : get_key_pair_request)
+
+let make_instance_state ?name:(name_ : string_ option) ?code:(code_ : integer option) () =
   ({ name = name_; code = code_ } : instance_state)
-let make_get_instance_state_request
-  ~instance_name:(instance_name_ : resource_name) () =
+
+let make_get_instance_state_request ~instance_name:(instance_name_ : resource_name) () =
   ({ instance_name = instance_name_ } : get_instance_state_request)
-let make_add_on ?duration:(duration_ : string_ option)
-  ?threshold:(threshold_ : string_ option)
-  ?next_snapshot_time_of_day:(next_snapshot_time_of_day_ :
-                               time_of_day option)
-  ?snapshot_time_of_day:(snapshot_time_of_day_ : time_of_day option)
-  ?status:(status_ : string_ option) ?name:(name_ : string_ option) () =
+
+let make_add_on ?duration:(duration_ : string_ option) ?threshold:(threshold_ : string_ option)
+    ?next_snapshot_time_of_day:(next_snapshot_time_of_day_ : time_of_day option)
+    ?snapshot_time_of_day:(snapshot_time_of_day_ : time_of_day option)
+    ?status:(status_ : string_ option) ?name:(name_ : string_ option) () =
   ({
      duration = duration_;
      threshold = threshold_;
      next_snapshot_time_of_day = next_snapshot_time_of_day_;
      snapshot_time_of_day = snapshot_time_of_day_;
      status = status_;
-     name = name_
-   } : add_on)
-let make_disk
-  ?auto_mount_status:(auto_mount_status_ : auto_mount_status option)
-  ?gb_in_use:(gb_in_use_ : integer option)
-  ?attachment_state:(attachment_state_ : string_ option)
-  ?is_attached:(is_attached_ : boolean_ option)
-  ?attached_to:(attached_to_ : resource_name option)
-  ?state:(state_ : disk_state option) ?path:(path_ : string_ option)
-  ?iops:(iops_ : integer option)
-  ?is_system_disk:(is_system_disk_ : boolean_ option)
-  ?size_in_gb:(size_in_gb_ : integer option)
-  ?add_ons:(add_ons_ : add_on_list option) ?tags:(tags_ : tag_list option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?support_code:(support_code_ : string_ option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+     name = name_;
+   }
+    : add_on)
+
+let make_disk ?auto_mount_status:(auto_mount_status_ : auto_mount_status option)
+    ?gb_in_use:(gb_in_use_ : integer option) ?attachment_state:(attachment_state_ : string_ option)
+    ?is_attached:(is_attached_ : boolean_ option) ?attached_to:(attached_to_ : resource_name option)
+    ?state:(state_ : disk_state option) ?path:(path_ : string_ option)
+    ?iops:(iops_ : integer option) ?is_system_disk:(is_system_disk_ : boolean_ option)
+    ?size_in_gb:(size_in_gb_ : integer option) ?add_ons:(add_ons_ : add_on_list option)
+    ?tags:(tags_ : tag_list option) ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?support_code:(support_code_ : string_ option) ?arn:(arn_ : non_empty_string option)
+    ?name:(name_ : resource_name option) () =
   ({
      auto_mount_status = auto_mount_status_;
      gb_in_use = gb_in_use_;
@@ -1346,24 +1308,22 @@ let make_disk
      created_at = created_at_;
      support_code = support_code_;
      arn = arn_;
-     name = name_
-   } : disk)
+     name = name_;
+   }
+    : disk)
+
 let make_instance_snapshot ?size_in_gb:(size_in_gb_ : integer option)
-  ?is_from_auto_snapshot:(is_from_auto_snapshot_ : boolean_ option)
-  ?from_bundle_id:(from_bundle_id_ : string_ option)
-  ?from_blueprint_id:(from_blueprint_id_ : string_ option)
-  ?from_instance_arn:(from_instance_arn_ : non_empty_string option)
-  ?from_instance_name:(from_instance_name_ : resource_name option)
-  ?from_attached_disks:(from_attached_disks_ : disk_list option)
-  ?progress:(progress_ : string_ option)
-  ?state:(state_ : instance_snapshot_state option)
-  ?tags:(tags_ : tag_list option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?support_code:(support_code_ : string_ option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+    ?is_from_auto_snapshot:(is_from_auto_snapshot_ : boolean_ option)
+    ?from_bundle_id:(from_bundle_id_ : string_ option)
+    ?from_blueprint_id:(from_blueprint_id_ : string_ option)
+    ?from_instance_arn:(from_instance_arn_ : non_empty_string option)
+    ?from_instance_name:(from_instance_name_ : resource_name option)
+    ?from_attached_disks:(from_attached_disks_ : disk_list option)
+    ?progress:(progress_ : string_ option) ?state:(state_ : instance_snapshot_state option)
+    ?tags:(tags_ : tag_list option) ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?support_code:(support_code_ : string_ option) ?arn:(arn_ : non_empty_string option)
+    ?name:(name_ : resource_name option) () =
   ({
      size_in_gb = size_in_gb_;
      is_from_auto_snapshot = is_from_auto_snapshot_;
@@ -1380,30 +1340,28 @@ let make_instance_snapshot ?size_in_gb:(size_in_gb_ : integer option)
      created_at = created_at_;
      support_code = support_code_;
      arn = arn_;
-     name = name_
-   } : instance_snapshot)
-let make_get_instance_snapshots_request
-  ?page_token:(page_token_ : string_ option) () =
+     name = name_;
+   }
+    : instance_snapshot)
+
+let make_get_instance_snapshots_request ?page_token:(page_token_ : string_ option) () =
   ({ page_token = page_token_ } : get_instance_snapshots_request)
+
 let make_get_instance_snapshot_request
-  ~instance_snapshot_name:(instance_snapshot_name_ : resource_name) () =
+    ~instance_snapshot_name:(instance_snapshot_name_ : resource_name) () =
   ({ instance_snapshot_name = instance_snapshot_name_ } : get_instance_snapshot_request)
+
 let make_instance_hardware ?ram_size_in_gb:(ram_size_in_gb_ : float_ option)
-  ?disks:(disks_ : disk_list option) ?cpu_count:(cpu_count_ : integer option)
-  () =
-  ({ ram_size_in_gb = ram_size_in_gb_; disks = disks_; cpu_count = cpu_count_
-   } : instance_hardware)
-let make_instance_port_info
-  ?cidr_list_aliases:(cidr_list_aliases_ : string_list option)
-  ?ipv6_cidrs:(ipv6_cidrs_ : string_list option)
-  ?cidrs:(cidrs_ : string_list option)
-  ?access_direction:(access_direction_ : access_direction option)
-  ?common_name:(common_name_ : string_ option)
-  ?access_type:(access_type_ : port_access_type option)
-  ?access_from:(access_from_ : string_ option)
-  ?protocol:(protocol_ : network_protocol option)
-  ?to_port:(to_port_ : port option) ?from_port:(from_port_ : port option) ()
-  =
+    ?disks:(disks_ : disk_list option) ?cpu_count:(cpu_count_ : integer option) () =
+  ({ ram_size_in_gb = ram_size_in_gb_; disks = disks_; cpu_count = cpu_count_ } : instance_hardware)
+
+let make_instance_port_info ?cidr_list_aliases:(cidr_list_aliases_ : string_list option)
+    ?ipv6_cidrs:(ipv6_cidrs_ : string_list option) ?cidrs:(cidrs_ : string_list option)
+    ?access_direction:(access_direction_ : access_direction option)
+    ?common_name:(common_name_ : string_ option)
+    ?access_type:(access_type_ : port_access_type option)
+    ?access_from:(access_from_ : string_ option) ?protocol:(protocol_ : network_protocol option)
+    ?to_port:(to_port_ : port option) ?from_port:(from_port_ : port option) () =
   ({
      cidr_list_aliases = cidr_list_aliases_;
      ipv6_cidrs = ipv6_cidrs_;
@@ -1414,48 +1372,46 @@ let make_instance_port_info
      access_from = access_from_;
      protocol = protocol_;
      to_port = to_port_;
-     from_port = from_port_
-   } : instance_port_info)
+     from_port = from_port_;
+   }
+    : instance_port_info)
+
 let make_instance_networking ?ports:(ports_ : instance_port_info_list option)
-  ?monthly_transfer:(monthly_transfer_ : monthly_transfer option) () =
+    ?monthly_transfer:(monthly_transfer_ : monthly_transfer option) () =
   ({ ports = ports_; monthly_transfer = monthly_transfer_ } : instance_networking)
+
 let make_instance_metadata_options
-  ?http_protocol_ipv6:(http_protocol_ipv6_ : http_protocol_ipv6 option)
-  ?http_put_response_hop_limit:(http_put_response_hop_limit_ :
-                                 integer option)
-  ?http_endpoint:(http_endpoint_ : http_endpoint option)
-  ?http_tokens:(http_tokens_ : http_tokens option)
-  ?state:(state_ : instance_metadata_state option) () =
+    ?http_protocol_ipv6:(http_protocol_ipv6_ : http_protocol_ipv6 option)
+    ?http_put_response_hop_limit:(http_put_response_hop_limit_ : integer option)
+    ?http_endpoint:(http_endpoint_ : http_endpoint option)
+    ?http_tokens:(http_tokens_ : http_tokens option)
+    ?state:(state_ : instance_metadata_state option) () =
   ({
      http_protocol_ipv6 = http_protocol_ipv6_;
      http_put_response_hop_limit = http_put_response_hop_limit_;
      http_endpoint = http_endpoint_;
      http_tokens = http_tokens_;
-     state = state_
-   } : instance_metadata_options)
-let make_instance
-  ?metadata_options:(metadata_options_ : instance_metadata_options option)
-  ?ssh_key_name:(ssh_key_name_ : resource_name option)
-  ?username:(username_ : non_empty_string option)
-  ?state:(state_ : instance_state option)
-  ?networking:(networking_ : instance_networking option)
-  ?hardware:(hardware_ : instance_hardware option)
-  ?ip_address_type:(ip_address_type_ : ip_address_type option)
-  ?ipv6_addresses:(ipv6_addresses_ : ipv6_address_list option)
-  ?public_ip_address:(public_ip_address_ : ip_address option)
-  ?private_ip_address:(private_ip_address_ : ip_address option)
-  ?is_static_ip:(is_static_ip_ : boolean_ option)
-  ?add_ons:(add_ons_ : add_on_list option)
-  ?bundle_id:(bundle_id_ : non_empty_string option)
-  ?blueprint_name:(blueprint_name_ : non_empty_string option)
-  ?blueprint_id:(blueprint_id_ : non_empty_string option)
-  ?tags:(tags_ : tag_list option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?support_code:(support_code_ : string_ option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+     state = state_;
+   }
+    : instance_metadata_options)
+
+let make_instance ?metadata_options:(metadata_options_ : instance_metadata_options option)
+    ?ssh_key_name:(ssh_key_name_ : resource_name option)
+    ?username:(username_ : non_empty_string option) ?state:(state_ : instance_state option)
+    ?networking:(networking_ : instance_networking option)
+    ?hardware:(hardware_ : instance_hardware option)
+    ?ip_address_type:(ip_address_type_ : ip_address_type option)
+    ?ipv6_addresses:(ipv6_addresses_ : ipv6_address_list option)
+    ?public_ip_address:(public_ip_address_ : ip_address option)
+    ?private_ip_address:(private_ip_address_ : ip_address option)
+    ?is_static_ip:(is_static_ip_ : boolean_ option) ?add_ons:(add_ons_ : add_on_list option)
+    ?bundle_id:(bundle_id_ : non_empty_string option)
+    ?blueprint_name:(blueprint_name_ : non_empty_string option)
+    ?blueprint_id:(blueprint_id_ : non_empty_string option) ?tags:(tags_ : tag_list option)
+    ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?support_code:(support_code_ : string_ option) ?arn:(arn_ : non_empty_string option)
+    ?name:(name_ : resource_name option) () =
   ({
      metadata_options = metadata_options_;
      ssh_key_name = ssh_key_name_;
@@ -1478,17 +1434,17 @@ let make_instance
      created_at = created_at_;
      support_code = support_code_;
      arn = arn_;
-     name = name_
-   } : instance)
-let make_get_instances_request ?page_token:(page_token_ : string_ option) ()
-  = ({ page_token = page_token_ } : get_instances_request)
-let make_instance_port_state
-  ?cidr_list_aliases:(cidr_list_aliases_ : string_list option)
-  ?ipv6_cidrs:(ipv6_cidrs_ : string_list option)
-  ?cidrs:(cidrs_ : string_list option) ?state:(state_ : port_state option)
-  ?protocol:(protocol_ : network_protocol option)
-  ?to_port:(to_port_ : port option) ?from_port:(from_port_ : port option) ()
-  =
+     name = name_;
+   }
+    : instance)
+
+let make_get_instances_request ?page_token:(page_token_ : string_ option) () =
+  ({ page_token = page_token_ } : get_instances_request)
+
+let make_instance_port_state ?cidr_list_aliases:(cidr_list_aliases_ : string_list option)
+    ?ipv6_cidrs:(ipv6_cidrs_ : string_list option) ?cidrs:(cidrs_ : string_list option)
+    ?state:(state_ : port_state option) ?protocol:(protocol_ : network_protocol option)
+    ?to_port:(to_port_ : port option) ?from_port:(from_port_ : port option) () =
   ({
      cidr_list_aliases = cidr_list_aliases_;
      ipv6_cidrs = ipv6_cidrs_;
@@ -1496,17 +1452,18 @@ let make_instance_port_state
      state = state_;
      protocol = protocol_;
      to_port = to_port_;
-     from_port = from_port_
-   } : instance_port_state)
-let make_get_instance_port_states_request
-  ~instance_name:(instance_name_ : resource_name) () =
+     from_port = from_port_;
+   }
+    : instance_port_state)
+
+let make_get_instance_port_states_request ~instance_name:(instance_name_ : resource_name) () =
   ({ instance_name = instance_name_ } : get_instance_port_states_request)
-let make_get_instance_metric_data_request
-  ~statistics:(statistics_ : metric_statistic_list)
-  ~unit_:(unit__ : metric_unit) ~end_time:(end_time_ : timestamp)
-  ~start_time:(start_time_ : timestamp) ~period:(period_ : metric_period)
-  ~metric_name:(metric_name_ : instance_metric_name)
-  ~instance_name:(instance_name_ : resource_name) () =
+
+let make_get_instance_metric_data_request ~statistics:(statistics_ : metric_statistic_list)
+    ~unit_:(unit__ : metric_unit) ~end_time:(end_time_ : timestamp)
+    ~start_time:(start_time_ : timestamp) ~period:(period_ : metric_period)
+    ~metric_name:(metric_name_ : instance_metric_name)
+    ~instance_name:(instance_name_ : resource_name) () =
   ({
      statistics = statistics_;
      unit_ = unit__;
@@ -1514,16 +1471,16 @@ let make_get_instance_metric_data_request
      start_time = start_time_;
      period = period_;
      metric_name = metric_name_;
-     instance_name = instance_name_
-   } : get_instance_metric_data_request)
-let make_host_key_attributes
-  ?not_valid_after:(not_valid_after_ : iso_date option)
-  ?not_valid_before:(not_valid_before_ : iso_date option)
-  ?fingerprint_sh_a256:(fingerprint_sh_a256_ : string_ option)
-  ?fingerprint_sh_a1:(fingerprint_sh_a1_ : string_ option)
-  ?witnessed_at:(witnessed_at_ : iso_date option)
-  ?public_key:(public_key_ : string_ option)
-  ?algorithm:(algorithm_ : string_ option) () =
+     instance_name = instance_name_;
+   }
+    : get_instance_metric_data_request)
+
+let make_host_key_attributes ?not_valid_after:(not_valid_after_ : iso_date option)
+    ?not_valid_before:(not_valid_before_ : iso_date option)
+    ?fingerprint_sh_a256:(fingerprint_sh_a256_ : string_ option)
+    ?fingerprint_sh_a1:(fingerprint_sh_a1_ : string_ option)
+    ?witnessed_at:(witnessed_at_ : iso_date option) ?public_key:(public_key_ : string_ option)
+    ?algorithm:(algorithm_ : string_ option) () =
   ({
      not_valid_after = not_valid_after_;
      not_valid_before = not_valid_before_;
@@ -1531,20 +1488,18 @@ let make_host_key_attributes
      fingerprint_sh_a1 = fingerprint_sh_a1_;
      witnessed_at = witnessed_at_;
      public_key = public_key_;
-     algorithm = algorithm_
-   } : host_key_attributes)
-let make_instance_access_details
-  ?host_keys:(host_keys_ : host_keys_list option)
-  ?username:(username_ : string_ option)
-  ?instance_name:(instance_name_ : resource_name option)
-  ?protocol:(protocol_ : instance_access_protocol option)
-  ?private_key:(private_key_ : string_ option)
-  ?password_data:(password_data_ : password_data option)
-  ?password:(password_ : string_ option)
-  ?ipv6_addresses:(ipv6_addresses_ : ipv6_address_list option)
-  ?ip_address:(ip_address_ : ip_address option)
-  ?expires_at:(expires_at_ : iso_date option)
-  ?cert_key:(cert_key_ : string_ option) () =
+     algorithm = algorithm_;
+   }
+    : host_key_attributes)
+
+let make_instance_access_details ?host_keys:(host_keys_ : host_keys_list option)
+    ?username:(username_ : string_ option) ?instance_name:(instance_name_ : resource_name option)
+    ?protocol:(protocol_ : instance_access_protocol option)
+    ?private_key:(private_key_ : string_ option)
+    ?password_data:(password_data_ : password_data option) ?password:(password_ : string_ option)
+    ?ipv6_addresses:(ipv6_addresses_ : ipv6_address_list option)
+    ?ip_address:(ip_address_ : ip_address option) ?expires_at:(expires_at_ : iso_date option)
+    ?cert_key:(cert_key_ : string_ option) () =
   ({
      host_keys = host_keys_;
      username = username_;
@@ -1556,45 +1511,44 @@ let make_instance_access_details
      ipv6_addresses = ipv6_addresses_;
      ip_address = ip_address_;
      expires_at = expires_at_;
-     cert_key = cert_key_
-   } : instance_access_details)
-let make_get_instance_access_details_request
-  ?protocol:(protocol_ : instance_access_protocol option)
-  ~instance_name:(instance_name_ : resource_name) () =
+     cert_key = cert_key_;
+   }
+    : instance_access_details)
+
+let make_get_instance_access_details_request ?protocol:(protocol_ : instance_access_protocol option)
+    ~instance_name:(instance_name_ : resource_name) () =
   ({ protocol = protocol_; instance_name = instance_name_ } : get_instance_access_details_request)
-let make_get_instance_request ~instance_name:(instance_name_ : resource_name)
-  () = ({ instance_name = instance_name_ } : get_instance_request)
+
+let make_get_instance_request ~instance_name:(instance_name_ : resource_name) () =
+  ({ instance_name = instance_name_ } : get_instance_request)
+
 let make_disk_info ?is_system_disk:(is_system_disk_ : boolean_ option)
-  ?size_in_gb:(size_in_gb_ : integer option)
-  ?path:(path_ : non_empty_string option) ?name:(name_ : string_ option) () =
-  ({
-     is_system_disk = is_system_disk_;
-     size_in_gb = size_in_gb_;
-     path = path_;
-     name = name_
-   } : disk_info)
-let make_instance_snapshot_info
-  ?from_disk_info:(from_disk_info_ : disk_info_list option)
-  ?from_blueprint_id:(from_blueprint_id_ : non_empty_string option)
-  ?from_bundle_id:(from_bundle_id_ : non_empty_string option) () =
+    ?size_in_gb:(size_in_gb_ : integer option) ?path:(path_ : non_empty_string option)
+    ?name:(name_ : string_ option) () =
+  ({ is_system_disk = is_system_disk_; size_in_gb = size_in_gb_; path = path_; name = name_ }
+    : disk_info)
+
+let make_instance_snapshot_info ?from_disk_info:(from_disk_info_ : disk_info_list option)
+    ?from_blueprint_id:(from_blueprint_id_ : non_empty_string option)
+    ?from_bundle_id:(from_bundle_id_ : non_empty_string option) () =
   ({
      from_disk_info = from_disk_info_;
      from_blueprint_id = from_blueprint_id_;
-     from_bundle_id = from_bundle_id_
-   } : instance_snapshot_info)
+     from_bundle_id = from_bundle_id_;
+   }
+    : instance_snapshot_info)
+
 let make_disk_snapshot_info ?size_in_gb:(size_in_gb_ : integer option) () =
   ({ size_in_gb = size_in_gb_ } : disk_snapshot_info)
+
 let make_export_snapshot_record_source_info
-  ?disk_snapshot_info:(disk_snapshot_info_ : disk_snapshot_info option)
-  ?instance_snapshot_info:(instance_snapshot_info_ :
-                            instance_snapshot_info option)
-  ?from_resource_arn:(from_resource_arn_ : non_empty_string option)
-  ?from_resource_name:(from_resource_name_ : non_empty_string option)
-  ?arn:(arn_ : non_empty_string option)
-  ?name:(name_ : non_empty_string option)
-  ?created_at:(created_at_ : iso_date option)
-  ?resource_type:(resource_type_ : export_snapshot_record_source_type option)
-  () =
+    ?disk_snapshot_info:(disk_snapshot_info_ : disk_snapshot_info option)
+    ?instance_snapshot_info:(instance_snapshot_info_ : instance_snapshot_info option)
+    ?from_resource_arn:(from_resource_arn_ : non_empty_string option)
+    ?from_resource_name:(from_resource_name_ : non_empty_string option)
+    ?arn:(arn_ : non_empty_string option) ?name:(name_ : non_empty_string option)
+    ?created_at:(created_at_ : iso_date option)
+    ?resource_type:(resource_type_ : export_snapshot_record_source_type option) () =
   ({
      disk_snapshot_info = disk_snapshot_info_;
      instance_snapshot_info = instance_snapshot_info_;
@@ -1603,20 +1557,19 @@ let make_export_snapshot_record_source_info
      arn = arn_;
      name = name_;
      created_at = created_at_;
-     resource_type = resource_type_
-   } : export_snapshot_record_source_info)
+     resource_type = resource_type_;
+   }
+    : export_snapshot_record_source_info)
+
 let make_destination_info ?service:(service_ : non_empty_string option)
-  ?id:(id_ : non_empty_string option) () =
+    ?id:(id_ : non_empty_string option) () =
   ({ service = service_; id = id_ } : destination_info)
-let make_export_snapshot_record
-  ?destination_info:(destination_info_ : destination_info option)
-  ?source_info:(source_info_ : export_snapshot_record_source_info option)
-  ?state:(state_ : record_state option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+
+let make_export_snapshot_record ?destination_info:(destination_info_ : destination_info option)
+    ?source_info:(source_info_ : export_snapshot_record_source_info option)
+    ?state:(state_ : record_state option) ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option) () =
   ({
      destination_info = destination_info_;
      source_info = source_info_;
@@ -1625,23 +1578,21 @@ let make_export_snapshot_record
      location = location_;
      created_at = created_at_;
      arn = arn_;
-     name = name_
-   } : export_snapshot_record)
-let make_get_export_snapshot_records_request
-  ?page_token:(page_token_ : string_ option) () =
+     name = name_;
+   }
+    : export_snapshot_record)
+
+let make_get_export_snapshot_records_request ?page_token:(page_token_ : string_ option) () =
   ({ page_token = page_token_ } : get_export_snapshot_records_request)
+
 let make_domain
-  ?registered_domain_delegation_info:(registered_domain_delegation_info_ :
-                                       registered_domain_delegation_info
-                                         option)
-  ?domain_entries:(domain_entries_ : domain_entry_list option)
-  ?tags:(tags_ : tag_list option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?support_code:(support_code_ : string_ option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+    ?registered_domain_delegation_info:
+      (registered_domain_delegation_info_ : registered_domain_delegation_info option)
+    ?domain_entries:(domain_entries_ : domain_entry_list option) ?tags:(tags_ : tag_list option)
+    ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?support_code:(support_code_ : string_ option) ?arn:(arn_ : non_empty_string option)
+    ?name:(name_ : resource_name option) () =
   ({
      registered_domain_delegation_info = registered_domain_delegation_info_;
      domain_entries = domain_entries_;
@@ -1651,38 +1602,34 @@ let make_domain
      created_at = created_at_;
      support_code = support_code_;
      arn = arn_;
-     name = name_
-   } : domain)
+     name = name_;
+   }
+    : domain)
+
 let make_get_domains_request ?page_token:(page_token_ : string_ option) () =
   ({ page_token = page_token_ } : get_domains_request)
+
 let make_get_domain_request ~domain_name:(domain_name_ : domain_name) () =
   ({ domain_name = domain_name_ } : get_domain_request)
+
 let make_lightsail_distribution
-  ?viewer_minimum_tls_protocol_version:(viewer_minimum_tls_protocol_version_
-                                         : string_ option)
-  ?tags:(tags_ : tag_list option)
-  ?ip_address_type:(ip_address_type_ : ip_address_type option)
-  ?able_to_update_bundle:(able_to_update_bundle_ : boolean_ option)
-  ?cache_behaviors:(cache_behaviors_ : cache_behavior_list option)
-  ?cache_behavior_settings:(cache_behavior_settings_ : cache_settings option)
-  ?default_cache_behavior:(default_cache_behavior_ : cache_behavior option)
-  ?origin_public_dn_s:(origin_public_dn_s_ : string_ option)
-  ?origin:(origin_ : origin option)
-  ?certificate_name:(certificate_name_ : resource_name option)
-  ?bundle_id:(bundle_id_ : string_ option)
-  ?domain_name:(domain_name_ : string_ option)
-  ?is_enabled:(is_enabled_ : boolean_ option)
-  ?status:(status_ : string_ option)
-  ?alternative_domain_names:(alternative_domain_names_ : string_list option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?support_code:(support_code_ : string_ option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+    ?viewer_minimum_tls_protocol_version:(viewer_minimum_tls_protocol_version_ : string_ option)
+    ?tags:(tags_ : tag_list option) ?ip_address_type:(ip_address_type_ : ip_address_type option)
+    ?able_to_update_bundle:(able_to_update_bundle_ : boolean_ option)
+    ?cache_behaviors:(cache_behaviors_ : cache_behavior_list option)
+    ?cache_behavior_settings:(cache_behavior_settings_ : cache_settings option)
+    ?default_cache_behavior:(default_cache_behavior_ : cache_behavior option)
+    ?origin_public_dn_s:(origin_public_dn_s_ : string_ option) ?origin:(origin_ : origin option)
+    ?certificate_name:(certificate_name_ : resource_name option)
+    ?bundle_id:(bundle_id_ : string_ option) ?domain_name:(domain_name_ : string_ option)
+    ?is_enabled:(is_enabled_ : boolean_ option) ?status:(status_ : string_ option)
+    ?alternative_domain_names:(alternative_domain_names_ : string_list option)
+    ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?support_code:(support_code_ : string_ option) ?arn:(arn_ : non_empty_string option)
+    ?name:(name_ : resource_name option) () =
   ({
-     viewer_minimum_tls_protocol_version =
-       viewer_minimum_tls_protocol_version_;
+     viewer_minimum_tls_protocol_version = viewer_minimum_tls_protocol_version_;
      tags = tags_;
      ip_address_type = ip_address_type_;
      able_to_update_bundle = able_to_update_bundle_;
@@ -1702,18 +1649,19 @@ let make_lightsail_distribution
      created_at = created_at_;
      support_code = support_code_;
      arn = arn_;
-     name = name_
-   } : lightsail_distribution)
+     name = name_;
+   }
+    : lightsail_distribution)
+
 let make_get_distributions_request ?page_token:(page_token_ : string_ option)
-  ?distribution_name:(distribution_name_ : resource_name option) () =
-  ({ page_token = page_token_; distribution_name = distribution_name_ } : 
-  get_distributions_request)
-let make_get_distribution_metric_data_request
-  ~statistics:(statistics_ : metric_statistic_list)
-  ~unit_:(unit__ : metric_unit) ~period:(period_ : metric_period)
-  ~end_time:(end_time_ : timestamp) ~start_time:(start_time_ : timestamp)
-  ~metric_name:(metric_name_ : distribution_metric_name)
-  ~distribution_name:(distribution_name_ : resource_name) () =
+    ?distribution_name:(distribution_name_ : resource_name option) () =
+  ({ page_token = page_token_; distribution_name = distribution_name_ } : get_distributions_request)
+
+let make_get_distribution_metric_data_request ~statistics:(statistics_ : metric_statistic_list)
+    ~unit_:(unit__ : metric_unit) ~period:(period_ : metric_period)
+    ~end_time:(end_time_ : timestamp) ~start_time:(start_time_ : timestamp)
+    ~metric_name:(metric_name_ : distribution_metric_name)
+    ~distribution_name:(distribution_name_ : resource_name) () =
   ({
      statistics = statistics_;
      unit_ = unit__;
@@ -1721,38 +1669,39 @@ let make_get_distribution_metric_data_request
      end_time = end_time_;
      start_time = start_time_;
      metric_name = metric_name_;
-     distribution_name = distribution_name_
-   } : get_distribution_metric_data_request)
+     distribution_name = distribution_name_;
+   }
+    : get_distribution_metric_data_request)
+
 let make_get_distribution_latest_cache_reset_request
-  ?distribution_name:(distribution_name_ : resource_name option) () =
+    ?distribution_name:(distribution_name_ : resource_name option) () =
   ({ distribution_name = distribution_name_ } : get_distribution_latest_cache_reset_request)
+
 let make_distribution_bundle ?is_active:(is_active_ : boolean_ option)
-  ?transfer_per_month_in_gb:(transfer_per_month_in_gb_ : integer option)
-  ?price:(price_ : float_ option) ?name:(name_ : string_ option)
-  ?bundle_id:(bundle_id_ : string_ option) () =
+    ?transfer_per_month_in_gb:(transfer_per_month_in_gb_ : integer option)
+    ?price:(price_ : float_ option) ?name:(name_ : string_ option)
+    ?bundle_id:(bundle_id_ : string_ option) () =
   ({
      is_active = is_active_;
      transfer_per_month_in_gb = transfer_per_month_in_gb_;
      price = price_;
      name = name_;
-     bundle_id = bundle_id_
-   } : distribution_bundle)
+     bundle_id = bundle_id_;
+   }
+    : distribution_bundle)
+
 let make_get_distribution_bundles_request () = (() : unit)
-let make_disk_snapshot
-  ?is_from_auto_snapshot:(is_from_auto_snapshot_ : boolean_ option)
-  ?from_instance_arn:(from_instance_arn_ : non_empty_string option)
-  ?from_instance_name:(from_instance_name_ : resource_name option)
-  ?from_disk_arn:(from_disk_arn_ : non_empty_string option)
-  ?from_disk_name:(from_disk_name_ : resource_name option)
-  ?progress:(progress_ : string_ option)
-  ?state:(state_ : disk_snapshot_state option)
-  ?size_in_gb:(size_in_gb_ : integer option) ?tags:(tags_ : tag_list option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?support_code:(support_code_ : string_ option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+
+let make_disk_snapshot ?is_from_auto_snapshot:(is_from_auto_snapshot_ : boolean_ option)
+    ?from_instance_arn:(from_instance_arn_ : non_empty_string option)
+    ?from_instance_name:(from_instance_name_ : resource_name option)
+    ?from_disk_arn:(from_disk_arn_ : non_empty_string option)
+    ?from_disk_name:(from_disk_name_ : resource_name option) ?progress:(progress_ : string_ option)
+    ?state:(state_ : disk_snapshot_state option) ?size_in_gb:(size_in_gb_ : integer option)
+    ?tags:(tags_ : tag_list option) ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?support_code:(support_code_ : string_ option) ?arn:(arn_ : non_empty_string option)
+    ?name:(name_ : resource_name option) () =
   ({
      is_from_auto_snapshot = is_from_auto_snapshot_;
      from_instance_arn = from_instance_arn_;
@@ -1768,89 +1717,94 @@ let make_disk_snapshot
      created_at = created_at_;
      support_code = support_code_;
      arn = arn_;
-     name = name_
-   } : disk_snapshot)
-let make_get_disk_snapshots_request
-  ?page_token:(page_token_ : string_ option) () =
+     name = name_;
+   }
+    : disk_snapshot)
+
+let make_get_disk_snapshots_request ?page_token:(page_token_ : string_ option) () =
   ({ page_token = page_token_ } : get_disk_snapshots_request)
-let make_get_disk_snapshot_request
-  ~disk_snapshot_name:(disk_snapshot_name_ : resource_name) () =
+
+let make_get_disk_snapshot_request ~disk_snapshot_name:(disk_snapshot_name_ : resource_name) () =
   ({ disk_snapshot_name = disk_snapshot_name_ } : get_disk_snapshot_request)
+
 let make_get_disks_request ?page_token:(page_token_ : string_ option) () =
   ({ page_token = page_token_ } : get_disks_request)
+
 let make_get_disk_request ~disk_name:(disk_name_ : resource_name) () =
   ({ disk_name = disk_name_ } : get_disk_request)
+
 let make_get_cost_estimate_request ~end_time:(end_time_ : iso_date)
-  ~start_time:(start_time_ : iso_date)
-  ~resource_name:(resource_name_ : resource_name) () =
-  ({
-     end_time = end_time_;
-     start_time = start_time_;
-     resource_name = resource_name_
-   } : get_cost_estimate_request)
+    ~start_time:(start_time_ : iso_date) ~resource_name:(resource_name_ : resource_name) () =
+  ({ end_time = end_time_; start_time = start_time_; resource_name = resource_name_ }
+    : get_cost_estimate_request)
+
 let make_get_container_services_request
-  ?service_name:(service_name_ : container_service_name option) () =
+    ?service_name:(service_name_ : container_service_name option) () =
   ({ service_name = service_name_ } : get_container_services_request)
+
 let make_container_service_power ?is_active:(is_active_ : boolean_ option)
-  ?name:(name_ : string_ option)
-  ?ram_size_in_gb:(ram_size_in_gb_ : float_ option)
-  ?cpu_count:(cpu_count_ : float_ option) ?price:(price_ : float_ option)
-  ?power_id:(power_id_ : string_ option) () =
+    ?name:(name_ : string_ option) ?ram_size_in_gb:(ram_size_in_gb_ : float_ option)
+    ?cpu_count:(cpu_count_ : float_ option) ?price:(price_ : float_ option)
+    ?power_id:(power_id_ : string_ option) () =
   ({
      is_active = is_active_;
      name = name_;
      ram_size_in_gb = ram_size_in_gb_;
      cpu_count = cpu_count_;
      price = price_;
-     power_id = power_id_
-   } : container_service_power)
+     power_id = power_id_;
+   }
+    : container_service_power)
+
 let make_get_container_service_powers_request () = (() : unit)
-let make_get_container_service_metric_data_request
-  ~statistics:(statistics_ : metric_statistic_list)
-  ~period:(period_ : metric_period) ~end_time:(end_time_ : iso_date)
-  ~start_time:(start_time_ : iso_date)
-  ~metric_name:(metric_name_ : container_service_metric_name)
-  ~service_name:(service_name_ : container_service_name) () =
+
+let make_get_container_service_metric_data_request ~statistics:(statistics_ : metric_statistic_list)
+    ~period:(period_ : metric_period) ~end_time:(end_time_ : iso_date)
+    ~start_time:(start_time_ : iso_date) ~metric_name:(metric_name_ : container_service_metric_name)
+    ~service_name:(service_name_ : container_service_name) () =
   ({
      statistics = statistics_;
      period = period_;
      end_time = end_time_;
      start_time = start_time_;
      metric_name = metric_name_;
-     service_name = service_name_
-   } : get_container_service_metric_data_request)
+     service_name = service_name_;
+   }
+    : get_container_service_metric_data_request)
+
 let make_get_container_service_deployments_request
-  ~service_name:(service_name_ : container_service_name) () =
+    ~service_name:(service_name_ : container_service_name) () =
   ({ service_name = service_name_ } : get_container_service_deployments_request)
+
 let make_container_service_log_event ?message:(message_ : string_ option)
-  ?created_at:(created_at_ : iso_date option) () =
+    ?created_at:(created_at_ : iso_date option) () =
   ({ message = message_; created_at = created_at_ } : container_service_log_event)
+
 let make_get_container_log_request ?page_token:(page_token_ : string_ option)
-  ?filter_pattern:(filter_pattern_ : string_ option)
-  ?end_time:(end_time_ : iso_date option)
-  ?start_time:(start_time_ : iso_date option)
-  ~container_name:(container_name_ : string_)
-  ~service_name:(service_name_ : container_service_name) () =
+    ?filter_pattern:(filter_pattern_ : string_ option) ?end_time:(end_time_ : iso_date option)
+    ?start_time:(start_time_ : iso_date option) ~container_name:(container_name_ : string_)
+    ~service_name:(service_name_ : container_service_name) () =
   ({
      page_token = page_token_;
      filter_pattern = filter_pattern_;
      end_time = end_time_;
      start_time = start_time_;
      container_name = container_name_;
-     service_name = service_name_
-   } : get_container_log_request)
-let make_get_container_images_request
-  ~service_name:(service_name_ : container_service_name) () =
+     service_name = service_name_;
+   }
+    : get_container_log_request)
+
+let make_get_container_images_request ~service_name:(service_name_ : container_service_name) () =
   ({ service_name = service_name_ } : get_container_images_request)
+
 let make_get_container_api_metadata_request () = (() : unit)
+
 let make_contact_method ?support_code:(support_code_ : string_ option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  ?protocol:(protocol_ : contact_protocol option)
-  ?status:(status_ : contact_method_status option)
-  ?contact_endpoint:(contact_endpoint_ : non_empty_string option) () =
+    ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
+    ?protocol:(protocol_ : contact_protocol option) ?status:(status_ : contact_method_status option)
+    ?contact_endpoint:(contact_endpoint_ : non_empty_string option) () =
   ({
      support_code = support_code_;
      resource_type = resource_type_;
@@ -1860,28 +1814,25 @@ let make_contact_method ?support_code:(support_code_ : string_ option)
      name = name_;
      protocol = protocol_;
      status = status_;
-     contact_endpoint = contact_endpoint_
-   } : contact_method)
-let make_get_contact_methods_request
-  ?protocols:(protocols_ : contact_protocols_list option) () =
+     contact_endpoint = contact_endpoint_;
+   }
+    : contact_method)
+
+let make_get_contact_methods_request ?protocols:(protocols_ : contact_protocols_list option) () =
   ({ protocols = protocols_ } : get_contact_methods_request)
-let make_cloud_formation_stack_record_source_info
-  ?arn:(arn_ : non_empty_string option)
-  ?name:(name_ : non_empty_string option)
-  ?resource_type:(resource_type_ :
-                   cloud_formation_stack_record_source_type option)
-  () =
-  ({ arn = arn_; name = name_; resource_type = resource_type_ } : cloud_formation_stack_record_source_info)
+
+let make_cloud_formation_stack_record_source_info ?arn:(arn_ : non_empty_string option)
+    ?name:(name_ : non_empty_string option)
+    ?resource_type:(resource_type_ : cloud_formation_stack_record_source_type option) () =
+  ({ arn = arn_; name = name_; resource_type = resource_type_ }
+    : cloud_formation_stack_record_source_info)
+
 let make_cloud_formation_stack_record
-  ?destination_info:(destination_info_ : destination_info option)
-  ?source_info:(source_info_ :
-                 cloud_formation_stack_record_source_info_list option)
-  ?state:(state_ : record_state option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+    ?destination_info:(destination_info_ : destination_info option)
+    ?source_info:(source_info_ : cloud_formation_stack_record_source_info_list option)
+    ?state:(state_ : record_state option) ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option) () =
   ({
      destination_info = destination_info_;
      source_info = source_info_;
@@ -1890,36 +1841,29 @@ let make_cloud_formation_stack_record
      location = location_;
      created_at = created_at_;
      arn = arn_;
-     name = name_
-   } : cloud_formation_stack_record)
-let make_get_cloud_formation_stack_records_request
-  ?page_token:(page_token_ : string_ option) () =
+     name = name_;
+   }
+    : cloud_formation_stack_record)
+
+let make_get_cloud_formation_stack_records_request ?page_token:(page_token_ : string_ option) () =
   ({ page_token = page_token_ } : get_cloud_formation_stack_records_request)
-let make_certificate ?support_code:(support_code_ : string_ option)
-  ?tags:(tags_ : tag_list option)
-  ?revocation_reason:(revocation_reason_ : revocation_reason option)
-  ?revoked_at:(revoked_at_ : iso_date option)
-  ?renewal_summary:(renewal_summary_ : renewal_summary option)
-  ?eligible_to_renew:(eligible_to_renew_ : eligible_to_renew option)
-  ?not_after:(not_after_ : iso_date option)
-  ?not_before:(not_before_ : iso_date option)
-  ?issuer_c_a:(issuer_c_a_ : issuer_c_a option)
-  ?issued_at:(issued_at_ : iso_date option)
-  ?created_at:(created_at_ : iso_date option)
-  ?key_algorithm:(key_algorithm_ : key_algorithm option)
-  ?in_use_resource_count:(in_use_resource_count_ :
-                           in_use_resource_count option)
-  ?request_failure_reason:(request_failure_reason_ :
-                            request_failure_reason option)
-  ?domain_validation_records:(domain_validation_records_ :
-                               domain_validation_record_list option)
-  ?subject_alternative_names:(subject_alternative_names_ :
-                               subject_alternative_name_list option)
-  ?serial_number:(serial_number_ : serial_number option)
-  ?status:(status_ : certificate_status option)
-  ?domain_name:(domain_name_ : domain_name option)
-  ?name:(name_ : certificate_name option)
-  ?arn:(arn_ : non_empty_string option) () =
+
+let make_certificate ?support_code:(support_code_ : string_ option) ?tags:(tags_ : tag_list option)
+    ?revocation_reason:(revocation_reason_ : revocation_reason option)
+    ?revoked_at:(revoked_at_ : iso_date option)
+    ?renewal_summary:(renewal_summary_ : renewal_summary option)
+    ?eligible_to_renew:(eligible_to_renew_ : eligible_to_renew option)
+    ?not_after:(not_after_ : iso_date option) ?not_before:(not_before_ : iso_date option)
+    ?issuer_c_a:(issuer_c_a_ : issuer_c_a option) ?issued_at:(issued_at_ : iso_date option)
+    ?created_at:(created_at_ : iso_date option)
+    ?key_algorithm:(key_algorithm_ : key_algorithm option)
+    ?in_use_resource_count:(in_use_resource_count_ : in_use_resource_count option)
+    ?request_failure_reason:(request_failure_reason_ : request_failure_reason option)
+    ?domain_validation_records:(domain_validation_records_ : domain_validation_record_list option)
+    ?subject_alternative_names:(subject_alternative_names_ : subject_alternative_name_list option)
+    ?serial_number:(serial_number_ : serial_number option)
+    ?status:(status_ : certificate_status option) ?domain_name:(domain_name_ : domain_name option)
+    ?name:(name_ : certificate_name option) ?arn:(arn_ : non_empty_string option) () =
   ({
      support_code = support_code_;
      tags = tags_;
@@ -1941,47 +1885,46 @@ let make_certificate ?support_code:(support_code_ : string_ option)
      status = status_;
      domain_name = domain_name_;
      name = name_;
-     arn = arn_
-   } : certificate)
+     arn = arn_;
+   }
+    : certificate)
+
 let make_certificate_summary ?tags:(tags_ : tag_list option)
-  ?certificate_detail:(certificate_detail_ : certificate option)
-  ?domain_name:(domain_name_ : domain_name option)
-  ?certificate_name:(certificate_name_ : certificate_name option)
-  ?certificate_arn:(certificate_arn_ : non_empty_string option) () =
+    ?certificate_detail:(certificate_detail_ : certificate option)
+    ?domain_name:(domain_name_ : domain_name option)
+    ?certificate_name:(certificate_name_ : certificate_name option)
+    ?certificate_arn:(certificate_arn_ : non_empty_string option) () =
   ({
      tags = tags_;
      certificate_detail = certificate_detail_;
      domain_name = domain_name_;
      certificate_name = certificate_name_;
-     certificate_arn = certificate_arn_
-   } : certificate_summary)
+     certificate_arn = certificate_arn_;
+   }
+    : certificate_summary)
+
 let make_get_certificates_request ?page_token:(page_token_ : string_ option)
-  ?certificate_name:(certificate_name_ : certificate_name option)
-  ?include_certificate_details:(include_certificate_details_ :
-                                 include_certificate_details option)
-  ?certificate_statuses:(certificate_statuses_ :
-                          certificate_status_list option)
-  () =
+    ?certificate_name:(certificate_name_ : certificate_name option)
+    ?include_certificate_details:(include_certificate_details_ : include_certificate_details option)
+    ?certificate_statuses:(certificate_statuses_ : certificate_status_list option) () =
   ({
      page_token = page_token_;
      certificate_name = certificate_name_;
      include_certificate_details = include_certificate_details_;
-     certificate_statuses = certificate_statuses_
-   } : get_certificates_request)
-let make_bundle
-  ?public_ipv4_address_count:(public_ipv4_address_count_ : integer option)
-  ?supported_app_categories:(supported_app_categories_ :
-                              app_category_list option)
-  ?supported_platforms:(supported_platforms_ : instance_platform_list option)
-  ?transfer_per_month_in_gb:(transfer_per_month_in_gb_ : integer option)
-  ?ram_size_in_gb:(ram_size_in_gb_ : float_ option)
-  ?power:(power_ : integer option) ?name:(name_ : string_ option)
-  ?is_active:(is_active_ : boolean_ option)
-  ?instance_type:(instance_type_ : string_ option)
-  ?bundle_id:(bundle_id_ : non_empty_string option)
-  ?disk_size_in_gb:(disk_size_in_gb_ : integer option)
-  ?cpu_count:(cpu_count_ : integer option) ?price:(price_ : float_ option) ()
-  =
+     certificate_statuses = certificate_statuses_;
+   }
+    : get_certificates_request)
+
+let make_bundle ?public_ipv4_address_count:(public_ipv4_address_count_ : integer option)
+    ?supported_app_categories:(supported_app_categories_ : app_category_list option)
+    ?supported_platforms:(supported_platforms_ : instance_platform_list option)
+    ?transfer_per_month_in_gb:(transfer_per_month_in_gb_ : integer option)
+    ?ram_size_in_gb:(ram_size_in_gb_ : float_ option) ?power:(power_ : integer option)
+    ?name:(name_ : string_ option) ?is_active:(is_active_ : boolean_ option)
+    ?instance_type:(instance_type_ : string_ option)
+    ?bundle_id:(bundle_id_ : non_empty_string option)
+    ?disk_size_in_gb:(disk_size_in_gb_ : integer option) ?cpu_count:(cpu_count_ : integer option)
+    ?price:(price_ : float_ option) () =
   ({
      public_ipv4_address_count = public_ipv4_address_count_;
      supported_app_categories = supported_app_categories_;
@@ -1995,44 +1938,42 @@ let make_bundle
      bundle_id = bundle_id_;
      disk_size_in_gb = disk_size_in_gb_;
      cpu_count = cpu_count_;
-     price = price_
-   } : bundle)
-let make_get_bundles_request
-  ?app_category:(app_category_ : app_category option)
-  ?page_token:(page_token_ : string_ option)
-  ?include_inactive:(include_inactive_ : boolean_ option) () =
-  ({
-     app_category = app_category_;
-     page_token = page_token_;
-     include_inactive = include_inactive_
-   } : get_bundles_request)
-let make_account_level_bpa_sync
-  ?bpa_impacts_lightsail:(bpa_impacts_lightsail_ : boolean_ option)
-  ?message:(message_ : bpa_status_message option)
-  ?last_synced_at:(last_synced_at_ : iso_date option)
-  ?status:(status_ : account_level_bpa_sync_status option) () =
+     price = price_;
+   }
+    : bundle)
+
+let make_get_bundles_request ?app_category:(app_category_ : app_category option)
+    ?page_token:(page_token_ : string_ option)
+    ?include_inactive:(include_inactive_ : boolean_ option) () =
+  ({ app_category = app_category_; page_token = page_token_; include_inactive = include_inactive_ }
+    : get_bundles_request)
+
+let make_account_level_bpa_sync ?bpa_impacts_lightsail:(bpa_impacts_lightsail_ : boolean_ option)
+    ?message:(message_ : bpa_status_message option)
+    ?last_synced_at:(last_synced_at_ : iso_date option)
+    ?status:(status_ : account_level_bpa_sync_status option) () =
   ({
      bpa_impacts_lightsail = bpa_impacts_lightsail_;
      message = message_;
      last_synced_at = last_synced_at_;
-     status = status_
-   } : account_level_bpa_sync)
+     status = status_;
+   }
+    : account_level_bpa_sync)
+
 let make_get_buckets_request
-  ?include_connected_resources:(include_connected_resources_ :
-                                 boolean_ option)
-  ?page_token:(page_token_ : string_ option)
-  ?bucket_name:(bucket_name_ : bucket_name option) () =
+    ?include_connected_resources:(include_connected_resources_ : boolean_ option)
+    ?page_token:(page_token_ : string_ option) ?bucket_name:(bucket_name_ : bucket_name option) () =
   ({
      include_connected_resources = include_connected_resources_;
      page_token = page_token_;
-     bucket_name = bucket_name_
-   } : get_buckets_request)
+     bucket_name = bucket_name_;
+   }
+    : get_buckets_request)
+
 let make_get_bucket_metric_data_request ~unit_:(unit__ : metric_unit)
-  ~statistics:(statistics_ : metric_statistic_list)
-  ~period:(period_ : metric_period) ~end_time:(end_time_ : iso_date)
-  ~start_time:(start_time_ : iso_date)
-  ~metric_name:(metric_name_ : bucket_metric_name)
-  ~bucket_name:(bucket_name_ : bucket_name) () =
+    ~statistics:(statistics_ : metric_statistic_list) ~period:(period_ : metric_period)
+    ~end_time:(end_time_ : iso_date) ~start_time:(start_time_ : iso_date)
+    ~metric_name:(metric_name_ : bucket_metric_name) ~bucket_name:(bucket_name_ : bucket_name) () =
   ({
      unit_ = unit__;
      statistics = statistics_;
@@ -2040,60 +1981,57 @@ let make_get_bucket_metric_data_request ~unit_:(unit__ : metric_unit)
      end_time = end_time_;
      start_time = start_time_;
      metric_name = metric_name_;
-     bucket_name = bucket_name_
-   } : get_bucket_metric_data_request)
+     bucket_name = bucket_name_;
+   }
+    : get_bucket_metric_data_request)
+
 let make_bucket_bundle ?is_active:(is_active_ : boolean_ option)
-  ?transfer_per_month_in_gb:(transfer_per_month_in_gb_ : integer option)
-  ?storage_per_month_in_gb:(storage_per_month_in_gb_ : integer option)
-  ?price:(price_ : float_ option) ?name:(name_ : non_empty_string option)
-  ?bundle_id:(bundle_id_ : non_empty_string option) () =
+    ?transfer_per_month_in_gb:(transfer_per_month_in_gb_ : integer option)
+    ?storage_per_month_in_gb:(storage_per_month_in_gb_ : integer option)
+    ?price:(price_ : float_ option) ?name:(name_ : non_empty_string option)
+    ?bundle_id:(bundle_id_ : non_empty_string option) () =
   ({
      is_active = is_active_;
      transfer_per_month_in_gb = transfer_per_month_in_gb_;
      storage_per_month_in_gb = storage_per_month_in_gb_;
      price = price_;
      name = name_;
-     bundle_id = bundle_id_
-   } : bucket_bundle)
-let make_get_bucket_bundles_request
-  ?include_inactive:(include_inactive_ : boolean_ option) () =
+     bundle_id = bundle_id_;
+   }
+    : bucket_bundle)
+
+let make_get_bucket_bundles_request ?include_inactive:(include_inactive_ : boolean_ option) () =
   ({ include_inactive = include_inactive_ } : get_bucket_bundles_request)
+
 let make_access_key_last_used ?service_name:(service_name_ : string_ option)
-  ?region:(region_ : string_ option)
-  ?last_used_date:(last_used_date_ : iso_date option) () =
-  ({
-     service_name = service_name_;
-     region = region_;
-     last_used_date = last_used_date_
-   } : access_key_last_used)
+    ?region:(region_ : string_ option) ?last_used_date:(last_used_date_ : iso_date option) () =
+  ({ service_name = service_name_; region = region_; last_used_date = last_used_date_ }
+    : access_key_last_used)
+
 let make_access_key ?last_used:(last_used_ : access_key_last_used option)
-  ?created_at:(created_at_ : iso_date option)
-  ?status:(status_ : status_type option)
-  ?secret_access_key:(secret_access_key_ : non_empty_string option)
-  ?access_key_id:(access_key_id_ : iam_access_key_id option) () =
+    ?created_at:(created_at_ : iso_date option) ?status:(status_ : status_type option)
+    ?secret_access_key:(secret_access_key_ : non_empty_string option)
+    ?access_key_id:(access_key_id_ : iam_access_key_id option) () =
   ({
      last_used = last_used_;
      created_at = created_at_;
      status = status_;
      secret_access_key = secret_access_key_;
-     access_key_id = access_key_id_
-   } : access_key)
-let make_get_bucket_access_keys_request
-  ~bucket_name:(bucket_name_ : bucket_name) () =
+     access_key_id = access_key_id_;
+   }
+    : access_key)
+
+let make_get_bucket_access_keys_request ~bucket_name:(bucket_name_ : bucket_name) () =
   ({ bucket_name = bucket_name_ } : get_bucket_access_keys_request)
+
 let make_blueprint ?app_category:(app_category_ : app_category option)
-  ?platform:(platform_ : instance_platform option)
-  ?license_url:(license_url_ : string_ option)
-  ?product_url:(product_url_ : string_ option)
-  ?version_code:(version_code_ : string_ option)
-  ?version:(version_ : string_ option)
-  ?min_power:(min_power_ : integer option)
-  ?is_active:(is_active_ : boolean_ option)
-  ?description:(description_ : string_ option)
-  ?type_:(type__ : blueprint_type option)
-  ?group:(group_ : non_empty_string option)
-  ?name:(name_ : resource_name option)
-  ?blueprint_id:(blueprint_id_ : non_empty_string option) () =
+    ?platform:(platform_ : instance_platform option) ?license_url:(license_url_ : string_ option)
+    ?product_url:(product_url_ : string_ option) ?version_code:(version_code_ : string_ option)
+    ?version:(version_ : string_ option) ?min_power:(min_power_ : integer option)
+    ?is_active:(is_active_ : boolean_ option) ?description:(description_ : string_ option)
+    ?type_:(type__ : blueprint_type option) ?group:(group_ : non_empty_string option)
+    ?name:(name_ : resource_name option) ?blueprint_id:(blueprint_id_ : non_empty_string option) ()
+    =
   ({
      app_category = app_category_;
      platform = platform_;
@@ -2107,56 +2045,51 @@ let make_blueprint ?app_category:(app_category_ : app_category option)
      type_ = type__;
      group = group_;
      name = name_;
-     blueprint_id = blueprint_id_
-   } : blueprint)
-let make_get_blueprints_request
-  ?app_category:(app_category_ : app_category option)
-  ?page_token:(page_token_ : string_ option)
-  ?include_inactive:(include_inactive_ : boolean_ option) () =
-  ({
-     app_category = app_category_;
-     page_token = page_token_;
-     include_inactive = include_inactive_
-   } : get_blueprints_request)
-let make_attached_disk ?size_in_gb:(size_in_gb_ : integer option)
-  ?path:(path_ : string_ option) () =
+     blueprint_id = blueprint_id_;
+   }
+    : blueprint)
+
+let make_get_blueprints_request ?app_category:(app_category_ : app_category option)
+    ?page_token:(page_token_ : string_ option)
+    ?include_inactive:(include_inactive_ : boolean_ option) () =
+  ({ app_category = app_category_; page_token = page_token_; include_inactive = include_inactive_ }
+    : get_blueprints_request)
+
+let make_attached_disk ?size_in_gb:(size_in_gb_ : integer option) ?path:(path_ : string_ option) ()
+    =
   ({ size_in_gb = size_in_gb_; path = path_ } : attached_disk)
+
 let make_auto_snapshot_details
-  ?from_attached_disks:(from_attached_disks_ : attached_disk_list option)
-  ?status:(status_ : auto_snapshot_status option)
-  ?created_at:(created_at_ : iso_date option) ?date:(date_ : string_ option)
-  () =
+    ?from_attached_disks:(from_attached_disks_ : attached_disk_list option)
+    ?status:(status_ : auto_snapshot_status option) ?created_at:(created_at_ : iso_date option)
+    ?date:(date_ : string_ option) () =
   ({
      from_attached_disks = from_attached_disks_;
      status = status_;
      created_at = created_at_;
-     date = date_
-   } : auto_snapshot_details)
-let make_get_auto_snapshots_request
-  ~resource_name:(resource_name_ : resource_name) () =
+     date = date_;
+   }
+    : auto_snapshot_details)
+
+let make_get_auto_snapshots_request ~resource_name:(resource_name_ : resource_name) () =
   ({ resource_name = resource_name_ } : get_auto_snapshots_request)
-let make_alarm
-  ?notification_enabled:(notification_enabled_ : boolean_ option)
-  ?notification_triggers:(notification_triggers_ :
-                           notification_trigger_list option)
-  ?contact_protocols:(contact_protocols_ : contact_protocols_list option)
-  ?unit_:(unit__ : metric_unit option) ?state:(state_ : alarm_state option)
-  ?metric_name:(metric_name_ : metric_name option)
-  ?statistic:(statistic_ : metric_statistic option)
-  ?treat_missing_data:(treat_missing_data_ : treat_missing_data option)
-  ?datapoints_to_alarm:(datapoints_to_alarm_ : integer option)
-  ?threshold:(threshold_ : double option)
-  ?period:(period_ : metric_period option)
-  ?evaluation_periods:(evaluation_periods_ : integer option)
-  ?comparison_operator:(comparison_operator_ : comparison_operator option)
-  ?monitored_resource_info:(monitored_resource_info_ :
-                             monitored_resource_info option)
-  ?support_code:(support_code_ : string_ option)
-  ?resource_type:(resource_type_ : resource_type option)
-  ?location:(location_ : resource_location option)
-  ?created_at:(created_at_ : iso_date option)
-  ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
-  () =
+
+let make_alarm ?notification_enabled:(notification_enabled_ : boolean_ option)
+    ?notification_triggers:(notification_triggers_ : notification_trigger_list option)
+    ?contact_protocols:(contact_protocols_ : contact_protocols_list option)
+    ?unit_:(unit__ : metric_unit option) ?state:(state_ : alarm_state option)
+    ?metric_name:(metric_name_ : metric_name option)
+    ?statistic:(statistic_ : metric_statistic option)
+    ?treat_missing_data:(treat_missing_data_ : treat_missing_data option)
+    ?datapoints_to_alarm:(datapoints_to_alarm_ : integer option)
+    ?threshold:(threshold_ : double option) ?period:(period_ : metric_period option)
+    ?evaluation_periods:(evaluation_periods_ : integer option)
+    ?comparison_operator:(comparison_operator_ : comparison_operator option)
+    ?monitored_resource_info:(monitored_resource_info_ : monitored_resource_info option)
+    ?support_code:(support_code_ : string_ option)
+    ?resource_type:(resource_type_ : resource_type option)
+    ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
+    ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option) () =
   ({
      notification_enabled = notification_enabled_;
      notification_triggers = notification_triggers_;
@@ -2177,175 +2110,183 @@ let make_alarm
      location = location_;
      created_at = created_at_;
      arn = arn_;
-     name = name_
-   } : alarm)
+     name = name_;
+   }
+    : alarm)
+
 let make_get_alarms_request
-  ?monitored_resource_name:(monitored_resource_name_ : resource_name option)
-  ?page_token:(page_token_ : string_ option)
-  ?alarm_name:(alarm_name_ : resource_name option) () =
+    ?monitored_resource_name:(monitored_resource_name_ : resource_name option)
+    ?page_token:(page_token_ : string_ option) ?alarm_name:(alarm_name_ : resource_name option) () =
   ({
      monitored_resource_name = monitored_resource_name_;
      page_token = page_token_;
-     alarm_name = alarm_name_
-   } : get_alarms_request)
-let make_get_active_names_request ?page_token:(page_token_ : string_ option)
-  () = ({ page_token = page_token_ } : get_active_names_request)
-let make_export_snapshot_request
-  ~source_snapshot_name:(source_snapshot_name_ : resource_name) () =
+     alarm_name = alarm_name_;
+   }
+    : get_alarms_request)
+
+let make_get_active_names_request ?page_token:(page_token_ : string_ option) () =
+  ({ page_token = page_token_ } : get_active_names_request)
+
+let make_export_snapshot_request ~source_snapshot_name:(source_snapshot_name_ : resource_name) () =
   ({ source_snapshot_name = source_snapshot_name_ } : export_snapshot_request)
+
 let make_auto_snapshot_add_on_request
-  ?snapshot_time_of_day:(snapshot_time_of_day_ : time_of_day option) () =
+    ?snapshot_time_of_day:(snapshot_time_of_day_ : time_of_day option) () =
   ({ snapshot_time_of_day = snapshot_time_of_day_ } : auto_snapshot_add_on_request)
+
 let make_add_on_request
-  ?stop_instance_on_idle_request:(stop_instance_on_idle_request_ :
-                                   stop_instance_on_idle_request option)
-  ?auto_snapshot_add_on_request:(auto_snapshot_add_on_request_ :
-                                  auto_snapshot_add_on_request option)
-  ~add_on_type:(add_on_type_ : add_on_type) () =
+    ?stop_instance_on_idle_request:
+      (stop_instance_on_idle_request_ : stop_instance_on_idle_request option)
+    ?auto_snapshot_add_on_request:
+      (auto_snapshot_add_on_request_ : auto_snapshot_add_on_request option)
+    ~add_on_type:(add_on_type_ : add_on_type) () =
   ({
      stop_instance_on_idle_request = stop_instance_on_idle_request_;
      auto_snapshot_add_on_request = auto_snapshot_add_on_request_;
-     add_on_type = add_on_type_
-   } : add_on_request)
-let make_enable_add_on_request
-  ~add_on_request:(add_on_request_ : add_on_request)
-  ~resource_name:(resource_name_ : resource_name) () =
-  ({ add_on_request = add_on_request_; resource_name = resource_name_ } : 
-  enable_add_on_request)
+     add_on_type = add_on_type_;
+   }
+    : add_on_request)
+
+let make_enable_add_on_request ~add_on_request:(add_on_request_ : add_on_request)
+    ~resource_name:(resource_name_ : resource_name) () =
+  ({ add_on_request = add_on_request_; resource_name = resource_name_ } : enable_add_on_request)
+
 let make_download_default_key_pair_request () = (() : unit)
-let make_disable_add_on_request
-  ~resource_name:(resource_name_ : resource_name)
-  ~add_on_type:(add_on_type_ : add_on_type) () =
+
+let make_disable_add_on_request ~resource_name:(resource_name_ : resource_name)
+    ~add_on_type:(add_on_type_ : add_on_type) () =
   ({ resource_name = resource_name_; add_on_type = add_on_type_ } : disable_add_on_request)
-let make_detach_static_ip_request
-  ~static_ip_name:(static_ip_name_ : resource_name) () =
+
+let make_detach_static_ip_request ~static_ip_name:(static_ip_name_ : resource_name) () =
   ({ static_ip_name = static_ip_name_ } : detach_static_ip_request)
+
 let make_detach_instances_from_load_balancer_request
-  ~instance_names:(instance_names_ : resource_name_list)
-  ~load_balancer_name:(load_balancer_name_ : resource_name) () =
-  ({
-     instance_names = instance_names_;
-     load_balancer_name = load_balancer_name_
-   } : detach_instances_from_load_balancer_request)
+    ~instance_names:(instance_names_ : resource_name_list)
+    ~load_balancer_name:(load_balancer_name_ : resource_name) () =
+  ({ instance_names = instance_names_; load_balancer_name = load_balancer_name_ }
+    : detach_instances_from_load_balancer_request)
+
 let make_detach_disk_request ~disk_name:(disk_name_ : resource_name) () =
   ({ disk_name = disk_name_ } : detach_disk_request)
+
 let make_detach_certificate_from_distribution_request
-  ~distribution_name:(distribution_name_ : resource_name) () =
+    ~distribution_name:(distribution_name_ : resource_name) () =
   ({ distribution_name = distribution_name_ } : detach_certificate_from_distribution_request)
+
 let make_delete_relational_database_snapshot_request
-  ~relational_database_snapshot_name:(relational_database_snapshot_name_ :
-                                       resource_name)
-  () =
-  ({ relational_database_snapshot_name = relational_database_snapshot_name_ } : 
-  delete_relational_database_snapshot_request)
+    ~relational_database_snapshot_name:(relational_database_snapshot_name_ : resource_name) () =
+  ({ relational_database_snapshot_name = relational_database_snapshot_name_ }
+    : delete_relational_database_snapshot_request)
+
 let make_delete_relational_database_request
-  ?final_relational_database_snapshot_name:(final_relational_database_snapshot_name_
-                                             : resource_name option)
-  ?skip_final_snapshot:(skip_final_snapshot_ : boolean_ option)
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
+    ?final_relational_database_snapshot_name:
+      (final_relational_database_snapshot_name_ : resource_name option)
+    ?skip_final_snapshot:(skip_final_snapshot_ : boolean_ option)
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
   ({
-     final_relational_database_snapshot_name =
-       final_relational_database_snapshot_name_;
+     final_relational_database_snapshot_name = final_relational_database_snapshot_name_;
      skip_final_snapshot = skip_final_snapshot_;
-     relational_database_name = relational_database_name_
-   } : delete_relational_database_request)
-let make_delete_load_balancer_tls_certificate_request
-  ?force:(force_ : boolean_ option)
-  ~certificate_name:(certificate_name_ : resource_name)
-  ~load_balancer_name:(load_balancer_name_ : resource_name) () =
+     relational_database_name = relational_database_name_;
+   }
+    : delete_relational_database_request)
+
+let make_delete_load_balancer_tls_certificate_request ?force:(force_ : boolean_ option)
+    ~certificate_name:(certificate_name_ : resource_name)
+    ~load_balancer_name:(load_balancer_name_ : resource_name) () =
   ({
      force = force_;
      certificate_name = certificate_name_;
-     load_balancer_name = load_balancer_name_
-   } : delete_load_balancer_tls_certificate_request)
-let make_delete_load_balancer_request
-  ~load_balancer_name:(load_balancer_name_ : resource_name) () =
+     load_balancer_name = load_balancer_name_;
+   }
+    : delete_load_balancer_tls_certificate_request)
+
+let make_delete_load_balancer_request ~load_balancer_name:(load_balancer_name_ : resource_name) () =
   ({ load_balancer_name = load_balancer_name_ } : delete_load_balancer_request)
-let make_delete_known_host_keys_request
-  ~instance_name:(instance_name_ : resource_name) () =
+
+let make_delete_known_host_keys_request ~instance_name:(instance_name_ : resource_name) () =
   ({ instance_name = instance_name_ } : delete_known_host_keys_request)
-let make_delete_key_pair_request
-  ?expected_fingerprint:(expected_fingerprint_ : string_ option)
-  ~key_pair_name:(key_pair_name_ : resource_name) () =
-  ({
-     expected_fingerprint = expected_fingerprint_;
-     key_pair_name = key_pair_name_
-   } : delete_key_pair_request)
+
+let make_delete_key_pair_request ?expected_fingerprint:(expected_fingerprint_ : string_ option)
+    ~key_pair_name:(key_pair_name_ : resource_name) () =
+  ({ expected_fingerprint = expected_fingerprint_; key_pair_name = key_pair_name_ }
+    : delete_key_pair_request)
+
 let make_delete_instance_snapshot_request
-  ~instance_snapshot_name:(instance_snapshot_name_ : resource_name) () =
+    ~instance_snapshot_name:(instance_snapshot_name_ : resource_name) () =
   ({ instance_snapshot_name = instance_snapshot_name_ } : delete_instance_snapshot_request)
-let make_delete_instance_request
-  ?force_delete_add_ons:(force_delete_add_ons_ : boolean_ option)
-  ~instance_name:(instance_name_ : resource_name) () =
-  ({
-     force_delete_add_ons = force_delete_add_ons_;
-     instance_name = instance_name_
-   } : delete_instance_request)
-let make_delete_domain_entry_request
-  ~domain_entry:(domain_entry_ : domain_entry)
-  ~domain_name:(domain_name_ : domain_name) () =
+
+let make_delete_instance_request ?force_delete_add_ons:(force_delete_add_ons_ : boolean_ option)
+    ~instance_name:(instance_name_ : resource_name) () =
+  ({ force_delete_add_ons = force_delete_add_ons_; instance_name = instance_name_ }
+    : delete_instance_request)
+
+let make_delete_domain_entry_request ~domain_entry:(domain_entry_ : domain_entry)
+    ~domain_name:(domain_name_ : domain_name) () =
   ({ domain_entry = domain_entry_; domain_name = domain_name_ } : delete_domain_entry_request)
+
 let make_delete_domain_request ~domain_name:(domain_name_ : domain_name) () =
   ({ domain_name = domain_name_ } : delete_domain_request)
-let make_delete_distribution_request
-  ?distribution_name:(distribution_name_ : resource_name option) () =
+
+let make_delete_distribution_request ?distribution_name:(distribution_name_ : resource_name option)
+    () =
   ({ distribution_name = distribution_name_ } : delete_distribution_request)
-let make_delete_disk_snapshot_request
-  ~disk_snapshot_name:(disk_snapshot_name_ : resource_name) () =
+
+let make_delete_disk_snapshot_request ~disk_snapshot_name:(disk_snapshot_name_ : resource_name) () =
   ({ disk_snapshot_name = disk_snapshot_name_ } : delete_disk_snapshot_request)
-let make_delete_disk_request
-  ?force_delete_add_ons:(force_delete_add_ons_ : boolean_ option)
-  ~disk_name:(disk_name_ : resource_name) () =
-  ({ force_delete_add_ons = force_delete_add_ons_; disk_name = disk_name_ } : 
-  delete_disk_request)
-let make_delete_container_service_request
-  ~service_name:(service_name_ : container_service_name) () =
+
+let make_delete_disk_request ?force_delete_add_ons:(force_delete_add_ons_ : boolean_ option)
+    ~disk_name:(disk_name_ : resource_name) () =
+  ({ force_delete_add_ons = force_delete_add_ons_; disk_name = disk_name_ } : delete_disk_request)
+
+let make_delete_container_service_request ~service_name:(service_name_ : container_service_name) ()
+    =
   ({ service_name = service_name_ } : delete_container_service_request)
+
 let make_delete_container_image_request ~image:(image_ : string_)
-  ~service_name:(service_name_ : container_service_name) () =
+    ~service_name:(service_name_ : container_service_name) () =
   ({ image = image_; service_name = service_name_ } : delete_container_image_request)
-let make_delete_contact_method_request
-  ~protocol:(protocol_ : contact_protocol) () =
+
+let make_delete_contact_method_request ~protocol:(protocol_ : contact_protocol) () =
   ({ protocol = protocol_ } : delete_contact_method_request)
-let make_delete_certificate_request
-  ~certificate_name:(certificate_name_ : certificate_name) () =
+
+let make_delete_certificate_request ~certificate_name:(certificate_name_ : certificate_name) () =
   ({ certificate_name = certificate_name_ } : delete_certificate_request)
-let make_delete_bucket_access_key_request
-  ~access_key_id:(access_key_id_ : non_empty_string)
-  ~bucket_name:(bucket_name_ : bucket_name) () =
-  ({ access_key_id = access_key_id_; bucket_name = bucket_name_ } : delete_bucket_access_key_request)
-let make_delete_bucket_request
-  ?force_delete:(force_delete_ : boolean_ option)
-  ~bucket_name:(bucket_name_ : bucket_name) () =
+
+let make_delete_bucket_access_key_request ~access_key_id:(access_key_id_ : non_empty_string)
+    ~bucket_name:(bucket_name_ : bucket_name) () =
+  ({ access_key_id = access_key_id_; bucket_name = bucket_name_ }
+    : delete_bucket_access_key_request)
+
+let make_delete_bucket_request ?force_delete:(force_delete_ : boolean_ option)
+    ~bucket_name:(bucket_name_ : bucket_name) () =
   ({ force_delete = force_delete_; bucket_name = bucket_name_ } : delete_bucket_request)
+
 let make_delete_auto_snapshot_request ~date:(date_ : auto_snapshot_date)
-  ~resource_name:(resource_name_ : resource_name) () =
+    ~resource_name:(resource_name_ : resource_name) () =
   ({ date = date_; resource_name = resource_name_ } : delete_auto_snapshot_request)
+
 let make_delete_alarm_request ~alarm_name:(alarm_name_ : resource_name) () =
   ({ alarm_name = alarm_name_ } : delete_alarm_request)
-let make_create_relational_database_snapshot_request
-  ?tags:(tags_ : tag_list option)
-  ~relational_database_snapshot_name:(relational_database_snapshot_name_ :
-                                       resource_name)
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
+
+let make_create_relational_database_snapshot_request ?tags:(tags_ : tag_list option)
+    ~relational_database_snapshot_name:(relational_database_snapshot_name_ : resource_name)
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
   ({
      tags = tags_;
      relational_database_snapshot_name = relational_database_snapshot_name_;
-     relational_database_name = relational_database_name_
-   } : create_relational_database_snapshot_request)
-let make_create_relational_database_from_snapshot_request
-  ?tags:(tags_ : tag_list option)
-  ?use_latest_restorable_time:(use_latest_restorable_time_ : boolean_ option)
-  ?restore_time:(restore_time_ : iso_date option)
-  ?source_relational_database_name:(source_relational_database_name_ :
-                                     resource_name option)
-  ?relational_database_bundle_id:(relational_database_bundle_id_ :
-                                   string_ option)
-  ?relational_database_snapshot_name:(relational_database_snapshot_name_ :
-                                       resource_name option)
-  ?publicly_accessible:(publicly_accessible_ : boolean_ option)
-  ?availability_zone:(availability_zone_ : string_ option)
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
+     relational_database_name = relational_database_name_;
+   }
+    : create_relational_database_snapshot_request)
+
+let make_create_relational_database_from_snapshot_request ?tags:(tags_ : tag_list option)
+    ?use_latest_restorable_time:(use_latest_restorable_time_ : boolean_ option)
+    ?restore_time:(restore_time_ : iso_date option)
+    ?source_relational_database_name:(source_relational_database_name_ : resource_name option)
+    ?relational_database_bundle_id:(relational_database_bundle_id_ : string_ option)
+    ?relational_database_snapshot_name:(relational_database_snapshot_name_ : resource_name option)
+    ?publicly_accessible:(publicly_accessible_ : boolean_ option)
+    ?availability_zone:(availability_zone_ : string_ option)
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
   ({
      tags = tags_;
      use_latest_restorable_time = use_latest_restorable_time_;
@@ -2355,21 +2296,21 @@ let make_create_relational_database_from_snapshot_request
      relational_database_snapshot_name = relational_database_snapshot_name_;
      publicly_accessible = publicly_accessible_;
      availability_zone = availability_zone_;
-     relational_database_name = relational_database_name_
-   } : create_relational_database_from_snapshot_request)
+     relational_database_name = relational_database_name_;
+   }
+    : create_relational_database_from_snapshot_request)
+
 let make_create_relational_database_request ?tags:(tags_ : tag_list option)
-  ?publicly_accessible:(publicly_accessible_ : boolean_ option)
-  ?preferred_maintenance_window:(preferred_maintenance_window_ :
-                                  string_ option)
-  ?preferred_backup_window:(preferred_backup_window_ : string_ option)
-  ?master_user_password:(master_user_password_ : sensitive_string option)
-  ?availability_zone:(availability_zone_ : string_ option)
-  ~master_username:(master_username_ : string_)
-  ~master_database_name:(master_database_name_ : string_)
-  ~relational_database_bundle_id:(relational_database_bundle_id_ : string_)
-  ~relational_database_blueprint_id:(relational_database_blueprint_id_ :
-                                      string_)
-  ~relational_database_name:(relational_database_name_ : resource_name) () =
+    ?publicly_accessible:(publicly_accessible_ : boolean_ option)
+    ?preferred_maintenance_window:(preferred_maintenance_window_ : string_ option)
+    ?preferred_backup_window:(preferred_backup_window_ : string_ option)
+    ?master_user_password:(master_user_password_ : sensitive_string option)
+    ?availability_zone:(availability_zone_ : string_ option)
+    ~master_username:(master_username_ : string_)
+    ~master_database_name:(master_database_name_ : string_)
+    ~relational_database_bundle_id:(relational_database_bundle_id_ : string_)
+    ~relational_database_blueprint_id:(relational_database_blueprint_id_ : string_)
+    ~relational_database_name:(relational_database_name_ : resource_name) () =
   ({
      tags = tags_;
      publicly_accessible = publicly_accessible_;
@@ -2381,33 +2322,31 @@ let make_create_relational_database_request ?tags:(tags_ : tag_list option)
      relational_database_bundle_id = relational_database_bundle_id_;
      relational_database_blueprint_id = relational_database_blueprint_id_;
      availability_zone = availability_zone_;
-     relational_database_name = relational_database_name_
-   } : create_relational_database_request)
-let make_create_load_balancer_tls_certificate_request
-  ?tags:(tags_ : tag_list option)
-  ?certificate_alternative_names:(certificate_alternative_names_ :
-                                   domain_name_list option)
-  ~certificate_domain_name:(certificate_domain_name_ : domain_name)
-  ~certificate_name:(certificate_name_ : resource_name)
-  ~load_balancer_name:(load_balancer_name_ : resource_name) () =
+     relational_database_name = relational_database_name_;
+   }
+    : create_relational_database_request)
+
+let make_create_load_balancer_tls_certificate_request ?tags:(tags_ : tag_list option)
+    ?certificate_alternative_names:(certificate_alternative_names_ : domain_name_list option)
+    ~certificate_domain_name:(certificate_domain_name_ : domain_name)
+    ~certificate_name:(certificate_name_ : resource_name)
+    ~load_balancer_name:(load_balancer_name_ : resource_name) () =
   ({
      tags = tags_;
      certificate_alternative_names = certificate_alternative_names_;
      certificate_domain_name = certificate_domain_name_;
      certificate_name = certificate_name_;
-     load_balancer_name = load_balancer_name_
-   } : create_load_balancer_tls_certificate_request)
-let make_create_load_balancer_request
-  ?tls_policy_name:(tls_policy_name_ : string_ option)
-  ?ip_address_type:(ip_address_type_ : ip_address_type option)
-  ?tags:(tags_ : tag_list option)
-  ?certificate_alternative_names:(certificate_alternative_names_ :
-                                   domain_name_list option)
-  ?certificate_domain_name:(certificate_domain_name_ : domain_name option)
-  ?certificate_name:(certificate_name_ : resource_name option)
-  ?health_check_path:(health_check_path_ : string_ option)
-  ~instance_port:(instance_port_ : port)
-  ~load_balancer_name:(load_balancer_name_ : resource_name) () =
+     load_balancer_name = load_balancer_name_;
+   }
+    : create_load_balancer_tls_certificate_request)
+
+let make_create_load_balancer_request ?tls_policy_name:(tls_policy_name_ : string_ option)
+    ?ip_address_type:(ip_address_type_ : ip_address_type option) ?tags:(tags_ : tag_list option)
+    ?certificate_alternative_names:(certificate_alternative_names_ : domain_name_list option)
+    ?certificate_domain_name:(certificate_domain_name_ : domain_name option)
+    ?certificate_name:(certificate_name_ : resource_name option)
+    ?health_check_path:(health_check_path_ : string_ option) ~instance_port:(instance_port_ : port)
+    ~load_balancer_name:(load_balancer_name_ : resource_name) () =
   ({
      tls_policy_name = tls_policy_name_;
      ip_address_type = ip_address_type_;
@@ -2417,41 +2356,41 @@ let make_create_load_balancer_request
      certificate_name = certificate_name_;
      health_check_path = health_check_path_;
      instance_port = instance_port_;
-     load_balancer_name = load_balancer_name_
-   } : create_load_balancer_request)
+     load_balancer_name = load_balancer_name_;
+   }
+    : create_load_balancer_request)
+
 let make_create_key_pair_request ?tags:(tags_ : tag_list option)
-  ~key_pair_name:(key_pair_name_ : resource_name) () =
+    ~key_pair_name:(key_pair_name_ : resource_name) () =
   ({ tags = tags_; key_pair_name = key_pair_name_ } : create_key_pair_request)
+
 let make_create_instance_snapshot_request ?tags:(tags_ : tag_list option)
-  ~instance_name:(instance_name_ : resource_name)
-  ~instance_snapshot_name:(instance_snapshot_name_ : resource_name) () =
+    ~instance_name:(instance_name_ : resource_name)
+    ~instance_snapshot_name:(instance_snapshot_name_ : resource_name) () =
   ({
      tags = tags_;
      instance_name = instance_name_;
-     instance_snapshot_name = instance_snapshot_name_
-   } : create_instance_snapshot_request)
+     instance_snapshot_name = instance_snapshot_name_;
+   }
+    : create_instance_snapshot_request)
+
 let make_disk_map ?new_disk_name:(new_disk_name_ : resource_name option)
-  ?original_disk_path:(original_disk_path_ : non_empty_string option) () =
-  ({ new_disk_name = new_disk_name_; original_disk_path = original_disk_path_
-   } : disk_map)
+    ?original_disk_path:(original_disk_path_ : non_empty_string option) () =
+  ({ new_disk_name = new_disk_name_; original_disk_path = original_disk_path_ } : disk_map)
+
 let make_create_instances_from_snapshot_request
-  ?use_latest_restorable_auto_snapshot:(use_latest_restorable_auto_snapshot_
-                                         : boolean_ option)
-  ?restore_date:(restore_date_ : string_ option)
-  ?source_instance_name:(source_instance_name_ : string_ option)
-  ?ip_address_type:(ip_address_type_ : ip_address_type option)
-  ?add_ons:(add_ons_ : add_on_request_list option)
-  ?tags:(tags_ : tag_list option)
-  ?key_pair_name:(key_pair_name_ : resource_name option)
-  ?user_data:(user_data_ : string_ option)
-  ?instance_snapshot_name:(instance_snapshot_name_ : resource_name option)
-  ?attached_disk_mapping:(attached_disk_mapping_ : attached_disk_map option)
-  ~bundle_id:(bundle_id_ : non_empty_string)
-  ~availability_zone:(availability_zone_ : string_)
-  ~instance_names:(instance_names_ : string_list) () =
+    ?use_latest_restorable_auto_snapshot:(use_latest_restorable_auto_snapshot_ : boolean_ option)
+    ?restore_date:(restore_date_ : string_ option)
+    ?source_instance_name:(source_instance_name_ : string_ option)
+    ?ip_address_type:(ip_address_type_ : ip_address_type option)
+    ?add_ons:(add_ons_ : add_on_request_list option) ?tags:(tags_ : tag_list option)
+    ?key_pair_name:(key_pair_name_ : resource_name option) ?user_data:(user_data_ : string_ option)
+    ?instance_snapshot_name:(instance_snapshot_name_ : resource_name option)
+    ?attached_disk_mapping:(attached_disk_mapping_ : attached_disk_map option)
+    ~bundle_id:(bundle_id_ : non_empty_string) ~availability_zone:(availability_zone_ : string_)
+    ~instance_names:(instance_names_ : string_list) () =
   ({
-     use_latest_restorable_auto_snapshot =
-       use_latest_restorable_auto_snapshot_;
+     use_latest_restorable_auto_snapshot = use_latest_restorable_auto_snapshot_;
      restore_date = restore_date_;
      source_instance_name = source_instance_name_;
      ip_address_type = ip_address_type_;
@@ -2463,19 +2402,17 @@ let make_create_instances_from_snapshot_request
      instance_snapshot_name = instance_snapshot_name_;
      availability_zone = availability_zone_;
      attached_disk_mapping = attached_disk_mapping_;
-     instance_names = instance_names_
-   } : create_instances_from_snapshot_request)
-let make_create_instances_request
-  ?ip_address_type:(ip_address_type_ : ip_address_type option)
-  ?add_ons:(add_ons_ : add_on_request_list option)
-  ?tags:(tags_ : tag_list option)
-  ?key_pair_name:(key_pair_name_ : resource_name option)
-  ?user_data:(user_data_ : string_ option)
-  ?custom_image_name:(custom_image_name_ : resource_name option)
-  ~bundle_id:(bundle_id_ : non_empty_string)
-  ~blueprint_id:(blueprint_id_ : non_empty_string)
-  ~availability_zone:(availability_zone_ : string_)
-  ~instance_names:(instance_names_ : string_list) () =
+     instance_names = instance_names_;
+   }
+    : create_instances_from_snapshot_request)
+
+let make_create_instances_request ?ip_address_type:(ip_address_type_ : ip_address_type option)
+    ?add_ons:(add_ons_ : add_on_request_list option) ?tags:(tags_ : tag_list option)
+    ?key_pair_name:(key_pair_name_ : resource_name option) ?user_data:(user_data_ : string_ option)
+    ?custom_image_name:(custom_image_name_ : resource_name option)
+    ~bundle_id:(bundle_id_ : non_empty_string) ~blueprint_id:(blueprint_id_ : non_empty_string)
+    ~availability_zone:(availability_zone_ : string_)
+    ~instance_names:(instance_names_ : string_list) () =
   ({
      ip_address_type = ip_address_type_;
      add_ons = add_ons_;
@@ -2486,35 +2423,34 @@ let make_create_instances_request
      blueprint_id = blueprint_id_;
      custom_image_name = custom_image_name_;
      availability_zone = availability_zone_;
-     instance_names = instance_names_
-   } : create_instances_request)
-let make_create_gui_session_access_details_request
-  ~resource_name:(resource_name_ : resource_name) () =
+     instance_names = instance_names_;
+   }
+    : create_instances_request)
+
+let make_create_gui_session_access_details_request ~resource_name:(resource_name_ : resource_name)
+    () =
   ({ resource_name = resource_name_ } : create_gui_session_access_details_request)
-let make_create_domain_entry_request
-  ~domain_entry:(domain_entry_ : domain_entry)
-  ~domain_name:(domain_name_ : domain_name) () =
+
+let make_create_domain_entry_request ~domain_entry:(domain_entry_ : domain_entry)
+    ~domain_name:(domain_name_ : domain_name) () =
   ({ domain_entry = domain_entry_; domain_name = domain_name_ } : create_domain_entry_request)
+
 let make_create_domain_request ?tags:(tags_ : tag_list option)
-  ~domain_name:(domain_name_ : domain_name) () =
+    ~domain_name:(domain_name_ : domain_name) () =
   ({ tags = tags_; domain_name = domain_name_ } : create_domain_request)
+
 let make_create_distribution_request
-  ?viewer_minimum_tls_protocol_version:(viewer_minimum_tls_protocol_version_
-                                         :
-                                         viewer_minimum_tls_protocol_version_enum
-                                           option)
-  ?certificate_name:(certificate_name_ : resource_name option)
-  ?tags:(tags_ : tag_list option)
-  ?ip_address_type:(ip_address_type_ : ip_address_type option)
-  ?cache_behaviors:(cache_behaviors_ : cache_behavior_list option)
-  ?cache_behavior_settings:(cache_behavior_settings_ : cache_settings option)
-  ~bundle_id:(bundle_id_ : string_)
-  ~default_cache_behavior:(default_cache_behavior_ : cache_behavior)
-  ~origin:(origin_ : input_origin)
-  ~distribution_name:(distribution_name_ : resource_name) () =
+    ?viewer_minimum_tls_protocol_version:
+      (viewer_minimum_tls_protocol_version_ : viewer_minimum_tls_protocol_version_enum option)
+    ?certificate_name:(certificate_name_ : resource_name option) ?tags:(tags_ : tag_list option)
+    ?ip_address_type:(ip_address_type_ : ip_address_type option)
+    ?cache_behaviors:(cache_behaviors_ : cache_behavior_list option)
+    ?cache_behavior_settings:(cache_behavior_settings_ : cache_settings option)
+    ~bundle_id:(bundle_id_ : string_)
+    ~default_cache_behavior:(default_cache_behavior_ : cache_behavior)
+    ~origin:(origin_ : input_origin) ~distribution_name:(distribution_name_ : resource_name) () =
   ({
-     viewer_minimum_tls_protocol_version =
-       viewer_minimum_tls_protocol_version_;
+     viewer_minimum_tls_protocol_version = viewer_minimum_tls_protocol_version_;
      certificate_name = certificate_name_;
      tags = tags_;
      ip_address_type = ip_address_type_;
@@ -2523,32 +2459,32 @@ let make_create_distribution_request
      cache_behavior_settings = cache_behavior_settings_;
      default_cache_behavior = default_cache_behavior_;
      origin = origin_;
-     distribution_name = distribution_name_
-   } : create_distribution_request)
+     distribution_name = distribution_name_;
+   }
+    : create_distribution_request)
+
 let make_create_disk_snapshot_request ?tags:(tags_ : tag_list option)
-  ?instance_name:(instance_name_ : resource_name option)
-  ?disk_name:(disk_name_ : resource_name option)
-  ~disk_snapshot_name:(disk_snapshot_name_ : resource_name) () =
+    ?instance_name:(instance_name_ : resource_name option)
+    ?disk_name:(disk_name_ : resource_name option)
+    ~disk_snapshot_name:(disk_snapshot_name_ : resource_name) () =
   ({
      tags = tags_;
      instance_name = instance_name_;
      disk_snapshot_name = disk_snapshot_name_;
-     disk_name = disk_name_
-   } : create_disk_snapshot_request)
+     disk_name = disk_name_;
+   }
+    : create_disk_snapshot_request)
+
 let make_create_disk_from_snapshot_request
-  ?use_latest_restorable_auto_snapshot:(use_latest_restorable_auto_snapshot_
-                                         : boolean_ option)
-  ?restore_date:(restore_date_ : string_ option)
-  ?source_disk_name:(source_disk_name_ : string_ option)
-  ?add_ons:(add_ons_ : add_on_request_list option)
-  ?tags:(tags_ : tag_list option)
-  ?disk_snapshot_name:(disk_snapshot_name_ : resource_name option)
-  ~size_in_gb:(size_in_gb_ : integer)
-  ~availability_zone:(availability_zone_ : non_empty_string)
-  ~disk_name:(disk_name_ : resource_name) () =
+    ?use_latest_restorable_auto_snapshot:(use_latest_restorable_auto_snapshot_ : boolean_ option)
+    ?restore_date:(restore_date_ : string_ option)
+    ?source_disk_name:(source_disk_name_ : string_ option)
+    ?add_ons:(add_ons_ : add_on_request_list option) ?tags:(tags_ : tag_list option)
+    ?disk_snapshot_name:(disk_snapshot_name_ : resource_name option)
+    ~size_in_gb:(size_in_gb_ : integer) ~availability_zone:(availability_zone_ : non_empty_string)
+    ~disk_name:(disk_name_ : resource_name) () =
   ({
-     use_latest_restorable_auto_snapshot =
-       use_latest_restorable_auto_snapshot_;
+     use_latest_restorable_auto_snapshot = use_latest_restorable_auto_snapshot_;
      restore_date = restore_date_;
      source_disk_name = source_disk_name_;
      add_ons = add_ons_;
@@ -2556,64 +2492,61 @@ let make_create_disk_from_snapshot_request
      size_in_gb = size_in_gb_;
      availability_zone = availability_zone_;
      disk_snapshot_name = disk_snapshot_name_;
-     disk_name = disk_name_
-   } : create_disk_from_snapshot_request)
+     disk_name = disk_name_;
+   }
+    : create_disk_from_snapshot_request)
+
 let make_create_disk_request ?add_ons:(add_ons_ : add_on_request_list option)
-  ?tags:(tags_ : tag_list option) ~size_in_gb:(size_in_gb_ : integer)
-  ~availability_zone:(availability_zone_ : non_empty_string)
-  ~disk_name:(disk_name_ : resource_name) () =
+    ?tags:(tags_ : tag_list option) ~size_in_gb:(size_in_gb_ : integer)
+    ~availability_zone:(availability_zone_ : non_empty_string)
+    ~disk_name:(disk_name_ : resource_name) () =
   ({
      add_ons = add_ons_;
      tags = tags_;
      size_in_gb = size_in_gb_;
      availability_zone = availability_zone_;
-     disk_name = disk_name_
-   } : create_disk_request)
-let make_container_service_registry_login
-  ?registry:(registry_ : string_ option)
-  ?expires_at:(expires_at_ : iso_date option)
-  ?password:(password_ : string_ option)
-  ?username:(username_ : string_ option) () =
-  ({
-     registry = registry_;
-     expires_at = expires_at_;
-     password = password_;
-     username = username_
-   } : container_service_registry_login)
+     disk_name = disk_name_;
+   }
+    : create_disk_request)
+
+let make_container_service_registry_login ?registry:(registry_ : string_ option)
+    ?expires_at:(expires_at_ : iso_date option) ?password:(password_ : string_ option)
+    ?username:(username_ : string_ option) () =
+  ({ registry = registry_; expires_at = expires_at_; password = password_; username = username_ }
+    : container_service_registry_login)
+
 let make_create_container_service_registry_login_request () = (() : unit)
+
 let make_endpoint_request
-  ?health_check:(health_check_ :
-                  container_service_health_check_config option)
-  ~container_port:(container_port_ : integer)
-  ~container_name:(container_name_ : string_) () =
+    ?health_check:(health_check_ : container_service_health_check_config option)
+    ~container_port:(container_port_ : integer) ~container_name:(container_name_ : string_) () =
   ({
      health_check = health_check_;
      container_port = container_port_;
-     container_name = container_name_
-   } : endpoint_request)
+     container_name = container_name_;
+   }
+    : endpoint_request)
+
 let make_create_container_service_deployment_request
-  ?public_endpoint:(public_endpoint_ : endpoint_request option)
-  ?containers:(containers_ : container_map option)
-  ~service_name:(service_name_ : container_service_name) () =
-  ({
-     public_endpoint = public_endpoint_;
-     containers = containers_;
-     service_name = service_name_
-   } : create_container_service_deployment_request)
+    ?public_endpoint:(public_endpoint_ : endpoint_request option)
+    ?containers:(containers_ : container_map option)
+    ~service_name:(service_name_ : container_service_name) () =
+  ({ public_endpoint = public_endpoint_; containers = containers_; service_name = service_name_ }
+    : create_container_service_deployment_request)
+
 let make_container_service_deployment_request
-  ?public_endpoint:(public_endpoint_ : endpoint_request option)
-  ?containers:(containers_ : container_map option) () =
-  ({ public_endpoint = public_endpoint_; containers = containers_ } : 
-  container_service_deployment_request)
+    ?public_endpoint:(public_endpoint_ : endpoint_request option)
+    ?containers:(containers_ : container_map option) () =
+  ({ public_endpoint = public_endpoint_; containers = containers_ }
+    : container_service_deployment_request)
+
 let make_create_container_service_request
-  ?private_registry_access:(private_registry_access_ :
-                             private_registry_access_request option)
-  ?deployment:(deployment_ : container_service_deployment_request option)
-  ?public_domain_names:(public_domain_names_ :
-                         container_service_public_domains option)
-  ?tags:(tags_ : tag_list option) ~scale:(scale_ : container_service_scale)
-  ~power:(power_ : container_service_power_name)
-  ~service_name:(service_name_ : container_service_name) () =
+    ?private_registry_access:(private_registry_access_ : private_registry_access_request option)
+    ?deployment:(deployment_ : container_service_deployment_request option)
+    ?public_domain_names:(public_domain_names_ : container_service_public_domains option)
+    ?tags:(tags_ : tag_list option) ~scale:(scale_ : container_service_scale)
+    ~power:(power_ : container_service_power_name)
+    ~service_name:(service_name_ : container_service_name) () =
   ({
      private_registry_access = private_registry_access_;
      deployment = deployment_;
@@ -2621,109 +2554,111 @@ let make_create_container_service_request
      tags = tags_;
      scale = scale_;
      power = power_;
-     service_name = service_name_
-   } : create_container_service_request)
-let make_create_contact_method_request
-  ~contact_endpoint:(contact_endpoint_ : string_max256)
-  ~protocol:(protocol_ : contact_protocol) () =
+     service_name = service_name_;
+   }
+    : create_container_service_request)
+
+let make_create_contact_method_request ~contact_endpoint:(contact_endpoint_ : string_max256)
+    ~protocol:(protocol_ : contact_protocol) () =
   ({ contact_endpoint = contact_endpoint_; protocol = protocol_ } : create_contact_method_request)
+
 let make_instance_entry ?user_data:(user_data_ : string_ option)
-  ~availability_zone:(availability_zone_ : string_)
-  ~port_info_source:(port_info_source_ : port_info_source_type)
-  ~instance_type:(instance_type_ : non_empty_string)
-  ~source_name:(source_name_ : resource_name) () =
+    ~availability_zone:(availability_zone_ : string_)
+    ~port_info_source:(port_info_source_ : port_info_source_type)
+    ~instance_type:(instance_type_ : non_empty_string) ~source_name:(source_name_ : resource_name)
+    () =
   ({
      availability_zone = availability_zone_;
      user_data = user_data_;
      port_info_source = port_info_source_;
      instance_type = instance_type_;
-     source_name = source_name_
-   } : instance_entry)
-let make_create_cloud_formation_stack_request
-  ~instances:(instances_ : instance_entry_list) () =
+     source_name = source_name_;
+   }
+    : instance_entry)
+
+let make_create_cloud_formation_stack_request ~instances:(instances_ : instance_entry_list) () =
   ({ instances = instances_ } : create_cloud_formation_stack_request)
+
 let make_create_certificate_request ?tags:(tags_ : tag_list option)
-  ?subject_alternative_names:(subject_alternative_names_ :
-                               subject_alternative_name_list option)
-  ~domain_name:(domain_name_ : domain_name)
-  ~certificate_name:(certificate_name_ : certificate_name) () =
+    ?subject_alternative_names:(subject_alternative_names_ : subject_alternative_name_list option)
+    ~domain_name:(domain_name_ : domain_name)
+    ~certificate_name:(certificate_name_ : certificate_name) () =
   ({
      tags = tags_;
      subject_alternative_names = subject_alternative_names_;
      domain_name = domain_name_;
-     certificate_name = certificate_name_
-   } : create_certificate_request)
-let make_create_bucket_access_key_request
-  ~bucket_name:(bucket_name_ : bucket_name) () =
+     certificate_name = certificate_name_;
+   }
+    : create_certificate_request)
+
+let make_create_bucket_access_key_request ~bucket_name:(bucket_name_ : bucket_name) () =
   ({ bucket_name = bucket_name_ } : create_bucket_access_key_request)
+
 let make_create_bucket_request
-  ?enable_object_versioning:(enable_object_versioning_ : boolean_ option)
-  ?tags:(tags_ : tag_list option) ~bundle_id:(bundle_id_ : non_empty_string)
-  ~bucket_name:(bucket_name_ : bucket_name) () =
+    ?enable_object_versioning:(enable_object_versioning_ : boolean_ option)
+    ?tags:(tags_ : tag_list option) ~bundle_id:(bundle_id_ : non_empty_string)
+    ~bucket_name:(bucket_name_ : bucket_name) () =
   ({
      enable_object_versioning = enable_object_versioning_;
      tags = tags_;
      bundle_id = bundle_id_;
-     bucket_name = bucket_name_
-   } : create_bucket_request)
+     bucket_name = bucket_name_;
+   }
+    : create_bucket_request)
+
 let make_copy_snapshot_request
-  ?use_latest_restorable_auto_snapshot:(use_latest_restorable_auto_snapshot_
-                                         : boolean_ option)
-  ?restore_date:(restore_date_ : string_ option)
-  ?source_resource_name:(source_resource_name_ : string_ option)
-  ?source_snapshot_name:(source_snapshot_name_ : resource_name option)
-  ~source_region:(source_region_ : region_name)
-  ~target_snapshot_name:(target_snapshot_name_ : resource_name) () =
+    ?use_latest_restorable_auto_snapshot:(use_latest_restorable_auto_snapshot_ : boolean_ option)
+    ?restore_date:(restore_date_ : string_ option)
+    ?source_resource_name:(source_resource_name_ : string_ option)
+    ?source_snapshot_name:(source_snapshot_name_ : resource_name option)
+    ~source_region:(source_region_ : region_name)
+    ~target_snapshot_name:(target_snapshot_name_ : resource_name) () =
   ({
      source_region = source_region_;
      target_snapshot_name = target_snapshot_name_;
-     use_latest_restorable_auto_snapshot =
-       use_latest_restorable_auto_snapshot_;
+     use_latest_restorable_auto_snapshot = use_latest_restorable_auto_snapshot_;
      restore_date = restore_date_;
      source_resource_name = source_resource_name_;
-     source_snapshot_name = source_snapshot_name_
-   } : copy_snapshot_request)
-let make_close_instance_public_ports_request
-  ~instance_name:(instance_name_ : resource_name)
-  ~port_info:(port_info_ : port_info) () =
+     source_snapshot_name = source_snapshot_name_;
+   }
+    : copy_snapshot_request)
+
+let make_close_instance_public_ports_request ~instance_name:(instance_name_ : resource_name)
+    ~port_info:(port_info_ : port_info) () =
   ({ instance_name = instance_name_; port_info = port_info_ } : close_instance_public_ports_request)
-let make_attach_static_ip_request
-  ~instance_name:(instance_name_ : resource_name)
-  ~static_ip_name:(static_ip_name_ : resource_name) () =
-  ({ instance_name = instance_name_; static_ip_name = static_ip_name_ } : 
-  attach_static_ip_request)
+
+let make_attach_static_ip_request ~instance_name:(instance_name_ : resource_name)
+    ~static_ip_name:(static_ip_name_ : resource_name) () =
+  ({ instance_name = instance_name_; static_ip_name = static_ip_name_ } : attach_static_ip_request)
+
 let make_attach_load_balancer_tls_certificate_request
-  ~certificate_name:(certificate_name_ : resource_name)
-  ~load_balancer_name:(load_balancer_name_ : resource_name) () =
-  ({
-     certificate_name = certificate_name_;
-     load_balancer_name = load_balancer_name_
-   } : attach_load_balancer_tls_certificate_request)
+    ~certificate_name:(certificate_name_ : resource_name)
+    ~load_balancer_name:(load_balancer_name_ : resource_name) () =
+  ({ certificate_name = certificate_name_; load_balancer_name = load_balancer_name_ }
+    : attach_load_balancer_tls_certificate_request)
+
 let make_attach_instances_to_load_balancer_request
-  ~instance_names:(instance_names_ : resource_name_list)
-  ~load_balancer_name:(load_balancer_name_ : resource_name) () =
-  ({
-     instance_names = instance_names_;
-     load_balancer_name = load_balancer_name_
-   } : attach_instances_to_load_balancer_request)
-let make_attach_disk_request
-  ?auto_mounting:(auto_mounting_ : boolean_ option)
-  ~disk_path:(disk_path_ : non_empty_string)
-  ~instance_name:(instance_name_ : resource_name)
-  ~disk_name:(disk_name_ : resource_name) () =
+    ~instance_names:(instance_names_ : resource_name_list)
+    ~load_balancer_name:(load_balancer_name_ : resource_name) () =
+  ({ instance_names = instance_names_; load_balancer_name = load_balancer_name_ }
+    : attach_instances_to_load_balancer_request)
+
+let make_attach_disk_request ?auto_mounting:(auto_mounting_ : boolean_ option)
+    ~disk_path:(disk_path_ : non_empty_string) ~instance_name:(instance_name_ : resource_name)
+    ~disk_name:(disk_name_ : resource_name) () =
   ({
      auto_mounting = auto_mounting_;
      disk_path = disk_path_;
      instance_name = instance_name_;
-     disk_name = disk_name_
-   } : attach_disk_request)
+     disk_name = disk_name_;
+   }
+    : attach_disk_request)
+
 let make_attach_certificate_to_distribution_request
-  ~certificate_name:(certificate_name_ : resource_name)
-  ~distribution_name:(distribution_name_ : resource_name) () =
-  ({
-     certificate_name = certificate_name_;
-     distribution_name = distribution_name_
-   } : attach_certificate_to_distribution_request)
-let make_allocate_static_ip_request
-  ~static_ip_name:(static_ip_name_ : resource_name) () =
+    ~certificate_name:(certificate_name_ : resource_name)
+    ~distribution_name:(distribution_name_ : resource_name) () =
+  ({ certificate_name = certificate_name_; distribution_name = distribution_name_ }
+    : attach_certificate_to_distribution_request)
+
+let make_allocate_static_ip_request ~static_ip_name:(static_ip_name_ : resource_name) () =
   ({ static_ip_name = static_ip_name_ } : allocate_static_ip_request)

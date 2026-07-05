@@ -14,9 +14,25 @@
   query_deserializers.ml)
  (deps
   (:gen ../../gen.exe)
-  (:input ../../../smithy-aws-protocol-tests_model.json))
+  (:input ../../../smithy-aws-protocol-tests_model.json)
+  (:ocf %{bin:ocamlformat}))
  (action
-  (run %{gen} %{input} . aws.protocoltests.shared)))
+  (progn
+   (run %{gen} %{input} . aws.protocoltests.shared)
+   (run
+    %{ocf}
+    -i
+    builders.ml
+    builders.mli
+    types.ml
+    types.mli
+    shared.ml
+    shared.mli
+    protocol_tests.ml
+    json_serializers.ml
+    json_deserializers.ml
+    query_serializers.ml
+    query_deserializers.ml))))
 
 (library
  (name shared)

@@ -1,60 +1,61 @@
 open Types
-let make_untag_queue_request ~tag_keys:(tag_keys_ : tag_key_list)
-  ~queue_url:(queue_url_ : string_) () =
+
+let make_untag_queue_request ~tag_keys:(tag_keys_ : tag_key_list) ~queue_url:(queue_url_ : string_)
+    () =
   ({ tag_keys = tag_keys_; queue_url = queue_url_ } : untag_queue_request)
-let make_tag_queue_request ~tags:(tags_ : tag_map)
-  ~queue_url:(queue_url_ : string_) () =
+
+let make_tag_queue_request ~tags:(tags_ : tag_map) ~queue_url:(queue_url_ : string_) () =
   ({ tags = tags_; queue_url = queue_url_ } : tag_queue_request)
+
 let make_start_message_move_task_request
-  ?max_number_of_messages_per_second:(max_number_of_messages_per_second_ :
-                                       nullable_integer option)
-  ?destination_arn:(destination_arn_ : string_ option)
-  ~source_arn:(source_arn_ : string_) () =
+    ?max_number_of_messages_per_second:
+      (max_number_of_messages_per_second_ : nullable_integer option)
+    ?destination_arn:(destination_arn_ : string_ option) ~source_arn:(source_arn_ : string_) () =
   ({
      max_number_of_messages_per_second = max_number_of_messages_per_second_;
      destination_arn = destination_arn_;
-     source_arn = source_arn_
-   } : start_message_move_task_request)
-let make_set_queue_attributes_request
-  ~attributes:(attributes_ : queue_attribute_map)
-  ~queue_url:(queue_url_ : string_) () =
+     source_arn = source_arn_;
+   }
+    : start_message_move_task_request)
+
+let make_set_queue_attributes_request ~attributes:(attributes_ : queue_attribute_map)
+    ~queue_url:(queue_url_ : string_) () =
   ({ attributes = attributes_; queue_url = queue_url_ } : set_queue_attributes_request)
-let make_message_attribute_value
-  ?binary_list_values:(binary_list_values_ : binary_list option)
-  ?string_list_values:(string_list_values_ : string_list option)
-  ?binary_value:(binary_value_ : binary option)
-  ?string_value:(string_value_ : string_ option)
-  ~data_type:(data_type_ : string_) () =
+
+let make_message_attribute_value ?binary_list_values:(binary_list_values_ : binary_list option)
+    ?string_list_values:(string_list_values_ : string_list option)
+    ?binary_value:(binary_value_ : binary option) ?string_value:(string_value_ : string_ option)
+    ~data_type:(data_type_ : string_) () =
   ({
      data_type = data_type_;
      binary_list_values = binary_list_values_;
      string_list_values = string_list_values_;
      binary_value = binary_value_;
-     string_value = string_value_
-   } : message_attribute_value)
+     string_value = string_value_;
+   }
+    : message_attribute_value)
+
 let make_message_system_attribute_value
-  ?binary_list_values:(binary_list_values_ : binary_list option)
-  ?string_list_values:(string_list_values_ : string_list option)
-  ?binary_value:(binary_value_ : binary option)
-  ?string_value:(string_value_ : string_ option)
-  ~data_type:(data_type_ : string_) () =
+    ?binary_list_values:(binary_list_values_ : binary_list option)
+    ?string_list_values:(string_list_values_ : string_list option)
+    ?binary_value:(binary_value_ : binary option) ?string_value:(string_value_ : string_ option)
+    ~data_type:(data_type_ : string_) () =
   ({
      data_type = data_type_;
      binary_list_values = binary_list_values_;
      string_list_values = string_list_values_;
      binary_value = binary_value_;
-     string_value = string_value_
-   } : message_system_attribute_value)
-let make_send_message_request
-  ?message_group_id:(message_group_id_ : string_ option)
-  ?message_deduplication_id:(message_deduplication_id_ : string_ option)
-  ?message_system_attributes:(message_system_attributes_ :
-                               message_body_system_attribute_map option)
-  ?message_attributes:(message_attributes_ :
-                        message_body_attribute_map option)
-  ?delay_seconds:(delay_seconds_ : nullable_integer option)
-  ~message_body:(message_body_ : string_) ~queue_url:(queue_url_ : string_)
-  () =
+     string_value = string_value_;
+   }
+    : message_system_attribute_value)
+
+let make_send_message_request ?message_group_id:(message_group_id_ : string_ option)
+    ?message_deduplication_id:(message_deduplication_id_ : string_ option)
+    ?message_system_attributes:
+      (message_system_attributes_ : message_body_system_attribute_map option)
+    ?message_attributes:(message_attributes_ : message_body_attribute_map option)
+    ?delay_seconds:(delay_seconds_ : nullable_integer option)
+    ~message_body:(message_body_ : string_) ~queue_url:(queue_url_ : string_) () =
   ({
      message_group_id = message_group_id_;
      message_deduplication_id = message_deduplication_id_;
@@ -62,37 +63,37 @@ let make_send_message_request
      message_attributes = message_attributes_;
      delay_seconds = delay_seconds_;
      message_body = message_body_;
-     queue_url = queue_url_
-   } : send_message_request)
-let make_send_message_batch_result_entry
-  ?sequence_number:(sequence_number_ : string_ option)
-  ?md5_of_message_system_attributes:(md5_of_message_system_attributes_ :
-                                      string_ option)
-  ?md5_of_message_attributes:(md5_of_message_attributes_ : string_ option)
-  ~md5_of_message_body:(md5_of_message_body_ : string_)
-  ~message_id:(message_id_ : string_) ~id:(id_ : string_) () =
+     queue_url = queue_url_;
+   }
+    : send_message_request)
+
+let make_send_message_batch_result_entry ?sequence_number:(sequence_number_ : string_ option)
+    ?md5_of_message_system_attributes:(md5_of_message_system_attributes_ : string_ option)
+    ?md5_of_message_attributes:(md5_of_message_attributes_ : string_ option)
+    ~md5_of_message_body:(md5_of_message_body_ : string_) ~message_id:(message_id_ : string_)
+    ~id:(id_ : string_) () =
   ({
      sequence_number = sequence_number_;
      md5_of_message_system_attributes = md5_of_message_system_attributes_;
      md5_of_message_attributes = md5_of_message_attributes_;
      md5_of_message_body = md5_of_message_body_;
      message_id = message_id_;
-     id = id_
-   } : send_message_batch_result_entry)
-let make_batch_result_error_entry ?message:(message_ : string_ option)
-  ~code:(code_ : string_) ~sender_fault:(sender_fault_ : boolean_)
-  ~id:(id_ : string_) () =
-  ({ message = message_; code = code_; sender_fault = sender_fault_; id = id_
-   } : batch_result_error_entry)
-let make_send_message_batch_request_entry
-  ?message_group_id:(message_group_id_ : string_ option)
-  ?message_deduplication_id:(message_deduplication_id_ : string_ option)
-  ?message_system_attributes:(message_system_attributes_ :
-                               message_body_system_attribute_map option)
-  ?message_attributes:(message_attributes_ :
-                        message_body_attribute_map option)
-  ?delay_seconds:(delay_seconds_ : nullable_integer option)
-  ~message_body:(message_body_ : string_) ~id:(id_ : string_) () =
+     id = id_;
+   }
+    : send_message_batch_result_entry)
+
+let make_batch_result_error_entry ?message:(message_ : string_ option) ~code:(code_ : string_)
+    ~sender_fault:(sender_fault_ : boolean_) ~id:(id_ : string_) () =
+  ({ message = message_; code = code_; sender_fault = sender_fault_; id = id_ }
+    : batch_result_error_entry)
+
+let make_send_message_batch_request_entry ?message_group_id:(message_group_id_ : string_ option)
+    ?message_deduplication_id:(message_deduplication_id_ : string_ option)
+    ?message_system_attributes:
+      (message_system_attributes_ : message_body_system_attribute_map option)
+    ?message_attributes:(message_attributes_ : message_body_attribute_map option)
+    ?delay_seconds:(delay_seconds_ : nullable_integer option)
+    ~message_body:(message_body_ : string_) ~id:(id_ : string_) () =
   ({
      message_group_id = message_group_id_;
      message_deduplication_id = message_deduplication_id_;
@@ -100,23 +101,22 @@ let make_send_message_batch_request_entry
      message_attributes = message_attributes_;
      delay_seconds = delay_seconds_;
      message_body = message_body_;
-     id = id_
-   } : send_message_batch_request_entry)
-let make_send_message_batch_request
-  ~entries:(entries_ : send_message_batch_request_entry_list)
-  ~queue_url:(queue_url_ : string_) () =
+     id = id_;
+   }
+    : send_message_batch_request_entry)
+
+let make_send_message_batch_request ~entries:(entries_ : send_message_batch_request_entry_list)
+    ~queue_url:(queue_url_ : string_) () =
   ({ entries = entries_; queue_url = queue_url_ } : send_message_batch_request)
-let make_remove_permission_request ~label:(label_ : string_)
-  ~queue_url:(queue_url_ : string_) () =
+
+let make_remove_permission_request ~label:(label_ : string_) ~queue_url:(queue_url_ : string_) () =
   ({ label = label_; queue_url = queue_url_ } : remove_permission_request)
-let make_message
-  ?message_attributes:(message_attributes_ :
-                        message_body_attribute_map option)
-  ?md5_of_message_attributes:(md5_of_message_attributes_ : string_ option)
-  ?attributes:(attributes_ : message_system_attribute_map option)
-  ?body:(body_ : string_ option) ?md5_of_body:(md5_of_body_ : string_ option)
-  ?receipt_handle:(receipt_handle_ : string_ option)
-  ?message_id:(message_id_ : string_ option) () =
+
+let make_message ?message_attributes:(message_attributes_ : message_body_attribute_map option)
+    ?md5_of_message_attributes:(md5_of_message_attributes_ : string_ option)
+    ?attributes:(attributes_ : message_system_attribute_map option) ?body:(body_ : string_ option)
+    ?md5_of_body:(md5_of_body_ : string_ option) ?receipt_handle:(receipt_handle_ : string_ option)
+    ?message_id:(message_id_ : string_ option) () =
   ({
      message_attributes = message_attributes_;
      md5_of_message_attributes = md5_of_message_attributes_;
@@ -124,19 +124,20 @@ let make_message
      body = body_;
      md5_of_body = md5_of_body_;
      receipt_handle = receipt_handle_;
-     message_id = message_id_
-   } : message)
+     message_id = message_id_;
+   }
+    : message)
+
 let make_receive_message_request
-  ?receive_request_attempt_id:(receive_request_attempt_id_ : string_ option)
-  ?wait_time_seconds:(wait_time_seconds_ : nullable_integer option)
-  ?visibility_timeout:(visibility_timeout_ : nullable_integer option)
-  ?max_number_of_messages:(max_number_of_messages_ : nullable_integer option)
-  ?message_attribute_names:(message_attribute_names_ :
-                             message_attribute_name_list option)
-  ?message_system_attribute_names:(message_system_attribute_names_ :
-                                    message_system_attribute_list option)
-  ?attribute_names:(attribute_names_ : attribute_name_list option)
-  ~queue_url:(queue_url_ : string_) () =
+    ?receive_request_attempt_id:(receive_request_attempt_id_ : string_ option)
+    ?wait_time_seconds:(wait_time_seconds_ : nullable_integer option)
+    ?visibility_timeout:(visibility_timeout_ : nullable_integer option)
+    ?max_number_of_messages:(max_number_of_messages_ : nullable_integer option)
+    ?message_attribute_names:(message_attribute_names_ : message_attribute_name_list option)
+    ?message_system_attribute_names:
+      (message_system_attribute_names_ : message_system_attribute_list option)
+    ?attribute_names:(attribute_names_ : attribute_name_list option)
+    ~queue_url:(queue_url_ : string_) () =
   ({
      receive_request_attempt_id = receive_request_attempt_id_;
      wait_time_seconds = wait_time_seconds_;
@@ -145,122 +146,120 @@ let make_receive_message_request
      message_attribute_names = message_attribute_names_;
      message_system_attribute_names = message_system_attribute_names_;
      attribute_names = attribute_names_;
-     queue_url = queue_url_
-   } : receive_message_request)
+     queue_url = queue_url_;
+   }
+    : receive_message_request)
+
 let make_purge_queue_request ~queue_url:(queue_url_ : string_) () =
   ({ queue_url = queue_url_ } : purge_queue_request)
-let make_list_queues_request
-  ?max_results:(max_results_ : boxed_integer option)
-  ?next_token:(next_token_ : token option)
-  ?queue_name_prefix:(queue_name_prefix_ : string_ option) () =
-  ({
-     max_results = max_results_;
-     next_token = next_token_;
-     queue_name_prefix = queue_name_prefix_
-   } : list_queues_request)
+
+let make_list_queues_request ?max_results:(max_results_ : boxed_integer option)
+    ?next_token:(next_token_ : token option)
+    ?queue_name_prefix:(queue_name_prefix_ : string_ option) () =
+  ({ max_results = max_results_; next_token = next_token_; queue_name_prefix = queue_name_prefix_ }
+    : list_queues_request)
+
 let make_list_queue_tags_request ~queue_url:(queue_url_ : string_) () =
   ({ queue_url = queue_url_ } : list_queue_tags_request)
-let make_list_message_move_tasks_result_entry
-  ?started_timestamp:(started_timestamp_ : long option)
-  ?failure_reason:(failure_reason_ : string_ option)
-  ?approximate_number_of_messages_to_move:(approximate_number_of_messages_to_move_
-                                            : nullable_long option)
-  ?approximate_number_of_messages_moved:(approximate_number_of_messages_moved_
-                                          : long option)
-  ?max_number_of_messages_per_second:(max_number_of_messages_per_second_ :
-                                       nullable_integer option)
-  ?destination_arn:(destination_arn_ : string_ option)
-  ?source_arn:(source_arn_ : string_ option)
-  ?status:(status_ : string_ option)
-  ?task_handle:(task_handle_ : string_ option) () =
+
+let make_list_message_move_tasks_result_entry ?started_timestamp:(started_timestamp_ : long option)
+    ?failure_reason:(failure_reason_ : string_ option)
+    ?approximate_number_of_messages_to_move:
+      (approximate_number_of_messages_to_move_ : nullable_long option)
+    ?approximate_number_of_messages_moved:(approximate_number_of_messages_moved_ : long option)
+    ?max_number_of_messages_per_second:
+      (max_number_of_messages_per_second_ : nullable_integer option)
+    ?destination_arn:(destination_arn_ : string_ option) ?source_arn:(source_arn_ : string_ option)
+    ?status:(status_ : string_ option) ?task_handle:(task_handle_ : string_ option) () =
   ({
      started_timestamp = started_timestamp_;
      failure_reason = failure_reason_;
-     approximate_number_of_messages_to_move =
-       approximate_number_of_messages_to_move_;
-     approximate_number_of_messages_moved =
-       approximate_number_of_messages_moved_;
+     approximate_number_of_messages_to_move = approximate_number_of_messages_to_move_;
+     approximate_number_of_messages_moved = approximate_number_of_messages_moved_;
      max_number_of_messages_per_second = max_number_of_messages_per_second_;
      destination_arn = destination_arn_;
      source_arn = source_arn_;
      status = status_;
-     task_handle = task_handle_
-   } : list_message_move_tasks_result_entry)
-let make_list_message_move_tasks_request
-  ?max_results:(max_results_ : nullable_integer option)
-  ~source_arn:(source_arn_ : string_) () =
+     task_handle = task_handle_;
+   }
+    : list_message_move_tasks_result_entry)
+
+let make_list_message_move_tasks_request ?max_results:(max_results_ : nullable_integer option)
+    ~source_arn:(source_arn_ : string_) () =
   ({ max_results = max_results_; source_arn = source_arn_ } : list_message_move_tasks_request)
-let make_list_dead_letter_source_queues_request
-  ?max_results:(max_results_ : boxed_integer option)
-  ?next_token:(next_token_ : token option) ~queue_url:(queue_url_ : string_)
-  () =
-  ({
-     max_results = max_results_;
-     next_token = next_token_;
-     queue_url = queue_url_
-   } : list_dead_letter_source_queues_request)
+
+let make_list_dead_letter_source_queues_request ?max_results:(max_results_ : boxed_integer option)
+    ?next_token:(next_token_ : token option) ~queue_url:(queue_url_ : string_) () =
+  ({ max_results = max_results_; next_token = next_token_; queue_url = queue_url_ }
+    : list_dead_letter_source_queues_request)
+
 let make_get_queue_url_request
-  ?queue_owner_aws_account_id:(queue_owner_aws_account_id_ : string_ option)
-  ~queue_name:(queue_name_ : string_) () =
-  ({
-     queue_owner_aws_account_id = queue_owner_aws_account_id_;
-     queue_name = queue_name_
-   } : get_queue_url_request)
+    ?queue_owner_aws_account_id:(queue_owner_aws_account_id_ : string_ option)
+    ~queue_name:(queue_name_ : string_) () =
+  ({ queue_owner_aws_account_id = queue_owner_aws_account_id_; queue_name = queue_name_ }
+    : get_queue_url_request)
+
 let make_get_queue_attributes_request
-  ?attribute_names:(attribute_names_ : attribute_name_list option)
-  ~queue_url:(queue_url_ : string_) () =
+    ?attribute_names:(attribute_names_ : attribute_name_list option)
+    ~queue_url:(queue_url_ : string_) () =
   ({ attribute_names = attribute_names_; queue_url = queue_url_ } : get_queue_attributes_request)
+
 let make_delete_queue_request ~queue_url:(queue_url_ : string_) () =
   ({ queue_url = queue_url_ } : delete_queue_request)
+
 let make_delete_message_request ~receipt_handle:(receipt_handle_ : string_)
-  ~queue_url:(queue_url_ : string_) () =
+    ~queue_url:(queue_url_ : string_) () =
   ({ receipt_handle = receipt_handle_; queue_url = queue_url_ } : delete_message_request)
+
 let make_delete_message_batch_result_entry ~id:(id_ : string_) () =
   ({ id = id_ } : delete_message_batch_result_entry)
-let make_delete_message_batch_request_entry
-  ~receipt_handle:(receipt_handle_ : string_) ~id:(id_ : string_) () =
+
+let make_delete_message_batch_request_entry ~receipt_handle:(receipt_handle_ : string_)
+    ~id:(id_ : string_) () =
   ({ receipt_handle = receipt_handle_; id = id_ } : delete_message_batch_request_entry)
-let make_delete_message_batch_request
-  ~entries:(entries_ : delete_message_batch_request_entry_list)
-  ~queue_url:(queue_url_ : string_) () =
+
+let make_delete_message_batch_request ~entries:(entries_ : delete_message_batch_request_entry_list)
+    ~queue_url:(queue_url_ : string_) () =
   ({ entries = entries_; queue_url = queue_url_ } : delete_message_batch_request)
+
 let make_create_queue_request ?tags:(tags_ : tag_map option)
-  ?attributes:(attributes_ : queue_attribute_map option)
-  ~queue_name:(queue_name_ : string_) () =
-  ({ tags = tags_; attributes = attributes_; queue_name = queue_name_ } : 
-  create_queue_request)
+    ?attributes:(attributes_ : queue_attribute_map option) ~queue_name:(queue_name_ : string_) () =
+  ({ tags = tags_; attributes = attributes_; queue_name = queue_name_ } : create_queue_request)
+
 let make_change_message_visibility_request
-  ~visibility_timeout:(visibility_timeout_ : nullable_integer)
-  ~receipt_handle:(receipt_handle_ : string_)
-  ~queue_url:(queue_url_ : string_) () =
+    ~visibility_timeout:(visibility_timeout_ : nullable_integer)
+    ~receipt_handle:(receipt_handle_ : string_) ~queue_url:(queue_url_ : string_) () =
   ({
      visibility_timeout = visibility_timeout_;
      receipt_handle = receipt_handle_;
-     queue_url = queue_url_
-   } : change_message_visibility_request)
-let make_change_message_visibility_batch_result_entry ~id:(id_ : string_) ()
-  = ({ id = id_ } : change_message_visibility_batch_result_entry)
+     queue_url = queue_url_;
+   }
+    : change_message_visibility_request)
+
+let make_change_message_visibility_batch_result_entry ~id:(id_ : string_) () =
+  ({ id = id_ } : change_message_visibility_batch_result_entry)
+
 let make_change_message_visibility_batch_request_entry
-  ?visibility_timeout:(visibility_timeout_ : nullable_integer option)
-  ~receipt_handle:(receipt_handle_ : string_) ~id:(id_ : string_) () =
-  ({
-     visibility_timeout = visibility_timeout_;
-     receipt_handle = receipt_handle_;
-     id = id_
-   } : change_message_visibility_batch_request_entry)
+    ?visibility_timeout:(visibility_timeout_ : nullable_integer option)
+    ~receipt_handle:(receipt_handle_ : string_) ~id:(id_ : string_) () =
+  ({ visibility_timeout = visibility_timeout_; receipt_handle = receipt_handle_; id = id_ }
+    : change_message_visibility_batch_request_entry)
+
 let make_change_message_visibility_batch_request
-  ~entries:(entries_ : change_message_visibility_batch_request_entry_list)
-  ~queue_url:(queue_url_ : string_) () =
+    ~entries:(entries_ : change_message_visibility_batch_request_entry_list)
+    ~queue_url:(queue_url_ : string_) () =
   ({ entries = entries_; queue_url = queue_url_ } : change_message_visibility_batch_request)
-let make_cancel_message_move_task_request
-  ~task_handle:(task_handle_ : string_) () =
+
+let make_cancel_message_move_task_request ~task_handle:(task_handle_ : string_) () =
   ({ task_handle = task_handle_ } : cancel_message_move_task_request)
+
 let make_add_permission_request ~actions:(actions_ : action_name_list)
-  ~aws_account_ids:(aws_account_ids_ : aws_account_id_list)
-  ~label:(label_ : string_) ~queue_url:(queue_url_ : string_) () =
+    ~aws_account_ids:(aws_account_ids_ : aws_account_id_list) ~label:(label_ : string_)
+    ~queue_url:(queue_url_ : string_) () =
   ({
      actions = actions_;
      aws_account_ids = aws_account_ids_;
      label = label_;
-     queue_url = queue_url_
-   } : add_permission_request)
+     queue_url = queue_url_;
+   }
+    : add_permission_request)
