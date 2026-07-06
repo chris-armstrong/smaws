@@ -9,7 +9,7 @@ type nonrec update_service_response = {
 }
 [@@ocaml.doc ""]
 
-type nonrec resource_id = string [@@ocaml.doc ""]
+type nonrec arn = string [@@ocaml.doc ""]
 
 type nonrec resource_description = string [@@ocaml.doc ""]
 
@@ -304,7 +304,13 @@ type nonrec update_service_request = {
       [@ocaml.doc
         "A complex type that contains the new settings for the service. You can specify a maximum \
          of 30 attributes (key-value pairs).\n"]
-  id : resource_id; [@ocaml.doc "The ID of the service that you want to update.\n"]
+  id : arn;
+      [@ocaml.doc
+        "The ID or Amazon Resource Name (ARN) of the service that you want to update. If the \
+         namespace associated with the service is shared with your Amazon Web Services account, \
+         specify the service ARN. For more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide} \n"]
 }
 [@@ocaml.doc ""]
 
@@ -320,7 +326,11 @@ type nonrec service_attributes_map = (service_attribute_key * service_attribute_
 type nonrec update_service_attributes_request = {
   attributes : service_attributes_map;
       [@ocaml.doc "A string map that contains attribute key-value pairs.\n"]
-  service_id : resource_id; [@ocaml.doc "The ID of the service that you want to update.\n"]
+  service_id : arn;
+      [@ocaml.doc
+        "The ID or Amazon Resource Name (ARN) of the service that you want to update. For services \
+         created in a namespace shared with your Amazon Web Services account, specify the service \
+         ARN.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -343,7 +353,7 @@ type nonrec invalid_input = { message : error_message option [@ocaml.doc ""] }
    constraints.\n"]
 
 type nonrec duplicate_request = {
-  duplicate_operation_id : resource_id option;
+  duplicate_operation_id : operation_id option;
       [@ocaml.doc "The ID of the operation that's already in progress.\n"]
   message : error_message option; [@ocaml.doc ""]
 }
@@ -357,6 +367,8 @@ type nonrec update_public_dns_namespace_response = {
          {{:https://docs.aws.amazon.com/cloud-map/latest/api/API_GetOperation.html}GetOperation}.\n"]
 }
 [@@ocaml.doc ""]
+
+type nonrec resource_id = string [@@ocaml.doc ""]
 
 type nonrec soa_change = {
   tt_l : record_tt_l;
@@ -395,7 +407,7 @@ type nonrec update_public_dns_namespace_request = {
          [UpdatePublicDnsNamespace] requests to be retried without the risk of running the \
          operation twice. [UpdaterRequestId] can be any unique string (for example, a \
          date/timestamp).\n"]
-  id : resource_id; [@ocaml.doc "The ID of the namespace being updated.\n"]
+  id : arn; [@ocaml.doc "The ID or Amazon Resource Name (ARN) of the namespace being updated.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -447,7 +459,9 @@ type nonrec update_private_dns_namespace_request = {
          [UpdatePrivateDnsNamespace] requests to be retried without the risk of running the \
          operation twice. [UpdaterRequestId] can be any unique string (for example, a \
          date/timestamp).\n"]
-  id : resource_id; [@ocaml.doc "The ID of the namespace that you want to update.\n"]
+  id : arn;
+      [@ocaml.doc
+        "The ID or Amazon Resource Name (ARN) of the namespace that you want to update.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -459,10 +473,14 @@ type nonrec update_instance_custom_health_status_request = {
       [@ocaml.doc "The new status of the instance, [HEALTHY] or [UNHEALTHY].\n"]
   instance_id : resource_id;
       [@ocaml.doc "The ID of the instance that you want to change the health status for.\n"]
-  service_id : resource_id;
+  service_id : arn;
       [@ocaml.doc
-        "The ID of the service that includes the configuration for the custom health check that \
-         you want to change the status for.\n"]
+        "The ID or Amazon Resource Name (ARN) of the service that includes the configuration for \
+         the custom health check that you want to change the status for. For services created in a \
+         shared namespace, specify the service ARN. For more information about shared namespaces, \
+         see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -497,7 +515,9 @@ type nonrec update_http_namespace_request = {
         "A unique string that identifies the request and that allows failed [UpdateHttpNamespace] \
          requests to be retried without the risk of running the operation twice. \
          [UpdaterRequestId] can be any unique string (for example, a date/timestamp).\n"]
-  id : resource_id; [@ocaml.doc "The ID of the namespace that you want to update.\n"]
+  id : arn;
+      [@ocaml.doc
+        "The ID or Amazon Resource Name (ARN) of the namespace that you want to update.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -561,7 +581,7 @@ type nonrec service_type_option = HTTP [@ocaml.doc ""] [@@ocaml.doc ""]
 type nonrec service_type = DNS [@ocaml.doc ""] | DNS_HTTP [@ocaml.doc ""] | HTTP [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec arn = string [@@ocaml.doc ""]
+type nonrec aws_account_id = string [@@ocaml.doc ""]
 
 type nonrec service_name = string [@@ocaml.doc ""]
 
@@ -710,6 +730,13 @@ type nonrec health_check_custom_config = {
   \  "]
 
 type nonrec service_summary = {
+  created_by_account : aws_account_id option;
+      [@ocaml.doc
+        "The ID of the Amazon Web Services account that created the service. If this isn't your \
+         account ID, it is the account ID of the namespace owner or of another account with which \
+         the namespace has been shared. For more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
   create_date : timestamp option; [@ocaml.doc "The date and time that the service was created.\n"]
   health_check_custom_config : health_check_custom_config option;
       [@ocaml.doc
@@ -761,6 +788,13 @@ type nonrec service_summary = {
         \                           \n\
         \                             "]
   name : service_name option; [@ocaml.doc "The name of the service.\n"]
+  resource_owner : aws_account_id option;
+      [@ocaml.doc
+        "The ID of the Amazon Web Services account that created the namespace with which the \
+         service is associated. If this isn't your account ID, it is the ID of the account that \
+         shared the namespace with your account. For more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
   arn : arn option;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) that Cloud Map assigns to the service when you create it.\n"]
@@ -771,7 +805,8 @@ type nonrec service_summary = {
 
 type nonrec service_summaries_list = service_summary list [@@ocaml.doc ""]
 
-type nonrec service_filter_name = NAMESPACE_ID [@ocaml.doc ""] [@@ocaml.doc ""]
+type nonrec service_filter_name = RESOURCE_OWNER [@ocaml.doc ""] | NAMESPACE_ID [@ocaml.doc ""]
+[@@ocaml.doc ""]
 
 type nonrec filter_value = string [@@ocaml.doc ""]
 
@@ -790,8 +825,8 @@ type nonrec service_filter = {
         "The operator that you want to use to determine whether a service is returned by \
          [ListServices]. Valid values for [Condition] include the following:\n\n\
         \ {ul\n\
-        \       {-   [EQ]: When you specify [EQ], specify one namespace ID for [Values]. [EQ] is \
-         the default condition and can be omitted.\n\
+        \       {-   [EQ]: When you specify [EQ], specify one value. [EQ] is the default condition \
+         and can be omitted.\n\
         \           \n\
         \            }\n\
         \       }\n\
@@ -799,8 +834,35 @@ type nonrec service_filter = {
   values : filter_values;
       [@ocaml.doc
         "The values that are applicable to the value that you specify for [Condition] to filter \
-         the list of services.\n"]
-  name : service_filter_name; [@ocaml.doc "Specify [NAMESPACE_ID].\n"]
+         the list of services.\n\n\
+        \ {ul\n\
+        \       {-   {b NAMESPACE_ID}: Specify one namespace ID or ARN. Specify the namespace ARN \
+         for namespaces that are shared with your Amazon Web Services account.\n\
+        \           \n\
+        \            }\n\
+        \       {-   {b RESOURCE_OWNER}: Specify one of [SELF] or [OTHER_ACCOUNTS]. [SELF] can be \
+         used to filter services associated with namespaces created by you and [OTHER_ACCOUNTS] \
+         can be used to filter services associated with namespaces that were shared with you.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \  "]
+  name : service_filter_name;
+      [@ocaml.doc
+        "Specify the services that you want to get using one of the following.\n\n\
+        \ {ul\n\
+        \       {-   [NAMESPACE_ID]: Gets the services associated with the specified namespace.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [RESOURCE_OWNER]: Gets the services associated with the namespaces created by \
+         your Amazon Web Services account or by other accounts. This can be used to filter for \
+         services created in a shared namespace. For more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \  "]
 }
 [@@ocaml.doc
   "A complex type that lets you specify the namespaces that you want to list services for.\n"]
@@ -822,6 +884,13 @@ type nonrec service_attributes = {
         \       }\n\
         \   You can specify a total of 30 attributes.\n\
         \   "]
+  resource_owner : aws_account_id option;
+      [@ocaml.doc
+        "The ID of the Amazon Web Services account that created the namespace with which the \
+         service is associated. If this isn't your account ID, it is the ID of the account that \
+         shared the namespace with your account. For more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
   service_arn : arn option;
       [@ocaml.doc "The ARN of the service that the attributes are associated with.\n"]
 }
@@ -831,6 +900,7 @@ type nonrec service_attributes = {
 type nonrec service_attribute_key_list = service_attribute_key list [@@ocaml.doc ""]
 
 type nonrec service_already_exists = {
+  service_arn : arn option; [@ocaml.doc "The ARN of the existing service.\n"]
   service_id : resource_id option; [@ocaml.doc "The ID of the existing service.\n"]
   creator_request_id : resource_id option;
       [@ocaml.doc "The [CreatorRequestId] that was used to create the service.\n"]
@@ -839,6 +909,13 @@ type nonrec service_already_exists = {
 [@@ocaml.doc "The service can't be created because a service with the same name already exists.\n"]
 
 type nonrec service = {
+  created_by_account : aws_account_id option;
+      [@ocaml.doc
+        "The ID of the Amazon Web Services account that created the service. If this isn't your \
+         account ID, it is the ID of account of the namespace owner or of another account with \
+         which the namespace has been shared. For more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
   creator_request_id : resource_id option;
       [@ocaml.doc
         "A unique string that identifies the request and that allows failed requests to be retried \
@@ -893,6 +970,13 @@ type nonrec service = {
   namespace_id : resource_id option;
       [@ocaml.doc "The ID of the namespace that was used to create the service.\n"]
   name : service_name option; [@ocaml.doc "The name of the service.\n"]
+  resource_owner : aws_account_id option;
+      [@ocaml.doc
+        "The ID of the Amazon Web Services account that created the namespace with which the \
+         service is associated. If this isn't your account ID, it is the ID of the account that \
+         shared the namespace with your account. For more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
   arn : arn option;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) that Cloud Map assigns to the service when you create it.\n"]
@@ -1073,8 +1157,13 @@ type nonrec register_instance_request = {
          because the [InstanceId] is discoverable by public DNS queries.\n\
         \    \n\
         \     "]
-  service_id : resource_id;
-      [@ocaml.doc "The ID of the service that you want to use for settings for the instance.\n"]
+  service_id : arn;
+      [@ocaml.doc
+        "The ID or Amazon Resource Name (ARN) of the service that you want to use for settings for \
+         the instance. For services created in a shared namespace, specify the service ARN. For \
+         more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -1354,6 +1443,13 @@ type nonrec namespace_summary = {
       [@ocaml.doc
         "The name of the namespace. When you create a namespace, Cloud Map automatically creates a \
          Route\194\16053 hosted zone that has the same name as the namespace.\n"]
+  resource_owner : aws_account_id option;
+      [@ocaml.doc
+        "The ID of the Amazon Web Services account that created the namespace. If this isn't your \
+         account ID, it's the ID of the account that shared the namespace with your account. For \
+         more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
   arn : arn option;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) that Cloud Map assigns to the namespace when you create it.\n"]
@@ -1383,6 +1479,7 @@ type nonrec list_namespaces_response = {
 [@@ocaml.doc ""]
 
 type nonrec namespace_filter_name =
+  | RESOURCE_OWNER [@ocaml.doc ""]
   | HTTP_NAME [@ocaml.doc ""]
   | NAME [@ocaml.doc ""]
   | TYPE [@ocaml.doc ""]
@@ -1395,8 +1492,8 @@ type nonrec namespace_filter = {
          specified value. Valid values for [Condition] are one of the following.\n\n\
         \ {ul\n\
         \       {-   [EQ]: When you specify [EQ] for [Condition], you can specify only one value. \
-         [EQ] is supported for [TYPE], [NAME], and [HTTP_NAME]. [EQ] is the default condition and \
-         can be omitted.\n\
+         [EQ] is supported for [TYPE], [NAME], [RESOURCE_OWNER] and [HTTP_NAME]. [EQ] is the \
+         default condition and can be omitted.\n\
         \           \n\
         \            }\n\
         \       {-   [BEGINS_WITH]: When you specify [BEGINS_WITH] for [Condition], you can \
@@ -1419,6 +1516,11 @@ type nonrec namespace_filter = {
          [Namespace.Properties.HttpProperties.HttpName].\n\
         \           \n\
         \            }\n\
+        \       {-   [RESOURCE_OWNER]: Specify one of [SELF] or [OTHER_ACCOUNTS]. [SELF] can be \
+         used to filter namespaces created by you and [OTHER_ACCOUNTS] can be used to filter \
+         namespaces shared with you that were created by other accounts.\n\
+        \           \n\
+        \            }\n\
         \       }\n\
         \  "]
   name : namespace_filter_name;
@@ -1432,6 +1534,13 @@ type nonrec namespace_filter = {
         \           \n\
         \            }\n\
         \       {-   [HTTP_NAME]: Gets the namespaces with the specified HTTP name.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [RESOURCE_OWNER]: Gets the namespaces created by your Amazon Web Services \
+         account or by other accounts. This can be used to filter for shared namespaces. For more \
+         information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n\
         \           \n\
         \            }\n\
         \       }\n\
@@ -1472,6 +1581,14 @@ type nonrec list_namespaces_request = {
 [@@ocaml.doc ""]
 
 type nonrec instance_summary = {
+  created_by_account : aws_account_id option;
+      [@ocaml.doc
+        "The ID of the Amazon Web Services account that registered the instance. If this isn't \
+         your account ID, it's the ID of the account that shared the namespace with your account \
+         or the ID of another account with which the namespace has been shared. For more \
+         information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
   attributes : attributes option;
       [@ocaml.doc
         "A string map that contains the following information:\n\n\
@@ -1531,6 +1648,11 @@ type nonrec list_instances_response = {
   instances : instance_summary_list option;
       [@ocaml.doc
         "Summary information about the instances that are associated with the specified service.\n"]
+  resource_owner : aws_account_id option;
+      [@ocaml.doc
+        "The ID of the Amazon Web Services account that created the namespace that contains the \
+         specified service. If this isn't your account ID, it's the ID of the account that shared \
+         the namespace with your account.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -1547,8 +1669,13 @@ type nonrec list_instances_request = {
          [ListInstances] request to get the next group of results. Specify the value of \
          [NextToken] from the previous response in the next request.\n\
         \ "]
-  service_id : resource_id;
-      [@ocaml.doc "The ID of the service that you want to list instances for.\n"]
+  service_id : arn;
+      [@ocaml.doc
+        "The ID or Amazon Resource Name (ARN) of the service that you want to list instances for. \
+         For services created in a shared namespace, specify the service ARN. For more information \
+         about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -1561,8 +1688,13 @@ type nonrec get_service_attributes_response = {
 [@@ocaml.doc ""]
 
 type nonrec get_service_attributes_request = {
-  service_id : resource_id;
-      [@ocaml.doc "The ID of the service that you want to get attributes for.\n"]
+  service_id : arn;
+      [@ocaml.doc
+        "The ID or Amazon Resource Name (ARN) of the service that you want to get attributes for. \
+         For services created in a namespace shared with your Amazon Web Services account, specify \
+         the service ARN. For more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -1573,7 +1705,13 @@ type nonrec get_service_response = {
 [@@ocaml.doc ""]
 
 type nonrec get_service_request = {
-  id : resource_id; [@ocaml.doc "The ID of the service that you want to get settings for.\n"]
+  id : arn;
+      [@ocaml.doc
+        "The ID or Amazon Resource Name (ARN) of the service that you want to get settings for. \
+         For services created by consumers in a shared namespace, specify the service ARN. For \
+         more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -1669,6 +1807,10 @@ type nonrec operation = {
         \                                             "]
   type_ : operation_type option;
       [@ocaml.doc "The name of the operation that's associated with the specified ID.\n"]
+  owner_account : aws_account_id option;
+      [@ocaml.doc
+        "The ID of the Amazon Web Services account that owns the namespace associated with the \
+         operation.\n"]
   id : operation_id option;
       [@ocaml.doc "The ID of the operation that you want to get information about.\n"]
 }
@@ -1681,7 +1823,12 @@ type nonrec get_operation_response = {
 [@@ocaml.doc ""]
 
 type nonrec get_operation_request = {
-  operation_id : resource_id;
+  owner_account : aws_account_id option;
+      [@ocaml.doc
+        "The ID of the Amazon Web Services account that owns the namespace associated with the \
+         operation, as specified in the namespace [ResourceOwner] field. For operations associated \
+         with namespaces that are shared with your account, you must specify an [OwnerAccount].\n"]
+  operation_id : operation_id;
       [@ocaml.doc "The ID of the operation that you want to get more information about.\n"]
 }
 [@@ocaml.doc ""]
@@ -1718,6 +1865,13 @@ type nonrec namespace = {
         \                                     \n\
         \                                       "]
   name : namespace_name option; [@ocaml.doc "The name of the namespace, such as [example.com].\n"]
+  resource_owner : aws_account_id option;
+      [@ocaml.doc
+        "The ID of the Amazon Web Services account that created the namespace. If this isn't your \
+         account ID, it's the ID of the account that shared the namespace with your account. For \
+         more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
   arn : arn option;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) that Cloud Map assigns to the namespace when you create it.\n"]
@@ -1732,7 +1886,13 @@ type nonrec get_namespace_response = {
 [@@ocaml.doc ""]
 
 type nonrec get_namespace_request = {
-  id : resource_id; [@ocaml.doc "The ID of the namespace that you want to get information about.\n"]
+  id : arn;
+      [@ocaml.doc
+        "The ID or Amazon Resource Name (ARN) of the namespace that you want to get information \
+         about. For namespaces shared with your Amazon Web Services account, specify the namespace \
+         ARN. For more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide} \n"]
 }
 [@@ocaml.doc ""]
 
@@ -1785,12 +1945,25 @@ type nonrec get_instances_health_status_request = {
          request.\n\
         \   \n\
         \    "]
-  service_id : resource_id;
-      [@ocaml.doc "The ID of the service that the instance is associated with.\n"]
+  service_id : arn;
+      [@ocaml.doc
+        "The ID or Amazon Resource Name (ARN) of the service that the instance is associated with. \
+         For services created in a shared namespace, specify the service ARN. For more information \
+         about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec instance = {
+  created_by_account : aws_account_id option;
+      [@ocaml.doc
+        "The ID of the Amazon Web Services account that registered the instance. If this isn't \
+         your account ID, it's the ID of the account that shared the namespace with your account \
+         or the ID of another account with which the namespace has been shared. For more \
+         information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
   attributes : attributes option;
       [@ocaml.doc
         "A string map that contains the following information for the service that you specify in \
@@ -1927,14 +2100,24 @@ type nonrec instance = {
 type nonrec get_instance_response = {
   instance : instance option;
       [@ocaml.doc "A complex type that contains information about a specified instance.\n"]
+  resource_owner : aws_account_id option;
+      [@ocaml.doc
+        "The ID of the Amazon Web Services account that created the namespace that contains the \
+         service that the instance is associated with. If this isn't your account ID, it's the ID \
+         of the account that shared the namespace with your account.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec get_instance_request = {
   instance_id : resource_id;
       [@ocaml.doc "The ID of the instance that you want to get information about.\n"]
-  service_id : resource_id;
-      [@ocaml.doc "The ID of the service that the instance is associated with.\n"]
+  service_id : arn;
+      [@ocaml.doc
+        "The ID or Amazon Resource Name (ARN) of the service that the instance is associated with. \
+         For services created in a shared namespace, specify the service ARN. For more information \
+         about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -1957,12 +2140,20 @@ type nonrec discover_instances_revision_response = {
 [@@ocaml.doc ""]
 
 type nonrec discover_instances_revision_request = {
+  owner_account : aws_account_id option;
+      [@ocaml.doc
+        "The ID of the Amazon Web Services account that owns the namespace associated with the \
+         instance, as specified in the namespace [ResourceOwner] field. For instances associated \
+         with namespaces that are shared with your account, you must specify an [OwnerAccount]. \
+         For more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
   service_name : service_name;
       [@ocaml.doc "The name of the service that you specified when you registered the instance.\n"]
   namespace_name : namespace_name;
       [@ocaml.doc
-        "The [HttpName] name of the namespace. It's found in the [HttpProperties] member of the \
-         [Properties] member of the namespace.\n"]
+        "The [HttpName] name of the namespace. The [HttpName] is found in the [HttpProperties] \
+         member of the [Properties] member of the namespace.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -1981,10 +2172,8 @@ type nonrec http_instance_summary = {
       [@ocaml.doc "The name of the service that you specified when you registered the instance.\n"]
   namespace_name : namespace_name_http option;
       [@ocaml.doc
-        "    \n\n\
-        \ The [HttpName] name of the namespace. It's found in the [HttpProperties] member of the \
-         [Properties] member of the namespace.\n\
-        \ "]
+        "The [HttpName] name of the namespace. It's found in the [HttpProperties] member of the \
+         [Properties] member of the namespace.\n"]
   instance_id : resource_id option;
       [@ocaml.doc
         "The ID of an instance that matches the values that you specified in the request.\n"]
@@ -2019,6 +2208,11 @@ type nonrec health_status_filter =
 [@@ocaml.doc ""]
 
 type nonrec discover_instances_request = {
+  owner_account : aws_account_id option;
+      [@ocaml.doc
+        "The ID of the Amazon Web Services account that owns the namespace associated with the \
+         instance, as specified in the namespace [ResourceOwner] field. For instances associated \
+         with namespaces that are shared with your account, you must specify an [OwnerAccount].\n"]
   health_status : health_status_filter option;
       [@ocaml.doc
         "The health status of the instances that you want to discover. This parameter is ignored \
@@ -2044,8 +2238,8 @@ type nonrec discover_instances_request = {
   query_parameters : attributes option;
       [@ocaml.doc
         "Filters to scope the results based on custom attributes for the instance (for example, \
-         [{version=v1,\n\
-        \    az=1a}]). Only instances that match all the specified key-value pairs are returned.\n"]
+         [{version=v1, az=1a}]). Only instances that match all the specified key-value pairs are \
+         returned.\n"]
   max_results : discover_max_results option;
       [@ocaml.doc
         "The maximum number of instances that you want Cloud Map to return in the response to a \
@@ -2055,9 +2249,9 @@ type nonrec discover_instances_request = {
       [@ocaml.doc "The name of the service that you specified when you registered the instance.\n"]
   namespace_name : namespace_name;
       [@ocaml.doc
-        "The [HttpName] name of the namespace. It's found in the [HttpProperties] member of the \
-         [Properties] member of the namespace. In most cases, [Name] and [HttpName] match. \
-         However, if you reuse [Name] for namespace creation, a generated hash is added to \
+        "The [HttpName] name of the namespace. The [HttpName] is found in the [HttpProperties] \
+         member of the [Properties] member of the namespace. In most cases, [Name] and [HttpName] \
+         match. However, if you reuse [Name] for namespace creation, a generated hash is added to \
          [HttpName] to distinguish the two.\n"]
 }
 [@@ocaml.doc ""]
@@ -2077,8 +2271,13 @@ type nonrec deregister_instance_request = {
         "The value that you specified for [Id] in the \
          {{:https://docs.aws.amazon.com/cloud-map/latest/api/API_RegisterInstance.html}RegisterInstance} \
          request.\n"]
-  service_id : resource_id;
-      [@ocaml.doc "The ID of the service that the instance is associated with.\n"]
+  service_id : arn;
+      [@ocaml.doc
+        "The ID or Amazon Resource Name (ARN) of the service that the instance is associated with. \
+         If the namespace associated with the service is shared with your account, specify the \
+         service ARN. For more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -2087,15 +2286,26 @@ type nonrec delete_service_attributes_response = unit [@@ocaml.doc ""]
 type nonrec delete_service_attributes_request = {
   attributes : service_attribute_key_list;
       [@ocaml.doc "A list of keys corresponding to each attribute that you want to delete.\n"]
-  service_id : resource_id;
-      [@ocaml.doc "The ID of the service from which the attributes will be deleted.\n"]
+  service_id : arn;
+      [@ocaml.doc
+        "The ID or Amazon Resource Name (ARN) of the service from which the attributes will be \
+         deleted. For services created in a namespace shared with your Amazon Web Services \
+         account, specify the service ARN. For more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec delete_service_response = unit [@@ocaml.doc ""]
 
 type nonrec delete_service_request = {
-  id : resource_id; [@ocaml.doc "The ID of the service that you want to delete.\n"]
+  id : arn;
+      [@ocaml.doc
+        "The ID or Amazon Resource Name (ARN) of the service that you want to delete. If the \
+         namespace associated with the service is shared with your Amazon Web Services account, \
+         specify the service ARN. For more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing}.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -2109,7 +2319,9 @@ type nonrec delete_namespace_response = {
 [@@ocaml.doc ""]
 
 type nonrec delete_namespace_request = {
-  id : resource_id; [@ocaml.doc "The ID of the namespace that you want to delete.\n"]
+  id : arn;
+      [@ocaml.doc
+        "The ID or Amazon Resource Name (ARN) of the namespace that you want to delete.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -2161,10 +2373,13 @@ type nonrec create_service_request = {
         "A unique string that identifies the request and that allows failed [CreateService] \
          requests to be retried without the risk of running the operation twice. \
          [CreatorRequestId] can be any unique string (for example, a date/timestamp).\n"]
-  namespace_id : resource_id option;
+  namespace_id : arn option;
       [@ocaml.doc
-        "The ID of the namespace that you want to use to create the service. The namespace ID must \
-         be specified, but it can be specified either here or in the [DnsConfig] object.\n"]
+        "The ID or Amazon Resource Name (ARN) of the namespace that you want to use to create the \
+         service. For namespaces shared with your Amazon Web Services account, specify the \
+         namespace ARN. For more information about shared namespaces, see \
+         {{:https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html}Cross-account \
+         Cloud Map namespace sharing} in the {i Cloud Map Developer Guide}.\n"]
   name : service_name;
       [@ocaml.doc
         "The name that you want to assign to the service.\n\n\

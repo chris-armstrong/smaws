@@ -1,8 +1,14 @@
 open Types
 
-val make_subnet : ?subnet_availability_zone:string_ -> ?subnet_identifier:string_ -> unit -> subnet
+val make_subnet :
+  ?supported_network_types:network_type_list ->
+  ?subnet_availability_zone:string_ ->
+  ?subnet_identifier:string_ ->
+  unit ->
+  subnet
 
 val make_subnet_group :
+  ?supported_network_types:network_type_list ->
   ?subnets:subnet_list ->
   ?vpc_id:string_ ->
   ?description:string_ ->
@@ -63,6 +69,7 @@ val make_parameter_group_status :
 val make_sse_description : ?status:sse_status -> unit -> sse_description
 
 val make_cluster :
+  ?network_type:network_type ->
   ?cluster_endpoint_encryption_type:cluster_endpoint_encryption_type ->
   ?sse_description:sse_description ->
   ?parameter_group:parameter_group_status ->
@@ -266,6 +273,7 @@ val make_create_parameter_group_request :
 val make_create_cluster_response : ?cluster:cluster -> unit -> create_cluster_response
 
 val make_create_cluster_request :
+  ?network_type:network_type ->
   ?cluster_endpoint_encryption_type:cluster_endpoint_encryption_type ->
   ?sse_specification:sse_specification ->
   ?tags:tag_list ->

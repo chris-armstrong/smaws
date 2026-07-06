@@ -43,6 +43,7 @@ val make_stream_description :
   unit ->
   stream_description
 
+val make_shard_filter : ?shard_id:shard_id -> ?type_:shard_filter_type -> unit -> shard_filter
 val make_identity : ?type_:string_ -> ?principal_id:string_ -> unit -> identity
 
 val make_record :
@@ -87,6 +88,7 @@ val make_describe_stream_output :
   ?stream_description:stream_description -> unit -> describe_stream_output
 
 val make_describe_stream_input :
+  ?shard_filter:shard_filter ->
   ?exclusive_start_shard_id:shard_id ->
   ?limit:positive_integer_object ->
   stream_arn:stream_arn ->

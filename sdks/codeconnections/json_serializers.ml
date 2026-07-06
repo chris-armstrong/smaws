@@ -24,6 +24,7 @@ let owner_id_to_yojson = string_to_yojson
 
 let provider_type_to_yojson (x : provider_type) =
   match x with
+  | AZURE_DEV_OPS -> `String "AzureDevOps"
   | GITLAB_SELF_MANAGED -> `String "GitLabSelfManaged"
   | GITLAB -> `String "GitLab"
   | GITHUB_ENTERPRISE_SERVER -> `String "GitHubEnterpriseServer"

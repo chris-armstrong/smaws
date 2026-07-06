@@ -19,8 +19,7 @@ type nonrec vmware_to_aws_tag_mapping = {
   vmware_category : vmware_category; [@ocaml.doc "The is the category of VMware.\n"]
 }
 [@@ocaml.doc
-  "This displays the mapping of on-premises VMware tags to the corresponding Amazon Web Services \
-   tags.\n"]
+  "This displays the mapping of VMware tags to the corresponding Amazon Web Services tags.\n"]
 
 type nonrec vmware_to_aws_tag_mappings = vmware_to_aws_tag_mapping list [@@ocaml.doc ""]
 
@@ -214,7 +213,8 @@ type nonrec tag = {
 }
 [@@ocaml.doc
   "A key-value pair you can use to manage, filter, and search for your resources. Allowed \
-   characters include UTF-8 letters, numbers, spaces, and the following characters: + - = . _ : /.\n"]
+   characters include UTF-8 letters, numbers, and the following characters: + - = . _ : /. Spaces \
+   are not allowed in tag values.\n"]
 
 type nonrec tags = tag list [@@ocaml.doc ""]
 
@@ -294,8 +294,7 @@ type nonrec put_hypervisor_property_mappings_input = {
   iam_role_arn : iam_role_arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the IAM role.\n"]
   vmware_to_aws_tag_mappings : vmware_to_aws_tag_mappings;
       [@ocaml.doc
-        "This action requests the mappings of on-premises VMware tags to the Amazon Web Services \
-         tags.\n"]
+        "This action requests the mappings of VMware tags to the Amazon Web Services tags.\n"]
   hypervisor_arn : server_arn; [@ocaml.doc "The Amazon Resource Name (ARN) of the hypervisor.\n"]
 }
 [@@ocaml.doc ""]
@@ -338,10 +337,7 @@ type nonrec bandwidth_rate_limit_interval = {
   average_upload_rate_limit_in_bits_per_sec : average_upload_rate_limit option;
       [@ocaml.doc
         "The average upload rate limit component of the bandwidth rate limit interval, in bits per \
-         second. This field does not appear in the response if the upload rate limit is not set.\n\n\
-        \  For Backup Gateway, the minimum value is [(Value)].\n\
-        \  \n\
-        \   "]
+         second. This field does not appear in the response if the upload rate limit is not set.\n"]
 }
 [@@ocaml.doc
   "Describes a bandwidth rate limit interval for a gateway. A bandwidth rate limit schedule \
@@ -602,8 +598,7 @@ type nonrec get_hypervisor_property_mappings_output = {
       [@ocaml.doc "The Amazon Resource Name (ARN) of the IAM role.\n"]
   vmware_to_aws_tag_mappings : vmware_to_aws_tag_mappings option;
       [@ocaml.doc
-        "This is a display of the mappings of on-premises VMware tags to the Amazon Web Services \
-         tags.\n"]
+        "This is a display of the mappings of VMware tags to the Amazon Web Services tags.\n"]
   hypervisor_arn : server_arn option;
       [@ocaml.doc "The Amazon Resource Name (ARN) of the hypervisor.\n"]
 }
@@ -625,6 +620,12 @@ type nonrec get_hypervisor_input = {
 [@@ocaml.doc ""]
 
 type nonrec gateway_details = {
+  software_version : name option;
+      [@ocaml.doc "The version number of the software running on the gateway appliance.\n"]
+  deprecation_date : time option;
+      [@ocaml.doc
+        "Date after which this gateway will not receive software updates for new features and bug \
+         fixes.\n"]
   vpc_endpoint : vpc_endpoint option;
       [@ocaml.doc
         "The DNS name for the virtual private cloud (VPC) endpoint the gateway uses to connect to \

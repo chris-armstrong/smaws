@@ -23,13 +23,18 @@ let iso_date_to_yojson = timestamp_epoch_seconds_to_yojson
 
 let region_name_to_yojson (x : region_name) =
   match x with
-  | EU_NORTH_1 -> `String "eu-north-1"
+  | SA_EAST_1 -> `String "sa-east-1"
+  | AP_SOUTHEAST_5 -> `String "ap-southeast-5"
+  | AP_SOUTHEAST_3 -> `String "ap-southeast-3"
   | AP_NORTHEAST_2 -> `String "ap-northeast-2"
   | AP_NORTHEAST_1 -> `String "ap-northeast-1"
   | AP_SOUTHEAST_2 -> `String "ap-southeast-2"
   | AP_SOUTHEAST_1 -> `String "ap-southeast-1"
   | AP_SOUTH_1 -> `String "ap-south-1"
+  | AP_EAST_1 -> `String "ap-east-1"
   | CA_CENTRAL_1 -> `String "ca-central-1"
+  | EU_SOUTH_2 -> `String "eu-south-2"
+  | EU_NORTH_1 -> `String "eu-north-1"
   | EU_CENTRAL_1 -> `String "eu-central-1"
   | EU_WEST_3 -> `String "eu-west-3"
   | EU_WEST_2 -> `String "eu-west-2"
@@ -308,6 +313,15 @@ let service_exception_to_yojson (x : service_exception) =
       ("code", option_to_yojson string__to_yojson x.code);
     ]
 
+let region_setup_in_progress_exception_to_yojson (x : region_setup_in_progress_exception) =
+  assoc_to_yojson
+    [
+      ("tip", option_to_yojson string__to_yojson x.tip);
+      ("message", option_to_yojson string__to_yojson x.message);
+      ("docs", option_to_yojson string__to_yojson x.docs);
+      ("code", option_to_yojson string__to_yojson x.code);
+    ]
+
 let operation_failure_exception_to_yojson (x : operation_failure_exception) =
   assoc_to_yojson
     [
@@ -433,9 +447,13 @@ let update_distribution_result_to_yojson (x : update_distribution_result) =
 let origin_protocol_policy_enum_to_yojson (x : origin_protocol_policy_enum) =
   match x with HTTPSOnly -> `String "https-only" | HTTPOnly -> `String "http-only"
 
+let origin_ip_address_type_enum_to_yojson (x : origin_ip_address_type_enum) =
+  match x with DUALSTACK -> `String "dualstack" | IPV6 -> `String "ipv6" | IPV4 -> `String "ipv4"
+
 let input_origin_to_yojson (x : input_origin) =
   assoc_to_yojson
     [
+      ("ipAddressType", option_to_yojson origin_ip_address_type_enum_to_yojson x.ip_address_type);
       ("responseTimeout", option_to_yojson integer_to_yojson x.response_timeout);
       ("protocolPolicy", option_to_yojson origin_protocol_policy_enum_to_yojson x.protocol_policy);
       ("regionName", option_to_yojson region_name_to_yojson x.region_name);
@@ -774,9 +792,36 @@ let bucket_access_log_config_to_yojson (x : bucket_access_log_config) =
       ("enabled", Some (boolean__to_yojson x.enabled));
     ]
 
+let bucket_cors_rule_id_to_yojson = string_to_yojson
+let bucket_cors_allowed_method_to_yojson = string_to_yojson
+
+let bucket_cors_allowed_methods_to_yojson tree =
+  list_to_yojson bucket_cors_allowed_method_to_yojson tree
+
+let bucket_cors_allowed_origins_to_yojson tree = list_to_yojson string__to_yojson tree
+let bucket_cors_allowed_headers_to_yojson tree = list_to_yojson string__to_yojson tree
+let bucket_cors_expose_headers_to_yojson tree = list_to_yojson string__to_yojson tree
+
+let bucket_cors_rule_to_yojson (x : bucket_cors_rule) =
+  assoc_to_yojson
+    [
+      ("maxAgeSeconds", option_to_yojson integer_to_yojson x.max_age_seconds);
+      ("exposeHeaders", option_to_yojson bucket_cors_expose_headers_to_yojson x.expose_headers);
+      ("allowedHeaders", option_to_yojson bucket_cors_allowed_headers_to_yojson x.allowed_headers);
+      ("allowedOrigins", Some (bucket_cors_allowed_origins_to_yojson x.allowed_origins));
+      ("allowedMethods", Some (bucket_cors_allowed_methods_to_yojson x.allowed_methods));
+      ("id", option_to_yojson bucket_cors_rule_id_to_yojson x.id);
+    ]
+
+let bucket_cors_rules_to_yojson tree = list_to_yojson bucket_cors_rule_to_yojson tree
+
+let bucket_cors_config_to_yojson (x : bucket_cors_config) =
+  assoc_to_yojson [ ("rules", option_to_yojson bucket_cors_rules_to_yojson x.rules) ]
+
 let bucket_to_yojson (x : bucket) =
   assoc_to_yojson
     [
+      ("cors", option_to_yojson bucket_cors_config_to_yojson x.cors);
       ("accessLogConfig", option_to_yojson bucket_access_log_config_to_yojson x.access_log_config);
       ("state", option_to_yojson bucket_state_to_yojson x.state);
       ( "resourcesReceivingAccess",
@@ -807,6 +852,7 @@ let update_bucket_result_to_yojson (x : update_bucket_result) =
 let update_bucket_request_to_yojson (x : update_bucket_request) =
   assoc_to_yojson
     [
+      ("cors", option_to_yojson bucket_cors_config_to_yojson x.cors);
       ("accessLogConfig", option_to_yojson bucket_access_log_config_to_yojson x.access_log_config);
       ( "readonlyAccessAccounts",
         option_to_yojson partner_id_list_to_yojson x.readonly_access_accounts );
@@ -1520,6 +1566,7 @@ let notification_trigger_list_to_yojson tree = list_to_yojson alarm_state_to_yoj
 let put_alarm_request_to_yojson (x : put_alarm_request) =
   assoc_to_yojson
     [
+      ("tags", option_to_yojson tag_list_to_yojson x.tags);
       ("notificationEnabled", option_to_yojson boolean__to_yojson x.notification_enabled);
       ( "notificationTriggers",
         option_to_yojson notification_trigger_list_to_yojson x.notification_triggers );
@@ -1564,6 +1611,7 @@ let password_data_to_yojson (x : password_data) =
 let origin_to_yojson (x : origin) =
   assoc_to_yojson
     [
+      ("ipAddressType", option_to_yojson origin_ip_address_type_enum_to_yojson x.ip_address_type);
       ("responseTimeout", option_to_yojson integer_to_yojson x.response_timeout);
       ("protocolPolicy", option_to_yojson origin_protocol_policy_enum_to_yojson x.protocol_policy);
       ("regionName", option_to_yojson region_name_to_yojson x.region_name);
@@ -2999,6 +3047,7 @@ let contact_method_status_to_yojson (x : contact_method_status) =
 let contact_method_to_yojson (x : contact_method) =
   assoc_to_yojson
     [
+      ("tags", option_to_yojson tag_list_to_yojson x.tags);
       ("supportCode", option_to_yojson string__to_yojson x.support_code);
       ("resourceType", option_to_yojson resource_type_to_yojson x.resource_type);
       ("location", option_to_yojson resource_location_to_yojson x.location);
@@ -3227,6 +3276,7 @@ let get_buckets_result_to_yojson (x : get_buckets_result) =
 let get_buckets_request_to_yojson (x : get_buckets_request) =
   assoc_to_yojson
     [
+      ("includeCors", option_to_yojson boolean__to_yojson x.include_cors);
       ( "includeConnectedResources",
         option_to_yojson boolean__to_yojson x.include_connected_resources );
       ("pageToken", option_to_yojson string__to_yojson x.page_token);
@@ -3383,6 +3433,7 @@ let get_auto_snapshots_request_to_yojson (x : get_auto_snapshots_request) =
 let alarm_to_yojson (x : alarm) =
   assoc_to_yojson
     [
+      ("tags", option_to_yojson tag_list_to_yojson x.tags);
       ("notificationEnabled", option_to_yojson boolean__to_yojson x.notification_enabled);
       ( "notificationTriggers",
         option_to_yojson notification_trigger_list_to_yojson x.notification_triggers );
@@ -4047,6 +4098,7 @@ let create_contact_method_result_to_yojson (x : create_contact_method_result) =
 let create_contact_method_request_to_yojson (x : create_contact_method_request) =
   assoc_to_yojson
     [
+      ("tags", option_to_yojson tag_list_to_yojson x.tags);
       ("contactEndpoint", Some (string_max256_to_yojson x.contact_endpoint));
       ("protocol", Some (contact_protocol_to_yojson x.protocol));
     ]

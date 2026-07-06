@@ -636,16 +636,9 @@ type nonrec ip_address_type = DUAL_STACK [@ocaml.doc ""] | IPV4 [@ocaml.doc ""] 
 type nonrec network_configuration = {
   ip_address_type : ip_address_type option;
       [@ocaml.doc
-        "App Runner provides you with the option to choose between {i Internet Protocol version 4 \
-         (IPv4)} and {i dual stack} (IPv4 and IPv6) for your incoming public network \
-         configuration. This is an optional parameter. If you do not specify an [IpAddressType], \
-         it defaults to select IPv4.\n\n\
-        \   Currently, App Runner supports dual stack for only Public endpoint. Only IPv4 is \
-         supported for Private endpoint. If you update a service that's using dual-stack Public \
-         endpoint to a Private endpoint, your App Runner service will default to support only IPv4 \
-         for Private endpoint and fail to receive traffic originating from IPv6 endpoint. \n\
-        \  \n\
-        \   "]
+        "App Runner provides you with the option to choose between {i IPv4} and {i dual stack} \
+         (IPv4 and IPv6). This is an optional parameter. If you do not specify an [IpAddressType], \
+         it defaults to select IPv4.\n"]
   ingress_configuration : ingress_configuration option;
       [@ocaml.doc "Network configuration settings for inbound message traffic.\n"]
   egress_configuration : egress_configuration option;
@@ -1951,7 +1944,8 @@ type nonrec create_vpc_connector_request = {
         "A list of IDs of subnets that App Runner should use when it associates your service with \
          a custom Amazon VPC. Specify IDs of subnets of a single Amazon VPC. App Runner determines \
          the Amazon VPC from the subnets you specify.\n\n\
-        \   App Runner currently only provides support for IPv4. \n\
+        \   App Runner only supports subnets of IP address type {i IPv4} and {i dual stack} (IPv4 \
+         and IPv6).\n\
         \  \n\
         \   "]
   vpc_connector_name : vpc_connector_name; [@ocaml.doc "A name for the VPC connector.\n"]

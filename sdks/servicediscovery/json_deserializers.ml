@@ -10,7 +10,7 @@ let update_service_response_of_yojson tree path =
    }
     : update_service_response)
 
-let resource_id_of_yojson = string_of_yojson
+let arn_of_yojson = string_of_yojson
 let resource_description_of_yojson = string_of_yojson
 
 let record_type_of_yojson (tree : t) path =
@@ -81,7 +81,7 @@ let update_service_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      service = value_for_key service_change_of_yojson "Service" _list path;
-     id = value_for_key resource_id_of_yojson "Id" _list path;
+     id = value_for_key arn_of_yojson "Id" _list path;
    }
     : update_service_request)
 
@@ -99,7 +99,7 @@ let update_service_attributes_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      attributes = value_for_key service_attributes_map_of_yojson "Attributes" _list path;
-     service_id = value_for_key resource_id_of_yojson "ServiceId" _list path;
+     service_id = value_for_key arn_of_yojson "ServiceId" _list path;
    }
     : update_service_attributes_request)
 
@@ -124,7 +124,7 @@ let duplicate_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      duplicate_operation_id =
-       option_of_yojson (value_for_key resource_id_of_yojson "DuplicateOperationId") _list path;
+       option_of_yojson (value_for_key operation_id_of_yojson "DuplicateOperationId") _list path;
      message = option_of_yojson (value_for_key error_message_of_yojson "Message") _list path;
    }
     : duplicate_request)
@@ -135,6 +135,8 @@ let update_public_dns_namespace_response_of_yojson tree path =
      operation_id = option_of_yojson (value_for_key operation_id_of_yojson "OperationId") _list path;
    }
     : update_public_dns_namespace_response)
+
+let resource_id_of_yojson = string_of_yojson
 
 let soa_change_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -171,7 +173,7 @@ let update_public_dns_namespace_request_of_yojson tree path =
      namespace = value_for_key public_dns_namespace_change_of_yojson "Namespace" _list path;
      updater_request_id =
        option_of_yojson (value_for_key resource_id_of_yojson "UpdaterRequestId") _list path;
-     id = value_for_key resource_id_of_yojson "Id" _list path;
+     id = value_for_key arn_of_yojson "Id" _list path;
    }
     : update_public_dns_namespace_request)
 
@@ -223,7 +225,7 @@ let update_private_dns_namespace_request_of_yojson tree path =
      namespace = value_for_key private_dns_namespace_change_of_yojson "Namespace" _list path;
      updater_request_id =
        option_of_yojson (value_for_key resource_id_of_yojson "UpdaterRequestId") _list path;
-     id = value_for_key resource_id_of_yojson "Id" _list path;
+     id = value_for_key arn_of_yojson "Id" _list path;
    }
     : update_private_dns_namespace_request)
 
@@ -241,7 +243,7 @@ let update_instance_custom_health_status_request_of_yojson tree path =
   ({
      status = value_for_key custom_health_status_of_yojson "Status" _list path;
      instance_id = value_for_key resource_id_of_yojson "InstanceId" _list path;
-     service_id = value_for_key resource_id_of_yojson "ServiceId" _list path;
+     service_id = value_for_key arn_of_yojson "ServiceId" _list path;
    }
     : update_instance_custom_health_status_request)
 
@@ -273,7 +275,7 @@ let update_http_namespace_request_of_yojson tree path =
      namespace = value_for_key http_namespace_change_of_yojson "Namespace" _list path;
      updater_request_id =
        option_of_yojson (value_for_key resource_id_of_yojson "UpdaterRequestId") _list path;
-     id = value_for_key resource_id_of_yojson "Id" _list path;
+     id = value_for_key arn_of_yojson "Id" _list path;
    }
     : update_http_namespace_request)
 
@@ -350,7 +352,7 @@ let service_type_of_yojson (tree : t) path =
      : service_type)
     : service_type)
 
-let arn_of_yojson = string_of_yojson
+let aws_account_id_of_yojson = string_of_yojson
 let service_name_of_yojson = string_of_yojson
 let resource_count_of_yojson = int_of_yojson
 
@@ -384,6 +386,8 @@ let health_check_custom_config_of_yojson tree path =
 let service_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     created_by_account =
+       option_of_yojson (value_for_key aws_account_id_of_yojson "CreatedByAccount") _list path;
      create_date = option_of_yojson (value_for_key timestamp_of_yojson "CreateDate") _list path;
      health_check_custom_config =
        option_of_yojson
@@ -398,6 +402,8 @@ let service_summary_of_yojson tree path =
        option_of_yojson (value_for_key resource_description_of_yojson "Description") _list path;
      type_ = option_of_yojson (value_for_key service_type_of_yojson "Type") _list path;
      name = option_of_yojson (value_for_key service_name_of_yojson "Name") _list path;
+     resource_owner =
+       option_of_yojson (value_for_key aws_account_id_of_yojson "ResourceOwner") _list path;
      arn = option_of_yojson (value_for_key arn_of_yojson "Arn") _list path;
      id = option_of_yojson (value_for_key resource_id_of_yojson "Id") _list path;
    }
@@ -407,6 +413,7 @@ let service_summaries_list_of_yojson tree path = list_of_yojson service_summary_
 
 let service_filter_name_of_yojson (tree : t) path =
   ((match tree with
+    | `String "RESOURCE_OWNER" -> RESOURCE_OWNER
     | `String "NAMESPACE_ID" -> NAMESPACE_ID
     | `String value -> raise (deserialize_unknown_enum_value_error path "ServiceFilterName" value)
     | _ -> raise (deserialize_wrong_type_error path "ServiceFilterName")
@@ -443,6 +450,8 @@ let service_attributes_of_yojson tree path =
   ({
      attributes =
        option_of_yojson (value_for_key service_attributes_map_of_yojson "Attributes") _list path;
+     resource_owner =
+       option_of_yojson (value_for_key aws_account_id_of_yojson "ResourceOwner") _list path;
      service_arn = option_of_yojson (value_for_key arn_of_yojson "ServiceArn") _list path;
    }
     : service_attributes)
@@ -453,6 +462,7 @@ let service_attribute_key_list_of_yojson tree path =
 let service_already_exists_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     service_arn = option_of_yojson (value_for_key arn_of_yojson "ServiceArn") _list path;
      service_id = option_of_yojson (value_for_key resource_id_of_yojson "ServiceId") _list path;
      creator_request_id =
        option_of_yojson (value_for_key resource_id_of_yojson "CreatorRequestId") _list path;
@@ -463,6 +473,8 @@ let service_already_exists_of_yojson tree path =
 let service_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     created_by_account =
+       option_of_yojson (value_for_key aws_account_id_of_yojson "CreatedByAccount") _list path;
      creator_request_id =
        option_of_yojson (value_for_key resource_id_of_yojson "CreatorRequestId") _list path;
      create_date = option_of_yojson (value_for_key timestamp_of_yojson "CreateDate") _list path;
@@ -480,6 +492,8 @@ let service_of_yojson tree path =
        option_of_yojson (value_for_key resource_description_of_yojson "Description") _list path;
      namespace_id = option_of_yojson (value_for_key resource_id_of_yojson "NamespaceId") _list path;
      name = option_of_yojson (value_for_key service_name_of_yojson "Name") _list path;
+     resource_owner =
+       option_of_yojson (value_for_key aws_account_id_of_yojson "ResourceOwner") _list path;
      arn = option_of_yojson (value_for_key arn_of_yojson "Arn") _list path;
      id = option_of_yojson (value_for_key resource_id_of_yojson "Id") _list path;
    }
@@ -513,7 +527,7 @@ let register_instance_request_of_yojson tree path =
      creator_request_id =
        option_of_yojson (value_for_key resource_id_of_yojson "CreatorRequestId") _list path;
      instance_id = value_for_key instance_id_of_yojson "InstanceId" _list path;
-     service_id = value_for_key resource_id_of_yojson "ServiceId" _list path;
+     service_id = value_for_key arn_of_yojson "ServiceId" _list path;
    }
     : register_instance_request)
 
@@ -660,6 +674,8 @@ let namespace_summary_of_yojson tree path =
        option_of_yojson (value_for_key resource_description_of_yojson "Description") _list path;
      type_ = option_of_yojson (value_for_key namespace_type_of_yojson "Type") _list path;
      name = option_of_yojson (value_for_key namespace_name_of_yojson "Name") _list path;
+     resource_owner =
+       option_of_yojson (value_for_key aws_account_id_of_yojson "ResourceOwner") _list path;
      arn = option_of_yojson (value_for_key arn_of_yojson "Arn") _list path;
      id = option_of_yojson (value_for_key resource_id_of_yojson "Id") _list path;
    }
@@ -679,6 +695,7 @@ let list_namespaces_response_of_yojson tree path =
 
 let namespace_filter_name_of_yojson (tree : t) path =
   ((match tree with
+    | `String "RESOURCE_OWNER" -> RESOURCE_OWNER
     | `String "HTTP_NAME" -> HTTP_NAME
     | `String "NAME" -> NAME
     | `String "TYPE" -> TYPE
@@ -710,6 +727,8 @@ let list_namespaces_request_of_yojson tree path =
 let instance_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     created_by_account =
+       option_of_yojson (value_for_key aws_account_id_of_yojson "CreatedByAccount") _list path;
      attributes = option_of_yojson (value_for_key attributes_of_yojson "Attributes") _list path;
      id = option_of_yojson (value_for_key resource_id_of_yojson "Id") _list path;
    }
@@ -723,6 +742,8 @@ let list_instances_response_of_yojson tree path =
      next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
      instances =
        option_of_yojson (value_for_key instance_summary_list_of_yojson "Instances") _list path;
+     resource_owner =
+       option_of_yojson (value_for_key aws_account_id_of_yojson "ResourceOwner") _list path;
    }
     : list_instances_response)
 
@@ -731,7 +752,7 @@ let list_instances_request_of_yojson tree path =
   ({
      max_results = option_of_yojson (value_for_key max_results_of_yojson "MaxResults") _list path;
      next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
-     service_id = value_for_key resource_id_of_yojson "ServiceId" _list path;
+     service_id = value_for_key arn_of_yojson "ServiceId" _list path;
    }
     : list_instances_request)
 
@@ -745,7 +766,7 @@ let get_service_attributes_response_of_yojson tree path =
 
 let get_service_attributes_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ service_id = value_for_key resource_id_of_yojson "ServiceId" _list path }
+  ({ service_id = value_for_key arn_of_yojson "ServiceId" _list path }
     : get_service_attributes_request)
 
 let get_service_response_of_yojson tree path =
@@ -755,7 +776,7 @@ let get_service_response_of_yojson tree path =
 
 let get_service_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ id = value_for_key resource_id_of_yojson "Id" _list path } : get_service_request)
+  ({ id = value_for_key arn_of_yojson "Id" _list path } : get_service_request)
 
 let operation_not_found_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -801,6 +822,8 @@ let operation_of_yojson tree path =
      error_message = option_of_yojson (value_for_key message_of_yojson "ErrorMessage") _list path;
      status = option_of_yojson (value_for_key operation_status_of_yojson "Status") _list path;
      type_ = option_of_yojson (value_for_key operation_type_of_yojson "Type") _list path;
+     owner_account =
+       option_of_yojson (value_for_key aws_account_id_of_yojson "OwnerAccount") _list path;
      id = option_of_yojson (value_for_key operation_id_of_yojson "Id") _list path;
    }
     : operation)
@@ -812,7 +835,11 @@ let get_operation_response_of_yojson tree path =
 
 let get_operation_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ operation_id = value_for_key resource_id_of_yojson "OperationId" _list path }
+  ({
+     owner_account =
+       option_of_yojson (value_for_key aws_account_id_of_yojson "OwnerAccount") _list path;
+     operation_id = value_for_key operation_id_of_yojson "OperationId" _list path;
+   }
     : get_operation_request)
 
 let namespace_of_yojson tree path =
@@ -829,6 +856,8 @@ let namespace_of_yojson tree path =
        option_of_yojson (value_for_key resource_description_of_yojson "Description") _list path;
      type_ = option_of_yojson (value_for_key namespace_type_of_yojson "Type") _list path;
      name = option_of_yojson (value_for_key namespace_name_of_yojson "Name") _list path;
+     resource_owner =
+       option_of_yojson (value_for_key aws_account_id_of_yojson "ResourceOwner") _list path;
      arn = option_of_yojson (value_for_key arn_of_yojson "Arn") _list path;
      id = option_of_yojson (value_for_key resource_id_of_yojson "Id") _list path;
    }
@@ -841,7 +870,7 @@ let get_namespace_response_of_yojson tree path =
 
 let get_namespace_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ id = value_for_key resource_id_of_yojson "Id" _list path } : get_namespace_request)
+  ({ id = value_for_key arn_of_yojson "Id" _list path } : get_namespace_request)
 
 let health_status_of_yojson (tree : t) path =
   ((match tree with
@@ -873,13 +902,15 @@ let get_instances_health_status_request_of_yojson tree path =
      next_token = option_of_yojson (value_for_key next_token_of_yojson "NextToken") _list path;
      max_results = option_of_yojson (value_for_key max_results_of_yojson "MaxResults") _list path;
      instances = option_of_yojson (value_for_key instance_id_list_of_yojson "Instances") _list path;
-     service_id = value_for_key resource_id_of_yojson "ServiceId" _list path;
+     service_id = value_for_key arn_of_yojson "ServiceId" _list path;
    }
     : get_instances_health_status_request)
 
 let instance_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     created_by_account =
+       option_of_yojson (value_for_key aws_account_id_of_yojson "CreatedByAccount") _list path;
      attributes = option_of_yojson (value_for_key attributes_of_yojson "Attributes") _list path;
      creator_request_id =
        option_of_yojson (value_for_key resource_id_of_yojson "CreatorRequestId") _list path;
@@ -889,14 +920,18 @@ let instance_of_yojson tree path =
 
 let get_instance_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ instance = option_of_yojson (value_for_key instance_of_yojson "Instance") _list path }
+  ({
+     instance = option_of_yojson (value_for_key instance_of_yojson "Instance") _list path;
+     resource_owner =
+       option_of_yojson (value_for_key aws_account_id_of_yojson "ResourceOwner") _list path;
+   }
     : get_instance_response)
 
 let get_instance_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      instance_id = value_for_key resource_id_of_yojson "InstanceId" _list path;
-     service_id = value_for_key resource_id_of_yojson "ServiceId" _list path;
+     service_id = value_for_key arn_of_yojson "ServiceId" _list path;
    }
     : get_instance_request)
 
@@ -918,6 +953,8 @@ let discover_instances_revision_response_of_yojson tree path =
 let discover_instances_revision_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     owner_account =
+       option_of_yojson (value_for_key aws_account_id_of_yojson "OwnerAccount") _list path;
      service_name = value_for_key service_name_of_yojson "ServiceName" _list path;
      namespace_name = value_for_key namespace_name_of_yojson "NamespaceName" _list path;
    }
@@ -967,6 +1004,8 @@ let health_status_filter_of_yojson (tree : t) path =
 let discover_instances_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     owner_account =
+       option_of_yojson (value_for_key aws_account_id_of_yojson "OwnerAccount") _list path;
      health_status =
        option_of_yojson (value_for_key health_status_filter_of_yojson "HealthStatus") _list path;
      optional_parameters =
@@ -991,7 +1030,7 @@ let deregister_instance_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      instance_id = value_for_key resource_id_of_yojson "InstanceId" _list path;
-     service_id = value_for_key resource_id_of_yojson "ServiceId" _list path;
+     service_id = value_for_key arn_of_yojson "ServiceId" _list path;
    }
     : deregister_instance_request)
 
@@ -1003,7 +1042,7 @@ let delete_service_attributes_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      attributes = value_for_key service_attribute_key_list_of_yojson "Attributes" _list path;
-     service_id = value_for_key resource_id_of_yojson "ServiceId" _list path;
+     service_id = value_for_key arn_of_yojson "ServiceId" _list path;
    }
     : delete_service_attributes_request)
 
@@ -1013,7 +1052,7 @@ let delete_service_response_of_yojson tree path =
 
 let delete_service_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ id = value_for_key resource_id_of_yojson "Id" _list path } : delete_service_request)
+  ({ id = value_for_key arn_of_yojson "Id" _list path } : delete_service_request)
 
 let delete_namespace_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1024,7 +1063,7 @@ let delete_namespace_response_of_yojson tree path =
 
 let delete_namespace_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ id = value_for_key resource_id_of_yojson "Id" _list path } : delete_namespace_request)
+  ({ id = value_for_key arn_of_yojson "Id" _list path } : delete_namespace_request)
 
 let create_service_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1047,7 +1086,7 @@ let create_service_request_of_yojson tree path =
        option_of_yojson (value_for_key resource_description_of_yojson "Description") _list path;
      creator_request_id =
        option_of_yojson (value_for_key resource_id_of_yojson "CreatorRequestId") _list path;
-     namespace_id = option_of_yojson (value_for_key resource_id_of_yojson "NamespaceId") _list path;
+     namespace_id = option_of_yojson (value_for_key arn_of_yojson "NamespaceId") _list path;
      name = value_for_key service_name_of_yojson "Name" _list path;
    }
     : create_service_request)

@@ -1,5 +1,18 @@
 open Types
 
+val make_warm_throughput_specification_summary :
+  status:warm_throughput_status ->
+  write_units_per_second:Smaws_Lib.Smithy_api.Types.long ->
+  read_units_per_second:Smaws_Lib.Smithy_api.Types.long ->
+  unit ->
+  warm_throughput_specification_summary
+
+val make_warm_throughput_specification :
+  ?write_units_per_second:Smaws_Lib.Smithy_api.Types.long ->
+  ?read_units_per_second:Smaws_Lib.Smithy_api.Types.long ->
+  unit ->
+  warm_throughput_specification
+
 val make_update_table_response : resource_arn:ar_n -> unit -> update_table_response
 
 val make_column_definition :
@@ -68,6 +81,7 @@ val make_cdc_specification :
   cdc_specification
 
 val make_update_table_request :
+  ?warm_throughput_specification:warm_throughput_specification ->
   ?cdc_specification:cdc_specification ->
   ?replica_specifications:replica_specification_list ->
   ?auto_scaling_specification:auto_scaling_specification ->
@@ -151,6 +165,7 @@ val make_capacity_specification_summary :
   capacity_specification_summary
 
 val make_replica_specification_summary :
+  ?warm_throughput_specification:warm_throughput_specification_summary ->
   ?capacity_specification:capacity_specification_summary ->
   ?status:table_status ->
   ?region:region ->
@@ -252,6 +267,7 @@ val make_cdc_specification_summary :
   ?view_type:view_type -> status:cdc_status -> unit -> cdc_specification_summary
 
 val make_get_table_response :
+  ?warm_throughput_specification:warm_throughput_specification_summary ->
   ?cdc_specification:cdc_specification_summary ->
   ?latest_stream_arn:stream_arn ->
   ?replica_specifications:replica_specification_summary_list ->
@@ -312,6 +328,7 @@ val make_create_type_request :
 val make_create_table_response : resource_arn:ar_n -> unit -> create_table_response
 
 val make_create_table_request :
+  ?warm_throughput_specification:warm_throughput_specification ->
   ?cdc_specification:cdc_specification ->
   ?replica_specifications:replica_specification_list ->
   ?auto_scaling_specification:auto_scaling_specification ->

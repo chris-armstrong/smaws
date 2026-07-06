@@ -8,6 +8,7 @@ module AllocateStaticIp : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -22,6 +23,7 @@ module AllocateStaticIp : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -76,6 +78,7 @@ module AttachDisk : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -90,6 +93,7 @@ module AttachDisk : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -111,6 +115,7 @@ module AttachInstancesToLoadBalancer : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -125,6 +130,7 @@ module AttachInstancesToLoadBalancer : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -149,6 +155,7 @@ module AttachLoadBalancerTlsCertificate : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -163,6 +170,7 @@ module AttachLoadBalancerTlsCertificate : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -190,6 +198,7 @@ module AttachStaticIp : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -204,6 +213,7 @@ module AttachStaticIp : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -218,6 +228,7 @@ module CloseInstancePublicPorts : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -232,6 +243,7 @@ module CloseInstancePublicPorts : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -252,6 +264,7 @@ module CopySnapshot : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -266,6 +279,7 @@ module CopySnapshot : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -289,6 +303,7 @@ module CreateBucket : sig
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -300,6 +315,7 @@ module CreateBucket : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -319,6 +335,7 @@ module CreateBucketAccessKey : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -331,6 +348,7 @@ module CreateBucketAccessKey : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -359,6 +377,7 @@ module CreateCertificate : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -371,6 +390,7 @@ module CreateCertificate : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -397,6 +417,7 @@ module CreateCloudFormationStack : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -411,6 +432,7 @@ module CreateCloudFormationStack : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -432,6 +454,7 @@ module CreateContactMethod : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -445,6 +468,7 @@ module CreateContactMethod : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -458,7 +482,12 @@ end
    see \
    {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-notifications}Notifications \
    in Amazon Lightsail}.\n\
-  \ "]
+  \ \n\
+  \  The [create contact method] operation supports tag-based access control via request tags. For \
+   more information, see the \
+   {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Lightsail \
+   Developer Guide}.\n\
+  \  "]
 
 module CreateContainerService : sig
   val error_to_string :
@@ -466,6 +495,7 @@ module CreateContainerService : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -478,6 +508,7 @@ module CreateContainerService : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -496,6 +527,7 @@ module CreateContainerServiceDeployment : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -508,6 +540,7 @@ module CreateContainerServiceDeployment : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -533,6 +566,7 @@ module CreateContainerServiceRegistryLogin : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -545,6 +579,7 @@ module CreateContainerServiceRegistryLogin : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -580,6 +615,7 @@ module CreateDisk : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -594,6 +630,7 @@ module CreateDisk : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -615,6 +652,7 @@ module CreateDiskFromSnapshot : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -629,6 +667,7 @@ module CreateDiskFromSnapshot : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -651,6 +690,7 @@ module CreateDiskSnapshot : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -665,6 +705,7 @@ module CreateDiskSnapshot : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -736,6 +777,7 @@ module CreateDomain : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -750,6 +792,7 @@ module CreateDomain : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -770,6 +813,7 @@ module CreateDomainEntry : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -784,6 +828,7 @@ module CreateDomainEntry : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -804,6 +849,7 @@ module CreateGUISessionAccessDetails : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -816,6 +862,7 @@ module CreateGUISessionAccessDetails : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -836,6 +883,7 @@ module CreateInstances : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -850,6 +898,7 @@ module CreateInstances : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -870,6 +919,7 @@ module CreateInstancesFromSnapshot : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -884,6 +934,7 @@ module CreateInstancesFromSnapshot : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -905,6 +956,7 @@ module CreateInstanceSnapshot : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -919,6 +971,7 @@ module CreateInstanceSnapshot : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -940,6 +993,7 @@ module CreateKeyPair : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -954,6 +1008,7 @@ module CreateKeyPair : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -979,6 +1034,7 @@ module CreateLoadBalancer : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -993,6 +1049,7 @@ module CreateLoadBalancer : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1001,7 +1058,7 @@ end
   "Creates a Lightsail load balancer. To learn more about deciding whether to load balance your \
    application, see \
    {{:https://docs.aws.amazon.com/lightsail/latest/userguide/configure-lightsail-instances-for-load-balancing}Configure \
-   your Lightsail instances for load balancing}. You can create up to 5 load balancers per AWS \
+   your Lightsail instances for load balancing}. You can create up to 10 load balancers per AWS \
    Region in your account.\n\n\
   \ When you create a load balancer, you can specify a unique name and port settings. To change \
    additional load balancer settings, use the [UpdateLoadBalancerAttribute] operation.\n\
@@ -1020,6 +1077,7 @@ module CreateLoadBalancerTlsCertificate : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1034,6 +1092,7 @@ module CreateLoadBalancerTlsCertificate : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1057,6 +1116,7 @@ module CreateRelationalDatabase : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1071,6 +1131,7 @@ module CreateRelationalDatabase : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1091,6 +1152,7 @@ module CreateRelationalDatabaseFromSnapshot : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1105,6 +1167,7 @@ module CreateRelationalDatabaseFromSnapshot : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1129,6 +1192,7 @@ module CreateRelationalDatabaseSnapshot : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1143,6 +1207,7 @@ module CreateRelationalDatabaseSnapshot : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1163,6 +1228,7 @@ module DeleteAlarm : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1176,6 +1242,7 @@ module DeleteAlarm : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1196,6 +1263,7 @@ module DeleteAutoSnapshot : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1209,6 +1277,7 @@ module DeleteAutoSnapshot : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1224,6 +1293,7 @@ module DeleteBucket : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1236,6 +1306,7 @@ module DeleteBucket : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1253,6 +1324,7 @@ module DeleteBucketAccessKey : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1265,6 +1337,7 @@ module DeleteBucketAccessKey : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1284,6 +1357,7 @@ module DeleteCertificate : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1296,6 +1370,7 @@ module DeleteCertificate : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1314,6 +1389,7 @@ module DeleteContactMethod : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1327,6 +1403,7 @@ module DeleteContactMethod : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1348,6 +1425,7 @@ module DeleteContainerImage : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1360,6 +1438,7 @@ module DeleteContainerImage : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1373,6 +1452,7 @@ module DeleteContainerService : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1385,6 +1465,7 @@ module DeleteContainerService : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1399,6 +1480,7 @@ module DeleteDisk : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1413,6 +1495,7 @@ module DeleteDisk : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1436,6 +1519,7 @@ module DeleteDiskSnapshot : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1450,6 +1534,7 @@ module DeleteDiskSnapshot : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1502,6 +1587,7 @@ module DeleteDomain : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1516,6 +1602,7 @@ module DeleteDomain : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1536,6 +1623,7 @@ module DeleteDomainEntry : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1550,6 +1638,7 @@ module DeleteDomainEntry : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1570,6 +1659,7 @@ module DeleteInstance : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1584,6 +1674,7 @@ module DeleteInstance : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1604,6 +1695,7 @@ module DeleteInstanceSnapshot : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1618,6 +1710,7 @@ module DeleteInstanceSnapshot : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1638,6 +1731,7 @@ module DeleteKeyPair : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1652,6 +1746,7 @@ module DeleteKeyPair : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1681,6 +1776,7 @@ module DeleteKnownHostKeys : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1695,6 +1791,7 @@ module DeleteKnownHostKeys : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1719,6 +1816,7 @@ module DeleteLoadBalancer : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1733,6 +1831,7 @@ module DeleteLoadBalancer : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1755,6 +1854,7 @@ module DeleteLoadBalancerTlsCertificate : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1769,6 +1869,7 @@ module DeleteLoadBalancerTlsCertificate : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1790,6 +1891,7 @@ module DeleteRelationalDatabase : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1804,6 +1906,7 @@ module DeleteRelationalDatabase : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1824,6 +1927,7 @@ module DeleteRelationalDatabaseSnapshot : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1838,6 +1942,7 @@ module DeleteRelationalDatabaseSnapshot : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1890,6 +1995,7 @@ module DetachDisk : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1904,6 +2010,7 @@ module DetachDisk : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1926,6 +2033,7 @@ module DetachInstancesFromLoadBalancer : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1940,6 +2048,7 @@ module DetachInstancesFromLoadBalancer : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1964,6 +2073,7 @@ module DetachStaticIp : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -1978,6 +2088,7 @@ module DetachStaticIp : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -1991,6 +2102,7 @@ module DisableAddOn : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2004,6 +2116,7 @@ module DisableAddOn : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2021,6 +2134,7 @@ module DownloadDefaultKeyPair : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2035,6 +2149,7 @@ module DownloadDefaultKeyPair : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2052,6 +2167,7 @@ module EnableAddOn : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2065,6 +2181,7 @@ module EnableAddOn : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2082,6 +2199,7 @@ module ExportSnapshot : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2096,6 +2214,7 @@ module ExportSnapshot : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2130,6 +2249,7 @@ module GetActiveNames : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2144,6 +2264,7 @@ module GetActiveNames : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2157,6 +2278,7 @@ module GetAlarms : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2170,6 +2292,7 @@ module GetAlarms : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2192,6 +2315,7 @@ module GetAutoSnapshots : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2205,6 +2329,7 @@ module GetAutoSnapshots : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2223,6 +2348,7 @@ module GetBlueprints : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2237,6 +2363,7 @@ module GetBlueprints : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2259,6 +2386,7 @@ module GetBucketAccessKeys : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2271,6 +2399,7 @@ module GetBucketAccessKeys : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2289,6 +2418,7 @@ module GetBucketBundles : sig
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2300,6 +2430,7 @@ module GetBucketBundles : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2320,6 +2451,7 @@ module GetBucketMetricData : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2332,6 +2464,7 @@ module GetBucketMetricData : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2349,6 +2482,7 @@ module GetBuckets : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2361,6 +2495,7 @@ module GetBuckets : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2382,6 +2517,7 @@ module GetBundles : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2396,6 +2532,7 @@ module GetBundles : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2415,6 +2552,7 @@ module GetCertificates : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2427,6 +2565,7 @@ module GetCertificates : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2447,6 +2586,7 @@ module GetCloudFormationStackRecords : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2461,6 +2601,7 @@ module GetCloudFormationStackRecords : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2479,6 +2620,7 @@ module GetContactMethods : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2492,6 +2634,7 @@ module GetContactMethods : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2512,6 +2655,7 @@ module GetContainerAPIMetadata : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2522,6 +2666,7 @@ module GetContainerAPIMetadata : sig
     ( get_container_api_metadata_result,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2536,6 +2681,7 @@ module GetContainerImages : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2548,6 +2694,7 @@ module GetContainerImages : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2566,6 +2713,7 @@ module GetContainerLog : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2578,6 +2726,7 @@ module GetContainerLog : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2600,6 +2749,7 @@ module GetContainerServiceDeployments : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2612,6 +2762,7 @@ module GetContainerServiceDeployments : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2637,6 +2788,7 @@ module GetContainerServiceMetricData : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2649,6 +2801,7 @@ module GetContainerServiceMetricData : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2665,6 +2818,7 @@ module GetContainerServicePowers : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2677,6 +2831,7 @@ module GetContainerServicePowers : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2693,6 +2848,7 @@ module GetContainerServices : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2705,6 +2861,7 @@ module GetContainerServices : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2717,6 +2874,7 @@ module GetCostEstimate : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2729,6 +2887,7 @@ module GetCostEstimate : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2745,6 +2904,7 @@ module GetDisk : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2759,6 +2919,7 @@ module GetDisk : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2773,6 +2934,7 @@ module GetDisks : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2787,6 +2949,7 @@ module GetDisks : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2801,6 +2964,7 @@ module GetDiskSnapshot : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2815,6 +2979,7 @@ module GetDiskSnapshot : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2829,6 +2994,7 @@ module GetDiskSnapshots : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2843,6 +3009,7 @@ module GetDiskSnapshots : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -2977,6 +3144,7 @@ module GetDomain : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -2991,6 +3159,7 @@ module GetDomain : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3005,6 +3174,7 @@ module GetDomains : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3019,6 +3189,7 @@ module GetDomains : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3033,6 +3204,7 @@ module GetExportSnapshotRecords : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3047,6 +3219,7 @@ module GetExportSnapshotRecords : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3068,6 +3241,7 @@ module GetInstance : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3082,6 +3256,7 @@ module GetInstance : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3098,6 +3273,7 @@ module GetInstanceAccessDetails : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3112,6 +3288,7 @@ module GetInstanceAccessDetails : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3133,6 +3310,7 @@ module GetInstanceMetricData : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3147,6 +3325,7 @@ module GetInstanceMetricData : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3167,6 +3346,7 @@ module GetInstancePortStates : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3181,6 +3361,7 @@ module GetInstancePortStates : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3197,6 +3378,7 @@ module GetInstances : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3211,6 +3393,7 @@ module GetInstances : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3226,6 +3409,7 @@ module GetInstanceSnapshot : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3240,6 +3424,7 @@ module GetInstanceSnapshot : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3254,6 +3439,7 @@ module GetInstanceSnapshots : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3268,6 +3454,7 @@ module GetInstanceSnapshots : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3282,6 +3469,7 @@ module GetInstanceState : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3296,6 +3484,7 @@ module GetInstanceState : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3310,6 +3499,7 @@ module GetKeyPair : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3324,6 +3514,7 @@ module GetKeyPair : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3338,6 +3529,7 @@ module GetKeyPairs : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3352,6 +3544,7 @@ module GetKeyPairs : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3366,6 +3559,7 @@ module GetLoadBalancer : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3380,6 +3574,7 @@ module GetLoadBalancer : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3394,6 +3589,7 @@ module GetLoadBalancerMetricData : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3408,6 +3604,7 @@ module GetLoadBalancerMetricData : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3427,6 +3624,7 @@ module GetLoadBalancers : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3441,6 +3639,7 @@ module GetLoadBalancers : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3455,6 +3654,7 @@ module GetLoadBalancerTlsCertificates : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3469,6 +3669,7 @@ module GetLoadBalancerTlsCertificates : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3488,6 +3689,7 @@ module GetLoadBalancerTlsPolicies : sig
     | `AccessDeniedException of access_denied_exception
     | `AccountSetupInProgressException of account_setup_in_progress_exception
     | `InvalidInputException of invalid_input_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3500,6 +3702,7 @@ module GetLoadBalancerTlsPolicies : sig
       | `AccessDeniedException of access_denied_exception
       | `AccountSetupInProgressException of account_setup_in_progress_exception
       | `InvalidInputException of invalid_input_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3520,6 +3723,7 @@ module GetOperation : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3534,6 +3738,7 @@ module GetOperation : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3550,6 +3755,7 @@ module GetOperations : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3564,6 +3770,7 @@ module GetOperations : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3583,6 +3790,7 @@ module GetOperationsForResource : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3597,6 +3805,7 @@ module GetOperationsForResource : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3611,6 +3820,7 @@ module GetRegions : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3625,6 +3835,7 @@ module GetRegions : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3641,6 +3852,7 @@ module GetRelationalDatabase : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3655,6 +3867,7 @@ module GetRelationalDatabase : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3669,6 +3882,7 @@ module GetRelationalDatabaseBlueprints : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3683,6 +3897,7 @@ module GetRelationalDatabaseBlueprints : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3701,6 +3916,7 @@ module GetRelationalDatabaseBundles : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3715,6 +3931,7 @@ module GetRelationalDatabaseBundles : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3733,6 +3950,7 @@ module GetRelationalDatabaseEvents : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3747,6 +3965,7 @@ module GetRelationalDatabaseEvents : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3761,6 +3980,7 @@ module GetRelationalDatabaseLogEvents : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3775,6 +3995,7 @@ module GetRelationalDatabaseLogEvents : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3789,6 +4010,7 @@ module GetRelationalDatabaseLogStreams : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3803,6 +4025,7 @@ module GetRelationalDatabaseLogStreams : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3818,6 +4041,7 @@ module GetRelationalDatabaseMasterUserPassword : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3832,6 +4056,7 @@ module GetRelationalDatabaseMasterUserPassword : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3851,6 +4076,7 @@ module GetRelationalDatabaseMetricData : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3865,6 +4091,7 @@ module GetRelationalDatabaseMetricData : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3884,6 +4111,7 @@ module GetRelationalDatabaseParameters : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3898,6 +4126,7 @@ module GetRelationalDatabaseParameters : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3918,6 +4147,7 @@ module GetRelationalDatabases : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3932,6 +4162,7 @@ module GetRelationalDatabases : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3946,6 +4177,7 @@ module GetRelationalDatabaseSnapshot : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3960,6 +4192,7 @@ module GetRelationalDatabaseSnapshot : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -3974,6 +4207,7 @@ module GetRelationalDatabaseSnapshots : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -3988,6 +4222,7 @@ module GetRelationalDatabaseSnapshots : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4000,6 +4235,7 @@ module GetSetupHistory : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4012,6 +4248,7 @@ module GetSetupHistory : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4028,6 +4265,7 @@ module GetStaticIp : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4042,6 +4280,7 @@ module GetStaticIp : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4056,6 +4295,7 @@ module GetStaticIps : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4070,6 +4310,7 @@ module GetStaticIps : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4084,6 +4325,7 @@ module ImportKeyPair : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4098,6 +4340,7 @@ module ImportKeyPair : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4112,6 +4355,7 @@ module IsVpcPeered : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4126,6 +4370,7 @@ module IsVpcPeered : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4140,6 +4385,7 @@ module OpenInstancePublicPorts : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4154,6 +4400,7 @@ module OpenInstancePublicPorts : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4175,6 +4422,7 @@ module PeerVpc : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4189,6 +4437,7 @@ module PeerVpc : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4202,6 +4451,7 @@ module PutAlarm : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4215,6 +4465,7 @@ module PutAlarm : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4234,7 +4485,12 @@ end
   \   When you update an existing alarm, its state is left unchanged, but the update completely \
    overwrites the previous configuration of the alarm. The alarm is then evaluated with the \
    updated configuration.\n\
-  \   "]
+  \   \n\
+  \    The [put alarm] operation supports tag-based access control via request tags. For more \
+   information, see the \
+   {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-controlling-access-using-tags}Lightsail \
+   Developer Guide}.\n\
+  \    "]
 
 module PutInstancePublicPorts : sig
   val error_to_string :
@@ -4244,6 +4500,7 @@ module PutInstancePublicPorts : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4258,6 +4515,7 @@ module PutInstancePublicPorts : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4282,6 +4540,7 @@ module RebootInstance : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4296,6 +4555,7 @@ module RebootInstance : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4316,6 +4576,7 @@ module RebootRelationalDatabase : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4330,6 +4591,7 @@ module RebootRelationalDatabase : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4348,6 +4610,7 @@ module RegisterContainerImage : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4360,6 +4623,7 @@ module RegisterContainerImage : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4382,6 +4646,7 @@ module ReleaseStaticIp : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4396,6 +4661,7 @@ module ReleaseStaticIp : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4440,6 +4706,7 @@ module SendContactMethodVerification : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4453,6 +4720,7 @@ module SendContactMethodVerification : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4485,6 +4753,7 @@ module SetIpAddressType : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4499,6 +4768,7 @@ module SetIpAddressType : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4516,6 +4786,7 @@ module SetResourceAccessForBucket : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4528,6 +4799,7 @@ module SetResourceAccessForBucket : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4544,6 +4816,7 @@ module SetupInstanceHttps : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4556,6 +4829,7 @@ module SetupInstanceHttps : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4573,6 +4847,7 @@ module StartGUISession : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4585,6 +4860,7 @@ module StartGUISession : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4602,6 +4878,7 @@ module StartInstance : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4616,6 +4893,7 @@ module StartInstance : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4643,6 +4921,7 @@ module StartRelationalDatabase : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4657,6 +4936,7 @@ module StartRelationalDatabase : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4676,6 +4956,7 @@ module StopGUISession : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4688,6 +4969,7 @@ module StopGUISession : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4705,6 +4987,7 @@ module StopInstance : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4719,6 +5002,7 @@ module StopInstance : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4745,6 +5029,7 @@ module StopRelationalDatabase : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4759,6 +5044,7 @@ module StopRelationalDatabase : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4784,6 +5070,7 @@ module TagResource : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4798,6 +5085,7 @@ module TagResource : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4821,6 +5109,7 @@ module TestAlarm : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4834,6 +5123,7 @@ module TestAlarm : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4857,6 +5147,7 @@ module UnpeerVpc : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4871,6 +5162,7 @@ module UnpeerVpc : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4885,6 +5177,7 @@ module UntagResource : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4899,6 +5192,7 @@ module UntagResource : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4918,6 +5212,7 @@ module UpdateBucket : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4930,6 +5225,7 @@ module UpdateBucket : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4946,6 +5242,7 @@ module UpdateBucketBundle : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4958,6 +5255,7 @@ module UpdateBucketBundle : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -4985,6 +5283,7 @@ module UpdateContainerService : sig
     | `AccessDeniedException of access_denied_exception
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -4997,6 +5296,7 @@ module UpdateContainerService : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -5080,6 +5380,7 @@ module UpdateDomainEntry : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -5094,6 +5395,7 @@ module UpdateDomainEntry : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -5114,6 +5416,7 @@ module UpdateInstanceMetadataOptions : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -5128,6 +5431,7 @@ module UpdateInstanceMetadataOptions : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -5149,6 +5453,7 @@ module UpdateLoadBalancerAttribute : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -5163,6 +5468,7 @@ module UpdateLoadBalancerAttribute : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -5185,6 +5491,7 @@ module UpdateRelationalDatabase : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -5199,6 +5506,7 @@ module UpdateRelationalDatabase : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result
@@ -5223,6 +5531,7 @@ module UpdateRelationalDatabaseParameters : sig
     | `InvalidInputException of invalid_input_exception
     | `NotFoundException of not_found_exception
     | `OperationFailureException of operation_failure_exception
+    | `RegionSetupInProgressException of region_setup_in_progress_exception
     | `ServiceException of service_exception
     | `UnauthenticatedException of unauthenticated_exception ] ->
     string
@@ -5237,6 +5546,7 @@ module UpdateRelationalDatabaseParameters : sig
       | `InvalidInputException of invalid_input_exception
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
+      | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
       | `UnauthenticatedException of unauthenticated_exception ] )
     result

@@ -39,8 +39,8 @@ type nonrec update_trail_response = {
       [@ocaml.doc "Specifies whether the trail is an organization trail.\n"]
   kms_key_id : string_ option;
       [@ocaml.doc
-        "Specifies the KMS key ID that encrypts the logs delivered by CloudTrail. The value is a \
-         fully specified ARN to a KMS key in the following format.\n\n\
+        "Specifies the KMS key ID that encrypts the logs and digest files delivered by CloudTrail. \
+         The value is a fully specified ARN to a KMS key in the following format.\n\n\
         \  [arn:aws:kms:us-east-2:123456789012:key/12345678-1234-1234-1234-123456789012] \n\
         \ "]
   cloud_watch_logs_role_arn : string_ option;
@@ -104,9 +104,9 @@ type nonrec update_trail_request = {
         \   "]
   kms_key_id : string_ option;
       [@ocaml.doc
-        "Specifies the KMS key ID to use to encrypt the logs delivered by CloudTrail. The value \
-         can be an alias name prefixed by \"alias/\", a fully specified ARN to an alias, a fully \
-         specified ARN to a key, or a globally unique identifier.\n\n\
+        "Specifies the KMS key ID to use to encrypt the logs and digest files delivered by \
+         CloudTrail. The value can be an alias name prefixed by \"alias/\", a fully specified ARN \
+         to an alias, a fully specified ARN to a key, or a globally unique identifier.\n\n\
         \ CloudTrail also supports KMS multi-Region keys. For more information about multi-Region \
          keys, see \
          {{:https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html}Using \
@@ -1084,8 +1084,8 @@ type nonrec trail = {
       [@ocaml.doc "Specifies if the trail has custom event selectors.\n"]
   kms_key_id : string_ option;
       [@ocaml.doc
-        "Specifies the KMS key ID that encrypts the logs delivered by CloudTrail. The value is a \
-         fully specified ARN to a KMS key in the following format.\n\n\
+        "Specifies the KMS key ID that encrypts the logs and digest files delivered by CloudTrail. \
+         The value is a fully specified ARN to a KMS key in the following format.\n\n\
         \  [arn:aws:kms:us-east-2:123456789012:key/12345678-1234-1234-1234-123456789012] \n\
         \ "]
   cloud_watch_logs_role_arn : string_ option;
@@ -1145,6 +1145,16 @@ type nonrec trail_already_exists_exception = {
 [@@ocaml.doc "This exception is thrown when the specified trail already exists.\n"]
 
 type nonrec timestamps = date list [@@ocaml.doc ""]
+
+type nonrec template =
+  | USER_ACTIONS [@ocaml.doc ""]
+  | RESOURCE_ACCESS [@ocaml.doc ""]
+  | API_ACTIVITY [@ocaml.doc ""]
+[@@ocaml.doc
+  "Specifies the type of the aggregation templates in the aggregation configuration. Valid values \
+   include API_ACTIVITY, RESOURCE_ACCESS and USER_ACTIONS.\n"]
+
+type nonrec templates = template list [@@ocaml.doc ""]
 
 type nonrec tag_key = string [@@ocaml.doc ""]
 
@@ -1418,6 +1428,11 @@ type nonrec start_dashboard_refresh_request = {
   dashboard_id : dashboard_arn; [@ocaml.doc " The name or ARN of the dashboard. \n"]
 }
 [@@ocaml.doc ""]
+
+type nonrec source_event_category = Data [@ocaml.doc ""] | Management [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec source_event_categories = source_event_category list [@@ocaml.doc ""]
 
 type nonrec source_config = {
   advanced_event_selectors : advanced_event_selectors option;
@@ -1822,15 +1837,32 @@ type nonrec insight_type =
 [@@ocaml.doc ""]
 
 type nonrec insight_selector = {
+  event_categories : source_event_categories option;
+      [@ocaml.doc
+        "Select the event category on which Insights should be enabled. \n\n\
+        \ {ul\n\
+        \       {-  If EventCategories is not provided, the specified Insights types are enabled \
+         on management API calls by default.\n\
+        \           \n\
+        \            }\n\
+        \       {-  If EventCategories is provided, the given event categories will overwrite the \
+         existing ones. For example, if a trail already has Insights enabled on management events, \
+         and then a PutInsightSelectors request is made with only data events specified in \
+         EventCategories, Insights on management events will be disabled. \n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \  "]
   insight_type : insight_type option;
       [@ocaml.doc
         "The type of Insights events to log on a trail or event data store. [ApiCallRateInsight] \
          and [ApiErrorRateInsight] are valid Insight types.\n\n\
-        \ The [ApiCallRateInsight] Insights type analyzes write-only management API calls that are \
-         aggregated per minute against a baseline API call volume.\n\
+        \ The [ApiCallRateInsight] Insights type analyzes write-only management API calls or read \
+         and write data API calls that are aggregated per minute against a baseline API call \
+         volume.\n\
         \ \n\
-        \  The [ApiErrorRateInsight] Insights type analyzes management API calls that result in \
-         error codes. The error is shown if the API call is unsuccessful.\n\
+        \  The [ApiErrorRateInsight] Insights type analyzes management and data API calls that \
+         result in error codes. The error is shown if the API call is unsuccessful.\n\
         \  "]
 }
 [@@ocaml.doc
@@ -1848,9 +1880,10 @@ type nonrec put_insight_selectors_response = {
          change or add Insights selectors.\n"]
   insight_selectors : insight_selectors option;
       [@ocaml.doc
-        "A JSON string that contains the Insights event types that you want to log on a trail or \
-         event data store. The valid Insights types are [ApiErrorRateInsight] and \
-         [ApiCallRateInsight].\n"]
+        "Contains the Insights types you want to log on a specific category of events in a trail \
+         or event data store. [ApiCallRateInsight] and [ApiErrorRateInsight] are valid Insight \
+         types.The EventCategory field can specify [Management] or [Data] events or both. For \
+         event data store, you can only log Insights for management events only.\n"]
   trail_ar_n : string_ option;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) of a trail for which you want to change or add Insights \
@@ -1875,13 +1908,16 @@ type nonrec put_insight_selectors_request = {
         \ "]
   insight_selectors : insight_selectors;
       [@ocaml.doc
-        "A JSON string that contains the Insights types you want to log on a trail or event data \
-         store. [ApiCallRateInsight] and [ApiErrorRateInsight] are valid Insight types.\n\n\
-        \ The [ApiCallRateInsight] Insights type analyzes write-only management API calls that are \
-         aggregated per minute against a baseline API call volume.\n\
+        "Contains the Insights types you want to log on a specific category of events on a trail \
+         or event data store. [ApiCallRateInsight] and [ApiErrorRateInsight] are valid Insight \
+         types.The EventCategory field can specify [Management] or [Data] events or both. For \
+         event data store, you can log Insights for management events only.\n\n\
+        \ The [ApiCallRateInsight] Insights type analyzes write-only management API calls or read \
+         and write data API calls that are aggregated per minute against a baseline API call \
+         volume.\n\
         \ \n\
-        \  The [ApiErrorRateInsight] Insights type analyzes management API calls that result in \
-         error codes. The error is shown if the API call is unsuccessful.\n\
+        \  The [ApiErrorRateInsight] Insights type analyzes management and data API calls that \
+         result in error codes. The error is shown if the API call is unsuccessful.\n\
         \  "]
   trail_name : string_ option;
       [@ocaml.doc
@@ -2204,7 +2240,22 @@ type nonrec context_key_selector = {
 
 type nonrec context_key_selectors = context_key_selector list [@@ocaml.doc ""]
 
+type nonrec event_category_aggregation = Data [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec aggregation_configuration = {
+  event_category : event_category_aggregation;
+      [@ocaml.doc "Specifies the event category for which aggregation should be performed.\n"]
+  templates : templates;
+      [@ocaml.doc
+        "A list of aggregation templates that can be used to configure event aggregation.\n"]
+}
+[@@ocaml.doc "An object that contains configuration settings for aggregating events.\n"]
+
+type nonrec aggregation_configurations = aggregation_configuration list [@@ocaml.doc ""]
+
 type nonrec put_event_configuration_response = {
+  aggregation_configurations : aggregation_configurations option;
+      [@ocaml.doc "A list of aggregation configurations that are configured for the trail.\n"]
   context_key_selectors : context_key_selectors option;
       [@ocaml.doc
         "The list of context key selectors that are configured for the event data store.\n"]
@@ -2214,21 +2265,29 @@ type nonrec put_event_configuration_response = {
       [@ocaml.doc
         "The Amazon Resource Name (ARN) or ID suffix of the ARN of the event data store for which \
          the event configuration settings were updated.\n"]
+  trail_ar_n : string_ option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the trail that has aggregation enabled.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec put_event_configuration_request = {
-  context_key_selectors : context_key_selectors;
+  aggregation_configurations : aggregation_configurations option;
+      [@ocaml.doc
+        "The list of aggregation configurations that you want to configure for the trail.\n"]
+  context_key_selectors : context_key_selectors option;
       [@ocaml.doc
         "A list of context key selectors that will be included to provide enriched event data.\n"]
-  max_event_size : max_event_size;
+  max_event_size : max_event_size option;
       [@ocaml.doc
         "The maximum allowed size for events to be stored in the specified event data store. If \
          you are using context key selectors, MaxEventSize must be set to Large.\n"]
   event_data_store : string_ option;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) or ID suffix of the ARN of the event data store for which \
-         you want to update event configuration settings.\n"]
+         event configuration settings are updated.\n"]
+  trail_name : string_ option;
+      [@ocaml.doc
+        "The name of the trail for which you want to update event configuration settings.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -2341,7 +2400,9 @@ type nonrec lookup_attribute = {
 
 type nonrec lookup_attributes_list = lookup_attribute list [@@ocaml.doc ""]
 
-type nonrec event_category = Insight [@ocaml.doc ""] [@@ocaml.doc ""]
+type nonrec event_category = Insight [@ocaml.doc ""]
+[@@ocaml.doc
+  "Specifies the event category for which aggregation configuration is enabled. Valid value is Data.\n"]
 
 type nonrec lookup_events_request = {
   next_token : next_token option;
@@ -2583,6 +2644,10 @@ type nonrec list_insights_metric_data_response = {
       [@ocaml.doc
         "The Amazon Web Services service to which the request was made, such as \
          [iam.amazonaws.com] or [s3.amazonaws.com].\n"]
+  trail_ar_n : string_ option;
+      [@ocaml.doc
+        "Specifies the ARN of the trail. This is only returned when Insights is enabled on a trail \
+         logging data events. \n"]
 }
 [@@ocaml.doc ""]
 
@@ -2648,6 +2713,73 @@ type nonrec list_insights_metric_data_request = {
       [@ocaml.doc
         "The Amazon Web Services service to which the request was made, such as \
          [iam.amazonaws.com] or [s3.amazonaws.com].\n"]
+  trail_name : string_ option;
+      [@ocaml.doc
+        "The Amazon Resource Name(ARN) or name of the trail for which you want to retrieve \
+         Insights metrics data. This parameter should only be provided to fetch Insights metrics \
+         data generated on trails logging data events. This parameter is not required for Insights \
+         metric data generated on trails logging management events.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_insights_data_type = INSIGHTS_EVENTS [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec list_insights_data_response = {
+  next_token : pagination_token option;
+      [@ocaml.doc
+        "The token to use to get the next page of results after a previous API call. If the token \
+         does not appear, there are no more results to return. The token must be passed in with \
+         the same parameters as the previous call. For example, if the original call specified a \
+         EventName as a dimension with [PutObject] as a value, the call with NextToken should \
+         include those same parameters. \n"]
+  events : events_list option;
+      [@ocaml.doc
+        "A list of events returned based on the InsightSource, DataType or Dimensions specified. \
+         The events list is sorted by time. The most recent event is listed first.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_insights_data_dimension_value = string [@@ocaml.doc ""]
+
+type nonrec list_insights_data_dimension_key =
+  | EVENT_SOURCE [@ocaml.doc ""]
+  | EVENT_NAME [@ocaml.doc ""]
+  | EVENT_ID [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec list_insights_data_dimensions =
+  (list_insights_data_dimension_key * list_insights_data_dimension_value) list
+[@@ocaml.doc ""]
+
+type nonrec list_insights_data_max_results_count = int [@@ocaml.doc ""]
+
+type nonrec list_insights_data_request = {
+  next_token : pagination_token option;
+      [@ocaml.doc
+        "The token to use to get the next page of results after a previous API call. This token \
+         must be passed in with the same parameters that were specified in the original call. For \
+         example, if the original call specified a EventName as a dimension with [PutObject] as a \
+         value, the call with NextToken should include those same parameters. \n"]
+  max_results : list_insights_data_max_results_count option;
+      [@ocaml.doc
+        "The number of events to return. Possible values are 1 through 50. The default is 50.\n"]
+  end_time : date option;
+      [@ocaml.doc
+        "Specifies that only events that occur before or at the specified time are returned. If \
+         the specified end time is before the specified start time, an error is returned.\n"]
+  start_time : date option;
+      [@ocaml.doc
+        "Specifies that only events that occur after or at the specified time are returned. If the \
+         specified start time is after the specified end time, an error is returned.\n"]
+  dimensions : list_insights_data_dimensions option;
+      [@ocaml.doc "Contains a map of dimensions. Currently the map can contain only one item.\n"]
+  data_type : list_insights_data_type;
+      [@ocaml.doc
+        "Specifies the category of events returned. To fetch Insights events, specify \
+         [InsightsEvents] as the value of [DataType] \n"]
+  insight_source : resource_arn;
+      [@ocaml.doc
+        "The Amazon Resource Name(ARN) of the trail for which you want to retrieve Insights events.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -3059,8 +3191,11 @@ type nonrec get_insight_selectors_response = {
       [@ocaml.doc " The ARN of the source event data store that enabled Insights events. \n"]
   insight_selectors : insight_selectors option;
       [@ocaml.doc
-        "A JSON string that contains the Insight types you want to log on a trail or event data \
-         store. [ApiErrorRateInsight] and [ApiCallRateInsight] are supported as Insights types.\n"]
+        "Contains the Insights types that are enabled on a trail or event data store. It also \
+         specifies the event categories on which a particular Insight type is enabled. \
+         [ApiCallRateInsight] and [ApiErrorRateInsight] are valid Insight types.The EventCategory \
+         field can specify [Management] or [Data] events or both. For event data store, you can \
+         log Insights for management events only.\n"]
   trail_ar_n : string_ option;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) of a trail for which you want to get Insights selectors.\n"]
@@ -3233,6 +3368,8 @@ type nonrec get_event_data_store_request = {
 [@@ocaml.doc ""]
 
 type nonrec get_event_configuration_response = {
+  aggregation_configurations : aggregation_configurations option;
+      [@ocaml.doc "The list of aggregation configurations that are configured for the trail.\n"]
   context_key_selectors : context_key_selectors option;
       [@ocaml.doc
         "The list of context key selectors that are configured for the event data store.\n"]
@@ -3242,6 +3379,10 @@ type nonrec get_event_configuration_response = {
       [@ocaml.doc
         "The Amazon Resource Name (ARN) or ID suffix of the ARN of the event data store for which \
          the event configuration settings are returned.\n"]
+  trail_ar_n : string_ option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the trail for which the event configuration settings \
+         are returned.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -3250,6 +3391,9 @@ type nonrec get_event_configuration_request = {
       [@ocaml.doc
         "The Amazon Resource Name (ARN) or ID suffix of the ARN of the event data store for which \
          you want to retrieve event configuration settings.\n"]
+  trail_name : string_ option;
+      [@ocaml.doc
+        "The name of the trail for which you want to retrieve event configuration settings.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -3667,9 +3811,9 @@ type nonrec create_trail_request = {
          Organizations.\n"]
   kms_key_id : string_ option;
       [@ocaml.doc
-        "Specifies the KMS key ID to use to encrypt the logs delivered by CloudTrail. The value \
-         can be an alias name prefixed by [alias/], a fully specified ARN to an alias, a fully \
-         specified ARN to a key, or a globally unique identifier.\n\n\
+        "Specifies the KMS key ID to use to encrypt the logs and digest files delivered by \
+         CloudTrail. The value can be an alias name prefixed by [alias/], a fully specified ARN to \
+         an alias, a fully specified ARN to a key, or a globally unique identifier.\n\n\
         \ CloudTrail also supports KMS multi-Region keys. For more information about multi-Region \
          keys, see \
          {{:https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html}Using \

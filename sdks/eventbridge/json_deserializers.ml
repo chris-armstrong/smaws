@@ -12,9 +12,39 @@ let dead_letter_config_of_yojson tree path =
   ({ arn = option_of_yojson (value_for_key resource_arn_of_yojson "Arn") _list path }
     : dead_letter_config)
 
+let include_detail_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "FULL" -> FULL
+    | `String "NONE" -> NONE
+    | `String value -> raise (deserialize_unknown_enum_value_error path "IncludeDetail" value)
+    | _ -> raise (deserialize_wrong_type_error path "IncludeDetail")
+     : include_detail)
+    : include_detail)
+
+let level_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "TRACE" -> TRACE
+    | `String "INFO" -> INFO
+    | `String "ERROR" -> ERROR
+    | `String "OFF" -> OFF
+    | `String value -> raise (deserialize_unknown_enum_value_error path "Level" value)
+    | _ -> raise (deserialize_wrong_type_error path "Level")
+     : level)
+    : level)
+
+let log_config_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     level = option_of_yojson (value_for_key level_of_yojson "Level") _list path;
+     include_detail =
+       option_of_yojson (value_for_key include_detail_of_yojson "IncludeDetail") _list path;
+   }
+    : log_config)
+
 let update_event_bus_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     log_config = option_of_yojson (value_for_key log_config_of_yojson "LogConfig") _list path;
      dead_letter_config =
        option_of_yojson (value_for_key dead_letter_config_of_yojson "DeadLetterConfig") _list path;
      description =
@@ -29,6 +59,7 @@ let update_event_bus_response_of_yojson tree path =
 let update_event_bus_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     log_config = option_of_yojson (value_for_key log_config_of_yojson "LogConfig") _list path;
      dead_letter_config =
        option_of_yojson (value_for_key dead_letter_config_of_yojson "DeadLetterConfig") _list path;
      description =
@@ -1964,6 +1995,7 @@ let describe_event_bus_response_of_yojson tree path =
      last_modified_time =
        option_of_yojson (value_for_key timestamp_of_yojson "LastModifiedTime") _list path;
      creation_time = option_of_yojson (value_for_key timestamp_of_yojson "CreationTime") _list path;
+     log_config = option_of_yojson (value_for_key log_config_of_yojson "LogConfig") _list path;
      policy = option_of_yojson (value_for_key string__of_yojson "Policy") _list path;
      dead_letter_config =
        option_of_yojson (value_for_key dead_letter_config_of_yojson "DeadLetterConfig") _list path;
@@ -2324,6 +2356,7 @@ let create_partner_event_source_request_of_yojson tree path =
 let create_event_bus_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     log_config = option_of_yojson (value_for_key log_config_of_yojson "LogConfig") _list path;
      dead_letter_config =
        option_of_yojson (value_for_key dead_letter_config_of_yojson "DeadLetterConfig") _list path;
      kms_key_identifier =
@@ -2338,6 +2371,7 @@ let create_event_bus_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      tags = option_of_yojson (value_for_key tag_list_of_yojson "Tags") _list path;
+     log_config = option_of_yojson (value_for_key log_config_of_yojson "LogConfig") _list path;
      dead_letter_config =
        option_of_yojson (value_for_key dead_letter_config_of_yojson "DeadLetterConfig") _list path;
      kms_key_identifier =

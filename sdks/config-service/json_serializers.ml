@@ -28,6 +28,98 @@ let resource_id_to_yojson = string_to_yojson
 
 let resource_type_to_yojson (x : resource_type) =
   match x with
+  | ApiGatewayMethod -> `String "AWS::ApiGateway::Method"
+  | SageMakerUserProfile -> `String "AWS::SageMaker::UserProfile"
+  | Route53DNSSEC -> `String "AWS::Route53::DNSSEC"
+  | AppStreamAppBlockBuilder -> `String "AWS::AppStream::AppBlockBuilder"
+  | CleanRoomsMLTrainingDataset -> `String "AWS::CleanRoomsML::TrainingDataset"
+  | ConnectSecurityProfile -> `String "AWS::Connect::SecurityProfile"
+  | EC2SubnetCidrBlock -> `String "AWS::EC2::SubnetCidrBlock"
+  | ECRReplicationConfiguration -> `String "AWS::ECR::ReplicationConfiguration"
+  | GameLiftBuild -> `String "AWS::GameLift::Build"
+  | ImageBuilderLifecyclePolicy -> `String "AWS::ImageBuilder::LifecyclePolicy"
+  | IoTThingGroup -> `String "AWS::IoT::ThingGroup"
+  | SSMContactsContact -> `String "AWS::SSMContacts::Contact"
+  | SecretsManagerResourcePolicy -> `String "AWS::SecretsManager::ResourcePolicy"
+  | S3TablesTableBucketPolicy -> `String "AWS::S3Tables::TableBucketPolicy"
+  | PCAConnectorADConnector -> `String "AWS::PCAConnectorAD::Connector"
+  | MediaPackageV2OriginEndpoint -> `String "AWS::MediaPackageV2::OriginEndpoint"
+  | LocationAPIKey -> `String "AWS::Location::APIKey"
+  | GuardDutyMalwareProtectionPlan -> `String "AWS::GuardDuty::MalwareProtectionPlan"
+  | DeadlineMonitor -> `String "AWS::Deadline::Monitor"
+  | CloudFrontKeyValueStore -> `String "AWS::CloudFront::KeyValueStore"
+  | B2BICapability -> `String "AWS::B2BI::Capability"
+  | IoTSiteWiseAsset -> `String "AWS::IoTSiteWise::Asset"
+  | MSKServerlessCluster -> `String "AWS::MSK::ServerlessCluster"
+  | MediaTailorLiveSource -> `String "AWS::MediaTailor::LiveSource"
+  | DataSyncAgent -> `String "AWS::DataSync::Agent"
+  | ComprehendFlywheel -> `String "AWS::Comprehend::Flywheel"
+  | BedrockPrompt -> `String "AWS::Bedrock::Prompt"
+  | EC2VPCGatewayAttachment -> `String "AWS::EC2::VPCGatewayAttachment"
+  | EC2IPAMPoolCidr -> `String "AWS::EC2::IPAMPoolCidr"
+  | OrganizationsOrganizationalUnit -> `String "AWS::Organizations::OrganizationalUnit"
+  | GlueDatabase -> `String "AWS::Glue::Database"
+  | TransferServer -> `String "AWS::Transfer::Server"
+  | SSMIncidentsResponsePlan -> `String "AWS::SSMIncidents::ResponsePlan"
+  | Route53ProfilesProfileAssociation -> `String "AWS::Route53Profiles::ProfileAssociation"
+  | RolesAnywhereTrustAnchor -> `String "AWS::RolesAnywhere::TrustAnchor"
+  | RedshiftIntegration -> `String "AWS::Redshift::Integration"
+  | OpenSearchServerlessSecurityConfig -> `String "AWS::OpenSearchServerless::SecurityConfig"
+  | NetworkManagerTransitGatewayPeering -> `String "AWS::NetworkManager::TransitGatewayPeering"
+  | KafkaConnectCustomPlugin -> `String "AWS::KafkaConnect::CustomPlugin"
+  | EC2VerifiedAccessInstance -> `String "AWS::EC2::VerifiedAccessInstance"
+  | EC2SecurityGroupVpcAssociation -> `String "AWS::EC2::SecurityGroupVpcAssociation"
+  | IoTCoreDeviceAdvisorSuiteDefinition -> `String "AWS::IoTCoreDeviceAdvisor::SuiteDefinition"
+  | EntityResolutionMatchingWorkflow -> `String "AWS::EntityResolution::MatchingWorkflow"
+  | EMRContainersVirtualCluster -> `String "AWS::EMRContainers::VirtualCluster"
+  | ElasticLoadBalancingV2TargetGroup -> `String "AWS::ElasticLoadBalancingV2::TargetGroup"
+  | BedrockAgentCoreBrowserCustom -> `String "AWS::BedrockAgentCore::BrowserCustom"
+  | BedrockAgentCoreRuntime -> `String "AWS::BedrockAgentCore::Runtime"
+  | SSMResourceDataSync -> `String "AWS::SSM::ResourceDataSync"
+  | SESMailManagerTrafficPolicy -> `String "AWS::SES::MailManagerTrafficPolicy"
+  | SESDedicatedIpPool -> `String "AWS::SES::DedicatedIpPool"
+  | SageMakerStudioLifecycleConfig -> `String "AWS::SageMaker::StudioLifecycleConfig"
+  | SageMakerModelQualityJobDefinition -> `String "AWS::SageMaker::ModelQualityJobDefinition"
+  | SageMakerModelExplainabilityJobDefinition ->
+      `String "AWS::SageMaker::ModelExplainabilityJobDefinition"
+  | SageMakerDataQualityJobDefinition -> `String "AWS::SageMaker::DataQualityJobDefinition"
+  | ConfigStoredQuery -> `String "AWS::Config::StoredQuery"
+  | BackupRestoreTestingPlan -> `String "AWS::Backup::RestoreTestingPlan"
+  | CodeArtifactDomain -> `String "AWS::CodeArtifact::Domain"
+  | RolesAnywhereProfile -> `String "AWS::RolesAnywhere::Profile"
+  | ConfigConformancePack -> `String "AWS::Config::ConformancePack"
+  | RDSIntegration -> `String "AWS::RDS::Integration"
+  | PCAConnectorADDirectoryRegistration -> `String "AWS::PCAConnectorAD::DirectoryRegistration"
+  | IoTDomainConfiguration -> `String "AWS::IoT::DomainConfiguration"
+  | EntityResolutionSchemaMapping -> `String "AWS::EntityResolution::SchemaMapping"
+  | EntityResolutionIdMappingWorkflow -> `String "AWS::EntityResolution::IdMappingWorkflow"
+  | CloudTrailEventDataStore -> `String "AWS::CloudTrail::EventDataStore"
+  | CloudFrontPublicKey -> `String "AWS::CloudFront::PublicKey"
+  | CloudFormationGuardHook -> `String "AWS::CloudFormation::GuardHook"
+  | BCMDataExportsExport -> `String "AWS::BCMDataExports::Export"
+  | BackupGatewayHypervisor -> `String "AWS::BackupGateway::Hypervisor"
+  | CloudFrontRealtimeLogConfig -> `String "AWS::CloudFront::RealtimeLogConfig"
+  | S3TablesTableBucket -> `String "AWS::S3Tables::TableBucket"
+  | EMRStudio -> `String "AWS::EMR::Studio"
+  | DeadlineFleet -> `String "AWS::Deadline::Fleet"
+  | AppConfigExtension -> `String "AWS::AppConfig::Extension"
+  | ApiGatewayUsagePlan -> `String "AWS::ApiGateway::UsagePlan"
+  | EC2SubnetNetworkAclAssociation -> `String "AWS::EC2::SubnetNetworkAclAssociation"
+  | CloudFormationLambdaHook -> `String "AWS::CloudFormation::LambdaHook"
+  | ECRRepositoryCreationTemplate -> `String "AWS::ECR::RepositoryCreationTemplate"
+  | DeadlineQueueFleetAssociation -> `String "AWS::Deadline::QueueFleetAssociation"
+  | SecretsManagerRotationSchedule -> `String "AWS::SecretsManager::RotationSchedule"
+  | SageMakerModelBiasJobDefinition -> `String "AWS::SageMaker::ModelBiasJobDefinition"
+  | SageMakerMlflowTrackingServer -> `String "AWS::SageMaker::MlflowTrackingServer"
+  | ApiGatewayV2Integration -> `String "AWS::ApiGatewayV2::Integration"
+  | BedrockApplicationInferenceProfile -> `String "AWS::Bedrock::ApplicationInferenceProfile"
+  | ConfigAggregationAuthorization -> `String "AWS::Config::AggregationAuthorization"
+  | EMRServerlessApplication -> `String "AWS::EMRServerless::Application"
+  | S3AccessGrantsInstance -> `String "AWS::S3::AccessGrantsInstance"
+  | S3AccessGrant -> `String "AWS::S3::AccessGrant"
+  | S3AccessGrantsLocation -> `String "AWS::S3::AccessGrantsLocation"
+  | MediaPackageV2Channel -> `String "AWS::MediaPackageV2::Channel"
+  | CloudFormationStackSet -> `String "AWS::CloudFormation::StackSet"
   | TransferProfile -> `String "AWS::Transfer::Profile"
   | SecurityHubStandard -> `String "AWS::SecurityHub::Standard"
   | SageMakerInferenceExperiment -> `String "AWS::SageMaker::InferenceExperiment"
@@ -555,7 +647,6 @@ let string_with_char_limit768_to_yojson = string_to_yojson
 let string_with_char_limit64_to_yojson = string_to_yojson
 let string_with_char_limit256_min0_to_yojson = string_to_yojson
 let string_with_char_limit256_to_yojson = string_to_yojson
-let string_with_char_limit2048_to_yojson = string_to_yojson
 let string_with_char_limit128_to_yojson = string_to_yojson
 let string_with_char_limit1024_to_yojson = string_to_yojson
 let string__to_yojson = string_to_yojson
@@ -1067,6 +1158,7 @@ let put_organization_conformance_pack_request_to_yojson
     (x : put_organization_conformance_pack_request) =
   assoc_to_yojson
     [
+      ("Tags", option_to_yojson tags_list_to_yojson x.tags);
       ("ExcludedAccounts", option_to_yojson excluded_accounts_to_yojson x.excluded_accounts);
       ( "ConformancePackInputParameters",
         option_to_yojson conformance_pack_input_parameters_to_yojson
@@ -1112,7 +1204,7 @@ let organization_managed_rule_metadata_to_yojson (x : organization_managed_rule_
       ("ResourceTypesScope", option_to_yojson resource_types_scope_to_yojson x.resource_types_scope);
       ( "MaximumExecutionFrequency",
         option_to_yojson maximum_execution_frequency_to_yojson x.maximum_execution_frequency );
-      ("InputParameters", option_to_yojson string_with_char_limit2048_to_yojson x.input_parameters);
+      ("InputParameters", option_to_yojson string_with_char_limit1024_to_yojson x.input_parameters);
       ("RuleIdentifier", Some (string_with_char_limit256_to_yojson x.rule_identifier));
       ("Description", option_to_yojson string_with_char_limit256_min0_to_yojson x.description);
     ]
@@ -1136,7 +1228,7 @@ let organization_custom_rule_metadata_to_yojson (x : organization_custom_rule_me
       ("ResourceTypesScope", option_to_yojson resource_types_scope_to_yojson x.resource_types_scope);
       ( "MaximumExecutionFrequency",
         option_to_yojson maximum_execution_frequency_to_yojson x.maximum_execution_frequency );
-      ("InputParameters", option_to_yojson string_with_char_limit2048_to_yojson x.input_parameters);
+      ("InputParameters", option_to_yojson string_with_char_limit1024_to_yojson x.input_parameters);
       ( "OrganizationConfigRuleTriggerTypes",
         Some
           (organization_config_rule_trigger_types_to_yojson x.organization_config_rule_trigger_types)
@@ -1173,7 +1265,7 @@ let organization_custom_policy_rule_metadata_to_yojson
       ("ResourceTypesScope", option_to_yojson resource_types_scope_to_yojson x.resource_types_scope);
       ( "MaximumExecutionFrequency",
         option_to_yojson maximum_execution_frequency_to_yojson x.maximum_execution_frequency );
-      ("InputParameters", option_to_yojson string_with_char_limit2048_to_yojson x.input_parameters);
+      ("InputParameters", option_to_yojson string_with_char_limit1024_to_yojson x.input_parameters);
       ( "OrganizationConfigRuleTriggerTypes",
         option_to_yojson organization_config_rule_trigger_type_no_s_ns_to_yojson
           x.organization_config_rule_trigger_types );
@@ -1183,6 +1275,7 @@ let organization_custom_policy_rule_metadata_to_yojson
 let put_organization_config_rule_request_to_yojson (x : put_organization_config_rule_request) =
   assoc_to_yojson
     [
+      ("Tags", option_to_yojson tags_list_to_yojson x.tags);
       ( "OrganizationCustomPolicyRuleMetadata",
         option_to_yojson organization_custom_policy_rule_metadata_to_yojson
           x.organization_custom_policy_rule_metadata );
@@ -1327,6 +1420,7 @@ let conformance_pack_name_to_yojson = string_to_yojson
 let put_conformance_pack_request_to_yojson (x : put_conformance_pack_request) =
   assoc_to_yojson
     [
+      ("Tags", option_to_yojson tags_list_to_yojson x.tags);
       ( "TemplateSSMDocumentDetails",
         option_to_yojson template_ssm_document_details_to_yojson x.template_ssm_document_details );
       ( "ConformancePackInputParameters",
@@ -1536,9 +1630,12 @@ let emptiable_string_with_char_limit256_to_yojson = string_to_yojson
 let compliance_resource_types_to_yojson tree =
   list_to_yojson string_with_char_limit256_to_yojson tree
 
+let service_principals_to_yojson tree = list_to_yojson string_with_char_limit128_to_yojson tree
+
 let scope_to_yojson (x : scope) =
   assoc_to_yojson
     [
+      ("ServicePrincipals", option_to_yojson service_principals_to_yojson x.service_principals);
       ("ComplianceResourceId", option_to_yojson base_resource_id_to_yojson x.compliance_resource_id);
       ("TagValue", option_to_yojson string_with_char_limit256_to_yojson x.tag_value);
       ("TagKey", option_to_yojson string_with_char_limit128_to_yojson x.tag_key);
@@ -1603,9 +1700,14 @@ let evaluation_mode_configuration_to_yojson (x : evaluation_mode_configuration) 
 
 let evaluation_modes_to_yojson tree = list_to_yojson evaluation_mode_configuration_to_yojson tree
 
+let rule_evaluation_visibility_to_yojson (x : rule_evaluation_visibility) =
+  match x with INTERNAL -> `String "INTERNAL" | EXTERNAL -> `String "EXTERNAL"
+
 let config_rule_to_yojson (x : config_rule) =
   assoc_to_yojson
     [
+      ( "RuleEvaluationVisibility",
+        option_to_yojson rule_evaluation_visibility_to_yojson x.rule_evaluation_visibility );
       ("EvaluationModes", option_to_yojson evaluation_modes_to_yojson x.evaluation_modes);
       ("CreatedBy", option_to_yojson string_with_char_limit256_to_yojson x.created_by);
       ("ConfigRuleState", option_to_yojson config_rule_state_to_yojson x.config_rule_state);
@@ -2652,6 +2754,7 @@ let describe_retention_configurations_request_to_yojson
 
 let remediation_execution_state_to_yojson (x : remediation_execution_state) =
   match x with
+  | UNKNOWN -> `String "UNKNOWN"
   | FAILED -> `String "FAILED"
   | SUCCEEDED -> `String "SUCCEEDED"
   | IN_PROGRESS -> `String "IN_PROGRESS"
@@ -2659,6 +2762,9 @@ let remediation_execution_state_to_yojson (x : remediation_execution_state) =
 
 let remediation_execution_step_state_to_yojson (x : remediation_execution_step_state) =
   match x with
+  | UNKNOWN -> `String "UNKNOWN"
+  | EXITED -> `String "EXITED"
+  | IN_PROGRESS -> `String "IN_PROGRESS"
   | FAILED -> `String "FAILED"
   | PENDING -> `String "PENDING"
   | SUCCEEDED -> `String "SUCCEEDED"
@@ -2928,7 +3034,7 @@ let organization_custom_policy_rule_metadata_no_policy_to_yojson
       ("ResourceTypesScope", option_to_yojson resource_types_scope_to_yojson x.resource_types_scope);
       ( "MaximumExecutionFrequency",
         option_to_yojson maximum_execution_frequency_to_yojson x.maximum_execution_frequency );
-      ("InputParameters", option_to_yojson string_with_char_limit2048_to_yojson x.input_parameters);
+      ("InputParameters", option_to_yojson string_with_char_limit1024_to_yojson x.input_parameters);
       ( "OrganizationConfigRuleTriggerTypes",
         option_to_yojson organization_config_rule_trigger_type_no_s_ns_to_yojson
           x.organization_config_rule_trigger_types );
@@ -3345,7 +3451,11 @@ let describe_config_rules_response_to_yojson (x : describe_config_rules_response
 
 let describe_config_rules_filters_to_yojson (x : describe_config_rules_filters) =
   assoc_to_yojson
-    [ ("EvaluationMode", option_to_yojson evaluation_mode_to_yojson x.evaluation_mode) ]
+    [
+      ( "RuleEvaluationVisibility",
+        option_to_yojson rule_evaluation_visibility_to_yojson x.rule_evaluation_visibility );
+      ("EvaluationMode", option_to_yojson evaluation_mode_to_yojson x.evaluation_mode);
+    ]
 
 let describe_config_rules_request_to_yojson (x : describe_config_rules_request) =
   assoc_to_yojson

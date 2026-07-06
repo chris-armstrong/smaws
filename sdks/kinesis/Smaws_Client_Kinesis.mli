@@ -8,9 +8,32 @@ module Types = Types
 
 (** {1:builders Builders} *)
 
+val make_warm_throughput_object :
+  ?current_mi_bps:natural_integer_object ->
+  ?target_mi_bps:natural_integer_object ->
+  unit ->
+  warm_throughput_object
+
+val make_update_stream_warm_throughput_output :
+  ?warm_throughput:warm_throughput_object ->
+  ?stream_name:stream_name ->
+  ?stream_ar_n:stream_ar_n ->
+  unit ->
+  update_stream_warm_throughput_output
+
+val make_update_stream_warm_throughput_input :
+  ?stream_id:stream_id ->
+  ?stream_name:stream_name ->
+  ?stream_ar_n:stream_ar_n ->
+  warm_throughput_mi_bps:natural_integer_object ->
+  unit ->
+  update_stream_warm_throughput_input
+
 val make_stream_mode_details : stream_mode:stream_mode -> unit -> stream_mode_details
 
 val make_update_stream_mode_input :
+  ?warm_throughput_mi_bps:natural_integer_object ->
+  ?stream_id:stream_id ->
   stream_mode_details:stream_mode_details ->
   stream_ar_n:stream_ar_n ->
   unit ->
@@ -25,6 +48,7 @@ val make_update_shard_count_output :
   update_shard_count_output
 
 val make_update_shard_count_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   scaling_type:scaling_type ->
@@ -32,11 +56,45 @@ val make_update_shard_count_input :
   unit ->
   update_shard_count_input
 
+val make_update_max_record_size_input :
+  ?stream_id:stream_id ->
+  ?stream_ar_n:stream_ar_n ->
+  max_record_size_in_ki_b:max_record_size_in_ki_b ->
+  unit ->
+  update_max_record_size_input
+
+val make_minimum_throughput_billing_commitment_output :
+  ?earliest_allowed_end_at:timestamp ->
+  ?ended_at:timestamp ->
+  ?started_at:timestamp ->
+  status:minimum_throughput_billing_commitment_output_status ->
+  unit ->
+  minimum_throughput_billing_commitment_output
+
+val make_update_account_settings_output :
+  ?minimum_throughput_billing_commitment:minimum_throughput_billing_commitment_output ->
+  unit ->
+  update_account_settings_output
+
+val make_minimum_throughput_billing_commitment_input :
+  status:minimum_throughput_billing_commitment_input_status ->
+  unit ->
+  minimum_throughput_billing_commitment_input
+
+val make_update_account_settings_input :
+  minimum_throughput_billing_commitment:minimum_throughput_billing_commitment_input ->
+  unit ->
+  update_account_settings_input
+
 val make_untag_resource_input :
-  resource_ar_n:resource_ar_n -> tag_keys:tag_key_list -> unit -> untag_resource_input
+  ?stream_id:stream_id ->
+  resource_ar_n:resource_ar_n ->
+  tag_keys:tag_key_list ->
+  unit ->
+  untag_resource_input
 
 val make_tag_resource_input :
-  resource_ar_n:resource_ar_n -> tags:tag_map -> unit -> tag_resource_input
+  ?stream_id:stream_id -> resource_ar_n:resource_ar_n -> tags:tag_map -> unit -> tag_resource_input
 
 val make_tag : ?value:tag_value -> key:tag_key -> unit -> tag
 
@@ -78,6 +136,7 @@ val make_starting_position :
   starting_position
 
 val make_subscribe_to_shard_input :
+  ?stream_id:stream_id ->
   starting_position:starting_position ->
   shard_id:shard_id ->
   consumer_ar_n:consumer_ar_n ->
@@ -96,10 +155,13 @@ val make_stream_summary :
 val make_enhanced_metrics : ?shard_level_metrics:metrics_name_list -> unit -> enhanced_metrics
 
 val make_stream_description_summary :
+  ?max_record_size_in_ki_b:max_record_size_in_ki_b ->
+  ?warm_throughput:warm_throughput_object ->
   ?consumer_count:consumer_count_object ->
   ?key_id:key_id ->
   ?encryption_type:encryption_type ->
   ?stream_mode_details:stream_mode_details ->
+  ?stream_id:stream_id ->
   open_shard_count:shard_count_object ->
   enhanced_monitoring:enhanced_monitoring_list ->
   stream_creation_timestamp:timestamp ->
@@ -141,6 +203,7 @@ val make_stream_description :
   stream_description
 
 val make_stop_stream_encryption_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   key_id:key_id ->
@@ -149,6 +212,7 @@ val make_stop_stream_encryption_input :
   stop_stream_encryption_input
 
 val make_start_stream_encryption_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   key_id:key_id ->
@@ -157,6 +221,7 @@ val make_start_stream_encryption_input :
   start_stream_encryption_input
 
 val make_split_shard_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   new_starting_hash_key:hash_key ->
@@ -168,6 +233,7 @@ val make_shard_filter :
   ?timestamp:timestamp -> ?shard_id:shard_id -> type_:shard_filter_type -> unit -> shard_filter
 
 val make_remove_tags_from_stream_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   tag_keys:tag_key_list ->
@@ -187,13 +253,18 @@ val make_register_stream_consumer_output :
 
 val make_register_stream_consumer_input :
   ?tags:tag_map ->
+  ?stream_id:stream_id ->
   consumer_name:consumer_name ->
   stream_ar_n:stream_ar_n ->
   unit ->
   register_stream_consumer_input
 
 val make_put_resource_policy_input :
-  policy:policy -> resource_ar_n:resource_ar_n -> unit -> put_resource_policy_input
+  ?stream_id:stream_id ->
+  policy:policy ->
+  resource_ar_n:resource_ar_n ->
+  unit ->
+  put_resource_policy_input
 
 val make_put_records_result_entry :
   ?error_message:error_message ->
@@ -218,6 +289,7 @@ val make_put_records_output :
   put_records_output
 
 val make_put_records_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   records:put_records_request_entry_list ->
@@ -232,6 +304,7 @@ val make_put_record_output :
   put_record_output
 
 val make_put_record_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?sequence_number_for_ordering:sequence_number ->
   ?explicit_hash_key:hash_key ->
@@ -242,6 +315,7 @@ val make_put_record_input :
   put_record_input
 
 val make_merge_shards_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   adjacent_shard_to_merge:shard_id ->
@@ -253,6 +327,7 @@ val make_list_tags_for_stream_output :
   has_more_tags:boolean_object -> tags:tag_list -> unit -> list_tags_for_stream_output
 
 val make_list_tags_for_stream_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?limit:list_tags_for_stream_input_limit ->
   ?exclusive_start_tag_key:tag_key ->
@@ -263,7 +338,7 @@ val make_list_tags_for_stream_input :
 val make_list_tags_for_resource_output : ?tags:tag_list -> unit -> list_tags_for_resource_output
 
 val make_list_tags_for_resource_input :
-  resource_ar_n:resource_ar_n -> unit -> list_tags_for_resource_input
+  ?stream_id:stream_id -> resource_ar_n:resource_ar_n -> unit -> list_tags_for_resource_input
 
 val make_list_streams_output :
   ?stream_summaries:stream_summary_list ->
@@ -284,6 +359,7 @@ val make_list_stream_consumers_output :
   ?next_token:next_token -> ?consumers:consumer_list -> unit -> list_stream_consumers_output
 
 val make_list_stream_consumers_input :
+  ?stream_id:stream_id ->
   ?stream_creation_timestamp:timestamp ->
   ?max_results:list_stream_consumers_input_limit ->
   ?next_token:next_token ->
@@ -295,6 +371,7 @@ val make_list_shards_output :
   ?next_token:next_token -> ?shards:shard_list -> unit -> list_shards_output
 
 val make_list_shards_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?shard_filter:shard_filter ->
   ?stream_creation_timestamp:timestamp ->
@@ -306,6 +383,7 @@ val make_list_shards_input :
   list_shards_input
 
 val make_increase_stream_retention_period_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   retention_period_hours:retention_period_hours ->
@@ -316,6 +394,7 @@ val make_get_shard_iterator_output :
   ?shard_iterator:shard_iterator -> unit -> get_shard_iterator_output
 
 val make_get_shard_iterator_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?timestamp:timestamp ->
   ?starting_sequence_number:sequence_number ->
@@ -328,7 +407,7 @@ val make_get_shard_iterator_input :
 val make_get_resource_policy_output : policy:policy -> unit -> get_resource_policy_output
 
 val make_get_resource_policy_input :
-  resource_ar_n:resource_ar_n -> unit -> get_resource_policy_input
+  ?stream_id:stream_id -> resource_ar_n:resource_ar_n -> unit -> get_resource_policy_input
 
 val make_get_records_output :
   ?child_shards:child_shard_list ->
@@ -339,6 +418,7 @@ val make_get_records_output :
   get_records_output
 
 val make_get_records_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?limit:get_records_input_limit ->
   shard_iterator:shard_iterator ->
@@ -354,6 +434,7 @@ val make_enhanced_monitoring_output :
   enhanced_monitoring_output
 
 val make_enable_enhanced_monitoring_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   shard_level_metrics:metrics_name_list ->
@@ -361,6 +442,7 @@ val make_enable_enhanced_monitoring_input :
   enable_enhanced_monitoring_input
 
 val make_disable_enhanced_monitoring_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   shard_level_metrics:metrics_name_list ->
@@ -371,7 +453,11 @@ val make_describe_stream_summary_output :
   stream_description_summary:stream_description_summary -> unit -> describe_stream_summary_output
 
 val make_describe_stream_summary_input :
-  ?stream_ar_n:stream_ar_n -> ?stream_name:stream_name -> unit -> describe_stream_summary_input
+  ?stream_id:stream_id ->
+  ?stream_ar_n:stream_ar_n ->
+  ?stream_name:stream_name ->
+  unit ->
+  describe_stream_summary_input
 
 val make_consumer_description :
   stream_ar_n:stream_ar_n ->
@@ -386,6 +472,7 @@ val make_describe_stream_consumer_output :
   consumer_description:consumer_description -> unit -> describe_stream_consumer_output
 
 val make_describe_stream_consumer_input :
+  ?stream_id:stream_id ->
   ?consumer_ar_n:consumer_ar_n ->
   ?consumer_name:consumer_name ->
   ?stream_ar_n:stream_ar_n ->
@@ -396,6 +483,7 @@ val make_describe_stream_output :
   stream_description:stream_description -> unit -> describe_stream_output
 
 val make_describe_stream_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?exclusive_start_shard_id:shard_id ->
   ?limit:describe_stream_input_limit ->
@@ -413,7 +501,15 @@ val make_describe_limits_output :
 
 val make_describe_limits_input : unit -> unit
 
+val make_describe_account_settings_output :
+  ?minimum_throughput_billing_commitment:minimum_throughput_billing_commitment_output ->
+  unit ->
+  describe_account_settings_output
+
+val make_describe_account_settings_input : unit -> unit
+
 val make_deregister_stream_consumer_input :
+  ?stream_id:stream_id ->
   ?consumer_ar_n:consumer_ar_n ->
   ?consumer_name:consumer_name ->
   ?stream_ar_n:stream_ar_n ->
@@ -421,6 +517,7 @@ val make_deregister_stream_consumer_input :
   deregister_stream_consumer_input
 
 val make_delete_stream_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?enforce_consumer_deletion:boolean_object ->
   ?stream_name:stream_name ->
@@ -428,9 +525,10 @@ val make_delete_stream_input :
   delete_stream_input
 
 val make_delete_resource_policy_input :
-  resource_ar_n:resource_ar_n -> unit -> delete_resource_policy_input
+  ?stream_id:stream_id -> resource_ar_n:resource_ar_n -> unit -> delete_resource_policy_input
 
 val make_decrease_stream_retention_period_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   retention_period_hours:retention_period_hours ->
@@ -438,6 +536,8 @@ val make_decrease_stream_retention_period_input :
   decrease_stream_retention_period_input
 
 val make_create_stream_input :
+  ?max_record_size_in_ki_b:max_record_size_in_ki_b ->
+  ?warm_throughput_mi_bps:natural_integer_object ->
   ?tags:tag_map ->
   ?stream_mode_details:stream_mode_details ->
   ?shard_count:positive_integer_object ->
@@ -446,6 +546,7 @@ val make_create_stream_input :
   create_stream_input
 
 val make_add_tags_to_stream_input :
+  ?stream_id:stream_id ->
   ?stream_ar_n:stream_ar_n ->
   ?stream_name:stream_name ->
   tags:tag_map ->
@@ -492,7 +593,8 @@ module CreateStream : sig
     [ Smaws_Lib.Protocols.AwsJson.error
     | `InvalidArgumentException of invalid_argument_exception
     | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception ] ->
+    | `ResourceInUseException of resource_in_use_exception
+    | `ValidationException of validation_exception ] ->
     string
 
   val request :
@@ -502,7 +604,8 @@ module CreateStream : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception ] )
+      | `ResourceInUseException of resource_in_use_exception
+      | `ValidationException of validation_exception ] )
     result
 end
 [@@ocaml.doc
@@ -513,35 +616,42 @@ end
   \ You can create your data stream using either on-demand or provisioned capacity mode. Data \
    streams with an on-demand mode require no capacity planning and automatically scale to handle \
    gigabytes of write and read throughput per minute. With the on-demand mode, Kinesis Data \
-   Streams automatically manages the shards in order to provide the necessary throughput. For the \
-   data streams with a provisioned mode, you must specify the number of shards for the data \
-   stream. Each shard can support reads up to five transactions per second, up to a maximum data \
-   read total of 2 MiB per second. Each shard can support writes up to 1,000 records per second, \
-   up to a maximum data write total of 1 MiB per second. If the amount of data input increases or \
-   decreases, you can add or remove shards.\n\
+   Streams automatically manages the shards in order to provide the necessary throughput.\n\
   \ \n\
-  \  The stream name identifies the stream. The name is scoped to the Amazon Web Services account \
-   used by the application. It is also scoped by Amazon Web Services Region. That is, two streams \
-   in two different accounts can have the same name, and two streams in the same account, but in \
-   two different Regions, can have the same name.\n\
+  \  If you'd still like to proactively scale your on-demand data stream\226\128\153s capacity, \
+   you can unlock the warm throughput feature for on-demand data streams by enabling \
+   [MinimumThroughputBillingCommitment] for your account. Once your account has \
+   [MinimumThroughputBillingCommitment] enabled, you can specify the warm throughput in MiB per \
+   second that your stream can support in writes.\n\
   \  \n\
-  \    [CreateStream] is an asynchronous operation. Upon receiving a [CreateStream] request, \
+  \   For the data streams with a provisioned mode, you must specify the number of shards for the \
+   data stream. Each shard can support reads up to five transactions per second, up to a maximum \
+   data read total of 2 MiB per second. Each shard can support writes up to 1,000 records per \
+   second, up to a maximum data write total of 1 MiB per second. If the amount of data input \
+   increases or decreases, you can add or remove shards.\n\
+  \   \n\
+  \    The stream name identifies the stream. The name is scoped to the Amazon Web Services \
+   account used by the application. It is also scoped by Amazon Web Services Region. That is, two \
+   streams in two different accounts can have the same name, and two streams in the same account, \
+   but in two different Regions, can have the same name.\n\
+  \    \n\
+  \      [CreateStream] is an asynchronous operation. Upon receiving a [CreateStream] request, \
    Kinesis Data Streams immediately returns and sets the stream status to [CREATING]. After the \
    stream is created, Kinesis Data Streams sets the stream status to [ACTIVE]. You should perform \
    read and write operations only on an [ACTIVE] stream. \n\
-  \   \n\
-  \    You receive a [LimitExceededException] when making a [CreateStream] request when you try to \
-   do one of the following:\n\
-  \    \n\
-  \     {ul\n\
-  \           {-  Have more than five streams in the [CREATING] state at any point in time.\n\
-  \               \n\
-  \                }\n\
-  \           {-  Create more shards than are authorized for your account.\n\
-  \               \n\
-  \                }\n\
-  \           }\n\
-  \   For the default shard limit for an Amazon Web Services account, see \
+  \     \n\
+  \      You receive a [LimitExceededException] when making a [CreateStream] request when you try \
+   to do one of the following:\n\
+  \      \n\
+  \       {ul\n\
+  \             {-  Have more than five streams in the [CREATING] state at any point in time.\n\
+  \                 \n\
+  \                  }\n\
+  \             {-  Create more shards than are authorized for your account.\n\
+  \                 \n\
+  \                  }\n\
+  \             }\n\
+  \   For the default shard or on-demand throughput limits for an Amazon Web Services account, see \
    {{:https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html}Amazon Kinesis \
    Data Streams Limits} in the {i Amazon Kinesis Data Streams Developer Guide}. To increase this \
    limit, {{:https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html}contact Amazon \
@@ -702,6 +812,27 @@ end
    operation to get a list of the descriptions of all the consumers that are currently registered \
    with a given data stream. The description of a consumer contains its name and ARN.\n\n\
   \ This operation has a limit of five transactions per second per stream.\n\
+  \ "]
+
+module DescribeAccountSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_account_settings_input ->
+    ( describe_account_settings_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
+    )
+    result
+end
+[@@ocaml.doc
+  "Describes the account-level settings for Amazon Kinesis Data Streams. This operation returns \
+   information about the minimum throughput billing commitments and other account-level \
+   configurations.\n\n\
+  \ This API has a call limit of 5 transactions per second (TPS) for each Amazon Web Services \
+   account. TPS over 5 will initiate the [LimitExceededException].\n\
   \ "]
 
 module DescribeLimits : sig
@@ -1389,7 +1520,7 @@ end
 [@@ocaml.doc
   "Writes a single data record into an Amazon Kinesis data stream. Call [PutRecord] to send data \
    into the stream for real-time ingestion and subsequent processing, one record at a time. Each \
-   shard can support writes up to 1,000 records per second, up to a maximum data write total of 1 \
+   shard can support writes up to 1,000 records per second, up to a maximum data write total of 10 \
    MiB per second.\n\n\
   \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
    both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
@@ -1476,9 +1607,9 @@ end
    both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
   \  \n\
   \    Each [PutRecords] request can support up to 500 records. Each record in the request can be \
-   as large as 1 MiB, up to a limit of 5 MiB for the entire request, including partition keys. \
+   as large as 10 MiB, up to a limit of 10 MiB for the entire request, including partition keys. \
    Each shard can support writes up to 1,000 records per second, up to a maximum data write total \
-   of 1 MiB per second.\n\
+   of 1 MB per second.\n\
   \    \n\
   \     You must specify the name of the stream that captures, stores, and transports the data; \
    and an array of request [Records], with each record in the array requiring a partition key and \
@@ -1613,8 +1744,10 @@ end
    permission for the consumer that will be registered. Tags will take effect from the [CREATING] \
    status of the consumer.\n\
   \ \n\
-  \  You can register up to 20 consumers per stream. A given consumer can only be registered with \
-   one stream at a time.\n\
+  \  With On-demand Advantage streams, you can register up to 50 consumers per stream to use \
+   Enhanced Fan-out. With On-demand Standard and Provisioned streams, you can register up to 20 \
+   consumers per stream to use Enhanced Fan-out. A given consumer can only be registered with one \
+   stream at a time.\n\
   \  \n\
   \   For an example of how to use this operation, see \
    {{:https://docs.aws.amazon.com/streams/latest/dev/building-enhanced-consumers-api.html}Enhanced \
@@ -1933,6 +2066,72 @@ end
   "Removes tags from the specified Kinesis resource. Removed tags are deleted and can't be \
    recovered after this operation completes successfully.\n"]
 
+module UpdateAccountSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_account_settings_input ->
+    ( update_account_settings_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Updates the account-level settings for Amazon Kinesis Data Streams.\n\n\
+  \ Updating account settings is a synchronous operation. Upon receiving the request, Kinesis Data \
+   Streams will return immediately with your account\226\128\153s updated settings.\n\
+  \ \n\
+  \   {b API limits} \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  Certain account configurations have minimum commitment windows. Attempting to \
+   update your settings prior to the end of the minimum commitment window might have certain \
+   restrictions.\n\
+  \             \n\
+  \              }\n\
+  \         {-  This API has a call limit of 5 transactions per second (TPS) for each Amazon Web \
+   Services account. TPS over 5 will initiate the [LimitExceededException].\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \  "]
+
+module UpdateMaxRecordSize : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_max_record_size_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "This allows you to update the [MaxRecordSize] of a single record that you can write to, and \
+   read from a stream. You can ingest and digest single records up to 10240 KiB.\n"]
+
 module UpdateShardCount : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -2012,14 +2211,14 @@ end
    form}.\n\
   \   "]
 
-(** {1:Serialization and Deserialization} *)
 module UpdateStreamMode : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `InvalidArgumentException of invalid_argument_exception
     | `LimitExceededException of limit_exceeded_exception
     | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
     string
 
   val request :
@@ -2030,13 +2229,82 @@ module UpdateStreamMode : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
     result
 end
 [@@ocaml.doc
   " Updates the capacity mode of the data stream. Currently, in Kinesis Data Streams, you can \
    choose between an {b on-demand} capacity mode and a {b provisioned} capacity mode for your data \
-   stream. \n"]
+   stream. \n\n\
+  \ If you'd still like to proactively scale your on-demand data stream\226\128\153s capacity, you \
+   can unlock the warm throughput feature for on-demand data streams by enabling \
+   [MinimumThroughputBillingCommitment] for your account. Once your account has \
+   [MinimumThroughputBillingCommitment] enabled, you can specify the warm throughput in MiB per \
+   second that your stream can support in writes.\n\
+  \ "]
+
+(** {1:Serialization and Deserialization} *)
+module UpdateStreamWarmThroughput : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_stream_warm_throughput_input ->
+    ( update_stream_warm_throughput_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Updates the warm throughput configuration for the specified Amazon Kinesis Data Streams \
+   on-demand data stream. This operation allows you to proactively scale your on-demand data \
+   stream to a specified throughput level, enabling better performance for sudden traffic spikes. \
+   \n\n\
+  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
+   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
+  \  \n\
+  \    Updating the warm throughput is an asynchronous operation. Upon receiving the request, \
+   Kinesis Data Streams returns immediately and sets the status of the stream to [UPDATING]. After \
+   the update is complete, Kinesis Data Streams sets the status of the stream back to [ACTIVE]. \
+   Depending on the size of the stream, the scaling action could take a few minutes to complete. \
+   You can continue to read and write data to your stream while its status is [UPDATING].\n\
+  \    \n\
+  \     This operation is only supported for data streams with the on-demand capacity mode in \
+   accounts that have [MinimumThroughputBillingCommitment] enabled. Provisioned capacity mode \
+   streams do not support warm throughput configuration.\n\
+  \     \n\
+  \      This operation has the following default limits. By default, you cannot do the following:\n\
+  \      \n\
+  \       {ul\n\
+  \             {-  Scale to more than 10 GiBps for an on-demand stream.\n\
+  \                 \n\
+  \                  }\n\
+  \             {-  This API has a call limit of 5 transactions per second (TPS) for each Amazon \
+   Web Services account. TPS over 5 will initiate the [LimitExceededException].\n\
+  \                 \n\
+  \                  }\n\
+  \             }\n\
+  \   For the default limits for an Amazon Web Services account, see \
+   {{:https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html}Streams Limits} \
+   in the {i Amazon Kinesis Data Streams Developer Guide}. To request an increase in the call rate \
+   limit, the shard limit for this API, or your overall shard limit, use the \
+   {{:https://console.aws.amazon.com/support/v1#/case/create?issueType=service-limit-increase&limitType=service-code-kinesis}limits \
+   form}.\n\
+  \   "]
 
 module Json_serializers = Json_serializers
 module Json_deserializers = Json_deserializers

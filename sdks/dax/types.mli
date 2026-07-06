@@ -1,6 +1,19 @@
 type nonrec string_ = string [@@ocaml.doc ""]
 
+type nonrec network_type =
+  | DUAL_STACK [@ocaml.doc ""]
+  | IPV6 [@ocaml.doc ""]
+  | IPV4 [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec network_type_list = network_type list [@@ocaml.doc ""]
+
 type nonrec subnet = {
+  supported_network_types : network_type_list option;
+      [@ocaml.doc
+        "The network types supported by this subnet. Returns an array of strings that can include \
+         [ipv4], [ipv6], or both, indicating whether the subnet supports IPv4 only, IPv6 only, or \
+         dual-stack deployments.\n"]
   subnet_availability_zone : string_ option;
       [@ocaml.doc "The Availability Zone (AZ) for the subnet.\n"]
   subnet_identifier : string_ option; [@ocaml.doc "The system-assigned identifier for the subnet.\n"]
@@ -12,6 +25,11 @@ type nonrec subnet = {
 type nonrec subnet_list = subnet list [@@ocaml.doc ""]
 
 type nonrec subnet_group = {
+  supported_network_types : network_type_list option;
+      [@ocaml.doc
+        "The network types supported by this subnet. Returns an array of strings that can include \
+         [ipv4], [ipv6], or both, indicating whether the subnet group supports IPv4 only, IPv6 \
+         only, or dual-stack deployments. \n"]
   subnets : subnet_list option;
       [@ocaml.doc "A list of subnets associated with the subnet group. \n"]
   vpc_id : string_ option;
@@ -52,6 +70,13 @@ type nonrec subnet_quota_exceeded_fault = { message : exception_message option [
 [@@ocaml.doc
   "The request cannot be processed because it would exceed the allowed number of subnets in a \
    subnet group.\n"]
+
+type nonrec subnet_not_allowed_fault = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The specified subnet can't be used for the requested network type. This error occurs when \
+   either there aren't enough subnets of the required network type to create the cluster, or when \
+   you try to use a subnet that doesn't support the requested network type (for example, trying to \
+   create a dual-stack cluster with a subnet that doesn't have IPv6 CIDR). \n"]
 
 type nonrec subnet_in_use = { message : exception_message option [@ocaml.doc ""] }
 [@@ocaml.doc "The requested subnet is being used by another subnet group.\n"]
@@ -172,7 +197,7 @@ type nonrec notification_configuration = {
          notifications will be sent to the topic. A value of \226\128\156inactive\226\128\157 \
          means that notifications will not be sent to the topic.\n"]
   topic_arn : string_ option;
-      [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the topic. \n"]
+      [@ocaml.doc "The Amazon Resource Name (ARN) that identifies the topic.\n"]
 }
 [@@ocaml.doc
   "Describes a notification topic and its status. Notification topics are used for publishing DAX \
@@ -227,6 +252,21 @@ type nonrec cluster_endpoint_encryption_type = TLS [@ocaml.doc ""] | NONE [@ocam
 [@@ocaml.doc ""]
 
 type nonrec cluster = {
+  network_type : network_type option;
+      [@ocaml.doc
+        "The IP address type of the cluster. Values are:\n\n\
+        \ {ul\n\
+        \       {-   [ipv4] - IPv4 addresses only\n\
+        \           \n\
+        \            }\n\
+        \       {-   [ipv6] - IPv6 addresses only\n\
+        \           \n\
+        \            }\n\
+        \       {-   [dual_stack] - Both IPv4 and IPv6 addresses\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \  "]
   cluster_endpoint_encryption_type : cluster_endpoint_encryption_type option;
       [@ocaml.doc
         "The type of encryption supported by the cluster's endpoint. Values are:\n\n\
@@ -325,7 +365,7 @@ type nonrec cluster_not_found_fault = { message : exception_message option [@oca
 
 type nonrec tag = {
   value : string_ option;
-      [@ocaml.doc "The value of the tag. Tag values are case-sensitive and can be null. \n"]
+      [@ocaml.doc "The value of the tag. Tag values are case-sensitive and can be null.\n"]
   key : string_ option;
       [@ocaml.doc
         "The key for the tag. Tag keys are case sensitive. Every DAX cluster can only have one tag \
@@ -335,9 +375,9 @@ type nonrec tag = {
 [@@ocaml.doc
   "A description of a tag. Every tag is a key-value pair. You can add up to 50 tags to a single \
    DAX cluster.\n\n\
-  \ AWS-assigned tag names and values are automatically assigned the [aws:] prefix, which the user \
-   cannot assign. AWS-assigned tag names do not count towards the tag limit of 50. User-assigned \
-   tag names have the prefix [user:].\n\
+  \ Amazon Web Services-assigned tag names and values are automatically assigned the [aws:] \
+   prefix, which the user cannot assign. Amazon Web Services-assigned tag names do not count \
+   towards the tag limit of 50. User-assigned tag names have the prefix [user:].\n\
   \ \n\
   \  You cannot backdate the application of a tag.\n\
   \  "]
@@ -502,7 +542,8 @@ type nonrec parameter_group_already_exists_fault = {
 type nonrec node_quota_for_customer_exceeded_fault = {
   message : exception_message option; [@ocaml.doc ""]
 }
-[@@ocaml.doc "You have attempted to exceed the maximum number of nodes for your AWS account.\n"]
+[@@ocaml.doc
+  "You have attempted to exceed the maximum number of nodes for your Amazon Web Services account.\n"]
 
 type nonrec node_quota_for_cluster_exceeded_fault = {
   message : exception_message option; [@ocaml.doc ""]
@@ -540,7 +581,7 @@ type nonrec insufficient_cluster_capacity_fault = {
 
 type nonrec increase_replication_factor_response = {
   cluster : cluster option;
-      [@ocaml.doc "A description of the DAX cluster. with its new replication factor.\n"]
+      [@ocaml.doc "A description of the DAX cluster, with its new replication factor.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -839,6 +880,24 @@ type nonrec create_cluster_response = {
 [@@ocaml.doc ""]
 
 type nonrec create_cluster_request = {
+  network_type : network_type option;
+      [@ocaml.doc
+        "Specifies the IP protocol(s) the cluster uses for network communications. Values are:\n\n\
+        \ {ul\n\
+        \       {-   [ipv4] - The cluster is accessible only through IPv4 addresses\n\
+        \           \n\
+        \            }\n\
+        \       {-   [ipv6] - The cluster is accessible only through IPv6 addresses\n\
+        \           \n\
+        \            }\n\
+        \       {-   [dual_stack] - The cluster is accessible through both IPv4 and IPv6 addresses.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \    If no explicit [NetworkType] is provided, the network type is derived based on the \
+         subnet group's configuration.\n\
+        \    \n\
+        \     "]
   cluster_endpoint_encryption_type : cluster_endpoint_encryption_type option;
       [@ocaml.doc
         "The type of encryption the cluster's endpoint should support. Values are:\n\n\
@@ -928,9 +987,10 @@ type nonrec create_cluster_request = {
          single-node cluster, without any read replicas. For additional fault tolerance, you can \
          create a multiple node cluster with one or more read replicas. To do this, set \
          [ReplicationFactor] to a number between 3 (one primary and two read replicas) and 10 (one \
-         primary and nine read replicas). [If the AvailabilityZones] parameter is provided, its \
-         length must equal the [ReplicationFactor].\n\n\
-        \  AWS recommends that you have at least two read replicas per cluster.\n\
+         primary and nine read replicas). [If the\n\
+        \                AvailabilityZones] parameter is provided, its length must equal the \
+         [ReplicationFactor].\n\n\
+        \  Amazon Web Services recommends that you have at least two read replicas per cluster.\n\
         \  \n\
         \   "]
   description : string_ option; [@ocaml.doc "A description of the cluster.\n"]
@@ -959,7 +1019,8 @@ type nonrec cluster_quota_for_customer_exceeded_fault = {
   message : exception_message option; [@ocaml.doc ""]
 }
 [@@ocaml.doc
-  "You have attempted to exceed the maximum number of DAX clusters for your AWS account.\n"]
+  "You have attempted to exceed the maximum number of DAX clusters for your Amazon Web Services \
+   account.\n"]
 
 type nonrec cluster_already_exists_fault = { message : exception_message option [@ocaml.doc ""] }
 [@@ocaml.doc "You already have a DAX cluster with the given identifier.\n"]

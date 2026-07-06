@@ -1736,9 +1736,16 @@ let alarm_state_information_of_yojson tree path =
 let alarm_state_information_list_of_yojson tree path =
   list_of_yojson alarm_state_information_of_yojson tree path
 
+let association_dispatch_assume_role_arn_of_yojson = string_of_yojson
+
 let association_description_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     association_dispatch_assume_role =
+       option_of_yojson
+         (value_for_key association_dispatch_assume_role_arn_of_yojson
+            "AssociationDispatchAssumeRole")
+         _list path;
      triggered_alarms =
        option_of_yojson
          (value_for_key alarm_state_information_list_of_yojson "TriggeredAlarms")
@@ -1852,6 +1859,11 @@ let update_association_result_of_yojson tree path =
 let update_association_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     association_dispatch_assume_role =
+       option_of_yojson
+         (value_for_key association_dispatch_assume_role_arn_of_yojson
+            "AssociationDispatchAssumeRole")
+         _list path;
      alarm_configuration =
        option_of_yojson
          (value_for_key alarm_configuration_of_yojson "AlarmConfiguration")
@@ -2435,6 +2447,11 @@ let start_change_request_execution_request_of_yojson tree path =
        option_of_yojson (value_for_key date_time_of_yojson "ScheduledTime") _list path;
    }
     : start_change_request_execution_request)
+
+let no_longer_supported_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({ message = option_of_yojson (value_for_key string__of_yojson "Message") _list path }
+    : no_longer_supported_exception)
 
 let invalid_automation_execution_parameters_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -6085,6 +6102,11 @@ let list_associations_request_of_yojson tree path =
 let association_version_info_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     association_dispatch_assume_role =
+       option_of_yojson
+         (value_for_key association_dispatch_assume_role_arn_of_yojson
+            "AssociationDispatchAssumeRole")
+         _list path;
      target_maps = option_of_yojson (value_for_key target_maps_of_yojson "TargetMaps") _list path;
      duration = option_of_yojson (value_for_key duration_of_yojson "Duration") _list path;
      schedule_offset =
@@ -7603,6 +7625,8 @@ let baseline_override_of_yojson tree path =
 let get_deployable_patch_snapshot_for_instance_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     use_s3_dual_stack_endpoint =
+       option_of_yojson (value_for_key boolean__of_yojson "UseS3DualStackEndpoint") _list path;
      baseline_override =
        option_of_yojson (value_for_key baseline_override_of_yojson "BaselineOverride") _list path;
      snapshot_id = value_for_key snapshot_id_of_yojson "SnapshotId" _list path;
@@ -9584,6 +9608,11 @@ let create_association_result_of_yojson tree path =
 let create_association_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     association_dispatch_assume_role =
+       option_of_yojson
+         (value_for_key association_dispatch_assume_role_arn_of_yojson
+            "AssociationDispatchAssumeRole")
+         _list path;
      alarm_configuration =
        option_of_yojson
          (value_for_key alarm_configuration_of_yojson "AlarmConfiguration")
@@ -9658,6 +9687,11 @@ let create_association_batch_request_entries_of_yojson tree path =
 let create_association_batch_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     association_dispatch_assume_role =
+       option_of_yojson
+         (value_for_key association_dispatch_assume_role_arn_of_yojson
+            "AssociationDispatchAssumeRole")
+         _list path;
      entries = value_for_key create_association_batch_request_entries_of_yojson "Entries" _list path;
    }
     : create_association_batch_request)

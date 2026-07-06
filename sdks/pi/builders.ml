@@ -30,10 +30,11 @@ let make_response_resource_metric_key ?dimensions:(dimensions_ : dimension_map o
 let make_response_partition_key ~dimensions:(dimensions_ : dimension_map) () =
   ({ dimensions = dimensions_ } : response_partition_key)
 
-let make_recommendation
+let make_recommendation ?recommendation_details:(recommendation_details_ : markdown_string option)
     ?recommendation_description:(recommendation_description_ : markdown_string option)
     ?recommendation_id:(recommendation_id_ : string_ option) () =
   ({
+     recommendation_details = recommendation_details_;
      recommendation_description = recommendation_description_;
      recommendation_id = recommendation_id_;
    }
@@ -78,6 +79,27 @@ let make_list_performance_analysis_reports_request ?list_tags:(list_tags_ : bool
      service_type = service_type_;
    }
     : list_performance_analysis_reports_request)
+
+let make_list_performance_analysis_report_recommendations_response
+    ?next_token:(next_token_ : next_token option)
+    ?recommendations:(recommendations_ : recommendation_list option) () =
+  ({ next_token = next_token_; recommendations = recommendations_ }
+    : list_performance_analysis_report_recommendations_response)
+
+let make_list_performance_analysis_report_recommendations_request
+    ?next_token:(next_token_ : next_token option) ?max_results:(max_results_ : max_results option)
+    ?recommendation_ids:(recommendation_ids_ : recommendation_id_list option)
+    ~analysis_report_id:(analysis_report_id_ : analysis_report_id)
+    ~identifier:(identifier_ : identifier_string) ~service_type:(service_type_ : service_type) () =
+  ({
+     next_token = next_token_;
+     max_results = max_results_;
+     recommendation_ids = recommendation_ids_;
+     analysis_report_id = analysis_report_id_;
+     identifier = identifier_;
+     service_type = service_type_;
+   }
+    : list_performance_analysis_report_recommendations_request)
 
 let make_list_available_resource_metrics_response ?next_token:(next_token_ : next_token option)
     ?metrics:(metrics_ : response_resource_metric_list option) () =
@@ -351,7 +373,7 @@ let make_create_performance_analysis_report_response
   ({ analysis_report_id = analysis_report_id_ } : create_performance_analysis_report_response)
 
 let make_create_performance_analysis_report_request ?tags:(tags_ : tag_list option)
-    ~end_time:(end_time_ : iso_timestamp) ~start_time:(start_time_ : iso_timestamp)
+    ?end_time:(end_time_ : iso_timestamp option) ~start_time:(start_time_ : iso_timestamp)
     ~identifier:(identifier_ : identifier_string) ~service_type:(service_type_ : service_type) () =
   ({
      tags = tags_;

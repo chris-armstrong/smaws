@@ -36,13 +36,18 @@ let iso_date_of_yojson = timestamp_epoch_seconds_of_yojson
 
 let region_name_of_yojson (tree : t) path =
   ((match tree with
-    | `String "eu-north-1" -> EU_NORTH_1
+    | `String "sa-east-1" -> SA_EAST_1
+    | `String "ap-southeast-5" -> AP_SOUTHEAST_5
+    | `String "ap-southeast-3" -> AP_SOUTHEAST_3
     | `String "ap-northeast-2" -> AP_NORTHEAST_2
     | `String "ap-northeast-1" -> AP_NORTHEAST_1
     | `String "ap-southeast-2" -> AP_SOUTHEAST_2
     | `String "ap-southeast-1" -> AP_SOUTHEAST_1
     | `String "ap-south-1" -> AP_SOUTH_1
+    | `String "ap-east-1" -> AP_EAST_1
     | `String "ca-central-1" -> CA_CENTRAL_1
+    | `String "eu-south-2" -> EU_SOUTH_2
+    | `String "eu-north-1" -> EU_NORTH_1
     | `String "eu-central-1" -> EU_CENTRAL_1
     | `String "eu-west-3" -> EU_WEST_3
     | `String "eu-west-2" -> EU_WEST_2
@@ -385,6 +390,16 @@ let service_exception_of_yojson tree path =
    }
     : service_exception)
 
+let region_setup_in_progress_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     tip = option_of_yojson (value_for_key string__of_yojson "tip") _list path;
+     message = option_of_yojson (value_for_key string__of_yojson "message") _list path;
+     docs = option_of_yojson (value_for_key string__of_yojson "docs") _list path;
+     code = option_of_yojson (value_for_key string__of_yojson "code") _list path;
+   }
+    : region_setup_in_progress_exception)
+
 let operation_failure_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -563,9 +578,24 @@ let origin_protocol_policy_enum_of_yojson (tree : t) path =
      : origin_protocol_policy_enum)
     : origin_protocol_policy_enum)
 
+let origin_ip_address_type_enum_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "dualstack" -> DUALSTACK
+    | `String "ipv6" -> IPV6
+    | `String "ipv4" -> IPV4
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "OriginIpAddressTypeEnum" value)
+    | _ -> raise (deserialize_wrong_type_error path "OriginIpAddressTypeEnum")
+     : origin_ip_address_type_enum)
+    : origin_ip_address_type_enum)
+
 let input_origin_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     ip_address_type =
+       option_of_yojson
+         (value_for_key origin_ip_address_type_enum_of_yojson "ipAddressType")
+         _list path;
      response_timeout =
        option_of_yojson (value_for_key integer_of_yojson "responseTimeout") _list path;
      protocol_policy =
@@ -1052,9 +1082,47 @@ let bucket_access_log_config_of_yojson tree path =
    }
     : bucket_access_log_config)
 
+let bucket_cors_rule_id_of_yojson = string_of_yojson
+let bucket_cors_allowed_method_of_yojson = string_of_yojson
+
+let bucket_cors_allowed_methods_of_yojson tree path =
+  list_of_yojson bucket_cors_allowed_method_of_yojson tree path
+
+let bucket_cors_allowed_origins_of_yojson tree path = list_of_yojson string__of_yojson tree path
+let bucket_cors_allowed_headers_of_yojson tree path = list_of_yojson string__of_yojson tree path
+let bucket_cors_expose_headers_of_yojson tree path = list_of_yojson string__of_yojson tree path
+
+let bucket_cors_rule_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     max_age_seconds = option_of_yojson (value_for_key integer_of_yojson "maxAgeSeconds") _list path;
+     expose_headers =
+       option_of_yojson
+         (value_for_key bucket_cors_expose_headers_of_yojson "exposeHeaders")
+         _list path;
+     allowed_headers =
+       option_of_yojson
+         (value_for_key bucket_cors_allowed_headers_of_yojson "allowedHeaders")
+         _list path;
+     allowed_origins =
+       value_for_key bucket_cors_allowed_origins_of_yojson "allowedOrigins" _list path;
+     allowed_methods =
+       value_for_key bucket_cors_allowed_methods_of_yojson "allowedMethods" _list path;
+     id = option_of_yojson (value_for_key bucket_cors_rule_id_of_yojson "id") _list path;
+   }
+    : bucket_cors_rule)
+
+let bucket_cors_rules_of_yojson tree path = list_of_yojson bucket_cors_rule_of_yojson tree path
+
+let bucket_cors_config_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({ rules = option_of_yojson (value_for_key bucket_cors_rules_of_yojson "rules") _list path }
+    : bucket_cors_config)
+
 let bucket_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     cors = option_of_yojson (value_for_key bucket_cors_config_of_yojson "cors") _list path;
      access_log_config =
        option_of_yojson
          (value_for_key bucket_access_log_config_of_yojson "accessLogConfig")
@@ -1098,6 +1166,7 @@ let update_bucket_result_of_yojson tree path =
 let update_bucket_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     cors = option_of_yojson (value_for_key bucket_cors_config_of_yojson "cors") _list path;
      access_log_config =
        option_of_yojson
          (value_for_key bucket_access_log_config_of_yojson "accessLogConfig")
@@ -2152,6 +2221,7 @@ let notification_trigger_list_of_yojson tree path = list_of_yojson alarm_state_o
 let put_alarm_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "tags") _list path;
      notification_enabled =
        option_of_yojson (value_for_key boolean__of_yojson "notificationEnabled") _list path;
      notification_triggers =
@@ -2229,6 +2299,10 @@ let password_data_of_yojson tree path =
 let origin_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     ip_address_type =
+       option_of_yojson
+         (value_for_key origin_ip_address_type_enum_of_yojson "ipAddressType")
+         _list path;
      response_timeout =
        option_of_yojson (value_for_key integer_of_yojson "responseTimeout") _list path;
      protocol_policy =
@@ -4219,6 +4293,7 @@ let contact_method_status_of_yojson (tree : t) path =
 let contact_method_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "tags") _list path;
      support_code = option_of_yojson (value_for_key string__of_yojson "supportCode") _list path;
      resource_type =
        option_of_yojson (value_for_key resource_type_of_yojson "resourceType") _list path;
@@ -4548,6 +4623,7 @@ let get_buckets_result_of_yojson tree path =
 let get_buckets_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     include_cors = option_of_yojson (value_for_key boolean__of_yojson "includeCors") _list path;
      include_connected_resources =
        option_of_yojson (value_for_key boolean__of_yojson "includeConnectedResources") _list path;
      page_token = option_of_yojson (value_for_key string__of_yojson "pageToken") _list path;
@@ -4762,6 +4838,7 @@ let get_auto_snapshots_request_of_yojson tree path =
 let alarm_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "tags") _list path;
      notification_enabled =
        option_of_yojson (value_for_key boolean__of_yojson "notificationEnabled") _list path;
      notification_triggers =
@@ -5756,6 +5833,7 @@ let create_contact_method_result_of_yojson tree path =
 let create_contact_method_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     tags = option_of_yojson (value_for_key tag_list_of_yojson "tags") _list path;
      contact_endpoint = value_for_key string_max256_of_yojson "contactEndpoint" _list path;
      protocol = value_for_key contact_protocol_of_yojson "protocol" _list path;
    }

@@ -338,7 +338,11 @@ val make_put_resource_policy_request :
   unit ->
   put_resource_policy_request
 
-val make_insight_selector : ?insight_type:insight_type -> unit -> insight_selector
+val make_insight_selector :
+  ?event_categories:source_event_categories ->
+  ?insight_type:insight_type ->
+  unit ->
+  insight_selector
 
 val make_put_insight_selectors_response :
   ?insights_destination:event_data_store_arn ->
@@ -383,17 +387,27 @@ val make_put_event_selectors_request :
 val make_context_key_selector :
   equals:operator_target_list -> type_:type_ -> unit -> context_key_selector
 
+val make_aggregation_configuration :
+  event_category:event_category_aggregation ->
+  templates:templates ->
+  unit ->
+  aggregation_configuration
+
 val make_put_event_configuration_response :
+  ?aggregation_configurations:aggregation_configurations ->
   ?context_key_selectors:context_key_selectors ->
   ?max_event_size:max_event_size ->
   ?event_data_store_arn:event_data_store_arn ->
+  ?trail_ar_n:string_ ->
   unit ->
   put_event_configuration_response
 
 val make_put_event_configuration_request :
+  ?aggregation_configurations:aggregation_configurations ->
+  ?context_key_selectors:context_key_selectors ->
+  ?max_event_size:max_event_size ->
   ?event_data_store:string_ ->
-  context_key_selectors:context_key_selectors ->
-  max_event_size:max_event_size ->
+  ?trail_name:string_ ->
   unit ->
   put_event_configuration_request
 
@@ -478,6 +492,7 @@ val make_list_insights_metric_data_response :
   ?insight_type:insight_type ->
   ?event_name:event_name ->
   ?event_source:event_source ->
+  ?trail_ar_n:string_ ->
   unit ->
   list_insights_metric_data_response
 
@@ -489,11 +504,26 @@ val make_list_insights_metric_data_request :
   ?end_time:date ->
   ?start_time:date ->
   ?error_code:error_code ->
+  ?trail_name:string_ ->
   insight_type:insight_type ->
   event_name:event_name ->
   event_source:event_source ->
   unit ->
   list_insights_metric_data_request
+
+val make_list_insights_data_response :
+  ?next_token:pagination_token -> ?events:events_list -> unit -> list_insights_data_response
+
+val make_list_insights_data_request :
+  ?next_token:pagination_token ->
+  ?max_results:list_insights_data_max_results_count ->
+  ?end_time:date ->
+  ?start_time:date ->
+  ?dimensions:list_insights_data_dimensions ->
+  data_type:list_insights_data_type ->
+  insight_source:resource_arn ->
+  unit ->
+  list_insights_data_request
 
 val make_imports_list_item :
   ?updated_timestamp:date ->
@@ -711,14 +741,16 @@ val make_get_event_data_store_request :
   event_data_store:event_data_store_arn -> unit -> get_event_data_store_request
 
 val make_get_event_configuration_response :
+  ?aggregation_configurations:aggregation_configurations ->
   ?context_key_selectors:context_key_selectors ->
   ?max_event_size:max_event_size ->
   ?event_data_store_arn:event_data_store_arn ->
+  ?trail_ar_n:string_ ->
   unit ->
   get_event_configuration_response
 
 val make_get_event_configuration_request :
-  ?event_data_store:string_ -> unit -> get_event_configuration_request
+  ?event_data_store:string_ -> ?trail_name:string_ -> unit -> get_event_configuration_request
 
 val make_get_dashboard_response :
   ?termination_protection_enabled:termination_protection_enabled ->

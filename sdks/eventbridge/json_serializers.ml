@@ -10,9 +10,27 @@ let resource_arn_to_yojson = string_to_yojson
 let dead_letter_config_to_yojson (x : dead_letter_config) =
   assoc_to_yojson [ ("Arn", option_to_yojson resource_arn_to_yojson x.arn) ]
 
+let include_detail_to_yojson (x : include_detail) =
+  match x with FULL -> `String "FULL" | NONE -> `String "NONE"
+
+let level_to_yojson (x : level) =
+  match x with
+  | TRACE -> `String "TRACE"
+  | INFO -> `String "INFO"
+  | ERROR -> `String "ERROR"
+  | OFF -> `String "OFF"
+
+let log_config_to_yojson (x : log_config) =
+  assoc_to_yojson
+    [
+      ("Level", option_to_yojson level_to_yojson x.level);
+      ("IncludeDetail", option_to_yojson include_detail_to_yojson x.include_detail);
+    ]
+
 let update_event_bus_response_to_yojson (x : update_event_bus_response) =
   assoc_to_yojson
     [
+      ("LogConfig", option_to_yojson log_config_to_yojson x.log_config);
       ("DeadLetterConfig", option_to_yojson dead_letter_config_to_yojson x.dead_letter_config);
       ("Description", option_to_yojson event_bus_description_to_yojson x.description);
       ("KmsKeyIdentifier", option_to_yojson kms_key_identifier_to_yojson x.kms_key_identifier);
@@ -23,6 +41,7 @@ let update_event_bus_response_to_yojson (x : update_event_bus_response) =
 let update_event_bus_request_to_yojson (x : update_event_bus_request) =
   assoc_to_yojson
     [
+      ("LogConfig", option_to_yojson log_config_to_yojson x.log_config);
       ("DeadLetterConfig", option_to_yojson dead_letter_config_to_yojson x.dead_letter_config);
       ("Description", option_to_yojson event_bus_description_to_yojson x.description);
       ("KmsKeyIdentifier", option_to_yojson kms_key_identifier_to_yojson x.kms_key_identifier);
@@ -1435,6 +1454,7 @@ let describe_event_bus_response_to_yojson (x : describe_event_bus_response) =
     [
       ("LastModifiedTime", option_to_yojson timestamp_to_yojson x.last_modified_time);
       ("CreationTime", option_to_yojson timestamp_to_yojson x.creation_time);
+      ("LogConfig", option_to_yojson log_config_to_yojson x.log_config);
       ("Policy", option_to_yojson string__to_yojson x.policy);
       ("DeadLetterConfig", option_to_yojson dead_letter_config_to_yojson x.dead_letter_config);
       ("KmsKeyIdentifier", option_to_yojson kms_key_identifier_to_yojson x.kms_key_identifier);
@@ -1673,6 +1693,7 @@ let create_partner_event_source_request_to_yojson (x : create_partner_event_sour
 let create_event_bus_response_to_yojson (x : create_event_bus_response) =
   assoc_to_yojson
     [
+      ("LogConfig", option_to_yojson log_config_to_yojson x.log_config);
       ("DeadLetterConfig", option_to_yojson dead_letter_config_to_yojson x.dead_letter_config);
       ("KmsKeyIdentifier", option_to_yojson kms_key_identifier_to_yojson x.kms_key_identifier);
       ("Description", option_to_yojson event_bus_description_to_yojson x.description);
@@ -1683,6 +1704,7 @@ let create_event_bus_request_to_yojson (x : create_event_bus_request) =
   assoc_to_yojson
     [
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);
+      ("LogConfig", option_to_yojson log_config_to_yojson x.log_config);
       ("DeadLetterConfig", option_to_yojson dead_letter_config_to_yojson x.dead_letter_config);
       ("KmsKeyIdentifier", option_to_yojson kms_key_identifier_to_yojson x.kms_key_identifier);
       ("Description", option_to_yojson event_bus_description_to_yojson x.description);

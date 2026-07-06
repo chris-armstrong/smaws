@@ -79,6 +79,7 @@ module CreateSubnetGroup : sig
     | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault
     | `SubnetGroupAlreadyExistsFault of subnet_group_already_exists_fault
     | `SubnetGroupQuotaExceededFault of subnet_group_quota_exceeded_fault
+    | `SubnetNotAllowedFault of subnet_not_allowed_fault
     | `SubnetQuotaExceededFault of subnet_quota_exceeded_fault ] ->
     string
 
@@ -91,6 +92,7 @@ module CreateSubnetGroup : sig
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault
       | `SubnetGroupAlreadyExistsFault of subnet_group_already_exists_fault
       | `SubnetGroupQuotaExceededFault of subnet_group_quota_exceeded_fault
+      | `SubnetNotAllowedFault of subnet_not_allowed_fault
       | `SubnetQuotaExceededFault of subnet_quota_exceeded_fault ] )
     result
 end
@@ -438,7 +440,7 @@ end
 [@@ocaml.doc
   "Reboots a single node of a DAX cluster. The reboot action takes place as soon as possible. \
    During the reboot, the node status is set to REBOOTING.\n\n\
-  \   [RebootNode] restarts the DAX engine process and does not remove the contents of the cache. \n\
+  \   [RebootNode] restarts the DAX engine process and does not remove the contents of the cache.\n\
   \  \n\
   \   "]
 
@@ -565,6 +567,7 @@ module UpdateSubnetGroup : sig
     | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault
     | `SubnetGroupNotFoundFault of subnet_group_not_found_fault
     | `SubnetInUse of subnet_in_use
+    | `SubnetNotAllowedFault of subnet_not_allowed_fault
     | `SubnetQuotaExceededFault of subnet_quota_exceeded_fault ] ->
     string
 
@@ -577,6 +580,7 @@ module UpdateSubnetGroup : sig
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault
       | `SubnetGroupNotFoundFault of subnet_group_not_found_fault
       | `SubnetInUse of subnet_in_use
+      | `SubnetNotAllowedFault of subnet_not_allowed_fault
       | `SubnetQuotaExceededFault of subnet_quota_exceeded_fault ] )
     result
 end

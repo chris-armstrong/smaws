@@ -525,9 +525,18 @@ let table_class_summary_to_yojson (x : table_class_summary) =
       ("TableClass", option_to_yojson table_class_to_yojson x.table_class);
     ]
 
+let global_table_settings_replication_mode_to_yojson (x : global_table_settings_replication_mode) =
+  match x with
+  | ENABLED_WITH_OVERRIDES -> `String "ENABLED_WITH_OVERRIDES"
+  | DISABLED -> `String "DISABLED"
+  | ENABLED -> `String "ENABLED"
+
 let replica_description_to_yojson (x : replica_description) =
   assoc_to_yojson
     [
+      ( "GlobalTableSettingsReplicationMode",
+        option_to_yojson global_table_settings_replication_mode_to_yojson
+          x.global_table_settings_replication_mode );
       ( "ReplicaTableClassSummary",
         option_to_yojson table_class_summary_to_yojson x.replica_table_class_summary );
       ( "ReplicaInaccessibleDateTime",
@@ -548,6 +557,7 @@ let replica_description_to_yojson (x : replica_description) =
       );
       ( "ReplicaStatusDescription",
         option_to_yojson replica_status_description_to_yojson x.replica_status_description );
+      ("ReplicaArn", option_to_yojson string__to_yojson x.replica_arn);
       ("ReplicaStatus", option_to_yojson replica_status_to_yojson x.replica_status);
       ("RegionName", option_to_yojson region_name_to_yojson x.region_name);
     ]
@@ -628,6 +638,9 @@ let table_description_to_yojson (x : table_description) =
       ("ArchivalSummary", option_to_yojson archival_summary_to_yojson x.archival_summary);
       ("SSEDescription", option_to_yojson sse_description_to_yojson x.sse_description);
       ("RestoreSummary", option_to_yojson restore_summary_to_yojson x.restore_summary);
+      ( "GlobalTableSettingsReplicationMode",
+        option_to_yojson global_table_settings_replication_mode_to_yojson
+          x.global_table_settings_replication_mode );
       ( "GlobalTableWitnesses",
         option_to_yojson global_table_witness_description_list_to_yojson x.global_table_witnesses );
       ("Replicas", option_to_yojson replica_description_list_to_yojson x.replicas);
@@ -792,6 +805,9 @@ let global_table_witness_group_update_list_to_yojson tree =
 let update_table_input_to_yojson (x : update_table_input) =
   assoc_to_yojson
     [
+      ( "GlobalTableSettingsReplicationMode",
+        option_to_yojson global_table_settings_replication_mode_to_yojson
+          x.global_table_settings_replication_mode );
       ("WarmThroughput", option_to_yojson warm_throughput_to_yojson x.warm_throughput);
       ("OnDemandThroughput", option_to_yojson on_demand_throughput_to_yojson x.on_demand_throughput);
       ( "GlobalTableWitnessUpdates",
@@ -1022,15 +1038,43 @@ let update_item_input_to_yojson (x : update_item_input) =
 let transaction_conflict_exception_to_yojson (x : transaction_conflict_exception) =
   assoc_to_yojson [ ("message", option_to_yojson error_message_to_yojson x.message) ]
 
+let availability_error_message_to_yojson = string_to_yojson
+let reason_to_yojson = string_to_yojson
+let resource_to_yojson = string_to_yojson
+
+let throttling_reason_to_yojson (x : throttling_reason) =
+  assoc_to_yojson
+    [
+      ("resource", option_to_yojson resource_to_yojson x.resource);
+      ("reason", option_to_yojson reason_to_yojson x.reason);
+    ]
+
+let throttling_reason_list_to_yojson tree = list_to_yojson throttling_reason_to_yojson tree
+
+let throttling_exception_to_yojson (x : throttling_exception) =
+  assoc_to_yojson
+    [
+      ("throttlingReasons", option_to_yojson throttling_reason_list_to_yojson x.throttling_reasons);
+      ("message", option_to_yojson availability_error_message_to_yojson x.message);
+    ]
+
 let request_limit_exceeded_to_yojson (x : request_limit_exceeded) =
-  assoc_to_yojson [ ("message", option_to_yojson error_message_to_yojson x.message) ]
+  assoc_to_yojson
+    [
+      ("ThrottlingReasons", option_to_yojson throttling_reason_list_to_yojson x.throttling_reasons);
+      ("message", option_to_yojson error_message_to_yojson x.message);
+    ]
 
 let replicated_write_conflict_exception_to_yojson (x : replicated_write_conflict_exception) =
   assoc_to_yojson [ ("message", option_to_yojson error_message_to_yojson x.message) ]
 
 let provisioned_throughput_exceeded_exception_to_yojson
     (x : provisioned_throughput_exceeded_exception) =
-  assoc_to_yojson [ ("message", option_to_yojson error_message_to_yojson x.message) ]
+  assoc_to_yojson
+    [
+      ("ThrottlingReasons", option_to_yojson throttling_reason_list_to_yojson x.throttling_reasons);
+      ("message", option_to_yojson error_message_to_yojson x.message);
+    ]
 
 let item_collection_size_limit_exceeded_exception_to_yojson
     (x : item_collection_size_limit_exceeded_exception) =
@@ -1238,9 +1282,16 @@ let contributor_insights_status_to_yojson (x : contributor_insights_status) =
   | ENABLED -> `String "ENABLED"
   | ENABLING -> `String "ENABLING"
 
+let contributor_insights_mode_to_yojson (x : contributor_insights_mode) =
+  match x with
+  | THROTTLED_KEYS -> `String "THROTTLED_KEYS"
+  | ACCESSED_AND_THROTTLED_KEYS -> `String "ACCESSED_AND_THROTTLED_KEYS"
+
 let update_contributor_insights_output_to_yojson (x : update_contributor_insights_output) =
   assoc_to_yojson
     [
+      ( "ContributorInsightsMode",
+        option_to_yojson contributor_insights_mode_to_yojson x.contributor_insights_mode );
       ( "ContributorInsightsStatus",
         option_to_yojson contributor_insights_status_to_yojson x.contributor_insights_status );
       ("IndexName", option_to_yojson index_name_to_yojson x.index_name);
@@ -1253,6 +1304,8 @@ let contributor_insights_action_to_yojson (x : contributor_insights_action) =
 let update_contributor_insights_input_to_yojson (x : update_contributor_insights_input) =
   assoc_to_yojson
     [
+      ( "ContributorInsightsMode",
+        option_to_yojson contributor_insights_mode_to_yojson x.contributor_insights_mode );
       ( "ContributorInsightsAction",
         Some (contributor_insights_action_to_yojson x.contributor_insights_action) );
       ("IndexName", option_to_yojson index_name_to_yojson x.index_name);
@@ -2093,6 +2146,8 @@ let list_exports_input_to_yojson (x : list_exports_input) =
 let contributor_insights_summary_to_yojson (x : contributor_insights_summary) =
   assoc_to_yojson
     [
+      ( "ContributorInsightsMode",
+        option_to_yojson contributor_insights_mode_to_yojson x.contributor_insights_mode );
       ( "ContributorInsightsStatus",
         option_to_yojson contributor_insights_status_to_yojson x.contributor_insights_status );
       ("IndexName", option_to_yojson index_name_to_yojson x.index_name);
@@ -2612,6 +2667,8 @@ let contributor_insights_rule_list_to_yojson tree =
 let describe_contributor_insights_output_to_yojson (x : describe_contributor_insights_output) =
   assoc_to_yojson
     [
+      ( "ContributorInsightsMode",
+        option_to_yojson contributor_insights_mode_to_yojson x.contributor_insights_mode );
       ("FailureException", option_to_yojson failure_exception_to_yojson x.failure_exception);
       ( "LastUpdateDateTime",
         option_to_yojson last_update_date_time_to_yojson x.last_update_date_time );
@@ -2734,6 +2791,10 @@ let create_table_output_to_yojson (x : create_table_output) =
 let create_table_input_to_yojson (x : create_table_input) =
   assoc_to_yojson
     [
+      ( "GlobalTableSettingsReplicationMode",
+        option_to_yojson global_table_settings_replication_mode_to_yojson
+          x.global_table_settings_replication_mode );
+      ("GlobalTableSourceArn", option_to_yojson table_arn_to_yojson x.global_table_source_arn);
       ("OnDemandThroughput", option_to_yojson on_demand_throughput_to_yojson x.on_demand_throughput);
       ("ResourcePolicy", option_to_yojson resource_policy_to_yojson x.resource_policy);
       ("WarmThroughput", option_to_yojson warm_throughput_to_yojson x.warm_throughput);
@@ -2750,9 +2811,10 @@ let create_table_input_to_yojson (x : create_table_input) =
         option_to_yojson global_secondary_index_list_to_yojson x.global_secondary_indexes );
       ( "LocalSecondaryIndexes",
         option_to_yojson local_secondary_index_list_to_yojson x.local_secondary_indexes );
-      ("KeySchema", Some (key_schema_to_yojson x.key_schema));
+      ("KeySchema", option_to_yojson key_schema_to_yojson x.key_schema);
       ("TableName", Some (table_arn_to_yojson x.table_name));
-      ("AttributeDefinitions", Some (attribute_definitions_to_yojson x.attribute_definitions));
+      ( "AttributeDefinitions",
+        option_to_yojson attribute_definitions_to_yojson x.attribute_definitions );
     ]
 
 let create_global_table_output_to_yojson (x : create_global_table_output) =

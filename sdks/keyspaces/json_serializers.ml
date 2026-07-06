@@ -7,6 +7,30 @@ let rs_to_yojson (x : rs) =
 let region_to_yojson = string_to_yojson
 let kms_key_ar_n_to_yojson = string_to_yojson
 
+let warm_throughput_status_to_yojson (x : warm_throughput_status) =
+  match x with AVAILABLE -> `String "AVAILABLE" | UPDATING -> `String "UPDATING"
+
+let warm_throughput_specification_summary_to_yojson (x : warm_throughput_specification_summary) =
+  assoc_to_yojson
+    [
+      ("status", Some (warm_throughput_status_to_yojson x.status));
+      ( "writeUnitsPerSecond",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.long_to_yojson x.write_units_per_second) );
+      ( "readUnitsPerSecond",
+        Some (Smaws_Lib.Smithy_api.Json_serializers.long_to_yojson x.read_units_per_second) );
+    ]
+
+let warm_throughput_specification_to_yojson (x : warm_throughput_specification) =
+  assoc_to_yojson
+    [
+      ( "writeUnitsPerSecond",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.long_to_yojson
+          x.write_units_per_second );
+      ( "readUnitsPerSecond",
+        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.long_to_yojson
+          x.read_units_per_second );
+    ]
+
 let view_type_to_yojson (x : view_type) =
   match x with
   | NEW_IMAGE -> `String "NEW_IMAGE"
@@ -165,6 +189,8 @@ let cdc_specification_to_yojson (x : cdc_specification) =
 let update_table_request_to_yojson (x : update_table_request) =
   assoc_to_yojson
     [
+      ( "warmThroughputSpecification",
+        option_to_yojson warm_throughput_specification_to_yojson x.warm_throughput_specification );
       ("cdcSpecification", option_to_yojson cdc_specification_to_yojson x.cdc_specification);
       ( "replicaSpecifications",
         option_to_yojson replica_specification_list_to_yojson x.replica_specifications );
@@ -378,6 +404,9 @@ let capacity_specification_summary_to_yojson (x : capacity_specification_summary
 let replica_specification_summary_to_yojson (x : replica_specification_summary) =
   assoc_to_yojson
     [
+      ( "warmThroughputSpecification",
+        option_to_yojson warm_throughput_specification_summary_to_yojson
+          x.warm_throughput_specification );
       ( "capacitySpecification",
         option_to_yojson capacity_specification_summary_to_yojson x.capacity_specification );
       ("status", option_to_yojson table_status_to_yojson x.status);
@@ -546,6 +575,9 @@ let cdc_specification_summary_to_yojson (x : cdc_specification_summary) =
 let get_table_response_to_yojson (x : get_table_response) =
   assoc_to_yojson
     [
+      ( "warmThroughputSpecification",
+        option_to_yojson warm_throughput_specification_summary_to_yojson
+          x.warm_throughput_specification );
       ("cdcSpecification", option_to_yojson cdc_specification_summary_to_yojson x.cdc_specification);
       ("latestStreamArn", option_to_yojson stream_arn_to_yojson x.latest_stream_arn);
       ( "replicaSpecifications",
@@ -639,6 +671,8 @@ let create_table_response_to_yojson (x : create_table_response) =
 let create_table_request_to_yojson (x : create_table_request) =
   assoc_to_yojson
     [
+      ( "warmThroughputSpecification",
+        option_to_yojson warm_throughput_specification_to_yojson x.warm_throughput_specification );
       ("cdcSpecification", option_to_yojson cdc_specification_to_yojson x.cdc_specification);
       ( "replicaSpecifications",
         option_to_yojson replica_specification_list_to_yojson x.replica_specifications );

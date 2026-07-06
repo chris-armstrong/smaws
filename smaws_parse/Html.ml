@@ -57,100 +57,99 @@ and transform ~ctx dom =
   let indent_str = Int.to_string indent in
   let open BasicDom in
   ignore
-    begin
-      match dom with
-      | Element ("p", _, children) ->
-          Format.pp_open_vbox fmt 0;
-          transform_children ~ctx children;
-          Format.pp_force_newline fmt ();
-          if not last then begin
-            Format.pp_force_newline fmt ()
-          end;
-          Format.pp_close_box fmt ()
-      | Element ("b", _, children) ->
-          Fmt.pf fmt "{b ";
-          transform_children ~ctx children;
-          Fmt.pf fmt "}"
-      | Element (("ul" as lt), _, children) | Element (("ol" as lt), _, children) ->
-          Fmt.pf fmt "{";
-          Fmt.pf fmt "%s" (if String.equal lt "ul" then "ul" else "ol");
-          Format.pp_open_vbox fmt indent;
-          Format.pp_print_cut fmt ();
-          transform_children
-            ~ctx:{ ctx with list_type = (if String.equal lt "ol" then Ordered else Unordered) }
-            children;
-          Format.pp_close_box fmt ();
-          Format.pp_print_break fmt 0 indent;
-          Fmt.pf fmt "}";
-          Format.pp_print_break fmt 0 indent
-      | Element ("li", _, children) ->
-          Fmt.pf fmt "{- ";
-          (* Fmt.pf fmt (if list_type == Unordered then "- " else "+ "); *)
-          transform_children ~ctx children;
-          Fmt.pf fmt "}";
-          Format.pp_print_cut fmt ()
-      | Element ("i", _, children) ->
-          Fmt.pf fmt "{i ";
-          transform_children ~ctx children;
-          Fmt.pf fmt "}"
-      | Element ("code", _, children) -> begin
-          match children with
-          | [] -> ()
-          | [ Text str ] ->
-              Fmt.pf fmt "[%s]"
-                (str
-                |> String.substr_replace_all ~pattern:"[" ~with_:"\\["
-                |> String.substr_replace_all ~pattern:"]" ~with_:"\\]")
-          | _ ->
-              Fmt.pf fmt "@\n{[@\n";
-              transform_children ~ctx children;
-              Fmt.pf fmt "@\n]}@\n"
+    begin match dom with
+    | Element ("p", _, children) ->
+        Format.pp_open_vbox fmt 0;
+        transform_children ~ctx children;
+        Format.pp_force_newline fmt ();
+        if not last then begin
+          Format.pp_force_newline fmt ()
+        end;
+        Format.pp_close_box fmt ()
+    | Element ("b", _, children) ->
+        Fmt.pf fmt "{b ";
+        transform_children ~ctx children;
+        Fmt.pf fmt "}"
+    | Element (("ul" as lt), _, children) | Element (("ol" as lt), _, children) ->
+        Fmt.pf fmt "{";
+        Fmt.pf fmt "%s" (if String.equal lt "ul" then "ul" else "ol");
+        Format.pp_open_vbox fmt indent;
+        Format.pp_print_cut fmt ();
+        transform_children
+          ~ctx:{ ctx with list_type = (if String.equal lt "ol" then Ordered else Unordered) }
+          children;
+        Format.pp_close_box fmt ();
+        Format.pp_print_break fmt 0 indent;
+        Fmt.pf fmt "}";
+        Format.pp_print_break fmt 0 indent
+    | Element ("li", _, children) ->
+        Fmt.pf fmt "{- ";
+        (* Fmt.pf fmt (if list_type == Unordered then "- " else "+ "); *)
+        transform_children ~ctx children;
+        Fmt.pf fmt "}";
+        Format.pp_print_cut fmt ()
+    | Element ("i", _, children) ->
+        Fmt.pf fmt "{i ";
+        transform_children ~ctx children;
+        Fmt.pf fmt "}"
+    | Element ("code", _, children) ->
+        begin match children with
+        | [] -> ()
+        | [ Text str ] ->
+            Fmt.pf fmt "[%s]"
+              (str
+              |> String.substr_replace_all ~pattern:"[" ~with_:"\\["
+              |> String.substr_replace_all ~pattern:"]" ~with_:"\\]")
+        | _ ->
+            Fmt.pf fmt "@\n{[@\n";
+            transform_children ~ctx children;
+            Fmt.pf fmt "@\n]}@\n"
         end
-      | Element ("pre", _, children) ->
-          Fmt.pf fmt "{v";
-          Format.pp_print_break fmt 0 0;
-          let _ =
-            match children with
-            | [ Text str ] ->
-                Format.pp_open_box fmt indent;
-                Format.pp_print_break fmt 0 0;
-                Format.pp_print_string fmt str;
-                Format.pp_close_box fmt ()
-            | _ -> raise (UnexpectedElement "<pre> tags should not contain other elements")
-          in
-          Format.pp_print_break fmt 0 0;
-          Fmt.pf fmt "v}";
-          Format.pp_print_break fmt 0 0
-      | Element ("a", attrs, children) -> (
-          let href = List.Assoc.find attrs ~equal:String.equal "href" in
-          match href with
-          | Some href -> begin
-              Fmt.pf fmt "{{:%s}" href;
-              transform_children ~ctx children;
-              Fmt.pf fmt "}"
-            end
-          | None -> begin
-              let link_href_fallback = match children with [ Text str ] -> str | _ -> "" in
-              Fmt.pf fmt "[%s]" link_href_fallback
-            end)
-      | Element (_, _, children) -> transform_children ~ctx children
-      | Text str ->
-          (* let str = *)
-          (*   if first then Re.replace_string ~all:false beginning_whitespace ~by:"" str else str *)
-          (* in *)
-          (* let str = *)
-          (*   if last then Re.replace_string ~all:false trailing_whitespace ~by:"" str else str *)
-          (* in *)
-          let str = Re.replace_string ~all:true multi_whitespace_regex ~by:" " str in
-          let str =
-            str
-            |> String.substr_replace_all ~pattern:"{" ~with_:"\\{"
-            |> String.substr_replace_all ~pattern:"}" ~with_:"\\}"
-            |> String.substr_replace_all ~pattern:"[" ~with_:"\\["
-            |> String.substr_replace_all ~pattern:"]" ~with_:"\\]"
-            |> String.substr_replace_all ~pattern:"@" ~with_:"\\@"
-          in
-          Format.pp_print_string fmt str
+    | Element ("pre", _, children) ->
+        Fmt.pf fmt "{v";
+        Format.pp_print_break fmt 0 0;
+        let _ =
+          match children with
+          | [ Text str ] ->
+              Format.pp_open_box fmt indent;
+              Format.pp_print_break fmt 0 0;
+              Format.pp_print_string fmt str;
+              Format.pp_close_box fmt ()
+          | _ -> raise (UnexpectedElement "<pre> tags should not contain other elements")
+        in
+        Format.pp_print_break fmt 0 0;
+        Fmt.pf fmt "v}";
+        Format.pp_print_break fmt 0 0
+    | Element ("a", attrs, children) -> (
+        let href = List.Assoc.find attrs ~equal:String.equal "href" in
+        match href with
+        | Some href -> begin
+            Fmt.pf fmt "{{:%s}" href;
+            transform_children ~ctx children;
+            Fmt.pf fmt "}"
+          end
+        | None -> begin
+            let link_href_fallback = match children with [ Text str ] -> str | _ -> "" in
+            Fmt.pf fmt "[%s]" link_href_fallback
+          end)
+    | Element (_, _, children) -> transform_children ~ctx children
+    | Text str ->
+        (* let str = *)
+        (*   if first then Re.replace_string ~all:false beginning_whitespace ~by:"" str else str *)
+        (* in *)
+        (* let str = *)
+        (*   if last then Re.replace_string ~all:false trailing_whitespace ~by:"" str else str *)
+        (* in *)
+        let str = Re.replace_string ~all:true multi_whitespace_regex ~by:" " str in
+        let str =
+          str
+          |> String.substr_replace_all ~pattern:"{" ~with_:"\\{"
+          |> String.substr_replace_all ~pattern:"}" ~with_:"\\}"
+          |> String.substr_replace_all ~pattern:"[" ~with_:"\\["
+          |> String.substr_replace_all ~pattern:"]" ~with_:"\\]"
+          |> String.substr_replace_all ~pattern:"@" ~with_:"\\@"
+        in
+        Format.pp_print_string fmt str
     end
 
 and html_to_odoc ?(indent = 2) ?(start_indent = 4) html =

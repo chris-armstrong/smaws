@@ -26,16 +26,11 @@ val make_service_change :
   unit ->
   service_change
 
-val make_update_service_request :
-  service:service_change -> id:resource_id -> unit -> update_service_request
-
+val make_update_service_request : service:service_change -> id:arn -> unit -> update_service_request
 val make_update_service_attributes_response : unit -> unit
 
 val make_update_service_attributes_request :
-  attributes:service_attributes_map ->
-  service_id:resource_id ->
-  unit ->
-  update_service_attributes_request
+  attributes:service_attributes_map -> service_id:arn -> unit -> update_service_attributes_request
 
 val make_update_public_dns_namespace_response :
   ?operation_id:operation_id -> unit -> update_public_dns_namespace_response
@@ -59,7 +54,7 @@ val make_public_dns_namespace_change :
 val make_update_public_dns_namespace_request :
   ?updater_request_id:resource_id ->
   namespace:public_dns_namespace_change ->
-  id:resource_id ->
+  id:arn ->
   unit ->
   update_public_dns_namespace_request
 
@@ -83,14 +78,14 @@ val make_private_dns_namespace_change :
 val make_update_private_dns_namespace_request :
   ?updater_request_id:resource_id ->
   namespace:private_dns_namespace_change ->
-  id:resource_id ->
+  id:arn ->
   unit ->
   update_private_dns_namespace_request
 
 val make_update_instance_custom_health_status_request :
   status:custom_health_status ->
   instance_id:resource_id ->
-  service_id:resource_id ->
+  service_id:arn ->
   unit ->
   update_instance_custom_health_status_request
 
@@ -102,7 +97,7 @@ val make_http_namespace_change : description:resource_description -> unit -> htt
 val make_update_http_namespace_request :
   ?updater_request_id:resource_id ->
   namespace:http_namespace_change ->
-  id:resource_id ->
+  id:arn ->
   unit ->
   update_http_namespace_request
 
@@ -128,6 +123,7 @@ val make_health_check_custom_config :
   ?failure_threshold:failure_threshold -> unit -> health_check_custom_config
 
 val make_service_summary :
+  ?created_by_account:aws_account_id ->
   ?create_date:timestamp ->
   ?health_check_custom_config:health_check_custom_config ->
   ?health_check_config:health_check_config ->
@@ -136,6 +132,7 @@ val make_service_summary :
   ?description:resource_description ->
   ?type_:service_type ->
   ?name:service_name ->
+  ?resource_owner:aws_account_id ->
   ?arn:arn ->
   ?id:resource_id ->
   unit ->
@@ -149,9 +146,14 @@ val make_service_filter :
   service_filter
 
 val make_service_attributes :
-  ?attributes:service_attributes_map -> ?service_arn:arn -> unit -> service_attributes
+  ?attributes:service_attributes_map ->
+  ?resource_owner:aws_account_id ->
+  ?service_arn:arn ->
+  unit ->
+  service_attributes
 
 val make_service :
+  ?created_by_account:aws_account_id ->
   ?creator_request_id:resource_id ->
   ?create_date:timestamp ->
   ?health_check_custom_config:health_check_custom_config ->
@@ -162,6 +164,7 @@ val make_service :
   ?description:resource_description ->
   ?namespace_id:resource_id ->
   ?name:service_name ->
+  ?resource_owner:aws_account_id ->
   ?arn:arn ->
   ?id:resource_id ->
   unit ->
@@ -176,7 +179,7 @@ val make_register_instance_request :
   ?creator_request_id:resource_id ->
   attributes:attributes ->
   instance_id:instance_id ->
-  service_id:resource_id ->
+  service_id:arn ->
   unit ->
   register_instance_request
 
@@ -228,6 +231,7 @@ val make_namespace_summary :
   ?description:resource_description ->
   ?type_:namespace_type ->
   ?name:namespace_name ->
+  ?resource_owner:aws_account_id ->
   ?arn:arn ->
   ?id:resource_id ->
   unit ->
@@ -250,26 +254,33 @@ val make_list_namespaces_request :
   unit ->
   list_namespaces_request
 
-val make_instance_summary : ?attributes:attributes -> ?id:resource_id -> unit -> instance_summary
+val make_instance_summary :
+  ?created_by_account:aws_account_id ->
+  ?attributes:attributes ->
+  ?id:resource_id ->
+  unit ->
+  instance_summary
 
 val make_list_instances_response :
-  ?next_token:next_token -> ?instances:instance_summary_list -> unit -> list_instances_response
+  ?next_token:next_token ->
+  ?instances:instance_summary_list ->
+  ?resource_owner:aws_account_id ->
+  unit ->
+  list_instances_response
 
 val make_list_instances_request :
   ?max_results:max_results ->
   ?next_token:next_token ->
-  service_id:resource_id ->
+  service_id:arn ->
   unit ->
   list_instances_request
 
 val make_get_service_attributes_response :
   ?service_attributes:service_attributes -> unit -> get_service_attributes_response
 
-val make_get_service_attributes_request :
-  service_id:resource_id -> unit -> get_service_attributes_request
-
+val make_get_service_attributes_request : service_id:arn -> unit -> get_service_attributes_request
 val make_get_service_response : ?service:service -> unit -> get_service_response
-val make_get_service_request : id:resource_id -> unit -> get_service_request
+val make_get_service_request : id:arn -> unit -> get_service_request
 
 val make_operation :
   ?targets:operation_targets_map ->
@@ -279,12 +290,15 @@ val make_operation :
   ?error_message:message ->
   ?status:operation_status ->
   ?type_:operation_type ->
+  ?owner_account:aws_account_id ->
   ?id:operation_id ->
   unit ->
   operation
 
 val make_get_operation_response : ?operation:operation -> unit -> get_operation_response
-val make_get_operation_request : operation_id:resource_id -> unit -> get_operation_request
+
+val make_get_operation_request :
+  ?owner_account:aws_account_id -> operation_id:operation_id -> unit -> get_operation_request
 
 val make_namespace :
   ?creator_request_id:resource_id ->
@@ -294,13 +308,14 @@ val make_namespace :
   ?description:resource_description ->
   ?type_:namespace_type ->
   ?name:namespace_name ->
+  ?resource_owner:aws_account_id ->
   ?arn:arn ->
   ?id:resource_id ->
   unit ->
   namespace
 
 val make_get_namespace_response : ?namespace:namespace -> unit -> get_namespace_response
-val make_get_namespace_request : id:resource_id -> unit -> get_namespace_request
+val make_get_namespace_request : id:arn -> unit -> get_namespace_request
 
 val make_get_instances_health_status_response :
   ?next_token:next_token ->
@@ -312,22 +327,29 @@ val make_get_instances_health_status_request :
   ?next_token:next_token ->
   ?max_results:max_results ->
   ?instances:instance_id_list ->
-  service_id:resource_id ->
+  service_id:arn ->
   unit ->
   get_instances_health_status_request
 
 val make_instance :
-  ?attributes:attributes -> ?creator_request_id:resource_id -> id:resource_id -> unit -> instance
+  ?created_by_account:aws_account_id ->
+  ?attributes:attributes ->
+  ?creator_request_id:resource_id ->
+  id:resource_id ->
+  unit ->
+  instance
 
-val make_get_instance_response : ?instance:instance -> unit -> get_instance_response
+val make_get_instance_response :
+  ?instance:instance -> ?resource_owner:aws_account_id -> unit -> get_instance_response
 
 val make_get_instance_request :
-  instance_id:resource_id -> service_id:resource_id -> unit -> get_instance_request
+  instance_id:resource_id -> service_id:arn -> unit -> get_instance_request
 
 val make_discover_instances_revision_response :
   ?instances_revision:revision -> unit -> discover_instances_revision_response
 
 val make_discover_instances_revision_request :
+  ?owner_account:aws_account_id ->
   service_name:service_name ->
   namespace_name:namespace_name ->
   unit ->
@@ -349,6 +371,7 @@ val make_discover_instances_response :
   discover_instances_response
 
 val make_discover_instances_request :
+  ?owner_account:aws_account_id ->
   ?health_status:health_status_filter ->
   ?optional_parameters:attributes ->
   ?query_parameters:attributes ->
@@ -362,20 +385,20 @@ val make_deregister_instance_response :
   ?operation_id:operation_id -> unit -> deregister_instance_response
 
 val make_deregister_instance_request :
-  instance_id:resource_id -> service_id:resource_id -> unit -> deregister_instance_request
+  instance_id:resource_id -> service_id:arn -> unit -> deregister_instance_request
 
 val make_delete_service_attributes_response : unit -> unit
 
 val make_delete_service_attributes_request :
   attributes:service_attribute_key_list ->
-  service_id:resource_id ->
+  service_id:arn ->
   unit ->
   delete_service_attributes_request
 
 val make_delete_service_response : unit -> unit
-val make_delete_service_request : id:resource_id -> unit -> delete_service_request
+val make_delete_service_request : id:arn -> unit -> delete_service_request
 val make_delete_namespace_response : ?operation_id:operation_id -> unit -> delete_namespace_response
-val make_delete_namespace_request : id:resource_id -> unit -> delete_namespace_request
+val make_delete_namespace_request : id:arn -> unit -> delete_namespace_request
 val make_create_service_response : ?service:service -> unit -> create_service_response
 
 val make_create_service_request :
@@ -386,7 +409,7 @@ val make_create_service_request :
   ?dns_config:dns_config ->
   ?description:resource_description ->
   ?creator_request_id:resource_id ->
-  ?namespace_id:resource_id ->
+  ?namespace_id:arn ->
   name:service_name ->
   unit ->
   create_service_request
@@ -893,7 +916,7 @@ module ListNamespaces : sig
 end
 [@@ocaml.doc
   "Lists summary information about the namespaces that were created by the current Amazon Web \
-   Services account.\n"]
+   Services account and shared with the current Amazon Web Services account.\n"]
 
 module ListOperations : sig
   val error_to_string :
@@ -1185,9 +1208,21 @@ end
   \              \n\
   \               }\n\
   \          }\n\
-  \   When you update settings for a service, Cloud Map also updates the corresponding settings in \
-   all the records and health checks that were created by using the specified service.\n\
-  \   "]
+  \    You can't call [UpdateService] and update settings in the following scenarios:\n\
+  \    \n\
+  \     {ul\n\
+  \           {-  When the service is associated with an HTTP namespace\n\
+  \               \n\
+  \                }\n\
+  \           {-  When the service is associated with a shared namespace and contains instances \
+   that were registered by Amazon Web Services accounts other than the account making the \
+   [UpdateService] call\n\
+  \               \n\
+  \                }\n\
+  \           }\n\
+  \    When you update settings for a service, Cloud Map also updates the corresponding settings \
+   in all the records and health checks that were created by using the specified service.\n\
+  \    "]
 
 (** {1:Serialization and Deserialization} *)
 module UpdateServiceAttributes : sig

@@ -131,6 +131,7 @@ module CreateSubnetGroup = struct
     | `ServiceLinkedRoleNotFoundFault _ -> "com.amazonaws.dax#ServiceLinkedRoleNotFoundFault"
     | `SubnetGroupAlreadyExistsFault _ -> "com.amazonaws.dax#SubnetGroupAlreadyExistsFault"
     | `SubnetGroupQuotaExceededFault _ -> "com.amazonaws.dax#SubnetGroupQuotaExceededFault"
+    | `SubnetNotAllowedFault _ -> "com.amazonaws.dax#SubnetNotAllowedFault"
     | `SubnetQuotaExceededFault _ -> "com.amazonaws.dax#SubnetQuotaExceededFault"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
@@ -146,6 +147,8 @@ module CreateSubnetGroup = struct
       | _, "SubnetGroupQuotaExceededFault" ->
           `SubnetGroupQuotaExceededFault
             (Json_deserializers.subnet_group_quota_exceeded_fault_of_yojson tree path)
+      | _, "SubnetNotAllowedFault" ->
+          `SubnetNotAllowedFault (Json_deserializers.subnet_not_allowed_fault_of_yojson tree path)
       | _, "SubnetQuotaExceededFault" ->
           `SubnetQuotaExceededFault
             (Json_deserializers.subnet_quota_exceeded_fault_of_yojson tree path)
@@ -822,6 +825,7 @@ module UpdateSubnetGroup = struct
     | `ServiceLinkedRoleNotFoundFault _ -> "com.amazonaws.dax#ServiceLinkedRoleNotFoundFault"
     | `SubnetGroupNotFoundFault _ -> "com.amazonaws.dax#SubnetGroupNotFoundFault"
     | `SubnetInUse _ -> "com.amazonaws.dax#SubnetInUse"
+    | `SubnetNotAllowedFault _ -> "com.amazonaws.dax#SubnetNotAllowedFault"
     | `SubnetQuotaExceededFault _ -> "com.amazonaws.dax#SubnetQuotaExceededFault"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
@@ -835,6 +839,8 @@ module UpdateSubnetGroup = struct
           `SubnetGroupNotFoundFault
             (Json_deserializers.subnet_group_not_found_fault_of_yojson tree path)
       | _, "SubnetInUse" -> `SubnetInUse (Json_deserializers.subnet_in_use_of_yojson tree path)
+      | _, "SubnetNotAllowedFault" ->
+          `SubnetNotAllowedFault (Json_deserializers.subnet_not_allowed_fault_of_yojson tree path)
       | _, "SubnetQuotaExceededFault" ->
           `SubnetQuotaExceededFault
             (Json_deserializers.subnet_quota_exceeded_fault_of_yojson tree path)

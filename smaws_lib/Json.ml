@@ -217,9 +217,9 @@ module DeserializeHelpers = struct
 
   let timestamp_epoch_seconds_of_yojson (tree : t) path =
     (match tree with
-    | `Int fl -> CoreTypes.Timestamp.of_float_s (fl |> Float.of_int)
-    | `Float fl -> CoreTypes.Timestamp.of_float_s fl
-    | _ -> raise (deserialize_wrong_type_error path "timestamp(epoch-seconds)"))
+      | `Int fl -> CoreTypes.Timestamp.of_float_s (fl |> Float.of_int)
+      | `Float fl -> CoreTypes.Timestamp.of_float_s fl
+      | _ -> raise (deserialize_wrong_type_error path "timestamp(epoch-seconds)"))
     |> Option.get_or_exn
          ~exn:
            (JsonDeserializeError
@@ -227,54 +227,54 @@ module DeserializeHelpers = struct
 
   let timestamp_iso_8601_of_yojson (tree : t) path =
     (match tree with
-    | `String str ->
-        CoreTypes.Timestamp.of_rfc3339 str
-        |> Result.map (fun (t, _, _) -> t)
-        |> Result.map_error (function `RFC3339 (range, error) ->
-               JsonDeserializeError
-                 (CustomError
-                    (Fmt.str "unable to parse ISO 8601 timestamp: %a" Timestamp.pp_rfc3339_error
-                       error)))
-    | _ -> Error (deserialize_wrong_type_error path "timestamp(iso8601)"))
+      | `String str ->
+          CoreTypes.Timestamp.of_rfc3339 str
+          |> Result.map (fun (t, _, _) -> t)
+          |> Result.map_error (function `RFC3339 (range, error) ->
+              JsonDeserializeError
+                (CustomError
+                   (Fmt.str "unable to parse ISO 8601 timestamp: %a" Timestamp.pp_rfc3339_error
+                      error)))
+      | _ -> Error (deserialize_wrong_type_error path "timestamp(iso8601)"))
     |> function
     | Ok x -> x
     | Error e -> raise e
 
   let timestamp_http_date_of_yojson (tree : t) path =
     (match tree with
-    | `String str ->
-        Scanf.sscanf str "%s@, %d %s %d %d:%d:%d GMT"
-          (fun weekday day month year hour minute second ->
-            let weekday =
-              match weekday with
-              | "Sun" -> `Sun
-              | "Mon" -> `Mon
-              | "Tue" -> `Tue
-              | "Wed" -> `Wed
-              | "Thu" -> `Thu
-              | "Fri" -> `Fri
-              | "Sat" -> `Sat
-              | _ -> failwith "unexpected weekday"
-            in
-            let month =
-              match month with
-              | "Jan" -> 1
-              | "Feb" -> 2
-              | "Mar" -> 3
-              | "Apr" -> 4
-              | "May" -> 5
-              | "Jun" -> 6
-              | "Jul" -> 7
-              | "Aug" -> 8
-              | "Sep" -> 9
-              | "Oct" -> 10
-              | "Nov" -> 11
-              | "Dec" -> 12
-              | _ -> failwith "unexpected month"
-            in
-            Fmt.pf Fmt.stdout "read %d %d %d %d-%d-%d\n" year month day hour minute second;
-            CoreTypes.Timestamp.of_date_time ((year, month, day), ((hour, minute, second), 0)))
-    | _ -> raise (deserialize_wrong_type_error path "timestamp(http-date)"))
+      | `String str ->
+          Scanf.sscanf str "%s@, %d %s %d %d:%d:%d GMT"
+            (fun weekday day month year hour minute second ->
+              let weekday =
+                match weekday with
+                | "Sun" -> `Sun
+                | "Mon" -> `Mon
+                | "Tue" -> `Tue
+                | "Wed" -> `Wed
+                | "Thu" -> `Thu
+                | "Fri" -> `Fri
+                | "Sat" -> `Sat
+                | _ -> failwith "unexpected weekday"
+              in
+              let month =
+                match month with
+                | "Jan" -> 1
+                | "Feb" -> 2
+                | "Mar" -> 3
+                | "Apr" -> 4
+                | "May" -> 5
+                | "Jun" -> 6
+                | "Jul" -> 7
+                | "Aug" -> 8
+                | "Sep" -> 9
+                | "Oct" -> 10
+                | "Nov" -> 11
+                | "Dec" -> 12
+                | _ -> failwith "unexpected month"
+              in
+              Fmt.pf Fmt.stdout "read %d %d %d %d-%d-%d\n" year month day hour minute second;
+              CoreTypes.Timestamp.of_date_time ((year, month, day), ((hour, minute, second), 0)))
+      | _ -> raise (deserialize_wrong_type_error path "timestamp(http-date)"))
     |> Option.get_or_exn ~exn:(JsonDeserializeError (CustomError "invalid timestamp"))
 
   let value_for_key converter key (l : (string * t) list) path =

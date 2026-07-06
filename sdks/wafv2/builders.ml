@@ -204,10 +204,21 @@ let make_challenge_action
     ?custom_request_handling:(custom_request_handling_ : custom_request_handling option) () =
   ({ custom_request_handling = custom_request_handling_ } : challenge_action)
 
-let make_rule_action ?challenge:(challenge_ : challenge_action option)
-    ?captcha:(captcha_ : captcha_action option) ?count:(count_ : count_action option)
-    ?allow:(allow_ : allow_action option) ?block:(block_ : block_action option) () =
-  ({ challenge = challenge_; captcha = captcha_; count = count_; allow = allow_; block = block_ }
+let make_monetize_action ?price_multiplier:(price_multiplier_ : price_multiplier option) () =
+  ({ price_multiplier = price_multiplier_ } : monetize_action)
+
+let make_rule_action ?monetize:(monetize_ : monetize_action option)
+    ?challenge:(challenge_ : challenge_action option) ?captcha:(captcha_ : captcha_action option)
+    ?count:(count_ : count_action option) ?allow:(allow_ : allow_action option)
+    ?block:(block_ : block_action option) () =
+  ({
+     monetize = monetize_;
+     challenge = challenge_;
+     captcha = captcha_;
+     count = count_;
+     allow = allow_;
+     block = block_;
+   }
     : rule_action)
 
 let make_rule_action_override ~action_to_use:(action_to_use_ : rule_action)
@@ -680,7 +691,22 @@ let make_application_attribute ?values:(values_ : attribute_values option)
 let make_application_config ?attributes:(attributes_ : application_attributes option) () =
   ({ attributes = attributes_ } : application_config)
 
-let make_web_ac_l ?application_config:(application_config_ : application_config option)
+let make_price ~currency:(currency_ : crypto_currency) ~amount:(amount_ : price_amount) () =
+  ({ currency = currency_; amount = amount_ } : price)
+
+let make_payment_network ~prices:(prices_ : prices)
+    ~wallet_address:(wallet_address_ : wallet_address) ~chain:(chain_ : blockchain_chain) () =
+  ({ prices = prices_; wallet_address = wallet_address_; chain = chain_ } : payment_network)
+
+let make_crypto_config ~payment_networks:(payment_networks_ : payment_networks) () =
+  ({ payment_networks = payment_networks_ } : crypto_config)
+
+let make_monetization_config ?currency_mode:(currency_mode_ : currency_mode option)
+    ?crypto_config:(crypto_config_ : crypto_config option) () =
+  ({ currency_mode = currency_mode_; crypto_config = crypto_config_ } : monetization_config)
+
+let make_web_ac_l ?monetization_config:(monetization_config_ : monetization_config option)
+    ?application_config:(application_config_ : application_config option)
     ?on_source_d_do_s_protection_config:
       (on_source_d_do_s_protection_config_ : on_source_d_do_s_protection_config option)
     ?retrofitted_by_firewall_manager:(retrofitted_by_firewall_manager_ : boolean_ option)
@@ -702,6 +728,7 @@ let make_web_ac_l ?application_config:(application_config_ : application_config 
     ~default_action:(default_action_ : default_action) ~ar_n:(ar_n_ : resource_arn)
     ~id:(id_ : entity_id) ~name:(name_ : entity_name) () =
   ({
+     monetization_config = monetization_config_;
      application_config = application_config_;
      on_source_d_do_s_protection_config = on_source_d_do_s_protection_config_;
      retrofitted_by_firewall_manager = retrofitted_by_firewall_manager_;
@@ -726,6 +753,11 @@ let make_web_ac_l ?application_config:(application_config_ : application_config 
    }
     : web_ac_l)
 
+let make_disallowed_feature
+    ?required_pricing_plan:(required_pricing_plan_ : required_pricing_plan_name option)
+    ?feature:(feature_ : pricing_plan_feature_name option) () =
+  ({ required_pricing_plan = required_pricing_plan_; feature = feature_ } : disallowed_feature)
+
 let make_version_to_publish ?forecasted_lifetime:(forecasted_lifetime_ : time_window_day option)
     ?associated_rule_group_arn:(associated_rule_group_arn_ : resource_arn option) () =
   ({
@@ -738,6 +770,8 @@ let make_update_web_acl_response ?next_lock_token:(next_lock_token_ : lock_token
   ({ next_lock_token = next_lock_token_ } : update_web_acl_response)
 
 let make_update_web_acl_request
+    ?monetization_config:(monetization_config_ : monetization_config option)
+    ?application_config:(application_config_ : application_config option)
     ?on_source_d_do_s_protection_config:
       (on_source_d_do_s_protection_config_ : on_source_d_do_s_protection_config option)
     ?association_config:(association_config_ : association_config option)
@@ -752,6 +786,8 @@ let make_update_web_acl_request
     ~default_action:(default_action_ : default_action) ~id:(id_ : entity_id) ~scope:(scope_ : scope)
     ~name:(name_ : entity_name) () =
   ({
+     monetization_config = monetization_config_;
+     application_config = application_config_;
      on_source_d_do_s_protection_config = on_source_d_do_s_protection_config_;
      association_config = association_config_;
      token_domains = token_domains_;
@@ -774,12 +810,14 @@ let make_update_rule_group_response ?next_lock_token:(next_lock_token_ : lock_to
   ({ next_lock_token = next_lock_token_ } : update_rule_group_response)
 
 let make_update_rule_group_request
+    ?monetization_config:(monetization_config_ : monetization_config option)
     ?custom_response_bodies:(custom_response_bodies_ : custom_response_bodies option)
     ?rules:(rules_ : rules option) ?description:(description_ : entity_description option)
     ~lock_token:(lock_token_ : lock_token)
     ~visibility_config:(visibility_config_ : visibility_config) ~id:(id_ : entity_id)
     ~scope:(scope_ : scope) ~name:(name_ : entity_name) () =
   ({
+     monetization_config = monetization_config_;
      custom_response_bodies = custom_response_bodies_;
      lock_token = lock_token_;
      visibility_config = visibility_config_;
@@ -873,6 +911,60 @@ let make_tag_info_for_resource ?tag_list:(tag_list_ : tag_list option)
     ?resource_ar_n:(resource_ar_n_ : resource_arn option) () =
   ({ tag_list = tag_list_; resource_ar_n = resource_ar_n_ } : tag_info_for_resource)
 
+let make_source_statistics ?group_by_value:(group_by_value_ : filter_string option)
+    ?verified:(verified_ : verified_status option)
+    ?organization:(organization_ : filter_string option) ?intent:(intent_ : filter_string option)
+    ?source_category:(source_category_ : filter_string option)
+    ~request_count:(request_count_ : request_count) ~amount:(amount_ : monetization_amount_value)
+    ~percentage:(percentage_ : percentage_value) ~source_name:(source_name_ : filter_string) () =
+  ({
+     group_by_value = group_by_value_;
+     verified = verified_;
+     organization = organization_;
+     intent = intent_;
+     source_category = source_category_;
+     request_count = request_count_;
+     amount = amount_;
+     percentage = percentage_;
+     source_name = source_name_;
+   }
+    : source_statistics)
+
+let make_settlement_record ?request_timestamp:(request_timestamp_ : timestamp option)
+    ?web_acl_arn:(web_acl_arn_ : resource_arn option)
+    ?content_path:(content_path_ : filter_string option)
+    ?verified:(verified_ : verified_status option) ?intent:(intent_ : filter_string option)
+    ?source_category:(source_category_ : filter_string option)
+    ?organization:(organization_ : filter_string option)
+    ?source_name:(source_name_ : filter_string option)
+    ?request_id:(request_id_ : settlement_filter_string option)
+    ?transaction_id:(transaction_id_ : settlement_id_string option)
+    ?network:(network_ : settlement_filter_string option) ?currency:(currency_ : currency option)
+    ?wallet_address:(wallet_address_ : settlement_filter_string option)
+    ?payer_address:(payer_address_ : settlement_filter_string option)
+    ~amount:(amount_ : monetization_amount_value) ~status:(status_ : settlement_status)
+    ~timestamp:(timestamp_ : timestamp) () =
+  ({
+     request_timestamp = request_timestamp_;
+     web_acl_arn = web_acl_arn_;
+     content_path = content_path_;
+     verified = verified_;
+     intent = intent_;
+     source_category = source_category_;
+     organization = organization_;
+     source_name = source_name_;
+     request_id = request_id_;
+     transaction_id = transaction_id_;
+     network = network_;
+     currency = currency_;
+     amount = amount_;
+     status = status_;
+     wallet_address = wallet_address_;
+     payer_address = payer_address_;
+     timestamp = timestamp_;
+   }
+    : settlement_record)
+
 let make_http_header ?value:(value_ : header_value option) ?name:(name_ : header_name option) () =
   ({ value = value_; name = name_ } : http_header)
 
@@ -946,7 +1038,8 @@ let make_rule_group_summary ?ar_n:(ar_n_ : resource_arn option)
 
 let make_label_summary ?name:(name_ : label_name option) () = ({ name = name_ } : label_summary)
 
-let make_rule_group ?consumed_labels:(consumed_labels_ : label_summaries option)
+let make_rule_group ?monetization_config:(monetization_config_ : monetization_config option)
+    ?consumed_labels:(consumed_labels_ : label_summaries option)
     ?available_labels:(available_labels_ : label_summaries option)
     ?custom_response_bodies:(custom_response_bodies_ : custom_response_bodies option)
     ?label_namespace:(label_namespace_ : label_name option) ?rules:(rules_ : rules option)
@@ -954,6 +1047,7 @@ let make_rule_group ?consumed_labels:(consumed_labels_ : label_summaries option)
     ~visibility_config:(visibility_config_ : visibility_config) ~ar_n:(ar_n_ : resource_arn)
     ~capacity:(capacity_ : capacity_unit) ~id:(id_ : entity_id) ~name:(name_ : entity_name) () =
   ({
+     monetization_config = monetization_config_;
      consumed_labels = consumed_labels_;
      available_labels = available_labels_;
      custom_response_bodies = custom_response_bodies_;
@@ -967,6 +1061,27 @@ let make_rule_group ?consumed_labels:(consumed_labels_ : label_summaries option)
      name = name_;
    }
     : rule_group)
+
+let make_revenue_path_statistics ~request_count:(request_count_ : request_count)
+    ~amount:(amount_ : monetization_amount_value) ~percentage:(percentage_ : percentage_value)
+    ~path:(path_ : path_string) () =
+  ({ request_count = request_count_; amount = amount_; percentage = percentage_; path = path_ }
+    : revenue_path_statistics)
+
+let make_revenue_breakdown ?total_monetize_served:(total_monetize_served_ : request_count option)
+    ?total_settled:(total_settled_ : request_count option) ?currency:(currency_ : currency option)
+    ?unverified_amount:(unverified_amount_ : monetization_amount_value option)
+    ?verified_amount:(verified_amount_ : monetization_amount_value option)
+    ?total_amount:(total_amount_ : monetization_amount_value option) () =
+  ({
+     total_monetize_served = total_monetize_served_;
+     total_settled = total_settled_;
+     currency = currency_;
+     unverified_amount = unverified_amount_;
+     verified_amount = verified_amount_;
+     total_amount = total_amount_;
+   }
+    : revenue_breakdown)
 
 let make_release_summary ?timestamp:(timestamp_ : timestamp option)
     ?release_version:(release_version_ : version_key_string option) () =
@@ -1083,6 +1198,33 @@ let make_managed_rule_set_version ?expiry_timestamp:(expiry_timestamp_ : timesta
    }
     : managed_rule_set_version)
 
+let make_filter_source ?bot_name:(bot_name_ : filter_string option)
+    ?bot_organization:(bot_organization_ : filter_string option)
+    ?bot_category:(bot_category_ : filter_string option) () =
+  ({ bot_name = bot_name_; bot_organization = bot_organization_; bot_category = bot_category_ }
+    : filter_source)
+
+let make_bot_statistics ~percentage:(percentage_ : percentage_value)
+    ~request_count:(request_count_ : request_count) ~bot_name:(bot_name_ : filter_string) () =
+  ({ percentage = percentage_; request_count = request_count_; bot_name = bot_name_ }
+    : bot_statistics)
+
+let make_path_statistics ?top_bots:(top_bots_ : bot_statistics_list option)
+    ?source:(source_ : filter_source option) ~percentage:(percentage_ : percentage_value)
+    ~request_count:(request_count_ : request_count) ~path:(path_ : path_string) () =
+  ({
+     top_bots = top_bots_;
+     percentage = percentage_;
+     request_count = request_count_;
+     path = path_;
+     source = source_;
+   }
+    : path_statistics)
+
+let make_monetization_filter ~values:(values_ : monetization_filter_value_list)
+    ~name:(name_ : monetization_filter_name) () =
+  ({ values = values_; name = name_ } : monetization_filter)
+
 let make_mobile_sdk_release ?tags:(tags_ : tag_list option)
     ?release_notes:(release_notes_ : release_notes option)
     ?timestamp:(timestamp_ : timestamp option)
@@ -1183,6 +1325,27 @@ let make_list_tags_for_resource_request ?limit:(limit_ : pagination_limit option
     () =
   ({ resource_ar_n = resource_ar_n_; limit = limit_; next_marker = next_marker_ }
     : list_tags_for_resource_request)
+
+let make_list_settlement_records_response ?next_marker:(next_marker_ : next_marker option)
+    ?settlements:(settlements_ : settlement_record_list option) () =
+  ({ next_marker = next_marker_; settlements = settlements_ } : list_settlement_records_response)
+
+let make_list_settlement_records_request ?next_marker:(next_marker_ : next_marker option)
+    ?limit:(limit_ : settlement_record_limit option) ?sort_order:(sort_order_ : sort_order option)
+    ?sort_by:(sort_by_ : settlement_sort_by option)
+    ?filters:(filters_ : monetization_filter_list option) ~currency:(currency_ : currency)
+    ~scope:(scope_ : scope) ~time_window:(time_window_ : time_window) () =
+  ({
+     next_marker = next_marker_;
+     limit = limit_;
+     sort_order = sort_order_;
+     sort_by = sort_by_;
+     filters = filters_;
+     currency = currency_;
+     scope = scope_;
+     time_window = time_window_;
+   }
+    : list_settlement_records_request)
 
 let make_list_rule_groups_response ?rule_groups:(rule_groups_ : rule_group_summaries option)
     ?next_marker:(next_marker_ : next_marker option) () =
@@ -1352,6 +1515,42 @@ let make_get_web_acl_for_resource_response ?web_ac_l:(web_ac_l_ : web_ac_l optio
 let make_get_web_acl_for_resource_request ~resource_arn:(resource_arn_ : resource_arn) () =
   ({ resource_arn = resource_arn_ } : get_web_acl_for_resource_request)
 
+let make_get_top_path_statistics_by_traffic_response
+    ?top_categories:(top_categories_ : path_statistics_list option)
+    ?next_marker:(next_marker_ : next_marker option)
+    ~total_request_count:(total_request_count_ : request_count)
+    ~path_statistics:(path_statistics_ : path_statistics_list) () =
+  ({
+     top_categories = top_categories_;
+     next_marker = next_marker_;
+     total_request_count = total_request_count_;
+     path_statistics = path_statistics_;
+   }
+    : get_top_path_statistics_by_traffic_response)
+
+let make_get_top_path_statistics_by_traffic_request ?next_marker:(next_marker_ : next_marker option)
+    ?bot_name:(bot_name_ : filter_string option)
+    ?bot_organization:(bot_organization_ : filter_string option)
+    ?bot_category:(bot_category_ : filter_string option)
+    ?uri_path_prefix:(uri_path_prefix_ : uri_path_prefix_string option)
+    ~number_of_top_traffic_bots_per_path:
+      (number_of_top_traffic_bots_per_path_ : number_of_top_traffic_bots_per_path)
+    ~limit:(limit_ : path_statistics_limit) ~time_window:(time_window_ : time_window)
+    ~scope:(scope_ : scope) ~web_acl_arn:(web_acl_arn_ : resource_arn) () =
+  ({
+     next_marker = next_marker_;
+     number_of_top_traffic_bots_per_path = number_of_top_traffic_bots_per_path_;
+     limit = limit_;
+     bot_name = bot_name_;
+     bot_organization = bot_organization_;
+     bot_category = bot_category_;
+     time_window = time_window_;
+     uri_path_prefix = uri_path_prefix_;
+     scope = scope_;
+     web_acl_arn = web_acl_arn_;
+   }
+    : get_top_path_statistics_by_traffic_request)
+
 let make_get_sampled_requests_response ?time_window:(time_window_ : time_window option)
     ?population_size:(population_size_ : population_size option)
     ?sampled_requests:(sampled_requests_ : sampled_http_requests option) () =
@@ -1382,6 +1581,89 @@ let make_get_rule_group_response ?lock_token:(lock_token_ : lock_token option)
 let make_get_rule_group_request ?ar_n:(ar_n_ : resource_arn option) ?id:(id_ : entity_id option)
     ?scope:(scope_ : scope option) ?name:(name_ : entity_name option) () =
   ({ ar_n = ar_n_; id = id_; scope = scope_; name = name_ } : get_rule_group_request)
+
+let make_data_point_entry ?group_by_value:(group_by_value_ : filter_string option)
+    ?intent:(intent_ : filter_string option) ?category:(category_ : filter_string option)
+    ?total_amount:(total_amount_ : monetization_amount_value option)
+    ?settled_count:(settled_count_ : request_count option)
+    ?monetize_served_count:(monetize_served_count_ : request_count option)
+    ?date:(date_ : timestamp option) () =
+  ({
+     group_by_value = group_by_value_;
+     intent = intent_;
+     category = category_;
+     total_amount = total_amount_;
+     settled_count = settled_count_;
+     monetize_served_count = monetize_served_count_;
+     date = date_;
+   }
+    : data_point_entry)
+
+let make_get_revenue_statistics_time_series_response
+    ?next_marker:(next_marker_ : next_marker option)
+    ?data_points:(data_points_ : data_points_list option) () =
+  ({ next_marker = next_marker_; data_points = data_points_ }
+    : get_revenue_statistics_time_series_response)
+
+let make_get_revenue_statistics_time_series_request ?next_marker:(next_marker_ : next_marker option)
+    ?limit:(limit_ : max_data_points option) ?filters:(filters_ : monetization_filter_list option)
+    ?group_by:(group_by_ : group_by_type option) ~currency:(currency_ : currency)
+    ~interval:(interval_ : interval_type) ~scope:(scope_ : scope)
+    ~time_window:(time_window_ : time_window)
+    ~statistic_type:(statistic_type_ : time_series_statistic_type) () =
+  ({
+     next_marker = next_marker_;
+     limit = limit_;
+     filters = filters_;
+     group_by = group_by_;
+     currency = currency_;
+     interval = interval_;
+     scope = scope_;
+     time_window = time_window_;
+     statistic_type = statistic_type_;
+   }
+    : get_revenue_statistics_time_series_request)
+
+let make_get_revenue_statistics_summary_response
+    ?revenue_breakdown:(revenue_breakdown_ : revenue_breakdown option) () =
+  ({ revenue_breakdown = revenue_breakdown_ } : get_revenue_statistics_summary_response)
+
+let make_get_revenue_statistics_summary_request
+    ?filters:(filters_ : monetization_filter_list option) ~currency:(currency_ : currency)
+    ~scope:(scope_ : scope) ~time_window:(time_window_ : time_window) () =
+  ({ filters = filters_; currency = currency_; scope = scope_; time_window = time_window_ }
+    : get_revenue_statistics_summary_request)
+
+let make_get_revenue_statistics_response ?next_marker:(next_marker_ : next_marker option)
+    ?revenue_path_statistics:(revenue_path_statistics_ : revenue_path_statistics_list option)
+    ?source_statistics:(source_statistics_ : source_statistics_list option) () =
+  ({
+     next_marker = next_marker_;
+     revenue_path_statistics = revenue_path_statistics_;
+     source_statistics = source_statistics_;
+   }
+    : get_revenue_statistics_response)
+
+let make_get_revenue_statistics_request ?sort_order:(sort_order_ : sort_order option)
+    ?sort_by:(sort_by_ : ranking_sort_by option) ?limit:(limit_ : path_statistics_limit option)
+    ?next_marker:(next_marker_ : next_marker option)
+    ?filters:(filters_ : monetization_filter_list option)
+    ?group_by:(group_by_ : group_by_type option) ~currency:(currency_ : currency)
+    ~scope:(scope_ : scope) ~time_window:(time_window_ : time_window)
+    ~statistic_type:(statistic_type_ : ranking_statistic_type) () =
+  ({
+     sort_order = sort_order_;
+     sort_by = sort_by_;
+     limit = limit_;
+     next_marker = next_marker_;
+     filters = filters_;
+     group_by = group_by_;
+     currency = currency_;
+     scope = scope_;
+     time_window = time_window_;
+     statistic_type = statistic_type_;
+   }
+    : get_revenue_statistics_request)
 
 let make_get_regex_pattern_set_response ?lock_token:(lock_token_ : lock_token option)
     ?regex_pattern_set:(regex_pattern_set_ : regex_pattern_set option) () =
@@ -1568,6 +1850,7 @@ let make_create_web_acl_response ?summary:(summary_ : web_acl_summary option) ()
   ({ summary = summary_ } : create_web_acl_response)
 
 let make_create_web_acl_request
+    ?monetization_config:(monetization_config_ : monetization_config option)
     ?application_config:(application_config_ : application_config option)
     ?on_source_d_do_s_protection_config:
       (on_source_d_do_s_protection_config_ : on_source_d_do_s_protection_config option)
@@ -1583,6 +1866,7 @@ let make_create_web_acl_request
     ~default_action:(default_action_ : default_action) ~scope:(scope_ : scope)
     ~name:(name_ : entity_name) () =
   ({
+     monetization_config = monetization_config_;
      application_config = application_config_;
      on_source_d_do_s_protection_config = on_source_d_do_s_protection_config_;
      association_config = association_config_;
@@ -1605,12 +1889,14 @@ let make_create_rule_group_response ?summary:(summary_ : rule_group_summary opti
   ({ summary = summary_ } : create_rule_group_response)
 
 let make_create_rule_group_request
+    ?monetization_config:(monetization_config_ : monetization_config option)
     ?custom_response_bodies:(custom_response_bodies_ : custom_response_bodies option)
     ?tags:(tags_ : tag_list option) ?rules:(rules_ : rules option)
     ?description:(description_ : entity_description option)
     ~visibility_config:(visibility_config_ : visibility_config)
     ~capacity:(capacity_ : capacity_unit) ~scope:(scope_ : scope) ~name:(name_ : entity_name) () =
   ({
+     monetization_config = monetization_config_;
      custom_response_bodies = custom_response_bodies_;
      tags = tags_;
      visibility_config = visibility_config_;

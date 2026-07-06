@@ -50,10 +50,12 @@ let make_start_report_creation_input ~s3_bucket:(s3_bucket_ : s3_bucket) () =
   ({ s3_bucket = s3_bucket_ } : start_report_creation_input)
 
 let make_compliance_details ?compliance_status:(compliance_status_ : compliance_status option)
+    ?missing_tag_keys:(missing_tag_keys_ : tag_key_list option)
     ?keys_with_noncompliant_values:(keys_with_noncompliant_values_ : tag_key_list option)
     ?noncompliant_keys:(noncompliant_keys_ : tag_key_list option) () =
   ({
      compliance_status = compliance_status_;
+     missing_tag_keys = missing_tag_keys_;
      keys_with_noncompliant_values = keys_with_noncompliant_values_;
      noncompliant_keys = noncompliant_keys_;
    }
@@ -63,6 +65,26 @@ let make_resource_tag_mapping ?compliance_details:(compliance_details_ : complia
     ?tags:(tags_ : tag_list option) ?resource_ar_n:(resource_ar_n_ : resource_ar_n option) () =
   ({ compliance_details = compliance_details_; tags = tags_; resource_ar_n = resource_ar_n_ }
     : resource_tag_mapping)
+
+let make_required_tag ?reporting_tag_keys:(reporting_tag_keys_ : reporting_tag_keys option)
+    ?cloud_formation_resource_types:
+      (cloud_formation_resource_types_ : cloud_formation_resource_types option)
+    ?resource_type:(resource_type_ : resource_type option) () =
+  ({
+     reporting_tag_keys = reporting_tag_keys_;
+     cloud_formation_resource_types = cloud_formation_resource_types_;
+     resource_type = resource_type_;
+   }
+    : required_tag)
+
+let make_list_required_tags_output ?next_token:(next_token_ : pagination_token option)
+    ?required_tags:(required_tags_ : required_tags_for_list_required_tags option) () =
+  ({ next_token = next_token_; required_tags = required_tags_ } : list_required_tags_output)
+
+let make_list_required_tags_input
+    ?max_results:(max_results_ : max_results_for_list_required_tags option)
+    ?next_token:(next_token_ : pagination_token option) () =
+  ({ max_results = max_results_; next_token = next_token_ } : list_required_tags_input)
 
 let make_get_tag_values_output ?tag_values:(tag_values_ : tag_values_output_list option)
     ?pagination_token:(pagination_token_ : pagination_token option) () =

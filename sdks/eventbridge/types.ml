@@ -20,7 +20,48 @@ type nonrec dead_letter_config = {
    dead-letter queues to process undelivered events} in the {i EventBridge User Guide}.\n\
   \ "]
 
+type nonrec include_detail = FULL [@ocaml.doc ""] | NONE [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec level =
+  | TRACE [@ocaml.doc ""]
+  | INFO [@ocaml.doc ""]
+  | ERROR [@ocaml.doc ""]
+  | OFF [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec log_config = {
+  level : level option;
+      [@ocaml.doc
+        "The level of logging detail to include. This applies to all log destinations for the \
+         event bus.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus-logs.html#eb-event-bus-logs-level}Specifying \
+         event bus log level} in the {i EventBridge User Guide}.\n\
+        \ "]
+  include_detail : include_detail option;
+      [@ocaml.doc
+        "Whether EventBridge include detailed event information in the records it generates. \
+         Detailed data can be useful for troubleshooting and debugging. This information includes \
+         details of the event itself, as well as target details.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus-logs.html#eb-event-logs-data}Including \
+         detail data in event bus logs} in the {i EventBridge User Guide}.\n\
+        \ "]
+}
+[@@ocaml.doc
+  "The logging configuration settings for the event bus.\n\n\
+  \ For more information, see {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring \
+   logs for event buses} in the {i EventBridge User Guide}.\n\
+  \ "]
+
 type nonrec update_event_bus_response = {
+  log_config : log_config option;
+      [@ocaml.doc
+        "The logging configuration settings for the event bus.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring logs for event buses} \
+         in the {i EventBridge User Guide}.\n\
+        \ "]
   dead_letter_config : dead_letter_config option; [@ocaml.doc ""]
   description : event_bus_description option; [@ocaml.doc "The event bus description.\n"]
   kms_key_identifier : kms_key_identifier option;
@@ -37,6 +78,13 @@ type nonrec update_event_bus_response = {
 [@@ocaml.doc ""]
 
 type nonrec update_event_bus_request = {
+  log_config : log_config option;
+      [@ocaml.doc
+        "The logging configuration settings for the event bus.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring logs for event buses} \
+         in the {i EventBridge User Guide}.\n\
+        \ "]
   dead_letter_config : dead_letter_config option; [@ocaml.doc ""]
   description : event_bus_description option; [@ocaml.doc "The event bus description.\n"]
   kms_key_identifier : kms_key_identifier option;
@@ -2782,6 +2830,13 @@ type nonrec describe_event_source_request = {
 type nonrec describe_event_bus_response = {
   last_modified_time : timestamp option; [@ocaml.doc "The time the event bus was last modified.\n"]
   creation_time : timestamp option; [@ocaml.doc "The time the event bus was created.\n"]
+  log_config : log_config option;
+      [@ocaml.doc
+        "The logging configuration settings for the event bus.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring logs for event buses} \
+         in the {i EventBridge User Guide}.\n\
+        \ "]
   policy : string_ option;
       [@ocaml.doc "The policy that enables the external account to send events to your account.\n"]
   dead_letter_config : dead_letter_config option; [@ocaml.doc ""]
@@ -3176,6 +3231,13 @@ type nonrec create_partner_event_source_request = {
 [@@ocaml.doc ""]
 
 type nonrec create_event_bus_response = {
+  log_config : log_config option;
+      [@ocaml.doc
+        "The logging configuration settings for the event bus.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring logs for event buses} \
+         in the {i EventBridge User Guide}.\n\
+        \ "]
   dead_letter_config : dead_letter_config option; [@ocaml.doc ""]
   kms_key_identifier : kms_key_identifier option;
       [@ocaml.doc
@@ -3192,6 +3254,13 @@ type nonrec create_event_bus_response = {
 
 type nonrec create_event_bus_request = {
   tags : tag_list option; [@ocaml.doc "Tags to associate with the event bus.\n"]
+  log_config : log_config option;
+      [@ocaml.doc
+        "The logging configuration settings for the event bus.\n\n\
+        \ For more information, see \
+         {{:https://docs.aws.amazon.com/eb-event-bus-logs.html}Configuring logs for event buses} \
+         in the {i EventBridge User Guide}.\n\
+        \ "]
   dead_letter_config : dead_letter_config option; [@ocaml.doc ""]
   kms_key_identifier : kms_key_identifier option;
       [@ocaml.doc

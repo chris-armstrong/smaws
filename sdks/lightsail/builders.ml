@@ -175,10 +175,12 @@ let make_update_domain_entry_request ~domain_entry:(domain_entry_ : domain_entry
     ~domain_name:(domain_name_ : domain_name) () =
   ({ domain_entry = domain_entry_; domain_name = domain_name_ } : update_domain_entry_request)
 
-let make_input_origin ?response_timeout:(response_timeout_ : integer option)
+let make_input_origin ?ip_address_type:(ip_address_type_ : origin_ip_address_type_enum option)
+    ?response_timeout:(response_timeout_ : integer option)
     ?protocol_policy:(protocol_policy_ : origin_protocol_policy_enum option)
     ?region_name:(region_name_ : region_name option) ?name:(name_ : resource_name option) () =
   ({
+     ip_address_type = ip_address_type_;
      response_timeout = response_timeout_;
      protocol_policy = protocol_policy_;
      region_name = region_name_;
@@ -398,7 +400,27 @@ let make_bucket_access_log_config ?prefix:(prefix_ : bucket_access_log_prefix op
     ?destination:(destination_ : bucket_name option) ~enabled:(enabled_ : boolean_) () =
   ({ prefix = prefix_; destination = destination_; enabled = enabled_ } : bucket_access_log_config)
 
-let make_bucket ?access_log_config:(access_log_config_ : bucket_access_log_config option)
+let make_bucket_cors_rule ?max_age_seconds:(max_age_seconds_ : integer option)
+    ?expose_headers:(expose_headers_ : bucket_cors_expose_headers option)
+    ?allowed_headers:(allowed_headers_ : bucket_cors_allowed_headers option)
+    ?id:(id_ : bucket_cors_rule_id option)
+    ~allowed_origins:(allowed_origins_ : bucket_cors_allowed_origins)
+    ~allowed_methods:(allowed_methods_ : bucket_cors_allowed_methods) () =
+  ({
+     max_age_seconds = max_age_seconds_;
+     expose_headers = expose_headers_;
+     allowed_headers = allowed_headers_;
+     allowed_origins = allowed_origins_;
+     allowed_methods = allowed_methods_;
+     id = id_;
+   }
+    : bucket_cors_rule)
+
+let make_bucket_cors_config ?rules:(rules_ : bucket_cors_rules option) () =
+  ({ rules = rules_ } : bucket_cors_config)
+
+let make_bucket ?cors:(cors_ : bucket_cors_config option)
+    ?access_log_config:(access_log_config_ : bucket_access_log_config option)
     ?state:(state_ : bucket_state option)
     ?resources_receiving_access:(resources_receiving_access_ : access_receiver_list option)
     ?readonly_access_accounts:(readonly_access_accounts_ : partner_id_list option)
@@ -411,6 +433,7 @@ let make_bucket ?access_log_config:(access_log_config_ : bucket_access_log_confi
     ?access_rules:(access_rules_ : access_rules option)
     ?resource_type:(resource_type_ : non_empty_string option) () =
   ({
+     cors = cors_;
      access_log_config = access_log_config_;
      state = state_;
      resources_receiving_access = resources_receiving_access_;
@@ -430,13 +453,14 @@ let make_bucket ?access_log_config:(access_log_config_ : bucket_access_log_confi
    }
     : bucket)
 
-let make_update_bucket_request
+let make_update_bucket_request ?cors:(cors_ : bucket_cors_config option)
     ?access_log_config:(access_log_config_ : bucket_access_log_config option)
     ?readonly_access_accounts:(readonly_access_accounts_ : partner_id_list option)
     ?versioning:(versioning_ : non_empty_string option)
     ?access_rules:(access_rules_ : access_rules option) ~bucket_name:(bucket_name_ : bucket_name) ()
     =
   ({
+     cors = cors_;
      access_log_config = access_log_config_;
      readonly_access_accounts = readonly_access_accounts_;
      versioning = versioning_;
@@ -860,7 +884,8 @@ let make_put_instance_public_ports_request ~instance_name:(instance_name_ : reso
     ~port_infos:(port_infos_ : port_info_list) () =
   ({ instance_name = instance_name_; port_infos = port_infos_ } : put_instance_public_ports_request)
 
-let make_put_alarm_request ?notification_enabled:(notification_enabled_ : boolean_ option)
+let make_put_alarm_request ?tags:(tags_ : tag_list option)
+    ?notification_enabled:(notification_enabled_ : boolean_ option)
     ?notification_triggers:(notification_triggers_ : notification_trigger_list option)
     ?contact_protocols:(contact_protocols_ : contact_protocols_list option)
     ?treat_missing_data:(treat_missing_data_ : treat_missing_data option)
@@ -870,6 +895,7 @@ let make_put_alarm_request ?notification_enabled:(notification_enabled_ : boolea
     ~monitored_resource_name:(monitored_resource_name_ : resource_name)
     ~metric_name:(metric_name_ : metric_name) ~alarm_name:(alarm_name_ : resource_name) () =
   ({
+     tags = tags_;
      notification_enabled = notification_enabled_;
      notification_triggers = notification_triggers_;
      contact_protocols = contact_protocols_;
@@ -890,11 +916,13 @@ let make_password_data ?key_pair_name:(key_pair_name_ : resource_name option)
     ?ciphertext:(ciphertext_ : string_ option) () =
   ({ key_pair_name = key_pair_name_; ciphertext = ciphertext_ } : password_data)
 
-let make_origin ?response_timeout:(response_timeout_ : integer option)
+let make_origin ?ip_address_type:(ip_address_type_ : origin_ip_address_type_enum option)
+    ?response_timeout:(response_timeout_ : integer option)
     ?protocol_policy:(protocol_policy_ : origin_protocol_policy_enum option)
     ?region_name:(region_name_ : region_name option)
     ?resource_type:(resource_type_ : resource_type option) ?name:(name_ : resource_name option) () =
   ({
+     ip_address_type = ip_address_type_;
      response_timeout = response_timeout_;
      protocol_policy = protocol_policy_;
      region_name = region_name_;
@@ -1799,13 +1827,15 @@ let make_get_container_images_request ~service_name:(service_name_ : container_s
 
 let make_get_container_api_metadata_request () = (() : unit)
 
-let make_contact_method ?support_code:(support_code_ : string_ option)
+let make_contact_method ?tags:(tags_ : tag_list option)
+    ?support_code:(support_code_ : string_ option)
     ?resource_type:(resource_type_ : resource_type option)
     ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
     ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option)
     ?protocol:(protocol_ : contact_protocol option) ?status:(status_ : contact_method_status option)
     ?contact_endpoint:(contact_endpoint_ : non_empty_string option) () =
   ({
+     tags = tags_;
      support_code = support_code_;
      resource_type = resource_type_;
      location = location_;
@@ -1960,10 +1990,11 @@ let make_account_level_bpa_sync ?bpa_impacts_lightsail:(bpa_impacts_lightsail_ :
    }
     : account_level_bpa_sync)
 
-let make_get_buckets_request
+let make_get_buckets_request ?include_cors:(include_cors_ : boolean_ option)
     ?include_connected_resources:(include_connected_resources_ : boolean_ option)
     ?page_token:(page_token_ : string_ option) ?bucket_name:(bucket_name_ : bucket_name option) () =
   ({
+     include_cors = include_cors_;
      include_connected_resources = include_connected_resources_;
      page_token = page_token_;
      bucket_name = bucket_name_;
@@ -2074,7 +2105,8 @@ let make_auto_snapshot_details
 let make_get_auto_snapshots_request ~resource_name:(resource_name_ : resource_name) () =
   ({ resource_name = resource_name_ } : get_auto_snapshots_request)
 
-let make_alarm ?notification_enabled:(notification_enabled_ : boolean_ option)
+let make_alarm ?tags:(tags_ : tag_list option)
+    ?notification_enabled:(notification_enabled_ : boolean_ option)
     ?notification_triggers:(notification_triggers_ : notification_trigger_list option)
     ?contact_protocols:(contact_protocols_ : contact_protocols_list option)
     ?unit_:(unit__ : metric_unit option) ?state:(state_ : alarm_state option)
@@ -2091,6 +2123,7 @@ let make_alarm ?notification_enabled:(notification_enabled_ : boolean_ option)
     ?location:(location_ : resource_location option) ?created_at:(created_at_ : iso_date option)
     ?arn:(arn_ : non_empty_string option) ?name:(name_ : resource_name option) () =
   ({
+     tags = tags_;
      notification_enabled = notification_enabled_;
      notification_triggers = notification_triggers_;
      contact_protocols = contact_protocols_;
@@ -2558,9 +2591,11 @@ let make_create_container_service_request
    }
     : create_container_service_request)
 
-let make_create_contact_method_request ~contact_endpoint:(contact_endpoint_ : string_max256)
-    ~protocol:(protocol_ : contact_protocol) () =
-  ({ contact_endpoint = contact_endpoint_; protocol = protocol_ } : create_contact_method_request)
+let make_create_contact_method_request ?tags:(tags_ : tag_list option)
+    ~contact_endpoint:(contact_endpoint_ : string_max256) ~protocol:(protocol_ : contact_protocol)
+    () =
+  ({ tags = tags_; contact_endpoint = contact_endpoint_; protocol = protocol_ }
+    : create_contact_method_request)
 
 let make_instance_entry ?user_data:(user_data_ : string_ option)
     ~availability_zone:(availability_zone_ : string_)

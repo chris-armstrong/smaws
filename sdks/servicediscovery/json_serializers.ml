@@ -6,7 +6,7 @@ let operation_id_to_yojson = string_to_yojson
 let update_service_response_to_yojson (x : update_service_response) =
   assoc_to_yojson [ ("OperationId", option_to_yojson operation_id_to_yojson x.operation_id) ]
 
-let resource_id_to_yojson = string_to_yojson
+let arn_to_yojson = string_to_yojson
 let resource_description_to_yojson = string_to_yojson
 
 let record_type_to_yojson (x : record_type) =
@@ -51,10 +51,7 @@ let service_change_to_yojson (x : service_change) =
 
 let update_service_request_to_yojson (x : update_service_request) =
   assoc_to_yojson
-    [
-      ("Service", Some (service_change_to_yojson x.service));
-      ("Id", Some (resource_id_to_yojson x.id));
-    ]
+    [ ("Service", Some (service_change_to_yojson x.service)); ("Id", Some (arn_to_yojson x.id)) ]
 
 let update_service_attributes_response_to_yojson = unit_to_yojson
 let service_attribute_value_to_yojson = string_to_yojson
@@ -67,7 +64,7 @@ let update_service_attributes_request_to_yojson (x : update_service_attributes_r
   assoc_to_yojson
     [
       ("Attributes", Some (service_attributes_map_to_yojson x.attributes));
-      ("ServiceId", Some (resource_id_to_yojson x.service_id));
+      ("ServiceId", Some (arn_to_yojson x.service_id));
     ]
 
 let error_message_to_yojson = string_to_yojson
@@ -85,12 +82,14 @@ let invalid_input_to_yojson (x : invalid_input) =
 let duplicate_request_to_yojson (x : duplicate_request) =
   assoc_to_yojson
     [
-      ("DuplicateOperationId", option_to_yojson resource_id_to_yojson x.duplicate_operation_id);
+      ("DuplicateOperationId", option_to_yojson operation_id_to_yojson x.duplicate_operation_id);
       ("Message", option_to_yojson error_message_to_yojson x.message);
     ]
 
 let update_public_dns_namespace_response_to_yojson (x : update_public_dns_namespace_response) =
   assoc_to_yojson [ ("OperationId", option_to_yojson operation_id_to_yojson x.operation_id) ]
+
+let resource_id_to_yojson = string_to_yojson
 
 let soa_change_to_yojson (x : soa_change) =
   assoc_to_yojson [ ("TTL", Some (record_tt_l_to_yojson x.tt_l)) ]
@@ -114,7 +113,7 @@ let update_public_dns_namespace_request_to_yojson (x : update_public_dns_namespa
     [
       ("Namespace", Some (public_dns_namespace_change_to_yojson x.namespace));
       ("UpdaterRequestId", option_to_yojson resource_id_to_yojson x.updater_request_id);
-      ("Id", Some (resource_id_to_yojson x.id));
+      ("Id", Some (arn_to_yojson x.id));
     ]
 
 let resource_in_use_to_yojson (x : resource_in_use) =
@@ -146,7 +145,7 @@ let update_private_dns_namespace_request_to_yojson (x : update_private_dns_names
     [
       ("Namespace", Some (private_dns_namespace_change_to_yojson x.namespace));
       ("UpdaterRequestId", option_to_yojson resource_id_to_yojson x.updater_request_id);
-      ("Id", Some (resource_id_to_yojson x.id));
+      ("Id", Some (arn_to_yojson x.id));
     ]
 
 let custom_health_status_to_yojson (x : custom_health_status) =
@@ -158,7 +157,7 @@ let update_instance_custom_health_status_request_to_yojson
     [
       ("Status", Some (custom_health_status_to_yojson x.status));
       ("InstanceId", Some (resource_id_to_yojson x.instance_id));
-      ("ServiceId", Some (resource_id_to_yojson x.service_id));
+      ("ServiceId", Some (arn_to_yojson x.service_id));
     ]
 
 let instance_not_found_to_yojson (x : instance_not_found) =
@@ -178,7 +177,7 @@ let update_http_namespace_request_to_yojson (x : update_http_namespace_request) 
     [
       ("Namespace", Some (http_namespace_change_to_yojson x.namespace));
       ("UpdaterRequestId", option_to_yojson resource_id_to_yojson x.updater_request_id);
-      ("Id", Some (resource_id_to_yojson x.id));
+      ("Id", Some (arn_to_yojson x.id));
     ]
 
 let untag_resource_response_to_yojson = unit_to_yojson
@@ -225,7 +224,7 @@ let service_type_option_to_yojson (x : service_type_option) = match x with HTTP 
 let service_type_to_yojson (x : service_type) =
   match x with DNS -> `String "DNS" | DNS_HTTP -> `String "DNS_HTTP" | HTTP -> `String "HTTP"
 
-let arn_to_yojson = string_to_yojson
+let aws_account_id_to_yojson = string_to_yojson
 let service_name_to_yojson = string_to_yojson
 let resource_count_to_yojson = int_to_yojson
 
@@ -247,6 +246,7 @@ let health_check_custom_config_to_yojson (x : health_check_custom_config) =
 let service_summary_to_yojson (x : service_summary) =
   assoc_to_yojson
     [
+      ("CreatedByAccount", option_to_yojson aws_account_id_to_yojson x.created_by_account);
       ("CreateDate", option_to_yojson timestamp_to_yojson x.create_date);
       ( "HealthCheckCustomConfig",
         option_to_yojson health_check_custom_config_to_yojson x.health_check_custom_config );
@@ -256,6 +256,7 @@ let service_summary_to_yojson (x : service_summary) =
       ("Description", option_to_yojson resource_description_to_yojson x.description);
       ("Type", option_to_yojson service_type_to_yojson x.type_);
       ("Name", option_to_yojson service_name_to_yojson x.name);
+      ("ResourceOwner", option_to_yojson aws_account_id_to_yojson x.resource_owner);
       ("Arn", option_to_yojson arn_to_yojson x.arn);
       ("Id", option_to_yojson resource_id_to_yojson x.id);
     ]
@@ -263,7 +264,7 @@ let service_summary_to_yojson (x : service_summary) =
 let service_summaries_list_to_yojson tree = list_to_yojson service_summary_to_yojson tree
 
 let service_filter_name_to_yojson (x : service_filter_name) =
-  match x with NAMESPACE_ID -> `String "NAMESPACE_ID"
+  match x with RESOURCE_OWNER -> `String "RESOURCE_OWNER" | NAMESPACE_ID -> `String "NAMESPACE_ID"
 
 let filter_value_to_yojson = string_to_yojson
 let filter_values_to_yojson tree = list_to_yojson filter_value_to_yojson tree
@@ -289,6 +290,7 @@ let service_attributes_to_yojson (x : service_attributes) =
   assoc_to_yojson
     [
       ("Attributes", option_to_yojson service_attributes_map_to_yojson x.attributes);
+      ("ResourceOwner", option_to_yojson aws_account_id_to_yojson x.resource_owner);
       ("ServiceArn", option_to_yojson arn_to_yojson x.service_arn);
     ]
 
@@ -297,6 +299,7 @@ let service_attribute_key_list_to_yojson tree = list_to_yojson service_attribute
 let service_already_exists_to_yojson (x : service_already_exists) =
   assoc_to_yojson
     [
+      ("ServiceArn", option_to_yojson arn_to_yojson x.service_arn);
       ("ServiceId", option_to_yojson resource_id_to_yojson x.service_id);
       ("CreatorRequestId", option_to_yojson resource_id_to_yojson x.creator_request_id);
       ("Message", option_to_yojson error_message_to_yojson x.message);
@@ -305,6 +308,7 @@ let service_already_exists_to_yojson (x : service_already_exists) =
 let service_to_yojson (x : service) =
   assoc_to_yojson
     [
+      ("CreatedByAccount", option_to_yojson aws_account_id_to_yojson x.created_by_account);
       ("CreatorRequestId", option_to_yojson resource_id_to_yojson x.creator_request_id);
       ("CreateDate", option_to_yojson timestamp_to_yojson x.create_date);
       ( "HealthCheckCustomConfig",
@@ -316,6 +320,7 @@ let service_to_yojson (x : service) =
       ("Description", option_to_yojson resource_description_to_yojson x.description);
       ("NamespaceId", option_to_yojson resource_id_to_yojson x.namespace_id);
       ("Name", option_to_yojson service_name_to_yojson x.name);
+      ("ResourceOwner", option_to_yojson aws_account_id_to_yojson x.resource_owner);
       ("Arn", option_to_yojson arn_to_yojson x.arn);
       ("Id", option_to_yojson resource_id_to_yojson x.id);
     ]
@@ -339,7 +344,7 @@ let register_instance_request_to_yojson (x : register_instance_request) =
       ("Attributes", Some (attributes_to_yojson x.attributes));
       ("CreatorRequestId", option_to_yojson resource_id_to_yojson x.creator_request_id);
       ("InstanceId", Some (instance_id_to_yojson x.instance_id));
-      ("ServiceId", Some (resource_id_to_yojson x.service_id));
+      ("ServiceId", Some (arn_to_yojson x.service_id));
     ]
 
 let list_tags_for_resource_response_to_yojson (x : list_tags_for_resource_response) =
@@ -450,6 +455,7 @@ let namespace_summary_to_yojson (x : namespace_summary) =
       ("Description", option_to_yojson resource_description_to_yojson x.description);
       ("Type", option_to_yojson namespace_type_to_yojson x.type_);
       ("Name", option_to_yojson namespace_name_to_yojson x.name);
+      ("ResourceOwner", option_to_yojson aws_account_id_to_yojson x.resource_owner);
       ("Arn", option_to_yojson arn_to_yojson x.arn);
       ("Id", option_to_yojson resource_id_to_yojson x.id);
     ]
@@ -464,7 +470,11 @@ let list_namespaces_response_to_yojson (x : list_namespaces_response) =
     ]
 
 let namespace_filter_name_to_yojson (x : namespace_filter_name) =
-  match x with HTTP_NAME -> `String "HTTP_NAME" | NAME -> `String "NAME" | TYPE -> `String "TYPE"
+  match x with
+  | RESOURCE_OWNER -> `String "RESOURCE_OWNER"
+  | HTTP_NAME -> `String "HTTP_NAME"
+  | NAME -> `String "NAME"
+  | TYPE -> `String "TYPE"
 
 let namespace_filter_to_yojson (x : namespace_filter) =
   assoc_to_yojson
@@ -487,6 +497,7 @@ let list_namespaces_request_to_yojson (x : list_namespaces_request) =
 let instance_summary_to_yojson (x : instance_summary) =
   assoc_to_yojson
     [
+      ("CreatedByAccount", option_to_yojson aws_account_id_to_yojson x.created_by_account);
       ("Attributes", option_to_yojson attributes_to_yojson x.attributes);
       ("Id", option_to_yojson resource_id_to_yojson x.id);
     ]
@@ -498,6 +509,7 @@ let list_instances_response_to_yojson (x : list_instances_response) =
     [
       ("NextToken", option_to_yojson next_token_to_yojson x.next_token);
       ("Instances", option_to_yojson instance_summary_list_to_yojson x.instances);
+      ("ResourceOwner", option_to_yojson aws_account_id_to_yojson x.resource_owner);
     ]
 
 let list_instances_request_to_yojson (x : list_instances_request) =
@@ -505,7 +517,7 @@ let list_instances_request_to_yojson (x : list_instances_request) =
     [
       ("MaxResults", option_to_yojson max_results_to_yojson x.max_results);
       ("NextToken", option_to_yojson next_token_to_yojson x.next_token);
-      ("ServiceId", Some (resource_id_to_yojson x.service_id));
+      ("ServiceId", Some (arn_to_yojson x.service_id));
     ]
 
 let get_service_attributes_response_to_yojson (x : get_service_attributes_response) =
@@ -513,13 +525,13 @@ let get_service_attributes_response_to_yojson (x : get_service_attributes_respon
     [ ("ServiceAttributes", option_to_yojson service_attributes_to_yojson x.service_attributes) ]
 
 let get_service_attributes_request_to_yojson (x : get_service_attributes_request) =
-  assoc_to_yojson [ ("ServiceId", Some (resource_id_to_yojson x.service_id)) ]
+  assoc_to_yojson [ ("ServiceId", Some (arn_to_yojson x.service_id)) ]
 
 let get_service_response_to_yojson (x : get_service_response) =
   assoc_to_yojson [ ("Service", option_to_yojson service_to_yojson x.service) ]
 
 let get_service_request_to_yojson (x : get_service_request) =
-  assoc_to_yojson [ ("Id", Some (resource_id_to_yojson x.id)) ]
+  assoc_to_yojson [ ("Id", Some (arn_to_yojson x.id)) ]
 
 let operation_not_found_to_yojson (x : operation_not_found) =
   assoc_to_yojson [ ("Message", option_to_yojson error_message_to_yojson x.message) ]
@@ -555,6 +567,7 @@ let operation_to_yojson (x : operation) =
       ("ErrorMessage", option_to_yojson message_to_yojson x.error_message);
       ("Status", option_to_yojson operation_status_to_yojson x.status);
       ("Type", option_to_yojson operation_type_to_yojson x.type_);
+      ("OwnerAccount", option_to_yojson aws_account_id_to_yojson x.owner_account);
       ("Id", option_to_yojson operation_id_to_yojson x.id);
     ]
 
@@ -562,7 +575,11 @@ let get_operation_response_to_yojson (x : get_operation_response) =
   assoc_to_yojson [ ("Operation", option_to_yojson operation_to_yojson x.operation) ]
 
 let get_operation_request_to_yojson (x : get_operation_request) =
-  assoc_to_yojson [ ("OperationId", Some (resource_id_to_yojson x.operation_id)) ]
+  assoc_to_yojson
+    [
+      ("OwnerAccount", option_to_yojson aws_account_id_to_yojson x.owner_account);
+      ("OperationId", Some (operation_id_to_yojson x.operation_id));
+    ]
 
 let namespace_to_yojson (x : namespace) =
   assoc_to_yojson
@@ -574,6 +591,7 @@ let namespace_to_yojson (x : namespace) =
       ("Description", option_to_yojson resource_description_to_yojson x.description);
       ("Type", option_to_yojson namespace_type_to_yojson x.type_);
       ("Name", option_to_yojson namespace_name_to_yojson x.name);
+      ("ResourceOwner", option_to_yojson aws_account_id_to_yojson x.resource_owner);
       ("Arn", option_to_yojson arn_to_yojson x.arn);
       ("Id", option_to_yojson resource_id_to_yojson x.id);
     ]
@@ -582,7 +600,7 @@ let get_namespace_response_to_yojson (x : get_namespace_response) =
   assoc_to_yojson [ ("Namespace", option_to_yojson namespace_to_yojson x.namespace) ]
 
 let get_namespace_request_to_yojson (x : get_namespace_request) =
-  assoc_to_yojson [ ("Id", Some (resource_id_to_yojson x.id)) ]
+  assoc_to_yojson [ ("Id", Some (arn_to_yojson x.id)) ]
 
 let health_status_to_yojson (x : health_status) =
   match x with
@@ -608,25 +626,30 @@ let get_instances_health_status_request_to_yojson (x : get_instances_health_stat
       ("NextToken", option_to_yojson next_token_to_yojson x.next_token);
       ("MaxResults", option_to_yojson max_results_to_yojson x.max_results);
       ("Instances", option_to_yojson instance_id_list_to_yojson x.instances);
-      ("ServiceId", Some (resource_id_to_yojson x.service_id));
+      ("ServiceId", Some (arn_to_yojson x.service_id));
     ]
 
 let instance_to_yojson (x : instance) =
   assoc_to_yojson
     [
+      ("CreatedByAccount", option_to_yojson aws_account_id_to_yojson x.created_by_account);
       ("Attributes", option_to_yojson attributes_to_yojson x.attributes);
       ("CreatorRequestId", option_to_yojson resource_id_to_yojson x.creator_request_id);
       ("Id", Some (resource_id_to_yojson x.id));
     ]
 
 let get_instance_response_to_yojson (x : get_instance_response) =
-  assoc_to_yojson [ ("Instance", option_to_yojson instance_to_yojson x.instance) ]
+  assoc_to_yojson
+    [
+      ("Instance", option_to_yojson instance_to_yojson x.instance);
+      ("ResourceOwner", option_to_yojson aws_account_id_to_yojson x.resource_owner);
+    ]
 
 let get_instance_request_to_yojson (x : get_instance_request) =
   assoc_to_yojson
     [
       ("InstanceId", Some (resource_id_to_yojson x.instance_id));
-      ("ServiceId", Some (resource_id_to_yojson x.service_id));
+      ("ServiceId", Some (arn_to_yojson x.service_id));
     ]
 
 let request_limit_exceeded_to_yojson (x : request_limit_exceeded) =
@@ -641,6 +664,7 @@ let discover_instances_revision_response_to_yojson (x : discover_instances_revis
 let discover_instances_revision_request_to_yojson (x : discover_instances_revision_request) =
   assoc_to_yojson
     [
+      ("OwnerAccount", option_to_yojson aws_account_id_to_yojson x.owner_account);
       ("ServiceName", Some (service_name_to_yojson x.service_name));
       ("NamespaceName", Some (namespace_name_to_yojson x.namespace_name));
     ]
@@ -678,6 +702,7 @@ let health_status_filter_to_yojson (x : health_status_filter) =
 let discover_instances_request_to_yojson (x : discover_instances_request) =
   assoc_to_yojson
     [
+      ("OwnerAccount", option_to_yojson aws_account_id_to_yojson x.owner_account);
       ("HealthStatus", option_to_yojson health_status_filter_to_yojson x.health_status);
       ("OptionalParameters", option_to_yojson attributes_to_yojson x.optional_parameters);
       ("QueryParameters", option_to_yojson attributes_to_yojson x.query_parameters);
@@ -693,7 +718,7 @@ let deregister_instance_request_to_yojson (x : deregister_instance_request) =
   assoc_to_yojson
     [
       ("InstanceId", Some (resource_id_to_yojson x.instance_id));
-      ("ServiceId", Some (resource_id_to_yojson x.service_id));
+      ("ServiceId", Some (arn_to_yojson x.service_id));
     ]
 
 let delete_service_attributes_response_to_yojson = unit_to_yojson
@@ -702,19 +727,19 @@ let delete_service_attributes_request_to_yojson (x : delete_service_attributes_r
   assoc_to_yojson
     [
       ("Attributes", Some (service_attribute_key_list_to_yojson x.attributes));
-      ("ServiceId", Some (resource_id_to_yojson x.service_id));
+      ("ServiceId", Some (arn_to_yojson x.service_id));
     ]
 
 let delete_service_response_to_yojson = unit_to_yojson
 
 let delete_service_request_to_yojson (x : delete_service_request) =
-  assoc_to_yojson [ ("Id", Some (resource_id_to_yojson x.id)) ]
+  assoc_to_yojson [ ("Id", Some (arn_to_yojson x.id)) ]
 
 let delete_namespace_response_to_yojson (x : delete_namespace_response) =
   assoc_to_yojson [ ("OperationId", option_to_yojson operation_id_to_yojson x.operation_id) ]
 
 let delete_namespace_request_to_yojson (x : delete_namespace_request) =
-  assoc_to_yojson [ ("Id", Some (resource_id_to_yojson x.id)) ]
+  assoc_to_yojson [ ("Id", Some (arn_to_yojson x.id)) ]
 
 let create_service_response_to_yojson (x : create_service_response) =
   assoc_to_yojson [ ("Service", option_to_yojson service_to_yojson x.service) ]
@@ -730,7 +755,7 @@ let create_service_request_to_yojson (x : create_service_request) =
       ("DnsConfig", option_to_yojson dns_config_to_yojson x.dns_config);
       ("Description", option_to_yojson resource_description_to_yojson x.description);
       ("CreatorRequestId", option_to_yojson resource_id_to_yojson x.creator_request_id);
-      ("NamespaceId", option_to_yojson resource_id_to_yojson x.namespace_id);
+      ("NamespaceId", option_to_yojson arn_to_yojson x.namespace_id);
       ("Name", Some (service_name_to_yojson x.name));
     ]
 

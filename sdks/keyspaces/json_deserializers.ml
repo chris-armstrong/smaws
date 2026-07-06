@@ -13,6 +13,43 @@ let rs_of_yojson (tree : t) path =
 let region_of_yojson = string_of_yojson
 let kms_key_ar_n_of_yojson = string_of_yojson
 
+let warm_throughput_status_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "AVAILABLE" -> AVAILABLE
+    | `String "UPDATING" -> UPDATING
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "WarmThroughputStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "WarmThroughputStatus")
+     : warm_throughput_status)
+    : warm_throughput_status)
+
+let warm_throughput_specification_summary_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     status = value_for_key warm_throughput_status_of_yojson "status" _list path;
+     write_units_per_second =
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.long_of_yojson "writeUnitsPerSecond"
+         _list path;
+     read_units_per_second =
+       value_for_key Smaws_Lib.Smithy_api.Json_deserializers.long_of_yojson "readUnitsPerSecond"
+         _list path;
+   }
+    : warm_throughput_specification_summary)
+
+let warm_throughput_specification_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     write_units_per_second =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.long_of_yojson "writeUnitsPerSecond")
+         _list path;
+     read_units_per_second =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.long_of_yojson "readUnitsPerSecond")
+         _list path;
+   }
+    : warm_throughput_specification)
+
 let view_type_of_yojson (tree : t) path =
   ((match tree with
     | `String "NEW_IMAGE" -> NEW_IMAGE
@@ -257,6 +294,10 @@ let cdc_specification_of_yojson tree path =
 let update_table_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     warm_throughput_specification =
+       option_of_yojson
+         (value_for_key warm_throughput_specification_of_yojson "warmThroughputSpecification")
+         _list path;
      cdc_specification =
        option_of_yojson (value_for_key cdc_specification_of_yojson "cdcSpecification") _list path;
      replica_specifications =
@@ -568,6 +609,11 @@ let capacity_specification_summary_of_yojson tree path =
 let replica_specification_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     warm_throughput_specification =
+       option_of_yojson
+         (value_for_key warm_throughput_specification_summary_of_yojson
+            "warmThroughputSpecification")
+         _list path;
      capacity_specification =
        option_of_yojson
          (value_for_key capacity_specification_summary_of_yojson "capacitySpecification")
@@ -769,6 +815,11 @@ let cdc_specification_summary_of_yojson tree path =
 let get_table_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     warm_throughput_specification =
+       option_of_yojson
+         (value_for_key warm_throughput_specification_summary_of_yojson
+            "warmThroughputSpecification")
+         _list path;
      cdc_specification =
        option_of_yojson
          (value_for_key cdc_specification_summary_of_yojson "cdcSpecification")
@@ -901,6 +952,10 @@ let create_table_response_of_yojson tree path =
 let create_table_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     warm_throughput_specification =
+       option_of_yojson
+         (value_for_key warm_throughput_specification_of_yojson "warmThroughputSpecification")
+         _list path;
      cdc_specification =
        option_of_yojson (value_for_key cdc_specification_of_yojson "cdcSpecification") _list path;
      replica_specifications =

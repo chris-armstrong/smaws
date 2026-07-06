@@ -4,6 +4,44 @@ type nonrec region = string [@@ocaml.doc ""]
 
 type nonrec kms_key_ar_n = string [@@ocaml.doc ""]
 
+type nonrec warm_throughput_status = AVAILABLE [@ocaml.doc ""] | UPDATING [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec warm_throughput_specification_summary = {
+  status : warm_throughput_status;
+      [@ocaml.doc
+        "The current status of the warm throughput configuration. Valid values are [AVAILABLE] \
+         when the configuration is active, and [UPDATING] when changes are being applied.\n"]
+  write_units_per_second : Smaws_Lib.Smithy_api.Types.long;
+      [@ocaml.doc
+        "The number of write capacity units per second currently configured for warm throughput.\n"]
+  read_units_per_second : Smaws_Lib.Smithy_api.Types.long;
+      [@ocaml.doc
+        "The number of read capacity units per second currently configured for warm throughput.\n"]
+}
+[@@ocaml.doc
+  "Contains the current warm throughput settings for a table, including the configured capacity \
+   units and the current status of the warm throughput configuration.\n"]
+
+type nonrec warm_throughput_specification = {
+  write_units_per_second : Smaws_Lib.Smithy_api.Types.long option;
+      [@ocaml.doc
+        "The number of write capacity units per second to pre-warm the table for write capacity \
+         throughput. The minimum value is 1.\n"]
+  read_units_per_second : Smaws_Lib.Smithy_api.Types.long option;
+      [@ocaml.doc
+        "The number of read capacity units per second to pre-warm the table for read capacity \
+         throughput. The minimum value is 1.\n"]
+}
+[@@ocaml.doc
+  "Specifies the warm throughput settings for a table. Pre-warming a table by specifying warm \
+   throughput pre-provisions read and write capacity units to help avoid capacity exceeded \
+   exceptions and reduce latency when your table starts receiving traffic.\n\n\
+  \ For more information about pre-warming in Amazon Keyspaces, see \
+   {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/warm-throughput.html}Pre-warm a table \
+   in Amazon Keyspaces} in the {i Amazon Keyspaces Developer Guide}.\n\
+  \ "]
+
 type nonrec view_type =
   | NEW_IMAGE [@ocaml.doc ""]
   | OLD_IMAGE [@ocaml.doc ""]
@@ -12,7 +50,10 @@ type nonrec view_type =
 [@@ocaml.doc ""]
 
 type nonrec validation_exception = {
-  message : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc "Description of the error.\n"]
+  message : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc
+        "The request parameters are invalid or malformed. Review the API documentation and correct \
+         the request format.\n"]
 }
 [@@ocaml.doc "The operation failed due to an invalid or malformed request.\n"]
 
@@ -449,6 +490,10 @@ type nonrec cdc_specification = {
    capture (CDC) streams in Amazon Keyspaces} in the {i Amazon Keyspaces Developer Guide}.\n"]
 
 type nonrec update_table_request = {
+  warm_throughput_specification : warm_throughput_specification option;
+      [@ocaml.doc
+        "Modifies the warm throughput settings for the table. You can update the read and write \
+         capacity units to adjust the pre-provisioned throughput.\n"]
   cdc_specification : cdc_specification option;
       [@ocaml.doc "The CDC stream settings of the table.\n"]
   replica_specifications : replica_specification_list option;
@@ -580,7 +625,10 @@ type nonrec update_table_request = {
 [@@ocaml.doc ""]
 
 type nonrec service_quota_exceeded_exception = {
-  message : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc "Description of the error.\n"]
+  message : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc
+        "The requested operation would exceed the service quota for this resource. Review the \
+         service quotas and adjust your request accordingly.\n"]
 }
 [@@ocaml.doc
   "The operation exceeded the service quota for this resource. For more information on service \
@@ -591,21 +639,30 @@ type nonrec resource_not_found_exception = {
   resource_arn : ar_n option;
       [@ocaml.doc
         "The unique identifier in the format of Amazon Resource Name (ARN) for the resource \
-         couldn\226\128\153t be found.\n"]
-  message : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc "Description of the error.\n"]
+         couldn't be found.\n"]
+  message : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc
+        "The specified resource was not found. Verify the resource identifier and ensure the \
+         resource exists and is in an ACTIVE state.\n"]
 }
 [@@ocaml.doc
   "The operation tried to access a keyspace, table, or type that doesn't exist. The resource might \
    not be specified correctly, or its status might not be [ACTIVE].\n"]
 
 type nonrec internal_server_exception = {
-  message : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc "Description of the error.\n"]
+  message : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc
+        "An internal service error occurred. Retry your request. If the problem persists, contact \
+         Amazon Web Services Support.\n"]
 }
 [@@ocaml.doc
   "Amazon Keyspaces was unable to fully process this request because of an internal server error.\n"]
 
 type nonrec conflict_exception = {
-  message : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc "Description of the error.\n"]
+  message : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc
+        "The requested operation conflicts with the current state of the resource or another \
+         concurrent operation.\n"]
 }
 [@@ocaml.doc
   "Amazon Keyspaces couldn't complete the requested action. This error may occur if you try to \
@@ -613,7 +670,10 @@ type nonrec conflict_exception = {
    create a resource that already exists. \n"]
 
 type nonrec access_denied_exception = {
-  message : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc "Description of the error.\n"]
+  message : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc
+        "You don't have the required permissions to perform this operation. Verify your IAM \
+         permissions and try again.\n"]
 }
 [@@ocaml.doc "You don't have sufficient access permissions to perform this action. \n"]
 
@@ -925,6 +985,10 @@ type nonrec capacity_specification_summary = {
   \   "]
 
 type nonrec replica_specification_summary = {
+  warm_throughput_specification : warm_throughput_specification_summary option;
+      [@ocaml.doc
+        "The warm throughput settings for this replica, including the current status and \
+         configured read and write capacity units.\n"]
   capacity_specification : capacity_specification_summary option; [@ocaml.doc ""]
   status : table_status option;
       [@ocaml.doc
@@ -1189,6 +1253,10 @@ type nonrec cdc_specification_summary = {
    capture (CDC) streams in Amazon Keyspaces} in the {i Amazon Keyspaces Developer Guide}.\n"]
 
 type nonrec get_table_response = {
+  warm_throughput_specification : warm_throughput_specification_summary option;
+      [@ocaml.doc
+        "The warm throughput settings for the table, including the current status and configured \
+         read and write capacity units.\n"]
   cdc_specification : cdc_specification_summary option;
       [@ocaml.doc "The CDC stream settings of the table.\n"]
   latest_stream_arn : stream_arn option;
@@ -1336,6 +1404,15 @@ type nonrec create_table_response = {
 [@@ocaml.doc ""]
 
 type nonrec create_table_request = {
+  warm_throughput_specification : warm_throughput_specification option;
+      [@ocaml.doc
+        "Specifies the warm throughput settings for the table. Pre-warming a table helps you avoid \
+         capacity exceeded exceptions by pre-provisioning read and write capacity units to reduce \
+         cold start latency when your table receives traffic.\n\n\
+        \ For more information about pre-warming in Amazon Keyspaces, see \
+         {{:https://docs.aws.amazon.com/keyspaces/latest/devguide/warm-throughput.html}Pre-warm a \
+         table in Amazon Keyspaces} in the {i Amazon Keyspaces Developer Guide}.\n\
+        \ "]
   cdc_specification : cdc_specification option;
       [@ocaml.doc "The CDC stream settings of the table.\n"]
   replica_specifications : replica_specification_list option;

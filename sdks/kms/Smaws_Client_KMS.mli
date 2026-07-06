@@ -9,6 +9,7 @@ module Types = Types
 (** {1:builders Builders} *)
 
 val make_xks_proxy_configuration_type :
+  ?vpc_endpoint_service_owner:account_id_type ->
   ?vpc_endpoint_service_name:xks_proxy_vpc_endpoint_service_name_type ->
   ?uri_path:xks_proxy_uri_path_type ->
   ?uri_endpoint:xks_proxy_uri_endpoint_type ->
@@ -71,6 +72,7 @@ val make_update_custom_key_store_response : unit -> unit
 val make_update_custom_key_store_request :
   ?xks_proxy_connectivity:xks_proxy_connectivity_type ->
   ?xks_proxy_authentication_credential:xks_proxy_authentication_credential_type ->
+  ?xks_proxy_vpc_endpoint_service_owner:account_id_type ->
   ?xks_proxy_vpc_endpoint_service_name:xks_proxy_vpc_endpoint_service_name_type ->
   ?xks_proxy_uri_path:xks_proxy_uri_path_type ->
   ?xks_proxy_uri_endpoint:xks_proxy_uri_endpoint_type ->
@@ -209,6 +211,7 @@ val make_re_encrypt_response :
   re_encrypt_response
 
 val make_re_encrypt_request :
+  ?dry_run_modifiers:dry_run_modifier_list ->
   ?dry_run:nullable_boolean_type ->
   ?grant_tokens:grant_token_list ->
   ?destination_encryption_algorithm:encryption_algorithm_spec ->
@@ -216,8 +219,8 @@ val make_re_encrypt_request :
   ?destination_encryption_context:encryption_context_type ->
   ?source_key_id:key_id_type ->
   ?source_encryption_context:encryption_context_type ->
+  ?ciphertext_blob:ciphertext_type ->
   destination_key_id:key_id_type ->
-  ciphertext_blob:ciphertext_type ->
   unit ->
   re_encrypt_request
 
@@ -230,12 +233,15 @@ val make_put_key_policy_request :
   put_key_policy_request
 
 val make_grant_constraints :
+  ?source_arn:grant_constraint_source_arn_type ->
   ?encryption_context_equals:encryption_context_type ->
   ?encryption_context_subset:encryption_context_type ->
   unit ->
   grant_constraints
 
 val make_grant_list_entry :
+  ?retiring_service_principal:service_principal_type ->
+  ?grantee_service_principal:service_principal_type ->
   ?constraints:grant_constraints ->
   ?operations:grant_operation_list ->
   ?issuing_account:principal_id_type ->
@@ -256,9 +262,10 @@ val make_list_grants_response :
   list_grants_response
 
 val make_list_retirable_grants_request :
+  ?retiring_service_principal:service_principal_type ->
+  ?retiring_principal:principal_id_type ->
   ?marker:marker_type ->
   ?limit:limit_type ->
-  retiring_principal:principal_id_type ->
   unit ->
   list_retirable_grants_request
 
@@ -330,6 +337,7 @@ val make_list_key_policies_request :
   list_key_policies_request
 
 val make_list_grants_request :
+  ?grantee_service_principal:service_principal_type ->
   ?grantee_principal:principal_id_type ->
   ?grant_id:grant_id_type ->
   ?marker:marker_type ->
@@ -422,6 +430,24 @@ val make_get_key_policy_response :
 
 val make_get_key_policy_request :
   ?policy_name:policy_name_type -> key_id:key_id_type -> unit -> get_key_policy_request
+
+val make_key_last_usage_data :
+  ?kms_request_id:kms_request_id_type ->
+  ?cloud_trail_event_id:cloud_trail_event_id_type ->
+  ?timestamp:date_type ->
+  ?operation:key_last_usage_tracking_operation ->
+  unit ->
+  key_last_usage_data
+
+val make_get_key_last_usage_response :
+  ?key_creation_date:date_type ->
+  ?tracking_start_date:date_type ->
+  ?key_last_usage:key_last_usage_data ->
+  ?key_id:key_id_type ->
+  unit ->
+  get_key_last_usage_response
+
+val make_get_key_last_usage_request : key_id:key_id_type -> unit -> get_key_last_usage_request
 
 val make_generate_random_response :
   ?ciphertext_for_recipient:ciphertext_type ->
@@ -646,13 +672,14 @@ val make_decrypt_response :
   decrypt_response
 
 val make_decrypt_request :
+  ?dry_run_modifiers:dry_run_modifier_list ->
   ?dry_run:nullable_boolean_type ->
   ?recipient:recipient_info ->
   ?encryption_algorithm:encryption_algorithm_spec ->
   ?key_id:key_id_type ->
   ?grant_tokens:grant_token_list ->
   ?encryption_context:encryption_context_type ->
-  ciphertext_blob:ciphertext_type ->
+  ?ciphertext_blob:ciphertext_type ->
   unit ->
   decrypt_request
 
@@ -677,13 +704,15 @@ val make_create_grant_response :
   ?grant_id:grant_id_type -> ?grant_token:grant_token_type -> unit -> create_grant_response
 
 val make_create_grant_request :
+  ?retiring_service_principal:service_principal_type ->
+  ?grantee_service_principal:service_principal_type ->
   ?dry_run:nullable_boolean_type ->
   ?name:grant_name_type ->
   ?grant_tokens:grant_token_list ->
   ?constraints:grant_constraints ->
   ?retiring_principal:principal_id_type ->
+  ?grantee_principal:principal_id_type ->
   operations:grant_operation_list ->
-  grantee_principal:principal_id_type ->
   key_id:key_id_type ->
   unit ->
   create_grant_request
@@ -694,6 +723,7 @@ val make_create_custom_key_store_response :
 val make_create_custom_key_store_request :
   ?xks_proxy_connectivity:xks_proxy_connectivity_type ->
   ?xks_proxy_authentication_credential:xks_proxy_authentication_credential_type ->
+  ?xks_proxy_vpc_endpoint_service_owner:account_id_type ->
   ?xks_proxy_vpc_endpoint_service_name:xks_proxy_vpc_endpoint_service_name_type ->
   ?xks_proxy_uri_path:xks_proxy_uri_path_type ->
   ?xks_proxy_uri_endpoint:xks_proxy_uri_endpoint_type ->
@@ -1175,33 +1205,38 @@ end
    can create one, use its permissions, and delete it without changing your key policies or IAM \
    policies. \n\
   \ \n\
-  \  For detailed information about grants, including grant terminology, see \
+  \  You can create a grant for an Amazon Web Services principal (IAM user, IAM role, or Amazon \
+   Web Services account) by specifying the [GranteePrincipal] parameter. You can also create a \
+   grant for an Amazon Web Services service principal by specifying the [GranteeServicePrincipal] \
+   parameter.\n\
+  \  \n\
+  \   For detailed information about grants, including grant terminology, see \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/grants.html}Grants in KMS} in the {i  \
    {i Key Management Service Developer Guide} }. For examples of creating grants in several \
    programming languages, see \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/example_kms_CreateGrant_section.html}Use \
    CreateGrant with an Amazon Web Services SDK or CLI}. \n\
-  \  \n\
-  \   The [CreateGrant] operation returns a [GrantToken] and a [GrantId].\n\
   \   \n\
-  \    {ul\n\
-  \          {-  When you create, retire, or revoke a grant, there might be a brief delay, usually \
-   less than five minutes, until the grant is available throughout KMS. This state is known as {i \
-   eventual consistency}. Once the grant has achieved eventual consistency, the grantee principal \
-   can use the permissions in the grant without identifying the grant. \n\
-  \              \n\
-  \               However, to use the permissions in the grant immediately, use the [GrantToken] \
+  \    The [CreateGrant] operation returns a [GrantToken] and a [GrantId].\n\
+  \    \n\
+  \     {ul\n\
+  \           {-  When you create, retire, or revoke a grant, there might be a brief delay, \
+   usually less than five minutes, until the grant is available throughout KMS. This state is \
+   known as {i eventual consistency}. Once the grant has achieved eventual consistency, the \
+   grantee principal can use the permissions in the grant without identifying the grant. \n\
+  \               \n\
+  \                However, to use the permissions in the grant immediately, use the [GrantToken] \
    that [CreateGrant] returns. For details, see \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/using-grant-token.html}Using a grant \
    token} in the {i  {i Key Management Service Developer Guide} }.\n\
-  \               \n\
-  \                }\n\
-  \          {-  The [CreateGrant] operation also returns a [GrantId]. You can use the [GrantId] \
+  \                \n\
+  \                 }\n\
+  \           {-  The [CreateGrant] operation also returns a [GrantId]. You can use the [GrantId] \
    and a key identifier to identify the grant in the [RetireGrant] and [RevokeGrant] operations. \
    To find the grant ID, use the [ListGrants] or [ListRetirableGrants] operations.\n\
-  \              \n\
-  \               }\n\
-  \          }\n\
+  \               \n\
+  \                }\n\
+  \           }\n\
   \   The KMS key that you use for this operation must be in a compatible key state. For details, \
    see {{:https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html}Key states of KMS \
    keys} in the {i Key Management Service Developer Guide}.\n\
@@ -1288,9 +1323,9 @@ end
   \  Use the parameters of [CreateKey] to specify the type of KMS key, the source of its key \
    material, its key policy, description, tags, and other properties.\n\
   \  \n\
-  \    KMS has replaced the term {i customer master key (CMK)} with {i KMS key} and {i KMS key}. \
-   The concept has not changed. To prevent breaking changes, KMS is keeping some variations of \
-   this term.\n\
+  \    KMS has replaced the term {i customer master key (CMK)} with {i Key Management Service key} \
+   and {i KMS key}. The concept has not changed. To prevent breaking changes, KMS is keeping some \
+   variations of this term.\n\
   \    \n\
   \      To create different types of KMS keys, use the following guidance:\n\
   \      \n\
@@ -1322,7 +1357,7 @@ end
    only). The private key in an asymmetric KMS key never leaves KMS unencrypted. However, you can \
    use the [GetPublicKey] operation to download the public key so it can be used outside of KMS. \
    Each KMS key can have only one key usage. KMS keys with RSA key pairs can be used to encrypt \
-   and decrypt data or sign and verify messages (but not both). KMS keys with NIST-recommended ECC \
+   and decrypt data or sign and verify messages (but not both). KMS keys with NIST-standard ECC \
    key pairs can be used to sign and verify messages or derive shared secrets (but not both). KMS \
    keys with [ECC_SECG_P256K1] can be used only to sign and verify messages. KMS keys with ML-DSA \
    key pairs can be used to sign and verify messages. KMS keys with SM2 key pairs (China Regions \
@@ -1344,30 +1379,30 @@ end
   \ \n\
   \   \n\
   \  \n\
-  \    Multi-Region primary keys Imported key material  To create a multi-Region {i primary key} \
-   in the local Amazon Web Services Region, use the [MultiRegion] parameter with a value of \
-   [True]. To create a multi-Region {i replica key}, that is, a KMS key with the same key ID and \
-   key material as a primary key, but in a different Amazon Web Services Region, use the \
-   [ReplicateKey] operation. To change a replica key to a primary key, and its primary key to a \
-   replica key, use the [UpdatePrimaryRegion] operation.\n\
-  \                                                     \n\
-  \                                                      You can create multi-Region KMS keys for \
-   all supported KMS key types: symmetric encryption KMS keys, HMAC KMS keys, asymmetric \
-   encryption KMS keys, and asymmetric signing KMS keys. You can also create multi-Region keys \
-   with imported key material. However, you can't create multi-Region keys in a custom key store.\n\
-  \                                                      \n\
-  \                                                       This operation supports {i multi-Region \
-   keys}, an KMS feature that lets you create multiple interoperable KMS keys in different Amazon \
-   Web Services Regions. Because these KMS keys have the same key ID, key material, and other \
-   metadata, you can use them interchangeably to encrypt data in one Amazon Web Services Region \
-   and decrypt it in a different Amazon Web Services Region without re-encrypting the data or \
-   making a cross-Region call. For more information about multi-Region keys, see \
+  \    Multi-Region primary keys  To create a multi-Region {i primary key} in the local Amazon Web \
+   Services Region, use the [MultiRegion] parameter with a value of [True]. To create a \
+   multi-Region {i replica key}, that is, a KMS key with the same key ID and key material as a \
+   primary key, but in a different Amazon Web Services Region, use the [ReplicateKey] operation. \
+   To change a replica key to a primary key, and its primary key to a replica key, use the \
+   [UpdatePrimaryRegion] operation.\n\
+  \                               \n\
+  \                                You can create multi-Region KMS keys for all supported KMS key \
+   types: symmetric encryption KMS keys, HMAC KMS keys, asymmetric encryption KMS keys, and \
+   asymmetric signing KMS keys. You can also create multi-Region keys with imported key material. \
+   However, you can't create multi-Region keys in a custom key store.\n\
+  \                                \n\
+  \                                 This operation supports {i multi-Region keys}, an KMS feature \
+   that lets you create multiple interoperable KMS keys in different Amazon Web Services Regions. \
+   Because these KMS keys have the same key ID, key material, and other metadata, you can use them \
+   interchangeably to encrypt data in one Amazon Web Services Region and decrypt it in a different \
+   Amazon Web Services Region without re-encrypting the data or making a cross-Region call. For \
+   more information about multi-Region keys, see \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html}Multi-Region \
    keys in KMS} in the {i Key Management Service Developer Guide}.\n\
-  \                                                       \n\
-  \                                                         \n\
-  \                                                        \n\
-  \                                                           To import your own key material into \
+  \                                 \n\
+  \                                   \n\
+  \                                  \n\
+  \                                    Imported key material  To import your own key material into \
    a KMS key, begin by creating a KMS key with no key material. To do this, use the [Origin] \
    parameter of [CreateKey] with a value of [EXTERNAL]. Next, use [GetParametersForImport] \
    operation to get a public key and import token. Use the wrapping public key to encrypt your key \
@@ -1551,23 +1586,30 @@ end
   \      \n\
   \        [Decrypt] also supports \
    {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nitro-enclave.html}Amazon Web Services \
-   Nitro Enclaves}, which provide an isolated compute environment in Amazon EC2. To call [Decrypt] \
-   for a Nitro enclave, use the \
+   Nitro Enclaves} and NitroTPM, which provide attested environments in Amazon EC2. To call \
+   [Decrypt] for a Nitro enclave or NitroTPM, use the \
    {{:https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk}Amazon Web \
    Services Nitro Enclaves SDK} or any Amazon Web Services SDK. Use the [Recipient] parameter to \
-   provide the attestation document for the enclave. Instead of the plaintext data, the response \
-   includes the plaintext data encrypted with the public key from the attestation document \
-   ([CiphertextForRecipient]). For information about the interaction between KMS and Amazon Web \
-   Services Nitro Enclaves, see \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html}How \
-   Amazon Web Services Nitro Enclaves uses KMS} in the {i Key Management Service Developer Guide}.\n\
+   provide the attestation document for the attested environment. Instead of the plaintext data, \
+   the response includes the plaintext data encrypted with the public key from the attestation \
+   document ([CiphertextForRecipient]). For information about the interaction between KMS and \
+   Amazon Web Services Nitro Enclaves or Amazon Web Services NitroTPM, see \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html}Cryptographic \
+   attestation support in KMS} in the {i Key Management Service Developer Guide}.\n\
   \       \n\
   \        The KMS key that you use for this operation must be in a compatible key state. For \
    details, see {{:https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html}Key states \
    of KMS keys} in the {i Key Management Service Developer Guide}.\n\
   \        \n\
-  \          {b Cross-account use}: Yes. If you use the [KeyId] parameter to identify a KMS key in \
-   a different Amazon Web Services account, specify the key ARN or the alias ARN of the KMS key.\n\
+  \          {b Cross-account use}: Yes. To specify a KMS key in a different Amazon Web Services \
+   account, use the \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN}key ARN} \
+   or \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-alias-ARN}alias \
+   ARN}. A short \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-id}key ID} is \
+   also acceptable when decrypting symmetric ciphertexts, though using a full key ARN is \
+   recommended to be more explicit about the intended KMS key.\n\
   \         \n\
   \           {b Required permissions}: \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html}kms:Decrypt} \
@@ -1789,30 +1831,43 @@ end
   \ When the specified KMS key is in the [PendingDeletion] state, this operation does not change \
    the KMS key's state. Otherwise, it changes the KMS key's state to [PendingImport].\n\
   \ \n\
-  \  The KMS key that you use for this operation must be in a compatible key state. For details, \
+  \   {b Considerations for multi-Region symmetric encryption keys} \n\
+  \  \n\
+  \   {ul\n\
+  \         {-  When you delete the key material of a primary Region key that is in \
+   [PENDING_ROTATION] or [PENDING_MULTI_REGION_IMPORT_AND_ROTATION]state, you'll also be deleting \
+   the key materials for the replica Region keys.\n\
+  \             \n\
+  \              }\n\
+  \         {-  If you delete any key material of a replica Region key, the primary Region key and \
+   other replica Region keys remain unchanged.\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \   The KMS key that you use for this operation must be in a compatible key state. For details, \
    see {{:https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html}Key states of KMS \
    keys} in the {i Key Management Service Developer Guide}.\n\
-  \  \n\
-  \    {b Cross-account use}: No. You cannot perform this operation on a KMS key in a different \
-   Amazon Web Services account.\n\
   \   \n\
-  \     {b Required permissions}: \
+  \     {b Cross-account use}: No. You cannot perform this operation on a KMS key in a different \
+   Amazon Web Services account.\n\
+  \    \n\
+  \      {b Required permissions}: \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html}kms:DeleteImportedKeyMaterial} \
    (key policy)\n\
-  \    \n\
-  \      {b Related operations:} \n\
   \     \n\
-  \      {ul\n\
-  \            {-   [GetParametersForImport] \n\
-  \                \n\
-  \                 }\n\
-  \            {-   [ListKeyRotations] \n\
-  \                \n\
-  \                 }\n\
-  \            {-   [ImportKeyMaterial] \n\
-  \                \n\
-  \                 }\n\
-  \            }\n\
+  \       {b Related operations:} \n\
+  \      \n\
+  \       {ul\n\
+  \             {-   [GetParametersForImport] \n\
+  \                 \n\
+  \                  }\n\
+  \             {-   [ListKeyRotations] \n\
+  \                 \n\
+  \                  }\n\
+  \             {-   [ImportKeyMaterial] \n\
+  \                 \n\
+  \                  }\n\
+  \             }\n\
   \    {b Eventual consistency}: The KMS API follows an eventual consistency model. For more \
    information, see \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency}KMS \
@@ -1851,8 +1906,8 @@ module DeriveSharedSecret : sig
 end
 [@@ocaml.doc
   "Derives a shared secret using a key agreement algorithm.\n\n\
-  \  You must use an asymmetric NIST-recommended elliptic curve (ECC) or SM2 (China Regions only) \
-   KMS key pair with a [KeyUsage] value of [KEY_AGREEMENT] to call DeriveSharedSecret.\n\
+  \  You must use an asymmetric NIST-standard elliptic curve (ECC) or SM2 (China Regions only) KMS \
+   key pair with a [KeyUsage] value of [KEY_AGREEMENT] to call DeriveSharedSecret.\n\
   \  \n\
   \    DeriveSharedSecret uses the \
    {{:https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-56Ar3.pdf#page=60}Elliptic \
@@ -1871,15 +1926,15 @@ end
   \            {-   {b Alice} calls [CreateKey] to create an asymmetric KMS key pair with a \
    [KeyUsage] value of [KEY_AGREEMENT].\n\
   \                \n\
-  \                 The asymmetric KMS key must use a NIST-recommended elliptic curve (ECC) or SM2 \
+  \                 The asymmetric KMS key must use a NIST-standard elliptic curve (ECC) or SM2 \
    (China Regions only) key spec.\n\
   \                 \n\
   \                  }\n\
   \            {-   {b Bob} creates an elliptic curve key pair.\n\
   \                \n\
   \                 Bob can call [CreateKey] to create an asymmetric KMS key pair or generate a \
-   key pair outside of KMS. Bob's key pair must use the same NIST-recommended elliptic curve (ECC) \
-   or SM2 (China Regions ony) curve as Alice.\n\
+   key pair outside of KMS. Bob's key pair must use the same NIST-standard elliptic curve (ECC) or \
+   SM2 (China Regions ony) curve as Alice.\n\
   \                 \n\
   \                  }\n\
   \            {-  Alice and Bob {b exchange their public keys} through an insecure communication \
@@ -1905,10 +1960,10 @@ end
   \                 }\n\
   \            }\n\
   \   To derive a shared secret you must provide a key agreement algorithm, the private key of the \
-   caller's asymmetric NIST-recommended elliptic curve or SM2 (China Regions only) KMS key pair, \
-   and the public key from your peer's NIST-recommended elliptic curve or SM2 (China Regions only) \
-   key pair. The public key can be from another asymmetric KMS key pair or from a key pair \
-   generated outside of KMS, but both key pairs must be on the same elliptic curve.\n\
+   caller's asymmetric NIST-standard elliptic curve or SM2 (China Regions only) KMS key pair, and \
+   the public key from your peer's NIST-standard elliptic curve or SM2 (China Regions only) key \
+   pair. The public key can be from another asymmetric KMS key pair or from a key pair generated \
+   outside of KMS, but both key pairs must be on the same elliptic curve.\n\
   \   \n\
   \    The KMS key that you use for this operation must be in a compatible key state. For details, \
    see {{:https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html}Key states of KMS \
@@ -2046,9 +2101,9 @@ module DescribeKey : sig
 end
 [@@ocaml.doc
   "Provides detailed information about a KMS key. You can run [DescribeKey] on a \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk}customer \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-mgn-key}customer \
    managed key} or an \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}Amazon \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-key}Amazon \
    Web Services managed key}.\n\n\
   \ This detailed information includes the key ARN, creation date (and deletion date, if \
    applicable), the key state, and the origin and expiration date (if any) of the key material. It \
@@ -2088,7 +2143,7 @@ end
   \          }\n\
   \   In general, [DescribeKey] is a non-mutating operation. It returns data about KMS keys, but \
    doesn't change them. However, Amazon Web Services services use [DescribeKey] to create \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}Amazon \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-key}Amazon \
    Web Services managed keys} from a {i predefined Amazon Web Services alias} with no key ID.\n\
   \   \n\
   \     {b Cross-account use}: Yes. To perform this operation with a KMS key in a different Amazon \
@@ -2219,12 +2274,12 @@ end
    keys}, set the property on the primary key.\n\
   \ \n\
   \  You can enable ([EnableKeyRotation]) and disable automatic rotation of the key material in \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk}customer \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-mgn-key}customer \
    managed KMS keys}. Key material rotation of \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}Amazon \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-key}Amazon \
    Web Services managed KMS keys} is not configurable. KMS always rotates the key material for \
    every year. Rotation of \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-cmk}Amazon Web \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-key}Amazon Web \
    Services owned KMS keys} varies.\n\
   \  \n\
   \    In May 2022, KMS changed the rotation schedule for Amazon Web Services managed keys from \
@@ -2416,7 +2471,7 @@ end
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/rotating-keys-enable-disable.html}automatic \
    rotation of the key material} of the specified symmetric encryption KMS key. \n\n\
   \ By default, when you enable automatic rotation of a \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk}customer \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-mgn-key}customer \
    managed KMS key}, KMS rotates the key material of the KMS key one year (approximately 365 days) \
    from the enable date and every year thereafter. You can use the optional [RotationPeriodInDays] \
    parameter to specify a custom rotation period when you enable key rotation, or you can use \
@@ -2442,10 +2497,10 @@ end
    keys}, set the property on the primary key. \n\
   \   \n\
   \    You cannot enable or disable automatic rotation of \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}Amazon \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-key}Amazon \
    Web Services managed KMS keys}. KMS always rotates the key material of Amazon Web Services \
    managed keys every year. Rotation of \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-cmk}Amazon Web \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-key}Amazon Web \
    Services owned KMS keys} is managed by the Amazon Web Services service that owns the key.\n\
   \    \n\
   \      In May 2022, KMS changed the rotation schedule for Amazon Web Services managed keys from \
@@ -2698,16 +2753,17 @@ end
   \       [GenerateDataKey] also supports \
    {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nitro-enclave.html}Amazon Web Services \
    Nitro Enclaves}, which provide an isolated compute environment in Amazon EC2. To call \
-   [GenerateDataKey] for an Amazon Web Services Nitro enclave, use the \
+   [GenerateDataKey] for an Amazon Web Services Nitro enclave or NitroTPM, use the \
    {{:https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk}Amazon Web \
    Services Nitro Enclaves SDK} or any Amazon Web Services SDK. Use the [Recipient] parameter to \
-   provide the attestation document for the enclave. [GenerateDataKey] returns a copy of the data \
-   key encrypted under the specified KMS key, as usual. But instead of a plaintext copy of the \
-   data key, the response includes a copy of the data key encrypted under the public key from the \
-   attestation document ([CiphertextForRecipient]). For information about the interaction between \
-   KMS and Amazon Web Services Nitro Enclaves, see \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html}How \
-   Amazon Web Services Nitro Enclaves uses KMS} in the {i Key Management Service Developer Guide}..\n\
+   provide the attestation document for the attested environment. [GenerateDataKey] returns a copy \
+   of the data key encrypted under the specified KMS key, as usual. But instead of a plaintext \
+   copy of the data key, the response includes a copy of the data key encrypted under the public \
+   key from the attestation document ([CiphertextForRecipient]). For information about the \
+   interaction between KMS and Amazon Web Services Nitro Enclaves or Amazon Web Services NitroTPM, \
+   see \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html}Cryptographic \
+   attestation support in KMS} in the {i Key Management Service Developer Guide}.\n\
   \      \n\
   \       The KMS key that you use for this operation must be in a compatible key state. For \
    details, see {{:https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html}Key states \
@@ -2852,17 +2908,17 @@ end
   \       [GenerateDataKeyPair] also supports \
    {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nitro-enclave.html}Amazon Web Services \
    Nitro Enclaves}, which provide an isolated compute environment in Amazon EC2. To call \
-   [GenerateDataKeyPair] for an Amazon Web Services Nitro enclave, use the \
+   [GenerateDataKeyPair] for an Amazon Web Services Nitro enclave or NitroTPM, use the \
    {{:https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk}Amazon Web \
    Services Nitro Enclaves SDK} or any Amazon Web Services SDK. Use the [Recipient] parameter to \
-   provide the attestation document for the enclave. [GenerateDataKeyPair] returns the public data \
-   key and a copy of the private data key encrypted under the specified KMS key, as usual. But \
-   instead of a plaintext copy of the private data key ([PrivateKeyPlaintext]), the response \
-   includes a copy of the private data key encrypted under the public key from the attestation \
-   document ([CiphertextForRecipient]). For information about the interaction between KMS and \
-   Amazon Web Services Nitro Enclaves, see \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html}How \
-   Amazon Web Services Nitro Enclaves uses KMS} in the {i Key Management Service Developer Guide}..\n\
+   provide the attestation document for the attested environment. [GenerateDataKeyPair] returns \
+   the public data key and a copy of the private data key encrypted under the specified KMS key, \
+   as usual. But instead of a plaintext copy of the private data key ([PrivateKeyPlaintext]), the \
+   response includes a copy of the private data key encrypted under the public key from the \
+   attestation document ([CiphertextForRecipient]). For information about the interaction between \
+   KMS and Amazon Web Services Nitro Enclaves or Amazon Web Services NitroTPM, see \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html}Cryptographic \
+   attestation support in KMS} in the {i Key Management Service Developer Guide}.\n\
   \      \n\
   \       You can use an optional encryption context to add additional security to the encryption \
    operation. If you specify an [EncryptionContext], you must specify the same encryption context \
@@ -3221,15 +3277,15 @@ end
   \    [GenerateRandom] also supports \
    {{:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nitro-enclave.html}Amazon Web Services \
    Nitro Enclaves}, which provide an isolated compute environment in Amazon EC2. To call \
-   [GenerateRandom] for a Nitro enclave, use the \
+   [GenerateRandom] for a Nitro enclave or NitroTPM, use the \
    {{:https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk}Amazon Web \
    Services Nitro Enclaves SDK} or any Amazon Web Services SDK. Use the [Recipient] parameter to \
-   provide the attestation document for the enclave. Instead of plaintext bytes, the response \
-   includes the plaintext bytes encrypted under the public key from the attestation document \
-   ([CiphertextForRecipient]).For information about the interaction between KMS and Amazon Web \
-   Services Nitro Enclaves, see \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html}How \
-   Amazon Web Services Nitro Enclaves uses KMS} in the {i Key Management Service Developer Guide}.\n\
+   provide the attestation document for the attested environment. Instead of plaintext bytes, the \
+   response includes the plaintext bytes encrypted under the public key from the attestation \
+   document ([CiphertextForRecipient]). For information about the interaction between KMS and \
+   Amazon Web Services Nitro Enclaves or Amazon Web Services NitroTPM, see \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/cryptographic-attestation.html}Cryptographic \
+   attestation support in KMS} in the {i Key Management Service Developer Guide}.\n\
   \   \n\
   \    For more information about entropy and random number generation, see \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/kms-cryptography.html#entropy-and-random-numbers}Entropy \
@@ -3247,6 +3303,93 @@ end
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency}KMS \
    eventual consistency}.\n\
   \       "]
+
+module GetKeyLastUsage : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `DependencyTimeoutException of dependency_timeout_exception
+    | `InvalidArnException of invalid_arn_exception
+    | `KMSInternalException of kms_internal_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_key_last_usage_request ->
+    ( get_key_last_usage_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DependencyTimeoutException of dependency_timeout_exception
+      | `InvalidArnException of invalid_arn_exception
+      | `KMSInternalException of kms_internal_exception
+      | `NotFoundException of not_found_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Returns usage information about the last successful cryptographic operation performed with a \
+   specified KMS key, including the operation type, timestamp, and associated CloudTrail event \
+   ID.\n\n\
+  \ The [TrackingStartDate] in the [GetKeyLastUsage] response indicates the date from which KMS \
+   began recording cryptographic activity for a given key. Use this value together with \
+   [KeyCreationDate] to understand the key's usage history:\n\
+  \ \n\
+  \  {ul\n\
+  \        {-  If the [KeyLastUsage] response element is {i present}, the key has been used for a \
+   successful cryptographic operation since the [TrackingStartDate]. The response includes the \
+   operation type, timestamp, and associated CloudTrail event ID.\n\
+  \            \n\
+  \             }\n\
+  \        {-  If the [KeyLastUsage] response element is {i empty} and [KeyCreationDate] is on or \
+   after [TrackingStartDate], the key has not been used for a successful cryptographic operation \
+   since it was created.\n\
+  \            \n\
+  \             }\n\
+  \        {-  If the [KeyLastUsage] response element is {i empty} and [KeyCreationDate] is before \
+   [TrackingStartDate], there is no record of the key being used for a successful cryptographic \
+   operation since the [TrackingStartDate]. However, the key may have been used before tracking \
+   began. To determine whether the key was used before the [TrackingStartDate], examine your past \
+   CloudTrail logs.\n\
+  \            \n\
+  \             }\n\
+  \        }\n\
+  \   For multi-Region KMS keys, primary and replica keys track last usage independently. Each key \
+   in a multi-Region key set maintains its own usage information.\n\
+  \   \n\
+  \    The [ReEncrypt] operation uses two keys: a source key for decryption and a destination key \
+   for encryption. Usage information is recorded for both keys independently, each with the \
+   CloudTrail event ID from the respective key owner's account.\n\
+  \    \n\
+  \      Do not use [GetKeyLastUsage] as the sole indicator when scheduling a key for deletion. \
+   Instead, first \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/enabling-keys.html}disable the key} \
+   and monitor CloudTrail for [DisabledException] entries, as there could be infrequent workflows \
+   that are dependent on the key. By looking for this exception, you can identify potential \
+   dependencies and workload failures before they occur.\n\
+  \      \n\
+  \         {b Cross-account use}: No. You cannot perform this operation on a KMS key in a \
+   different Amazon Web Services account.\n\
+  \        \n\
+  \          {b Required permissions}: \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html}kms:GetKeyLastUsage} \
+   (key policy)\n\
+  \         \n\
+  \           {b Related operations:} \n\
+  \          \n\
+  \           {ul\n\
+  \                 {-   [DescribeKey] \n\
+  \                     \n\
+  \                      }\n\
+  \                 {-   [DisableKey] \n\
+  \                     \n\
+  \                      }\n\
+  \                 {-   [ScheduleKeyDeletion] \n\
+  \                     \n\
+  \                      }\n\
+  \                 }\n\
+  \    {b Eventual consistency}: The KMS API follows an eventual consistency model. For more \
+   information, see \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency}KMS \
+   eventual consistency}.\n\
+  \   "]
 
 module GetKeyPolicy : sig
   val error_to_string :
@@ -3332,7 +3475,7 @@ end
   \ \n\
   \  You can enable ([EnableKeyRotation]) and disable automatic rotation ([DisableKeyRotation]) of \
    the key material in customer managed KMS keys. Key material rotation of \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}Amazon \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-key}Amazon \
    Web Services managed KMS keys} is not configurable. KMS always rotates the key material in \
    Amazon Web Services managed KMS keys every year. The key rotation status for Amazon Web \
    Services managed KMS keys is always [true].\n\
@@ -3644,10 +3787,30 @@ end
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html}Importing key \
    material}.\n\
   \ \n\
-  \  For asymmetric, HMAC and multi-Region keys, you cannot change the key material after the \
-   initial import. You can import multiple key materials into single-Region, symmetric encryption \
-   keys and rotate the key material on demand using [RotateKeyOnDemand].\n\
+  \  For asymmetric and HMAC keys, you cannot change the key material after the initial import. \
+   You can import multiple key materials into symmetric encryption keys and rotate the key \
+   material on demand using [RotateKeyOnDemand].\n\
   \  \n\
+  \   You can import new key materials into multi-Region symmetric encryption keys. To do so, you \
+   must import the new key material into the primary Region key. Then you can import the same key \
+   materials into the replica Region keys. You cannot directly import new key material into the \
+   replica Region keys.\n\
+  \   \n\
+  \    To import new key material for a multi-Region symmetric key, you\226\128\153ll need to \
+   complete the following:\n\
+  \    \n\
+  \     {ol\n\
+  \           {-  Call [ImportKeyMaterial] on the primary Region key with the [ImportType]set to \
+   [NEW_KEY_MATERIAL].\n\
+  \               \n\
+  \                }\n\
+  \           {-  Call [ImportKeyMaterial] on the replica Region key with the [ImportType] set to \
+   [EXISTING_KEY_MATERIAL] using the same key material imported to the primary Region key. You \
+   must do this for every replica Region key before you can perform the [RotateKeyOnDemand] \
+   operation on the primary Region key.\n\
+  \               \n\
+  \                }\n\
+  \           }\n\
   \   After you import key material, you can \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys-import-key-material.html#reimport-key-material}reimport \
    the same key material} into that KMS key or, if the key supports on-demand rotation, import new \
@@ -3687,13 +3850,13 @@ end
   \                \n\
   \                 }\n\
   \            }\n\
-  \    Then, in an [ImportKeyMaterial] request, you submit your encrypted key material and import \
+  \   Then, in an [ImportKeyMaterial] request, you submit your encrypted key material and import \
    token. When calling this operation, you must specify the following values:\n\
   \   \n\
   \    {ul\n\
   \          {-  The key ID or key ARN of the KMS key to associate with the imported key material. \
-   Its [Origin] must be [EXTERNAL] and its [KeyState] must be [PendingImport]. You cannot perform \
-   this operation on a KMS key in a \
+   Its [Origin] must be [EXTERNAL] and its [KeyState] must be [PendingImport] or [Enabled]. You \
+   cannot perform this operation on a KMS key in a \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/key-store-overview.html}custom key \
    store}, or on a KMS key in a different Amazon Web Services account. To get the [Origin] and \
    [KeyState] of a KMS key, call [DescribeKey].\n\
@@ -3719,11 +3882,11 @@ end
   \               \n\
   \                }\n\
   \          }\n\
-  \   When this operation is successful, the key state of the KMS key changes from [PendingImport] \
-   to [Enabled], and you can use the KMS key in cryptographic operations. For single-Region, \
-   symmetric encryption keys, you will need to import all of the key materials associated with the \
-   KMS key to change its state to [Enabled]. Use the [ListKeyRotations] operation to list the ID \
-   and import state of each key material associated with a KMS key.\n\
+  \   When this operation is successful, the state of the KMS key changes to [Enabled], and you \
+   can use the KMS key in cryptographic operations. For symmetric encryption keys, you will need \
+   to import all of the key materials associated with the KMS key to change its state to \
+   [Enabled]. Use the [ListKeyRotations] operation to list the ID and import state of each key \
+   material associated with a KMS key.\n\
   \   \n\
   \    If this operation fails, use the exception to help determine the problem. If the error is \
    related to the key material, the import token, or wrapping key, use [GetParametersForImport] to \
@@ -3867,8 +4030,8 @@ module ListGrants : sig
 end
 [@@ocaml.doc
   "Gets a list of all grants for the specified KMS key. \n\n\
-  \ You must specify the KMS key in all requests. You can filter the grant list by grant ID or \
-   grantee principal.\n\
+  \ You must specify the KMS key in all requests. You can filter the grant list by grant ID, \
+   grantee principal, or grantee service principal.\n\
   \ \n\
   \  For detailed information about grants, including grant terminology, see \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/grants.html}Grants in KMS} in the {i  \
@@ -3877,35 +4040,43 @@ end
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/example_kms_CreateGrant_section.html}Use \
    CreateGrant with an Amazon Web Services SDK or CLI}. \n\
   \  \n\
-  \    The [GranteePrincipal] field in the [ListGrants] response usually contains the user or role \
-   designated as the grantee principal in the grant. However, when the grantee principal in the \
-   grant is an Amazon Web Services service, the [GranteePrincipal] field contains the \
+  \    When a grant is created with the [GranteePrincipal] field, the [ListGrants] response \
+   usually contains the user or role designated as the grantee principal in the grant. However, if \
+   the grantee principal is an Amazon Web Services service, the [GranteePrincipal] field contains \
+   an Amazon Web Services \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services}service \
-   principal}, which might represent several different grantee principals.\n\
+   principal}, which might correspond to several different grantee principals, such as an IAM \
+   user, IAM role, or Amazon Web Services account.\n\
   \    \n\
-  \       {b Cross-account use}: Yes. To perform this operation on a KMS key in a different Amazon \
-   Web Services account, specify the key ARN in the value of the [KeyId] parameter.\n\
-  \      \n\
-  \        {b Required permissions}: \
+  \     When a grant is created with the [GranteeServicePrincipal] field, the [ListGrants] \
+   response always includes a [GranteeServicePrincipal] that indicates the grantee is actually an \
+   Amazon Web Services \
+   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services}service \
+   principal}.\n\
+  \     \n\
+  \        {b Cross-account use}: Yes. To perform this operation on a KMS key in a different \
+   Amazon Web Services account, specify the key ARN in the value of the [KeyId] parameter.\n\
+  \       \n\
+  \         {b Required permissions}: \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html}kms:ListGrants} \
    (key policy)\n\
-  \       \n\
-  \         {b Related operations:} \n\
   \        \n\
-  \         {ul\n\
-  \               {-   [CreateGrant] \n\
-  \                   \n\
-  \                    }\n\
-  \               {-   [ListRetirableGrants] \n\
-  \                   \n\
-  \                    }\n\
-  \               {-   [RetireGrant] \n\
-  \                   \n\
-  \                    }\n\
-  \               {-   [RevokeGrant] \n\
-  \                   \n\
-  \                    }\n\
-  \               }\n\
+  \          {b Related operations:} \n\
+  \         \n\
+  \          {ul\n\
+  \                {-   [CreateGrant] \n\
+  \                    \n\
+  \                     }\n\
+  \                {-   [ListRetirableGrants] \n\
+  \                    \n\
+  \                     }\n\
+  \                {-   [RetireGrant] \n\
+  \                    \n\
+  \                     }\n\
+  \                {-   [RevokeGrant] \n\
+  \                    \n\
+  \                     }\n\
+  \                }\n\
   \    {b Eventual consistency}: The KMS API follows an eventual consistency model. For more \
    information, see \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency}KMS \
@@ -4162,7 +4333,7 @@ module ListRetirableGrants : sig
 end
 [@@ocaml.doc
   "Returns information about all grants in the Amazon Web Services account and Region that have \
-   the specified retiring principal. \n\n\
+   the specified retiring principal or retiring service principal. \n\n\
   \ You can specify any principal in your Amazon Web Services account. The grants that are \
    returned include grants for KMS keys in your Amazon Web Services account and other Amazon Web \
    Services accounts. You might use this operation to determine which grants you may retire. To \
@@ -4186,28 +4357,30 @@ end
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html}kms:ListRetirableGrants} \
    (IAM policy) in your Amazon Web Services account.\n\
   \    \n\
-  \      KMS authorizes [ListRetirableGrants] requests by evaluating the caller account's \
-   kms:ListRetirableGrants permissions. The authorized resource in [ListRetirableGrants] calls is \
-   the retiring principal specified in the request. KMS does not evaluate the caller's permissions \
-   to verify their access to any KMS keys or grants that might be returned by the \
-   [ListRetirableGrants] call.\n\
+  \      When listing retirable grants by [RetiringPrincipal], KMS authorizes \
+   [ListRetirableGrants] requests by evaluating the caller account's kms:ListRetirableGrants \
+   permissions. The authorized resource in [ListRetirableGrants] calls is the retiring principal \
+   specified in the request. KMS does not evaluate the caller's permissions to verify their access \
+   to any KMS keys or grants that might be returned by the [ListRetirableGrants] call.\n\
   \      \n\
-  \         {b Related operations:} \n\
-  \        \n\
-  \         {ul\n\
-  \               {-   [CreateGrant] \n\
-  \                   \n\
-  \                    }\n\
-  \               {-   [ListGrants] \n\
-  \                   \n\
-  \                    }\n\
-  \               {-   [RetireGrant] \n\
-  \                   \n\
-  \                    }\n\
-  \               {-   [RevokeGrant] \n\
-  \                   \n\
-  \                    }\n\
-  \               }\n\
+  \       The [RetiringServicePrincipal] filter is only usable by callers in a service principal.\n\
+  \       \n\
+  \          {b Related operations:} \n\
+  \         \n\
+  \          {ul\n\
+  \                {-   [CreateGrant] \n\
+  \                    \n\
+  \                     }\n\
+  \                {-   [ListGrants] \n\
+  \                    \n\
+  \                     }\n\
+  \                {-   [RetireGrant] \n\
+  \                    \n\
+  \                     }\n\
+  \                {-   [RevokeGrant] \n\
+  \                    \n\
+  \                     }\n\
+  \                }\n\
   \    {b Eventual consistency}: The KMS API follows an eventual consistency model. For more \
    information, see \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency}KMS \
@@ -4363,24 +4536,35 @@ end
    see {{:https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html}Key states of KMS \
    keys} in the {i Key Management Service Developer Guide}.\n\
   \   \n\
-  \     {b Cross-account use}: Yes. The source KMS key and destination KMS key can be in different \
-   Amazon Web Services accounts. Either or both KMS keys can be in a different account than the \
-   caller. To specify a KMS key in a different account, you must use its key ARN or alias ARN.\n\
-  \    \n\
-  \      {b Required permissions}:\n\
+  \     When using grants with [SourceArn] constraints for [ReEncrypt] operations, the grants on \
+   both the source KMS key (for [ReEncryptFrom]) and the destination KMS key (for [ReEncryptTo]) \
+   must specify the same [SourceArn] value. \n\
   \     \n\
-  \      {ul\n\
-  \            {-   \
+  \        {b Cross-account use}: Yes. The source KMS key and destination KMS key can be in \
+   different Amazon Web Services accounts. Either or both KMS keys can be in a different account \
+   than the caller. To specify a KMS key in a different account, use the \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN}key ARN} \
+   or \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-alias-ARN}alias \
+   ARN}. A short \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-id}key ID} is \
+   also acceptable for the source key when decrypting symmetric ciphertexts, though using a full \
+   key ARN is recommended to be more explicit about the intended KMS key.\n\
+  \       \n\
+  \         {b Required permissions}:\n\
+  \        \n\
+  \         {ul\n\
+  \               {-   \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html}kms:ReEncryptFrom} \
    permission on the source KMS key (key policy)\n\
-  \                \n\
-  \                 }\n\
-  \            {-   \
+  \                   \n\
+  \                    }\n\
+  \               {-   \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html}kms:ReEncryptTo} \
    permission on the destination KMS key (key policy)\n\
-  \                \n\
-  \                 }\n\
-  \            }\n\
+  \                   \n\
+  \                    }\n\
+  \               }\n\
   \   To permit reencryption from or to a KMS key, include the [\"kms:ReEncrypt*\"] permission in \
    your {{:https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html}key policy}. \
    This permission is automatically included in the key policy when you use the console to create \
@@ -4723,7 +4907,7 @@ end
    and you perform an on-demand rotation on April 10, 2024, the key will automatically rotate, as \
    scheduled, on April 14, 2024 and every 730 days thereafter.\n\
   \ \n\
-  \   You can perform on-demand key rotation a {b maximum of 10 times} per KMS key. You can use \
+  \   You can perform on-demand key rotation a {b maximum of 25 times} per KMS key. You can use \
    the KMS console to view the number of remaining on-demand rotations available for a KMS key.\n\
   \   \n\
   \     You can use [GetKeyRotationStatus] to identify any in progress on-demand rotations. You \
@@ -4735,9 +4919,7 @@ end
    perform on-demand rotation of \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html}asymmetric \
    KMS keys}, {{:https://docs.aws.amazon.com/kms/latest/developerguide/hmac.html}HMAC KMS keys}, \
-   multi-Region KMS keys with \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html}imported key \
-   material}, or KMS keys in a \
+   or KMS keys in a \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/key-store-overview.html}custom key \
    store}. When you initiate on-demand key rotation on a symmetric encryption KMS key with \
    imported key material, you must have already imported \
@@ -4746,13 +4928,14 @@ end
    [ListKeyRotations] operation to check the state of all key materials associated with a KMS key. \
    To perform on-demand rotation of a set of related \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html#multi-region-rotate}multi-Region \
-   keys}, invoke the on-demand rotation on the primary key.\n\
+   keys}, import new key material in the primary Region key, import the same key material in each \
+   replica Region key, and invoke the on-demand rotation on the primary Region key.\n\
   \      \n\
   \       You cannot initiate on-demand rotation of \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}Amazon \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-key}Amazon \
    Web Services managed KMS keys}. KMS always rotates the key material of Amazon Web Services \
    managed keys every year. Rotation of \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-cmk}Amazon Web \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-key}Amazon Web \
    Services owned KMS keys} is managed by the Amazon Web Services service that owns the key.\n\
   \       \n\
   \        The KMS key that you use for this operation must be in a compatible key state. For \
@@ -5003,7 +5186,7 @@ module TagResource : sig
 end
 [@@ocaml.doc
   "Adds or edits tags on a \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk}customer \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-mgn-key}customer \
    managed key}.\n\n\
   \  Tagging or untagging a KMS key can allow or deny permission to the KMS key. For details, see \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/abac.html}ABAC for KMS} in the {i Key \
@@ -5014,11 +5197,11 @@ end
    value. To edit a tag, specify an existing tag key and a new tag value.\n\
   \    \n\
   \     You can use this operation to tag a \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk}customer \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-mgn-key}customer \
    managed key}, but you cannot tag an \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk}Amazon \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-key}Amazon \
    Web Services managed key}, an \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-cmk}Amazon Web \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-key}Amazon Web \
    Services owned key}, a \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/key-store-overview.html}custom key \
    store}, or an {{:https://docs.aws.amazon.com/kms/latest/developerguide/kms-alias.html}alias}.\n\
@@ -5089,7 +5272,7 @@ module UntagResource : sig
 end
 [@@ocaml.doc
   "Deletes tags from a \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk}customer \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-mgn-key}customer \
    managed key}. To delete a tag, specify the tag key and the KMS key.\n\n\
   \  Tagging or untagging a KMS key can allow or deny permission to the KMS key. For details, see \
    {{:https://docs.aws.amazon.com/kms/latest/developerguide/abac.html}ABAC for KMS} in the {i Key \
@@ -5317,8 +5500,10 @@ end
   \           For an CloudHSM key store, you can use this operation to change the custom key store \
    friendly name ([NewCustomKeyStoreName]), to tell KMS about a change to the [kmsuser] crypto \
    user password ([KeyStorePassword]), or to associate the custom key store with a different, but \
-   related, CloudHSM cluster ([CloudHsmClusterId]). To update any property of an CloudHSM key \
-   store, the [ConnectionState] of the CloudHSM key store must be [DISCONNECTED]. \n\
+   related, CloudHSM cluster ([CloudHsmClusterId]). To update most properties of an CloudHSM key \
+   store, the [ConnectionState] of the CloudHSM key store must be [DISCONNECTED]. However, you can \
+   update the [CustomKeyStoreName] of an AWS CloudHSM key store when it is in the [CONNECTED] or \
+   [DISCONNECTED] state.\n\
   \           \n\
   \            For an external key store, you can use this operation to change the custom key \
    store friendly name ([NewCustomKeyStoreName]), or to tell KMS about a change to the external \

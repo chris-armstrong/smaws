@@ -40,6 +40,7 @@ val make_start_report_creation_input : s3_bucket:s3_bucket -> unit -> start_repo
 
 val make_compliance_details :
   ?compliance_status:compliance_status ->
+  ?missing_tag_keys:tag_key_list ->
   ?keys_with_noncompliant_values:tag_key_list ->
   ?noncompliant_keys:tag_key_list ->
   unit ->
@@ -51,6 +52,25 @@ val make_resource_tag_mapping :
   ?resource_ar_n:resource_ar_n ->
   unit ->
   resource_tag_mapping
+
+val make_required_tag :
+  ?reporting_tag_keys:reporting_tag_keys ->
+  ?cloud_formation_resource_types:cloud_formation_resource_types ->
+  ?resource_type:resource_type ->
+  unit ->
+  required_tag
+
+val make_list_required_tags_output :
+  ?next_token:pagination_token ->
+  ?required_tags:required_tags_for_list_required_tags ->
+  unit ->
+  list_required_tags_output
+
+val make_list_required_tags_input :
+  ?max_results:max_results_for_list_required_tags ->
+  ?next_token:pagination_token ->
+  unit ->
+  list_required_tags_input
 
 val make_get_tag_values_output :
   ?tag_values:tag_values_output_list ->

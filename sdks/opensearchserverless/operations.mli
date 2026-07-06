@@ -54,6 +54,62 @@ end
    {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html}Creating \
    and managing Amazon OpenSearch Serverless collections}.\n"]
 
+module CreateCollectionGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_collection_group_request ->
+    ( create_collection_group_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Creates a collection group within OpenSearch Serverless. Collection groups let you manage \
+   OpenSearch Compute Units (OCUs) at a group level, with multiple collections sharing the group's \
+   capacity limits.\n\n\
+  \ For more information, see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-collection-groups.html}Managing \
+   collection groups}.\n\
+  \ "]
+
+module CreateIndex : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_index_request ->
+    ( create_index_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Creates an index within an OpenSearch Serverless collection. Unlike other OpenSearch indexes, \
+   indexes created by this API are automatically configured to conduct automatic semantic \
+   enrichment ingestion and search. For more information, see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment}About \
+   automatic semantic enrichment} in the {i OpenSearch User Guide}.\n"]
+
 module CreateSecurityConfig : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -77,7 +133,7 @@ end
 [@@ocaml.doc
   "Specifies a security configuration for OpenSearch Serverless. For more information, see \
    {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html}SAML \
-   authentication for Amazon OpenSearch Serverless}. \n"]
+   authentication for Amazon OpenSearch Serverless}.\n"]
 
 module CreateVpcEndpoint : sig
   val error_to_string :
@@ -153,6 +209,57 @@ end
   "Deletes an OpenSearch Serverless collection. For more information, see \
    {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html}Creating \
    and managing Amazon OpenSearch Serverless collections}.\n"]
+
+module DeleteCollectionGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_collection_group_request ->
+    ( delete_collection_group_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Deletes a collection group. You can only delete empty collection groups that contain no \
+   collections. For more information, see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html}Creating \
+   and managing Amazon OpenSearch Serverless collections}.\n"]
+
+module DeleteIndex : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_index_request ->
+    ( delete_index_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Deletes an index from an OpenSearch Serverless collection. Be aware that the index might be \
+   configured to conduct automatic semantic enrichment ingestion and search. For more information, \
+   see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment}About \
+   automatic semantic enrichment}.\n"]
 
 module DeleteLifecyclePolicy : sig
   val error_to_string :
@@ -274,6 +381,31 @@ end
    {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-data-access.html}Data \
    access control for Amazon OpenSearch Serverless}.\n"]
 
+module GetIndex : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_index_request ->
+    ( get_index_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Retrieves information about an index in an OpenSearch Serverless collection, including its \
+   schema definition. The index might be configured to conduct automatic semantic enrichment \
+   ingestion and search. For more information, see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment}About \
+   automatic semantic enrichment}.\n"]
+
 module GetSecurityConfig : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -341,6 +473,27 @@ module ListAccessPolicies : sig
     result
 end
 [@@ocaml.doc "Returns information about a list of OpenSearch Serverless access policies.\n"]
+
+module ListCollectionGroups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_collection_groups_request ->
+    ( list_collection_groups_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Returns a list of collection groups. For more information, see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html}Creating \
+   and managing Amazon OpenSearch Serverless collections}.\n"]
 
 module ListCollections : sig
   val error_to_string :
@@ -467,8 +620,30 @@ module BatchGetCollection : sig
     result
 end
 [@@ocaml.doc
-  "Returns attributes for one or more collections, including the collection endpoint and the \
-   OpenSearch Dashboards endpoint. For more information, see \
+  "Returns attributes for one or more collections, including the collection endpoint, the \
+   OpenSearch Dashboards endpoint, and FIPS-compliant endpoints. For more information, see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html}Creating \
+   and managing Amazon OpenSearch Serverless collections}.\n"]
+
+module BatchGetCollectionGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_collection_group_request ->
+    ( batch_get_collection_group_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Returns attributes for one or more collection groups, including capacity limits and the number \
+   of collections in each group. For more information, see \
    {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html}Creating \
    and managing Amazon OpenSearch Serverless collections}.\n"]
 
@@ -734,6 +909,7 @@ module UpdateAccountSettings : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `InternalServerException of internal_server_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
     | `ValidationException of validation_exception ] ->
     string
 
@@ -743,6 +919,7 @@ module UpdateAccountSettings : sig
     ( update_account_settings_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
 end
@@ -771,6 +948,53 @@ module UpdateCollection : sig
     result
 end
 [@@ocaml.doc "Updates an OpenSearch Serverless collection.\n"]
+
+module UpdateCollectionGroup : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_collection_group_request ->
+    ( update_collection_group_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc "Updates the description and capacity limits of a collection group.\n"]
+
+module UpdateIndex : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_index_request ->
+    ( update_index_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Updates an existing index in an OpenSearch Serverless collection. This operation allows you to \
+   modify the index schema, including adding new fields or changing field mappings. You can also \
+   enable automatic semantic enrichment ingestion and search. For more information, see \
+   {{:https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment}About \
+   automatic semantic enrichment}.\n"]
 
 module UpdateLifecyclePolicy : sig
   val error_to_string :

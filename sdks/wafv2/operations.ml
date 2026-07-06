@@ -3,15 +3,22 @@ open Service_metadata
 
 module AssociateWebACL = struct
   let error_to_string = function
+    | `WAFFeatureNotIncludedInPricingPlanException _ ->
+        "com.amazonaws.wafv2#WAFFeatureNotIncludedInPricingPlanException"
     | `WAFInternalErrorException _ -> "com.amazonaws.wafv2#WAFInternalErrorException"
     | `WAFInvalidOperationException _ -> "com.amazonaws.wafv2#WAFInvalidOperationException"
     | `WAFInvalidParameterException _ -> "com.amazonaws.wafv2#WAFInvalidParameterException"
+    | `WAFLimitsExceededException _ -> "com.amazonaws.wafv2#WAFLimitsExceededException"
     | `WAFNonexistentItemException _ -> "com.amazonaws.wafv2#WAFNonexistentItemException"
     | `WAFUnavailableEntityException _ -> "com.amazonaws.wafv2#WAFUnavailableEntityException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
     let handler handler tree path = function
+      | _, "WAFFeatureNotIncludedInPricingPlanException" ->
+          `WAFFeatureNotIncludedInPricingPlanException
+            (Json_deserializers.waf_feature_not_included_in_pricing_plan_exception_of_yojson tree
+               path)
       | _, "WAFInternalErrorException" ->
           `WAFInternalErrorException
             (Json_deserializers.waf_internal_error_exception_of_yojson tree path)
@@ -21,6 +28,9 @@ module AssociateWebACL = struct
       | _, "WAFInvalidParameterException" ->
           `WAFInvalidParameterException
             (Json_deserializers.waf_invalid_parameter_exception_of_yojson tree path)
+      | _, "WAFLimitsExceededException" ->
+          `WAFLimitsExceededException
+            (Json_deserializers.waf_limits_exceeded_exception_of_yojson tree path)
       | _, "WAFNonexistentItemException" ->
           `WAFNonexistentItemException
             (Json_deserializers.waf_nonexistent_item_exception_of_yojson tree path)
@@ -1183,6 +1193,111 @@ module GetRegexPatternSet = struct
       ~error_deserializer
 end
 
+module GetRevenueStatistics = struct
+  let error_to_string = function
+    | `WAFInternalErrorException _ -> "com.amazonaws.wafv2#WAFInternalErrorException"
+    | `WAFInvalidOperationException _ -> "com.amazonaws.wafv2#WAFInvalidOperationException"
+    | `WAFInvalidParameterException _ -> "com.amazonaws.wafv2#WAFInvalidParameterException"
+    | `WAFNonexistentItemException _ -> "com.amazonaws.wafv2#WAFNonexistentItemException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "WAFInternalErrorException" ->
+          `WAFInternalErrorException
+            (Json_deserializers.waf_internal_error_exception_of_yojson tree path)
+      | _, "WAFInvalidOperationException" ->
+          `WAFInvalidOperationException
+            (Json_deserializers.waf_invalid_operation_exception_of_yojson tree path)
+      | _, "WAFInvalidParameterException" ->
+          `WAFInvalidParameterException
+            (Json_deserializers.waf_invalid_parameter_exception_of_yojson tree path)
+      | _, "WAFNonexistentItemException" ->
+          `WAFNonexistentItemException
+            (Json_deserializers.waf_nonexistent_item_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_revenue_statistics_request) =
+    let input = Json_serializers.get_revenue_statistics_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20190729.GetRevenueStatistics" ~service
+      ~context ~input
+      ~output_deserializer:Json_deserializers.get_revenue_statistics_response_of_yojson
+      ~error_deserializer
+end
+
+module GetRevenueStatisticsSummary = struct
+  let error_to_string = function
+    | `WAFInternalErrorException _ -> "com.amazonaws.wafv2#WAFInternalErrorException"
+    | `WAFInvalidOperationException _ -> "com.amazonaws.wafv2#WAFInvalidOperationException"
+    | `WAFInvalidParameterException _ -> "com.amazonaws.wafv2#WAFInvalidParameterException"
+    | `WAFNonexistentItemException _ -> "com.amazonaws.wafv2#WAFNonexistentItemException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "WAFInternalErrorException" ->
+          `WAFInternalErrorException
+            (Json_deserializers.waf_internal_error_exception_of_yojson tree path)
+      | _, "WAFInvalidOperationException" ->
+          `WAFInvalidOperationException
+            (Json_deserializers.waf_invalid_operation_exception_of_yojson tree path)
+      | _, "WAFInvalidParameterException" ->
+          `WAFInvalidParameterException
+            (Json_deserializers.waf_invalid_parameter_exception_of_yojson tree path)
+      | _, "WAFNonexistentItemException" ->
+          `WAFNonexistentItemException
+            (Json_deserializers.waf_nonexistent_item_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_revenue_statistics_summary_request) =
+    let input = Json_serializers.get_revenue_statistics_summary_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20190729.GetRevenueStatisticsSummary"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_revenue_statistics_summary_response_of_yojson
+      ~error_deserializer
+end
+
+module GetRevenueStatisticsTimeSeries = struct
+  let error_to_string = function
+    | `WAFInternalErrorException _ -> "com.amazonaws.wafv2#WAFInternalErrorException"
+    | `WAFInvalidOperationException _ -> "com.amazonaws.wafv2#WAFInvalidOperationException"
+    | `WAFInvalidParameterException _ -> "com.amazonaws.wafv2#WAFInvalidParameterException"
+    | `WAFNonexistentItemException _ -> "com.amazonaws.wafv2#WAFNonexistentItemException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "WAFInternalErrorException" ->
+          `WAFInternalErrorException
+            (Json_deserializers.waf_internal_error_exception_of_yojson tree path)
+      | _, "WAFInvalidOperationException" ->
+          `WAFInvalidOperationException
+            (Json_deserializers.waf_invalid_operation_exception_of_yojson tree path)
+      | _, "WAFInvalidParameterException" ->
+          `WAFInvalidParameterException
+            (Json_deserializers.waf_invalid_parameter_exception_of_yojson tree path)
+      | _, "WAFNonexistentItemException" ->
+          `WAFNonexistentItemException
+            (Json_deserializers.waf_nonexistent_item_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_revenue_statistics_time_series_request) =
+    let input = Json_serializers.get_revenue_statistics_time_series_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20190729.GetRevenueStatisticsTimeSeries"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_revenue_statistics_time_series_response_of_yojson
+      ~error_deserializer
+end
+
 module GetRuleGroup = struct
   let error_to_string = function
     | `WAFInternalErrorException _ -> "com.amazonaws.wafv2#WAFInternalErrorException"
@@ -1245,6 +1360,47 @@ module GetSampledRequests = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20190729.GetSampledRequests" ~service
       ~context ~input
       ~output_deserializer:Json_deserializers.get_sampled_requests_response_of_yojson
+      ~error_deserializer
+end
+
+module GetTopPathStatisticsByTraffic = struct
+  let error_to_string = function
+    | `WAFFeatureNotIncludedInPricingPlanException _ ->
+        "com.amazonaws.wafv2#WAFFeatureNotIncludedInPricingPlanException"
+    | `WAFInternalErrorException _ -> "com.amazonaws.wafv2#WAFInternalErrorException"
+    | `WAFInvalidOperationException _ -> "com.amazonaws.wafv2#WAFInvalidOperationException"
+    | `WAFInvalidParameterException _ -> "com.amazonaws.wafv2#WAFInvalidParameterException"
+    | `WAFNonexistentItemException _ -> "com.amazonaws.wafv2#WAFNonexistentItemException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "WAFFeatureNotIncludedInPricingPlanException" ->
+          `WAFFeatureNotIncludedInPricingPlanException
+            (Json_deserializers.waf_feature_not_included_in_pricing_plan_exception_of_yojson tree
+               path)
+      | _, "WAFInternalErrorException" ->
+          `WAFInternalErrorException
+            (Json_deserializers.waf_internal_error_exception_of_yojson tree path)
+      | _, "WAFInvalidOperationException" ->
+          `WAFInvalidOperationException
+            (Json_deserializers.waf_invalid_operation_exception_of_yojson tree path)
+      | _, "WAFInvalidParameterException" ->
+          `WAFInvalidParameterException
+            (Json_deserializers.waf_invalid_parameter_exception_of_yojson tree path)
+      | _, "WAFNonexistentItemException" ->
+          `WAFNonexistentItemException
+            (Json_deserializers.waf_nonexistent_item_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_top_path_statistics_by_traffic_request) =
+    let input = Json_serializers.get_top_path_statistics_by_traffic_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20190729.GetTopPathStatisticsByTraffic"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_top_path_statistics_by_traffic_response_of_yojson
       ~error_deserializer
 end
 
@@ -1643,6 +1799,41 @@ module ListRuleGroups = struct
       ~error_deserializer
 end
 
+module ListSettlementRecords = struct
+  let error_to_string = function
+    | `WAFInternalErrorException _ -> "com.amazonaws.wafv2#WAFInternalErrorException"
+    | `WAFInvalidOperationException _ -> "com.amazonaws.wafv2#WAFInvalidOperationException"
+    | `WAFInvalidParameterException _ -> "com.amazonaws.wafv2#WAFInvalidParameterException"
+    | `WAFNonexistentItemException _ -> "com.amazonaws.wafv2#WAFNonexistentItemException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "WAFInternalErrorException" ->
+          `WAFInternalErrorException
+            (Json_deserializers.waf_internal_error_exception_of_yojson tree path)
+      | _, "WAFInvalidOperationException" ->
+          `WAFInvalidOperationException
+            (Json_deserializers.waf_invalid_operation_exception_of_yojson tree path)
+      | _, "WAFInvalidParameterException" ->
+          `WAFInvalidParameterException
+            (Json_deserializers.waf_invalid_parameter_exception_of_yojson tree path)
+      | _, "WAFNonexistentItemException" ->
+          `WAFNonexistentItemException
+            (Json_deserializers.waf_nonexistent_item_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_settlement_records_request) =
+    let input = Json_serializers.list_settlement_records_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20190729.ListSettlementRecords" ~service
+      ~context ~input
+      ~output_deserializer:Json_deserializers.list_settlement_records_response_of_yojson
+      ~error_deserializer
+end
+
 module ListTagsForResource = struct
   let error_to_string = function
     | `WAFInternalErrorException _ -> "com.amazonaws.wafv2#WAFInternalErrorException"
@@ -1719,6 +1910,8 @@ end
 
 module PutLoggingConfiguration = struct
   let error_to_string = function
+    | `WAFFeatureNotIncludedInPricingPlanException _ ->
+        "com.amazonaws.wafv2#WAFFeatureNotIncludedInPricingPlanException"
     | `WAFInternalErrorException _ -> "com.amazonaws.wafv2#WAFInternalErrorException"
     | `WAFInvalidOperationException _ -> "com.amazonaws.wafv2#WAFInvalidOperationException"
     | `WAFInvalidParameterException _ -> "com.amazonaws.wafv2#WAFInvalidParameterException"
@@ -1733,6 +1926,10 @@ module PutLoggingConfiguration = struct
 
   let error_deserializer tree path =
     let handler handler tree path = function
+      | _, "WAFFeatureNotIncludedInPricingPlanException" ->
+          `WAFFeatureNotIncludedInPricingPlanException
+            (Json_deserializers.waf_feature_not_included_in_pricing_plan_exception_of_yojson tree
+               path)
       | _, "WAFInternalErrorException" ->
           `WAFInternalErrorException
             (Json_deserializers.waf_internal_error_exception_of_yojson tree path)
@@ -2134,6 +2331,8 @@ module UpdateWebACL = struct
     | `WAFDuplicateItemException _ -> "com.amazonaws.wafv2#WAFDuplicateItemException"
     | `WAFExpiredManagedRuleGroupVersionException _ ->
         "com.amazonaws.wafv2#WAFExpiredManagedRuleGroupVersionException"
+    | `WAFFeatureNotIncludedInPricingPlanException _ ->
+        "com.amazonaws.wafv2#WAFFeatureNotIncludedInPricingPlanException"
     | `WAFInternalErrorException _ -> "com.amazonaws.wafv2#WAFInternalErrorException"
     | `WAFInvalidOperationException _ -> "com.amazonaws.wafv2#WAFInvalidOperationException"
     | `WAFInvalidParameterException _ -> "com.amazonaws.wafv2#WAFInvalidParameterException"
@@ -2156,6 +2355,10 @@ module UpdateWebACL = struct
       | _, "WAFExpiredManagedRuleGroupVersionException" ->
           `WAFExpiredManagedRuleGroupVersionException
             (Json_deserializers.waf_expired_managed_rule_group_version_exception_of_yojson tree path)
+      | _, "WAFFeatureNotIncludedInPricingPlanException" ->
+          `WAFFeatureNotIncludedInPricingPlanException
+            (Json_deserializers.waf_feature_not_included_in_pricing_plan_exception_of_yojson tree
+               path)
       | _, "WAFInternalErrorException" ->
           `WAFInternalErrorException
             (Json_deserializers.waf_internal_error_exception_of_yojson tree path)

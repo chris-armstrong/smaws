@@ -65,10 +65,15 @@ let xks_proxy_connectivity_type_of_yojson (tree : t) path =
     : xks_proxy_connectivity_type)
 
 let xks_proxy_authentication_access_key_id_type_of_yojson = string_of_yojson
+let account_id_type_of_yojson = string_of_yojson
 
 let xks_proxy_configuration_type_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     vpc_endpoint_service_owner =
+       option_of_yojson
+         (value_for_key account_id_type_of_yojson "VpcEndpointServiceOwner")
+         _list path;
      vpc_endpoint_service_name =
        option_of_yojson
          (value_for_key xks_proxy_vpc_endpoint_service_name_type_of_yojson "VpcEndpointServiceName")
@@ -141,6 +146,8 @@ let boolean_type_of_yojson = bool_of_yojson
 
 let signing_algorithm_spec_of_yojson (tree : t) path =
   ((match tree with
+    | `String "ED25519_PH_SHA_512" -> ED25519_PH_SHA_512
+    | `String "ED25519_SHA_512" -> ED25519_SHA_512
     | `String "ML_DSA_SHAKE_256" -> ML_DSA_SHAKE_256
     | `String "SM2DSA" -> SM2DSA
     | `String "ECDSA_SHA_512" -> ECDSA_SHA_512
@@ -342,6 +349,10 @@ let update_custom_key_store_request_of_yojson tree path =
        option_of_yojson
          (value_for_key xks_proxy_authentication_credential_type_of_yojson
             "XksProxyAuthenticationCredential")
+         _list path;
+     xks_proxy_vpc_endpoint_service_owner =
+       option_of_yojson
+         (value_for_key account_id_type_of_yojson "XksProxyVpcEndpointServiceOwner")
          _list path;
      xks_proxy_vpc_endpoint_service_name =
        option_of_yojson
@@ -647,6 +658,7 @@ let customer_master_key_spec_of_yojson (tree : t) path =
 
 let key_spec_of_yojson (tree : t) path =
   ((match tree with
+    | `String "ECC_NIST_EDWARDS25519" -> ECC_NIST_EDWARDS25519
     | `String "ML_DSA_87" -> ML_DSA_87
     | `String "ML_DSA_65" -> ML_DSA_65
     | `String "ML_DSA_44" -> ML_DSA_44
@@ -875,9 +887,22 @@ let encryption_context_key_of_yojson = string_of_yojson
 let encryption_context_type_of_yojson tree path =
   map_of_yojson encryption_context_key_of_yojson encryption_context_value_of_yojson tree path
 
+let dry_run_modifier_type_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "IGNORE_CIPHERTEXT" -> IGNORE_CIPHERTEXT
+    | `String value -> raise (deserialize_unknown_enum_value_error path "DryRunModifierType" value)
+    | _ -> raise (deserialize_wrong_type_error path "DryRunModifierType")
+     : dry_run_modifier_type)
+    : dry_run_modifier_type)
+
+let dry_run_modifier_list_of_yojson tree path =
+  list_of_yojson dry_run_modifier_type_of_yojson tree path
+
 let re_encrypt_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     dry_run_modifiers =
+       option_of_yojson (value_for_key dry_run_modifier_list_of_yojson "DryRunModifiers") _list path;
      dry_run = option_of_yojson (value_for_key nullable_boolean_type_of_yojson "DryRun") _list path;
      grant_tokens =
        option_of_yojson (value_for_key grant_token_list_of_yojson "GrantTokens") _list path;
@@ -899,7 +924,8 @@ let re_encrypt_request_of_yojson tree path =
        option_of_yojson
          (value_for_key encryption_context_type_of_yojson "SourceEncryptionContext")
          _list path;
-     ciphertext_blob = value_for_key ciphertext_type_of_yojson "CiphertextBlob" _list path;
+     ciphertext_blob =
+       option_of_yojson (value_for_key ciphertext_type_of_yojson "CiphertextBlob") _list path;
    }
     : re_encrypt_request)
 
@@ -952,10 +978,15 @@ let grant_operation_of_yojson (tree : t) path =
     : grant_operation)
 
 let grant_operation_list_of_yojson tree path = list_of_yojson grant_operation_of_yojson tree path
+let grant_constraint_source_arn_type_of_yojson = string_of_yojson
 
 let grant_constraints_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     source_arn =
+       option_of_yojson
+         (value_for_key grant_constraint_source_arn_type_of_yojson "SourceArn")
+         _list path;
      encryption_context_equals =
        option_of_yojson
          (value_for_key encryption_context_type_of_yojson "EncryptionContextEquals")
@@ -967,9 +998,19 @@ let grant_constraints_of_yojson tree path =
    }
     : grant_constraints)
 
+let service_principal_type_of_yojson = string_of_yojson
+
 let grant_list_entry_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     retiring_service_principal =
+       option_of_yojson
+         (value_for_key service_principal_type_of_yojson "RetiringServicePrincipal")
+         _list path;
+     grantee_service_principal =
+       option_of_yojson
+         (value_for_key service_principal_type_of_yojson "GranteeServicePrincipal")
+         _list path;
      constraints =
        option_of_yojson (value_for_key grant_constraints_of_yojson "Constraints") _list path;
      operations =
@@ -1004,7 +1045,12 @@ let limit_type_of_yojson = int_of_yojson
 let list_retirable_grants_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     retiring_principal = value_for_key principal_id_type_of_yojson "RetiringPrincipal" _list path;
+     retiring_service_principal =
+       option_of_yojson
+         (value_for_key service_principal_type_of_yojson "RetiringServicePrincipal")
+         _list path;
+     retiring_principal =
+       option_of_yojson (value_for_key principal_id_type_of_yojson "RetiringPrincipal") _list path;
      marker = option_of_yojson (value_for_key marker_type_of_yojson "Marker") _list path;
      limit = option_of_yojson (value_for_key limit_type_of_yojson "Limit") _list path;
    }
@@ -1068,6 +1114,7 @@ let import_state_of_yojson (tree : t) path =
 
 let key_material_state_of_yojson (tree : t) path =
   ((match tree with
+    | `String "PENDING_MULTI_REGION_IMPORT_AND_ROTATION" -> PENDING_MULTI_REGION_IMPORT_AND_ROTATION
     | `String "PENDING_ROTATION" -> PENDING_ROTATION
     | `String "CURRENT" -> CURRENT
     | `String "NON_CURRENT" -> NON_CURRENT
@@ -1164,6 +1211,10 @@ let list_key_policies_request_of_yojson tree path =
 let list_grants_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     grantee_service_principal =
+       option_of_yojson
+         (value_for_key service_principal_type_of_yojson "GranteeServicePrincipal")
+         _list path;
      grantee_principal =
        option_of_yojson (value_for_key principal_id_type_of_yojson "GranteePrincipal") _list path;
      grant_id = option_of_yojson (value_for_key grant_id_type_of_yojson "GrantId") _list path;
@@ -1371,6 +1422,63 @@ let get_key_policy_request_of_yojson tree path =
    }
     : get_key_policy_request)
 
+let key_last_usage_tracking_operation_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "VerifyMac" -> VerifyMac
+    | `String "Verify" -> Verify
+    | `String "Sign" -> Sign
+    | `String "ReEncrypt" -> ReEncrypt
+    | `String "GenerateMac" -> GenerateMac
+    | `String "GenerateDataKeyWithoutPlaintext" -> GenerateDataKeyWithoutPlaintext
+    | `String "GenerateDataKeyPairWithoutPlaintext" -> GenerateDataKeyPairWithoutPlaintext
+    | `String "GenerateDataKeyPair" -> GenerateDataKeyPair
+    | `String "GenerateDataKey" -> GenerateDataKey
+    | `String "Encrypt" -> Encrypt
+    | `String "DeriveSharedSecret" -> DeriveSharedSecret
+    | `String "Decrypt" -> Decrypt
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "KeyLastUsageTrackingOperation" value)
+    | _ -> raise (deserialize_wrong_type_error path "KeyLastUsageTrackingOperation")
+     : key_last_usage_tracking_operation)
+    : key_last_usage_tracking_operation)
+
+let cloud_trail_event_id_type_of_yojson = string_of_yojson
+let kms_request_id_type_of_yojson = string_of_yojson
+
+let key_last_usage_data_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     kms_request_id =
+       option_of_yojson (value_for_key kms_request_id_type_of_yojson "KmsRequestId") _list path;
+     cloud_trail_event_id =
+       option_of_yojson
+         (value_for_key cloud_trail_event_id_type_of_yojson "CloudTrailEventId")
+         _list path;
+     timestamp = option_of_yojson (value_for_key date_type_of_yojson "Timestamp") _list path;
+     operation =
+       option_of_yojson
+         (value_for_key key_last_usage_tracking_operation_of_yojson "Operation")
+         _list path;
+   }
+    : key_last_usage_data)
+
+let get_key_last_usage_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     key_creation_date =
+       option_of_yojson (value_for_key date_type_of_yojson "KeyCreationDate") _list path;
+     tracking_start_date =
+       option_of_yojson (value_for_key date_type_of_yojson "TrackingStartDate") _list path;
+     key_last_usage =
+       option_of_yojson (value_for_key key_last_usage_data_of_yojson "KeyLastUsage") _list path;
+     key_id = option_of_yojson (value_for_key key_id_type_of_yojson "KeyId") _list path;
+   }
+    : get_key_last_usage_response)
+
+let get_key_last_usage_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({ key_id = value_for_key key_id_type_of_yojson "KeyId" _list path } : get_key_last_usage_request)
+
 let generate_random_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1483,6 +1591,7 @@ let generate_data_key_without_plaintext_request_of_yojson tree path =
 
 let data_key_pair_spec_of_yojson (tree : t) path =
   ((match tree with
+    | `String "ECC_NIST_EDWARDS25519" -> ECC_NIST_EDWARDS25519
     | `String "SM2" -> SM2
     | `String "ECC_SECG_P256K1" -> ECC_SECG_P256K1
     | `String "ECC_NIST_P521" -> ECC_NIST_P521
@@ -1896,6 +2005,8 @@ let decrypt_response_of_yojson tree path =
 let decrypt_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     dry_run_modifiers =
+       option_of_yojson (value_for_key dry_run_modifier_list_of_yojson "DryRunModifiers") _list path;
      dry_run = option_of_yojson (value_for_key nullable_boolean_type_of_yojson "DryRun") _list path;
      recipient = option_of_yojson (value_for_key recipient_info_of_yojson "Recipient") _list path;
      encryption_algorithm =
@@ -1909,7 +2020,8 @@ let decrypt_request_of_yojson tree path =
        option_of_yojson
          (value_for_key encryption_context_type_of_yojson "EncryptionContext")
          _list path;
-     ciphertext_blob = value_for_key ciphertext_type_of_yojson "CiphertextBlob" _list path;
+     ciphertext_blob =
+       option_of_yojson (value_for_key ciphertext_type_of_yojson "CiphertextBlob") _list path;
    }
     : decrypt_request)
 
@@ -1960,6 +2072,14 @@ let create_grant_response_of_yojson tree path =
 let create_grant_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     retiring_service_principal =
+       option_of_yojson
+         (value_for_key service_principal_type_of_yojson "RetiringServicePrincipal")
+         _list path;
+     grantee_service_principal =
+       option_of_yojson
+         (value_for_key service_principal_type_of_yojson "GranteeServicePrincipal")
+         _list path;
      dry_run = option_of_yojson (value_for_key nullable_boolean_type_of_yojson "DryRun") _list path;
      name = option_of_yojson (value_for_key grant_name_type_of_yojson "Name") _list path;
      grant_tokens =
@@ -1969,7 +2089,8 @@ let create_grant_request_of_yojson tree path =
      operations = value_for_key grant_operation_list_of_yojson "Operations" _list path;
      retiring_principal =
        option_of_yojson (value_for_key principal_id_type_of_yojson "RetiringPrincipal") _list path;
-     grantee_principal = value_for_key principal_id_type_of_yojson "GranteePrincipal" _list path;
+     grantee_principal =
+       option_of_yojson (value_for_key principal_id_type_of_yojson "GranteePrincipal") _list path;
      key_id = value_for_key key_id_type_of_yojson "KeyId" _list path;
    }
     : create_grant_request)
@@ -2005,6 +2126,10 @@ let create_custom_key_store_request_of_yojson tree path =
        option_of_yojson
          (value_for_key xks_proxy_authentication_credential_type_of_yojson
             "XksProxyAuthenticationCredential")
+         _list path;
+     xks_proxy_vpc_endpoint_service_owner =
+       option_of_yojson
+         (value_for_key account_id_type_of_yojson "XksProxyVpcEndpointServiceOwner")
          _list path;
      xks_proxy_vpc_endpoint_service_name =
        option_of_yojson

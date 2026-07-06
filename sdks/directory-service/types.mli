@@ -66,16 +66,17 @@ type nonrec os_version = VERSION_2019 [@ocaml.doc ""] | VERSION_2012 [@ocaml.doc
 
 type nonrec os_update_settings = {
   os_version : os_version option;
-      [@ocaml.doc " OS version that the directory needs to be updated to. \n"]
+      [@ocaml.doc "OS version that the directory needs to be updated to.\n"]
 }
-[@@ocaml.doc " OS version that the directory needs to be updated to. \n"]
+[@@ocaml.doc "OS version that the directory needs to be updated to.\n"]
 
 type nonrec update_value = {
   os_update_settings : os_update_settings option; [@ocaml.doc " The OS update related settings. \n"]
 }
 [@@ocaml.doc " The value for a given type of [UpdateSettings]. \n"]
 
-type nonrec update_type = OS [@ocaml.doc ""] [@@ocaml.doc ""]
+type nonrec update_type = SIZE [@ocaml.doc ""] | NETWORK [@ocaml.doc ""] | OS [@ocaml.doc ""]
+[@@ocaml.doc ""]
 
 type nonrec update_trust_result = {
   trust_id : trust_id option; [@ocaml.doc "Identifier of the trust relationship.\n"]
@@ -196,11 +197,13 @@ type nonrec radius_settings = {
       [@ocaml.doc
         "The port that your RADIUS server is using for communications. Your self-managed network \
          must allow inbound traffic over this port from the Directory Service servers.\n"]
+  radius_servers_ipv6 : servers option;
+      [@ocaml.doc
+        "The IPv6 addresses of the RADIUS server endpoints or RADIUS server load balancer.\n"]
   radius_servers : servers option;
       [@ocaml.doc
-        "An array of strings that contains the fully qualified domain name (FQDN) or IP addresses \
-         of the RADIUS server endpoints, or the FQDN or IP addresses of your RADIUS server load \
-         balancer.\n"]
+        "The fully qualified domain name (FQDN) or IP addresses of the RADIUS server endpoints, or \
+         the FQDN or IP addresses of your RADIUS server load balancer.\n"]
 }
 [@@ocaml.doc
   "Contains information about a Remote Authentication Dial In User Service (RADIUS) server.\n"]
@@ -259,24 +262,141 @@ type nonrec update_info_entry = {
       [@ocaml.doc " The status of the update performed on the directory. \n"]
   region : region_name option; [@ocaml.doc " The name of the Region. \n"]
 }
-[@@ocaml.doc " An entry of update information related to a requested update type. \n"]
+[@@ocaml.doc "An entry of update information related to a requested update type.\n"]
+
+type nonrec assessment_id = string [@@ocaml.doc ""]
+
+type nonrec update_hybrid_ad_result = {
+  assessment_id : assessment_id option;
+      [@ocaml.doc
+        "The identifier of the assessment performed to validate the update configuration. This \
+         assessment ensures the updated settings are compatible with your environment.\n"]
+  directory_id : directory_id option;
+      [@ocaml.doc "The identifier of the updated hybrid directory.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec secret_arn = string [@@ocaml.doc ""]
+
+type nonrec hybrid_administrator_account_update = {
+  secret_arn : secret_arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret that \
+         contains the credentials for the AD administrator user, and enables hybrid domain \
+         controllers to join the managed AD domain. For example:\n\n\
+        \  [\n\
+        \                \
+         {\"customerAdAdminDomainUsername\":\"carlos_salazar\",\"customerAdAdminDomainPassword\":\"ExamplePassword123!\"}.\n\
+        \            ] \n\
+        \ "]
+}
+[@@ocaml.doc " Use to recover to the hybrid directory administrator account credentials.\n"]
+
+type nonrec ip_addr = string [@@ocaml.doc ""]
+
+type nonrec customer_dns_ips = ip_addr list [@@ocaml.doc ""]
+
+type nonrec assessment_instance_id = string [@@ocaml.doc ""]
+
+type nonrec assessment_instance_ids = assessment_instance_id list [@@ocaml.doc ""]
+
+type nonrec hybrid_customer_instances_settings = {
+  instance_ids : assessment_instance_ids;
+      [@ocaml.doc
+        "The identifiers of the self-managed instances with SSM used in hybrid directory.\n"]
+  customer_dns_ips : customer_dns_ips;
+      [@ocaml.doc
+        "The IP addresses of the DNS servers or domain controllers in your self-managed AD \
+         environment.\n"]
+}
+[@@ocaml.doc
+  "Contains configuration settings for self-managed instances with SSM used in hybrid directory \
+   operations.\n"]
+
+type nonrec update_hybrid_ad_request = {
+  self_managed_instances_settings : hybrid_customer_instances_settings option;
+      [@ocaml.doc
+        "Updates to the self-managed AD configuration, including DNS server IP addresses and \
+         Amazon Web Services System Manager managed node identifiers.\n"]
+  hybrid_administrator_account_update : hybrid_administrator_account_update option;
+      [@ocaml.doc
+        "We create a hybrid directory administrator account when we create a hybrid directory. Use \
+         [HybridAdministratorAccountUpdate] to recover the hybrid directory administrator account \
+         if you have deleted it.\n\n\
+        \ To recover your hybrid directory administrator account, we need temporary access to a \
+         user in your self-managed AD with administrator permissions in the form of a secret from \
+         Amazon Web Services Secrets Manager. We use these credentials once during recovery and \
+         don't store them.\n\
+        \ \n\
+        \  If your hybrid directory administrator account exists, then you don\226\128\153t need \
+         to use [HybridAdministratorAccountUpdate], even if you have updated your self-managed AD \
+         administrator user.\n\
+        \  "]
+  directory_id : directory_id; [@ocaml.doc "The identifier of the hybrid directory to update.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec ad_assessment_limit_exceeded_exception = {
+  request_id : request_id option; [@ocaml.doc ""]
+  message : exception_message option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "A directory assessment is automatically created when you create a hybrid directory. There are \
+   two types of assessments: [CUSTOMER] and [SYSTEM]. Your Amazon Web Services account has a limit \
+   of 100 [CUSTOMER] directory assessments.\n\n\
+  \ If you attempt to create a hybrid directory; and you already have 100 [CUSTOMER] directory \
+   assessments;, you will encounter an error. Delete assessments to free up capacity before trying \
+   again.\n\
+  \ \n\
+  \  You can request an increase to your [CUSTOMER] directory assessment quota by contacting \
+   customer support or delete existing CUSTOMER directory assessments; to free up capacity.\n\
+  \  "]
 
 type nonrec update_directory_setup_result = unit [@@ocaml.doc ""]
+
+type nonrec directory_size = LARGE [@ocaml.doc ""] | SMALL [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec directory_size_update_settings = {
+  directory_size : directory_size option;
+      [@ocaml.doc "The target directory size for the update operation.\n"]
+}
+[@@ocaml.doc "Contains the directory size configuration for update operations.\n"]
+
+type nonrec network_type =
+  | IPV6_ONLY [@ocaml.doc ""]
+  | IPV4_ONLY [@ocaml.doc ""]
+  | DUAL_STACK [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec ipv6_addr = string [@@ocaml.doc ""]
+
+type nonrec dns_ipv6_addrs = ipv6_addr list [@@ocaml.doc ""]
+
+type nonrec network_update_settings = {
+  customer_dns_ips_v6 : dns_ipv6_addrs option;
+      [@ocaml.doc
+        "IPv6 addresses of DNS servers or domain controllers in the self-managed directory. \
+         Required only when updating an AD Connector directory.\n"]
+  network_type : network_type option;
+      [@ocaml.doc "The target network type for the directory update.\n"]
+}
+[@@ocaml.doc "Contains the network configuration for directory update operations.\n"]
 
 type nonrec create_snapshot_before_update = bool [@@ocaml.doc ""]
 
 type nonrec update_directory_setup_request = {
   create_snapshot_before_update : create_snapshot_before_update option;
       [@ocaml.doc
-        " The boolean that specifies if a snapshot for the directory needs to be taken before \
-         updating the directory. \n"]
+        "Specifies whether to create a directory snapshot before performing the update.\n"]
+  network_update_settings : network_update_settings option;
+      [@ocaml.doc "Network configuration to apply during the directory update operation.\n"]
+  directory_size_update_settings : directory_size_update_settings option;
+      [@ocaml.doc "Directory size configuration to apply during the update operation.\n"]
   os_update_settings : os_update_settings option;
-      [@ocaml.doc " The settings for the OS update that needs to be performed on the directory. \n"]
-  update_type : update_type;
       [@ocaml.doc
-        " The type of update that needs to be performed on the directory. For example, OS. \n"]
-  directory_id : directory_id;
-      [@ocaml.doc " The identifier of the directory on which you want to perform the update. \n"]
+        "Operating system configuration to apply during the directory update operation.\n"]
+  update_type : update_type; [@ocaml.doc "The type of update to perform on the directory.\n"]
+  directory_id : directory_id; [@ocaml.doc "The identifier of the directory to update.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -304,12 +424,14 @@ type nonrec update_conditional_forwarder_result = unit [@@ocaml.doc ""]
 
 type nonrec remote_domain_name = string [@@ocaml.doc ""]
 
-type nonrec ip_addr = string [@@ocaml.doc ""]
-
 type nonrec dns_ip_addrs = ip_addr list [@@ocaml.doc ""]
 
 type nonrec update_conditional_forwarder_request = {
-  dns_ip_addrs : dns_ip_addrs;
+  dns_ipv6_addrs : dns_ipv6_addrs option;
+      [@ocaml.doc
+        "The updated IPv6 addresses of the remote DNS server associated with the conditional \
+         forwarder.\n"]
+  dns_ip_addrs : dns_ip_addrs option;
       [@ocaml.doc
         "The updated IP addresses of the remote DNS server associated with the conditional \
          forwarder.\n"]
@@ -506,6 +628,68 @@ type nonrec start_schema_extension_request = {
   directory_id : directory_id;
       [@ocaml.doc
         "The identifier of the directory for which the schema extension will be applied to.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec start_ad_assessment_result = {
+  assessment_id : assessment_id option;
+      [@ocaml.doc
+        "The unique identifier of the newly started directory assessment. Use this identifier to \
+         monitor assessment progress and retrieve results.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec directory_name = string [@@ocaml.doc ""]
+
+type nonrec directory_vpc_settings = {
+  subnet_ids : subnet_ids;
+      [@ocaml.doc
+        "The identifiers of the subnets for the directory servers. The two subnets must be in \
+         different Availability Zones. Directory Service creates a directory server and a DNS \
+         server in each of these subnets.\n"]
+  vpc_id : vpc_id; [@ocaml.doc "The identifier of the VPC in which to create the directory.\n"]
+}
+[@@ocaml.doc
+  "Contains VPC information for the [CreateDirectory], [CreateMicrosoftAD], or [CreateHybridAD] \
+   operation.\n"]
+
+type nonrec security_group_id = string [@@ocaml.doc ""]
+
+type nonrec security_group_ids = security_group_id list [@@ocaml.doc ""]
+
+type nonrec assessment_configuration = {
+  security_group_ids : security_group_ids option;
+      [@ocaml.doc
+        "By default, the service attaches a security group to allow network access to the \
+         self-managed nodes in your Amazon VPC. You can optionally supply your own security group \
+         that allows network traffic to and from your self-managed domain controllers outside of \
+         your Amazon VPC. \n"]
+  instance_ids : assessment_instance_ids;
+      [@ocaml.doc
+        "The identifiers of the self-managed instances with SSM that are used to perform \
+         connectivity and validation tests.\n"]
+  vpc_settings : directory_vpc_settings; [@ocaml.doc ""]
+  dns_name : directory_name;
+      [@ocaml.doc
+        "The fully qualified domain name (FQDN) of the self-managed AD domain to assess.\n"]
+  customer_dns_ips : customer_dns_ips;
+      [@ocaml.doc
+        "A list of IP addresses for the DNS servers or domain controllers in your self-managed AD \
+         that are tested during the assessment.\n"]
+}
+[@@ocaml.doc "Contains configuration parameters required to perform a directory assessment.\n"]
+
+type nonrec start_ad_assessment_request = {
+  directory_id : directory_id option;
+      [@ocaml.doc
+        "The identifier of the directory for which to perform the assessment. This should be an \
+         existing directory. If the assessment is not for an existing directory, this parameter \
+         should be omitted.\n"]
+  assessment_configuration : assessment_configuration option;
+      [@ocaml.doc
+        "Configuration parameters for the directory assessment, including DNS server information, \
+         domain name, Amazon VPC subnet, and Amazon Web Services System Manager managed node \
+         details.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -736,8 +920,6 @@ type nonrec setting_entry = {
 
 type nonrec setting_entries = setting_entry list [@@ocaml.doc ""]
 
-type nonrec security_group_id = string [@@ocaml.doc ""]
-
 type nonrec schema_extension_status =
   | COMPLETED [@ocaml.doc ""]
   | FAILED [@ocaml.doc ""]
@@ -833,8 +1015,13 @@ type nonrec cidr_ip = string [@@ocaml.doc ""]
 
 type nonrec cidr_ips = cidr_ip list [@@ocaml.doc ""]
 
+type nonrec cidr_ipv6 = string [@@ocaml.doc ""]
+
+type nonrec cidr_ipv6s = cidr_ipv6 list [@@ocaml.doc ""]
+
 type nonrec remove_ip_routes_request = {
-  cidr_ips : cidr_ips; [@ocaml.doc "IP address blocks that you want to remove.\n"]
+  cidr_ipv6s : cidr_ipv6s option; [@ocaml.doc "IPv6 address blocks that you want to remove.\n"]
+  cidr_ips : cidr_ips option; [@ocaml.doc "IP address blocks that you want to remove.\n"]
   directory_id : directory_id;
       [@ocaml.doc
         "Identifier (ID) of the directory from which you want to remove the IP addresses.\n"]
@@ -954,17 +1141,6 @@ type nonrec directory_stage =
   | REQUESTED [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec directory_vpc_settings = {
-  subnet_ids : subnet_ids;
-      [@ocaml.doc
-        "The identifiers of the subnets for the directory servers. The two subnets must be in \
-         different Availability Zones. Directory Service creates a directory server and a DNS \
-         server in each of these subnets.\n"]
-  vpc_id : vpc_id; [@ocaml.doc "The identifier of the VPC in which to create the directory.\n"]
-}
-[@@ocaml.doc
-  "Contains VPC information for the [CreateDirectory] or [CreateMicrosoftAD] operation.\n"]
-
 type nonrec launch_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
 
 type nonrec region_description = {
@@ -1003,6 +1179,8 @@ type nonrec radius_status =
   | CREATING [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
+type nonrec pca_connector_arn = string [@@ocaml.doc ""]
+
 type nonrec password = string [@@ocaml.doc ""]
 
 type nonrec page_limit = int [@@ocaml.doc ""]
@@ -1023,12 +1201,15 @@ type nonrec directory_vpc_settings_description = {
 [@@ocaml.doc "Contains information about the directory.\n"]
 
 type nonrec owner_directory_description = {
-  radius_status : radius_status option;
-      [@ocaml.doc "Information about the status of the RADIUS server.\n"]
+  network_type : network_type option;
+      [@ocaml.doc "Network type of the directory in the directory owner account.\n"]
+  radius_status : radius_status option; [@ocaml.doc "The status of the RADIUS server.\n"]
   radius_settings : radius_settings option;
-      [@ocaml.doc "A [RadiusSettings] object that contains information about the RADIUS server.\n"]
+      [@ocaml.doc "Information about the [RadiusSettings] object server configuration.\n"]
   vpc_settings : directory_vpc_settings_description option;
       [@ocaml.doc "Information about the VPC settings for the directory.\n"]
+  dns_ipv6_addrs : dns_ipv6_addrs option;
+      [@ocaml.doc "IPv6 addresses of the directory\226\128\153s domain controllers.\n"]
   dns_ip_addrs : dns_ip_addrs option;
       [@ocaml.doc "IP address of the directory\226\128\153s domain controllers.\n"]
   account_id : customer_id option; [@ocaml.doc "Identifier of the directory owner account.\n"]
@@ -1037,8 +1218,7 @@ type nonrec owner_directory_description = {
         "Identifier of the Managed Microsoft AD directory in the directory owner account.\n"]
 }
 [@@ocaml.doc
-  "Describes the directory owner account details that have been shared to the directory consumer \
-   account.\n"]
+  "Contains the directory owner account details shared with the directory consumer account.\n"]
 
 type nonrec organizational_unit_d_n = string [@@ocaml.doc ""]
 
@@ -1151,6 +1331,7 @@ type nonrec ip_route_info = {
       [@ocaml.doc "The date and time the address block was added to the directory.\n"]
   ip_route_status_msg : ip_route_status_msg option;
       [@ocaml.doc "The status of the IP address block.\n"]
+  cidr_ipv6 : cidr_ipv6 option; [@ocaml.doc "IPv6 address block in the [IpRoute].\n"]
   cidr_ip : cidr_ip option; [@ocaml.doc "IP address block in the [IpRoute].\n"]
   directory_id : directory_id option;
       [@ocaml.doc "Identifier (ID) of the directory associated with the IP addresses.\n"]
@@ -1235,6 +1416,72 @@ type nonrec list_certificates_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec assessment_start_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec last_update_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec assessment_status = string [@@ocaml.doc ""]
+
+type nonrec assessment_report_type = string [@@ocaml.doc ""]
+
+type nonrec assessment_summary = {
+  report_type : assessment_report_type option;
+      [@ocaml.doc
+        "The type of assessment report generated. Valid values include [CUSTOMER] and [SYSTEM].\n"]
+  customer_dns_ips : customer_dns_ips option;
+      [@ocaml.doc
+        "The IP addresses of the DNS servers or domain controllers in your self-managed AD \
+         environment.\n"]
+  status : assessment_status option;
+      [@ocaml.doc
+        "The current status of the assessment. Valid values include [SUCCESS], [FAILED], \
+         [PENDING], and [IN_PROGRESS].\n"]
+  last_update_date_time : last_update_date_time option;
+      [@ocaml.doc "The date and time when the assessment status was last updated.\n"]
+  start_time : assessment_start_time option;
+      [@ocaml.doc "The date and time when the assessment was initiated.\n"]
+  dns_name : directory_name option;
+      [@ocaml.doc
+        "The fully qualified domain name (FQDN) of the Active Directory domain being assessed.\n"]
+  directory_id : directory_id option;
+      [@ocaml.doc "The identifier of the directory associated with this assessment.\n"]
+  assessment_id : assessment_id option;
+      [@ocaml.doc "The unique identifier of the directory assessment.\n"]
+}
+[@@ocaml.doc
+  "Contains summary information about a directory assessment, providing a high-level overview \
+   without detailed validation results.\n"]
+
+type nonrec assessments = assessment_summary list [@@ocaml.doc ""]
+
+type nonrec list_ad_assessments_result = {
+  next_token : next_token option;
+      [@ocaml.doc
+        "If not null, more results are available. Pass this value for the [NextToken] parameter in \
+         a subsequent request to retrieve the next set of items.\n"]
+  assessments : assessments option;
+      [@ocaml.doc
+        "A list of assessment summaries containing basic information about each directory \
+         assessment.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec assessment_limit = int [@@ocaml.doc ""]
+
+type nonrec list_ad_assessments_request = {
+  limit : assessment_limit option;
+      [@ocaml.doc "The maximum number of assessment summaries to return.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The pagination token from a previous request to [ListADAssessments]. Pass null if this is \
+         the first request.\n"]
+  directory_id : directory_id option;
+      [@ocaml.doc
+        "The identifier of the directory for which to list assessments. If not specified, all \
+         assessments in your account are returned.\n"]
+}
+[@@ocaml.doc ""]
+
 type nonrec ldaps_type = CLIENT [@ocaml.doc ""] [@@ocaml.doc ""]
 
 type nonrec ldaps_status_reason = string [@@ocaml.doc ""]
@@ -1257,17 +1504,24 @@ type nonrec ldaps_setting_info = {
 
 type nonrec ldaps_settings_info = ldaps_setting_info list [@@ocaml.doc ""]
 
+type nonrec ip_v6_addrs = ipv6_addr list [@@ocaml.doc ""]
+
 type nonrec ip_route = {
   description : description option; [@ocaml.doc "Description of the address block.\n"]
+  cidr_ipv6 : cidr_ipv6 option;
+      [@ocaml.doc
+        "IPv6 address block in CIDR format, such as 2001:db8::/32. This is often the address block \
+         of the DNS server used for your self-managed domain. For a single IPv6 address, use a \
+         CIDR address block with /128. For example, 2001:db8::1/128.\n"]
   cidr_ip : cidr_ip option;
       [@ocaml.doc
-        "IP address block using CIDR format, for example 10.0.0.0/24. This is often the address \
-         block of the DNS server used for your self-managed domain. For a single IP address use a \
-         CIDR address block with /32. For example 10.0.0.0/32.\n"]
+        "IP address block in CIDR format, such as 10.0.0.0/24. This is often the address block of \
+         the DNS server used for your self-managed domain. For a single IP address, use a CIDR \
+         address block with /32. For example, 10.0.0.0/32.\n"]
 }
 [@@ocaml.doc
-  "IP address block. This is often the address block of the DNS server used for your self-managed \
-   domain. \n"]
+  "Contains the IP address block. This is often the address block of the DNS server used for your \
+   self-managed domain. \n"]
 
 type nonrec ip_routes = ip_route list [@@ocaml.doc ""]
 
@@ -1299,6 +1553,75 @@ type nonrec insufficient_permissions_exception = {
   message : exception_message option; [@ocaml.doc ""]
 }
 [@@ocaml.doc "The account does not have sufficient permission to perform the operation.\n"]
+
+type nonrec hybrid_update_value = {
+  dns_ips : customer_dns_ips option;
+      [@ocaml.doc
+        "The IP addresses of the DNS servers or domain controllers in the hybrid directory \
+         configuration.\n"]
+  instance_ids : assessment_instance_ids option;
+      [@ocaml.doc
+        "The identifiers of the self-managed instances with SSM in the hybrid directory \
+         configuration.\n"]
+}
+[@@ocaml.doc
+  "Contains the configuration values for a hybrid directory update, including Amazon Web Services \
+   System Manager managed node and DNS information.\n"]
+
+type nonrec hybrid_update_type =
+  | HYBRID_ADMINISTRATOR_ACCOUNT [@ocaml.doc ""]
+  | SELF_MANAGED_INSTANCES [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec hybrid_update_info_entry = {
+  assessment_id : assessment_id option;
+      [@ocaml.doc
+        "The identifier of the assessment performed to validate this update configuration.\n"]
+  last_updated_date_time : last_updated_date_time option;
+      [@ocaml.doc "The date and time when the update activity status was last updated.\n"]
+  start_time : start_date_time option;
+      [@ocaml.doc "The date and time when the update activity was initiated.\n"]
+  previous_value : hybrid_update_value option;
+      [@ocaml.doc "The previous configuration values before this update was applied.\n"]
+  new_value : hybrid_update_value option;
+      [@ocaml.doc "The new configuration values being applied in this update.\n"]
+  initiated_by : initiated_by option;
+      [@ocaml.doc "Specifies if the update was initiated by the customer or Amazon Web Services.\n"]
+  status_reason : update_status_reason option;
+      [@ocaml.doc
+        "A human-readable description of the update status, including any error details or \
+         progress information.\n"]
+  status : update_status option;
+      [@ocaml.doc
+        "The current status of the update activity. Valid values include [UPDATED], [UPDATING], \
+         and [UPDATE_FAILED].\n"]
+}
+[@@ocaml.doc
+  "Contains detailed information about a specific update activity for a hybrid directory component.\n"]
+
+type nonrec hybrid_update_info_entries = hybrid_update_info_entry list [@@ocaml.doc ""]
+
+type nonrec hybrid_update_activities = {
+  hybrid_administrator_account : hybrid_update_info_entries option;
+      [@ocaml.doc
+        "A list of update activities related to hybrid directory administrator account changes.\n"]
+  self_managed_instances : hybrid_update_info_entries option;
+      [@ocaml.doc
+        "A list of update activities related to the self-managed instances with SSM in the \
+         self-managed instances with SSM hybrid directory configuration.\n"]
+}
+[@@ocaml.doc
+  "Contains information about update activities for different components of a hybrid directory.\n"]
+
+type nonrec hybrid_settings_description = {
+  self_managed_instance_ids : assessment_instance_ids option;
+      [@ocaml.doc
+        "The identifiers of the self-managed instances with SSM used for hybrid directory \
+         operations.\n"]
+  self_managed_dns_ip_addrs : ip_addrs option;
+      [@ocaml.doc "The IP addresses of the DNS servers in your self-managed AD environment.\n"]
+}
+[@@ocaml.doc "Describes the current hybrid directory configuration settings for a directory.\n"]
 
 type nonrec get_snapshot_limits_result = {
   snapshot_limits : snapshot_limits option;
@@ -1448,6 +1771,32 @@ type nonrec enable_client_authentication_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec enable_ca_enrollment_policy_result = unit [@@ocaml.doc ""]
+
+type nonrec enable_ca_enrollment_policy_request = {
+  pca_connector_arn : pca_connector_arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the Private Certificate Authority (PCA) connector to \
+         use for automatic certificate enrollment. This connector must be properly configured and \
+         accessible from the directory.\n\n\
+        \ The ARN format is: \n\
+        \ {[\n\
+        \ arn:aws:pca-connector-ad:{i region}:{i account-id}:connector/{i connector-id} \n\
+        \ ]}\n\
+        \  \n\
+        \ "]
+  directory_id : directory_id;
+      [@ocaml.doc "The identifier of the directory for which to enable the CA enrollment policy.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [EnableCAEnrollmentPolicy] operation.\n"]
+
+type nonrec enable_already_in_progress_exception = {
+  request_id : request_id option; [@ocaml.doc ""]
+  message : exception_message option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "An enable operation for CA enrollment policy is already in progress for this directory.\n"]
+
 type nonrec domain_controller_id = string [@@ocaml.doc ""]
 
 type nonrec domain_controller_status =
@@ -1477,6 +1826,7 @@ type nonrec domain_controller = {
       [@ocaml.doc "Identifier of the subnet in the VPC that contains the domain controller.\n"]
   vpc_id : vpc_id option;
       [@ocaml.doc "The identifier of the VPC that contains the domain controller.\n"]
+  dns_ipv6_addr : ipv6_addr option; [@ocaml.doc "The IPv6 address of the domain controller.\n"]
   dns_ip_addr : ip_addr option; [@ocaml.doc "The IP address of the domain controller.\n"]
   domain_controller_id : domain_controller_id option;
       [@ocaml.doc "Identifies a specific domain controller in the directory.\n"]
@@ -1547,14 +1897,28 @@ type nonrec disable_client_authentication_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec disable_ca_enrollment_policy_result = unit [@@ocaml.doc ""]
+
+type nonrec disable_ca_enrollment_policy_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The identifier of the directory for which to disable the CA enrollment policy.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [DisableCAEnrollmentPolicy] operation.\n"]
+
+type nonrec disable_already_in_progress_exception = {
+  request_id : request_id option; [@ocaml.doc ""]
+  message : exception_message option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "A disable operation for CA enrollment policy is already in progress for this directory.\n"]
+
 type nonrec directory_type =
   | SHARED_MICROSOFT_AD [@ocaml.doc ""]
   | MICROSOFT_AD [@ocaml.doc ""]
   | AD_CONNECTOR [@ocaml.doc ""]
   | SIMPLE_AD [@ocaml.doc ""]
 [@@ocaml.doc ""]
-
-type nonrec directory_size = LARGE [@ocaml.doc ""] | SMALL [@ocaml.doc ""] [@@ocaml.doc ""]
 
 type nonrec directory_short_name = string [@@ocaml.doc ""]
 
@@ -1748,6 +2112,32 @@ type nonrec describe_ldaps_settings_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec describe_hybrid_ad_update_result = {
+  next_token : next_token option;
+      [@ocaml.doc
+        "If not null, more results are available. Pass this value for the [NextToken] parameter in \
+         a subsequent request to retrieve the next set of items.\n"]
+  update_activities : hybrid_update_activities option;
+      [@ocaml.doc
+        "Information about update activities for the hybrid directory, organized by update type.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_hybrid_ad_update_request = {
+  next_token : next_token option;
+      [@ocaml.doc
+        "The pagination token from a previous request to [DescribeHybridADUpdate]. Pass null if \
+         this is the first request.\n"]
+  update_type : hybrid_update_type option;
+      [@ocaml.doc
+        "The type of update activities to retrieve. Valid values include [SelfManagedInstances] \
+         and [HybridAdministratorAccount].\n"]
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The identifier of the hybrid directory for which to retrieve update information.\n"]
+}
+[@@ocaml.doc ""]
+
 type nonrec describe_event_topics_result = {
   event_topics : event_topics option;
       [@ocaml.doc
@@ -1814,9 +2204,10 @@ type nonrec describe_directory_data_access_request = {
 }
 [@@ocaml.doc ""]
 
-type nonrec directory_name = string [@@ocaml.doc ""]
-
-type nonrec directory_edition = STANDARD [@ocaml.doc ""] | ENTERPRISE [@ocaml.doc ""]
+type nonrec directory_edition =
+  | HYBRID [@ocaml.doc ""]
+  | STANDARD [@ocaml.doc ""]
+  | ENTERPRISE [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
 type nonrec alias_name = string [@@ocaml.doc ""]
@@ -1824,9 +2215,11 @@ type nonrec alias_name = string [@@ocaml.doc ""]
 type nonrec access_url = string [@@ocaml.doc ""]
 
 type nonrec directory_connect_settings_description = {
+  connect_ips_v6 : ip_v6_addrs option;
+      [@ocaml.doc "The IPv6 addresses of the AD Connector servers.\n"]
   connect_ips : ip_addrs option; [@ocaml.doc "The IP addresses of the AD Connector servers.\n"]
   availability_zones : availability_zones option;
-      [@ocaml.doc "A list of the Availability Zones that the directory is in.\n"]
+      [@ocaml.doc "The Availability Zones that the directory is in.\n"]
   security_group_id : security_group_id option;
       [@ocaml.doc "The security group identifier for the AD Connector directory.\n"]
   customer_user_name : user_name option;
@@ -1838,6 +2231,11 @@ type nonrec directory_connect_settings_description = {
 [@@ocaml.doc "Contains information about an AD Connector directory.\n"]
 
 type nonrec directory_description = {
+  network_type : network_type option; [@ocaml.doc "The network type of the directory.\n"]
+  hybrid_settings : hybrid_settings_description option;
+      [@ocaml.doc
+        "Contains information about the hybrid directory configuration for the directory, \
+         including Amazon Web Services System Manager managed node identifiers and DNS IPs.\n"]
   os_version : os_version option;
       [@ocaml.doc "The operating system (OS) version of the directory.\n"]
   regions_info : regions_info option;
@@ -1849,30 +2247,27 @@ type nonrec directory_description = {
         "The desired number of domain controllers in the directory if the directory is Microsoft AD.\n"]
   sso_enabled : sso_enabled option;
       [@ocaml.doc
-        "Indicates if single sign-on is enabled for the directory. For more information, see \
+        "Indicates whether single sign-on is enabled for the directory. For more information, see \
          [EnableSso] and [DisableSso].\n"]
   stage_reason : stage_reason option;
       [@ocaml.doc "Additional information about the directory stage.\n"]
   radius_status : radius_status option;
       [@ocaml.doc "The status of the RADIUS MFA server connection.\n"]
   radius_settings : radius_settings option;
-      [@ocaml.doc
-        "A [RadiusSettings] object that contains information about the RADIUS server configured \
-         for this directory.\n"]
+      [@ocaml.doc "Information about the [RadiusSettings] object configured for this directory.\n"]
   connect_settings : directory_connect_settings_description option;
       [@ocaml.doc
-        "A [DirectoryConnectSettingsDescription] object that contains additional information about \
-         an AD Connector directory. This member is only present if the directory is an AD \
-         Connector directory.\n"]
+        " [DirectoryConnectSettingsDescription] object that contains additional information about \
+         an AD Connector directory. Present only for AD Connector directories.\n"]
   vpc_settings : directory_vpc_settings_description option;
       [@ocaml.doc
         "A [DirectoryVpcSettingsDescription] object that contains additional information about a \
-         directory. This member is only present if the directory is a Simple AD or Managed \
-         Microsoft AD directory.\n"]
+         directory. Present only for Simple AD and Managed Microsoft AD directories.\n"]
   type_ : directory_type option; [@ocaml.doc "The directory type.\n"]
   stage_last_updated_date_time : last_updated_date_time option;
-      [@ocaml.doc "The date and time that the stage was last updated.\n"]
-  launch_time : launch_time option; [@ocaml.doc "Specifies when the directory was created.\n"]
+      [@ocaml.doc "The date and time when the stage was last updated.\n"]
+  launch_time : launch_time option;
+      [@ocaml.doc "The date and time when the directory was created.\n"]
   share_notes : notes option;
       [@ocaml.doc
         "A directory share request that is sent by the directory owner to the directory consumer. \
@@ -1886,12 +2281,19 @@ type nonrec directory_description = {
   share_status : share_status option;
       [@ocaml.doc "Current directory status of the shared Managed Microsoft AD directory.\n"]
   stage : directory_stage option; [@ocaml.doc "The current stage of the directory.\n"]
+  dns_ipv6_addrs : dns_ipv6_addrs option;
+      [@ocaml.doc
+        "The IPv6 addresses of the DNS servers for the directory. For a Simple AD or Microsoft AD \
+         directory, these are the IPv6 addresses of the Simple AD or Microsoft AD directory \
+         servers. For an AD Connector directory, these are the IPv6 addresses of the DNS servers \
+         or domain controllers in your self-managed directory to which the AD Connector is \
+         connected.\n"]
   dns_ip_addrs : dns_ip_addrs option;
       [@ocaml.doc
         "The IP addresses of the DNS servers for the directory. For a Simple AD or Microsoft AD \
          directory, these are the IP addresses of the Simple AD or Microsoft AD directory servers. \
-         For an AD Connector directory, these are the IP addresses of the DNS servers or domain \
-         controllers in your self-managed directory to which the AD Connector is connected.\n"]
+         For an AD Connector directory, these are the IP addresses of self-managed directory to \
+         which the AD Connector is connected.\n"]
   description : description option; [@ocaml.doc "The description for the directory.\n"]
   access_url : access_url option;
       [@ocaml.doc
@@ -1899,14 +2301,14 @@ type nonrec directory_description = {
          {[\n\
          http://.awsapps.com\n\
          ]}\n\
-         . If no alias has been created for the directory, \n\
+         . If no alias exists, \n\
          {[\n\n\
          ]}\n\
         \ is the directory identifier, such as [d-XXXXXXXXXX].\n"]
   alias : alias_name option;
       [@ocaml.doc
-        "The alias for the directory. If no alias has been created for the directory, the alias is \
-         the directory identifier, such as [d-XXXXXXXXXX].\n"]
+        "The alias for the directory. If no alias exists, the alias is the directory identifier, \
+         such as [d-XXXXXXXXXX].\n"]
   edition : directory_edition option; [@ocaml.doc "The edition associated with this directory.\n"]
   size : directory_size option; [@ocaml.doc "The directory size.\n"]
   short_name : directory_short_name option; [@ocaml.doc "The short name of the directory.\n"]
@@ -1956,6 +2358,10 @@ type nonrec conditional_forwarder = {
         "The replication scope of the conditional forwarder. The only allowed value is [Domain], \
          which will replicate the conditional forwarder to all of the domain controllers for your \
          Amazon Web Services directory.\n"]
+  dns_ipv6_addrs : dns_ipv6_addrs option;
+      [@ocaml.doc
+        "The IPv6 addresses of the remote DNS server associated with RemoteDomainName. This is the \
+         IPv6 address of the DNS server that your conditional forwarder points to.\n"]
   dns_ip_addrs : dns_ip_addrs option;
       [@ocaml.doc
         "The IP addresses of the remote DNS server associated with RemoteDomainName. This is the \
@@ -2088,6 +2494,193 @@ type nonrec describe_certificate_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec ca_enrollment_policy_status =
+  | IMPAIRED [@ocaml.doc ""]
+  | DISABLED [@ocaml.doc ""]
+  | DISABLING [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+  | SUCCESS [@ocaml.doc ""]
+  | IN_PROGRESS [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec ca_enrollment_policy_status_reason = string [@@ocaml.doc ""]
+
+type nonrec describe_ca_enrollment_policy_result = {
+  ca_enrollment_policy_status_reason : ca_enrollment_policy_status_reason option;
+      [@ocaml.doc
+        "Additional information explaining the current status of the CA enrollment policy, \
+         particularly useful when the policy is in an error or transitional state.\n"]
+  last_updated_date_time : last_updated_date_time option;
+      [@ocaml.doc "The date and time when the CA enrollment policy was last modified or updated.\n"]
+  ca_enrollment_policy_status : ca_enrollment_policy_status option;
+      [@ocaml.doc
+        "The current status of the CA enrollment policy. This indicates if automatic certificate \
+         enrollment is currently active, inactive, or in a transitional state.\n\n\
+        \ Valid values:\n\
+        \ \n\
+        \  {ul\n\
+        \        {-   [IN_PROGRESS] - The policy is being activated T\n\
+        \            \n\
+        \             }\n\
+        \        {-   [SUCCESS] - The policy is active and automatic certificate enrollment is \
+         operational\n\
+        \            \n\
+        \             }\n\
+        \        {-   [FAILED] - The policy activation or deactivation failed\n\
+        \            \n\
+        \             }\n\
+        \        {-   [DISABLING] - The policy is being deactivated\n\
+        \            \n\
+        \             }\n\
+        \        {-   [DISABLED] - The policy is inactive and automatic certificate enrollment is \
+         not available\n\
+        \            \n\
+        \             }\n\
+        \        {-   [IMPAIRED] - Network connectivity is impaired.\n\
+        \            \n\
+        \             }\n\
+        \        }\n\
+        \  "]
+  pca_connector_arn : pca_connector_arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the Amazon Web Services Private Certificate Authority \
+         (PCA) connector that is configured for automatic certificate enrollment in this directory.\n"]
+  directory_id : directory_id option;
+      [@ocaml.doc "The identifier of the directory associated with this CA enrollment policy.\n"]
+}
+[@@ocaml.doc "Contains the results of the [DescribeCAEnrollmentPolicy] operation.\n"]
+
+type nonrec describe_ca_enrollment_policy_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The identifier of the directory for which to retrieve the CA enrollment policy information.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [DescribeCAEnrollmentPolicy] operation.\n"]
+
+type nonrec assessment_status_code = string [@@ocaml.doc ""]
+
+type nonrec assessment_status_reason = string [@@ocaml.doc ""]
+
+type nonrec assessment_version = string [@@ocaml.doc ""]
+
+type nonrec assessment = {
+  version : assessment_version option;
+      [@ocaml.doc
+        "The version of the assessment framework used to evaluate your self-managed AD environment.\n"]
+  report_type : assessment_report_type option;
+      [@ocaml.doc
+        "The type of assessment report generated. Valid values are [CUSTOMER] and [SYSTEM].\n"]
+  self_managed_instance_ids : assessment_instance_ids option;
+      [@ocaml.doc
+        "The identifiers of the self-managed AD instances used to perform the assessment.\n"]
+  security_group_ids : security_group_ids option;
+      [@ocaml.doc "The security groups identifiers attached to the network interfaces.\n"]
+  subnet_ids : subnet_ids option;
+      [@ocaml.doc
+        "A list of subnet identifiers in the Amazon VPC in which the hybrid directory is created.\n"]
+  vpc_id : vpc_id option;
+      [@ocaml.doc "Contains Amazon VPC information for the [StartADAssessment] operation. \n"]
+  customer_dns_ips : customer_dns_ips option;
+      [@ocaml.doc
+        "The IP addresses of the DNS servers or domain controllers in your self-managed AD \
+         environment.\n"]
+  status_reason : assessment_status_reason option;
+      [@ocaml.doc
+        "A human-readable description of the current assessment status, including any error \
+         details or progress information.\n"]
+  status_code : assessment_status_code option;
+      [@ocaml.doc
+        "A detailed status code providing additional information about the assessment state.\n"]
+  status : assessment_status option;
+      [@ocaml.doc
+        "The current status of the assessment. Valid values include [SUCCESS], [FAILED], \
+         [PENDING], and [IN_PROGRESS].\n"]
+  last_update_date_time : last_update_date_time option;
+      [@ocaml.doc "The date and time when the assessment status was last updated.\n"]
+  start_time : assessment_start_time option;
+      [@ocaml.doc "The date and time when the assessment was initiated.\n"]
+  dns_name : directory_name option;
+      [@ocaml.doc
+        "The fully qualified domain name (FQDN) of the Active Directory domain being assessed.\n"]
+  directory_id : directory_id option;
+      [@ocaml.doc "The identifier of the directory associated with this assessment.\n"]
+  assessment_id : assessment_id option;
+      [@ocaml.doc "The unique identifier of the directory assessment.\n"]
+}
+[@@ocaml.doc
+  "Contains detailed information about a directory assessment, including configuration parameters, \
+   status, and validation results.\n"]
+
+type nonrec assessment_validation_category = string [@@ocaml.doc ""]
+
+type nonrec assessment_validation_name = string [@@ocaml.doc ""]
+
+type nonrec assessment_validation_status = string [@@ocaml.doc ""]
+
+type nonrec assessment_validation_status_code = string [@@ocaml.doc ""]
+
+type nonrec assessment_validation_status_reason = string [@@ocaml.doc ""]
+
+type nonrec assessment_validation_time_stamp = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec assessment_validation = {
+  last_update_date_time : assessment_validation_time_stamp option;
+      [@ocaml.doc "The date and time when the validation test was completed or last updated.\n"]
+  start_time : assessment_validation_time_stamp option;
+      [@ocaml.doc "The date and time when the validation test was started.\n"]
+  status_reason : assessment_validation_status_reason option;
+      [@ocaml.doc
+        "A human-readable description of the validation result, including any error details or \
+         recommendations.\n"]
+  status_code : assessment_validation_status_code option;
+      [@ocaml.doc
+        "A detailed status code providing additional information about the validation result.\n"]
+  status : assessment_validation_status option;
+      [@ocaml.doc
+        "The result status of the validation test. Valid values include [SUCCESS], [FAILED], \
+         [PENDING], and [IN_PROGRESS].\n"]
+  name : assessment_validation_name option;
+      [@ocaml.doc "The name of the specific validation test performed within the category.\n"]
+  category : assessment_validation_category option;
+      [@ocaml.doc "The category of the validation test.\n"]
+}
+[@@ocaml.doc
+  "Contains information about a specific validation test performed during a directory assessment.\n"]
+
+type nonrec assessment_validations = assessment_validation list [@@ocaml.doc ""]
+
+type nonrec assessment_report = {
+  validations : assessment_validations option;
+      [@ocaml.doc
+        "A list of validation results for different test categories performed against this domain \
+         controller.\n"]
+  domain_controller_ip : ip_addr option;
+      [@ocaml.doc
+        "The IP address of the domain controller that was tested during the assessment.\n"]
+}
+[@@ocaml.doc
+  "Contains the results of validation tests performed against a specific domain controller during \
+   a directory assessment.\n"]
+
+type nonrec assessment_reports = assessment_report list [@@ocaml.doc ""]
+
+type nonrec describe_ad_assessment_result = {
+  assessment_reports : assessment_reports option;
+      [@ocaml.doc
+        "A list of assessment reports containing validation results for each domain controller and \
+         test category. Each report includes specific validation details and outcomes.\n"]
+  assessment : assessment option;
+      [@ocaml.doc
+        "Detailed information about the self-managed instance settings (IDs and DNS IPs).\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_ad_assessment_request = {
+  assessment_id : assessment_id;
+      [@ocaml.doc "The identifier of the directory assessment to describe.\n"]
+}
+[@@ocaml.doc ""]
+
 type nonrec deregister_event_topic_result = unit [@@ocaml.doc ""]
 
 type nonrec deregister_event_topic_request = {
@@ -2175,6 +2768,18 @@ type nonrec delete_conditional_forwarder_request = {
 }
 [@@ocaml.doc "Deletes a conditional forwarder.\n"]
 
+type nonrec delete_ad_assessment_result = {
+  assessment_id : assessment_id option;
+      [@ocaml.doc "The unique identifier of the deleted directory assessment.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec delete_ad_assessment_request = {
+  assessment_id : assessment_id;
+      [@ocaml.doc "The unique identifier of the directory assessment to delete.\n"]
+}
+[@@ocaml.doc ""]
+
 type nonrec create_trust_result = {
   trust_id : trust_id option;
       [@ocaml.doc "A unique identifier for the trust relationship that was created.\n"]
@@ -2184,6 +2789,8 @@ type nonrec create_trust_result = {
 type nonrec create_trust_request = {
   selective_auth : selective_auth option;
       [@ocaml.doc "Optional parameter to enable selective authentication for the trust.\n"]
+  conditional_forwarder_ipv6_addrs : dns_ipv6_addrs option;
+      [@ocaml.doc "The IPv6 addresses of the remote DNS server associated with RemoteDomainName.\n"]
   conditional_forwarder_ip_addrs : dns_ip_addrs option;
       [@ocaml.doc "The IP addresses of the remote DNS server associated with RemoteDomainName.\n"]
   trust_type : trust_type option;
@@ -2238,6 +2845,10 @@ type nonrec create_microsoft_ad_result = {
 [@@ocaml.doc "Result of a CreateMicrosoftAD request.\n"]
 
 type nonrec create_microsoft_ad_request = {
+  network_type : network_type option;
+      [@ocaml.doc
+        " The network type for your domain. The default value is [IPv4] or [IPv6] based on the \
+         provided subnet capabilities.\n"]
   tags : tags option;
       [@ocaml.doc "The tags to be assigned to the Managed Microsoft AD directory.\n"]
   edition : directory_edition option;
@@ -2284,6 +2895,34 @@ type nonrec create_log_subscription_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec create_hybrid_ad_result = {
+  directory_id : directory_id option;
+      [@ocaml.doc "The unique identifier of the newly created hybrid directory.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec create_hybrid_ad_request = {
+  tags : tags option;
+      [@ocaml.doc
+        "The tags to be assigned to the directory. Each tag consists of a key and value pair. You \
+         can specify multiple tags as a list.\n"]
+  assessment_id : assessment_id;
+      [@ocaml.doc
+        "The unique identifier of the successful directory assessment that validates your \
+         self-managed AD environment. You must have a successful directory assessment before you \
+         create a hybrid directory.\n"]
+  secret_arn : secret_arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret that \
+         contains the credentials for the service account used to join hybrid domain controllers \
+         to your self-managed AD domain. This secret is used once and not stored.\n\n\
+        \ The secret must contain key-value pairs with keys matching \
+         [customerAdAdminDomainUsername] and [customerAdAdminDomainPassword]. For example: \
+         [{\"customerAdAdminDomainUsername\":\"carlos_salazar\",\"customerAdAdminDomainPassword\":\"ExamplePassword123!\"}].\n\
+        \ "]
+}
+[@@ocaml.doc ""]
+
 type nonrec create_directory_result = {
   directory_id : directory_id option;
       [@ocaml.doc "The identifier of the directory that was created.\n"]
@@ -2291,6 +2930,9 @@ type nonrec create_directory_result = {
 [@@ocaml.doc "Contains the results of the [CreateDirectory] operation.\n"]
 
 type nonrec create_directory_request = {
+  network_type : network_type option;
+      [@ocaml.doc
+        "The network type for your directory. Simple AD supports IPv4 and Dual-stack only.\n"]
   tags : tags option; [@ocaml.doc "The tags to be assigned to the Simple AD directory.\n"]
   vpc_settings : directory_vpc_settings option;
       [@ocaml.doc
@@ -2344,7 +2986,9 @@ type nonrec create_directory_request = {
 type nonrec create_conditional_forwarder_result = unit [@@ocaml.doc ""]
 
 type nonrec create_conditional_forwarder_request = {
-  dns_ip_addrs : dns_ip_addrs;
+  dns_ipv6_addrs : dns_ipv6_addrs option;
+      [@ocaml.doc "The IPv6 addresses of the remote DNS server associated with RemoteDomainName.\n"]
+  dns_ip_addrs : dns_ip_addrs option;
       [@ocaml.doc "The IP addresses of the remote DNS server associated with RemoteDomainName.\n"]
   remote_domain_name : remote_domain_name;
       [@ocaml.doc
@@ -2451,19 +3095,24 @@ type nonrec directory_connect_settings = {
         \            }\n\
         \       }\n\
         \  "]
-  customer_dns_ips : dns_ip_addrs;
+  customer_dns_ips_v6 : dns_ipv6_addrs option;
       [@ocaml.doc
-        "A list of one or more IP addresses of DNS servers or domain controllers in your \
-         self-managed directory.\n"]
+        "The IPv6 addresses of DNS servers or domain controllers in your self-managed directory.\n"]
+  customer_dns_ips : dns_ip_addrs option;
+      [@ocaml.doc
+        "The IP addresses of DNS servers or domain controllers in your self-managed directory.\n"]
   subnet_ids : subnet_ids;
       [@ocaml.doc "A list of subnet identifiers in the VPC in which the AD Connector is created.\n"]
   vpc_id : vpc_id; [@ocaml.doc "The identifier of the VPC in which the AD Connector is created.\n"]
 }
 [@@ocaml.doc
-  "Contains information for the [ConnectDirectory] operation when an AD Connector directory is \
-   being created.\n"]
+  "Contains connection settings for creating an AD Connector with the [ConnectDirectory] action.\n"]
 
 type nonrec connect_directory_request = {
+  network_type : network_type option;
+      [@ocaml.doc
+        "The network type for your directory. The default value is [IPv4] or [IPv6] based on the \
+         provided subnet capabilities.\n"]
   tags : tags option; [@ocaml.doc "The tags to be assigned to AD Connector.\n"]
   connect_settings : directory_connect_settings;
       [@ocaml.doc

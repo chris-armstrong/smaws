@@ -17,7 +17,7 @@ let convert_docs traits =
   let docStrs =
     traits |> Option.value ~default:[]
     |> List.filter_map ~f:(fun trait ->
-           match trait with Ast.Trait.DocumentationTrait str -> Some (sanitize str) | _ -> None)
+        match trait with Ast.Trait.DocumentationTrait str -> Some (sanitize str) | _ -> None)
   in
   if List.is_empty docStrs then ""
   else begin

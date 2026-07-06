@@ -65,6 +65,10 @@ let make_stream_description ?last_evaluated_shard_id:(last_evaluated_shard_id_ :
    }
     : stream_description)
 
+let make_shard_filter ?shard_id:(shard_id_ : shard_id option)
+    ?type_:(type__ : shard_filter_type option) () =
+  ({ shard_id = shard_id_; type_ = type__ } : shard_filter)
+
 let make_identity ?type_:(type__ : string_ option) ?principal_id:(principal_id_ : string_ option) ()
     =
   ({ type_ = type__; principal_id = principal_id_ } : identity)
@@ -127,10 +131,11 @@ let make_describe_stream_output
     ?stream_description:(stream_description_ : stream_description option) () =
   ({ stream_description = stream_description_ } : describe_stream_output)
 
-let make_describe_stream_input
+let make_describe_stream_input ?shard_filter:(shard_filter_ : shard_filter option)
     ?exclusive_start_shard_id:(exclusive_start_shard_id_ : shard_id option)
     ?limit:(limit_ : positive_integer_object option) ~stream_arn:(stream_arn_ : stream_arn) () =
   ({
+     shard_filter = shard_filter_;
      exclusive_start_shard_id = exclusive_start_shard_id_;
      limit = limit_;
      stream_arn = stream_arn_;

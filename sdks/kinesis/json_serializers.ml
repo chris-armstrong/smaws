@@ -1,24 +1,40 @@
 open Smaws_Lib.Json.SerializeHelpers
 open Types
 
+let natural_integer_object_to_yojson = int_to_yojson
+
+let warm_throughput_object_to_yojson (x : warm_throughput_object) =
+  assoc_to_yojson
+    [
+      ("CurrentMiBps", option_to_yojson natural_integer_object_to_yojson x.current_mi_bps);
+      ("TargetMiBps", option_to_yojson natural_integer_object_to_yojson x.target_mi_bps);
+    ]
+
 let error_message_to_yojson = string_to_yojson
 
 let validation_exception_to_yojson (x : validation_exception) =
   assoc_to_yojson [ ("message", option_to_yojson error_message_to_yojson x.message) ]
 
 let stream_ar_n_to_yojson = string_to_yojson
+let stream_name_to_yojson = string_to_yojson
 
-let stream_mode_to_yojson (x : stream_mode) =
-  match x with ON_DEMAND -> `String "ON_DEMAND" | PROVISIONED -> `String "PROVISIONED"
-
-let stream_mode_details_to_yojson (x : stream_mode_details) =
-  assoc_to_yojson [ ("StreamMode", Some (stream_mode_to_yojson x.stream_mode)) ]
-
-let update_stream_mode_input_to_yojson (x : update_stream_mode_input) =
+let update_stream_warm_throughput_output_to_yojson (x : update_stream_warm_throughput_output) =
   assoc_to_yojson
     [
-      ("StreamModeDetails", Some (stream_mode_details_to_yojson x.stream_mode_details));
-      ("StreamARN", Some (stream_ar_n_to_yojson x.stream_ar_n));
+      ("WarmThroughput", option_to_yojson warm_throughput_object_to_yojson x.warm_throughput);
+      ("StreamName", option_to_yojson stream_name_to_yojson x.stream_name);
+      ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
+    ]
+
+let stream_id_to_yojson = string_to_yojson
+
+let update_stream_warm_throughput_input_to_yojson (x : update_stream_warm_throughput_input) =
+  assoc_to_yojson
+    [
+      ("WarmThroughputMiBps", Some (natural_integer_object_to_yojson x.warm_throughput_mi_bps));
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
+      ("StreamName", option_to_yojson stream_name_to_yojson x.stream_name);
+      ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
     ]
 
 let resource_not_found_exception_to_yojson (x : resource_not_found_exception) =
@@ -33,7 +49,25 @@ let limit_exceeded_exception_to_yojson (x : limit_exceeded_exception) =
 let invalid_argument_exception_to_yojson (x : invalid_argument_exception) =
   assoc_to_yojson [ ("message", option_to_yojson error_message_to_yojson x.message) ]
 
-let stream_name_to_yojson = string_to_yojson
+let access_denied_exception_to_yojson (x : access_denied_exception) =
+  assoc_to_yojson [ ("message", option_to_yojson error_message_to_yojson x.message) ]
+
+let stream_mode_to_yojson (x : stream_mode) =
+  match x with ON_DEMAND -> `String "ON_DEMAND" | PROVISIONED -> `String "PROVISIONED"
+
+let stream_mode_details_to_yojson (x : stream_mode_details) =
+  assoc_to_yojson [ ("StreamMode", Some (stream_mode_to_yojson x.stream_mode)) ]
+
+let update_stream_mode_input_to_yojson (x : update_stream_mode_input) =
+  assoc_to_yojson
+    [
+      ( "WarmThroughputMiBps",
+        option_to_yojson natural_integer_object_to_yojson x.warm_throughput_mi_bps );
+      ("StreamModeDetails", Some (stream_mode_details_to_yojson x.stream_mode_details));
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
+      ("StreamARN", Some (stream_ar_n_to_yojson x.stream_ar_n));
+    ]
+
 let positive_integer_object_to_yojson = int_to_yojson
 
 let update_shard_count_output_to_yojson (x : update_shard_count_output) =
@@ -51,14 +85,67 @@ let scaling_type_to_yojson (x : scaling_type) =
 let update_shard_count_input_to_yojson (x : update_shard_count_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("ScalingType", Some (scaling_type_to_yojson x.scaling_type));
       ("TargetShardCount", Some (positive_integer_object_to_yojson x.target_shard_count));
       ("StreamName", option_to_yojson stream_name_to_yojson x.stream_name);
     ]
 
-let access_denied_exception_to_yojson (x : access_denied_exception) =
-  assoc_to_yojson [ ("message", option_to_yojson error_message_to_yojson x.message) ]
+let max_record_size_in_ki_b_to_yojson = int_to_yojson
+
+let update_max_record_size_input_to_yojson (x : update_max_record_size_input) =
+  assoc_to_yojson
+    [
+      ("MaxRecordSizeInKiB", Some (max_record_size_in_ki_b_to_yojson x.max_record_size_in_ki_b));
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
+      ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
+    ]
+
+let minimum_throughput_billing_commitment_output_status_to_yojson
+    (x : minimum_throughput_billing_commitment_output_status) =
+  match x with
+  | ENABLED_UNTIL_EARLIEST_ALLOWED_END -> `String "ENABLED_UNTIL_EARLIEST_ALLOWED_END"
+  | DISABLED -> `String "DISABLED"
+  | ENABLED -> `String "ENABLED"
+
+let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
+
+let minimum_throughput_billing_commitment_output_to_yojson
+    (x : minimum_throughput_billing_commitment_output) =
+  assoc_to_yojson
+    [
+      ("EarliestAllowedEndAt", option_to_yojson timestamp_to_yojson x.earliest_allowed_end_at);
+      ("EndedAt", option_to_yojson timestamp_to_yojson x.ended_at);
+      ("StartedAt", option_to_yojson timestamp_to_yojson x.started_at);
+      ("Status", Some (minimum_throughput_billing_commitment_output_status_to_yojson x.status));
+    ]
+
+let update_account_settings_output_to_yojson (x : update_account_settings_output) =
+  assoc_to_yojson
+    [
+      ( "MinimumThroughputBillingCommitment",
+        option_to_yojson minimum_throughput_billing_commitment_output_to_yojson
+          x.minimum_throughput_billing_commitment );
+    ]
+
+let minimum_throughput_billing_commitment_input_status_to_yojson
+    (x : minimum_throughput_billing_commitment_input_status) =
+  match x with DISABLED -> `String "DISABLED" | ENABLED -> `String "ENABLED"
+
+let minimum_throughput_billing_commitment_input_to_yojson
+    (x : minimum_throughput_billing_commitment_input) =
+  assoc_to_yojson
+    [ ("Status", Some (minimum_throughput_billing_commitment_input_status_to_yojson x.status)) ]
+
+let update_account_settings_input_to_yojson (x : update_account_settings_input) =
+  assoc_to_yojson
+    [
+      ( "MinimumThroughputBillingCommitment",
+        Some
+          (minimum_throughput_billing_commitment_input_to_yojson
+             x.minimum_throughput_billing_commitment) );
+    ]
 
 let tag_key_to_yojson = string_to_yojson
 let tag_key_list_to_yojson tree = list_to_yojson tag_key_to_yojson tree
@@ -67,17 +154,18 @@ let resource_ar_n_to_yojson = string_to_yojson
 let untag_resource_input_to_yojson (x : untag_resource_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("ResourceARN", Some (resource_ar_n_to_yojson x.resource_ar_n));
       ("TagKeys", Some (tag_key_list_to_yojson x.tag_keys));
     ]
 
-let timestamp_to_yojson = timestamp_epoch_seconds_to_yojson
 let tag_value_to_yojson = string_to_yojson
 let tag_map_to_yojson tree = map_to_yojson tag_key_to_yojson tag_value_to_yojson tree
 
 let tag_resource_input_to_yojson (x : tag_resource_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("ResourceARN", Some (resource_ar_n_to_yojson x.resource_ar_n));
       ("Tags", Some (tag_map_to_yojson x.tags));
     ]
@@ -215,6 +303,7 @@ let subscribe_to_shard_input_to_yojson (x : subscribe_to_shard_input) =
     [
       ("StartingPosition", Some (starting_position_to_yojson x.starting_position));
       ("ShardId", Some (shard_id_to_yojson x.shard_id));
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("ConsumerARN", Some (consumer_ar_n_to_yojson x.consumer_ar_n));
     ]
 
@@ -264,6 +353,9 @@ let consumer_count_object_to_yojson = int_to_yojson
 let stream_description_summary_to_yojson (x : stream_description_summary) =
   assoc_to_yojson
     [
+      ( "MaxRecordSizeInKiB",
+        option_to_yojson max_record_size_in_ki_b_to_yojson x.max_record_size_in_ki_b );
+      ("WarmThroughput", option_to_yojson warm_throughput_object_to_yojson x.warm_throughput);
       ("ConsumerCount", option_to_yojson consumer_count_object_to_yojson x.consumer_count);
       ("OpenShardCount", Some (shard_count_object_to_yojson x.open_shard_count));
       ("KeyId", option_to_yojson key_id_to_yojson x.key_id);
@@ -273,6 +365,7 @@ let stream_description_summary_to_yojson (x : stream_description_summary) =
       ("RetentionPeriodHours", Some (retention_period_hours_to_yojson x.retention_period_hours));
       ("StreamModeDetails", option_to_yojson stream_mode_details_to_yojson x.stream_mode_details);
       ("StreamStatus", Some (stream_status_to_yojson x.stream_status));
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", Some (stream_ar_n_to_yojson x.stream_ar_n));
       ("StreamName", Some (stream_name_to_yojson x.stream_name));
     ]
@@ -316,6 +409,7 @@ let stream_description_to_yojson (x : stream_description) =
 let stop_stream_encryption_input_to_yojson (x : stop_stream_encryption_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("KeyId", Some (key_id_to_yojson x.key_id));
       ("EncryptionType", Some (encryption_type_to_yojson x.encryption_type));
@@ -325,6 +419,7 @@ let stop_stream_encryption_input_to_yojson (x : stop_stream_encryption_input) =
 let start_stream_encryption_input_to_yojson (x : start_stream_encryption_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("KeyId", Some (key_id_to_yojson x.key_id));
       ("EncryptionType", Some (encryption_type_to_yojson x.encryption_type));
@@ -334,6 +429,7 @@ let start_stream_encryption_input_to_yojson (x : start_stream_encryption_input) 
 let split_shard_input_to_yojson (x : split_shard_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("NewStartingHashKey", Some (hash_key_to_yojson x.new_starting_hash_key));
       ("ShardToSplit", Some (shard_id_to_yojson x.shard_to_split));
@@ -362,6 +458,7 @@ let shard_filter_to_yojson (x : shard_filter) =
 let remove_tags_from_stream_input_to_yojson (x : remove_tags_from_stream_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("TagKeys", Some (tag_key_list_to_yojson x.tag_keys));
       ("StreamName", option_to_yojson stream_name_to_yojson x.stream_name);
@@ -391,6 +488,7 @@ let register_stream_consumer_input_to_yojson (x : register_stream_consumer_input
   assoc_to_yojson
     [
       ("Tags", option_to_yojson tag_map_to_yojson x.tags);
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("ConsumerName", Some (consumer_name_to_yojson x.consumer_name));
       ("StreamARN", Some (stream_ar_n_to_yojson x.stream_ar_n));
     ]
@@ -401,6 +499,7 @@ let put_resource_policy_input_to_yojson (x : put_resource_policy_input) =
   assoc_to_yojson
     [
       ("Policy", Some (policy_to_yojson x.policy));
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("ResourceARN", Some (resource_ar_n_to_yojson x.resource_ar_n));
     ]
 
@@ -440,6 +539,7 @@ let put_records_output_to_yojson (x : put_records_output) =
 let put_records_input_to_yojson (x : put_records_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("StreamName", option_to_yojson stream_name_to_yojson x.stream_name);
       ("Records", Some (put_records_request_entry_list_to_yojson x.records));
@@ -460,6 +560,7 @@ let put_record_output_to_yojson (x : put_record_output) =
 let put_record_input_to_yojson (x : put_record_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ( "SequenceNumberForOrdering",
         option_to_yojson sequence_number_to_yojson x.sequence_number_for_ordering );
@@ -476,6 +577,7 @@ let next_token_to_yojson = string_to_yojson
 let merge_shards_input_to_yojson (x : merge_shards_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("AdjacentShardToMerge", Some (shard_id_to_yojson x.adjacent_shard_to_merge));
       ("ShardToMerge", Some (shard_id_to_yojson x.shard_to_merge));
@@ -494,6 +596,7 @@ let list_tags_for_stream_input_limit_to_yojson = int_to_yojson
 let list_tags_for_stream_input_to_yojson (x : list_tags_for_stream_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("Limit", option_to_yojson list_tags_for_stream_input_limit_to_yojson x.limit);
       ("ExclusiveStartTagKey", option_to_yojson tag_key_to_yojson x.exclusive_start_tag_key);
@@ -504,7 +607,11 @@ let list_tags_for_resource_output_to_yojson (x : list_tags_for_resource_output) 
   assoc_to_yojson [ ("Tags", option_to_yojson tag_list_to_yojson x.tags) ]
 
 let list_tags_for_resource_input_to_yojson (x : list_tags_for_resource_input) =
-  assoc_to_yojson [ ("ResourceARN", Some (resource_ar_n_to_yojson x.resource_ar_n)) ]
+  assoc_to_yojson
+    [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
+      ("ResourceARN", Some (resource_ar_n_to_yojson x.resource_ar_n));
+    ]
 
 let list_streams_output_to_yojson (x : list_streams_output) =
   assoc_to_yojson
@@ -543,6 +650,7 @@ let list_stream_consumers_input_limit_to_yojson = int_to_yojson
 let list_stream_consumers_input_to_yojson (x : list_stream_consumers_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamCreationTimestamp", option_to_yojson timestamp_to_yojson x.stream_creation_timestamp);
       ("MaxResults", option_to_yojson list_stream_consumers_input_limit_to_yojson x.max_results);
       ("NextToken", option_to_yojson next_token_to_yojson x.next_token);
@@ -561,6 +669,7 @@ let list_shards_input_limit_to_yojson = int_to_yojson
 let list_shards_input_to_yojson (x : list_shards_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("ShardFilter", option_to_yojson shard_filter_to_yojson x.shard_filter);
       ("StreamCreationTimestamp", option_to_yojson timestamp_to_yojson x.stream_creation_timestamp);
@@ -573,6 +682,7 @@ let list_shards_input_to_yojson (x : list_shards_input) =
 let increase_stream_retention_period_input_to_yojson (x : increase_stream_retention_period_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("RetentionPeriodHours", Some (retention_period_hours_to_yojson x.retention_period_hours));
       ("StreamName", option_to_yojson stream_name_to_yojson x.stream_name);
@@ -584,6 +694,7 @@ let get_shard_iterator_output_to_yojson (x : get_shard_iterator_output) =
 let get_shard_iterator_input_to_yojson (x : get_shard_iterator_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("Timestamp", option_to_yojson timestamp_to_yojson x.timestamp);
       ( "StartingSequenceNumber",
@@ -597,7 +708,11 @@ let get_resource_policy_output_to_yojson (x : get_resource_policy_output) =
   assoc_to_yojson [ ("Policy", Some (policy_to_yojson x.policy)) ]
 
 let get_resource_policy_input_to_yojson (x : get_resource_policy_input) =
-  assoc_to_yojson [ ("ResourceARN", Some (resource_ar_n_to_yojson x.resource_ar_n)) ]
+  assoc_to_yojson
+    [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
+      ("ResourceARN", Some (resource_ar_n_to_yojson x.resource_ar_n));
+    ]
 
 let expired_iterator_exception_to_yojson (x : expired_iterator_exception) =
   assoc_to_yojson [ ("message", option_to_yojson error_message_to_yojson x.message) ]
@@ -616,6 +731,7 @@ let get_records_input_limit_to_yojson = int_to_yojson
 let get_records_input_to_yojson (x : get_records_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("Limit", option_to_yojson get_records_input_limit_to_yojson x.limit);
       ("ShardIterator", Some (shard_iterator_to_yojson x.shard_iterator));
@@ -635,6 +751,7 @@ let enhanced_monitoring_output_to_yojson (x : enhanced_monitoring_output) =
 let enable_enhanced_monitoring_input_to_yojson (x : enable_enhanced_monitoring_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("ShardLevelMetrics", Some (metrics_name_list_to_yojson x.shard_level_metrics));
       ("StreamName", option_to_yojson stream_name_to_yojson x.stream_name);
@@ -643,6 +760,7 @@ let enable_enhanced_monitoring_input_to_yojson (x : enable_enhanced_monitoring_i
 let disable_enhanced_monitoring_input_to_yojson (x : disable_enhanced_monitoring_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("ShardLevelMetrics", Some (metrics_name_list_to_yojson x.shard_level_metrics));
       ("StreamName", option_to_yojson stream_name_to_yojson x.stream_name);
@@ -658,6 +776,7 @@ let describe_stream_summary_output_to_yojson (x : describe_stream_summary_output
 let describe_stream_summary_input_to_yojson (x : describe_stream_summary_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("StreamName", option_to_yojson stream_name_to_yojson x.stream_name);
     ]
@@ -679,6 +798,7 @@ let describe_stream_consumer_output_to_yojson (x : describe_stream_consumer_outp
 let describe_stream_consumer_input_to_yojson (x : describe_stream_consumer_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("ConsumerARN", option_to_yojson consumer_ar_n_to_yojson x.consumer_ar_n);
       ("ConsumerName", option_to_yojson consumer_name_to_yojson x.consumer_name);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
@@ -693,6 +813,7 @@ let describe_stream_input_limit_to_yojson = int_to_yojson
 let describe_stream_input_to_yojson (x : describe_stream_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("ExclusiveStartShardId", option_to_yojson shard_id_to_yojson x.exclusive_start_shard_id);
       ("Limit", option_to_yojson describe_stream_input_limit_to_yojson x.limit);
@@ -712,9 +833,20 @@ let describe_limits_output_to_yojson (x : describe_limits_output) =
 
 let describe_limits_input_to_yojson = unit_to_yojson
 
+let describe_account_settings_output_to_yojson (x : describe_account_settings_output) =
+  assoc_to_yojson
+    [
+      ( "MinimumThroughputBillingCommitment",
+        option_to_yojson minimum_throughput_billing_commitment_output_to_yojson
+          x.minimum_throughput_billing_commitment );
+    ]
+
+let describe_account_settings_input_to_yojson = unit_to_yojson
+
 let deregister_stream_consumer_input_to_yojson (x : deregister_stream_consumer_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("ConsumerARN", option_to_yojson consumer_ar_n_to_yojson x.consumer_ar_n);
       ("ConsumerName", option_to_yojson consumer_name_to_yojson x.consumer_name);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
@@ -723,6 +855,7 @@ let deregister_stream_consumer_input_to_yojson (x : deregister_stream_consumer_i
 let delete_stream_input_to_yojson (x : delete_stream_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ( "EnforceConsumerDeletion",
         option_to_yojson boolean_object_to_yojson x.enforce_consumer_deletion );
@@ -730,11 +863,16 @@ let delete_stream_input_to_yojson (x : delete_stream_input) =
     ]
 
 let delete_resource_policy_input_to_yojson (x : delete_resource_policy_input) =
-  assoc_to_yojson [ ("ResourceARN", Some (resource_ar_n_to_yojson x.resource_ar_n)) ]
+  assoc_to_yojson
+    [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
+      ("ResourceARN", Some (resource_ar_n_to_yojson x.resource_ar_n));
+    ]
 
 let decrease_stream_retention_period_input_to_yojson (x : decrease_stream_retention_period_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("RetentionPeriodHours", Some (retention_period_hours_to_yojson x.retention_period_hours));
       ("StreamName", option_to_yojson stream_name_to_yojson x.stream_name);
@@ -743,6 +881,10 @@ let decrease_stream_retention_period_input_to_yojson (x : decrease_stream_retent
 let create_stream_input_to_yojson (x : create_stream_input) =
   assoc_to_yojson
     [
+      ( "MaxRecordSizeInKiB",
+        option_to_yojson max_record_size_in_ki_b_to_yojson x.max_record_size_in_ki_b );
+      ( "WarmThroughputMiBps",
+        option_to_yojson natural_integer_object_to_yojson x.warm_throughput_mi_bps );
       ("Tags", option_to_yojson tag_map_to_yojson x.tags);
       ("StreamModeDetails", option_to_yojson stream_mode_details_to_yojson x.stream_mode_details);
       ("ShardCount", option_to_yojson positive_integer_object_to_yojson x.shard_count);
@@ -752,6 +894,7 @@ let create_stream_input_to_yojson (x : create_stream_input) =
 let add_tags_to_stream_input_to_yojson (x : add_tags_to_stream_input) =
   assoc_to_yojson
     [
+      ("StreamId", option_to_yojson stream_id_to_yojson x.stream_id);
       ("StreamARN", option_to_yojson stream_ar_n_to_yojson x.stream_ar_n);
       ("Tags", Some (tag_map_to_yojson x.tags));
       ("StreamName", option_to_yojson stream_name_to_yojson x.stream_name);

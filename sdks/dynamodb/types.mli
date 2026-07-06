@@ -1013,7 +1013,31 @@ type nonrec table_class_summary = {
 }
 [@@ocaml.doc "Contains details of the table class.\n"]
 
+type nonrec global_table_settings_replication_mode =
+  | ENABLED_WITH_OVERRIDES [@ocaml.doc ""]
+  | DISABLED [@ocaml.doc ""]
+  | ENABLED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
 type nonrec replica_description = {
+  global_table_settings_replication_mode : global_table_settings_replication_mode option;
+      [@ocaml.doc
+        "Indicates one of the settings synchronization modes for the global table replica:\n\n\
+        \ {ul\n\
+        \       {-   [ENABLED]: Indicates that the settings synchronization mode for the global \
+         table replica is enabled.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [DISABLED]: Indicates that the settings synchronization mode for the global \
+         table replica is disabled.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [ENABLED_WITH_OVERRIDES]: This mode is set by default for a same account \
+         global table. Indicates that certain global table settings can be overridden.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \  "]
   replica_table_class_summary : table_class_summary option; [@ocaml.doc ""]
   replica_inaccessible_date_time : date option;
       [@ocaml.doc
@@ -1038,6 +1062,8 @@ type nonrec replica_description = {
          percentage.\n"]
   replica_status_description : replica_status_description option;
       [@ocaml.doc "Detailed information about the replica status.\n"]
+  replica_arn : string_ option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the global table replica.\n"]
   replica_status : replica_status option;
       [@ocaml.doc
         "The current state of the replica:\n\n\
@@ -1219,6 +1245,24 @@ type nonrec table_description = {
   sse_description : sse_description option;
       [@ocaml.doc "The description of the server-side encryption status on the specified table.\n"]
   restore_summary : restore_summary option; [@ocaml.doc "Contains details for the restore.\n"]
+  global_table_settings_replication_mode : global_table_settings_replication_mode option;
+      [@ocaml.doc
+        "Indicates one of the settings synchronization modes for the global table:\n\n\
+        \ {ul\n\
+        \       {-   [ENABLED]: Indicates that the settings synchronization mode for the global \
+         table is enabled.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [DISABLED]: Indicates that the settings synchronization mode for the global \
+         table is disabled.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [ENABLED_WITH_OVERRIDES]: This mode is set by default for a same account \
+         global table. Indicates that certain global table settings can be overridden.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \  "]
   global_table_witnesses : global_table_witness_description_list option;
       [@ocaml.doc
         "The witness Region and its current status in the MRSC global table. Only one witness \
@@ -1599,7 +1643,10 @@ type nonrec create_global_secondary_index_action = {
         "Represents attributes that are copied (projected) from the table into an index. These are \
          in addition to the primary key attributes and index key attributes, which are \
          automatically projected.\n"]
-  key_schema : key_schema; [@ocaml.doc "The key schema for the global secondary index.\n"]
+  key_schema : key_schema;
+      [@ocaml.doc
+        "The key schema for the global secondary index. Global secondary index supports up to 4 \
+         partition and up to 4 sort keys.\n"]
   index_name : index_name; [@ocaml.doc "The name of the global secondary index to be created.\n"]
 }
 [@@ocaml.doc "Represents a new global secondary index to be added to an existing table.\n"]
@@ -1845,6 +1892,22 @@ type nonrec global_table_witness_group_update_list = global_table_witness_group_
 [@@ocaml.doc ""]
 
 type nonrec update_table_input = {
+  global_table_settings_replication_mode : global_table_settings_replication_mode option;
+      [@ocaml.doc
+        "Controls the settings replication mode for a global table replica. This attribute can be \
+         defined using UpdateTable operation only on a regional table with values:\n\n\
+        \ {ul\n\
+        \       {-   [ENABLED]: Defines settings replication on a regional table to be used as a \
+         source table for creating Multi-Account Global Table.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [DISABLED]: Remove settings replication on a regional table. Settings \
+         replication needs to be defined to ENABLED again in order to create a Multi-Account \
+         Global Table using this table. \n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \  "]
   warm_throughput : warm_throughput option;
       [@ocaml.doc
         "Represents the warm throughput (in read units per second and write units per second) for \
@@ -2752,8 +2815,7 @@ type nonrec update_item_input = {
         \                         }\n\
         \                   \n\
         \         }\n\
-        \           The [ADD] action only supports Number and set data types. In addition, [ADD] \
-         can only be used on top-level attributes, not nested attributes.\n\
+        \           The [ADD] action only supports Number and set data types.\n\
         \           \n\
         \             }\n\
         \        {-   [DELETE] - Deletes an element from a set.\n\
@@ -2763,8 +2825,7 @@ type nonrec update_item_input = {
          action specifies [\\[a,c\\]], then the final attribute value is [\\[b\\]]. Specifying an \
          empty set is an error.\n\
         \             \n\
-        \               The [DELETE] action only supports set data types. In addition, [DELETE] \
-         can only be used on top-level attributes, not nested attributes.\n\
+        \               The [DELETE] action only supports set data types.\n\
         \               \n\
         \                 }\n\
         \        }\n\
@@ -2847,10 +2908,109 @@ type nonrec update_item_input = {
 type nonrec transaction_conflict_exception = { message : error_message option [@ocaml.doc ""] }
 [@@ocaml.doc "Operation was rejected because there is an ongoing transaction for the item.\n"]
 
-type nonrec request_limit_exceeded = { message : error_message option [@ocaml.doc ""] }
+type nonrec availability_error_message = string [@@ocaml.doc ""]
+
+type nonrec reason = string [@@ocaml.doc ""]
+
+type nonrec resource = string [@@ocaml.doc ""]
+
+type nonrec throttling_reason = {
+  resource : resource option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the DynamoDB table or index that experienced the \
+         throttling event.\n"]
+  reason : reason option;
+      [@ocaml.doc
+        "The reason for throttling. The throttling reason follows a specific format: \
+         [ResourceType+OperationType+LimitType]:\n\n\
+        \ {ul\n\
+        \       {-  Resource Type (What is being throttled): Table or Index\n\
+        \           \n\
+        \            }\n\
+        \       {-  Operation Type (What kind of operation): Read or Write\n\
+        \           \n\
+        \            }\n\
+        \       {-  Limit Type (Why the throttling occurred):\n\
+        \           \n\
+        \            {ul\n\
+        \                  {-   [ProvisionedThroughputExceeded]: The request rate is exceeding the \
+         {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html}provisioned \
+         throughput capacity} (read or write capacity units) configured for a table or a global \
+         secondary index (GSI) in provisioned capacity mode.\n\
+        \                      \n\
+        \                       }\n\
+        \                  {-   [AccountLimitExceeded]: The request rate has caused a table or \
+         global secondary index (GSI) in on-demand mode to exceed the \
+         {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ServiceQuotas.html#default-limits-throughput}per-table \
+         account-level service quotas} for read/write throughput in the current Amazon Web \
+         Services Region. \n\
+        \                      \n\
+        \                       }\n\
+        \                  {-   [KeyRangeThroughputExceeded]: The request rate directed at a \
+         specific partition key value has exceeded the \
+         {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-partition-key-design.html}internal \
+         partition-level throughput limits}, indicating uneven access patterns across the table's \
+         or GSI's key space.\n\
+        \                      \n\
+        \                       }\n\
+        \                  {-   [MaxOnDemandThroughputExceeded]: The request rate has exceeded the \
+         {{:https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode-max-throughput.html}configured \
+         maximum throughput limits} set for a table or index in on-demand capacity mode.\n\
+        \                      \n\
+        \                       }\n\
+        \                  \n\
+        \        }\n\
+        \         }\n\
+        \       }\n\
+        \   Examples of complete throttling reasons:\n\
+        \   \n\
+        \    {ul\n\
+        \          {-  TableReadProvisionedThroughputExceeded\n\
+        \              \n\
+        \               }\n\
+        \          {-  IndexWriteAccountLimitExceeded\n\
+        \              \n\
+        \               }\n\
+        \          }\n\
+        \   This helps identify exactly what resource is being throttled, what type of operation \
+         caused it, and why the throttling occurred.\n\
+        \   "]
+}
 [@@ocaml.doc
-  "Throughput exceeds the current throughput quota for your account. Please contact \
-   {{:https://aws.amazon.com/support}Amazon Web ServicesSupport} to request a quota increase.\n"]
+  "Represents the specific reason why a DynamoDB request was throttled and the ARN of the impacted \
+   resource. This helps identify exactly what resource is being throttled, what type of operation \
+   caused it, and why the throttling occurred.\n"]
+
+type nonrec throttling_reason_list = throttling_reason list [@@ocaml.doc ""]
+
+type nonrec throttling_exception = {
+  throttling_reasons : throttling_reason_list option;
+      [@ocaml.doc
+        "A list of \
+         {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html}ThrottlingReason} \
+         that provide detailed diagnostic information about why the request was throttled. \n"]
+  message : availability_error_message option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "The request was denied due to request throttling. For detailed information about why the \
+   request was throttled and the ARN of the impacted resource, find the \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html}ThrottlingReason} \
+   field in the returned exception.\n"]
+
+type nonrec request_limit_exceeded = {
+  throttling_reasons : throttling_reason_list option;
+      [@ocaml.doc
+        "A list of \
+         {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html}ThrottlingReason} \
+         that provide detailed diagnostic information about why the request was throttled. \n"]
+  message : error_message option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "Throughput exceeds the current throughput quota for your account. For detailed information \
+   about why the request was throttled and the ARN of the impacted resource, find the \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html}ThrottlingReason} \
+   field in the returned exception. Contact {{:https://aws.amazon.com/support}Amazon Web Services \
+   Support} to request a quota increase.\n"]
 
 type nonrec replicated_write_conflict_exception = { message : error_message option [@ocaml.doc ""] }
 [@@ocaml.doc
@@ -2858,11 +3018,19 @@ type nonrec replicated_write_conflict_exception = { message : error_message opti
    request in another Region. \n"]
 
 type nonrec provisioned_throughput_exceeded_exception = {
+  throttling_reasons : throttling_reason_list option;
+      [@ocaml.doc
+        "A list of \
+         {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html}ThrottlingReason} \
+         that provide detailed diagnostic information about why the request was throttled. \n"]
   message : error_message option;
       [@ocaml.doc "You exceeded your maximum allowed provisioned throughput.\n"]
 }
 [@@ocaml.doc
-  "Your request rate is too high. The Amazon Web Services SDKs for DynamoDB automatically retry \
+  "The request was denied due to request throttling. For detailed information about why the \
+   request was throttled and the ARN of the impacted resource, find the \
+   {{:https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html}ThrottlingReason} \
+   field in the returned exception. The Amazon Web Services SDKs for DynamoDB automatically retry \
    requests that receive this exception. Your request is eventually successful, unless your retry \
    queue is too large to finish. Reduce the frequency of requests and use exponential backoff. For \
    more information, go to \
@@ -3197,7 +3365,16 @@ type nonrec contributor_insights_status =
   | ENABLING [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
+type nonrec contributor_insights_mode =
+  | THROTTLED_KEYS [@ocaml.doc ""]
+  | ACCESSED_AND_THROTTLED_KEYS [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
 type nonrec update_contributor_insights_output = {
+  contributor_insights_mode : contributor_insights_mode option;
+      [@ocaml.doc
+        "The updated mode of CloudWatch Contributor Insights that determines whether to monitor \
+         all access and throttled events or to track throttled events exclusively.\n"]
   contributor_insights_status : contributor_insights_status option;
       [@ocaml.doc "The status of contributor insights\n"]
   index_name : index_name option;
@@ -3210,6 +3387,10 @@ type nonrec contributor_insights_action = DISABLE [@ocaml.doc ""] | ENABLE [@oca
 [@@ocaml.doc ""]
 
 type nonrec update_contributor_insights_input = {
+  contributor_insights_mode : contributor_insights_mode option;
+      [@ocaml.doc
+        "Specifies whether to track all access and throttled events or throttled events only for \
+         the DynamoDB table or index.\n"]
   contributor_insights_action : contributor_insights_action;
       [@ocaml.doc "Represents the contributor insights action.\n"]
   index_name : index_name option; [@ocaml.doc "The global secondary index name, if applicable.\n"]
@@ -3476,10 +3657,9 @@ type nonrec transaction_canceled_exception = {
   \              \n\
   \               }\n\
   \          }\n\
-  \    If using Java, DynamoDB lists the cancellation reasons on the [CancellationReasons] \
-   property. This property is not set for other languages. Transaction cancellation reasons are \
-   ordered in the order of requested items, if an item has no error it will have [None] code and \
-   [Null] message.\n\
+  \    DynamoDB lists the cancellation reasons on the [CancellationReasons] property. Transaction \
+   cancellation reasons are ordered in the order of requested items, if an item has no error it \
+   will have [None] code and [Null] message.\n\
   \    \n\
   \      Cancellation reason codes and possible error messages:\n\
   \      \n\
@@ -5780,6 +5960,11 @@ type nonrec list_exports_input = {
 [@@ocaml.doc ""]
 
 type nonrec contributor_insights_summary = {
+  contributor_insights_mode : contributor_insights_mode option;
+      [@ocaml.doc
+        "Indicates the current mode of CloudWatch Contributor Insights, specifying whether it \
+         tracks all access and throttled events or throttled events only for the DynamoDB table or \
+         index.\n"]
   contributor_insights_status : contributor_insights_status option;
       [@ocaml.doc
         "Describes the current status for contributor insights for the given table and index, if \
@@ -6515,7 +6700,7 @@ type nonrec export_table_to_point_in_time_input = {
          might not be idempotent.\n\
         \ \n\
         \  If you submit a request with the same client token but a change in other parameters \
-         within the 8-hour idempotency window, DynamoDB returns an [ImportConflictException].\n\
+         within the 8-hour idempotency window, DynamoDB returns an [ExportConflictException].\n\
         \  "]
   export_time : export_time option;
       [@ocaml.doc
@@ -6771,6 +6956,10 @@ type nonrec contributor_insights_rule = string [@@ocaml.doc ""]
 type nonrec contributor_insights_rule_list = contributor_insights_rule list [@@ocaml.doc ""]
 
 type nonrec describe_contributor_insights_output = {
+  contributor_insights_mode : contributor_insights_mode option;
+      [@ocaml.doc
+        "The mode of CloudWatch Contributor Insights for DynamoDB that determines which events are \
+         emitted. Can be set to track all access and throttled events or throttled events only.\n"]
   failure_exception : failure_exception option;
       [@ocaml.doc
         "Returns information about the last failure that was encountered.\n\n\
@@ -7156,6 +7345,15 @@ type nonrec create_table_output = {
 [@@ocaml.doc "Represents the output of a [CreateTable] operation.\n"]
 
 type nonrec create_table_input = {
+  global_table_settings_replication_mode : global_table_settings_replication_mode option;
+      [@ocaml.doc
+        "Controls the settings synchronization mode for the global table. For multi-account global \
+         tables, this parameter is required and the only supported value is ENABLED. For \
+         same-account global tables, this parameter is set to ENABLED_WITH_OVERRIDES. \n"]
+  global_table_source_arn : table_arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the source table used for the creation of a \
+         multi-account global table.\n"]
   on_demand_throughput : on_demand_throughput option;
       [@ocaml.doc
         "Sets the maximum number of read and write units for the specified table in on-demand \
@@ -7273,7 +7471,8 @@ type nonrec create_table_input = {
         \            \n\
         \            \n\
         \             }\n\
-        \       {-   [KeySchema] - Specifies the key schema for the global secondary index.\n\
+        \       {-   [KeySchema] - Specifies the key schema for the global secondary index. Each \
+         global secondary index supports up to 4 partition keys and up to 4 sort keys.\n\
         \           \n\
         \            }\n\
         \       {-   [Projection] - Specifies attributes that are copied (projected) from the \
@@ -7374,7 +7573,7 @@ type nonrec create_table_input = {
         \          }\n\
         \        }\n\
         \  "]
-  key_schema : key_schema;
+  key_schema : key_schema option;
       [@ocaml.doc
         "Specifies the attributes that make up the primary key for a table or an index. The \
          attributes in [KeySchema] must also be defined in the [AttributeDefinitions] array. For \
@@ -7423,7 +7622,7 @@ type nonrec create_table_input = {
       [@ocaml.doc
         "The name of the table to create. You can also provide the Amazon Resource Name (ARN) of \
          the table in this parameter.\n"]
-  attribute_definitions : attribute_definitions;
+  attribute_definitions : attribute_definitions option;
       [@ocaml.doc
         "An array of attributes that describe the key schema for the table and indexes.\n"]
 }

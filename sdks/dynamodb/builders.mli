@@ -230,6 +230,7 @@ val make_table_class_summary :
   ?last_update_date_time:date -> ?table_class:table_class -> unit -> table_class_summary
 
 val make_replica_description :
+  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
   ?replica_table_class_summary:table_class_summary ->
   ?replica_inaccessible_date_time:date ->
   ?global_secondary_indexes:replica_global_secondary_index_description_list ->
@@ -239,6 +240,7 @@ val make_replica_description :
   ?kms_master_key_id:kms_master_key_id ->
   ?replica_status_percent_progress:replica_status_percent_progress ->
   ?replica_status_description:replica_status_description ->
+  ?replica_arn:string_ ->
   ?replica_status:replica_status ->
   ?region_name:region_name ->
   unit ->
@@ -282,6 +284,7 @@ val make_table_description :
   ?archival_summary:archival_summary ->
   ?sse_description:sse_description ->
   ?restore_summary:restore_summary ->
+  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
   ?global_table_witnesses:global_table_witness_description_list ->
   ?replicas:replica_description_list ->
   ?global_table_version:string_ ->
@@ -397,6 +400,7 @@ val make_global_table_witness_group_update :
   global_table_witness_group_update
 
 val make_update_table_input :
+  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
   ?warm_throughput:warm_throughput ->
   ?on_demand_throughput:on_demand_throughput ->
   ?global_table_witness_updates:global_table_witness_group_update_list ->
@@ -493,6 +497,8 @@ val make_update_item_input :
   unit ->
   update_item_input
 
+val make_throttling_reason : ?resource:resource -> ?reason:reason -> unit -> throttling_reason
+
 val make_replica_global_secondary_index_settings_description :
   ?provisioned_write_capacity_auto_scaling_settings:auto_scaling_settings_description ->
   ?provisioned_write_capacity_units:positive_long_object ->
@@ -582,6 +588,7 @@ val make_update_global_table_input :
   update_global_table_input
 
 val make_update_contributor_insights_output :
+  ?contributor_insights_mode:contributor_insights_mode ->
   ?contributor_insights_status:contributor_insights_status ->
   ?index_name:index_name ->
   ?table_name:table_name ->
@@ -589,6 +596,7 @@ val make_update_contributor_insights_output :
   update_contributor_insights_output
 
 val make_update_contributor_insights_input :
+  ?contributor_insights_mode:contributor_insights_mode ->
   ?index_name:index_name ->
   contributor_insights_action:contributor_insights_action ->
   table_name:table_arn ->
@@ -1047,6 +1055,7 @@ val make_list_exports_input :
   list_exports_input
 
 val make_contributor_insights_summary :
+  ?contributor_insights_mode:contributor_insights_mode ->
   ?contributor_insights_status:contributor_insights_status ->
   ?index_name:index_name ->
   ?table_name:table_name ->
@@ -1347,6 +1356,7 @@ val make_describe_endpoints_response : endpoints:endpoints -> unit -> describe_e
 val make_describe_endpoints_request : unit -> unit
 
 val make_describe_contributor_insights_output :
+  ?contributor_insights_mode:contributor_insights_mode ->
   ?failure_exception:failure_exception ->
   ?last_update_date_time:last_update_date_time ->
   ?contributor_insights_status:contributor_insights_status ->
@@ -1430,6 +1440,8 @@ val make_delete_backup_input : backup_arn:backup_arn -> unit -> delete_backup_in
 val make_create_table_output : ?table_description:table_description -> unit -> create_table_output
 
 val make_create_table_input :
+  ?global_table_settings_replication_mode:global_table_settings_replication_mode ->
+  ?global_table_source_arn:table_arn ->
   ?on_demand_throughput:on_demand_throughput ->
   ?resource_policy:resource_policy ->
   ?warm_throughput:warm_throughput ->
@@ -1442,9 +1454,9 @@ val make_create_table_input :
   ?billing_mode:billing_mode ->
   ?global_secondary_indexes:global_secondary_index_list ->
   ?local_secondary_indexes:local_secondary_index_list ->
-  key_schema:key_schema ->
+  ?key_schema:key_schema ->
+  ?attribute_definitions:attribute_definitions ->
   table_name:table_arn ->
-  attribute_definitions:attribute_definitions ->
   unit ->
   create_table_input
 

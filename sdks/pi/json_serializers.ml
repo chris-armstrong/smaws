@@ -93,12 +93,14 @@ let markdown_string_to_yojson = string_to_yojson
 let recommendation_to_yojson (x : recommendation) =
   assoc_to_yojson
     [
+      ("RecommendationDetails", option_to_yojson markdown_string_to_yojson x.recommendation_details);
       ( "RecommendationDescription",
         option_to_yojson markdown_string_to_yojson x.recommendation_description );
       ("RecommendationId", option_to_yojson string__to_yojson x.recommendation_id);
     ]
 
 let recommendation_list_to_yojson tree = list_to_yojson recommendation_to_yojson tree
+let recommendation_id_list_to_yojson tree = list_to_yojson string__to_yojson tree
 
 let period_alignment_to_yojson (x : period_alignment) =
   match x with START_TIME -> `String "START_TIME" | END_TIME -> `String "END_TIME"
@@ -156,6 +158,28 @@ let list_performance_analysis_reports_request_to_yojson
       ("ListTags", option_to_yojson boolean__to_yojson x.list_tags);
       ("MaxResults", option_to_yojson max_results_to_yojson x.max_results);
       ("NextToken", option_to_yojson next_token_to_yojson x.next_token);
+      ("Identifier", Some (identifier_string_to_yojson x.identifier));
+      ("ServiceType", Some (service_type_to_yojson x.service_type));
+    ]
+
+let list_performance_analysis_report_recommendations_response_to_yojson
+    (x : list_performance_analysis_report_recommendations_response) =
+  assoc_to_yojson
+    [
+      ("NextToken", option_to_yojson next_token_to_yojson x.next_token);
+      ("Recommendations", option_to_yojson recommendation_list_to_yojson x.recommendations);
+    ]
+
+let analysis_report_id_to_yojson = string_to_yojson
+
+let list_performance_analysis_report_recommendations_request_to_yojson
+    (x : list_performance_analysis_report_recommendations_request) =
+  assoc_to_yojson
+    [
+      ("NextToken", option_to_yojson next_token_to_yojson x.next_token);
+      ("MaxResults", option_to_yojson max_results_to_yojson x.max_results);
+      ("RecommendationIds", option_to_yojson recommendation_id_list_to_yojson x.recommendation_ids);
+      ("AnalysisReportId", Some (analysis_report_id_to_yojson x.analysis_report_id));
       ("Identifier", Some (identifier_string_to_yojson x.identifier));
       ("ServiceType", Some (service_type_to_yojson x.service_type));
     ]
@@ -333,8 +357,6 @@ let get_resource_metadata_request_to_yojson (x : get_resource_metadata_request) 
       ("ServiceType", Some (service_type_to_yojson x.service_type));
     ]
 
-let analysis_report_id_to_yojson = string_to_yojson
-
 let context_type_to_yojson (x : context_type) =
   match x with CONTEXTUAL -> `String "CONTEXTUAL" | CAUSAL -> `String "CAUSAL"
 
@@ -509,7 +531,7 @@ let create_performance_analysis_report_request_to_yojson
   assoc_to_yojson
     [
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);
-      ("EndTime", Some (iso_timestamp_to_yojson x.end_time));
+      ("EndTime", option_to_yojson iso_timestamp_to_yojson x.end_time);
       ("StartTime", Some (iso_timestamp_to_yojson x.start_time));
       ("Identifier", Some (identifier_string_to_yojson x.identifier));
       ("ServiceType", Some (service_type_to_yojson x.service_type));

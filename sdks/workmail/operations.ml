@@ -2787,6 +2787,7 @@ module RegisterToWorkMail = struct
     | `MailDomainStateException _ -> "com.amazonaws.workmail#MailDomainStateException"
     | `OrganizationNotFoundException _ -> "com.amazonaws.workmail#OrganizationNotFoundException"
     | `OrganizationStateException _ -> "com.amazonaws.workmail#OrganizationStateException"
+    | `UnsupportedOperationException _ -> "com.amazonaws.workmail#UnsupportedOperationException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -2824,6 +2825,9 @@ module RegisterToWorkMail = struct
       | _, "OrganizationStateException" ->
           `OrganizationStateException
             (Json_deserializers.organization_state_exception_of_yojson tree path)
+      | _, "UnsupportedOperationException" ->
+          `UnsupportedOperationException
+            (Json_deserializers.unsupported_operation_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(

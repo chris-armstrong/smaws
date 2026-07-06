@@ -26,13 +26,18 @@ type nonrec setup_request = {
 type nonrec iso_date = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
 
 type nonrec region_name =
-  | EU_NORTH_1 [@ocaml.doc ""]
+  | SA_EAST_1 [@ocaml.doc ""]
+  | AP_SOUTHEAST_5 [@ocaml.doc ""]
+  | AP_SOUTHEAST_3 [@ocaml.doc ""]
   | AP_NORTHEAST_2 [@ocaml.doc ""]
   | AP_NORTHEAST_1 [@ocaml.doc ""]
   | AP_SOUTHEAST_2 [@ocaml.doc ""]
   | AP_SOUTHEAST_1 [@ocaml.doc ""]
   | AP_SOUTH_1 [@ocaml.doc ""]
+  | AP_EAST_1 [@ocaml.doc ""]
   | CA_CENTRAL_1 [@ocaml.doc ""]
+  | EU_SOUTH_2 [@ocaml.doc ""]
+  | EU_NORTH_1 [@ocaml.doc ""]
   | EU_CENTRAL_1 [@ocaml.doc ""]
   | EU_WEST_3 [@ocaml.doc ""]
   | EU_WEST_2 [@ocaml.doc ""]
@@ -428,6 +433,23 @@ type nonrec service_exception = {
 }
 [@@ocaml.doc "A general service exception.\n"]
 
+type nonrec region_setup_in_progress_exception = {
+  tip : string_ option;
+      [@ocaml.doc
+        "Opt-in Regions typically take a few minutes to finish setting up before you can work with \
+         them. Wait a few minutes and try again.\n"]
+  message : string_ option; [@ocaml.doc ""]
+  docs : string_ option;
+      [@ocaml.doc
+        " \
+         {{:https://docs.aws.amazon.com/lightsail/latest/userguide/understanding-regions-and-availability-zones-in-amazon-lightsail.html}Regions \
+         and Availability Zones for Lightsail} \n"]
+  code : string_ option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "Lightsail throws this exception when an operation is performed on resources in an opt-in Region \
+   that is currently being set up.\n"]
+
 type nonrec operation_failure_exception = {
   tip : string_ option; [@ocaml.doc ""]
   message : string_ option; [@ocaml.doc ""]
@@ -694,7 +716,19 @@ type nonrec update_distribution_result = {
 type nonrec origin_protocol_policy_enum = HTTPSOnly [@ocaml.doc ""] | HTTPOnly [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
+type nonrec origin_ip_address_type_enum =
+  | DUALSTACK [@ocaml.doc ""]
+  | IPV6 [@ocaml.doc ""]
+  | IPV4 [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
 type nonrec input_origin = {
+  ip_address_type : origin_ip_address_type_enum option;
+      [@ocaml.doc
+        "The IP address type that the distribution uses when connecting to the origin.\n\n\
+        \ The possible values are [ipv4] for IPv4 only, [ipv6] for IPv6 only, and [dualstack] for \
+         IPv4 and IPv6.\n\
+        \ "]
   response_timeout : integer option;
       [@ocaml.doc
         "The amount of time, in seconds, that the distribution waits for a response after \
@@ -1717,7 +1751,99 @@ type nonrec bucket_access_log_config = {
    Guide}.\n\
   \ "]
 
+type nonrec bucket_cors_rule_id = string [@@ocaml.doc ""]
+
+type nonrec bucket_cors_allowed_method = string [@@ocaml.doc ""]
+
+type nonrec bucket_cors_allowed_methods = bucket_cors_allowed_method list [@@ocaml.doc ""]
+
+type nonrec bucket_cors_allowed_origins = string_ list [@@ocaml.doc ""]
+
+type nonrec bucket_cors_allowed_headers = string_ list [@@ocaml.doc ""]
+
+type nonrec bucket_cors_expose_headers = string_ list [@@ocaml.doc ""]
+
+type nonrec bucket_cors_rule = {
+  max_age_seconds : integer option;
+      [@ocaml.doc
+        "The time in seconds that your browser is to cache the preflight response for the \
+         specified resource. A CORS rule can have only one [maxAgeSeconds] element.\n"]
+  expose_headers : bucket_cors_expose_headers option;
+      [@ocaml.doc
+        "One or more headers in the response that you want customers to be able to access from \
+         their applications (for example, from a JavaScript [XMLHttpRequest] object).\n"]
+  allowed_headers : bucket_cors_allowed_headers option;
+      [@ocaml.doc
+        "Headers that are specified in the [Access-Control-Request-Headers] header. These headers \
+         are allowed in a preflight [OPTIONS] request. In response to any preflight [OPTIONS] \
+         request, Amazon S3 returns any requested headers that are allowed.\n"]
+  allowed_origins : bucket_cors_allowed_origins;
+      [@ocaml.doc
+        "One or more origins you want customers to be able to access the bucket from. Each CORS \
+         rule must identify at least one origin and one method.\n"]
+  allowed_methods : bucket_cors_allowed_methods;
+      [@ocaml.doc
+        "The HTTP methods that are allowed when accessing the bucket from the specified origin. \
+         Each CORS rule must identify at least one origin and one method.\n\n\
+        \ You can use the following HTTP methods:\n\
+        \ \n\
+        \  {ul\n\
+        \        {-   [GET] - Retrieves data from the server, such as downloading files or viewing \
+         content.\n\
+        \            \n\
+        \             }\n\
+        \        {-   [PUT] - Uploads or replaces data on the server, such as uploading new files.\n\
+        \            \n\
+        \             }\n\
+        \        {-   [POST] - Sends data to the server for processing, such as submitting forms \
+         or creating new resources.\n\
+        \            \n\
+        \             }\n\
+        \        {-   [DELETE] - Removes data from the server, such as deleting files or resources.\n\
+        \            \n\
+        \             }\n\
+        \        {-   [HEAD] - Retrieves only the headers from the server without the actual \
+         content, useful for checking if a resource exists.\n\
+        \            \n\
+        \             }\n\
+        \        }\n\
+        \  "]
+  id : bucket_cors_rule_id option;
+      [@ocaml.doc
+        "A unique identifier for the CORS rule. The ID value can be up to 255 characters long. The \
+         IDs help you find a rule in the configuration.\n"]
+}
+[@@ocaml.doc
+  "Describes a cross-origin resource sharing (CORS) rule for a Lightsail bucket. CORS rules \
+   specify which origins are allowed to access the bucket, which HTTP methods are allowed, and \
+   other access control information. For more information, see \
+   {{:https://docs.aws.amazon.com/lightsail/latest/userguide/configure-cors.html}Configuring \
+   cross-origin resource sharing (CORS)}.\n"]
+
+type nonrec bucket_cors_rules = bucket_cors_rule list [@@ocaml.doc ""]
+
+type nonrec bucket_cors_config = {
+  rules : bucket_cors_rules option;
+      [@ocaml.doc
+        "A set of origins and methods (cross-origin access that you want to allow). You can add up \
+         to 20 rules to the configuration. The total size is limited to 64 KB.\n"]
+}
+[@@ocaml.doc
+  "Describes the cross-origin resource sharing (CORS) configuration for a Lightsail bucket. CORS \
+   defines a way for client web applications that are loaded in one domain to interact with \
+   resources in a different domain. For more information, see \
+   {{:https://docs.aws.amazon.com/lightsail/latest/userguide/configure-cors.html}Configuring \
+   cross-origin resource sharing (CORS)}.\n"]
+
 type nonrec bucket = {
+  cors : bucket_cors_config option;
+      [@ocaml.doc
+        "An array of cross-origin resource sharing (CORS) rules that identify origins and the HTTP \
+         methods that can be executed on your bucket. This field is only included in the response \
+         when CORS configuration is requested or when updating CORS configuration. For more \
+         information, see \
+         {{:https://docs.aws.amazon.com/lightsail/latest/userguide/configure-cors.html}Configuring \
+         cross-origin resource sharing (CORS)}.\n"]
   access_log_config : bucket_access_log_config option;
       [@ocaml.doc "An object that describes the access log configuration for the bucket.\n"]
   state : bucket_state option; [@ocaml.doc "An object that describes the state of the bucket.\n"]
@@ -1806,6 +1932,16 @@ type nonrec update_bucket_result = {
 [@@ocaml.doc ""]
 
 type nonrec update_bucket_request = {
+  cors : bucket_cors_config option;
+      [@ocaml.doc
+        "Sets the cross-origin resource sharing (CORS) configuration for your bucket. If a CORS \
+         configuration exists, it is replaced with the specified configuration. For AWS CLI \
+         operations, this parameter can also be passed as a file. For more information, see \
+         {{:https://docs.aws.amazon.com/lightsail/latest/userguide/configure-cors.html}Configuring \
+         cross-origin resource sharing (CORS)}.\n\n\
+        \  CORS information is only returned in a response when you update the CORS policy.\n\
+        \  \n\
+        \   "]
   access_log_config : bucket_access_log_config option;
       [@ocaml.doc "An object that describes the access log configuration for the bucket.\n"]
   readonly_access_accounts : partner_id_list option;
@@ -3146,6 +3282,11 @@ type nonrec contact_protocols_list = contact_protocol list [@@ocaml.doc ""]
 type nonrec notification_trigger_list = alarm_state list [@@ocaml.doc ""]
 
 type nonrec put_alarm_request = {
+  tags : tag_list option;
+      [@ocaml.doc
+        "The tag keys and optional values to add to the alarm during create.\n\n\
+        \ Use the [TagResource] action to tag a resource after it's created.\n\
+        \ "]
   notification_enabled : boolean_ option;
       [@ocaml.doc
         "Indicates whether the alarm is enabled.\n\n\
@@ -3343,6 +3484,12 @@ type nonrec password_data = {
    pair name.\n"]
 
 type nonrec origin = {
+  ip_address_type : origin_ip_address_type_enum option;
+      [@ocaml.doc
+        "The IP address type that the distribution uses when connecting to the origin.\n\n\
+        \ The possible values are [ipv4] for IPv4 only, [ipv6] for IPv6 only, and [dualstack] for \
+         IPv4 and IPv6.\n\
+        \ "]
   response_timeout : integer option;
       [@ocaml.doc
         "The amount of time, in seconds, that the distribution waits for a response after \
@@ -6919,6 +7066,12 @@ type nonrec contact_method_status =
 [@@ocaml.doc ""]
 
 type nonrec contact_method = {
+  tags : tag_list option;
+      [@ocaml.doc
+        "The tag keys and optional values for the resource. For more information about tags in \
+         Lightsail, see the \
+         {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags}Amazon \
+         Lightsail Developer Guide}.\n"]
   support_code : string_ option;
       [@ocaml.doc
         "The support code. Include this code in your email to support when you have questions \
@@ -7396,7 +7549,7 @@ type nonrec account_level_bpa_sync = {
         \            \n\
         \             }\n\
         \        {-   [Unknown] - The reason that synchronization failed is unknown. Contact \
-         Amazon Web ServicesSupport for more information.\n\
+         Amazon Web Services Support for more information.\n\
         \            \n\
         \             }\n\
         \        }\n\
@@ -7471,6 +7624,16 @@ type nonrec get_buckets_result = {
 [@@ocaml.doc ""]
 
 type nonrec get_buckets_request = {
+  include_cors : boolean_ option;
+      [@ocaml.doc
+        "A Boolean value that indicates whether to include Lightsail bucket CORS configuration in \
+         the response. For more information, see \
+         {{:https://docs.aws.amazon.com/lightsail/latest/userguide/configure-cors.html}Configuring \
+         cross-origin resource sharing (CORS)}.\n\n\
+        \  This parameter is only supported when getting a single bucket with [bucketName] \
+         specified. The default value for this parameter is [False].\n\
+        \  \n\
+        \   "]
   include_connected_resources : boolean_ option;
       [@ocaml.doc
         "A Boolean value that indicates whether to include Lightsail instances that were given \
@@ -7831,6 +7994,12 @@ type nonrec get_auto_snapshots_request = {
 [@@ocaml.doc ""]
 
 type nonrec alarm = {
+  tags : tag_list option;
+      [@ocaml.doc
+        "The tag keys and optional values for the resource. For more information about tags in \
+         Lightsail, see the \
+         {{:https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-tags}Amazon \
+         Lightsail Developer Guide}.\n"]
   notification_enabled : boolean_ option; [@ocaml.doc "Indicates whether the alarm is enabled.\n"]
   notification_triggers : notification_trigger_list option;
       [@ocaml.doc "The alarm states that trigger a notification.\n"]
@@ -9779,6 +9948,11 @@ type nonrec create_contact_method_result = {
 [@@ocaml.doc ""]
 
 type nonrec create_contact_method_request = {
+  tags : tag_list option;
+      [@ocaml.doc
+        "The tag keys and optional values to add to the contact method during create.\n\n\
+        \ Use the [TagResource] action to tag a resource after it's created.\n\
+        \ "]
   contact_endpoint : string_max256;
       [@ocaml.doc
         "The destination of the contact method, such as an email address or a mobile phone number.\n\n\

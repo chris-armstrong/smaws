@@ -236,6 +236,8 @@ val make_get_hypervisor_output : ?hypervisor:hypervisor_details -> unit -> get_h
 val make_get_hypervisor_input : hypervisor_arn:server_arn -> unit -> get_hypervisor_input
 
 val make_gateway_details :
+  ?software_version:name ->
+  ?deprecation_date:time ->
   ?vpc_endpoint:vpc_endpoint ->
   ?next_update_availability_time:time ->
   ?maintenance_start_time:maintenance_start_time ->
@@ -439,8 +441,8 @@ module GetHypervisorPropertyMappings : sig
 end
 [@@ocaml.doc
   "This action retrieves the property mappings for the specified hypervisor. A hypervisor property \
-   mapping displays the relationship of entity properties available from the on-premises \
-   hypervisor to the properties available in Amazon Web Services.\n"]
+   mapping displays the relationship of entity properties available from the hypervisor to the \
+   properties available in Amazon Web Services.\n"]
 
 module GetVirtualMachine : sig
   val error_to_string :
@@ -564,8 +566,8 @@ module PutHypervisorPropertyMappings : sig
 end
 [@@ocaml.doc
   "This action sets the property mappings for the specified hypervisor. A hypervisor property \
-   mapping displays the relationship of entity properties available from the on-premises \
-   hypervisor to the properties available in Amazon Web Services.\n"]
+   mapping displays the relationship of entity properties available from the hypervisor to the \
+   properties available in Amazon Web Services.\n"]
 
 module PutMaintenanceStartTime : sig
   val error_to_string :

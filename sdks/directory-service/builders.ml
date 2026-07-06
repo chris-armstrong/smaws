@@ -28,6 +28,7 @@ let make_radius_settings ?use_same_username:(use_same_username_ : use_same_usern
     ?radius_retries:(radius_retries_ : radius_retries option)
     ?radius_timeout:(radius_timeout_ : radius_timeout option)
     ?radius_port:(radius_port_ : port_number option)
+    ?radius_servers_ipv6:(radius_servers_ipv6_ : servers option)
     ?radius_servers:(radius_servers_ : servers option) () =
   ({
      use_same_username = use_same_username_;
@@ -37,6 +38,7 @@ let make_radius_settings ?use_same_username:(use_same_username_ : use_same_usern
      radius_retries = radius_retries_;
      radius_timeout = radius_timeout_;
      radius_port = radius_port_;
+     radius_servers_ipv6 = radius_servers_ipv6_;
      radius_servers = radius_servers_;
    }
     : radius_settings)
@@ -71,23 +73,61 @@ let make_update_info_entry
    }
     : update_info_entry)
 
+let make_hybrid_administrator_account_update ~secret_arn:(secret_arn_ : secret_arn) () =
+  ({ secret_arn = secret_arn_ } : hybrid_administrator_account_update)
+
+let make_hybrid_customer_instances_settings ~instance_ids:(instance_ids_ : assessment_instance_ids)
+    ~customer_dns_ips:(customer_dns_ips_ : customer_dns_ips) () =
+  ({ instance_ids = instance_ids_; customer_dns_ips = customer_dns_ips_ }
+    : hybrid_customer_instances_settings)
+
+let make_update_hybrid_ad_request
+    ?self_managed_instances_settings:
+      (self_managed_instances_settings_ : hybrid_customer_instances_settings option)
+    ?hybrid_administrator_account_update:
+      (hybrid_administrator_account_update_ : hybrid_administrator_account_update option)
+    ~directory_id:(directory_id_ : directory_id) () =
+  ({
+     self_managed_instances_settings = self_managed_instances_settings_;
+     hybrid_administrator_account_update = hybrid_administrator_account_update_;
+     directory_id = directory_id_;
+   }
+    : update_hybrid_ad_request)
+
+let make_directory_size_update_settings ?directory_size:(directory_size_ : directory_size option) ()
+    =
+  ({ directory_size = directory_size_ } : directory_size_update_settings)
+
+let make_network_update_settings ?customer_dns_ips_v6:(customer_dns_ips_v6_ : dns_ipv6_addrs option)
+    ?network_type:(network_type_ : network_type option) () =
+  ({ customer_dns_ips_v6 = customer_dns_ips_v6_; network_type = network_type_ }
+    : network_update_settings)
+
 let make_update_directory_setup_request
     ?create_snapshot_before_update:
       (create_snapshot_before_update_ : create_snapshot_before_update option)
+    ?network_update_settings:(network_update_settings_ : network_update_settings option)
+    ?directory_size_update_settings:
+      (directory_size_update_settings_ : directory_size_update_settings option)
     ?os_update_settings:(os_update_settings_ : os_update_settings option)
     ~update_type:(update_type_ : update_type) ~directory_id:(directory_id_ : directory_id) () =
   ({
      create_snapshot_before_update = create_snapshot_before_update_;
+     network_update_settings = network_update_settings_;
+     directory_size_update_settings = directory_size_update_settings_;
      os_update_settings = os_update_settings_;
      update_type = update_type_;
      directory_id = directory_id_;
    }
     : update_directory_setup_request)
 
-let make_update_conditional_forwarder_request ~dns_ip_addrs:(dns_ip_addrs_ : dns_ip_addrs)
+let make_update_conditional_forwarder_request
+    ?dns_ipv6_addrs:(dns_ipv6_addrs_ : dns_ipv6_addrs option)
+    ?dns_ip_addrs:(dns_ip_addrs_ : dns_ip_addrs option)
     ~remote_domain_name:(remote_domain_name_ : remote_domain_name)
     ~directory_id:(directory_id_ : directory_id) () =
   ({
+     dns_ipv6_addrs = dns_ipv6_addrs_;
      dns_ip_addrs = dns_ip_addrs_;
      remote_domain_name = remote_domain_name_;
      directory_id = directory_id_;
@@ -142,6 +182,29 @@ let make_start_schema_extension_request ~description:(description_ : description
      directory_id = directory_id_;
    }
     : start_schema_extension_request)
+
+let make_directory_vpc_settings ~subnet_ids:(subnet_ids_ : subnet_ids) ~vpc_id:(vpc_id_ : vpc_id) ()
+    =
+  ({ subnet_ids = subnet_ids_; vpc_id = vpc_id_ } : directory_vpc_settings)
+
+let make_assessment_configuration
+    ?security_group_ids:(security_group_ids_ : security_group_ids option)
+    ~instance_ids:(instance_ids_ : assessment_instance_ids)
+    ~vpc_settings:(vpc_settings_ : directory_vpc_settings) ~dns_name:(dns_name_ : directory_name)
+    ~customer_dns_ips:(customer_dns_ips_ : customer_dns_ips) () =
+  ({
+     security_group_ids = security_group_ids_;
+     instance_ids = instance_ids_;
+     vpc_settings = vpc_settings_;
+     dns_name = dns_name_;
+     customer_dns_ips = customer_dns_ips_;
+   }
+    : assessment_configuration)
+
+let make_start_ad_assessment_request ?directory_id:(directory_id_ : directory_id option)
+    ?assessment_configuration:(assessment_configuration_ : assessment_configuration option) () =
+  ({ directory_id = directory_id_; assessment_configuration = assessment_configuration_ }
+    : start_ad_assessment_request)
 
 let make_snapshot ?start_time:(start_time_ : start_time option)
     ?status:(status_ : snapshot_status option) ?name:(name_ : snapshot_name option)
@@ -269,9 +332,10 @@ let make_remove_tags_from_resource_request ~tag_keys:(tag_keys_ : tag_keys)
 let make_remove_region_request ~directory_id:(directory_id_ : directory_id) () =
   ({ directory_id = directory_id_ } : remove_region_request)
 
-let make_remove_ip_routes_request ~cidr_ips:(cidr_ips_ : cidr_ips)
-    ~directory_id:(directory_id_ : directory_id) () =
-  ({ cidr_ips = cidr_ips_; directory_id = directory_id_ } : remove_ip_routes_request)
+let make_remove_ip_routes_request ?cidr_ipv6s:(cidr_ipv6s_ : cidr_ipv6s option)
+    ?cidr_ips:(cidr_ips_ : cidr_ips option) ~directory_id:(directory_id_ : directory_id) () =
+  ({ cidr_ipv6s = cidr_ipv6s_; cidr_ips = cidr_ips_; directory_id = directory_id_ }
+    : remove_ip_routes_request)
 
 let make_reject_shared_directory_request ~shared_directory_id:(shared_directory_id_ : directory_id)
     () =
@@ -300,10 +364,6 @@ let make_register_certificate_request
 let make_regions_info ?additional_regions:(additional_regions_ : additional_regions option)
     ?primary_region:(primary_region_ : region_name option) () =
   ({ additional_regions = additional_regions_; primary_region = primary_region_ } : regions_info)
-
-let make_directory_vpc_settings ~subnet_ids:(subnet_ids_ : subnet_ids) ~vpc_id:(vpc_id_ : vpc_id) ()
-    =
-  ({ subnet_ids = subnet_ids_; vpc_id = vpc_id_ } : directory_vpc_settings)
 
 let make_region_description
     ?last_updated_date_time:(last_updated_date_time_ : last_updated_date_time option)
@@ -341,16 +401,20 @@ let make_directory_vpc_settings_description
    }
     : directory_vpc_settings_description)
 
-let make_owner_directory_description ?radius_status:(radius_status_ : radius_status option)
+let make_owner_directory_description ?network_type:(network_type_ : network_type option)
+    ?radius_status:(radius_status_ : radius_status option)
     ?radius_settings:(radius_settings_ : radius_settings option)
     ?vpc_settings:(vpc_settings_ : directory_vpc_settings_description option)
+    ?dns_ipv6_addrs:(dns_ipv6_addrs_ : dns_ipv6_addrs option)
     ?dns_ip_addrs:(dns_ip_addrs_ : dns_ip_addrs option)
     ?account_id:(account_id_ : customer_id option)
     ?directory_id:(directory_id_ : directory_id option) () =
   ({
+     network_type = network_type_;
      radius_status = radius_status_;
      radius_settings = radius_settings_;
      vpc_settings = vpc_settings_;
+     dns_ipv6_addrs = dns_ipv6_addrs_;
      dns_ip_addrs = dns_ip_addrs_;
      account_id = account_id_;
      directory_id = directory_id_;
@@ -389,12 +453,14 @@ let make_ip_route_info ?description:(description_ : description option)
     ?ip_route_status_reason:(ip_route_status_reason_ : ip_route_status_reason option)
     ?added_date_time:(added_date_time_ : added_date_time option)
     ?ip_route_status_msg:(ip_route_status_msg_ : ip_route_status_msg option)
-    ?cidr_ip:(cidr_ip_ : cidr_ip option) ?directory_id:(directory_id_ : directory_id option) () =
+    ?cidr_ipv6:(cidr_ipv6_ : cidr_ipv6 option) ?cidr_ip:(cidr_ip_ : cidr_ip option)
+    ?directory_id:(directory_id_ : directory_id option) () =
   ({
      description = description_;
      ip_route_status_reason = ip_route_status_reason_;
      added_date_time = added_date_time_;
      ip_route_status_msg = ip_route_status_msg_;
+     cidr_ipv6 = cidr_ipv6_;
      cidr_ip = cidr_ip_;
      directory_id = directory_id_;
    }
@@ -423,6 +489,32 @@ let make_list_certificates_request ?limit:(limit_ : page_limit option)
   ({ limit = limit_; next_token = next_token_; directory_id = directory_id_ }
     : list_certificates_request)
 
+let make_assessment_summary ?report_type:(report_type_ : assessment_report_type option)
+    ?customer_dns_ips:(customer_dns_ips_ : customer_dns_ips option)
+    ?status:(status_ : assessment_status option)
+    ?last_update_date_time:(last_update_date_time_ : last_update_date_time option)
+    ?start_time:(start_time_ : assessment_start_time option)
+    ?dns_name:(dns_name_ : directory_name option)
+    ?directory_id:(directory_id_ : directory_id option)
+    ?assessment_id:(assessment_id_ : assessment_id option) () =
+  ({
+     report_type = report_type_;
+     customer_dns_ips = customer_dns_ips_;
+     status = status_;
+     last_update_date_time = last_update_date_time_;
+     start_time = start_time_;
+     dns_name = dns_name_;
+     directory_id = directory_id_;
+     assessment_id = assessment_id_;
+   }
+    : assessment_summary)
+
+let make_list_ad_assessments_request ?limit:(limit_ : assessment_limit option)
+    ?next_token:(next_token_ : next_token option)
+    ?directory_id:(directory_id_ : directory_id option) () =
+  ({ limit = limit_; next_token = next_token_; directory_id = directory_id_ }
+    : list_ad_assessments_request)
+
 let make_ldaps_setting_info
     ?last_updated_date_time:(last_updated_date_time_ : last_updated_date_time option)
     ?ldaps_status_reason:(ldaps_status_reason_ : ldaps_status_reason option)
@@ -435,8 +527,51 @@ let make_ldaps_setting_info
     : ldaps_setting_info)
 
 let make_ip_route ?description:(description_ : description option)
-    ?cidr_ip:(cidr_ip_ : cidr_ip option) () =
-  ({ description = description_; cidr_ip = cidr_ip_ } : ip_route)
+    ?cidr_ipv6:(cidr_ipv6_ : cidr_ipv6 option) ?cidr_ip:(cidr_ip_ : cidr_ip option) () =
+  ({ description = description_; cidr_ipv6 = cidr_ipv6_; cidr_ip = cidr_ip_ } : ip_route)
+
+let make_hybrid_update_value ?dns_ips:(dns_ips_ : customer_dns_ips option)
+    ?instance_ids:(instance_ids_ : assessment_instance_ids option) () =
+  ({ dns_ips = dns_ips_; instance_ids = instance_ids_ } : hybrid_update_value)
+
+let make_hybrid_update_info_entry ?assessment_id:(assessment_id_ : assessment_id option)
+    ?last_updated_date_time:(last_updated_date_time_ : last_updated_date_time option)
+    ?start_time:(start_time_ : start_date_time option)
+    ?previous_value:(previous_value_ : hybrid_update_value option)
+    ?new_value:(new_value_ : hybrid_update_value option)
+    ?initiated_by:(initiated_by_ : initiated_by option)
+    ?status_reason:(status_reason_ : update_status_reason option)
+    ?status:(status_ : update_status option) () =
+  ({
+     assessment_id = assessment_id_;
+     last_updated_date_time = last_updated_date_time_;
+     start_time = start_time_;
+     previous_value = previous_value_;
+     new_value = new_value_;
+     initiated_by = initiated_by_;
+     status_reason = status_reason_;
+     status = status_;
+   }
+    : hybrid_update_info_entry)
+
+let make_hybrid_update_activities
+    ?hybrid_administrator_account:
+      (hybrid_administrator_account_ : hybrid_update_info_entries option)
+    ?self_managed_instances:(self_managed_instances_ : hybrid_update_info_entries option) () =
+  ({
+     hybrid_administrator_account = hybrid_administrator_account_;
+     self_managed_instances = self_managed_instances_;
+   }
+    : hybrid_update_activities)
+
+let make_hybrid_settings_description
+    ?self_managed_instance_ids:(self_managed_instance_ids_ : assessment_instance_ids option)
+    ?self_managed_dns_ip_addrs:(self_managed_dns_ip_addrs_ : ip_addrs option) () =
+  ({
+     self_managed_instance_ids = self_managed_instance_ids_;
+     self_managed_dns_ip_addrs = self_managed_dns_ip_addrs_;
+   }
+    : hybrid_settings_description)
 
 let make_get_snapshot_limits_request ~directory_id:(directory_id_ : directory_id) () =
   ({ directory_id = directory_id_ } : get_snapshot_limits_request)
@@ -502,6 +637,12 @@ let make_enable_client_authentication_request ~type_:(type__ : client_authentica
     ~directory_id:(directory_id_ : directory_id) () =
   ({ type_ = type__; directory_id = directory_id_ } : enable_client_authentication_request)
 
+let make_enable_ca_enrollment_policy_request
+    ~pca_connector_arn:(pca_connector_arn_ : pca_connector_arn)
+    ~directory_id:(directory_id_ : directory_id) () =
+  ({ pca_connector_arn = pca_connector_arn_; directory_id = directory_id_ }
+    : enable_ca_enrollment_policy_request)
+
 let make_domain_controller
     ?status_last_updated_date_time:(status_last_updated_date_time_ : last_updated_date_time option)
     ?launch_time:(launch_time_ : launch_time option)
@@ -509,7 +650,7 @@ let make_domain_controller
     ?status:(status_ : domain_controller_status option)
     ?availability_zone:(availability_zone_ : availability_zone option)
     ?subnet_id:(subnet_id_ : subnet_id option) ?vpc_id:(vpc_id_ : vpc_id option)
-    ?dns_ip_addr:(dns_ip_addr_ : ip_addr option)
+    ?dns_ipv6_addr:(dns_ipv6_addr_ : ipv6_addr option) ?dns_ip_addr:(dns_ip_addr_ : ip_addr option)
     ?domain_controller_id:(domain_controller_id_ : domain_controller_id option)
     ?directory_id:(directory_id_ : directory_id option) () =
   ({
@@ -520,6 +661,7 @@ let make_domain_controller
      availability_zone = availability_zone_;
      subnet_id = subnet_id_;
      vpc_id = vpc_id_;
+     dns_ipv6_addr = dns_ipv6_addr_;
      dns_ip_addr = dns_ip_addr_;
      domain_controller_id = domain_controller_id_;
      directory_id = directory_id_;
@@ -544,6 +686,9 @@ let make_disable_directory_data_access_request ~directory_id:(directory_id_ : di
 let make_disable_client_authentication_request ~type_:(type__ : client_authentication_type)
     ~directory_id:(directory_id_ : directory_id) () =
   ({ type_ = type__; directory_id = directory_id_ } : disable_client_authentication_request)
+
+let make_disable_ca_enrollment_policy_request ~directory_id:(directory_id_ : directory_id) () =
+  ({ directory_id = directory_id_ } : disable_ca_enrollment_policy_request)
 
 let make_describe_update_directory_request ?next_token:(next_token_ : next_token option)
     ?region_name:(region_name_ : region_name option) ~update_type:(update_type_ : update_type)
@@ -609,6 +754,12 @@ let make_describe_ldaps_settings_request ?limit:(limit_ : page_limit option)
   ({ limit = limit_; next_token = next_token_; type_ = type__; directory_id = directory_id_ }
     : describe_ldaps_settings_request)
 
+let make_describe_hybrid_ad_update_request ?next_token:(next_token_ : next_token option)
+    ?update_type:(update_type_ : hybrid_update_type option)
+    ~directory_id:(directory_id_ : directory_id) () =
+  ({ next_token = next_token_; update_type = update_type_; directory_id = directory_id_ }
+    : describe_hybrid_ad_update_request)
+
 let make_describe_event_topics_request ?topic_names:(topic_names_ : topic_names option)
     ?directory_id:(directory_id_ : directory_id option) () =
   ({ topic_names = topic_names_; directory_id = directory_id_ } : describe_event_topics_request)
@@ -628,12 +779,15 @@ let make_describe_domain_controllers_request ?limit:(limit_ : limit option)
 let make_describe_directory_data_access_request ~directory_id:(directory_id_ : directory_id) () =
   ({ directory_id = directory_id_ } : describe_directory_data_access_request)
 
-let make_directory_connect_settings_description ?connect_ips:(connect_ips_ : ip_addrs option)
+let make_directory_connect_settings_description
+    ?connect_ips_v6:(connect_ips_v6_ : ip_v6_addrs option)
+    ?connect_ips:(connect_ips_ : ip_addrs option)
     ?availability_zones:(availability_zones_ : availability_zones option)
     ?security_group_id:(security_group_id_ : security_group_id option)
     ?customer_user_name:(customer_user_name_ : user_name option)
     ?subnet_ids:(subnet_ids_ : subnet_ids option) ?vpc_id:(vpc_id_ : vpc_id option) () =
   ({
+     connect_ips_v6 = connect_ips_v6_;
      connect_ips = connect_ips_;
      availability_zones = availability_zones_;
      security_group_id = security_group_id_;
@@ -643,7 +797,9 @@ let make_directory_connect_settings_description ?connect_ips:(connect_ips_ : ip_
    }
     : directory_connect_settings_description)
 
-let make_directory_description ?os_version:(os_version_ : os_version option)
+let make_directory_description ?network_type:(network_type_ : network_type option)
+    ?hybrid_settings:(hybrid_settings_ : hybrid_settings_description option)
+    ?os_version:(os_version_ : os_version option)
     ?regions_info:(regions_info_ : regions_info option)
     ?owner_directory_description:(owner_directory_description_ : owner_directory_description option)
     ?desired_number_of_domain_controllers:
@@ -659,12 +815,15 @@ let make_directory_description ?os_version:(os_version_ : os_version option)
     ?launch_time:(launch_time_ : launch_time option) ?share_notes:(share_notes_ : notes option)
     ?share_method:(share_method_ : share_method option)
     ?share_status:(share_status_ : share_status option) ?stage:(stage_ : directory_stage option)
+    ?dns_ipv6_addrs:(dns_ipv6_addrs_ : dns_ipv6_addrs option)
     ?dns_ip_addrs:(dns_ip_addrs_ : dns_ip_addrs option)
     ?description:(description_ : description option) ?access_url:(access_url_ : access_url option)
     ?alias:(alias_ : alias_name option) ?edition:(edition_ : directory_edition option)
     ?size:(size_ : directory_size option) ?short_name:(short_name_ : directory_short_name option)
     ?name:(name_ : directory_name option) ?directory_id:(directory_id_ : directory_id option) () =
   ({
+     network_type = network_type_;
+     hybrid_settings = hybrid_settings_;
      os_version = os_version_;
      regions_info = regions_info_;
      owner_directory_description = owner_directory_description_;
@@ -682,6 +841,7 @@ let make_directory_description ?os_version:(os_version_ : os_version option)
      share_method = share_method_;
      share_status = share_status_;
      stage = stage_;
+     dns_ipv6_addrs = dns_ipv6_addrs_;
      dns_ip_addrs = dns_ip_addrs_;
      description = description_;
      access_url = access_url_;
@@ -701,10 +861,12 @@ let make_describe_directories_request ?limit:(limit_ : limit option)
     : describe_directories_request)
 
 let make_conditional_forwarder ?replication_scope:(replication_scope_ : replication_scope option)
+    ?dns_ipv6_addrs:(dns_ipv6_addrs_ : dns_ipv6_addrs option)
     ?dns_ip_addrs:(dns_ip_addrs_ : dns_ip_addrs option)
     ?remote_domain_name:(remote_domain_name_ : remote_domain_name option) () =
   ({
      replication_scope = replication_scope_;
+     dns_ipv6_addrs = dns_ipv6_addrs_;
      dns_ip_addrs = dns_ip_addrs_;
      remote_domain_name = remote_domain_name_;
    }
@@ -756,6 +918,68 @@ let make_describe_certificate_request ~certificate_id:(certificate_id_ : certifi
   ({ certificate_id = certificate_id_; directory_id = directory_id_ }
     : describe_certificate_request)
 
+let make_describe_ca_enrollment_policy_request ~directory_id:(directory_id_ : directory_id) () =
+  ({ directory_id = directory_id_ } : describe_ca_enrollment_policy_request)
+
+let make_assessment ?version:(version_ : assessment_version option)
+    ?report_type:(report_type_ : assessment_report_type option)
+    ?self_managed_instance_ids:(self_managed_instance_ids_ : assessment_instance_ids option)
+    ?security_group_ids:(security_group_ids_ : security_group_ids option)
+    ?subnet_ids:(subnet_ids_ : subnet_ids option) ?vpc_id:(vpc_id_ : vpc_id option)
+    ?customer_dns_ips:(customer_dns_ips_ : customer_dns_ips option)
+    ?status_reason:(status_reason_ : assessment_status_reason option)
+    ?status_code:(status_code_ : assessment_status_code option)
+    ?status:(status_ : assessment_status option)
+    ?last_update_date_time:(last_update_date_time_ : last_update_date_time option)
+    ?start_time:(start_time_ : assessment_start_time option)
+    ?dns_name:(dns_name_ : directory_name option)
+    ?directory_id:(directory_id_ : directory_id option)
+    ?assessment_id:(assessment_id_ : assessment_id option) () =
+  ({
+     version = version_;
+     report_type = report_type_;
+     self_managed_instance_ids = self_managed_instance_ids_;
+     security_group_ids = security_group_ids_;
+     subnet_ids = subnet_ids_;
+     vpc_id = vpc_id_;
+     customer_dns_ips = customer_dns_ips_;
+     status_reason = status_reason_;
+     status_code = status_code_;
+     status = status_;
+     last_update_date_time = last_update_date_time_;
+     start_time = start_time_;
+     dns_name = dns_name_;
+     directory_id = directory_id_;
+     assessment_id = assessment_id_;
+   }
+    : assessment)
+
+let make_assessment_validation
+    ?last_update_date_time:(last_update_date_time_ : assessment_validation_time_stamp option)
+    ?start_time:(start_time_ : assessment_validation_time_stamp option)
+    ?status_reason:(status_reason_ : assessment_validation_status_reason option)
+    ?status_code:(status_code_ : assessment_validation_status_code option)
+    ?status:(status_ : assessment_validation_status option)
+    ?name:(name_ : assessment_validation_name option)
+    ?category:(category_ : assessment_validation_category option) () =
+  ({
+     last_update_date_time = last_update_date_time_;
+     start_time = start_time_;
+     status_reason = status_reason_;
+     status_code = status_code_;
+     status = status_;
+     name = name_;
+     category = category_;
+   }
+    : assessment_validation)
+
+let make_assessment_report ?validations:(validations_ : assessment_validations option)
+    ?domain_controller_ip:(domain_controller_ip_ : ip_addr option) () =
+  ({ validations = validations_; domain_controller_ip = domain_controller_ip_ } : assessment_report)
+
+let make_describe_ad_assessment_request ~assessment_id:(assessment_id_ : assessment_id) () =
+  ({ assessment_id = assessment_id_ } : describe_ad_assessment_request)
+
 let make_deregister_event_topic_request ~topic_name:(topic_name_ : topic_name)
     ~directory_id:(directory_id_ : directory_id) () =
   ({ topic_name = topic_name_; directory_id = directory_id_ } : deregister_event_topic_request)
@@ -790,7 +1014,11 @@ let make_delete_conditional_forwarder_request
   ({ remote_domain_name = remote_domain_name_; directory_id = directory_id_ }
     : delete_conditional_forwarder_request)
 
+let make_delete_ad_assessment_request ~assessment_id:(assessment_id_ : assessment_id) () =
+  ({ assessment_id = assessment_id_ } : delete_ad_assessment_request)
+
 let make_create_trust_request ?selective_auth:(selective_auth_ : selective_auth option)
+    ?conditional_forwarder_ipv6_addrs:(conditional_forwarder_ipv6_addrs_ : dns_ipv6_addrs option)
     ?conditional_forwarder_ip_addrs:(conditional_forwarder_ip_addrs_ : dns_ip_addrs option)
     ?trust_type:(trust_type_ : trust_type option)
     ~trust_direction:(trust_direction_ : trust_direction)
@@ -799,6 +1027,7 @@ let make_create_trust_request ?selective_auth:(selective_auth_ : selective_auth 
     ~directory_id:(directory_id_ : directory_id) () =
   ({
      selective_auth = selective_auth_;
+     conditional_forwarder_ipv6_addrs = conditional_forwarder_ipv6_addrs_;
      conditional_forwarder_ip_addrs = conditional_forwarder_ip_addrs_;
      trust_type = trust_type_;
      trust_direction = trust_direction_;
@@ -812,12 +1041,14 @@ let make_create_snapshot_request ?name:(name_ : snapshot_name option)
     ~directory_id:(directory_id_ : directory_id) () =
   ({ name = name_; directory_id = directory_id_ } : create_snapshot_request)
 
-let make_create_microsoft_ad_request ?tags:(tags_ : tags option)
-    ?edition:(edition_ : directory_edition option) ?description:(description_ : description option)
+let make_create_microsoft_ad_request ?network_type:(network_type_ : network_type option)
+    ?tags:(tags_ : tags option) ?edition:(edition_ : directory_edition option)
+    ?description:(description_ : description option)
     ?short_name:(short_name_ : directory_short_name option)
     ~vpc_settings:(vpc_settings_ : directory_vpc_settings) ~password:(password_ : password)
     ~name:(name_ : directory_name) () =
   ({
+     network_type = network_type_;
      tags = tags_;
      edition = edition_;
      vpc_settings = vpc_settings_;
@@ -833,12 +1064,18 @@ let make_create_log_subscription_request ~log_group_name:(log_group_name_ : log_
   ({ log_group_name = log_group_name_; directory_id = directory_id_ }
     : create_log_subscription_request)
 
-let make_create_directory_request ?tags:(tags_ : tags option)
-    ?vpc_settings:(vpc_settings_ : directory_vpc_settings option)
+let make_create_hybrid_ad_request ?tags:(tags_ : tags option)
+    ~assessment_id:(assessment_id_ : assessment_id) ~secret_arn:(secret_arn_ : secret_arn) () =
+  ({ tags = tags_; assessment_id = assessment_id_; secret_arn = secret_arn_ }
+    : create_hybrid_ad_request)
+
+let make_create_directory_request ?network_type:(network_type_ : network_type option)
+    ?tags:(tags_ : tags option) ?vpc_settings:(vpc_settings_ : directory_vpc_settings option)
     ?description:(description_ : description option)
     ?short_name:(short_name_ : directory_short_name option) ~size:(size_ : directory_size)
     ~password:(password_ : password) ~name:(name_ : directory_name) () =
   ({
+     network_type = network_type_;
      tags = tags_;
      vpc_settings = vpc_settings_;
      size = size_;
@@ -849,10 +1086,13 @@ let make_create_directory_request ?tags:(tags_ : tags option)
    }
     : create_directory_request)
 
-let make_create_conditional_forwarder_request ~dns_ip_addrs:(dns_ip_addrs_ : dns_ip_addrs)
+let make_create_conditional_forwarder_request
+    ?dns_ipv6_addrs:(dns_ipv6_addrs_ : dns_ipv6_addrs option)
+    ?dns_ip_addrs:(dns_ip_addrs_ : dns_ip_addrs option)
     ~remote_domain_name:(remote_domain_name_ : remote_domain_name)
     ~directory_id:(directory_id_ : directory_id) () =
   ({
+     dns_ipv6_addrs = dns_ipv6_addrs_;
      dns_ip_addrs = dns_ip_addrs_;
      remote_domain_name = remote_domain_name_;
      directory_id = directory_id_;
@@ -891,24 +1131,28 @@ let make_create_alias_request ~alias:(alias_ : alias_name)
     ~directory_id:(directory_id_ : directory_id) () =
   ({ alias = alias_; directory_id = directory_id_ } : create_alias_request)
 
-let make_directory_connect_settings ~customer_user_name:(customer_user_name_ : user_name)
-    ~customer_dns_ips:(customer_dns_ips_ : dns_ip_addrs) ~subnet_ids:(subnet_ids_ : subnet_ids)
+let make_directory_connect_settings
+    ?customer_dns_ips_v6:(customer_dns_ips_v6_ : dns_ipv6_addrs option)
+    ?customer_dns_ips:(customer_dns_ips_ : dns_ip_addrs option)
+    ~customer_user_name:(customer_user_name_ : user_name) ~subnet_ids:(subnet_ids_ : subnet_ids)
     ~vpc_id:(vpc_id_ : vpc_id) () =
   ({
      customer_user_name = customer_user_name_;
+     customer_dns_ips_v6 = customer_dns_ips_v6_;
      customer_dns_ips = customer_dns_ips_;
      subnet_ids = subnet_ids_;
      vpc_id = vpc_id_;
    }
     : directory_connect_settings)
 
-let make_connect_directory_request ?tags:(tags_ : tags option)
-    ?description:(description_ : description option)
+let make_connect_directory_request ?network_type:(network_type_ : network_type option)
+    ?tags:(tags_ : tags option) ?description:(description_ : description option)
     ?short_name:(short_name_ : directory_short_name option)
     ~connect_settings:(connect_settings_ : directory_connect_settings)
     ~size:(size_ : directory_size) ~password:(password_ : connect_password)
     ~name:(name_ : directory_name) () =
   ({
+     network_type = network_type_;
      tags = tags_;
      connect_settings = connect_settings_;
      size = size_;

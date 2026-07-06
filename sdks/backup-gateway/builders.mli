@@ -228,6 +228,8 @@ val make_get_hypervisor_output : ?hypervisor:hypervisor_details -> unit -> get_h
 val make_get_hypervisor_input : hypervisor_arn:server_arn -> unit -> get_hypervisor_input
 
 val make_gateway_details :
+  ?software_version:name ->
+  ?deprecation_date:time ->
   ?vpc_endpoint:vpc_endpoint ->
   ?next_update_availability_time:time ->
   ?maintenance_start_time:maintenance_start_time ->

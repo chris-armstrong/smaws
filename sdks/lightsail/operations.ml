@@ -9,6 +9,7 @@ module AllocateStaticIp = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -27,6 +28,9 @@ module AllocateStaticIp = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -91,6 +95,7 @@ module AttachDisk = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -109,6 +114,9 @@ module AttachDisk = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -134,6 +142,7 @@ module AttachInstancesToLoadBalancer = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -152,6 +161,9 @@ module AttachInstancesToLoadBalancer = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -178,6 +190,7 @@ module AttachLoadBalancerTlsCertificate = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -196,6 +209,9 @@ module AttachLoadBalancerTlsCertificate = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -222,6 +238,7 @@ module AttachStaticIp = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -240,6 +257,9 @@ module AttachStaticIp = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -265,6 +285,7 @@ module CloseInstancePublicPorts = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -283,6 +304,9 @@ module CloseInstancePublicPorts = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -309,6 +333,7 @@ module CopySnapshot = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -327,6 +352,9 @@ module CopySnapshot = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -348,6 +376,7 @@ module CreateBucket = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -358,6 +387,9 @@ module CreateBucket = struct
           `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
       | _, "InvalidInputException" ->
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -380,6 +412,7 @@ module CreateBucketAccessKey = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -392,6 +425,9 @@ module CreateBucketAccessKey = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -415,6 +451,7 @@ module CreateCertificate = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -427,6 +464,9 @@ module CreateCertificate = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -452,6 +492,7 @@ module CreateCloudFormationStack = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -470,6 +511,9 @@ module CreateCloudFormationStack = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -494,6 +538,7 @@ module CreateContactMethod = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -509,6 +554,9 @@ module CreateContactMethod = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -532,6 +580,7 @@ module CreateContainerService = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -544,6 +593,9 @@ module CreateContainerService = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -567,6 +619,7 @@ module CreateContainerServiceDeployment = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -579,6 +632,9 @@ module CreateContainerServiceDeployment = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -602,6 +658,7 @@ module CreateContainerServiceRegistryLogin = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -614,6 +671,9 @@ module CreateContainerServiceRegistryLogin = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -643,6 +703,7 @@ module CreateDisk = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -661,6 +722,9 @@ module CreateDisk = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -686,6 +750,7 @@ module CreateDiskFromSnapshot = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -704,6 +769,9 @@ module CreateDiskFromSnapshot = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -730,6 +798,7 @@ module CreateDiskSnapshot = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -748,6 +817,9 @@ module CreateDiskSnapshot = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -811,6 +883,7 @@ module CreateDomain = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -829,6 +902,9 @@ module CreateDomain = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -854,6 +930,7 @@ module CreateDomainEntry = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -872,6 +949,9 @@ module CreateDomainEntry = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -894,6 +974,7 @@ module CreateGUISessionAccessDetails = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -906,6 +987,9 @@ module CreateGUISessionAccessDetails = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -932,6 +1016,7 @@ module CreateInstances = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -950,6 +1035,9 @@ module CreateInstances = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -975,6 +1063,7 @@ module CreateInstancesFromSnapshot = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -993,6 +1082,9 @@ module CreateInstancesFromSnapshot = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1019,6 +1111,7 @@ module CreateInstanceSnapshot = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1037,6 +1130,9 @@ module CreateInstanceSnapshot = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1063,6 +1159,7 @@ module CreateKeyPair = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1081,6 +1178,9 @@ module CreateKeyPair = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1106,6 +1206,7 @@ module CreateLoadBalancer = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1124,6 +1225,9 @@ module CreateLoadBalancer = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1149,6 +1253,7 @@ module CreateLoadBalancerTlsCertificate = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1167,6 +1272,9 @@ module CreateLoadBalancerTlsCertificate = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1193,6 +1301,7 @@ module CreateRelationalDatabase = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1211,6 +1320,9 @@ module CreateRelationalDatabase = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1237,6 +1349,7 @@ module CreateRelationalDatabaseFromSnapshot = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1255,6 +1368,9 @@ module CreateRelationalDatabaseFromSnapshot = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1284,6 +1400,7 @@ module CreateRelationalDatabaseSnapshot = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1302,6 +1419,9 @@ module CreateRelationalDatabaseSnapshot = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1326,6 +1446,7 @@ module DeleteAlarm = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1341,6 +1462,9 @@ module DeleteAlarm = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1364,6 +1488,7 @@ module DeleteAutoSnapshot = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1379,6 +1504,9 @@ module DeleteAutoSnapshot = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1401,6 +1529,7 @@ module DeleteBucket = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1413,6 +1542,9 @@ module DeleteBucket = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1435,6 +1567,7 @@ module DeleteBucketAccessKey = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1447,6 +1580,9 @@ module DeleteBucketAccessKey = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1470,6 +1606,7 @@ module DeleteCertificate = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1482,6 +1619,9 @@ module DeleteCertificate = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1505,6 +1645,7 @@ module DeleteContactMethod = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1520,6 +1661,9 @@ module DeleteContactMethod = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1543,6 +1687,7 @@ module DeleteContainerImage = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1555,6 +1700,9 @@ module DeleteContainerImage = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1578,6 +1726,7 @@ module DeleteContainerService = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1590,6 +1739,9 @@ module DeleteContainerService = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1616,6 +1768,7 @@ module DeleteDisk = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1634,6 +1787,9 @@ module DeleteDisk = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1659,6 +1815,7 @@ module DeleteDiskSnapshot = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1677,6 +1834,9 @@ module DeleteDiskSnapshot = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1740,6 +1900,7 @@ module DeleteDomain = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1758,6 +1919,9 @@ module DeleteDomain = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1783,6 +1947,7 @@ module DeleteDomainEntry = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1801,6 +1966,9 @@ module DeleteDomainEntry = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1826,6 +1994,7 @@ module DeleteInstance = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1844,6 +2013,9 @@ module DeleteInstance = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1869,6 +2041,7 @@ module DeleteInstanceSnapshot = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1887,6 +2060,9 @@ module DeleteInstanceSnapshot = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1913,6 +2089,7 @@ module DeleteKeyPair = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1931,6 +2108,9 @@ module DeleteKeyPair = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -1956,6 +2136,7 @@ module DeleteKnownHostKeys = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1974,6 +2155,9 @@ module DeleteKnownHostKeys = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2000,6 +2184,7 @@ module DeleteLoadBalancer = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2018,6 +2203,9 @@ module DeleteLoadBalancer = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2043,6 +2231,7 @@ module DeleteLoadBalancerTlsCertificate = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2061,6 +2250,9 @@ module DeleteLoadBalancerTlsCertificate = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2087,6 +2279,7 @@ module DeleteRelationalDatabase = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2105,6 +2298,9 @@ module DeleteRelationalDatabase = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2131,6 +2327,7 @@ module DeleteRelationalDatabaseSnapshot = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2149,6 +2346,9 @@ module DeleteRelationalDatabaseSnapshot = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2214,6 +2414,7 @@ module DetachDisk = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2232,6 +2433,9 @@ module DetachDisk = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2257,6 +2461,7 @@ module DetachInstancesFromLoadBalancer = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2275,6 +2480,9 @@ module DetachInstancesFromLoadBalancer = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2301,6 +2509,7 @@ module DetachStaticIp = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2319,6 +2528,9 @@ module DetachStaticIp = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2342,6 +2554,7 @@ module DisableAddOn = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2357,6 +2570,9 @@ module DisableAddOn = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2382,6 +2598,7 @@ module DownloadDefaultKeyPair = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2400,6 +2617,9 @@ module DownloadDefaultKeyPair = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2424,6 +2644,7 @@ module EnableAddOn = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2439,6 +2660,9 @@ module EnableAddOn = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2464,6 +2688,7 @@ module ExportSnapshot = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2482,6 +2707,9 @@ module ExportSnapshot = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2507,6 +2735,7 @@ module GetActiveNames = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2525,6 +2754,9 @@ module GetActiveNames = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2548,6 +2780,7 @@ module GetAlarms = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2563,6 +2796,9 @@ module GetAlarms = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2585,6 +2821,7 @@ module GetAutoSnapshots = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2600,6 +2837,9 @@ module GetAutoSnapshots = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2625,6 +2865,7 @@ module GetBlueprints = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2643,6 +2884,9 @@ module GetBlueprints = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2665,6 +2909,7 @@ module GetBucketAccessKeys = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2677,6 +2922,9 @@ module GetBucketAccessKeys = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2699,6 +2947,7 @@ module GetBucketBundles = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2709,6 +2958,9 @@ module GetBucketBundles = struct
           `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
       | _, "InvalidInputException" ->
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2731,6 +2983,7 @@ module GetBucketMetricData = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2743,6 +2996,9 @@ module GetBucketMetricData = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2766,6 +3022,7 @@ module GetBuckets = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2778,6 +3035,9 @@ module GetBuckets = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2803,6 +3063,7 @@ module GetBundles = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2821,6 +3082,9 @@ module GetBundles = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2843,6 +3107,7 @@ module GetCertificates = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2855,6 +3120,9 @@ module GetCertificates = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2880,6 +3148,7 @@ module GetCloudFormationStackRecords = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2898,6 +3167,9 @@ module GetCloudFormationStackRecords = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2922,6 +3194,7 @@ module GetContactMethods = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2937,6 +3210,9 @@ module GetContactMethods = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2957,6 +3233,7 @@ end
 module GetContainerAPIMetadata = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -2965,6 +3242,9 @@ module GetContainerAPIMetadata = struct
     let handler handler tree path = function
       | _, "AccessDeniedException" ->
           `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -2988,6 +3268,7 @@ module GetContainerImages = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3000,6 +3281,9 @@ module GetContainerImages = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3022,6 +3306,7 @@ module GetContainerLog = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3034,6 +3319,9 @@ module GetContainerLog = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3056,6 +3344,7 @@ module GetContainerServiceDeployments = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3068,6 +3357,9 @@ module GetContainerServiceDeployments = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3091,6 +3383,7 @@ module GetContainerServiceMetricData = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3103,6 +3396,9 @@ module GetContainerServiceMetricData = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3126,6 +3422,7 @@ module GetContainerServicePowers = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3138,6 +3435,9 @@ module GetContainerServicePowers = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3161,6 +3461,7 @@ module GetContainerServices = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3173,6 +3474,9 @@ module GetContainerServices = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3196,6 +3500,7 @@ module GetCostEstimate = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3208,6 +3513,9 @@ module GetCostEstimate = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3233,6 +3541,7 @@ module GetDisk = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3251,6 +3560,9 @@ module GetDisk = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3275,6 +3587,7 @@ module GetDisks = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3293,6 +3606,9 @@ module GetDisks = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3317,6 +3633,7 @@ module GetDiskSnapshot = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3335,6 +3652,9 @@ module GetDiskSnapshot = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3360,6 +3680,7 @@ module GetDiskSnapshots = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3378,6 +3699,9 @@ module GetDiskSnapshots = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3558,6 +3882,7 @@ module GetDomain = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3576,6 +3901,9 @@ module GetDomain = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3600,6 +3928,7 @@ module GetDomains = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3618,6 +3947,9 @@ module GetDomains = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3643,6 +3975,7 @@ module GetExportSnapshotRecords = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3661,6 +3994,9 @@ module GetExportSnapshotRecords = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3687,6 +4023,7 @@ module GetInstance = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3705,6 +4042,9 @@ module GetInstance = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3730,6 +4070,7 @@ module GetInstanceAccessDetails = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3748,6 +4089,9 @@ module GetInstanceAccessDetails = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3774,6 +4118,7 @@ module GetInstanceMetricData = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3792,6 +4137,9 @@ module GetInstanceMetricData = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3818,6 +4166,7 @@ module GetInstancePortStates = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3836,6 +4185,9 @@ module GetInstancePortStates = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3862,6 +4214,7 @@ module GetInstances = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3880,6 +4233,9 @@ module GetInstances = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3905,6 +4261,7 @@ module GetInstanceSnapshot = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3923,6 +4280,9 @@ module GetInstanceSnapshot = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3949,6 +4309,7 @@ module GetInstanceSnapshots = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -3967,6 +4328,9 @@ module GetInstanceSnapshots = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -3993,6 +4357,7 @@ module GetInstanceState = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4011,6 +4376,9 @@ module GetInstanceState = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4036,6 +4404,7 @@ module GetKeyPair = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4054,6 +4423,9 @@ module GetKeyPair = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4079,6 +4451,7 @@ module GetKeyPairs = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4097,6 +4470,9 @@ module GetKeyPairs = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4122,6 +4498,7 @@ module GetLoadBalancer = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4140,6 +4517,9 @@ module GetLoadBalancer = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4165,6 +4545,7 @@ module GetLoadBalancerMetricData = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4183,6 +4564,9 @@ module GetLoadBalancerMetricData = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4209,6 +4593,7 @@ module GetLoadBalancers = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4227,6 +4612,9 @@ module GetLoadBalancers = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4252,6 +4640,7 @@ module GetLoadBalancerTlsCertificates = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4270,6 +4659,9 @@ module GetLoadBalancerTlsCertificates = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4294,6 +4686,7 @@ module GetLoadBalancerTlsPolicies = struct
     | `AccountSetupInProgressException _ ->
         "com.amazonaws.lightsail#AccountSetupInProgressException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4307,6 +4700,9 @@ module GetLoadBalancerTlsPolicies = struct
             (Json_deserializers.account_setup_in_progress_exception_of_yojson tree path)
       | _, "InvalidInputException" ->
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4333,6 +4729,7 @@ module GetOperation = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4351,6 +4748,9 @@ module GetOperation = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4376,6 +4776,7 @@ module GetOperations = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4394,6 +4795,9 @@ module GetOperations = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4419,6 +4823,7 @@ module GetOperationsForResource = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4437,6 +4842,9 @@ module GetOperationsForResource = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4463,6 +4871,7 @@ module GetRegions = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4481,6 +4890,9 @@ module GetRegions = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4506,6 +4918,7 @@ module GetRelationalDatabase = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4524,6 +4937,9 @@ module GetRelationalDatabase = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4550,6 +4966,7 @@ module GetRelationalDatabaseBlueprints = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4568,6 +4985,9 @@ module GetRelationalDatabaseBlueprints = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4594,6 +5014,7 @@ module GetRelationalDatabaseBundles = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4612,6 +5033,9 @@ module GetRelationalDatabaseBundles = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4638,6 +5062,7 @@ module GetRelationalDatabaseEvents = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4656,6 +5081,9 @@ module GetRelationalDatabaseEvents = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4682,6 +5110,7 @@ module GetRelationalDatabaseLogEvents = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4700,6 +5129,9 @@ module GetRelationalDatabaseLogEvents = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4726,6 +5158,7 @@ module GetRelationalDatabaseLogStreams = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4744,6 +5177,9 @@ module GetRelationalDatabaseLogStreams = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4770,6 +5206,7 @@ module GetRelationalDatabaseMasterUserPassword = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4788,6 +5225,9 @@ module GetRelationalDatabaseMasterUserPassword = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4818,6 +5258,7 @@ module GetRelationalDatabaseMetricData = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4836,6 +5277,9 @@ module GetRelationalDatabaseMetricData = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4862,6 +5306,7 @@ module GetRelationalDatabaseParameters = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4880,6 +5325,9 @@ module GetRelationalDatabaseParameters = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4906,6 +5354,7 @@ module GetRelationalDatabases = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4924,6 +5373,9 @@ module GetRelationalDatabases = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4950,6 +5402,7 @@ module GetRelationalDatabaseSnapshot = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -4968,6 +5421,9 @@ module GetRelationalDatabaseSnapshot = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -4994,6 +5450,7 @@ module GetRelationalDatabaseSnapshots = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5012,6 +5469,9 @@ module GetRelationalDatabaseSnapshots = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5035,6 +5495,7 @@ module GetSetupHistory = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5047,6 +5508,9 @@ module GetSetupHistory = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5072,6 +5536,7 @@ module GetStaticIp = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5090,6 +5555,9 @@ module GetStaticIp = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5115,6 +5583,7 @@ module GetStaticIps = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5133,6 +5602,9 @@ module GetStaticIps = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5158,6 +5630,7 @@ module ImportKeyPair = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5176,6 +5649,9 @@ module ImportKeyPair = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5201,6 +5677,7 @@ module IsVpcPeered = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5219,6 +5696,9 @@ module IsVpcPeered = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5244,6 +5724,7 @@ module OpenInstancePublicPorts = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5262,6 +5743,9 @@ module OpenInstancePublicPorts = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5288,6 +5772,7 @@ module PeerVpc = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5306,6 +5791,9 @@ module PeerVpc = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5328,6 +5816,7 @@ module PutAlarm = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5343,6 +5832,9 @@ module PutAlarm = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5367,6 +5859,7 @@ module PutInstancePublicPorts = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5385,6 +5878,9 @@ module PutInstancePublicPorts = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5411,6 +5907,7 @@ module RebootInstance = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5429,6 +5926,9 @@ module RebootInstance = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5454,6 +5954,7 @@ module RebootRelationalDatabase = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5472,6 +5973,9 @@ module RebootRelationalDatabase = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5495,6 +5999,7 @@ module RegisterContainerImage = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5507,6 +6012,9 @@ module RegisterContainerImage = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5533,6 +6041,7 @@ module ReleaseStaticIp = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5551,6 +6060,9 @@ module ReleaseStaticIp = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5613,6 +6125,7 @@ module SendContactMethodVerification = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5628,6 +6141,9 @@ module SendContactMethodVerification = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5654,6 +6170,7 @@ module SetIpAddressType = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5672,6 +6189,9 @@ module SetIpAddressType = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5694,6 +6214,7 @@ module SetResourceAccessForBucket = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5706,6 +6227,9 @@ module SetResourceAccessForBucket = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5729,6 +6253,7 @@ module SetupInstanceHttps = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5741,6 +6266,9 @@ module SetupInstanceHttps = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5763,6 +6291,7 @@ module StartGUISession = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5775,6 +6304,9 @@ module StartGUISession = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5800,6 +6332,7 @@ module StartInstance = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5818,6 +6351,9 @@ module StartInstance = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5843,6 +6379,7 @@ module StartRelationalDatabase = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5861,6 +6398,9 @@ module StartRelationalDatabase = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5884,6 +6424,7 @@ module StopGUISession = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5896,6 +6437,9 @@ module StopGUISession = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5921,6 +6465,7 @@ module StopInstance = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5939,6 +6484,9 @@ module StopInstance = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -5964,6 +6512,7 @@ module StopRelationalDatabase = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -5982,6 +6531,9 @@ module StopRelationalDatabase = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -6008,6 +6560,7 @@ module TagResource = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -6026,6 +6579,9 @@ module TagResource = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -6049,6 +6605,7 @@ module TestAlarm = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -6064,6 +6621,9 @@ module TestAlarm = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -6088,6 +6648,7 @@ module UnpeerVpc = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -6106,6 +6667,9 @@ module UnpeerVpc = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -6130,6 +6694,7 @@ module UntagResource = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -6148,6 +6713,9 @@ module UntagResource = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -6170,6 +6738,7 @@ module UpdateBucket = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -6182,6 +6751,9 @@ module UpdateBucket = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -6204,6 +6776,7 @@ module UpdateBucketBundle = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -6216,6 +6789,9 @@ module UpdateBucketBundle = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -6238,6 +6814,7 @@ module UpdateContainerService = struct
     | `AccessDeniedException _ -> "com.amazonaws.lightsail#AccessDeniedException"
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -6250,6 +6827,9 @@ module UpdateContainerService = struct
           `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
       | _, "NotFoundException" ->
           `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -6353,6 +6933,7 @@ module UpdateDomainEntry = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -6371,6 +6952,9 @@ module UpdateDomainEntry = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -6396,6 +6980,7 @@ module UpdateInstanceMetadataOptions = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -6414,6 +6999,9 @@ module UpdateInstanceMetadataOptions = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -6440,6 +7028,7 @@ module UpdateLoadBalancerAttribute = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -6458,6 +7047,9 @@ module UpdateLoadBalancerAttribute = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -6484,6 +7076,7 @@ module UpdateRelationalDatabase = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -6502,6 +7095,9 @@ module UpdateRelationalDatabase = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->
@@ -6528,6 +7124,7 @@ module UpdateRelationalDatabaseParameters = struct
     | `InvalidInputException _ -> "com.amazonaws.lightsail#InvalidInputException"
     | `NotFoundException _ -> "com.amazonaws.lightsail#NotFoundException"
     | `OperationFailureException _ -> "com.amazonaws.lightsail#OperationFailureException"
+    | `RegionSetupInProgressException _ -> "com.amazonaws.lightsail#RegionSetupInProgressException"
     | `ServiceException _ -> "com.amazonaws.lightsail#ServiceException"
     | `UnauthenticatedException _ -> "com.amazonaws.lightsail#UnauthenticatedException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -6546,6 +7143,9 @@ module UpdateRelationalDatabaseParameters = struct
       | _, "OperationFailureException" ->
           `OperationFailureException
             (Json_deserializers.operation_failure_exception_of_yojson tree path)
+      | _, "RegionSetupInProgressException" ->
+          `RegionSetupInProgressException
+            (Json_deserializers.region_setup_in_progress_exception_of_yojson tree path)
       | _, "ServiceException" ->
           `ServiceException (Json_deserializers.service_exception_of_yojson tree path)
       | _, "UnauthenticatedException" ->

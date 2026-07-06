@@ -156,6 +156,10 @@ type nonrec requested_dimension_list = sanitized_string list [@@ocaml.doc ""]
 type nonrec markdown_string = string [@@ocaml.doc ""]
 
 type nonrec recommendation = {
+  recommendation_details : markdown_string option;
+      [@ocaml.doc
+        "Detailed information about the recommendation, including steps to resolve the performance \
+         issue.\n"]
   recommendation_description : markdown_string option;
       [@ocaml.doc
         "The recommendation details to help resolve the performance issue. For example, \
@@ -166,6 +170,8 @@ type nonrec recommendation = {
 [@@ocaml.doc "The list of recommendations for the insight.\n"]
 
 type nonrec recommendation_list = recommendation list [@@ocaml.doc ""]
+
+type nonrec recommendation_id_list = string_ list [@@ocaml.doc ""]
 
 type nonrec period_alignment = START_TIME [@ocaml.doc ""] | END_TIME [@ocaml.doc ""]
 [@@ocaml.doc ""]
@@ -245,6 +251,52 @@ type nonrec list_performance_analysis_reports_request = {
         "An optional pagination token provided by a previous request. If this parameter is \
          specified, the response includes only records beyond the token, up to the value specified \
          by [MaxResults].\n"]
+  identifier : identifier_string;
+      [@ocaml.doc
+        "An immutable identifier for a data source that is unique for an Amazon Web Services \
+         Region. Performance Insights gathers metrics from this data source. In the console, the \
+         identifier is shown as {i ResourceID}. When you call [DescribeDBInstances], the \
+         identifier is returned as [DbiResourceId].\n\n\
+        \ To use a DB instance as a data source, specify its [DbiResourceId] value. For example, \
+         specify [db-ABCDEFGHIJKLMNOPQRSTU1VW2X].\n\
+        \ "]
+  service_type : service_type;
+      [@ocaml.doc
+        "The Amazon Web Services service for which Performance Insights returns metrics. Valid \
+         value is [RDS].\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_performance_analysis_report_recommendations_response = {
+  next_token : next_token option;
+      [@ocaml.doc
+        "An optional pagination token provided by a previous request. If this parameter is \
+         specified, the response includes only records beyond the token, up to the value specified \
+         by [MaxResults].\n"]
+  recommendations : recommendation_list option;
+      [@ocaml.doc "The list of recommendations for the analysis report.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec analysis_report_id = string [@@ocaml.doc ""]
+
+type nonrec list_performance_analysis_report_recommendations_request = {
+  next_token : next_token option;
+      [@ocaml.doc
+        "An optional pagination token provided by a previous request. If this parameter is \
+         specified, the response includes only records beyond the token, up to the value specified \
+         by [MaxResults].\n"]
+  max_results : max_results option;
+      [@ocaml.doc
+        "The maximum number of items to return in the response. If more items exist than the \
+         specified [MaxResults] value, a pagination token is included in the response so that the \
+         remaining results can be retrieved. \n"]
+  recommendation_ids : recommendation_id_list option;
+      [@ocaml.doc "A list of recommendation identifiers to filter the results.\n"]
+  analysis_report_id : analysis_report_id;
+      [@ocaml.doc
+        "A unique identifier of the created analysis report. For example, \
+         [report-12345678901234567] \n"]
   identifier : identifier_string;
       [@ocaml.doc
         "An immutable identifier for a data source that is unique for an Amazon Web Services \
@@ -979,8 +1031,6 @@ type nonrec get_resource_metadata_request = {
 }
 [@@ocaml.doc ""]
 
-type nonrec analysis_report_id = string [@@ocaml.doc ""]
-
 type nonrec context_type = CONTEXTUAL [@ocaml.doc ""] | CAUSAL [@ocaml.doc ""] [@@ocaml.doc ""]
 
 type nonrec descriptive_string = string [@@ocaml.doc ""]
@@ -1465,7 +1515,7 @@ type nonrec create_performance_analysis_report_response = {
 type nonrec create_performance_analysis_report_request = {
   tags : tag_list option;
       [@ocaml.doc "The metadata assigned to the analysis report consisting of a key-value pair.\n"]
-  end_time : iso_timestamp; [@ocaml.doc "The end time defined for the analysis report.\n"]
+  end_time : iso_timestamp option; [@ocaml.doc "The end time defined for the analysis report.\n"]
   start_time : iso_timestamp; [@ocaml.doc "The start time defined for the analysis report.\n"]
   identifier : identifier_string;
       [@ocaml.doc

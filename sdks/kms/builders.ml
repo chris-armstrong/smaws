@@ -1,6 +1,7 @@
 open Types
 
 let make_xks_proxy_configuration_type
+    ?vpc_endpoint_service_owner:(vpc_endpoint_service_owner_ : account_id_type option)
     ?vpc_endpoint_service_name:
       (vpc_endpoint_service_name_ : xks_proxy_vpc_endpoint_service_name_type option)
     ?uri_path:(uri_path_ : xks_proxy_uri_path_type option)
@@ -8,6 +9,7 @@ let make_xks_proxy_configuration_type
     ?access_key_id:(access_key_id_ : xks_proxy_authentication_access_key_id_type option)
     ?connectivity:(connectivity_ : xks_proxy_connectivity_type option) () =
   ({
+     vpc_endpoint_service_owner = vpc_endpoint_service_owner_;
      vpc_endpoint_service_name = vpc_endpoint_service_name_;
      uri_path = uri_path_;
      uri_endpoint = uri_endpoint_;
@@ -82,6 +84,8 @@ let make_update_custom_key_store_request
     ?xks_proxy_connectivity:(xks_proxy_connectivity_ : xks_proxy_connectivity_type option)
     ?xks_proxy_authentication_credential:
       (xks_proxy_authentication_credential_ : xks_proxy_authentication_credential_type option)
+    ?xks_proxy_vpc_endpoint_service_owner:
+      (xks_proxy_vpc_endpoint_service_owner_ : account_id_type option)
     ?xks_proxy_vpc_endpoint_service_name:
       (xks_proxy_vpc_endpoint_service_name_ : xks_proxy_vpc_endpoint_service_name_type option)
     ?xks_proxy_uri_path:(xks_proxy_uri_path_ : xks_proxy_uri_path_type option)
@@ -93,6 +97,7 @@ let make_update_custom_key_store_request
   ({
      xks_proxy_connectivity = xks_proxy_connectivity_;
      xks_proxy_authentication_credential = xks_proxy_authentication_credential_;
+     xks_proxy_vpc_endpoint_service_owner = xks_proxy_vpc_endpoint_service_owner_;
      xks_proxy_vpc_endpoint_service_name = xks_proxy_vpc_endpoint_service_name_;
      xks_proxy_uri_path = xks_proxy_uri_path_;
      xks_proxy_uri_endpoint = xks_proxy_uri_endpoint_;
@@ -282,7 +287,8 @@ let make_re_encrypt_response
    }
     : re_encrypt_response)
 
-let make_re_encrypt_request ?dry_run:(dry_run_ : nullable_boolean_type option)
+let make_re_encrypt_request ?dry_run_modifiers:(dry_run_modifiers_ : dry_run_modifier_list option)
+    ?dry_run:(dry_run_ : nullable_boolean_type option)
     ?grant_tokens:(grant_tokens_ : grant_token_list option)
     ?destination_encryption_algorithm:
       (destination_encryption_algorithm_ : encryption_algorithm_spec option)
@@ -291,9 +297,10 @@ let make_re_encrypt_request ?dry_run:(dry_run_ : nullable_boolean_type option)
       (destination_encryption_context_ : encryption_context_type option)
     ?source_key_id:(source_key_id_ : key_id_type option)
     ?source_encryption_context:(source_encryption_context_ : encryption_context_type option)
-    ~destination_key_id:(destination_key_id_ : key_id_type)
-    ~ciphertext_blob:(ciphertext_blob_ : ciphertext_type) () =
+    ?ciphertext_blob:(ciphertext_blob_ : ciphertext_type option)
+    ~destination_key_id:(destination_key_id_ : key_id_type) () =
   ({
+     dry_run_modifiers = dry_run_modifiers_;
      dry_run = dry_run_;
      grant_tokens = grant_tokens_;
      destination_encryption_algorithm = destination_encryption_algorithm_;
@@ -318,16 +325,20 @@ let make_put_key_policy_request
    }
     : put_key_policy_request)
 
-let make_grant_constraints
+let make_grant_constraints ?source_arn:(source_arn_ : grant_constraint_source_arn_type option)
     ?encryption_context_equals:(encryption_context_equals_ : encryption_context_type option)
     ?encryption_context_subset:(encryption_context_subset_ : encryption_context_type option) () =
   ({
+     source_arn = source_arn_;
      encryption_context_equals = encryption_context_equals_;
      encryption_context_subset = encryption_context_subset_;
    }
     : grant_constraints)
 
-let make_grant_list_entry ?constraints:(constraints_ : grant_constraints option)
+let make_grant_list_entry
+    ?retiring_service_principal:(retiring_service_principal_ : service_principal_type option)
+    ?grantee_service_principal:(grantee_service_principal_ : service_principal_type option)
+    ?constraints:(constraints_ : grant_constraints option)
     ?operations:(operations_ : grant_operation_list option)
     ?issuing_account:(issuing_account_ : principal_id_type option)
     ?retiring_principal:(retiring_principal_ : principal_id_type option)
@@ -335,6 +346,8 @@ let make_grant_list_entry ?constraints:(constraints_ : grant_constraints option)
     ?creation_date:(creation_date_ : date_type option) ?name:(name_ : grant_name_type option)
     ?grant_id:(grant_id_ : grant_id_type option) ?key_id:(key_id_ : key_id_type option) () =
   ({
+     retiring_service_principal = retiring_service_principal_;
+     grantee_service_principal = grantee_service_principal_;
      constraints = constraints_;
      operations = operations_;
      issuing_account = issuing_account_;
@@ -351,10 +364,16 @@ let make_list_grants_response ?truncated:(truncated_ : boolean_type option)
     ?next_marker:(next_marker_ : marker_type option) ?grants:(grants_ : grant_list option) () =
   ({ truncated = truncated_; next_marker = next_marker_; grants = grants_ } : list_grants_response)
 
-let make_list_retirable_grants_request ?marker:(marker_ : marker_type option)
-    ?limit:(limit_ : limit_type option)
-    ~retiring_principal:(retiring_principal_ : principal_id_type) () =
-  ({ retiring_principal = retiring_principal_; marker = marker_; limit = limit_ }
+let make_list_retirable_grants_request
+    ?retiring_service_principal:(retiring_service_principal_ : service_principal_type option)
+    ?retiring_principal:(retiring_principal_ : principal_id_type option)
+    ?marker:(marker_ : marker_type option) ?limit:(limit_ : limit_type option) () =
+  ({
+     retiring_service_principal = retiring_service_principal_;
+     retiring_principal = retiring_principal_;
+     marker = marker_;
+     limit = limit_;
+   }
     : list_retirable_grants_request)
 
 let make_list_resource_tags_response ?truncated:(truncated_ : boolean_type option)
@@ -427,10 +446,13 @@ let make_list_key_policies_request ?marker:(marker_ : marker_type option)
     ?limit:(limit_ : limit_type option) ~key_id:(key_id_ : key_id_type) () =
   ({ marker = marker_; limit = limit_; key_id = key_id_ } : list_key_policies_request)
 
-let make_list_grants_request ?grantee_principal:(grantee_principal_ : principal_id_type option)
+let make_list_grants_request
+    ?grantee_service_principal:(grantee_service_principal_ : service_principal_type option)
+    ?grantee_principal:(grantee_principal_ : principal_id_type option)
     ?grant_id:(grant_id_ : grant_id_type option) ?marker:(marker_ : marker_type option)
     ?limit:(limit_ : limit_type option) ~key_id:(key_id_ : key_id_type) () =
   ({
+     grantee_service_principal = grantee_service_principal_;
      grantee_principal = grantee_principal_;
      grant_id = grant_id_;
      key_id = key_id_;
@@ -557,6 +579,33 @@ let make_get_key_policy_response ?policy_name:(policy_name_ : policy_name_type o
 let make_get_key_policy_request ?policy_name:(policy_name_ : policy_name_type option)
     ~key_id:(key_id_ : key_id_type) () =
   ({ policy_name = policy_name_; key_id = key_id_ } : get_key_policy_request)
+
+let make_key_last_usage_data ?kms_request_id:(kms_request_id_ : kms_request_id_type option)
+    ?cloud_trail_event_id:(cloud_trail_event_id_ : cloud_trail_event_id_type option)
+    ?timestamp:(timestamp_ : date_type option)
+    ?operation:(operation_ : key_last_usage_tracking_operation option) () =
+  ({
+     kms_request_id = kms_request_id_;
+     cloud_trail_event_id = cloud_trail_event_id_;
+     timestamp = timestamp_;
+     operation = operation_;
+   }
+    : key_last_usage_data)
+
+let make_get_key_last_usage_response ?key_creation_date:(key_creation_date_ : date_type option)
+    ?tracking_start_date:(tracking_start_date_ : date_type option)
+    ?key_last_usage:(key_last_usage_ : key_last_usage_data option)
+    ?key_id:(key_id_ : key_id_type option) () =
+  ({
+     key_creation_date = key_creation_date_;
+     tracking_start_date = tracking_start_date_;
+     key_last_usage = key_last_usage_;
+     key_id = key_id_;
+   }
+    : get_key_last_usage_response)
+
+let make_get_key_last_usage_request ~key_id:(key_id_ : key_id_type) () =
+  ({ key_id = key_id_ } : get_key_last_usage_request)
 
 let make_generate_random_response
     ?ciphertext_for_recipient:(ciphertext_for_recipient_ : ciphertext_type option)
@@ -874,13 +923,15 @@ let make_decrypt_response ?key_material_id:(key_material_id_ : backing_key_id_ty
    }
     : decrypt_response)
 
-let make_decrypt_request ?dry_run:(dry_run_ : nullable_boolean_type option)
+let make_decrypt_request ?dry_run_modifiers:(dry_run_modifiers_ : dry_run_modifier_list option)
+    ?dry_run:(dry_run_ : nullable_boolean_type option)
     ?recipient:(recipient_ : recipient_info option)
     ?encryption_algorithm:(encryption_algorithm_ : encryption_algorithm_spec option)
     ?key_id:(key_id_ : key_id_type option) ?grant_tokens:(grant_tokens_ : grant_token_list option)
     ?encryption_context:(encryption_context_ : encryption_context_type option)
-    ~ciphertext_blob:(ciphertext_blob_ : ciphertext_type) () =
+    ?ciphertext_blob:(ciphertext_blob_ : ciphertext_type option) () =
   ({
+     dry_run_modifiers = dry_run_modifiers_;
      dry_run = dry_run_;
      recipient = recipient_;
      encryption_algorithm = encryption_algorithm_;
@@ -922,13 +973,18 @@ let make_create_grant_response ?grant_id:(grant_id_ : grant_id_type option)
     ?grant_token:(grant_token_ : grant_token_type option) () =
   ({ grant_id = grant_id_; grant_token = grant_token_ } : create_grant_response)
 
-let make_create_grant_request ?dry_run:(dry_run_ : nullable_boolean_type option)
-    ?name:(name_ : grant_name_type option) ?grant_tokens:(grant_tokens_ : grant_token_list option)
+let make_create_grant_request
+    ?retiring_service_principal:(retiring_service_principal_ : service_principal_type option)
+    ?grantee_service_principal:(grantee_service_principal_ : service_principal_type option)
+    ?dry_run:(dry_run_ : nullable_boolean_type option) ?name:(name_ : grant_name_type option)
+    ?grant_tokens:(grant_tokens_ : grant_token_list option)
     ?constraints:(constraints_ : grant_constraints option)
     ?retiring_principal:(retiring_principal_ : principal_id_type option)
-    ~operations:(operations_ : grant_operation_list)
-    ~grantee_principal:(grantee_principal_ : principal_id_type) ~key_id:(key_id_ : key_id_type) () =
+    ?grantee_principal:(grantee_principal_ : principal_id_type option)
+    ~operations:(operations_ : grant_operation_list) ~key_id:(key_id_ : key_id_type) () =
   ({
+     retiring_service_principal = retiring_service_principal_;
+     grantee_service_principal = grantee_service_principal_;
      dry_run = dry_run_;
      name = name_;
      grant_tokens = grant_tokens_;
@@ -948,6 +1004,8 @@ let make_create_custom_key_store_request
     ?xks_proxy_connectivity:(xks_proxy_connectivity_ : xks_proxy_connectivity_type option)
     ?xks_proxy_authentication_credential:
       (xks_proxy_authentication_credential_ : xks_proxy_authentication_credential_type option)
+    ?xks_proxy_vpc_endpoint_service_owner:
+      (xks_proxy_vpc_endpoint_service_owner_ : account_id_type option)
     ?xks_proxy_vpc_endpoint_service_name:
       (xks_proxy_vpc_endpoint_service_name_ : xks_proxy_vpc_endpoint_service_name_type option)
     ?xks_proxy_uri_path:(xks_proxy_uri_path_ : xks_proxy_uri_path_type option)
@@ -960,6 +1018,7 @@ let make_create_custom_key_store_request
   ({
      xks_proxy_connectivity = xks_proxy_connectivity_;
      xks_proxy_authentication_credential = xks_proxy_authentication_credential_;
+     xks_proxy_vpc_endpoint_service_owner = xks_proxy_vpc_endpoint_service_owner_;
      xks_proxy_vpc_endpoint_service_name = xks_proxy_vpc_endpoint_service_name_;
      xks_proxy_uri_path = xks_proxy_uri_path_;
      xks_proxy_uri_endpoint = xks_proxy_uri_endpoint_;

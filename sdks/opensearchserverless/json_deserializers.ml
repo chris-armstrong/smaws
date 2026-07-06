@@ -5,6 +5,8 @@ let saml_user_attribute_of_yojson = string_of_yojson
 let saml_metadata_of_yojson = string_of_yojson
 let saml_group_attribute_of_yojson = string_of_yojson
 let open_search_serverless_entity_id_of_yojson = string_of_yojson
+let iam_federation_user_attribute_of_yojson = string_of_yojson
+let iam_federation_group_attribute_of_yojson = string_of_yojson
 let vpc_id_of_yojson = string_of_yojson
 let vpc_endpoint_id_of_yojson = string_of_yojson
 let vpc_endpoint_name_of_yojson = string_of_yojson
@@ -89,6 +91,26 @@ let vpc_endpoint_detail_of_yojson tree path =
 
 let vpc_endpoint_details_of_yojson tree path =
   list_of_yojson vpc_endpoint_detail_of_yojson tree path
+
+let serverless_vector_acceleration_status_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "ENABLED" -> ENABLED
+    | `String "DISABLED" -> DISABLED
+    | `String "ALLOWED" -> ALLOWED
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "ServerlessVectorAccelerationStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "ServerlessVectorAccelerationStatus")
+     : serverless_vector_acceleration_status)
+    : serverless_vector_acceleration_status)
+
+let vector_options_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     serverless_vector_acceleration =
+       value_for_key serverless_vector_acceleration_status_of_yojson "ServerlessVectorAcceleration"
+         _list path;
+   }
+    : vector_options)
 
 let validation_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -269,6 +291,7 @@ let security_config_type_of_yojson (tree : t) path =
   ((match tree with
     | `String "saml" -> Saml
     | `String "iamidentitycenter" -> Iamidentitycenter
+    | `String "iamfederation" -> Iamfederation
     | `String value -> raise (deserialize_unknown_enum_value_error path "SecurityConfigType" value)
     | _ -> raise (deserialize_wrong_type_error path "SecurityConfigType")
      : security_config_type)
@@ -350,6 +373,20 @@ let iam_identity_center_config_options_of_yojson tree path =
    }
     : iam_identity_center_config_options)
 
+let iam_federation_config_options_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     user_attribute =
+       option_of_yojson
+         (value_for_key iam_federation_user_attribute_of_yojson "userAttribute")
+         _list path;
+     group_attribute =
+       option_of_yojson
+         (value_for_key iam_federation_group_attribute_of_yojson "groupAttribute")
+         _list path;
+   }
+    : iam_federation_config_options)
+
 let security_config_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -360,6 +397,10 @@ let security_config_detail_of_yojson tree path =
      created_date =
        option_of_yojson
          (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.long_of_yojson "createdDate")
+         _list path;
+     iam_federation_options =
+       option_of_yojson
+         (value_for_key iam_federation_config_options_of_yojson "iamFederationOptions")
          _list path;
      iam_identity_center_options =
        option_of_yojson
@@ -404,6 +445,10 @@ let update_security_config_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      client_token = option_of_yojson (value_for_key client_token_of_yojson "clientToken") _list path;
+     iam_federation_options =
+       option_of_yojson
+         (value_for_key iam_federation_config_options_of_yojson "iamFederationOptions")
+         _list path;
      iam_identity_center_options_updates =
        option_of_yojson
          (value_for_key update_iam_identity_center_config_options_of_yojson
@@ -473,15 +518,33 @@ let update_lifecycle_policy_request_of_yojson tree path =
    }
     : update_lifecycle_policy_request)
 
+let update_index_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  (() : unit)
+
 let collection_id_of_yojson = string_of_yojson
+let index_name_of_yojson = string_of_yojson
+let index_schema_of_yojson = json_of_yojson
+
+let update_index_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     index_schema = option_of_yojson (value_for_key index_schema_of_yojson "indexSchema") _list path;
+     index_name = value_for_key index_name_of_yojson "indexName" _list path;
+     id = value_for_key collection_id_of_yojson "id" _list path;
+   }
+    : update_index_request)
+
 let collection_name_of_yojson = string_of_yojson
 
 let collection_status_of_yojson (tree : t) path =
   ((match tree with
     | `String "CREATING" -> CREATING
+    | `String "UPDATING" -> UPDATING
     | `String "DELETING" -> DELETING
     | `String "ACTIVE" -> ACTIVE
     | `String "FAILED" -> FAILED
+    | `String "UPDATE_FAILED" -> UPDATE_FAILED
     | `String value -> raise (deserialize_unknown_enum_value_error path "CollectionStatus" value)
     | _ -> raise (deserialize_wrong_type_error path "CollectionStatus")
      : collection_status)
@@ -497,9 +560,22 @@ let collection_type_of_yojson (tree : t) path =
      : collection_type)
     : collection_type)
 
+let deletion_protection_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "ENABLED" -> ENABLED
+    | `String "DISABLED" -> DISABLED
+    | `String value -> raise (deserialize_unknown_enum_value_error path "DeletionProtection" value)
+    | _ -> raise (deserialize_wrong_type_error path "DeletionProtection")
+     : deletion_protection)
+    : deletion_protection)
+
 let update_collection_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     deletion_protection =
+       option_of_yojson
+         (value_for_key deletion_protection_of_yojson "deletionProtection")
+         _list path;
      last_modified_date =
        option_of_yojson
          (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.long_of_yojson "lastModifiedDate")
@@ -512,6 +588,8 @@ let update_collection_detail_of_yojson tree path =
        option_of_yojson
          (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "arn")
          _list path;
+     vector_options =
+       option_of_yojson (value_for_key vector_options_of_yojson "vectorOptions") _list path;
      description =
        option_of_yojson
          (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "description")
@@ -537,6 +615,12 @@ let update_collection_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      client_token = option_of_yojson (value_for_key client_token_of_yojson "clientToken") _list path;
+     deletion_protection =
+       option_of_yojson
+         (value_for_key deletion_protection_of_yojson "deletionProtection")
+         _list path;
+     vector_options =
+       option_of_yojson (value_for_key vector_options_of_yojson "vectorOptions") _list path;
      description =
        option_of_yojson
          (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "description")
@@ -544,6 +628,105 @@ let update_collection_request_of_yojson tree path =
      id = value_for_key collection_id_of_yojson "id" _list path;
    }
     : update_collection_request)
+
+let collection_group_id_of_yojson = string_of_yojson
+let collection_group_name_of_yojson = string_of_yojson
+let collection_group_max_indexing_capacity_value_of_yojson = float_of_yojson
+let collection_group_max_search_capacity_value_of_yojson = float_of_yojson
+let collection_group_min_indexing_capacity_value_of_yojson = float_of_yojson
+let collection_group_min_search_capacity_value_of_yojson = float_of_yojson
+
+let collection_group_capacity_limits_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     min_search_capacity_in_oc_u =
+       option_of_yojson
+         (value_for_key collection_group_min_search_capacity_value_of_yojson
+            "minSearchCapacityInOCU")
+         _list path;
+     min_indexing_capacity_in_oc_u =
+       option_of_yojson
+         (value_for_key collection_group_min_indexing_capacity_value_of_yojson
+            "minIndexingCapacityInOCU")
+         _list path;
+     max_search_capacity_in_oc_u =
+       option_of_yojson
+         (value_for_key collection_group_max_search_capacity_value_of_yojson
+            "maxSearchCapacityInOCU")
+         _list path;
+     max_indexing_capacity_in_oc_u =
+       option_of_yojson
+         (value_for_key collection_group_max_indexing_capacity_value_of_yojson
+            "maxIndexingCapacityInOCU")
+         _list path;
+   }
+    : collection_group_capacity_limits)
+
+let serverless_generation_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "CLASSIC" -> CLASSIC
+    | `String "NEXTGEN" -> NEXTGEN
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "ServerlessGeneration" value)
+    | _ -> raise (deserialize_wrong_type_error path "ServerlessGeneration")
+     : serverless_generation)
+    : serverless_generation)
+
+let update_collection_group_detail_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     generation =
+       option_of_yojson (value_for_key serverless_generation_of_yojson "generation") _list path;
+     last_modified_date =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.long_of_yojson "lastModifiedDate")
+         _list path;
+     created_date =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.long_of_yojson "createdDate")
+         _list path;
+     capacity_limits =
+       option_of_yojson
+         (value_for_key collection_group_capacity_limits_of_yojson "capacityLimits")
+         _list path;
+     description =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "description")
+         _list path;
+     name = option_of_yojson (value_for_key collection_group_name_of_yojson "name") _list path;
+     arn =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "arn")
+         _list path;
+     id = option_of_yojson (value_for_key collection_group_id_of_yojson "id") _list path;
+   }
+    : update_collection_group_detail)
+
+let update_collection_group_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     update_collection_group_detail =
+       option_of_yojson
+         (value_for_key update_collection_group_detail_of_yojson "updateCollectionGroupDetail")
+         _list path;
+   }
+    : update_collection_group_response)
+
+let update_collection_group_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     client_token = option_of_yojson (value_for_key client_token_of_yojson "clientToken") _list path;
+     capacity_limits =
+       option_of_yojson
+         (value_for_key collection_group_capacity_limits_of_yojson "capacityLimits")
+         _list path;
+     description =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "description")
+         _list path;
+     id = value_for_key collection_group_id_of_yojson "id" _list path;
+   }
+    : update_collection_group_request)
 
 let indexing_capacity_value_of_yojson = int_of_yojson
 let search_capacity_value_of_yojson = int_of_yojson
@@ -1041,9 +1224,145 @@ let batch_get_effective_lifecycle_policy_request_of_yojson tree path =
    }
     : batch_get_effective_lifecycle_policy_request)
 
+let autoscaling_status_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "ACTION_SCALING_UP" -> ACTION_SCALING_UP
+    | `String "ACTION_SCALING_DOWN" -> ACTION_SCALING_DOWN
+    | `String "NO_ACTION" -> NO_ACTION
+    | `String value -> raise (deserialize_unknown_enum_value_error path "AutoscalingStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "AutoscalingStatus")
+     : autoscaling_status)
+    : autoscaling_status)
+
+let capacity_details_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     autoscaling_status =
+       option_of_yojson (value_for_key autoscaling_status_of_yojson "autoscalingStatus") _list path;
+     capacity_in_ocu =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.float__of_yojson "capacityInOcu")
+         _list path;
+   }
+    : capacity_details)
+
+let current_capacity_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     indexing = option_of_yojson (value_for_key capacity_details_of_yojson "indexing") _list path;
+     search = option_of_yojson (value_for_key capacity_details_of_yojson "search") _list path;
+   }
+    : current_capacity)
+
+let collection_group_detail_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     generation =
+       option_of_yojson (value_for_key serverless_generation_of_yojson "generation") _list path;
+     number_of_collections =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.integer_of_yojson
+            "numberOfCollections")
+         _list path;
+     current_capacity =
+       option_of_yojson (value_for_key current_capacity_of_yojson "currentCapacity") _list path;
+     capacity_limits =
+       option_of_yojson
+         (value_for_key collection_group_capacity_limits_of_yojson "capacityLimits")
+         _list path;
+     created_date =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.long_of_yojson "createdDate")
+         _list path;
+     tags = option_of_yojson (value_for_key tags_of_yojson "tags") _list path;
+     description =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "description")
+         _list path;
+     standby_replicas =
+       option_of_yojson (value_for_key standby_replicas_of_yojson "standbyReplicas") _list path;
+     name = option_of_yojson (value_for_key collection_group_name_of_yojson "name") _list path;
+     arn =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "arn")
+         _list path;
+     id = option_of_yojson (value_for_key collection_group_id_of_yojson "id") _list path;
+   }
+    : collection_group_detail)
+
+let collection_group_details_of_yojson tree path =
+  list_of_yojson collection_group_detail_of_yojson tree path
+
+let collection_group_error_detail_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     error_code =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "errorCode")
+         _list path;
+     error_message =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "errorMessage")
+         _list path;
+     name = option_of_yojson (value_for_key collection_group_name_of_yojson "name") _list path;
+     id = option_of_yojson (value_for_key collection_group_id_of_yojson "id") _list path;
+   }
+    : collection_group_error_detail)
+
+let collection_group_error_details_of_yojson tree path =
+  list_of_yojson collection_group_error_detail_of_yojson tree path
+
+let batch_get_collection_group_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     collection_group_error_details =
+       option_of_yojson
+         (value_for_key collection_group_error_details_of_yojson "collectionGroupErrorDetails")
+         _list path;
+     collection_group_details =
+       option_of_yojson
+         (value_for_key collection_group_details_of_yojson "collectionGroupDetails")
+         _list path;
+   }
+    : batch_get_collection_group_response)
+
+let collection_group_ids_of_yojson tree path =
+  list_of_yojson collection_group_id_of_yojson tree path
+
+let collection_group_names_of_yojson tree path =
+  list_of_yojson collection_group_name_of_yojson tree path
+
+let batch_get_collection_group_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     names = option_of_yojson (value_for_key collection_group_names_of_yojson "names") _list path;
+     ids = option_of_yojson (value_for_key collection_group_ids_of_yojson "ids") _list path;
+   }
+    : batch_get_collection_group_request)
+
+let fips_endpoints_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     dashboard_endpoint =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson
+            "dashboardEndpoint")
+         _list path;
+     collection_endpoint =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson
+            "collectionEndpoint")
+         _list path;
+   }
+    : fips_endpoints)
+
 let collection_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     collection_group_name =
+       option_of_yojson
+         (value_for_key collection_group_name_of_yojson "collectionGroupName")
+         _list path;
      failure_message =
        option_of_yojson
          (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "failureMessage")
@@ -1052,6 +1371,8 @@ let collection_detail_of_yojson tree path =
        option_of_yojson
          (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "failureCode")
          _list path;
+     fips_endpoints =
+       option_of_yojson (value_for_key fips_endpoints_of_yojson "fipsEndpoints") _list path;
      dashboard_endpoint =
        option_of_yojson
          (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson
@@ -1069,6 +1390,12 @@ let collection_detail_of_yojson tree path =
      created_date =
        option_of_yojson
          (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.long_of_yojson "createdDate")
+         _list path;
+     vector_options =
+       option_of_yojson (value_for_key vector_options_of_yojson "vectorOptions") _list path;
+     deletion_protection =
+       option_of_yojson
+         (value_for_key deletion_protection_of_yojson "deletionProtection")
          _list path;
      standby_replicas =
        option_of_yojson (value_for_key standby_replicas_of_yojson "standbyReplicas") _list path;
@@ -1296,6 +1623,14 @@ let list_lifecycle_policies_request_of_yojson tree path =
 let collection_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     collection_group_name =
+       option_of_yojson
+         (value_for_key collection_group_name_of_yojson "collectionGroupName")
+         _list path;
+     kms_key_arn =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "kmsKeyArn")
+         _list path;
      arn =
        option_of_yojson
          (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "arn")
@@ -1325,6 +1660,10 @@ let list_collections_response_of_yojson tree path =
 let collection_filters_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     collection_group_name =
+       option_of_yojson
+         (value_for_key collection_group_name_of_yojson "collectionGroupName")
+         _list path;
      status = option_of_yojson (value_for_key collection_status_of_yojson "status") _list path;
      name = option_of_yojson (value_for_key collection_name_of_yojson "name") _list path;
    }
@@ -1345,6 +1684,64 @@ let list_collections_request_of_yojson tree path =
        option_of_yojson (value_for_key collection_filters_of_yojson "collectionFilters") _list path;
    }
     : list_collections_request)
+
+let collection_group_summary_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     generation =
+       option_of_yojson (value_for_key serverless_generation_of_yojson "generation") _list path;
+     capacity_limits =
+       option_of_yojson
+         (value_for_key collection_group_capacity_limits_of_yojson "capacityLimits")
+         _list path;
+     created_date =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.long_of_yojson "createdDate")
+         _list path;
+     number_of_collections =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.integer_of_yojson
+            "numberOfCollections")
+         _list path;
+     name = option_of_yojson (value_for_key collection_group_name_of_yojson "name") _list path;
+     arn =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "arn")
+         _list path;
+     id = option_of_yojson (value_for_key collection_group_id_of_yojson "id") _list path;
+   }
+    : collection_group_summary)
+
+let collection_group_summaries_of_yojson tree path =
+  list_of_yojson collection_group_summary_of_yojson tree path
+
+let list_collection_groups_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_token =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "nextToken")
+         _list path;
+     collection_group_summaries =
+       option_of_yojson
+         (value_for_key collection_group_summaries_of_yojson "collectionGroupSummaries")
+         _list path;
+   }
+    : list_collection_groups_response)
+
+let list_collection_groups_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     max_results =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.integer_of_yojson "maxResults")
+         _list path;
+     next_token =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "nextToken")
+         _list path;
+   }
+    : list_collection_groups_request)
 
 let access_policy_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1432,6 +1829,21 @@ let get_security_config_request_of_yojson tree path =
   ({ id = value_for_key security_config_id_of_yojson "id" _list path }
     : get_security_config_request)
 
+let get_index_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     index_schema = option_of_yojson (value_for_key index_schema_of_yojson "indexSchema") _list path;
+   }
+    : get_index_response)
+
+let get_index_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     index_name = value_for_key index_name_of_yojson "indexName" _list path;
+     id = value_for_key collection_id_of_yojson "id" _list path;
+   }
+    : get_index_request)
+
 let get_access_policy_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1449,6 +1861,20 @@ let get_access_policy_request_of_yojson tree path =
      type_ = value_for_key access_policy_type_of_yojson "type" _list path;
    }
     : get_access_policy_request)
+
+let encryption_config_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     kms_key_arn =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "kmsKeyArn")
+         _list path;
+     a_ws_owned_key =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.boolean__of_yojson "aWSOwnedKey")
+         _list path;
+   }
+    : encryption_config)
 
 let delete_vpc_endpoint_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1515,9 +1941,25 @@ let delete_lifecycle_policy_request_of_yojson tree path =
    }
     : delete_lifecycle_policy_request)
 
+let delete_index_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  (() : unit)
+
+let delete_index_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     index_name = value_for_key index_name_of_yojson "indexName" _list path;
+     id = value_for_key collection_id_of_yojson "id" _list path;
+   }
+    : delete_index_request)
+
 let delete_collection_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     deletion_protection =
+       option_of_yojson
+         (value_for_key deletion_protection_of_yojson "deletionProtection")
+         _list path;
      status = option_of_yojson (value_for_key collection_status_of_yojson "status") _list path;
      name = option_of_yojson (value_for_key collection_name_of_yojson "name") _list path;
      id = option_of_yojson (value_for_key collection_id_of_yojson "id") _list path;
@@ -1541,6 +1983,18 @@ let delete_collection_request_of_yojson tree path =
      id = value_for_key collection_id_of_yojson "id" _list path;
    }
     : delete_collection_request)
+
+let delete_collection_group_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  (() : unit)
+
+let delete_collection_group_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     client_token = option_of_yojson (value_for_key client_token_of_yojson "clientToken") _list path;
+     id = value_for_key collection_group_id_of_yojson "id" _list path;
+   }
+    : delete_collection_group_request)
 
 let delete_access_policy_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -1618,6 +2072,10 @@ let create_security_config_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      client_token = option_of_yojson (value_for_key client_token_of_yojson "clientToken") _list path;
+     iam_federation_options =
+       option_of_yojson
+         (value_for_key iam_federation_config_options_of_yojson "iamFederationOptions")
+         _list path;
      iam_identity_center_options =
        option_of_yojson
          (value_for_key create_iam_identity_center_config_options_of_yojson
@@ -1632,9 +2090,26 @@ let create_security_config_request_of_yojson tree path =
    }
     : create_security_config_request)
 
+let create_index_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  (() : unit)
+
+let create_index_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     index_schema = option_of_yojson (value_for_key index_schema_of_yojson "indexSchema") _list path;
+     index_name = value_for_key index_name_of_yojson "indexName" _list path;
+     id = value_for_key collection_id_of_yojson "id" _list path;
+   }
+    : create_index_request)
+
 let create_collection_detail_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     collection_group_name =
+       option_of_yojson
+         (value_for_key collection_group_name_of_yojson "collectionGroupName")
+         _list path;
      last_modified_date =
        option_of_yojson
          (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.long_of_yojson "lastModifiedDate")
@@ -1642,6 +2117,12 @@ let create_collection_detail_of_yojson tree path =
      created_date =
        option_of_yojson
          (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.long_of_yojson "createdDate")
+         _list path;
+     vector_options =
+       option_of_yojson (value_for_key vector_options_of_yojson "vectorOptions") _list path;
+     deletion_protection =
+       option_of_yojson
+         (value_for_key deletion_protection_of_yojson "deletionProtection")
          _list path;
      standby_replicas =
        option_of_yojson (value_for_key standby_replicas_of_yojson "standbyReplicas") _list path;
@@ -1678,6 +2159,18 @@ let create_collection_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
      client_token = option_of_yojson (value_for_key client_token_of_yojson "clientToken") _list path;
+     deletion_protection =
+       option_of_yojson
+         (value_for_key deletion_protection_of_yojson "deletionProtection")
+         _list path;
+     encryption_config =
+       option_of_yojson (value_for_key encryption_config_of_yojson "encryptionConfig") _list path;
+     collection_group_name =
+       option_of_yojson
+         (value_for_key collection_group_name_of_yojson "collectionGroupName")
+         _list path;
+     vector_options =
+       option_of_yojson (value_for_key vector_options_of_yojson "vectorOptions") _list path;
      standby_replicas =
        option_of_yojson (value_for_key standby_replicas_of_yojson "standbyReplicas") _list path;
      tags = option_of_yojson (value_for_key tags_of_yojson "tags") _list path;
@@ -1689,6 +2182,65 @@ let create_collection_request_of_yojson tree path =
      name = value_for_key collection_name_of_yojson "name" _list path;
    }
     : create_collection_request)
+
+let create_collection_group_detail_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     generation =
+       option_of_yojson (value_for_key serverless_generation_of_yojson "generation") _list path;
+     capacity_limits =
+       option_of_yojson
+         (value_for_key collection_group_capacity_limits_of_yojson "capacityLimits")
+         _list path;
+     created_date =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.long_of_yojson "createdDate")
+         _list path;
+     tags = option_of_yojson (value_for_key tags_of_yojson "tags") _list path;
+     description =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "description")
+         _list path;
+     standby_replicas =
+       option_of_yojson (value_for_key standby_replicas_of_yojson "standbyReplicas") _list path;
+     name = option_of_yojson (value_for_key collection_group_name_of_yojson "name") _list path;
+     arn =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "arn")
+         _list path;
+     id = option_of_yojson (value_for_key collection_group_id_of_yojson "id") _list path;
+   }
+    : create_collection_group_detail)
+
+let create_collection_group_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     create_collection_group_detail =
+       option_of_yojson
+         (value_for_key create_collection_group_detail_of_yojson "createCollectionGroupDetail")
+         _list path;
+   }
+    : create_collection_group_response)
+
+let create_collection_group_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     client_token = option_of_yojson (value_for_key client_token_of_yojson "clientToken") _list path;
+     generation =
+       option_of_yojson (value_for_key serverless_generation_of_yojson "generation") _list path;
+     capacity_limits =
+       option_of_yojson
+         (value_for_key collection_group_capacity_limits_of_yojson "capacityLimits")
+         _list path;
+     tags = option_of_yojson (value_for_key tags_of_yojson "tags") _list path;
+     description =
+       option_of_yojson
+         (value_for_key Smaws_Lib.Smithy_api.Json_deserializers.string__of_yojson "description")
+         _list path;
+     standby_replicas = value_for_key standby_replicas_of_yojson "standbyReplicas" _list path;
+     name = value_for_key collection_group_name_of_yojson "name" _list path;
+   }
+    : create_collection_group_request)
 
 let create_access_policy_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in

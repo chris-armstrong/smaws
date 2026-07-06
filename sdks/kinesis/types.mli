@@ -1,3 +1,19 @@
+type nonrec natural_integer_object = int [@@ocaml.doc ""]
+
+type nonrec warm_throughput_object = {
+  current_mi_bps : natural_integer_object option;
+      [@ocaml.doc
+        "The current warm throughput value on the stream. This is the write throughput in MiBps \
+         that the stream is currently scaled to handle.\n"]
+  target_mi_bps : natural_integer_object option;
+      [@ocaml.doc
+        "The target warm throughput value on the stream. This indicates that the stream is \
+         currently scaling towards this target value.\n"]
+}
+[@@ocaml.doc
+  "Represents the warm throughput configuration on the stream. This is only present for On-Demand \
+   Kinesis Data Streams in accounts that have [MinimumThroughputBillingCommitment] enabled.\n"]
+
 type nonrec error_message = string [@@ocaml.doc ""]
 
 type nonrec validation_exception = { message : error_message option [@ocaml.doc ""] }
@@ -7,29 +23,27 @@ type nonrec validation_exception = { message : error_message option [@ocaml.doc 
 
 type nonrec stream_ar_n = string [@@ocaml.doc ""]
 
-type nonrec stream_mode = ON_DEMAND [@ocaml.doc ""] | PROVISIONED [@ocaml.doc ""] [@@ocaml.doc ""]
+type nonrec stream_name = string [@@ocaml.doc ""]
 
-type nonrec stream_mode_details = {
-  stream_mode : stream_mode;
-      [@ocaml.doc
-        " Specifies the capacity mode to which you want to set your data stream. Currently, in \
-         Kinesis Data Streams, you can choose between an {b on-demand} capacity mode and a {b \
-         provisioned} capacity mode for your data streams. \n"]
+type nonrec update_stream_warm_throughput_output = {
+  warm_throughput : warm_throughput_object option;
+      [@ocaml.doc "Specifies the updated warm throughput configuration for your data stream.\n"]
+  stream_name : stream_name option; [@ocaml.doc "The name of the stream that was updated.\n"]
+  stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream that was updated.\n"]
 }
-[@@ocaml.doc
-  " Specifies the capacity mode to which you want to set your data stream. Currently, in Kinesis \
-   Data Streams, you can choose between an {b on-demand} capacity mode and a {b provisioned} \
-   capacity mode for your data streams. \n"]
+[@@ocaml.doc ""]
 
-type nonrec update_stream_mode_input = {
-  stream_mode_details : stream_mode_details;
+type nonrec stream_id = string [@@ocaml.doc ""]
+
+type nonrec update_stream_warm_throughput_input = {
+  warm_throughput_mi_bps : natural_integer_object;
       [@ocaml.doc
-        " Specifies the capacity mode to which you want to set your data stream. Currently, in \
-         Kinesis Data Streams, you can choose between an {b on-demand} capacity mode and a {b \
-         provisioned} capacity mode for your data streams. \n"]
-  stream_ar_n : stream_ar_n;
-      [@ocaml.doc
-        " Specifies the ARN of the data stream whose capacity mode you want to update. \n"]
+        "The target warm throughput in MB/s that the stream should be scaled to handle. This \
+         represents the throughput capacity that will be immediately available for write \
+         operations.\n"]
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
+  stream_name : stream_name option; [@ocaml.doc "The name of the stream to be updated.\n"]
+  stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream to be updated.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -64,7 +78,40 @@ type nonrec invalid_argument_exception = {
   "A specified parameter exceeds its restrictions, is not supported, or can't be used. For more \
    information, see the returned message.\n"]
 
-type nonrec stream_name = string [@@ocaml.doc ""]
+type nonrec access_denied_exception = { message : error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "Specifies that you do not have the permissions required to perform this operation.\n"]
+
+type nonrec stream_mode = ON_DEMAND [@ocaml.doc ""] | PROVISIONED [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec stream_mode_details = {
+  stream_mode : stream_mode;
+      [@ocaml.doc
+        " Specifies the capacity mode to which you want to set your data stream. Currently, in \
+         Kinesis Data Streams, you can choose between an {b on-demand} capacity mode and a {b \
+         provisioned} capacity mode for your data streams. \n"]
+}
+[@@ocaml.doc
+  " Specifies the capacity mode to which you want to set your data stream. Currently, in Kinesis \
+   Data Streams, you can choose between an {b on-demand} capacity mode and a {b provisioned} \
+   capacity mode for your data streams. \n"]
+
+type nonrec update_stream_mode_input = {
+  warm_throughput_mi_bps : natural_integer_object option;
+      [@ocaml.doc
+        "The target warm throughput in MB/s that the stream should be scaled to handle. This \
+         represents the throughput capacity that will be immediately available for write \
+         operations. This field is only valid when the stream mode is being updated to on-demand.\n"]
+  stream_mode_details : stream_mode_details;
+      [@ocaml.doc
+        " Specifies the capacity mode to which you want to set your data stream. Currently, in \
+         Kinesis Data Streams, you can choose between an {b on-demand} capacity mode and a {b \
+         provisioned} capacity mode for your data streams. \n"]
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
+  stream_ar_n : stream_ar_n;
+      [@ocaml.doc
+        " Specifies the ARN of the data stream whose capacity mode you want to update. \n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec positive_integer_object = int [@@ocaml.doc ""]
 
@@ -81,6 +128,7 @@ type nonrec update_shard_count_output = {
 type nonrec scaling_type = UNIFORM_SCALING [@ocaml.doc ""] [@@ocaml.doc ""]
 
 type nonrec update_shard_count_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   scaling_type : scaling_type;
       [@ocaml.doc "The scaling type. Uniform scaling creates shards of equal size.\n"]
@@ -110,8 +158,84 @@ type nonrec update_shard_count_input = {
 }
 [@@ocaml.doc ""]
 
-type nonrec access_denied_exception = { message : error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "Specifies that you do not have the permissions required to perform this operation.\n"]
+type nonrec max_record_size_in_ki_b = int [@@ocaml.doc ""]
+
+type nonrec update_max_record_size_input = {
+  max_record_size_in_ki_b : max_record_size_in_ki_b;
+      [@ocaml.doc
+        "The maximum record size of a single record in KiB that you can write to, and read from a \
+         stream. Specify a value between 1024 and 10240 KiB (1 to 10 MiB). If you specify a value \
+         that is out of this range, [UpdateMaxRecordSize] sends back an [ValidationException] \
+         message.\n"]
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
+  stream_ar_n : stream_ar_n option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the stream for the [MaxRecordSize] update.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec minimum_throughput_billing_commitment_output_status =
+  | ENABLED_UNTIL_EARLIEST_ALLOWED_END [@ocaml.doc ""]
+  | DISABLED [@ocaml.doc ""]
+  | ENABLED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec timestamp = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec minimum_throughput_billing_commitment_output = {
+  earliest_allowed_end_at : timestamp option;
+      [@ocaml.doc "The earliest timestamp when the commitment can be ended.\n"]
+  ended_at : timestamp option; [@ocaml.doc "The timestamp when the commitment was ended.\n"]
+  started_at : timestamp option; [@ocaml.doc "The timestamp when the commitment was started.\n"]
+  status : minimum_throughput_billing_commitment_output_status;
+      [@ocaml.doc "The current status of the minimum throughput billing commitment.\n"]
+}
+[@@ocaml.doc
+  "Represents the current status of minimum throughput billing commitment for an account.\n"]
+
+type nonrec update_account_settings_output = {
+  minimum_throughput_billing_commitment : minimum_throughput_billing_commitment_output option;
+      [@ocaml.doc
+        "The updated configuration of the minimum throughput billing commitment for your account.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec minimum_throughput_billing_commitment_input_status =
+  | DISABLED [@ocaml.doc ""]
+  | ENABLED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec minimum_throughput_billing_commitment_input = {
+  status : minimum_throughput_billing_commitment_input_status;
+      [@ocaml.doc "The desired status of the minimum throughput billing commitment.\n"]
+}
+[@@ocaml.doc
+  "Represents the request parameters for configuring minimum throughput billing commitment.\n\n\
+  \  {ul\n\
+  \        {-  Minimum throughput billing commitments provide cost savings on on-demand data \
+   streams in exchange for committing to a minimum level of throughput usage.\n\
+  \            \n\
+  \             }\n\
+  \        {-  Commitments have a minimum duration of 24 hours that must be honored before they \
+   can be disabled.\n\
+  \            \n\
+  \             }\n\
+  \        {-  If you attempt to disable a commitment before the minimum commitment period ends, \
+   the commitment will be scheduled for automatic disable at the earliest allowed end time.\n\
+  \            \n\
+  \             }\n\
+  \        {-  You can cancel a pending disable by enabling the commitment again before the \
+   earliest allowed end time.\n\
+  \            \n\
+  \             }\n\
+  \        }\n\
+  \   "]
+
+type nonrec update_account_settings_input = {
+  minimum_throughput_billing_commitment : minimum_throughput_billing_commitment_input;
+      [@ocaml.doc
+        "Specifies the minimum throughput billing commitment configuration for your account.\n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec tag_key = string [@@ocaml.doc ""]
 
@@ -120,6 +244,7 @@ type nonrec tag_key_list = tag_key list [@@ocaml.doc ""]
 type nonrec resource_ar_n = string [@@ocaml.doc ""]
 
 type nonrec untag_resource_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   resource_ar_n : resource_ar_n;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) of the Kinesis resource from which to remove tags.\n"]
@@ -130,13 +255,12 @@ type nonrec untag_resource_input = {
 }
 [@@ocaml.doc ""]
 
-type nonrec timestamp = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
 type nonrec tag_value = string [@@ocaml.doc ""]
 
 type nonrec tag_map = (tag_key * tag_value) list [@@ocaml.doc ""]
 
 type nonrec tag_resource_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   resource_ar_n : resource_ar_n;
       [@ocaml.doc "The Amazon Resource Name (ARN) of the Kinesis resource to which to add tags.\n"]
   tags : tag_map;
@@ -385,6 +509,7 @@ type nonrec subscribe_to_shard_input = {
       [@ocaml.doc
         "The ID of the shard you want to subscribe to. To see a list of all the shards for a given \
          stream, use [ListShards].\n"]
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   consumer_ar_n : consumer_ar_n;
       [@ocaml.doc
         "For this parameter, use the value you obtained when you called [RegisterStreamConsumer].\n"]
@@ -477,6 +602,14 @@ type nonrec shard_count_object = int [@@ocaml.doc ""]
 type nonrec consumer_count_object = int [@@ocaml.doc ""]
 
 type nonrec stream_description_summary = {
+  max_record_size_in_ki_b : max_record_size_in_ki_b option;
+      [@ocaml.doc
+        "The maximum record size of a single record in kibibyte (KiB) that you can write to, and \
+         read from a stream.\n"]
+  warm_throughput : warm_throughput_object option;
+      [@ocaml.doc
+        "The warm throughput in MB/s for the stream. This represents the throughput capacity that \
+         will be immediately available for write operations.\n"]
   consumer_count : consumer_count_object option;
       [@ocaml.doc "The number of enhanced fan-out consumers registered with the stream.\n"]
   open_shard_count : shard_count_object; [@ocaml.doc "The number of open shards in the stream.\n"]
@@ -552,6 +685,7 @@ type nonrec stream_description_summary = {
         \            }\n\
         \       }\n\
         \  "]
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n;
       [@ocaml.doc "The Amazon Resource Name (ARN) for the stream being described.\n"]
   stream_name : stream_name; [@ocaml.doc "The name of the stream being described.\n"]
@@ -671,6 +805,7 @@ type nonrec stream_description = {
 [@@ocaml.doc "Represents the output for [DescribeStream].\n"]
 
 type nonrec stop_stream_encryption_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   key_id : key_id;
       [@ocaml.doc
@@ -705,6 +840,7 @@ type nonrec stop_stream_encryption_input = {
 [@@ocaml.doc ""]
 
 type nonrec start_stream_encryption_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   key_id : key_id;
       [@ocaml.doc
@@ -739,6 +875,7 @@ type nonrec start_stream_encryption_input = {
 [@@ocaml.doc ""]
 
 type nonrec split_shard_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   new_starting_hash_key : hash_key;
       [@ocaml.doc
@@ -815,6 +952,7 @@ type nonrec shard_filter = {
 [@@ocaml.doc "The request parameter used to filter out the response of the [ListShards] API.\n"]
 
 type nonrec remove_tags_from_stream_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   tag_keys : tag_key_list;
       [@ocaml.doc "A list of tag keys. Each corresponding tag is removed from the stream.\n"]
@@ -862,6 +1000,7 @@ type nonrec register_stream_consumer_input = {
   tags : tag_map option;
       [@ocaml.doc
         "A set of up to 50 key-value pairs. A tag consists of a required key and an optional value.\n"]
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   consumer_name : consumer_name;
       [@ocaml.doc
         "For a given Kinesis data stream, each consumer must have a unique name. However, consumer \
@@ -882,6 +1021,7 @@ type nonrec put_resource_policy_input = {
       [@ocaml.doc
         "Details of the resource policy. It must include the identity of the principal and the \
          actions allowed on this resource. This is formatted as a JSON string.\n"]
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   resource_ar_n : resource_ar_n;
       [@ocaml.doc "The Amazon Resource Name (ARN) of the data stream or consumer.\n"]
 }
@@ -930,7 +1070,7 @@ type nonrec put_records_request_entry = {
       [@ocaml.doc
         "The data blob to put into the record, which is base64-encoded when the blob is \
          serialized. When the data blob (the payload before base64-encoding) is added to the \
-         partition key size, the total size must not exceed the maximum record size (1 MiB).\n"]
+         partition key size, the total size must not exceed the maximum record size (10 MiB).\n"]
 }
 [@@ocaml.doc "Represents the output for [PutRecords].\n"]
 
@@ -963,6 +1103,7 @@ type nonrec put_records_output = {
 [@@ocaml.doc " [PutRecords] results.\n"]
 
 type nonrec put_records_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   stream_name : stream_name option; [@ocaml.doc "The stream name associated with the request.\n"]
   records : put_records_request_entry_list; [@ocaml.doc "The records associated with the request.\n"]
@@ -1006,6 +1147,7 @@ type nonrec put_record_output = {
 [@@ocaml.doc "Represents the output for [PutRecord].\n"]
 
 type nonrec put_record_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   sequence_number_for_ordering : sequence_number option;
       [@ocaml.doc
@@ -1030,7 +1172,7 @@ type nonrec put_record_input = {
       [@ocaml.doc
         "The data blob to put into the record, which is base64-encoded when the blob is \
          serialized. When the data blob (the payload before base64-encoding) is added to the \
-         partition key size, the total size must not exceed the maximum record size (1 MiB).\n"]
+         partition key size, the total size must not exceed the maximum record size (10 MiB).\n"]
   stream_name : stream_name option;
       [@ocaml.doc "The name of the stream to put the data record into.\n"]
 }
@@ -1043,6 +1185,7 @@ type nonrec on_demand_stream_count_limit_object = int [@@ocaml.doc ""]
 type nonrec next_token = string [@@ocaml.doc ""]
 
 type nonrec merge_shards_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   adjacent_shard_to_merge : shard_id;
       [@ocaml.doc "The shard ID of the adjacent shard for the merge.\n"]
@@ -1067,6 +1210,7 @@ type nonrec list_tags_for_stream_output = {
 type nonrec list_tags_for_stream_input_limit = int [@@ocaml.doc ""]
 
 type nonrec list_tags_for_stream_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   limit : list_tags_for_stream_input_limit option;
       [@ocaml.doc
@@ -1088,6 +1232,7 @@ type nonrec list_tags_for_resource_output = {
 [@@ocaml.doc ""]
 
 type nonrec list_tags_for_resource_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   resource_ar_n : resource_ar_n;
       [@ocaml.doc
         "The Amazon Resource Name (ARN) of the Kinesis resource for which to list tags.\n"]
@@ -1148,6 +1293,7 @@ type nonrec list_stream_consumers_output = {
 type nonrec list_stream_consumers_input_limit = int [@@ocaml.doc ""]
 
 type nonrec list_stream_consumers_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_creation_timestamp : timestamp option;
       [@ocaml.doc
         "Specify this input parameter to distinguish data streams that have the same name. For \
@@ -1220,6 +1366,7 @@ type nonrec list_shards_output = {
 type nonrec list_shards_input_limit = int [@@ocaml.doc ""]
 
 type nonrec list_shards_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   shard_filter : shard_filter option;
       [@ocaml.doc
@@ -1298,6 +1445,7 @@ type nonrec list_shards_input = {
 [@@ocaml.doc ""]
 
 type nonrec increase_stream_retention_period_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   retention_period_hours : retention_period_hours;
       [@ocaml.doc
@@ -1316,6 +1464,7 @@ type nonrec get_shard_iterator_output = {
 [@@ocaml.doc "Represents the output for [GetShardIterator].\n"]
 
 type nonrec get_shard_iterator_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   timestamp : timestamp option;
       [@ocaml.doc
@@ -1370,6 +1519,7 @@ type nonrec get_resource_policy_output = {
 [@@ocaml.doc ""]
 
 type nonrec get_resource_policy_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   resource_ar_n : resource_ar_n;
       [@ocaml.doc "The Amazon Resource Name (ARN) of the data stream or consumer.\n"]
 }
@@ -1403,6 +1553,7 @@ type nonrec get_records_output = {
 type nonrec get_records_input_limit = int [@@ocaml.doc ""]
 
 type nonrec get_records_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   limit : get_records_input_limit option;
       [@ocaml.doc
@@ -1433,6 +1584,7 @@ type nonrec enhanced_monitoring_output = {
   "Represents the output for [EnableEnhancedMonitoring] and [DisableEnhancedMonitoring].\n"]
 
 type nonrec enable_enhanced_monitoring_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   shard_level_metrics : metrics_name_list;
       [@ocaml.doc
@@ -1476,6 +1628,7 @@ type nonrec enable_enhanced_monitoring_input = {
 [@@ocaml.doc "Represents the input for [EnableEnhancedMonitoring].\n"]
 
 type nonrec disable_enhanced_monitoring_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   shard_level_metrics : metrics_name_list;
       [@ocaml.doc
@@ -1526,6 +1679,7 @@ type nonrec describe_stream_summary_output = {
 [@@ocaml.doc ""]
 
 type nonrec describe_stream_summary_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   stream_name : stream_name option; [@ocaml.doc "The name of the stream to describe.\n"]
 }
@@ -1560,6 +1714,7 @@ type nonrec describe_stream_consumer_output = {
 [@@ocaml.doc ""]
 
 type nonrec describe_stream_consumer_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   consumer_ar_n : consumer_ar_n option;
       [@ocaml.doc "The ARN returned by Kinesis Data Streams when you registered the consumer.\n"]
   consumer_name : consumer_name option; [@ocaml.doc "The name that you gave to the consumer.\n"]
@@ -1583,6 +1738,7 @@ type nonrec describe_stream_output = {
 type nonrec describe_stream_input_limit = int [@@ocaml.doc ""]
 
 type nonrec describe_stream_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   exclusive_start_shard_id : shard_id option;
       [@ocaml.doc
@@ -1613,7 +1769,18 @@ type nonrec describe_limits_output = {
 
 type nonrec describe_limits_input = unit [@@ocaml.doc ""]
 
+type nonrec describe_account_settings_output = {
+  minimum_throughput_billing_commitment : minimum_throughput_billing_commitment_output option;
+      [@ocaml.doc
+        "The current configuration of the minimum throughput billing commitment for your Amazon \
+         Web Services account.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_account_settings_input = unit [@@ocaml.doc ""]
+
 type nonrec deregister_stream_consumer_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   consumer_ar_n : consumer_ar_n option;
       [@ocaml.doc
         "The ARN returned by Kinesis Data Streams when you registered the consumer. If you don't \
@@ -1632,6 +1799,7 @@ type nonrec deregister_stream_consumer_input = {
 [@@ocaml.doc ""]
 
 type nonrec delete_stream_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   enforce_consumer_deletion : boolean_object option;
       [@ocaml.doc
@@ -1642,12 +1810,14 @@ type nonrec delete_stream_input = {
 [@@ocaml.doc "Represents the input for [DeleteStream].\n"]
 
 type nonrec delete_resource_policy_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   resource_ar_n : resource_ar_n;
       [@ocaml.doc "The Amazon Resource Name (ARN) of the data stream or consumer.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec decrease_stream_retention_period_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   retention_period_hours : retention_period_hours;
       [@ocaml.doc
@@ -1658,6 +1828,15 @@ type nonrec decrease_stream_retention_period_input = {
 [@@ocaml.doc "Represents the input for [DecreaseStreamRetentionPeriod].\n"]
 
 type nonrec create_stream_input = {
+  max_record_size_in_ki_b : max_record_size_in_ki_b option;
+      [@ocaml.doc
+        "The maximum record size of a single record in kibibyte (KiB) that you can write to, and \
+         read from a stream.\n"]
+  warm_throughput_mi_bps : natural_integer_object option;
+      [@ocaml.doc
+        "The target warm throughput in MB/s that the stream should be scaled to handle. This \
+         represents the throughput capacity that will be immediately available for write \
+         operations.\n"]
   tags : tag_map option;
       [@ocaml.doc
         "A set of up to 50 key-value pairs to use to create the tags. A tag consists of a required \
@@ -1682,6 +1861,7 @@ type nonrec create_stream_input = {
 [@@ocaml.doc "Represents the input for [CreateStream].\n"]
 
 type nonrec add_tags_to_stream_input = {
+  stream_id : stream_id option; [@ocaml.doc "Not Implemented. Reserved for future use.\n"]
   stream_ar_n : stream_ar_n option; [@ocaml.doc "The ARN of the stream.\n"]
   tags : tag_map;
       [@ocaml.doc

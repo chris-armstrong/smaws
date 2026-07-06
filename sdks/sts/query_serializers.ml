@@ -1,5 +1,18 @@
 open Types
 
+let web_identity_token_type_to_query path v =
+  Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
+
+let web_identity_token_duration_seconds_type_to_query path v =
+  Smaws_Lib.Protocols.AwsQuery.Serialize.int_field path v
+
+let web_identity_token_audience_string_type_to_query path v =
+  Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
+
+let web_identity_token_audience_list_type_to_query path xs =
+  Smaws_Lib.Protocols.AwsQuery.Serialize.list_to_query "member"
+    web_identity_token_audience_string_type_to_query path xs
+
 let web_identity_subject_type_to_query path v =
   Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
 
@@ -10,6 +23,7 @@ let url_type_to_query path v = Smaws_Lib.Protocols.AwsQuery.Serialize.string_fie
 let unrestricted_session_policy_document_type_to_query path v =
   Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
 
+let trade_in_token_type_to_query path v = Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
 let token_type_to_query path v = Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
 let token_code_type_to_query path v = Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
 let tag_value_type_to_query path v = Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
@@ -64,6 +78,8 @@ let non_negative_integer_type_to_query path v =
 let malformed_policy_document_message_to_query path v =
   Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
 
+let jwt_algorithm_type_to_query path v = Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
+
 let invalid_identity_token_message_to_query path v =
   Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
 
@@ -78,6 +94,9 @@ let idp_communication_error_message_to_query path v =
 
 let federated_id_type_to_query path v = Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
 let external_id_type_to_query path v = Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
+
+let expired_trade_in_token_exception_message_to_query path v =
+  Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
 
 let expired_identity_token_message_to_query path v =
   Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
@@ -112,6 +131,19 @@ let target_principal_type_to_query path v =
 
 let subject_type_to_query path v = Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
 let subject_to_query path v = Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
+
+let session_duration_escalation_exception2_to_query path v =
+  Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
+
+let session_duration_escalation_exception_to_query path (x : session_duration_escalation_exception)
+    =
+  List.concat
+    [
+      (match x.message with
+      | None -> []
+      | Some v -> session_duration_escalation_exception2_to_query (List.append path [ "message" ]) v);
+    ]
+
 let saml_assertion_type_to_query path v = Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
 
 let root_duration_seconds_type_to_query path v =
@@ -147,6 +179,20 @@ let packed_policy_too_large_exception_to_query path (x : packed_policy_too_large
       | Some v -> packed_policy_too_large_message_to_query (List.append path [ "message" ]) v);
     ]
 
+let outbound_web_identity_federation_disabled_exception2_to_query path v =
+  Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
+
+let outbound_web_identity_federation_disabled_exception_to_query path
+    (x : outbound_web_identity_federation_disabled_exception) =
+  List.concat
+    [
+      (match x.message with
+      | None -> []
+      | Some v ->
+          outbound_web_identity_federation_disabled_exception2_to_query
+            (List.append path [ "message" ]) v);
+    ]
+
 let name_qualifier_to_query path v = Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
 
 let malformed_policy_document_exception_to_query path (x : malformed_policy_document_exception) =
@@ -155,6 +201,17 @@ let malformed_policy_document_exception_to_query path (x : malformed_policy_docu
       (match x.message with
       | None -> []
       | Some v -> malformed_policy_document_message_to_query (List.append path [ "message" ]) v);
+    ]
+
+let jwt_payload_size_exceeded_exception2_to_query path v =
+  Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
+
+let jwt_payload_size_exceeded_exception_to_query path (x : jwt_payload_size_exceeded_exception) =
+  List.concat
+    [
+      (match x.message with
+      | None -> []
+      | Some v -> jwt_payload_size_exceeded_exception2_to_query (List.append path [ "message" ]) v);
     ]
 
 let issuer_to_query path v = Smaws_Lib.Protocols.AwsQuery.Serialize.string_field path v
@@ -190,6 +247,33 @@ let idp_communication_error_exception_to_query path (x : idp_communication_error
       (match x.message with
       | None -> []
       | Some v -> idp_communication_error_message_to_query (List.append path [ "message" ]) v);
+    ]
+
+let get_web_identity_token_response_to_query path (x : get_web_identity_token_response) =
+  List.concat
+    [
+      (match x.expiration with
+      | None -> []
+      | Some v -> date_type_to_query (List.append path [ "Expiration" ]) v);
+      (match x.web_identity_token with
+      | None -> []
+      | Some v -> web_identity_token_type_to_query (List.append path [ "WebIdentityToken" ]) v);
+    ]
+
+let get_web_identity_token_request_to_query path (x : get_web_identity_token_request) =
+  List.concat
+    [
+      (match x.tags with
+      | None -> []
+      | Some v -> tag_list_type_to_query (List.append path [ "Tags" ]) v);
+      jwt_algorithm_type_to_query (List.append path [ "SigningAlgorithm" ]) x.signing_algorithm;
+      (match x.duration_seconds with
+      | None -> []
+      | Some v ->
+          web_identity_token_duration_seconds_type_to_query
+            (List.append path [ "DurationSeconds" ])
+            v);
+      web_identity_token_audience_list_type_to_query (List.append path [ "Audience" ]) x.audience;
     ]
 
 let credentials_to_query path (x : credentials) =
@@ -260,6 +344,33 @@ let get_federation_token_request_to_query path (x : get_federation_token_request
       | None -> []
       | Some v -> session_policy_document_type_to_query (List.append path [ "Policy" ]) v);
       user_name_type_to_query (List.append path [ "Name" ]) x.name;
+    ]
+
+let get_delegated_access_token_response_to_query path (x : get_delegated_access_token_response) =
+  List.concat
+    [
+      (match x.assumed_principal with
+      | None -> []
+      | Some v -> arn_type_to_query (List.append path [ "AssumedPrincipal" ]) v);
+      (match x.packed_policy_size with
+      | None -> []
+      | Some v -> non_negative_integer_type_to_query (List.append path [ "PackedPolicySize" ]) v);
+      (match x.credentials with
+      | None -> []
+      | Some v -> credentials_to_query (List.append path [ "Credentials" ]) v);
+    ]
+
+let get_delegated_access_token_request_to_query path (x : get_delegated_access_token_request) =
+  List.concat
+    [ trade_in_token_type_to_query (List.append path [ "TradeInToken" ]) x.trade_in_token ]
+
+let expired_trade_in_token_exception_to_query path (x : expired_trade_in_token_exception) =
+  List.concat
+    [
+      (match x.message with
+      | None -> []
+      | Some v ->
+          expired_trade_in_token_exception_message_to_query (List.append path [ "message" ]) v);
     ]
 
 let get_caller_identity_response_to_query path (x : get_caller_identity_response) =

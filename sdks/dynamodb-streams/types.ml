@@ -163,8 +163,8 @@ type nonrec stream_record = {
   approximate_creation_date_time : date option;
       [@ocaml.doc
         "The approximate date and time when the stream record was created, in \
-         {{:http://www.epochconverter.com/}UNIX epoch time} format and rounded down to the closest \
-         second.\n"]
+         {{:https://www.iso.org/iso-8601-date-and-time-format.html}ISO 8601} format and rounded \
+         down to the closest second.\n"]
 }
 [@@ocaml.doc
   "A description of a single data modification that was performed on an item in a DynamoDB table.\n"]
@@ -356,6 +356,21 @@ type nonrec shard_iterator_type =
 [@@ocaml.doc ""]
 
 type nonrec shard_iterator = string [@@ocaml.doc ""]
+
+type nonrec shard_filter_type = CHILD_SHARDS [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec shard_filter = {
+  shard_id : shard_id option;
+      [@ocaml.doc
+        "Contains the [shardId] of the parent shard for which you are requesting child shards.\n\n\
+        \  {i Sample request:} \n\
+        \ "]
+  type_ : shard_filter_type option;
+      [@ocaml.doc
+        "Contains the type of filter to be applied on the [DescribeStream] API. Currently, the \
+         only value this parameter accepts is [CHILD_SHARDS].\n"]
+}
+[@@ocaml.doc "This optional field contains the filter definition for the [DescribeStream] API.\n"]
 
 type nonrec resource_not_found_exception = {
   message : error_message option;
@@ -587,6 +602,9 @@ type nonrec describe_stream_output = {
 [@@ocaml.doc "Represents the output of a [DescribeStream] operation.\n"]
 
 type nonrec describe_stream_input = {
+  shard_filter : shard_filter option;
+      [@ocaml.doc
+        "This optional field contains the filter definition for the [DescribeStream] API.\n"]
   exclusive_start_shard_id : shard_id option;
       [@ocaml.doc
         "The shard ID of the first item that this operation will evaluate. Use the value that was \

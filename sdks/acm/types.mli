@@ -1,3 +1,200 @@
+type nonrec string_ = string [@@ocaml.doc ""]
+
+type nonrec domain_component_list = string_ list [@@ocaml.doc ""]
+
+type nonrec custom_attribute = {
+  value : string_ option;
+      [@ocaml.doc "Specifies the attribute value of relative distinguished name (RDN).\n"]
+  object_identifier : string_ option;
+      [@ocaml.doc
+        "Specifies the object identifier (OID) of the attribute type of the relative distinguished \
+         name (RDN).\n"]
+}
+[@@ocaml.doc "Defines the X.500 relative distinguished name (RDN).\n"]
+
+type nonrec custom_attribute_list = custom_attribute list [@@ocaml.doc ""]
+
+type nonrec distinguished_name = {
+  title : string_ option; [@ocaml.doc "The title attribute.\n"]
+  surname : string_ option; [@ocaml.doc "The surname attribute.\n"]
+  state : string_ option; [@ocaml.doc "The state or province (ST) attribute.\n"]
+  serial_number : string_ option; [@ocaml.doc "The serial number attribute.\n"]
+  pseudonym : string_ option; [@ocaml.doc "The pseudonym attribute.\n"]
+  organizational_unit : string_ option; [@ocaml.doc "The organizational unit (OU) attribute.\n"]
+  organization : string_ option; [@ocaml.doc "The organization (O) attribute.\n"]
+  locality : string_ option; [@ocaml.doc "The locality (L) attribute.\n"]
+  initials : string_ option; [@ocaml.doc "The initials attribute.\n"]
+  given_name : string_ option; [@ocaml.doc "The given name attribute.\n"]
+  generation_qualifier : string_ option; [@ocaml.doc "The generation qualifier attribute.\n"]
+  distinguished_name_qualifier : string_ option;
+      [@ocaml.doc "The distinguished name qualifier attribute.\n"]
+  custom_attributes : custom_attribute_list option;
+      [@ocaml.doc
+        "A list of custom attributes in the distinguished name. Each custom attribute contains an \
+         object identifier (OID) and its corresponding value.\n"]
+  country : string_ option; [@ocaml.doc "The country (C) attribute.\n"]
+  domain_components : domain_component_list option;
+      [@ocaml.doc "The domain component attributes.\n"]
+  common_name : string_ option; [@ocaml.doc "The common name (CN) attribute.\n"]
+}
+[@@ocaml.doc "Contains X.500 distinguished name information.\n"]
+
+type nonrec other_name = {
+  value : string_ option; [@ocaml.doc "Specifies an OID value.\n"]
+  object_identifier : string_ option; [@ocaml.doc "Specifies an OID.\n"]
+}
+[@@ocaml.doc
+  "Defines a custom ASN.1 X.400 [GeneralName] using an object identifier (OID) and value. For more \
+   information, see NIST's definition of \
+   {{:https://csrc.nist.gov/glossary/term/Object_Identifier}Object Identifier (OID)}.\n"]
+
+type nonrec general_name =
+  | UniformResourceIdentifier of string_ [@ocaml.doc "Represents [GeneralName] as a URI.\n"]
+  | Rfc822Name of string_
+      [@ocaml.doc
+        "Represents [GeneralName] as an {{:https://datatracker.ietf.org/doc/html/rfc822}RFC 822} \
+         email address.\n"]
+  | RegisteredId of string_ [@ocaml.doc "Represents [GeneralName] as an object identifier (OID).\n"]
+  | OtherName of other_name [@ocaml.doc "Represents [GeneralName] using an [OtherName] object.\n"]
+  | IpAddress of string_ [@ocaml.doc "Represents [GeneralName] as an IPv4 or IPv6 address.\n"]
+  | DnsName of string_ [@ocaml.doc "Represents [GeneralName] as a DNS name.\n"]
+  | DirectoryName of distinguished_name
+      [@ocaml.doc
+        "Contains information about the certificate subject. The [Subject] field in the \
+         certificate identifies the entity that owns or controls the public key in the \
+         certificate. The entity can be a user, computer, device, or service. The [Subject] must \
+         contain an X.500 distinguished name (DN). A DN is a sequence of relative distinguished \
+         names (RDNs). The RDNs are separated by commas in the certificate.\n"]
+[@@ocaml.doc
+  "Describes an ASN.1 X.400 [GeneralName] as defined in \
+   {{:https://datatracker.ietf.org/doc/html/rfc5280}RFC 5280}. Only one of the following naming \
+   options should be provided.\n"]
+
+type nonrec general_name_list = general_name list [@@ocaml.doc ""]
+
+type nonrec extended_key_usage_name =
+  | CUSTOM [@ocaml.doc ""]
+  | NONE [@ocaml.doc ""]
+  | ANY [@ocaml.doc ""]
+  | IPSEC_USER [@ocaml.doc ""]
+  | IPSEC_TUNNEL [@ocaml.doc ""]
+  | IPSEC_END_SYSTEM [@ocaml.doc ""]
+  | OCSP_SIGNING [@ocaml.doc ""]
+  | TIME_STAMPING [@ocaml.doc ""]
+  | EMAIL_PROTECTION [@ocaml.doc ""]
+  | CODE_SIGNING [@ocaml.doc ""]
+  | TLS_WEB_CLIENT_AUTHENTICATION [@ocaml.doc ""]
+  | TLS_WEB_SERVER_AUTHENTICATION [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec extended_key_usage_names = extended_key_usage_name list [@@ocaml.doc ""]
+
+type nonrec key_algorithm =
+  | EC_secp521r1 [@ocaml.doc ""]
+  | EC_secp384r1 [@ocaml.doc ""]
+  | EC_prime256v1 [@ocaml.doc ""]
+  | RSA_4096 [@ocaml.doc ""]
+  | RSA_3072 [@ocaml.doc ""]
+  | RSA_2048 [@ocaml.doc ""]
+  | RSA_1024 [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec key_usage_name =
+  | CUSTOM [@ocaml.doc ""]
+  | ANY [@ocaml.doc ""]
+  | DECIPHER_ONLY [@ocaml.doc ""]
+  | ENCHIPER_ONLY [@ocaml.doc ""]
+  | CRL_SIGNING [@ocaml.doc ""]
+  | CERTIFICATE_SIGNING [@ocaml.doc ""]
+  | KEY_AGREEMENT [@ocaml.doc ""]
+  | DATA_ENCIPHERMENT [@ocaml.doc ""]
+  | KEY_ENCIPHERMENT [@ocaml.doc ""]
+  | NON_REPUDATION [@ocaml.doc ""]
+  | DIGITAL_SIGNATURE [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec key_usage_names = key_usage_name list [@@ocaml.doc ""]
+
+type nonrec serial_number = string [@@ocaml.doc ""]
+
+type nonrec t_stamp = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec x509_attributes = {
+  not_before : t_stamp option; [@ocaml.doc "The time before which the certificate is not valid.\n"]
+  not_after : t_stamp option; [@ocaml.doc "The time after which the certificate is not valid.\n"]
+  serial_number : serial_number option;
+      [@ocaml.doc "The serial number assigned by the certificate authority.\n"]
+  key_usages : key_usage_names option;
+      [@ocaml.doc
+        "A list of Key Usage X.509 v3 extension objects. Each object is a string value that \
+         identifies the purpose of the public key contained in the certificate. Possible extension \
+         values include DIGITAL_SIGNATURE, KEY_ENCHIPHERMENT, NON_REPUDIATION, and more.\n"]
+  key_algorithm : key_algorithm option;
+      [@ocaml.doc "The algorithm that was used to generate the public-private key pair.\n"]
+  extended_key_usages : extended_key_usage_names option;
+      [@ocaml.doc
+        "Contains a list of Extended Key Usage X.509 v3 extension objects. Each object specifies a \
+         purpose for which the certificate public key can be used and consists of a name and an \
+         object identifier (OID). \n"]
+  subject_alternative_names : general_name_list option;
+      [@ocaml.doc
+        "One or more domain names (subject alternative names) included in the certificate. This \
+         list contains the domain names that are bound to the public key that is contained in the \
+         certificate. The subject alternative names include the canonical domain name (CN) of the \
+         certificate and additional domain names that can be used to connect to the website. \n"]
+  subject : distinguished_name option;
+      [@ocaml.doc "The distinguished name of the certificate subject.\n"]
+  issuer : distinguished_name option;
+      [@ocaml.doc "The distinguished name of the certificate issuer.\n"]
+}
+[@@ocaml.doc "Contains X.509 certificate attributes extracted from the certificate.\n"]
+
+type nonrec filter_string = string [@@ocaml.doc ""]
+
+type nonrec comparison_operator = EQUALS [@ocaml.doc ""] | CONTAINS [@ocaml.doc ""]
+[@@ocaml.doc
+  "The comparison operator to use for string filters. Valid values are [CONTAINS] and [EQUALS].\n"]
+
+type nonrec common_name_filter = {
+  comparison_operator : comparison_operator; [@ocaml.doc "The comparison operator to use.\n"]
+  value : filter_string; [@ocaml.doc "The value to match against.\n"]
+}
+[@@ocaml.doc "Filters certificates by common name.\n"]
+
+type nonrec subject_filter =
+  | CommonName of common_name_filter [@ocaml.doc "Filter by common name in the subject.\n"]
+[@@ocaml.doc "Filters certificates by subject attributes.\n"]
+
+type nonrec dns_name_filter = {
+  comparison_operator : comparison_operator; [@ocaml.doc "The comparison operator to use.\n"]
+  value : filter_string; [@ocaml.doc "The DNS name value to match against.\n"]
+}
+[@@ocaml.doc "Filters certificates by DNS name.\n"]
+
+type nonrec subject_alternative_name_filter =
+  | DnsName of dns_name_filter [@ocaml.doc "Filter by DNS name in subject alternative names.\n"]
+[@@ocaml.doc "Filters certificates by subject alternative name attributes.\n"]
+
+type nonrec timestamp_range = {
+  end_ : t_stamp option; [@ocaml.doc "The end of the time range. This value is inclusive.\n"]
+  start : t_stamp option; [@ocaml.doc "The start of the time range. This value is inclusive.\n"]
+}
+[@@ocaml.doc "Specifies a time range for filtering certificates.\n"]
+
+type nonrec x509_attribute_filter =
+  | NotBefore of timestamp_range
+      [@ocaml.doc "Filter by certificate validity start date. The start date is inclusive.\n"]
+  | NotAfter of timestamp_range
+      [@ocaml.doc "Filter by certificate expiration date. The start date is inclusive.\n"]
+  | SerialNumber of serial_number [@ocaml.doc "Filter by serial number.\n"]
+  | KeyAlgorithm of key_algorithm [@ocaml.doc "Filter by key algorithm.\n"]
+  | KeyUsage of key_usage_name [@ocaml.doc "Filter by key usage.\n"]
+  | ExtendedKeyUsage of extended_key_usage_name [@ocaml.doc "Filter by extended key usage.\n"]
+  | SubjectAlternativeName of subject_alternative_name_filter
+      [@ocaml.doc "Filter by subject alternative names.\n"]
+  | Subject of subject_filter [@ocaml.doc "Filter by certificate subject.\n"]
+[@@ocaml.doc "Filters certificates by X.509 attributes.\n"]
+
 type nonrec validation_method = HTTP [@ocaml.doc ""] | DNS [@ocaml.doc ""] | EMAIL [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
@@ -6,8 +203,6 @@ type nonrec validation_exception_message = string [@@ocaml.doc ""]
 type nonrec validation_exception = { message : validation_exception_message option [@ocaml.doc ""] }
 [@@ocaml.doc
   "The supplied input failed to satisfy constraints of an Amazon Web Services service.\n"]
-
-type nonrec string_ = string [@@ocaml.doc ""]
 
 type nonrec validation_email_list = string_ list [@@ocaml.doc ""]
 
@@ -24,19 +219,18 @@ type nonrec certificate_export = DISABLED [@ocaml.doc ""] | ENABLED [@ocaml.doc 
 type nonrec certificate_options = {
   export_ : certificate_export option;
       [@ocaml.doc
-        "You can opt in to allow the export of your certificates by specifying [ENABLED].\n"]
+        "You can opt in to allow the export of your certificates by specifying [ENABLED]. You \
+         cannot update the value of [Export] after the the certificate is created.\n"]
   certificate_transparency_logging_preference : certificate_transparency_logging_preference option;
       [@ocaml.doc
-        "You can opt out of certificate transparency logging by specifying the [DISABLED] option. \
-         Opt in by specifying [ENABLED]. \n"]
+        "This parameter has been deprecated. Certificate transparency logging opt-out is no longer \
+         available. All public certificates are recorded in a certificate transparency log.\n"]
 }
 [@@ocaml.doc
   "Structure that contains options for your certificate. You can use this structure to specify \
-   whether to opt in to or out of certificate transparency logging and export your certificate. \n\n\
-  \ Some browsers require that public certificates issued for your domain be recorded in a log. \
-   Certificates that are not logged typically generate a browser error. Transparency makes it \
-   possible for you to detect SSL/TLS certificates that have been mistakenly or maliciously issued \
-   for your domain. For general information, see \
+   whether to export your certificate.\n\n\
+  \ Certificate transparency logging opt-out is no longer available. All public certificates are \
+   recorded in a certificate transparency log. For general information, see \
    {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-concepts.html#concept-transparency}Certificate \
    Transparency Logging}.\n\
   \ \n\
@@ -49,11 +243,12 @@ type nonrec certificate_options = {
 type nonrec update_certificate_options_request = {
   options : certificate_options;
       [@ocaml.doc
-        "Use to update the options for your certificate. Currently, you can specify whether to add \
-         your certificate to a transparency log or export your certificate. Certificate \
-         transparency makes it possible to detect SSL/TLS certificates that have been mistakenly \
-         or maliciously issued. Certificates that have not been logged typically produce an error \
-         message in a browser. \n"]
+        "Use to update the options for your certificate. Currently, you can specify whether to \
+         export your certificate. Certificate transparency logging opt-out is no longer available. \
+         All public certificates are recorded in a certificate transparency log. For more \
+         information, see \
+         {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-concepts.html#concept-transparency}Certificate \
+         Transparency Logging}.\n"]
   certificate_arn : arn;
       [@ocaml.doc
         "ARN of the requested certificate to update. This must be of the form:\n\n\
@@ -80,20 +275,136 @@ type nonrec invalid_state_exception = { message : string_ option [@ocaml.doc ""]
 type nonrec invalid_arn_exception = { message : string_ option [@ocaml.doc ""] }
 [@@ocaml.doc "The requested Amazon Resource Name (ARN) does not refer to an existing resource.\n"]
 
-type nonrec too_many_tags_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc "The request contains too many tags. Try the request again with fewer tags.\n"]
+type nonrec acme_endpoint_arn = string [@@ocaml.doc ""]
+
+type nonrec acme_authorization_behavior = PRE_APPROVED [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec acme_contact = NOT_REQUIRED [@ocaml.doc ""] | REQUIRED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec public_key_algorithm =
+  | EC_SECP384_R1 [@ocaml.doc ""]
+  | EC_PRIME256_V1 [@ocaml.doc ""]
+  | RSA_2048 [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec public_key_algorithm_list = public_key_algorithm list [@@ocaml.doc ""]
+
+type nonrec public_certificate_authority = {
+  allowed_key_algorithms : public_key_algorithm_list option;
+      [@ocaml.doc
+        "The key algorithms allowed for certificates issued by this certificate authority.\n"]
+}
+[@@ocaml.doc "Configuration for a public certificate authority.\n"]
+
+type nonrec certificate_authority =
+  | PublicCertificateAuthority of public_certificate_authority
+      [@ocaml.doc "Configuration for using a public certificate authority.\n"]
+[@@ocaml.doc "Defines the certificate authority to use for an ACME endpoint.\n"]
+
+type nonrec update_acme_endpoint_request = {
+  certificate_authority : certificate_authority option;
+      [@ocaml.doc "The updated certificate authority configuration.\n"]
+  contact : acme_contact option; [@ocaml.doc "The updated contact requirement.\n"]
+  authorization_behavior : acme_authorization_behavior option;
+      [@ocaml.doc "The updated authorization behavior.\n"]
+  acme_endpoint_arn : acme_endpoint_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint to update.\n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec availability_error_message = string [@@ocaml.doc ""]
 
-type nonrec throttling_exception = { message : availability_error_message option [@ocaml.doc ""] }
+type nonrec coral_availability_throttling_reason = string [@@ocaml.doc ""]
+
+type nonrec coral_availability_throttled_resource = string [@@ocaml.doc ""]
+
+type nonrec throttling_reason = {
+  resource : coral_availability_throttled_resource option;
+      [@ocaml.doc "The resource that causes the request to be throttled.\n"]
+  reason : coral_availability_throttling_reason option;
+      [@ocaml.doc "A description of why a request was throttled.\n"]
+}
+[@@ocaml.doc "A description of why a request was throttled.\n"]
+
+type nonrec throttling_reason_list = throttling_reason list [@@ocaml.doc ""]
+
+type nonrec throttling_exception = {
+  throttling_reasons : throttling_reason_list option;
+      [@ocaml.doc "One or more reasons why the request was throttled.\n"]
+  message : availability_error_message option; [@ocaml.doc ""]
+}
 [@@ocaml.doc "The request was denied because it exceeded a quota.\n"]
 
-type nonrec tag_value = string [@@ocaml.doc ""]
+type nonrec internal_server_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The request processing has failed because of an unknown error, exception, or failure.\n"]
 
-type nonrec tag_policy_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc "A specified tag did not comply with an existing tag policy and was rejected.\n"]
+type nonrec conflict_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "You are trying to update a resource or configuration that is already being created or updated. \
+   Wait for the previous operation to finish and try again.\n"]
+
+type nonrec service_error_message = string [@@ocaml.doc ""]
+
+type nonrec access_denied_exception = { message : service_error_message option [@ocaml.doc ""] }
+[@@ocaml.doc "You do not have access required to perform this action.\n"]
+
+type nonrec acme_domain_validation_arn = string [@@ocaml.doc ""]
+
+type nonrec domain_scope_option = DISABLED [@ocaml.doc ""] | ENABLED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec domain_scope = {
+  wildcards : domain_scope_option option;
+      [@ocaml.doc "Whether validation applies to wildcard domains.\n"]
+  subdomains : domain_scope_option option;
+      [@ocaml.doc "Whether validation applies to subdomains.\n"]
+  exact_domain : domain_scope_option option;
+      [@ocaml.doc "Whether validation applies to the exact domain.\n"]
+}
+[@@ocaml.doc "Specifies the scope of domain validation.\n"]
+
+type nonrec hosted_zone_id = string [@@ocaml.doc ""]
+
+type nonrec dns_prevalidation_options = {
+  hosted_zone_id : hosted_zone_id option;
+      [@ocaml.doc "The Route 53 hosted zone ID for DNS validation.\n"]
+  domain_scope : domain_scope option;
+      [@ocaml.doc "The scope of domains covered by this prevalidation.\n"]
+}
+[@@ocaml.doc "DNS prevalidation options for domain validation.\n"]
+
+type nonrec prevalidation_options =
+  | DnsPrevalidation of dns_prevalidation_options [@ocaml.doc "DNS-based prevalidation options.\n"]
+[@@ocaml.doc "Specifies prevalidation options for domain validation.\n"]
+
+type nonrec update_acme_domain_validation_request = {
+  prevalidation_options : prevalidation_options option;
+      [@ocaml.doc "The updated prevalidation options.\n"]
+  acme_domain_validation_arn : acme_domain_validation_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME domain validation to update.\n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec tag_key = string [@@ocaml.doc ""]
+
+type nonrec tag_key_list = tag_key list [@@ocaml.doc ""]
+
+type nonrec untag_resource_request = {
+  tag_keys : tag_key_list; [@ocaml.doc "The key of each tag to remove.\n"]
+  resource_arn : arn;
+      [@ocaml.doc "The ARN of the ACM resource from which the tag is to be removed.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec too_many_tags_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc "The request contains too many tags. Try the request again with fewer tags.\n"]
+
+type nonrec time_type = DAYS [@ocaml.doc ""] | HOURS [@ocaml.doc ""] | MINUTES [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec tag_value = string [@@ocaml.doc ""]
 
 type nonrec tag = {
   value : tag_value option; [@ocaml.doc "The value of the tag.\n"]
@@ -103,13 +414,251 @@ type nonrec tag = {
 
 type nonrec tag_list = tag list [@@ocaml.doc ""]
 
-type nonrec t_stamp = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+type nonrec tag_resource_request = {
+  tags : tag_list; [@ocaml.doc "The key-value pair that defines the tag to apply.\n"]
+  resource_arn : arn; [@ocaml.doc "The ARN of the ACM resource to which the tag is to be applied.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec service_quota_exceeded_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc "A service quota has been exceeded.\n"]
+
+type nonrec tag_policy_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc "A specified tag did not comply with an existing tag policy and was rejected.\n"]
 
 type nonrec sort_order = DESCENDING [@ocaml.doc ""] | ASCENDING [@ocaml.doc ""] [@@ocaml.doc ""]
 
 type nonrec sort_by = CREATED_AT [@ocaml.doc ""] [@@ocaml.doc ""]
 
-type nonrec service_error_message = string [@@ocaml.doc ""]
+type nonrec search_max_results = int [@@ocaml.doc ""]
+
+type nonrec search_certificates_sort_order =
+  | DESCENDING [@ocaml.doc ""]
+  | ASCENDING [@ocaml.doc ""]
+[@@ocaml.doc "The order to sort search results.\n"]
+
+type nonrec search_certificates_sort_by =
+  | CERTIFICATE_KEY_PAIR_ORIGIN [@ocaml.doc ""]
+  | ACME_ACCOUNT_ID [@ocaml.doc ""]
+  | ACME_ENDPOINT_ARN [@ocaml.doc ""]
+  | IMPORTED_AT [@ocaml.doc ""]
+  | VALIDATION_METHOD [@ocaml.doc ""]
+  | EXPORT_OPTION [@ocaml.doc ""]
+  | MANAGED_BY [@ocaml.doc ""]
+  | ISSUED_AT [@ocaml.doc ""]
+  | RENEWAL_ELIGIBILITY [@ocaml.doc ""]
+  | REVOKED_AT [@ocaml.doc ""]
+  | COMMON_NAME [@ocaml.doc ""]
+  | CERTIFICATE_ARN [@ocaml.doc ""]
+  | TYPE [@ocaml.doc ""]
+  | KEY_ALGORITHM [@ocaml.doc ""]
+  | NOT_BEFORE [@ocaml.doc ""]
+  | IN_USE [@ocaml.doc ""]
+  | EXPORTED [@ocaml.doc ""]
+  | RENEWAL_STATUS [@ocaml.doc ""]
+  | STATUS [@ocaml.doc ""]
+  | NOT_AFTER [@ocaml.doc ""]
+  | CREATED_AT [@ocaml.doc ""]
+[@@ocaml.doc "The field to sort search results by.\n"]
+
+type nonrec nullable_boolean = bool [@@ocaml.doc ""]
+
+type nonrec renewal_eligibility = INELIGIBLE [@ocaml.doc ""] | ELIGIBLE [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec certificate_status =
+  | FAILED [@ocaml.doc ""]
+  | REVOKED [@ocaml.doc ""]
+  | VALIDATION_TIMED_OUT [@ocaml.doc ""]
+  | EXPIRED [@ocaml.doc ""]
+  | INACTIVE [@ocaml.doc ""]
+  | ISSUED [@ocaml.doc ""]
+  | PENDING_VALIDATION [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec renewal_status =
+  | FAILED [@ocaml.doc ""]
+  | SUCCESS [@ocaml.doc ""]
+  | PENDING_VALIDATION [@ocaml.doc ""]
+  | PENDING_AUTO_RENEWAL [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec certificate_type =
+  | PRIVATE [@ocaml.doc ""]
+  | AMAZON_ISSUED [@ocaml.doc ""]
+  | IMPORTED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec certificate_managed_by = CLOUDFRONT [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec certificate_key_pair_origin =
+  | CUSTOMER_PROVIDED [@ocaml.doc ""]
+  | ACME [@ocaml.doc ""]
+  | AWS_MANAGED [@ocaml.doc ""]
+[@@ocaml.doc "The origin of the certificate's key pair.\n"]
+
+type nonrec acme_account_id = string [@@ocaml.doc ""]
+
+type nonrec acm_certificate_metadata = {
+  acme_account_id : acme_account_id option;
+      [@ocaml.doc "The ACME account identifier associated with the certificate.\n"]
+  acme_endpoint_arn : arn option;
+      [@ocaml.doc "The ARN of the ACME endpoint used to issue the certificate.\n"]
+  certificate_key_pair_origin : certificate_key_pair_origin option;
+      [@ocaml.doc "The origin of the certificate's key pair.\n"]
+  validation_method : validation_method option;
+      [@ocaml.doc "Specifies the domain validation method.\n"]
+  managed_by : certificate_managed_by option;
+      [@ocaml.doc
+        "Identifies the Amazon Web Services service that manages the certificate issued by ACM.\n"]
+  export_option : certificate_export option;
+      [@ocaml.doc "Indicates whether the certificate can be exported.\n"]
+  type_ : certificate_type option;
+      [@ocaml.doc
+        "The source of the certificate. For certificates provided by ACM, this value is \
+         [AMAZON_ISSUED]. For certificates that you imported with [ImportCertificate], this value \
+         is [IMPORTED]. ACM does not provide \
+         {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html}managed renewal} for \
+         imported certificates. For more information about the differences between certificates \
+         that you import and those that ACM provides, see \
+         {{:https://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html}Importing \
+         Certificates} in the {i Certificate Manager User Guide}. \n"]
+  renewal_status : renewal_status option; [@ocaml.doc "The renewal status of the certificate.\n"]
+  status : certificate_status option;
+      [@ocaml.doc
+        "The status of the certificate.\n\n\
+        \ A certificate enters status PENDING_VALIDATION upon being requested, unless it fails for \
+         any of the reasons given in the troubleshooting topic \
+         {{:https://docs.aws.amazon.com/acm/latest/userguide/troubleshooting-failed.html}Certificate \
+         request fails}. ACM makes repeated attempts to validate a certificate for 72 hours and \
+         then times out. If a certificate shows status FAILED or VALIDATION_TIMED_OUT, delete the \
+         request, correct the issue with \
+         {{:https://docs.aws.amazon.com/acm/latest/userguide/dns-validation.html}DNS validation} \
+         or {{:https://docs.aws.amazon.com/acm/latest/userguide/email-validation.html}Email \
+         validation}, and try again. If validation succeeds, the certificate enters status ISSUED. \n\
+        \ "]
+  revoked_at : t_stamp option;
+      [@ocaml.doc
+        "The time at which the certificate was revoked. This value exists only when the \
+         certificate status is [REVOKED]. \n"]
+  renewal_eligibility : renewal_eligibility option;
+      [@ocaml.doc
+        "Specifies whether the certificate is eligible for renewal. At this time, only exported \
+         private certificates can be renewed with the [RenewCertificate] command.\n"]
+  issued_at : t_stamp option;
+      [@ocaml.doc
+        "The time at which the certificate was issued. This value exists only when the certificate \
+         type is [AMAZON_ISSUED]. \n"]
+  in_use : nullable_boolean option;
+      [@ocaml.doc
+        "Indicates whether the certificate is currently in use by an Amazon Web Services service.\n"]
+  imported_at : t_stamp option;
+      [@ocaml.doc
+        "The date and time when the certificate was imported. This value exists only when the \
+         certificate type is [IMPORTED]. \n"]
+  exported : nullable_boolean option;
+      [@ocaml.doc "Indicates whether the certificate has been exported.\n"]
+  created_at : t_stamp option; [@ocaml.doc "The time at which the certificate was requested.\n"]
+}
+[@@ocaml.doc "Contains ACM-specific metadata about a certificate.\n"]
+
+type nonrec certificate_metadata =
+  | AcmCertificateMetadata of acm_certificate_metadata
+      [@ocaml.doc "Metadata for an ACM certificate.\n"]
+[@@ocaml.doc
+  "Contains metadata about a certificate. Currently supports ACM certificate metadata.\n"]
+
+type nonrec certificate_search_result = {
+  certificate_metadata : certificate_metadata option;
+      [@ocaml.doc "ACM-specific metadata about the certificate.\n"]
+  x509_attributes : x509_attributes option;
+      [@ocaml.doc "X.509 certificate attributes such as subject, issuer, and validity period.\n"]
+  certificate_arn : arn option; [@ocaml.doc "The Amazon Resource Name (ARN) of the certificate.\n"]
+}
+[@@ocaml.doc
+  "Contains information about a certificate returned by the [SearchCertificates] action. This \
+   structure includes the certificate ARN, X.509 attributes, and ACM metadata.\n"]
+
+type nonrec certificate_search_result_list = certificate_search_result list [@@ocaml.doc ""]
+
+type nonrec next_token = string [@@ocaml.doc ""]
+
+type nonrec search_certificates_response = {
+  next_token : next_token option;
+      [@ocaml.doc
+        "When the list is truncated, this value is present and contains the value to use for the \
+         [NextToken] parameter in a subsequent pagination request.\n"]
+  results : certificate_search_result_list option;
+      [@ocaml.doc
+        "A list of certificate search results containing certificate ARNs, X.509 attributes, and \
+         ACM metadata.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec acm_certificate_metadata_filter =
+  | AcmeAccountId of acme_account_id [@ocaml.doc "Filter by ACME account identifier.\n"]
+  | AcmeEndpointArn of arn [@ocaml.doc "Filter by ACME endpoint ARN.\n"]
+  | CertificateKeyPairOrigin of certificate_key_pair_origin
+      [@ocaml.doc "Filter by certificate key pair origin.\n"]
+  | ValidationMethod of validation_method [@ocaml.doc "Filter by validation method.\n"]
+  | ManagedBy of certificate_managed_by
+      [@ocaml.doc "Filter by the entity that manages the certificate.\n"]
+  | ExportOption of certificate_export [@ocaml.doc "Filter by certificate export option.\n"]
+  | Exported of nullable_boolean
+      [@ocaml.doc "Filter by whether the certificate has been exported.\n"]
+  | InUse of nullable_boolean [@ocaml.doc "Filter by whether the certificate is in use.\n"]
+  | Type of certificate_type [@ocaml.doc "Filter by certificate type.\n"]
+  | RenewalStatus of renewal_status [@ocaml.doc "Filter by certificate renewal status.\n"]
+  | Status of certificate_status [@ocaml.doc "Filter by certificate status.\n"]
+[@@ocaml.doc "Filters certificates by ACM metadata.\n"]
+
+type nonrec certificate_filter =
+  | AcmCertificateMetadataFilter of acm_certificate_metadata_filter
+      [@ocaml.doc "Filter by ACM certificate metadata.\n"]
+  | X509AttributeFilter of x509_attribute_filter
+      [@ocaml.doc "Filter by X.509 certificate attributes.\n"]
+  | CertificateArn of arn [@ocaml.doc "Filter by certificate ARN.\n"]
+[@@ocaml.doc
+  "Defines a filter for searching certificates by ARN, X.509 attributes, or ACM metadata.\n"]
+
+type certificate_filter_statement =
+  | Filter of certificate_filter [@ocaml.doc "A single certificate filter.\n"]
+  | Not of certificate_filter_statement [@ocaml.doc "A filter statement that must not be true.\n"]
+  | Or of certificate_filter_statement_list
+      [@ocaml.doc "A list of filter statements where at least one must be true.\n"]
+  | And of certificate_filter_statement_list
+      [@ocaml.doc "A list of filter statements that must all be true.\n"]
+[@@ocaml.doc
+  "A filter statement used to search for certificates. Can contain AND, OR, NOT logical operators \
+   or a single filter.\n"]
+
+and certificate_filter_statement_list = certificate_filter_statement list [@@ocaml.doc ""]
+
+type nonrec search_certificates_request = {
+  sort_order : search_certificates_sort_order option;
+      [@ocaml.doc
+        "Specifies the order of sorted results. Valid values are ASCENDING or DESCENDING.\n"]
+  sort_by : search_certificates_sort_by option;
+      [@ocaml.doc
+        "Specifies the field to sort results by. Valid values are CREATED_AT, NOT_AFTER, STATUS, \
+         RENEWAL_STATUS, EXPORTED, IN_USE, NOT_BEFORE, KEY_ALGORITHM, TYPE, CERTIFICATE_ARN, \
+         COMMON_NAME, REVOKED_AT, RENEWAL_ELIGIBILITY, ISSUED_AT, MANAGED_BY, EXPORT_OPTION, \
+         VALIDATION_METHOD, and IMPORTED_AT.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "Use this parameter only when paginating results and only in a subsequent request after \
+         you receive a response with truncated results. Set it to the value of [NextToken] from \
+         the response you just received.\n"]
+  max_results : search_max_results option;
+      [@ocaml.doc "The maximum number of results to return in the response. Default is 100.\n"]
+  filter_statement : certificate_filter_statement option;
+      [@ocaml.doc
+        "A filter statement that defines the search criteria. You can combine multiple filters \
+         using AND, OR, and NOT logical operators to create complex queries.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec role_arn = string [@@ocaml.doc ""]
 
 type nonrec revoke_certificate_response = {
   certificate_arn : arn option;
@@ -148,13 +697,22 @@ type nonrec resource_in_use_exception = { message : string_ option [@ocaml.doc "
   "The certificate is in use by another Amazon Web Services service in the caller's account. \
    Remove the association and try again.\n"]
 
-type nonrec conflict_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "You are trying to update a resource or configuration that is already being created or updated. \
-   Wait for the previous operation to finish and try again.\n"]
+type nonrec acme_external_account_binding_arn = string [@@ocaml.doc ""]
 
-type nonrec access_denied_exception = { message : service_error_message option [@ocaml.doc ""] }
-[@@ocaml.doc "You do not have access required to perform this action.\n"]
+type nonrec revoke_acme_external_account_binding_request = {
+  acme_external_account_binding_arn : acme_external_account_binding_arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the ACME external account binding to revoke.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec revoke_acme_account_request = {
+  account_url : Smaws_Lib.Smithy_api.Types.string_;
+      [@ocaml.doc "The URL of the ACME account to revoke.\n"]
+  acme_endpoint_arn : acme_endpoint_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint.\n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec record_type = CNAME [@ocaml.doc ""] [@@ocaml.doc ""]
 
@@ -179,8 +737,7 @@ type nonrec resend_validation_email_request = {
          used to send the emails. This must be the same as the [Domain] value or a superdomain of \
          the [Domain] value. For example, if you requested a certificate for \
          [site.subdomain.example.com] and specify a {b ValidationDomain} of \
-         [subdomain.example.com], ACM sends email to the domain registrant, technical contact, and \
-         administrative contact in WHOIS and the following five addresses:\n\n\
+         [subdomain.example.com], ACM sends email to the the following five addresses:\n\n\
         \ {ul\n\
         \       {-  admin\\@subdomain.example.com\n\
         \           \n\
@@ -273,18 +830,6 @@ type nonrec domain_validation_option_list = domain_validation_option list [@@oca
 
 type nonrec pca_arn = string [@@ocaml.doc ""]
 
-type nonrec key_algorithm =
-  | EC_secp521r1 [@ocaml.doc ""]
-  | EC_secp384r1 [@ocaml.doc ""]
-  | EC_prime256v1 [@ocaml.doc ""]
-  | RSA_4096 [@ocaml.doc ""]
-  | RSA_3072 [@ocaml.doc ""]
-  | RSA_2048 [@ocaml.doc ""]
-  | RSA_1024 [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec certificate_managed_by = CLOUDFRONT [@ocaml.doc ""] [@@ocaml.doc ""]
-
 type nonrec request_certificate_request = {
   managed_by : certificate_managed_by option;
       [@ocaml.doc
@@ -300,7 +845,7 @@ type nonrec request_certificate_request = {
          to ensure that compatibility is not broken. Check the requirements for the Amazon Web \
          Services service where you plan to deploy your certificate. For more information about \
          selecting an algorithm, see \
-         {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-certificate.html#algorithms}Key \
+         {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-certificate-characteristics.html#algorithms-term}Key \
          algorithms}.\n\n\
         \  Algorithms supported for an ACM certificate request include: \n\
         \  \n\
@@ -339,13 +884,11 @@ type nonrec request_certificate_request = {
         \ "]
   options : certificate_options option;
       [@ocaml.doc
-        "You can use this parameter to specify whether to add the certificate to a certificate \
-         transparency log and export your certificate.\n\n\
-        \ Certificate transparency makes it possible to detect SSL/TLS certificates that have been \
-         mistakenly or maliciously issued. Certificates that have not been logged typically \
-         produce an error message in a browser. For more information, see \
-         {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-bestpractices.html#best-practices-transparency}Opting \
-         Out of Certificate Transparency Logging}.\n\
+        "You can use this parameter to specify whether to export your certificate.\n\n\
+        \ Certificate transparency logging opt-out is no longer available. All public certificates \
+         are recorded in a certificate transparency log. For more information, see \
+         {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-concepts.html#concept-transparency}Certificate \
+         Transparency Logging}.\n\
         \ \n\
         \  You can export public ACM certificates to use with Amazon Web Services services as well \
          as outside the Amazon Web Services Cloud. For more information, see \
@@ -421,13 +964,6 @@ type nonrec invalid_tag_exception = { message : string_ option [@ocaml.doc ""] }
 
 type nonrec invalid_parameter_exception = { message : string_ option [@ocaml.doc ""] }
 [@@ocaml.doc "An input parameter was invalid.\n"]
-
-type nonrec renewal_status =
-  | FAILED [@ocaml.doc ""]
-  | SUCCESS [@ocaml.doc ""]
-  | PENDING_VALIDATION [@ocaml.doc ""]
-  | PENDING_AUTO_RENEWAL [@ocaml.doc ""]
-[@@ocaml.doc ""]
 
 type nonrec domain_status =
   | FAILED [@ocaml.doc ""]
@@ -545,9 +1081,6 @@ type nonrec renewal_summary = {
    {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html}managed renewal} for the \
    certificate. This structure exists only when the certificate type is [AMAZON_ISSUED].\n"]
 
-type nonrec renewal_eligibility = INELIGIBLE [@ocaml.doc ""] | ELIGIBLE [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
 type nonrec renew_certificate_request = {
   certificate_arn : arn;
       [@ocaml.doc
@@ -607,13 +1140,37 @@ type nonrec private_key_blob = bytes [@@ocaml.doc ""]
 
 type nonrec private_key = string [@@ocaml.doc ""]
 
+type nonrec prevalidation_type = DNS_PREVALIDATION [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec dns_prevalidation_details = {
+  resource_record : resource_record option;
+      [@ocaml.doc "The DNS resource record to create for domain validation.\n"]
+  hosted_zone_id : hosted_zone_id option;
+      [@ocaml.doc "The Route 53 hosted zone ID for DNS validation.\n"]
+  domain_scope : domain_scope option;
+      [@ocaml.doc "The scope of domains covered by this prevalidation.\n"]
+}
+[@@ocaml.doc "DNS prevalidation details including the resource record for validation.\n"]
+
+type nonrec prevalidation_details =
+  | DnsPrevalidation of dns_prevalidation_details [@ocaml.doc "DNS-based prevalidation details.\n"]
+[@@ocaml.doc "Contains details about the prevalidation configuration.\n"]
+
 type nonrec passphrase_blob = bytes [@@ocaml.doc ""]
 
-type nonrec nullable_boolean = bool [@@ocaml.doc ""]
-
-type nonrec next_token = string [@@ocaml.doc ""]
-
 type nonrec max_items = int [@@ocaml.doc ""]
+
+type nonrec mac_key = string [@@ocaml.doc ""]
+
+type nonrec list_tags_for_resource_response = {
+  tags : tag_list option; [@ocaml.doc "The tags associated with the resource.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_tags_for_resource_request = {
+  resource_arn : arn; [@ocaml.doc "The ARN of the ACM resource for which to list tags.\n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec list_tags_for_certificate_response = {
   tags : tag_list option; [@ocaml.doc "The key-value pairs that define the applied tags.\n"]
@@ -634,56 +1191,9 @@ type nonrec list_tags_for_certificate_request = {
 }
 [@@ocaml.doc ""]
 
-type nonrec certificate_status =
-  | FAILED [@ocaml.doc ""]
-  | REVOKED [@ocaml.doc ""]
-  | VALIDATION_TIMED_OUT [@ocaml.doc ""]
-  | EXPIRED [@ocaml.doc ""]
-  | INACTIVE [@ocaml.doc ""]
-  | ISSUED [@ocaml.doc ""]
-  | PENDING_VALIDATION [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec certificate_type =
-  | PRIVATE [@ocaml.doc ""]
-  | AMAZON_ISSUED [@ocaml.doc ""]
-  | IMPORTED [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec key_usage_name =
-  | CUSTOM [@ocaml.doc ""]
-  | ANY [@ocaml.doc ""]
-  | DECIPHER_ONLY [@ocaml.doc ""]
-  | ENCHIPER_ONLY [@ocaml.doc ""]
-  | CRL_SIGNING [@ocaml.doc ""]
-  | CERTIFICATE_SIGNING [@ocaml.doc ""]
-  | KEY_AGREEMENT [@ocaml.doc ""]
-  | DATA_ENCIPHERMENT [@ocaml.doc ""]
-  | KEY_ENCIPHERMENT [@ocaml.doc ""]
-  | NON_REPUDATION [@ocaml.doc ""]
-  | DIGITAL_SIGNATURE [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec key_usage_names = key_usage_name list [@@ocaml.doc ""]
-
-type nonrec extended_key_usage_name =
-  | CUSTOM [@ocaml.doc ""]
-  | NONE [@ocaml.doc ""]
-  | ANY [@ocaml.doc ""]
-  | IPSEC_USER [@ocaml.doc ""]
-  | IPSEC_TUNNEL [@ocaml.doc ""]
-  | IPSEC_END_SYSTEM [@ocaml.doc ""]
-  | OCSP_SIGNING [@ocaml.doc ""]
-  | TIME_STAMPING [@ocaml.doc ""]
-  | EMAIL_PROTECTION [@ocaml.doc ""]
-  | CODE_SIGNING [@ocaml.doc ""]
-  | TLS_WEB_CLIENT_AUTHENTICATION [@ocaml.doc ""]
-  | TLS_WEB_SERVER_AUTHENTICATION [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec extended_key_usage_names = extended_key_usage_name list [@@ocaml.doc ""]
-
 type nonrec certificate_summary = {
+  certificate_key_pair_origin : certificate_key_pair_origin option;
+      [@ocaml.doc "The origin of the certificate's key pair.\n"]
   managed_by : certificate_managed_by option;
       [@ocaml.doc
         "Identifies the Amazon Web Services service that manages the certificate issued by ACM.\n"]
@@ -707,9 +1217,7 @@ type nonrec certificate_summary = {
         "Specifies whether the certificate is eligible for renewal. At this time, only exported \
          private certificates can be renewed with the [RenewCertificate] command.\n"]
   exported : nullable_boolean option;
-      [@ocaml.doc
-        "Indicates whether the certificate has been exported. This value exists only when the \
-         certificate type is [PRIVATE].\n"]
+      [@ocaml.doc "Indicates whether the certificate has been exported.\n"]
   in_use : nullable_boolean option;
       [@ocaml.doc
         "Indicates whether the certificate is currently in use by any Amazon Web Services resources.\n"]
@@ -753,13 +1261,13 @@ type nonrec certificate_summary = {
   has_additional_subject_alternative_names : nullable_boolean option;
       [@ocaml.doc
         "When called by \
-         {{:https://docs.aws.amazon.com/acm/latestAPIReference/API_ListCertificates.html}ListCertificates}, \
+         {{:https://docs.aws.amazon.com/acm/latest/APIReference/API_ListCertificates.html}ListCertificates}, \
          indicates whether the full list of subject alternative names has been included in the \
          response. If false, the response includes all of the subject alternative names included \
          in the certificate. If true, the response only includes the first 100 subject alternative \
          names included in the certificate. To display the full list of subject alternative names, \
          use \
-         {{:https://docs.aws.amazon.com/acm/latestAPIReference/API_DescribeCertificate.html}DescribeCertificate}.\n"]
+         {{:https://docs.aws.amazon.com/acm/latest/APIReference/API_DescribeCertificate.html}DescribeCertificate}.\n"]
   subject_alternative_name_summaries : domain_list option;
       [@ocaml.doc
         "One or more domain names (subject alternative names) included in the certificate. This \
@@ -767,10 +1275,10 @@ type nonrec certificate_summary = {
          certificate. The subject alternative names include the canonical domain name (CN) of the \
          certificate and additional domain names that can be used to connect to the website. \n\n\
         \ When called by \
-         {{:https://docs.aws.amazon.com/acm/latestAPIReference/API_ListCertificates.html}ListCertificates}, \
+         {{:https://docs.aws.amazon.com/acm/latest/APIReference/API_ListCertificates.html}ListCertificates}, \
          this parameter will only return the first 100 subject alternative names included in the \
          certificate. To display the full list of subject alternative names, use \
-         {{:https://docs.aws.amazon.com/acm/latestAPIReference/API_DescribeCertificate.html}DescribeCertificate}.\n\
+         {{:https://docs.aws.amazon.com/acm/latest/APIReference/API_DescribeCertificate.html}DescribeCertificate}.\n\
         \ "]
   domain_name : domain_name_string option;
       [@ocaml.doc
@@ -801,6 +1309,8 @@ type nonrec list_certificates_response = {
 [@@ocaml.doc ""]
 
 type nonrec certificate_statuses = certificate_status list [@@ocaml.doc ""]
+
+type nonrec certificate_key_pair_origins = certificate_key_pair_origin list [@@ocaml.doc ""]
 
 type nonrec extended_key_usage_filter_list = extended_key_usage_name list [@@ocaml.doc ""]
 
@@ -855,6 +1365,11 @@ type nonrec list_certificates_request = {
   includes : filters option;
       [@ocaml.doc
         "Filter the certificate list. For more information, see the [Filters] structure.\n"]
+  certificate_key_pair_origins : certificate_key_pair_origins option;
+      [@ocaml.doc
+        "Filter the certificate list by certificate key pair origin. Specify one or more \
+         [CertificateKeyPairOrigin] values. Default filtering returns only certificates with key \
+         pair origin of [AWS_MANAGED] and [CUSTOMER_PROVIDED].\n"]
   certificate_statuses : certificate_statuses option;
       [@ocaml.doc "Filter the certificate list by status value.\n"]
 }
@@ -862,6 +1377,200 @@ type nonrec list_certificates_request = {
 
 type nonrec invalid_args_exception = { message : string_ option [@ocaml.doc ""] }
 [@@ocaml.doc "One or more of request parameters specified is not valid.\n"]
+
+type nonrec acme_external_account_binding_summary = {
+  updated_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the external account binding was last updated.\n"]
+  created_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the external account binding was created.\n"]
+  last_used_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the external account binding was last used.\n"]
+  revoked_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the external account binding was revoked.\n"]
+  expires_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the external account binding expires.\n"]
+  role_arn : role_arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the IAM role associated with the external account \
+         binding.\n"]
+  acme_endpoint_arn : acme_endpoint_arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint.\n"]
+  acme_external_account_binding_arn : acme_external_account_binding_arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME external account binding.\n"]
+}
+[@@ocaml.doc "Contains summary information about an ACME external account binding.\n"]
+
+type nonrec acme_external_account_binding_list = acme_external_account_binding_summary list
+[@@ocaml.doc ""]
+
+type nonrec list_acme_external_account_bindings_response = {
+  next_token : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc "A token for pagination.\n"]
+  external_account_bindings : acme_external_account_binding_list option;
+      [@ocaml.doc "The list of external account bindings.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_acme_external_account_bindings_request = {
+  acme_endpoint_arn : acme_endpoint_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint.\n"]
+  max_results : Smaws_Lib.Smithy_api.Types.integer option;
+      [@ocaml.doc "The maximum number of results to return.\n"]
+  next_token : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc "A token for pagination.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec acme_endpoint_status =
+  | FAILED [@ocaml.doc ""]
+  | DELETING [@ocaml.doc ""]
+  | ACTIVE [@ocaml.doc ""]
+  | CREATING [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec acme_endpoint_summary = {
+  updated_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the ACME endpoint was last updated.\n"]
+  created_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the ACME endpoint was created.\n"]
+  certificate_tags : tag_list option;
+      [@ocaml.doc "Tags applied to certificates issued through this ACME endpoint.\n"]
+  certificate_authority : certificate_authority option;
+      [@ocaml.doc "The certificate authority configuration for the ACME endpoint.\n"]
+  contact : acme_contact option;
+      [@ocaml.doc
+        "Whether ACME clients must provide contact information during account registration.\n"]
+  authorization_behavior : acme_authorization_behavior option;
+      [@ocaml.doc "The authorization behavior of the ACME endpoint.\n"]
+  failure_reason : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The reason the ACME endpoint failed, if applicable.\n"]
+  status : acme_endpoint_status option; [@ocaml.doc "The status of the ACME endpoint.\n"]
+  endpoint_url : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The URL of the ACME endpoint.\n"]
+  acme_endpoint_arn : acme_endpoint_arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint.\n"]
+}
+[@@ocaml.doc "Contains summary information about an ACME endpoint.\n"]
+
+type nonrec acme_endpoint_list = acme_endpoint_summary list [@@ocaml.doc ""]
+
+type nonrec list_acme_endpoints_response = {
+  next_token : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc "A token for pagination.\n"]
+  acme_endpoints : acme_endpoint_list option; [@ocaml.doc "The list of ACME endpoints.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_acme_endpoints_request = {
+  max_results : Smaws_Lib.Smithy_api.Types.integer option;
+      [@ocaml.doc "The maximum number of results to return.\n"]
+  next_token : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc "A token for pagination.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec domain_name = string [@@ocaml.doc ""]
+
+type nonrec acme_domain_validation_status =
+  | DELETING [@ocaml.doc ""]
+  | INVALID [@ocaml.doc ""]
+  | VALID [@ocaml.doc ""]
+  | VALIDATING [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec acme_domain_validation_failure_reason =
+  | TIMED_OUT [@ocaml.doc ""]
+  | INVALID_PUBLIC_DOMAIN [@ocaml.doc ""]
+  | INVALID_CHANGE_BATCH [@ocaml.doc ""]
+  | INTERNAL_FAILURE [@ocaml.doc ""]
+  | HOSTED_ZONE_NOT_FOUND [@ocaml.doc ""]
+  | ENDPOINT_NOT_ACTIVE [@ocaml.doc ""]
+  | DOMAIN_NOT_ALLOWED [@ocaml.doc ""]
+  | DOMAIN_MISMATCH [@ocaml.doc ""]
+  | ACCESS_DENIED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec failure_details = {
+  message : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "A message describing the failure.\n"]
+  reason : acme_domain_validation_failure_reason option; [@ocaml.doc "The reason for the failure.\n"]
+}
+[@@ocaml.doc "Contains details about a failure.\n"]
+
+type nonrec acme_domain_validation_summary = {
+  updated_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the domain validation was last updated.\n"]
+  created_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the domain validation was created.\n"]
+  failure_details : failure_details option;
+      [@ocaml.doc "Details about the failure, if the validation failed.\n"]
+  status : acme_domain_validation_status option;
+      [@ocaml.doc "The status of the domain validation.\n"]
+  prevalidation_details : prevalidation_details option;
+      [@ocaml.doc "Details about the prevalidation configuration.\n"]
+  prevalidation_type : prevalidation_type option; [@ocaml.doc "The type of prevalidation used.\n"]
+  domain_name : domain_name option; [@ocaml.doc "The domain name being validated.\n"]
+  acme_endpoint_arn : acme_endpoint_arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint.\n"]
+  acme_domain_validation_arn : acme_domain_validation_arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME domain validation.\n"]
+}
+[@@ocaml.doc "Contains summary information about an ACME domain validation.\n"]
+
+type nonrec acme_domain_validation_list = acme_domain_validation_summary list [@@ocaml.doc ""]
+
+type nonrec list_acme_domain_validations_response = {
+  next_token : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc "A token for pagination.\n"]
+  acme_domain_validations : acme_domain_validation_list option;
+      [@ocaml.doc "The list of domain validations.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_acme_domain_validations_request = {
+  acme_endpoint_arn : acme_endpoint_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint.\n"]
+  max_results : Smaws_Lib.Smithy_api.Types.integer option;
+      [@ocaml.doc "The maximum number of results to return.\n"]
+  next_token : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc "A token for pagination.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec acme_account_status =
+  | REVOKED [@ocaml.doc ""]
+  | DEACTIVATED [@ocaml.doc ""]
+  | VALID [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec contact_list = Smaws_Lib.Smithy_api.Types.string_ list [@@ocaml.doc ""]
+
+type nonrec acme_account_summary = {
+  contacts : contact_list option; [@ocaml.doc "The contact information for the ACME account.\n"]
+  acme_external_account_binding_arn : acme_external_account_binding_arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the external account binding associated with this ACME \
+         account.\n"]
+  created_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the ACME account was created.\n"]
+  status : acme_account_status option; [@ocaml.doc "The status of the ACME account.\n"]
+  public_key_thumbprint : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The thumbprint of the public key associated with the ACME account.\n"]
+  account_url : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The URL of the ACME account.\n"]
+}
+[@@ocaml.doc "Contains summary information about an ACME account.\n"]
+
+type nonrec acme_account_list = acme_account_summary list [@@ocaml.doc ""]
+
+type nonrec list_acme_accounts_response = {
+  next_token : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc "A token for pagination.\n"]
+  acme_accounts : acme_account_list option; [@ocaml.doc "The list of ACME accounts.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_acme_accounts_request = {
+  acme_endpoint_arn : acme_endpoint_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint.\n"]
+  max_results : Smaws_Lib.Smithy_api.Types.integer option;
+      [@ocaml.doc "The maximum number of results to return.\n"]
+  next_token : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc "A token for pagination.\n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec key_usage = {
   name : key_usage_name option;
@@ -931,6 +1640,20 @@ type nonrec get_certificate_request = {
          {{:https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html}Amazon \
          Resource Names (ARNs)}.\n\
         \  "]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_acme_external_account_binding_credentials_response = {
+  mac_key : mac_key option;
+      [@ocaml.doc "The MAC key for the external account binding credentials.\n"]
+  key_id : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The key identifier for the external account binding credentials.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_acme_external_account_binding_credentials_request = {
+  acme_external_account_binding_arn : acme_external_account_binding_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME external account binding.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -1018,13 +1741,23 @@ type nonrec export_certificate_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec expiration = {
+  type_ : time_type; [@ocaml.doc "The time unit for the expiration value.\n"]
+  value : Smaws_Lib.Smithy_api.Types.long; [@ocaml.doc "The numeric value of the expiration.\n"]
+}
+[@@ocaml.doc "Specifies an expiration configuration.\n"]
+
 type nonrec certificate_detail = {
+  acme_account_id : acme_account_id option;
+      [@ocaml.doc "The ACME account identifier associated with the certificate.\n"]
+  acme_endpoint_arn : arn option;
+      [@ocaml.doc "The ARN of the ACME endpoint used to issue the certificate.\n"]
+  certificate_key_pair_origin : certificate_key_pair_origin option;
+      [@ocaml.doc "The origin of the certificate's key pair.\n"]
   options : certificate_options option;
       [@ocaml.doc
-        "Value that specifies whether to add the certificate to a transparency log. Certificate \
-         transparency makes it possible to detect SSL certificates that have been mistakenly or \
-         maliciously issued. A browser might respond to certificate that has not been logged by \
-         showing an error message. The logs are cryptographically secure. \n"]
+        "Contains the certificate options. Certificate transparency logging opt-out is no longer \
+         available. All public certificates are recorded in a certificate transparency log.\n"]
   renewal_eligibility : renewal_eligibility option;
       [@ocaml.doc
         "Specifies whether the certificate is eligible for renewal. At this time, only exported \
@@ -1160,6 +1893,135 @@ type nonrec describe_certificate_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec acme_external_account_binding = {
+  updated_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the external account binding was last updated.\n"]
+  created_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the external account binding was created.\n"]
+  last_used_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the external account binding was last used.\n"]
+  revoked_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the external account binding was revoked.\n"]
+  expires_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the external account binding expires.\n"]
+  role_arn : role_arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the IAM role associated with the external account \
+         binding.\n"]
+  acme_endpoint_arn : acme_endpoint_arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint.\n"]
+  acme_external_account_binding_arn : acme_external_account_binding_arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME external account binding.\n"]
+}
+[@@ocaml.doc "Contains detailed information about an ACME external account binding.\n"]
+
+type nonrec describe_acme_external_account_binding_response = {
+  external_account_binding : acme_external_account_binding option;
+      [@ocaml.doc "The external account binding details.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_acme_external_account_binding_request = {
+  acme_external_account_binding_arn : acme_external_account_binding_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME external account binding.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec acme_endpoint = {
+  updated_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the ACME endpoint was last updated.\n"]
+  created_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the ACME endpoint was created.\n"]
+  certificate_tags : tag_list option;
+      [@ocaml.doc "Tags applied to certificates issued through this ACME endpoint.\n"]
+  certificate_authority : certificate_authority option;
+      [@ocaml.doc "The certificate authority configuration for the ACME endpoint.\n"]
+  contact : acme_contact option;
+      [@ocaml.doc
+        "Whether ACME clients must provide contact information during account registration.\n"]
+  authorization_behavior : acme_authorization_behavior option;
+      [@ocaml.doc "The authorization behavior of the ACME endpoint.\n"]
+  failure_reason : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The reason the ACME endpoint failed, if applicable.\n"]
+  status : acme_endpoint_status option; [@ocaml.doc "The status of the ACME endpoint.\n"]
+  endpoint_url : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The URL of the ACME endpoint.\n"]
+  acme_endpoint_arn : acme_endpoint_arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint.\n"]
+}
+[@@ocaml.doc "Contains detailed information about an ACME endpoint.\n"]
+
+type nonrec describe_acme_endpoint_response = {
+  acme_endpoint : acme_endpoint option; [@ocaml.doc "The ACME endpoint details.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_acme_endpoint_request = {
+  acme_endpoint_arn : acme_endpoint_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec acme_domain_validation = {
+  updated_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the domain validation was last updated.\n"]
+  created_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the domain validation was created.\n"]
+  failure_details : failure_details option;
+      [@ocaml.doc "Details about the failure, if the validation failed.\n"]
+  status : acme_domain_validation_status option;
+      [@ocaml.doc "The status of the domain validation.\n"]
+  prevalidation_details : prevalidation_details option;
+      [@ocaml.doc "Details about the prevalidation configuration.\n"]
+  prevalidation_type : prevalidation_type option; [@ocaml.doc "The type of prevalidation used.\n"]
+  domain_name : domain_name option; [@ocaml.doc "The domain name being validated.\n"]
+  acme_endpoint_arn : acme_endpoint_arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint.\n"]
+  acme_domain_validation_arn : acme_domain_validation_arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME domain validation.\n"]
+}
+[@@ocaml.doc "Contains detailed information about an ACME domain validation.\n"]
+
+type nonrec describe_acme_domain_validation_response = {
+  acme_domain_validation : acme_domain_validation option;
+      [@ocaml.doc "The ACME domain validation details.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_acme_domain_validation_request = {
+  acme_domain_validation_arn : acme_domain_validation_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME domain validation.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec acme_account = {
+  contacts : contact_list option; [@ocaml.doc "The contact information for the ACME account.\n"]
+  acme_external_account_binding_arn : acme_external_account_binding_arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the external account binding associated with this ACME \
+         account.\n"]
+  created_at : Smaws_Lib.Smithy_api.Types.timestamp option;
+      [@ocaml.doc "The time at which the ACME account was created.\n"]
+  status : acme_account_status option; [@ocaml.doc "The status of the ACME account.\n"]
+  public_key_thumbprint : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The thumbprint of the public key associated with the ACME account.\n"]
+  account_url : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "The URL of the ACME account.\n"]
+}
+[@@ocaml.doc "Contains detailed information about an ACME account.\n"]
+
+type nonrec describe_acme_account_response = {
+  acme_account : acme_account option; [@ocaml.doc "The ACME account details.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_acme_account_request = {
+  account_url : Smaws_Lib.Smithy_api.Types.string_; [@ocaml.doc "The URL of the ACME account.\n"]
+  acme_endpoint_arn : acme_endpoint_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint.\n"]
+}
+[@@ocaml.doc ""]
+
 type nonrec delete_certificate_request = {
   certificate_arn : arn;
       [@ocaml.doc
@@ -1171,6 +2033,90 @@ type nonrec delete_certificate_request = {
          {{:https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html}Amazon \
          Resource Names (ARNs)}.\n\
         \  "]
+}
+[@@ocaml.doc ""]
+
+type nonrec delete_acme_external_account_binding_request = {
+  acme_external_account_binding_arn : acme_external_account_binding_arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the ACME external account binding to delete.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec delete_acme_endpoint_request = {
+  acme_endpoint_arn : acme_endpoint_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint to delete.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec delete_acme_domain_validation_request = {
+  acme_domain_validation_arn : acme_domain_validation_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME domain validation to delete.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec create_acme_external_account_binding_response = {
+  external_account_binding : acme_external_account_binding option;
+      [@ocaml.doc "The created external account binding.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec create_acme_external_account_binding_request = {
+  tags : tag_list option;
+      [@ocaml.doc "One or more tags to associate with the external account binding.\n"]
+  expiration : expiration option;
+      [@ocaml.doc "The expiration configuration for the external account binding.\n"]
+  role_arn : role_arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the IAM role to associate with the external account \
+         binding.\n"]
+  acme_endpoint_arn : acme_endpoint_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint.\n"]
+  idempotency_token : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "A unique, case-sensitive identifier to ensure idempotency of the request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec create_acme_endpoint_response = {
+  acme_endpoint_arn : acme_endpoint_arn option;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the created ACME endpoint.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec create_acme_endpoint_request = {
+  certificate_tags : tag_list option;
+      [@ocaml.doc "Tags to apply to certificates issued through this ACME endpoint.\n"]
+  tags : tag_list option; [@ocaml.doc "One or more tags to associate with the ACME endpoint.\n"]
+  certificate_authority : certificate_authority;
+      [@ocaml.doc
+        "The type of certificate authority to use for issuing certificates through this ACME \
+         endpoint.\n"]
+  contact : acme_contact option;
+      [@ocaml.doc
+        "Specifies whether ACME clients must provide contact information during account \
+         registration.\n"]
+  authorization_behavior : acme_authorization_behavior;
+      [@ocaml.doc "The authorization behavior for the ACME endpoint.\n"]
+  idempotency_token : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "A unique, case-sensitive identifier to ensure idempotency of the request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec create_acme_domain_validation_response = {
+  acme_domain_validation_arn : acme_domain_validation_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the created domain validation.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec create_acme_domain_validation_request = {
+  tags : tag_list option; [@ocaml.doc "One or more tags to associate with the domain validation.\n"]
+  prevalidation_options : prevalidation_options;
+      [@ocaml.doc "The prevalidation options for the domain.\n"]
+  domain_name : domain_name; [@ocaml.doc "The domain name to validate.\n"]
+  acme_endpoint_arn : acme_endpoint_arn;
+      [@ocaml.doc "The Amazon Resource Name (ARN) of the ACME endpoint.\n"]
+  idempotency_token : Smaws_Lib.Smithy_api.Types.string_ option;
+      [@ocaml.doc "A unique, case-sensitive identifier to ensure idempotency of the request.\n"]
 }
 [@@ocaml.doc ""]
 

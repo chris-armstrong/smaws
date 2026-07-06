@@ -14,6 +14,20 @@ val make_policy_descriptor_type : ?arn:arn_type -> unit -> policy_descriptor_typ
 val make_provided_context :
   ?context_assertion:context_assertion_type -> ?provider_arn:arn_type -> unit -> provided_context
 
+val make_get_web_identity_token_response :
+  ?expiration:date_type ->
+  ?web_identity_token:web_identity_token_type ->
+  unit ->
+  get_web_identity_token_response
+
+val make_get_web_identity_token_request :
+  ?tags:tag_list_type ->
+  ?duration_seconds:web_identity_token_duration_seconds_type ->
+  signing_algorithm:jwt_algorithm_type ->
+  audience:web_identity_token_audience_list_type ->
+  unit ->
+  get_web_identity_token_request
+
 val make_credentials :
   expiration:date_type ->
   session_token:token_type ->
@@ -49,6 +63,16 @@ val make_get_federation_token_request :
   name:user_name_type ->
   unit ->
   get_federation_token_request
+
+val make_get_delegated_access_token_response :
+  ?assumed_principal:arn_type ->
+  ?packed_policy_size:non_negative_integer_type ->
+  ?credentials:credentials ->
+  unit ->
+  get_delegated_access_token_response
+
+val make_get_delegated_access_token_request :
+  trade_in_token:trade_in_token_type -> unit -> get_delegated_access_token_request
 
 val make_get_caller_identity_response :
   ?arn:arn_type ->
@@ -313,11 +337,14 @@ end
    secret access key, and a security token. Applications can use these temporary security \
    credentials to sign calls to Amazon Web Services services.\n\
   \ \n\
-  \   {b Session Duration} \n\
-  \  \n\
-  \   By default, the temporary security credentials created by [AssumeRoleWithSAML] last for one \
-   hour. However, you can use the optional [DurationSeconds] parameter to specify the duration of \
-   your session. Your role session lasts for the duration that you specify, or until the time \
+  \   AssumeRoleWithSAML will not work on IAM Identity Center managed roles. These roles' names \
+   start with [AWSReservedSSO_].\n\
+  \   \n\
+  \      {b Session Duration} \n\
+  \     \n\
+  \      By default, the temporary security credentials created by [AssumeRoleWithSAML] last for \
+   one hour. However, you can use the optional [DurationSeconds] parameter to specify the duration \
+   of your session. Your role session lasts for the duration that you specify, or until the time \
    specified in the SAML authentication response's [SessionNotOnOrAfter] value, whichever is \
    shorter. You can provide a [DurationSeconds] value from 900 seconds (15 minutes) up to the \
    maximum session duration setting for the role. This setting can have a value from 1 hour to 12 \
@@ -329,8 +356,8 @@ end
    URL. For more information, see \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use.html}Using IAM Roles} in the \
    {i IAM User Guide}.\n\
-  \   \n\
-  \      \
+  \      \n\
+  \         \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_terms-and-concepts.html#iam-term-role-chaining}Role \
    chaining} limits your CLI or Amazon Web Services API role session to a maximum of one hour. \
    When you use the [AssumeRole] API operation to assume a role, you can specify the duration of \
@@ -338,14 +365,14 @@ end
    to 43200 seconds (12 hours), depending on the maximum session duration setting for your role. \
    However, if you assume a role using role chaining and provide a [DurationSeconds] parameter \
    value greater than one hour, the operation fails.\n\
-  \     \n\
-  \        {b Permissions} \n\
-  \       \n\
-  \        The temporary security credentials created by [AssumeRoleWithSAML] can be used to make \
-   API calls to any Amazon Web Services service with the following exception: you cannot call the \
-   STS [GetFederationToken] or [GetSessionToken] API operations.\n\
   \        \n\
-  \         (Optional) You can pass inline or managed \
+  \           {b Permissions} \n\
+  \          \n\
+  \           The temporary security credentials created by [AssumeRoleWithSAML] can be used to \
+   make API calls to any Amazon Web Services service with the following exception: you cannot call \
+   the STS [GetFederationToken] or [GetSessionToken] API operations.\n\
+  \           \n\
+  \            (Optional) You can pass inline or managed \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#policies_session}session \
    policies} to this operation. You can pass a single JSON policy document to use as an inline \
    session policy. You can also specify up to 10 managed policy Amazon Resource Names (ARNs) to \
@@ -358,83 +385,83 @@ end
    identity-based policy of the role that is being assumed. For more information, see \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#policies_session}Session \
    Policies} in the {i IAM User Guide}.\n\
-  \         \n\
-  \          Calling [AssumeRoleWithSAML] does not require the use of Amazon Web Services security \
-   credentials. The identity of the caller is validated by using keys in the metadata document \
-   that is uploaded for the SAML provider entity for your identity provider. \n\
-  \          \n\
-  \            Calling [AssumeRoleWithSAML] can result in an entry in your CloudTrail logs. The \
+  \            \n\
+  \             Calling [AssumeRoleWithSAML] does not require the use of Amazon Web Services \
+   security credentials. The identity of the caller is validated by using keys in the metadata \
+   document that is uploaded for the SAML provider entity for your identity provider. \n\
+  \             \n\
+  \               Calling [AssumeRoleWithSAML] can result in an entry in your CloudTrail logs. The \
    entry includes the value in the [NameID] element of the SAML assertion. We recommend that you \
    use a [NameIDType] that is not associated with any personally identifiable information (PII). \
    For example, you could instead use the persistent identifier \
    ([urn:oasis:names:tc:SAML:2.0:nameid-format:persistent]).\n\
-  \            \n\
-  \               {b Tags} \n\
-  \              \n\
-  \               (Optional) You can configure your IdP to pass attributes into your SAML \
+  \               \n\
+  \                  {b Tags} \n\
+  \                 \n\
+  \                  (Optional) You can configure your IdP to pass attributes into your SAML \
    assertion as session tags. Each session tag consists of a key name and an associated value. For \
    more information about session tags, see \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_session-tags.html}Passing Session Tags \
    in STS} in the {i IAM User Guide}.\n\
-  \               \n\
-  \                You can pass up to 50 session tags. The plaintext session tag keys \
+  \                  \n\
+  \                   You can pass up to 50 session tags. The plaintext session tag keys \
    can\226\128\153t exceed 128 characters and the values can\226\128\153t exceed 256 characters. \
    For these and additional limits, see \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-limits.html#reference_iam-limits-entity-length}IAM \
    and STS Character Limits} in the {i IAM User Guide}.\n\
-  \                \n\
-  \                  An Amazon Web Services conversion compresses the passed inline session \
+  \                   \n\
+  \                     An Amazon Web Services conversion compresses the passed inline session \
    policy, managed policy ARNs, and session tags into a packed binary format that has a separate \
    limit. Your request can fail for this limit even if your plaintext meets the other \
    requirements. The [PackedPolicySize] response element indicates by percentage how close the \
    policies and tags for your request are to the upper size limit.\n\
-  \                  \n\
-  \                    You can pass a session tag with the same key as a tag that is attached to \
-   the role. When you do, session tags override the role's tags with the same key.\n\
-  \                    \n\
-  \                     An administrator must grant you the permissions necessary to pass session \
-   tags. The administrator can also create granular permissions to allow you to pass only specific \
-   session tags. For more information, see \
+  \                     \n\
+  \                       You can pass a session tag with the same key as a tag that is attached \
+   to the role. When you do, session tags override the role's tags with the same key.\n\
+  \                       \n\
+  \                        An administrator must grant you the permissions necessary to pass \
+   session tags. The administrator can also create granular permissions to allow you to pass only \
+   specific session tags. For more information, see \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_attribute-based-access-control.html}Tutorial: \
    Using Tags for Attribute-Based Access Control} in the {i IAM User Guide}.\n\
-  \                     \n\
-  \                      You can set the session tags as transitive. Transitive tags persist \
+  \                        \n\
+  \                         You can set the session tags as transitive. Transitive tags persist \
    during role chaining. For more information, see \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_session-tags.html#id_session-tags_role-chaining}Chaining \
    Roles with Session Tags} in the {i IAM User Guide}.\n\
-  \                      \n\
-  \                        {b SAML Configuration} \n\
-  \                       \n\
-  \                        Before your application can call [AssumeRoleWithSAML], you must \
+  \                         \n\
+  \                           {b SAML Configuration} \n\
+  \                          \n\
+  \                           Before your application can call [AssumeRoleWithSAML], you must \
    configure your SAML identity provider (IdP) to issue the claims required by Amazon Web \
    Services. Additionally, you must use Identity and Access Management (IAM) to create a SAML \
    provider entity in your Amazon Web Services account that represents your identity provider. You \
    must also create an IAM role that specifies this SAML provider in its trust policy. \n\
-  \                        \n\
-  \                         For more information, see the following resources:\n\
-  \                         \n\
-  \                          {ul\n\
-  \                                {-   \
+  \                           \n\
+  \                            For more information, see the following resources:\n\
+  \                            \n\
+  \                             {ul\n\
+  \                                   {-   \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_saml.html}About SAML \
    2.0-based Federation} in the {i IAM User Guide}. \n\
-  \                                    \n\
-  \                                     }\n\
-  \                                {-   \
+  \                                       \n\
+  \                                        }\n\
+  \                                   {-   \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_saml.html}Creating \
    SAML Identity Providers} in the {i IAM User Guide}. \n\
-  \                                    \n\
-  \                                     }\n\
-  \                                {-   \
+  \                                       \n\
+  \                                        }\n\
+  \                                   {-   \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_saml_relying-party.html}Configuring \
    a Relying Party and Claims} in the {i IAM User Guide}. \n\
-  \                                    \n\
-  \                                     }\n\
-  \                                {-   \
+  \                                       \n\
+  \                                        }\n\
+  \                                   {-   \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-idp_saml.html}Creating \
    a Role for SAML 2.0 Federation} in the {i IAM User Guide}. \n\
-  \                                    \n\
-  \                                     }\n\
-  \                                }\n\
+  \                                       \n\
+  \                                        }\n\
+  \                                   }\n\
   \  "]
 
 module AssumeRoleWithWebIdentity : sig
@@ -537,8 +564,8 @@ end
   \             (Optional) You can configure your IdP to pass attributes into your web identity \
    token as session tags. Each session tag consists of a key name and an associated value. For \
    more information about session tags, see \
-   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_session-tags.html}Passing Session Tags \
-   in STS} in the {i IAM User Guide}.\n\
+   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_session-tags.html#id_session-tags_adding-assume-role-idp}Passing \
+   session tags using AssumeRoleWithWebIdentity} in the {i IAM User Guide}.\n\
   \             \n\
   \              You can pass up to 50 session tags. The plaintext session tag keys \
    can\226\128\153t exceed 128 characters and the values can\226\128\153t exceed 256 characters. \
@@ -621,7 +648,9 @@ module AssumeRoot : sig
 end
 [@@ocaml.doc
   "Returns a set of short term credentials you can use to perform privileged tasks on a member \
-   account in your organization.\n\n\
+   account in your organization. You must use credentials from an Organizations management account \
+   or a delegated administrator account for IAM to call [AssumeRoot]. You cannot use root user \
+   credentials to make this call.\n\n\
   \ Before you can launch a privileged session, you must have centralized root access in your \
    organization. For steps to enable this feature, see \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-enable-root-access.html}Centralize \
@@ -635,7 +664,16 @@ end
    session. For more information, see \
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/cloudtrail-track-privileged-tasks.html}Track \
    privileged tasks in CloudTrail} in the {i IAM User Guide}.\n\
-  \     "]
+  \     \n\
+  \      When granting access to privileged tasks you should only grant the necessary permissions \
+   required to perform that task. For more information, see \
+   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html}Security best practices \
+   in IAM}. In addition, you can use \
+   {{:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html}service \
+   control policies} (SCPs) to manage and limit permissions in your organization. See \
+   {{:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples_general.html}General \
+   examples} in the {i Organizations User Guide} for more information on SCPs.\n\
+  \      "]
 
 module DecodeAuthorizationMessage : sig
   val error_to_string :
@@ -744,6 +782,30 @@ end
    Am Not Authorized to Perform: iam:DeleteVirtualMFADevice} in the {i IAM User Guide}.\n\
   \  \n\
   \   "]
+
+module GetDelegatedAccessToken : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `ExpiredTradeInTokenException of expired_trade_in_token_exception
+    | `PackedPolicyTooLargeException of packed_policy_too_large_exception
+    | `RegionDisabledException of region_disabled_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_delegated_access_token_request ->
+    ( get_delegated_access_token_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ExpiredTradeInTokenException of expired_trade_in_token_exception
+      | `PackedPolicyTooLargeException of packed_policy_too_large_exception
+      | `RegionDisabledException of region_disabled_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Exchanges a trade-in token for temporary Amazon Web Services credentials with the permissions \
+   associated with the assumed principal. This operation allows you to obtain credentials for a \
+   specific principal based on a trade-in token, enabling delegation of access to Amazon Web \
+   Services resources.\n"]
 
 module GetFederationToken : sig
   val error_to_string :
@@ -866,7 +928,6 @@ end
    tags, and the session tag passed in the request takes precedence over the user tag.\n\
   \             "]
 
-(** {1:Serialization and Deserialization} *)
 module GetSessionToken : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error | `RegionDisabledException of region_disabled_exception ] ->
@@ -939,6 +1000,33 @@ end
    {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_request.html#api_getsessiontoken}Temporary \
    Credentials for Users in Untrusted Environments} in the {i IAM User Guide}. \n\
   \       "]
+
+(** {1:Serialization and Deserialization} *)
+module GetWebIdentityToken : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `JWTPayloadSizeExceededException of jwt_payload_size_exceeded_exception
+    | `OutboundWebIdentityFederationDisabledException of
+      outbound_web_identity_federation_disabled_exception
+    | `SessionDurationEscalationException of session_duration_escalation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_web_identity_token_request ->
+    ( get_web_identity_token_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `JWTPayloadSizeExceededException of jwt_payload_size_exceeded_exception
+      | `OutboundWebIdentityFederationDisabledException of
+        outbound_web_identity_federation_disabled_exception
+      | `SessionDurationEscalationException of session_duration_escalation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Returns a signed JSON Web Token (JWT) that represents the calling Amazon Web Services identity. \
+   The returned JWT can be used to authenticate with external services that support OIDC \
+   discovery. The token is signed by Amazon Web Services STS and can be publicly verified using \
+   the verification keys published at the issuer's JWKS endpoint.\n"]
 
 module Query_serializers = Query_serializers
 module Query_deserializers = Query_deserializers

@@ -366,6 +366,7 @@ val make_medical_scribe_channel_definition :
 
 val make_medical_scribe_job :
   ?tags:tag_list ->
+  ?medical_scribe_context_provided:boolean_ ->
   ?channel_definitions:medical_scribe_channel_definitions ->
   ?data_access_role_arn:data_access_role_arn ->
   ?settings:medical_scribe_settings ->
@@ -384,7 +385,14 @@ val make_medical_scribe_job :
 val make_start_medical_scribe_job_response :
   ?medical_scribe_job:medical_scribe_job -> unit -> start_medical_scribe_job_response
 
+val make_medical_scribe_patient_context :
+  ?pronouns:pronouns -> unit -> medical_scribe_patient_context
+
+val make_medical_scribe_context :
+  ?patient_context:medical_scribe_patient_context -> unit -> medical_scribe_context
+
 val make_start_medical_scribe_job_request :
+  ?medical_scribe_context:medical_scribe_context ->
   ?tags:tag_list ->
   ?channel_definitions:medical_scribe_channel_definitions ->
   ?kms_encryption_context:kms_encryption_context_map ->
@@ -1873,7 +1881,7 @@ end
   \          {-   [OutputBucketName]: The Amazon S3 bucket where you want your output files stored.\n\
   \              \n\
   \               }\n\
-  \          {-   [Settings]: A [MedicalScribeSettings] obect that must set exactly one of \
+  \          {-   [Settings]: A [MedicalScribeSettings] object that must set exactly one of \
    [ShowSpeakerLabels] or [ChannelIdentification] to true. If [ShowSpeakerLabels] is true, \
    [MaxSpeakerLabels] must also be set. \n\
   \              \n\

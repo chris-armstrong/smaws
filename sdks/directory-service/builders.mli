@@ -24,6 +24,7 @@ val make_radius_settings :
   ?radius_retries:radius_retries ->
   ?radius_timeout:radius_timeout ->
   ?radius_port:port_number ->
+  ?radius_servers_ipv6:servers ->
   ?radius_servers:servers ->
   unit ->
   radius_settings
@@ -49,8 +50,35 @@ val make_update_info_entry :
   unit ->
   update_info_entry
 
+val make_hybrid_administrator_account_update :
+  secret_arn:secret_arn -> unit -> hybrid_administrator_account_update
+
+val make_hybrid_customer_instances_settings :
+  instance_ids:assessment_instance_ids ->
+  customer_dns_ips:customer_dns_ips ->
+  unit ->
+  hybrid_customer_instances_settings
+
+val make_update_hybrid_ad_request :
+  ?self_managed_instances_settings:hybrid_customer_instances_settings ->
+  ?hybrid_administrator_account_update:hybrid_administrator_account_update ->
+  directory_id:directory_id ->
+  unit ->
+  update_hybrid_ad_request
+
+val make_directory_size_update_settings :
+  ?directory_size:directory_size -> unit -> directory_size_update_settings
+
+val make_network_update_settings :
+  ?customer_dns_ips_v6:dns_ipv6_addrs ->
+  ?network_type:network_type ->
+  unit ->
+  network_update_settings
+
 val make_update_directory_setup_request :
   ?create_snapshot_before_update:create_snapshot_before_update ->
+  ?network_update_settings:network_update_settings ->
+  ?directory_size_update_settings:directory_size_update_settings ->
   ?os_update_settings:os_update_settings ->
   update_type:update_type ->
   directory_id:directory_id ->
@@ -58,7 +86,8 @@ val make_update_directory_setup_request :
   update_directory_setup_request
 
 val make_update_conditional_forwarder_request :
-  dns_ip_addrs:dns_ip_addrs ->
+  ?dns_ipv6_addrs:dns_ipv6_addrs ->
+  ?dns_ip_addrs:dns_ip_addrs ->
   remote_domain_name:remote_domain_name ->
   directory_id:directory_id ->
   unit ->
@@ -93,6 +122,24 @@ val make_start_schema_extension_request :
   directory_id:directory_id ->
   unit ->
   start_schema_extension_request
+
+val make_directory_vpc_settings :
+  subnet_ids:subnet_ids -> vpc_id:vpc_id -> unit -> directory_vpc_settings
+
+val make_assessment_configuration :
+  ?security_group_ids:security_group_ids ->
+  instance_ids:assessment_instance_ids ->
+  vpc_settings:directory_vpc_settings ->
+  dns_name:directory_name ->
+  customer_dns_ips:customer_dns_ips ->
+  unit ->
+  assessment_configuration
+
+val make_start_ad_assessment_request :
+  ?directory_id:directory_id ->
+  ?assessment_configuration:assessment_configuration ->
+  unit ->
+  start_ad_assessment_request
 
 val make_snapshot :
   ?start_time:start_time ->
@@ -176,7 +223,11 @@ val make_remove_tags_from_resource_request :
 val make_remove_region_request : directory_id:directory_id -> unit -> remove_region_request
 
 val make_remove_ip_routes_request :
-  cidr_ips:cidr_ips -> directory_id:directory_id -> unit -> remove_ip_routes_request
+  ?cidr_ipv6s:cidr_ipv6s ->
+  ?cidr_ips:cidr_ips ->
+  directory_id:directory_id ->
+  unit ->
+  remove_ip_routes_request
 
 val make_reject_shared_directory_request :
   shared_directory_id:directory_id -> unit -> reject_shared_directory_request
@@ -196,9 +247,6 @@ val make_register_certificate_request :
 
 val make_regions_info :
   ?additional_regions:additional_regions -> ?primary_region:region_name -> unit -> regions_info
-
-val make_directory_vpc_settings :
-  subnet_ids:subnet_ids -> vpc_id:vpc_id -> unit -> directory_vpc_settings
 
 val make_region_description :
   ?last_updated_date_time:last_updated_date_time ->
@@ -222,9 +270,11 @@ val make_directory_vpc_settings_description :
   directory_vpc_settings_description
 
 val make_owner_directory_description :
+  ?network_type:network_type ->
   ?radius_status:radius_status ->
   ?radius_settings:radius_settings ->
   ?vpc_settings:directory_vpc_settings_description ->
+  ?dns_ipv6_addrs:dns_ipv6_addrs ->
   ?dns_ip_addrs:dns_ip_addrs ->
   ?account_id:customer_id ->
   ?directory_id:directory_id ->
@@ -264,6 +314,7 @@ val make_ip_route_info :
   ?ip_route_status_reason:ip_route_status_reason ->
   ?added_date_time:added_date_time ->
   ?ip_route_status_msg:ip_route_status_msg ->
+  ?cidr_ipv6:cidr_ipv6 ->
   ?cidr_ip:cidr_ip ->
   ?directory_id:directory_id ->
   unit ->
@@ -292,6 +343,25 @@ val make_list_certificates_request :
   unit ->
   list_certificates_request
 
+val make_assessment_summary :
+  ?report_type:assessment_report_type ->
+  ?customer_dns_ips:customer_dns_ips ->
+  ?status:assessment_status ->
+  ?last_update_date_time:last_update_date_time ->
+  ?start_time:assessment_start_time ->
+  ?dns_name:directory_name ->
+  ?directory_id:directory_id ->
+  ?assessment_id:assessment_id ->
+  unit ->
+  assessment_summary
+
+val make_list_ad_assessments_request :
+  ?limit:assessment_limit ->
+  ?next_token:next_token ->
+  ?directory_id:directory_id ->
+  unit ->
+  list_ad_assessments_request
+
 val make_ldaps_setting_info :
   ?last_updated_date_time:last_updated_date_time ->
   ?ldaps_status_reason:ldaps_status_reason ->
@@ -299,7 +369,35 @@ val make_ldaps_setting_info :
   unit ->
   ldaps_setting_info
 
-val make_ip_route : ?description:description -> ?cidr_ip:cidr_ip -> unit -> ip_route
+val make_ip_route :
+  ?description:description -> ?cidr_ipv6:cidr_ipv6 -> ?cidr_ip:cidr_ip -> unit -> ip_route
+
+val make_hybrid_update_value :
+  ?dns_ips:customer_dns_ips -> ?instance_ids:assessment_instance_ids -> unit -> hybrid_update_value
+
+val make_hybrid_update_info_entry :
+  ?assessment_id:assessment_id ->
+  ?last_updated_date_time:last_updated_date_time ->
+  ?start_time:start_date_time ->
+  ?previous_value:hybrid_update_value ->
+  ?new_value:hybrid_update_value ->
+  ?initiated_by:initiated_by ->
+  ?status_reason:update_status_reason ->
+  ?status:update_status ->
+  unit ->
+  hybrid_update_info_entry
+
+val make_hybrid_update_activities :
+  ?hybrid_administrator_account:hybrid_update_info_entries ->
+  ?self_managed_instances:hybrid_update_info_entries ->
+  unit ->
+  hybrid_update_activities
+
+val make_hybrid_settings_description :
+  ?self_managed_instance_ids:assessment_instance_ids ->
+  ?self_managed_dns_ip_addrs:ip_addrs ->
+  unit ->
+  hybrid_settings_description
 
 val make_get_snapshot_limits_request :
   directory_id:directory_id -> unit -> get_snapshot_limits_request
@@ -350,6 +448,12 @@ val make_enable_client_authentication_request :
   unit ->
   enable_client_authentication_request
 
+val make_enable_ca_enrollment_policy_request :
+  pca_connector_arn:pca_connector_arn ->
+  directory_id:directory_id ->
+  unit ->
+  enable_ca_enrollment_policy_request
+
 val make_domain_controller :
   ?status_last_updated_date_time:last_updated_date_time ->
   ?launch_time:launch_time ->
@@ -358,6 +462,7 @@ val make_domain_controller :
   ?availability_zone:availability_zone ->
   ?subnet_id:subnet_id ->
   ?vpc_id:vpc_id ->
+  ?dns_ipv6_addr:ipv6_addr ->
   ?dns_ip_addr:ip_addr ->
   ?domain_controller_id:domain_controller_id ->
   ?directory_id:directory_id ->
@@ -384,6 +489,9 @@ val make_disable_client_authentication_request :
   directory_id:directory_id ->
   unit ->
   disable_client_authentication_request
+
+val make_disable_ca_enrollment_policy_request :
+  directory_id:directory_id -> unit -> disable_ca_enrollment_policy_request
 
 val make_describe_update_directory_request :
   ?next_token:next_token ->
@@ -439,6 +547,13 @@ val make_describe_ldaps_settings_request :
   unit ->
   describe_ldaps_settings_request
 
+val make_describe_hybrid_ad_update_request :
+  ?next_token:next_token ->
+  ?update_type:hybrid_update_type ->
+  directory_id:directory_id ->
+  unit ->
+  describe_hybrid_ad_update_request
+
 val make_describe_event_topics_request :
   ?topic_names:topic_names -> ?directory_id:directory_id -> unit -> describe_event_topics_request
 
@@ -454,6 +569,7 @@ val make_describe_directory_data_access_request :
   directory_id:directory_id -> unit -> describe_directory_data_access_request
 
 val make_directory_connect_settings_description :
+  ?connect_ips_v6:ip_v6_addrs ->
   ?connect_ips:ip_addrs ->
   ?availability_zones:availability_zones ->
   ?security_group_id:security_group_id ->
@@ -464,6 +580,8 @@ val make_directory_connect_settings_description :
   directory_connect_settings_description
 
 val make_directory_description :
+  ?network_type:network_type ->
+  ?hybrid_settings:hybrid_settings_description ->
   ?os_version:os_version ->
   ?regions_info:regions_info ->
   ?owner_directory_description:owner_directory_description ->
@@ -481,6 +599,7 @@ val make_directory_description :
   ?share_method:share_method ->
   ?share_status:share_status ->
   ?stage:directory_stage ->
+  ?dns_ipv6_addrs:dns_ipv6_addrs ->
   ?dns_ip_addrs:dns_ip_addrs ->
   ?description:description ->
   ?access_url:access_url ->
@@ -502,6 +621,7 @@ val make_describe_directories_request :
 
 val make_conditional_forwarder :
   ?replication_scope:replication_scope ->
+  ?dns_ipv6_addrs:dns_ipv6_addrs ->
   ?dns_ip_addrs:dns_ip_addrs ->
   ?remote_domain_name:remote_domain_name ->
   unit ->
@@ -543,6 +663,45 @@ val make_certificate :
 val make_describe_certificate_request :
   certificate_id:certificate_id -> directory_id:directory_id -> unit -> describe_certificate_request
 
+val make_describe_ca_enrollment_policy_request :
+  directory_id:directory_id -> unit -> describe_ca_enrollment_policy_request
+
+val make_assessment :
+  ?version:assessment_version ->
+  ?report_type:assessment_report_type ->
+  ?self_managed_instance_ids:assessment_instance_ids ->
+  ?security_group_ids:security_group_ids ->
+  ?subnet_ids:subnet_ids ->
+  ?vpc_id:vpc_id ->
+  ?customer_dns_ips:customer_dns_ips ->
+  ?status_reason:assessment_status_reason ->
+  ?status_code:assessment_status_code ->
+  ?status:assessment_status ->
+  ?last_update_date_time:last_update_date_time ->
+  ?start_time:assessment_start_time ->
+  ?dns_name:directory_name ->
+  ?directory_id:directory_id ->
+  ?assessment_id:assessment_id ->
+  unit ->
+  assessment
+
+val make_assessment_validation :
+  ?last_update_date_time:assessment_validation_time_stamp ->
+  ?start_time:assessment_validation_time_stamp ->
+  ?status_reason:assessment_validation_status_reason ->
+  ?status_code:assessment_validation_status_code ->
+  ?status:assessment_validation_status ->
+  ?name:assessment_validation_name ->
+  ?category:assessment_validation_category ->
+  unit ->
+  assessment_validation
+
+val make_assessment_report :
+  ?validations:assessment_validations -> ?domain_controller_ip:ip_addr -> unit -> assessment_report
+
+val make_describe_ad_assessment_request :
+  assessment_id:assessment_id -> unit -> describe_ad_assessment_request
+
 val make_deregister_event_topic_request :
   topic_name:topic_name -> directory_id:directory_id -> unit -> deregister_event_topic_request
 
@@ -571,8 +730,12 @@ val make_delete_conditional_forwarder_request :
   unit ->
   delete_conditional_forwarder_request
 
+val make_delete_ad_assessment_request :
+  assessment_id:assessment_id -> unit -> delete_ad_assessment_request
+
 val make_create_trust_request :
   ?selective_auth:selective_auth ->
+  ?conditional_forwarder_ipv6_addrs:dns_ipv6_addrs ->
   ?conditional_forwarder_ip_addrs:dns_ip_addrs ->
   ?trust_type:trust_type ->
   trust_direction:trust_direction ->
@@ -586,6 +749,7 @@ val make_create_snapshot_request :
   ?name:snapshot_name -> directory_id:directory_id -> unit -> create_snapshot_request
 
 val make_create_microsoft_ad_request :
+  ?network_type:network_type ->
   ?tags:tags ->
   ?edition:directory_edition ->
   ?description:description ->
@@ -602,7 +766,15 @@ val make_create_log_subscription_request :
   unit ->
   create_log_subscription_request
 
+val make_create_hybrid_ad_request :
+  ?tags:tags ->
+  assessment_id:assessment_id ->
+  secret_arn:secret_arn ->
+  unit ->
+  create_hybrid_ad_request
+
 val make_create_directory_request :
+  ?network_type:network_type ->
   ?tags:tags ->
   ?vpc_settings:directory_vpc_settings ->
   ?description:description ->
@@ -614,7 +786,8 @@ val make_create_directory_request :
   create_directory_request
 
 val make_create_conditional_forwarder_request :
-  dns_ip_addrs:dns_ip_addrs ->
+  ?dns_ipv6_addrs:dns_ipv6_addrs ->
+  ?dns_ip_addrs:dns_ip_addrs ->
   remote_domain_name:remote_domain_name ->
   directory_id:directory_id ->
   unit ->
@@ -642,14 +815,16 @@ val make_create_alias_request :
   alias:alias_name -> directory_id:directory_id -> unit -> create_alias_request
 
 val make_directory_connect_settings :
+  ?customer_dns_ips_v6:dns_ipv6_addrs ->
+  ?customer_dns_ips:dns_ip_addrs ->
   customer_user_name:user_name ->
-  customer_dns_ips:dns_ip_addrs ->
   subnet_ids:subnet_ids ->
   vpc_id:vpc_id ->
   unit ->
   directory_connect_settings
 
 val make_connect_directory_request :
+  ?network_type:network_type ->
   ?tags:tags ->
   ?description:description ->
   ?short_name:directory_short_name ->

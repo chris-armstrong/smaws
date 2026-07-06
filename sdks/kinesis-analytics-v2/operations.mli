@@ -522,8 +522,11 @@ module DescribeApplicationOperation : sig
     result
 end
 [@@ocaml.doc
-  "Returns information about a specific operation performed on a Managed Service for Apache Flink \
-   application"]
+  "Provides a detailed description of a specified application operation. To see a list of all the \
+   operations of an application, invoke the [ListApplicationOperations] operation.\n\n\
+  \  This operation is supported only for Managed Service for Apache Flink.\n\
+  \  \n\
+  \   "]
 
 module DescribeApplicationSnapshot : sig
   val error_to_string :
@@ -625,7 +628,14 @@ module ListApplicationOperations : sig
     result
 end
 [@@ocaml.doc
-  "Lists information about operations performed on a Managed Service for Apache Flink application"]
+  "Lists all the operations performed for the specified application such as UpdateApplication, \
+   StartApplication etc. The response also includes a summary of the operation.\n\n\
+  \ To get the complete description of a specific operation, invoke the \
+   [DescribeApplicationOperation] operation.\n\
+  \ \n\
+  \   This operation is supported only for Managed Service for Apache Flink.\n\
+  \   \n\
+  \    "]
 
 module ListApplicationSnapshots : sig
   val error_to_string :

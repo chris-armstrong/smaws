@@ -10,7 +10,7 @@ let datetime_offsets_test_suite : unit Alcotest.test = ("aws.protocoltests.json#
 let sends_requests_to_slash () =
   Eio.Switch.run ~name:"sends_requests_to_slash" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Smaws_Lib.Smithy_api.Types.unit_ = () in
@@ -40,7 +40,7 @@ let sends_requests_to_slash () =
 let includes_x_amz_target_and_content_type () =
   Eio.Switch.run ~name:"includes_x_amz_target_and_content_type" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Smaws_Lib.Smithy_api.Types.unit_ = () in
@@ -70,7 +70,7 @@ let includes_x_amz_target_and_content_type () =
 let json_1_1_client_sends_empty_payload_for_no_input_shape () =
   Eio.Switch.run ~name:"json_1_1_client_sends_empty_payload_for_no_input_shape" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Smaws_Lib.Smithy_api.Types.unit_ = () in
@@ -86,10 +86,10 @@ let json_1_1_client_sends_empty_payload_for_no_input_shape () =
           (Some (Smaws_Lib.Json.of_string "{}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -112,7 +112,7 @@ let json_1_1_client_sends_empty_payload_for_no_input_shape () =
 let json_1_1_service_responds_with_no_payload () =
   Eio.Switch.run ~name:"json_1_1_service_responds_with_no_payload" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "") ~status:200
@@ -141,7 +141,7 @@ let empty_operation_test_suite : unit Alcotest.test =
 let aws_json11_endpoint_trait () =
   Eio.Switch.run ~name:"AwsJson11EndpointTrait" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config =
     {
       Config.dummy with
@@ -162,10 +162,10 @@ let aws_json11_endpoint_trait () =
           (Some (Smaws_Lib.Json.of_string "{}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -192,7 +192,7 @@ let endpoint_operation_test_suite : unit Alcotest.test =
 let aws_json11_endpoint_trait_with_host_label () =
   Eio.Switch.run ~name:"AwsJson11EndpointTraitWithHostLabel" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config =
     {
       Config.dummy with
@@ -213,10 +213,10 @@ let aws_json11_endpoint_trait_with_host_label () =
           (Some (Smaws_Lib.Json.of_string "{\"label\": \"bar\"}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -250,7 +250,7 @@ let greeting_with_errors_test_suite : unit Alcotest.test =
 let aws_json11_host_with_path () =
   Eio.Switch.run ~name:"AwsJson11HostWithPath" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config =
     {
       Config.dummy with
@@ -271,10 +271,10 @@ let aws_json11_host_with_path () =
           (Some (Smaws_Lib.Json.of_string "{}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -302,7 +302,7 @@ let host_with_path_operation_test_suite : unit Alcotest.test =
 let aws_json11_enums () =
   Eio.Switch.run ~name:"AwsJson11Enums" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.json_enums_input_output =
@@ -365,10 +365,10 @@ let aws_json11_enums () =
                  }"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -391,7 +391,7 @@ let aws_json11_enums () =
 let aws_json11_enums () =
   Eio.Switch.run ~name:"AwsJson11Enums" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -455,7 +455,7 @@ let json_enums_test_suite : unit Alcotest.test =
 let aws_json11_int_enums () =
   Eio.Switch.run ~name:"AwsJson11IntEnums" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.json_int_enums_input_output =
@@ -518,10 +518,10 @@ let aws_json11_int_enums () =
                  }"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -544,7 +544,7 @@ let aws_json11_int_enums () =
 let aws_json11_int_enums () =
   Eio.Switch.run ~name:"AwsJson11IntEnums" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -613,7 +613,7 @@ let json_int_enums_test_suite : unit Alcotest.test =
 let aws_json11_serialize_string_union_value () =
   Eio.Switch.run ~name:"AwsJson11SerializeStringUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.union_input_output = { contents = Some (StringValue "foo") } in
@@ -632,10 +632,10 @@ let aws_json11_serialize_string_union_value () =
                 "{\n    \"contents\": {\n        \"stringValue\": \"foo\"\n    }\n}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -658,7 +658,7 @@ let aws_json11_serialize_string_union_value () =
 let aws_json11_serialize_boolean_union_value () =
   Eio.Switch.run ~name:"AwsJson11SerializeBooleanUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.union_input_output = { contents = Some (BooleanValue true) } in
@@ -677,10 +677,10 @@ let aws_json11_serialize_boolean_union_value () =
                 "{\n    \"contents\": {\n        \"booleanValue\": true\n    }\n}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -703,7 +703,7 @@ let aws_json11_serialize_boolean_union_value () =
 let aws_json11_serialize_number_union_value () =
   Eio.Switch.run ~name:"AwsJson11SerializeNumberUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.union_input_output = { contents = Some (NumberValue 1) } in
@@ -722,10 +722,10 @@ let aws_json11_serialize_number_union_value () =
                 "{\n    \"contents\": {\n        \"numberValue\": 1\n    }\n}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -748,7 +748,7 @@ let aws_json11_serialize_number_union_value () =
 let aws_json11_serialize_blob_union_value () =
   Eio.Switch.run ~name:"AwsJson11SerializeBlobUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.union_input_output =
@@ -769,10 +769,10 @@ let aws_json11_serialize_blob_union_value () =
                 "{\n    \"contents\": {\n        \"blobValue\": \"Zm9v\"\n    }\n}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -795,7 +795,7 @@ let aws_json11_serialize_blob_union_value () =
 let aws_json11_serialize_timestamp_union_value () =
   Eio.Switch.run ~name:"AwsJson11SerializeTimestampUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.union_input_output =
@@ -820,10 +820,10 @@ let aws_json11_serialize_timestamp_union_value () =
                 "{\n    \"contents\": {\n        \"timestampValue\": 1398796238\n    }\n}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -846,7 +846,7 @@ let aws_json11_serialize_timestamp_union_value () =
 let aws_json11_serialize_enum_union_value () =
   Eio.Switch.run ~name:"AwsJson11SerializeEnumUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.union_input_output = { contents = Some (EnumValue FOO) } in
@@ -865,10 +865,10 @@ let aws_json11_serialize_enum_union_value () =
                 "{\n    \"contents\": {\n        \"enumValue\": \"Foo\"\n    }\n}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -891,7 +891,7 @@ let aws_json11_serialize_enum_union_value () =
 let aws_json11_serialize_list_union_value () =
   Eio.Switch.run ~name:"AwsJson11SerializeListUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.union_input_output = { contents = Some (ListValue [ "foo"; "bar" ]) } in
@@ -911,10 +911,10 @@ let aws_json11_serialize_list_union_value () =
                 "{\n    \"contents\": {\n        \"listValue\": [\"foo\", \"bar\"]\n    }\n}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -937,7 +937,7 @@ let aws_json11_serialize_list_union_value () =
 let aws_json11_serialize_map_union_value () =
   Eio.Switch.run ~name:"AwsJson11SerializeMapUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.union_input_output =
@@ -975,10 +975,10 @@ let aws_json11_serialize_map_union_value () =
                  }"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -1001,7 +1001,7 @@ let aws_json11_serialize_map_union_value () =
 let aws_json11_serialize_structure_union_value () =
   Eio.Switch.run ~name:"AwsJson11SerializeStructureUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.union_input_output =
@@ -1037,10 +1037,10 @@ let aws_json11_serialize_structure_union_value () =
                  }"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -1063,7 +1063,7 @@ let aws_json11_serialize_structure_union_value () =
 let aws_json11_deserialize_string_union_value () =
   Eio.Switch.run ~name:"AwsJson11DeserializeStringUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -1082,7 +1082,7 @@ let aws_json11_deserialize_string_union_value () =
 let aws_json11_deserialize_boolean_union_value () =
   Eio.Switch.run ~name:"AwsJson11DeserializeBooleanUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\n    \"contents\": {\n        \"booleanValue\": true\n    }\n}")
@@ -1101,7 +1101,7 @@ let aws_json11_deserialize_boolean_union_value () =
 let aws_json11_deserialize_number_union_value () =
   Eio.Switch.run ~name:"AwsJson11DeserializeNumberUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\n    \"contents\": {\n        \"numberValue\": 1\n    }\n}")
@@ -1120,7 +1120,7 @@ let aws_json11_deserialize_number_union_value () =
 let aws_json11_deserialize_blob_union_value () =
   Eio.Switch.run ~name:"AwsJson11DeserializeBlobUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -1142,7 +1142,7 @@ let aws_json11_deserialize_blob_union_value () =
 let aws_json11_deserialize_timestamp_union_value () =
   Eio.Switch.run ~name:"AwsJson11DeserializeTimestampUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -1169,7 +1169,7 @@ let aws_json11_deserialize_timestamp_union_value () =
 let aws_json11_deserialize_enum_union_value () =
   Eio.Switch.run ~name:"AwsJson11DeserializeEnumUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\n    \"contents\": {\n        \"enumValue\": \"Foo\"\n    }\n}")
@@ -1188,7 +1188,7 @@ let aws_json11_deserialize_enum_union_value () =
 let aws_json11_deserialize_list_union_value () =
   Eio.Switch.run ~name:"AwsJson11DeserializeListUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -1210,7 +1210,7 @@ let aws_json11_deserialize_list_union_value () =
 let aws_json11_deserialize_map_union_value () =
   Eio.Switch.run ~name:"AwsJson11DeserializeMapUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -1242,7 +1242,7 @@ let aws_json11_deserialize_map_union_value () =
 let aws_json11_deserialize_structure_union_value () =
   Eio.Switch.run ~name:"AwsJson11DeserializeStructureUnionValue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -1299,7 +1299,7 @@ let json_unions_test_suite : unit Alcotest.test =
 let serializes_string_shapes () =
   Eio.Switch.run ~name:"serializes_string_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -1344,10 +1344,10 @@ let serializes_string_shapes () =
           (Some (Smaws_Lib.Json.of_string "{\"String\":\"abc xyz\"}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -1370,7 +1370,7 @@ let serializes_string_shapes () =
 let serializes_string_shapes_with_jsonvalue_trait () =
   Eio.Switch.run ~name:"serializes_string_shapes_with_jsonvalue_trait" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -1423,10 +1423,10 @@ let serializes_string_shapes_with_jsonvalue_trait () =
                 "{\"JsonValue\":\"{\\\"string\\\":\\\"value\\\",\\\"number\\\":1234.5,\\\"boolTrue\\\":true,\\\"boolFalse\\\":false,\\\"array\\\":[1,2,3,4],\\\"object\\\":{\\\"key\\\":\\\"value\\\"},\\\"null\\\":null}\"}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -1449,7 +1449,7 @@ let serializes_string_shapes_with_jsonvalue_trait () =
 let serializes_integer_shapes () =
   Eio.Switch.run ~name:"serializes_integer_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -1494,10 +1494,10 @@ let serializes_integer_shapes () =
           (Some (Smaws_Lib.Json.of_string "{\"Integer\":1234}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -1520,7 +1520,7 @@ let serializes_integer_shapes () =
 let serializes_long_shapes () =
   Eio.Switch.run ~name:"serializes_long_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -1565,10 +1565,10 @@ let serializes_long_shapes () =
           (Some (Smaws_Lib.Json.of_string "{\"Long\":999999999999}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -1591,7 +1591,7 @@ let serializes_long_shapes () =
 let serializes_float_shapes () =
   Eio.Switch.run ~name:"serializes_float_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -1636,10 +1636,10 @@ let serializes_float_shapes () =
           (Some (Smaws_Lib.Json.of_string "{\"Float\":1234.5}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -1662,7 +1662,7 @@ let serializes_float_shapes () =
 let serializes_double_shapes () =
   Eio.Switch.run ~name:"serializes_double_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -1707,10 +1707,10 @@ let serializes_double_shapes () =
           (Some (Smaws_Lib.Json.of_string "{\"Double\":1234.5}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -1733,7 +1733,7 @@ let serializes_double_shapes () =
 let serializes_blob_shapes () =
   Eio.Switch.run ~name:"serializes_blob_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -1778,10 +1778,10 @@ let serializes_blob_shapes () =
           (Some (Smaws_Lib.Json.of_string "{\"Blob\":\"YmluYXJ5LXZhbHVl\"}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -1804,7 +1804,7 @@ let serializes_blob_shapes () =
 let serializes_boolean_shapes_true () =
   Eio.Switch.run ~name:"serializes_boolean_shapes_true" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -1849,10 +1849,10 @@ let serializes_boolean_shapes_true () =
           (Some (Smaws_Lib.Json.of_string "{\"Boolean\":true}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -1875,7 +1875,7 @@ let serializes_boolean_shapes_true () =
 let serializes_boolean_shapes_false () =
   Eio.Switch.run ~name:"serializes_boolean_shapes_false" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -1920,10 +1920,10 @@ let serializes_boolean_shapes_false () =
           (Some (Smaws_Lib.Json.of_string "{\"Boolean\":false}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -1946,7 +1946,7 @@ let serializes_boolean_shapes_false () =
 let serializes_timestamp_shapes () =
   Eio.Switch.run ~name:"serializes_timestamp_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -1991,10 +1991,10 @@ let serializes_timestamp_shapes () =
           (Some (Smaws_Lib.Json.of_string "{\"Timestamp\":946845296}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -2017,7 +2017,7 @@ let serializes_timestamp_shapes () =
 let serializes_timestamp_shapes_with_iso8601_timestampformat () =
   Eio.Switch.run ~name:"serializes_timestamp_shapes_with_iso8601_timestampformat" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -2062,10 +2062,10 @@ let serializes_timestamp_shapes_with_iso8601_timestampformat () =
           (Some (Smaws_Lib.Json.of_string "{\"Iso8601Timestamp\":\"2000-01-02T20:34:56Z\"}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -2088,7 +2088,7 @@ let serializes_timestamp_shapes_with_iso8601_timestampformat () =
 let serializes_timestamp_shapes_with_httpdate_timestampformat () =
   Eio.Switch.run ~name:"serializes_timestamp_shapes_with_httpdate_timestampformat" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -2135,10 +2135,10 @@ let serializes_timestamp_shapes_with_httpdate_timestampformat () =
              (Smaws_Lib.Json.of_string "{\"HttpdateTimestamp\":\"Sun, 02 Jan 2000 20:34:56 GMT\"}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -2161,7 +2161,7 @@ let serializes_timestamp_shapes_with_httpdate_timestampformat () =
 let serializes_timestamp_shapes_with_unixtimestamp_timestampformat () =
   Eio.Switch.run ~name:"serializes_timestamp_shapes_with_unixtimestamp_timestampformat" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -2206,10 +2206,10 @@ let serializes_timestamp_shapes_with_unixtimestamp_timestampformat () =
           (Some (Smaws_Lib.Json.of_string "{\"UnixTimestamp\":946845296}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -2232,7 +2232,7 @@ let serializes_timestamp_shapes_with_unixtimestamp_timestampformat () =
 let serializes_list_shapes () =
   Eio.Switch.run ~name:"serializes_list_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -2277,10 +2277,10 @@ let serializes_list_shapes () =
           (Some (Smaws_Lib.Json.of_string "{\"ListOfStrings\":[\"abc\",\"mno\",\"xyz\"]}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -2303,7 +2303,7 @@ let serializes_list_shapes () =
 let serializes_empty_list_shapes () =
   Eio.Switch.run ~name:"serializes_empty_list_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -2348,10 +2348,10 @@ let serializes_empty_list_shapes () =
           (Some (Smaws_Lib.Json.of_string "{\"ListOfStrings\":[]}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -2374,7 +2374,7 @@ let serializes_empty_list_shapes () =
 let serializes_list_of_map_shapes () =
   Eio.Switch.run ~name:"serializes_list_of_map_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -2424,10 +2424,10 @@ let serializes_list_of_map_shapes () =
                 "{\"ListOfMapsOfStrings\":[{\"foo\":\"bar\"},{\"abc\":\"xyz\"},{\"red\":\"blue\"}]}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -2450,7 +2450,7 @@ let serializes_list_of_map_shapes () =
 let serializes_list_of_structure_shapes () =
   Eio.Switch.run ~name:"serializes_list_of_structure_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -2500,10 +2500,10 @@ let serializes_list_of_structure_shapes () =
                 "{\"ListOfStructs\":[{\"Value\":\"abc\"},{\"Value\":\"mno\"},{\"Value\":\"xyz\"}]}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -2526,7 +2526,7 @@ let serializes_list_of_structure_shapes () =
 let serializes_list_of_recursive_structure_shapes () =
   Eio.Switch.run ~name:"serializes_list_of_recursive_structure_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -2669,10 +2669,10 @@ let serializes_list_of_recursive_structure_shapes () =
                 "{\"RecursiveList\":[{\"RecursiveList\":[{\"RecursiveList\":[{\"Integer\":123}]}]}]}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -2695,7 +2695,7 @@ let serializes_list_of_recursive_structure_shapes () =
 let serializes_map_shapes () =
   Eio.Switch.run ~name:"serializes_map_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -2740,10 +2740,10 @@ let serializes_map_shapes () =
           (Some (Smaws_Lib.Json.of_string "{\"MapOfStrings\":{\"abc\":\"xyz\",\"mno\":\"hjk\"}}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -2766,7 +2766,7 @@ let serializes_map_shapes () =
 let serializes_empty_map_shapes () =
   Eio.Switch.run ~name:"serializes_empty_map_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -2811,10 +2811,10 @@ let serializes_empty_map_shapes () =
           (Some (Smaws_Lib.Json.of_string "{\"MapOfStrings\":{}}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -2837,7 +2837,7 @@ let serializes_empty_map_shapes () =
 let serializes_map_of_list_shapes () =
   Eio.Switch.run ~name:"serializes_map_of_list_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -2886,10 +2886,10 @@ let serializes_map_of_list_shapes () =
                 "{\"MapOfListsOfStrings\":{\"abc\":[\"abc\",\"xyz\"],\"mno\":[\"xyz\",\"abc\"]}}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -2912,7 +2912,7 @@ let serializes_map_of_list_shapes () =
 let serializes_map_of_structure_shapes () =
   Eio.Switch.run ~name:"serializes_map_of_structure_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -2963,10 +2963,10 @@ let serializes_map_of_structure_shapes () =
                 "{\"MapOfStructs\":{\"key1\":{\"Value\":\"value-1\"},\"key2\":{\"Value\":\"value-2\"}}}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -2989,7 +2989,7 @@ let serializes_map_of_structure_shapes () =
 let serializes_map_of_recursive_structure_shapes () =
   Eio.Switch.run ~name:"serializes_map_of_recursive_structure_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -3136,10 +3136,10 @@ let serializes_map_of_recursive_structure_shapes () =
                 "{\"RecursiveMap\":{\"key1\":{\"RecursiveMap\":{\"key2\":{\"RecursiveMap\":{\"key3\":{\"Boolean\":false}}}}}}}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -3162,7 +3162,7 @@ let serializes_map_of_recursive_structure_shapes () =
 let serializes_structure_shapes () =
   Eio.Switch.run ~name:"serializes_structure_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -3207,10 +3207,10 @@ let serializes_structure_shapes () =
           (Some (Smaws_Lib.Json.of_string "{\"SimpleStruct\":{\"Value\":\"abc\"}}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -3233,7 +3233,7 @@ let serializes_structure_shapes () =
 let serializes_structure_members_with_locationname_traits () =
   Eio.Switch.run ~name:"serializes_structure_members_with_locationname_traits" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -3278,10 +3278,10 @@ let serializes_structure_members_with_locationname_traits () =
           (Some (Smaws_Lib.Json.of_string "{\"StructWithJsonName\":{\"Value\":\"some-value\"}}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -3304,7 +3304,7 @@ let serializes_structure_members_with_locationname_traits () =
 let serializes_empty_structure_shapes () =
   Eio.Switch.run ~name:"serializes_empty_structure_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -3349,10 +3349,10 @@ let serializes_empty_structure_shapes () =
           (Some (Smaws_Lib.Json.of_string "{\"SimpleStruct\":{}}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -3375,7 +3375,7 @@ let serializes_empty_structure_shapes () =
 let serializes_structure_which_have_no_members () =
   Eio.Switch.run ~name:"serializes_structure_which_have_no_members" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -3420,10 +3420,10 @@ let serializes_structure_which_have_no_members () =
           (Some (Smaws_Lib.Json.of_string "{\"EmptyStruct\":{}}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -3446,7 +3446,7 @@ let serializes_structure_which_have_no_members () =
 let serializes_recursive_structure_shapes () =
   Eio.Switch.run ~name:"serializes_recursive_structure_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.kitchen_sink =
@@ -3614,10 +3614,10 @@ let serializes_recursive_structure_shapes () =
                 "{\"String\":\"top-value\",\"Boolean\":false,\"RecursiveStruct\":{\"String\":\"nested-value\",\"Boolean\":true,\"RecursiveList\":[{\"String\":\"string-only\"},{\"RecursiveStruct\":{\"MapOfStrings\":{\"color\":\"red\",\"size\":\"large\"}}}]}}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -3640,7 +3640,7 @@ let serializes_recursive_structure_shapes () =
 let parses_operations_with_empty_json_bodies () =
   Eio.Switch.run ~name:"parses_operations_with_empty_json_bodies" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{}") ~status:200
@@ -3718,7 +3718,7 @@ let parses_operations_with_empty_json_bodies () =
 let parses_string_shapes () =
   Eio.Switch.run ~name:"parses_string_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\"String\":\"string-value\"}") ~status:200
@@ -3796,7 +3796,7 @@ let parses_string_shapes () =
 let parses_integer_shapes () =
   Eio.Switch.run ~name:"parses_integer_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\"Integer\":1234}") ~status:200
@@ -3874,7 +3874,7 @@ let parses_integer_shapes () =
 let parses_long_shapes () =
   Eio.Switch.run ~name:"parses_long_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\"Long\":1234567890123456789}") ~status:200
@@ -3952,7 +3952,7 @@ let parses_long_shapes () =
 let parses_float_shapes () =
   Eio.Switch.run ~name:"parses_float_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\"Float\":1234.5}") ~status:200
@@ -4030,7 +4030,7 @@ let parses_float_shapes () =
 let parses_double_shapes () =
   Eio.Switch.run ~name:"parses_double_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\"Double\":123456789.12345679}") ~status:200
@@ -4108,7 +4108,7 @@ let parses_double_shapes () =
 let parses_boolean_shapes_true () =
   Eio.Switch.run ~name:"parses_boolean_shapes_true" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\"Boolean\":true}") ~status:200
@@ -4186,7 +4186,7 @@ let parses_boolean_shapes_true () =
 let parses_boolean_false () =
   Eio.Switch.run ~name:"parses_boolean_false" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\"Boolean\":false}") ~status:200
@@ -4264,7 +4264,7 @@ let parses_boolean_false () =
 let parses_blob_shapes () =
   Eio.Switch.run ~name:"parses_blob_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\"Blob\":\"YmluYXJ5LXZhbHVl\"}") ~status:200
@@ -4342,7 +4342,7 @@ let parses_blob_shapes () =
 let parses_timestamp_shapes () =
   Eio.Switch.run ~name:"parses_timestamp_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\"Timestamp\":946845296}") ~status:200
@@ -4420,7 +4420,7 @@ let parses_timestamp_shapes () =
 let parses_iso8601_timestamps () =
   Eio.Switch.run ~name:"parses_iso8601_timestamps" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\"Iso8601Timestamp\":\"2000-01-02T20:34:56Z\"}") ~status:200
@@ -4499,7 +4499,7 @@ let parses_iso8601_timestamps () =
 let parses_httpdate_timestamps () =
   Eio.Switch.run ~name:"parses_httpdate_timestamps" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\"HttpdateTimestamp\":\"Sun, 02 Jan 2000 20:34:56 GMT\"}")
@@ -4579,7 +4579,7 @@ let parses_httpdate_timestamps () =
 let parses_list_shapes () =
   Eio.Switch.run ~name:"parses_list_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\"ListOfStrings\":[\"abc\",\"mno\",\"xyz\"]}") ~status:200
@@ -4657,7 +4657,7 @@ let parses_list_shapes () =
 let parses_list_of_map_shapes () =
   Eio.Switch.run ~name:"parses_list_of_map_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -4737,7 +4737,7 @@ let parses_list_of_map_shapes () =
 let parses_list_of_list_shapes () =
   Eio.Switch.run ~name:"parses_list_of_list_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -4817,7 +4817,7 @@ let parses_list_of_list_shapes () =
 let parses_list_of_structure_shapes () =
   Eio.Switch.run ~name:"parses_list_of_structure_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -4897,7 +4897,7 @@ let parses_list_of_structure_shapes () =
 let parses_list_of_recursive_structure_shapes () =
   Eio.Switch.run ~name:"parses_list_of_recursive_structure_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -5072,7 +5072,7 @@ let parses_list_of_recursive_structure_shapes () =
 let parses_map_shapes () =
   Eio.Switch.run ~name:"parses_map_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\"MapOfStrings\":{\"size\":\"large\",\"color\":\"red\"}}")
@@ -5151,7 +5151,7 @@ let parses_map_shapes () =
 let parses_map_of_list_shapes () =
   Eio.Switch.run ~name:"parses_map_of_list_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -5234,7 +5234,7 @@ let parses_map_of_list_shapes () =
 let parses_map_of_map_shapes () =
   Eio.Switch.run ~name:"parses_map_of_map_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -5321,7 +5321,7 @@ let parses_map_of_map_shapes () =
 let parses_map_of_structure_shapes () =
   Eio.Switch.run ~name:"parses_map_of_structure_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -5402,7 +5402,7 @@ let parses_map_of_structure_shapes () =
 let parses_map_of_recursive_structure_shapes () =
   Eio.Switch.run ~name:"parses_map_of_recursive_structure_shapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -5580,7 +5580,7 @@ let parses_map_of_recursive_structure_shapes () =
 let parses_the_request_id_from_the_response () =
   Eio.Switch.run ~name:"parses_the_request_id_from_the_response" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{}") ~status:200
@@ -5736,7 +5736,7 @@ let kitchen_sink_operation_test_suite : unit Alcotest.test =
 let aws_json11_structures_dont_serialize_null_values () =
   Eio.Switch.run ~name:"AwsJson11StructuresDontSerializeNullValues" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.null_operation_input_output = { string_ = None } in
@@ -5752,10 +5752,10 @@ let aws_json11_structures_dont_serialize_null_values () =
           (Some (Smaws_Lib.Json.of_string "{}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -5778,7 +5778,7 @@ let aws_json11_structures_dont_serialize_null_values () =
 let aws_json11_servers_dont_serialize_null_structure_values () =
   Eio.Switch.run ~name:"AwsJson11ServersDontSerializeNullStructureValues" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{}") ~status:200
@@ -5808,7 +5808,7 @@ let null_operation_test_suite : unit Alcotest.test =
 let can_call_operation_with_no_input_or_output () =
   Eio.Switch.run ~name:"can_call_operation_with_no_input_or_output" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.operation_with_optional_input_output_input = { value = None } in
@@ -5824,10 +5824,10 @@ let can_call_operation_with_no_input_or_output () =
           (Some (Smaws_Lib.Json.of_string "{}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -5850,7 +5850,7 @@ let can_call_operation_with_no_input_or_output () =
 let can_call_operation_with_optional_input () =
   Eio.Switch.run ~name:"can_call_operation_with_optional_input" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.operation_with_optional_input_output_input = { value = Some "Hi" } in
@@ -5866,10 +5866,10 @@ let can_call_operation_with_optional_input () =
           (Some (Smaws_Lib.Json.of_string "{\"Value\":\"Hi\"}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -5901,7 +5901,7 @@ let operation_with_optional_input_output_test_suite : unit Alcotest.test =
 let put_and_get_inline_documents_input () =
   Eio.Switch.run ~name:"PutAndGetInlineDocumentsInput" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.put_and_get_inline_documents_input_output =
@@ -5919,10 +5919,10 @@ let put_and_get_inline_documents_input () =
           (Some (Smaws_Lib.Json.of_string "{\n    \"inlineDocument\": {\"foo\": \"bar\"}\n}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -5945,7 +5945,7 @@ let put_and_get_inline_documents_input () =
 let put_and_get_inline_documents_input () =
   Eio.Switch.run ~name:"PutAndGetInlineDocumentsInput" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\n    \"inlineDocument\": {\"foo\": \"bar\"}\n}") ~status:200
@@ -5979,7 +5979,7 @@ let put_with_content_encoding_test_suite : unit Alcotest.test =
 let aws_json11_supports_na_n_float_inputs () =
   Eio.Switch.run ~name:"AwsJson11SupportsNaNFloatInputs" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_scalar_properties_input_output =
@@ -6000,10 +6000,10 @@ let aws_json11_supports_na_n_float_inputs () =
                 "{\n    \"floatValue\": \"NaN\",\n    \"doubleValue\": \"NaN\"\n}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -6026,7 +6026,7 @@ let aws_json11_supports_na_n_float_inputs () =
 let aws_json11_supports_infinity_float_inputs () =
   Eio.Switch.run ~name:"AwsJson11SupportsInfinityFloatInputs" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_scalar_properties_input_output =
@@ -6048,10 +6048,10 @@ let aws_json11_supports_infinity_float_inputs () =
                 "{\n    \"floatValue\": \"Infinity\",\n    \"doubleValue\": \"Infinity\"\n}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -6074,7 +6074,7 @@ let aws_json11_supports_infinity_float_inputs () =
 let aws_json11_supports_negative_infinity_float_inputs () =
   Eio.Switch.run ~name:"AwsJson11SupportsNegativeInfinityFloatInputs" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_scalar_properties_input_output =
@@ -6096,10 +6096,10 @@ let aws_json11_supports_negative_infinity_float_inputs () =
                 "{\n    \"floatValue\": \"-Infinity\",\n    \"doubleValue\": \"-Infinity\"\n}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -6122,7 +6122,7 @@ let aws_json11_supports_negative_infinity_float_inputs () =
 let aws_json11_supports_na_n_float_inputs () =
   Eio.Switch.run ~name:"AwsJson11SupportsNaNFloatInputs" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\n    \"floatValue\": \"NaN\",\n    \"doubleValue\": \"NaN\"\n}")
@@ -6145,7 +6145,7 @@ let aws_json11_supports_na_n_float_inputs () =
 let aws_json11_supports_infinity_float_inputs () =
   Eio.Switch.run ~name:"AwsJson11SupportsInfinityFloatInputs" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -6169,7 +6169,7 @@ let aws_json11_supports_infinity_float_inputs () =
 let aws_json11_supports_negative_infinity_float_inputs () =
   Eio.Switch.run ~name:"AwsJson11SupportsNegativeInfinityFloatInputs" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -6208,7 +6208,7 @@ let simple_scalar_properties_test_suite : unit Alcotest.test =
 let aws_json11_sparse_maps_serialize_null_values () =
   Eio.Switch.run ~name:"AwsJson11SparseMapsSerializeNullValues" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.sparse_nulls_operation_input_output =
@@ -6232,10 +6232,10 @@ let aws_json11_sparse_maps_serialize_null_values () =
                 "{\n    \"sparseStringMap\": {\n        \"foo\": null\n    }\n}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -6258,7 +6258,7 @@ let aws_json11_sparse_maps_serialize_null_values () =
 let aws_json11_sparse_lists_serialize_null () =
   Eio.Switch.run ~name:"AwsJson11SparseListsSerializeNull" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.sparse_nulls_operation_input_output =
@@ -6277,10 +6277,10 @@ let aws_json11_sparse_lists_serialize_null () =
           (Some (Smaws_Lib.Json.of_string "{\n    \"sparseStringList\": [\n        null\n    ]\n}"))
           (request.body
           |> Option.map (function
-               | `Form _ -> failwith "not expecting form"
-               | `String x -> x
-               | `Compressed (x, _) -> x
-               | `None -> "{}")
+            | `Form _ -> failwith "not expecting form"
+            | `String x -> x
+            | `Compressed (x, _) -> x
+            | `None -> "{}")
           |> Option.map Yojson.Basic.from_string)
       in
       let () =
@@ -6303,7 +6303,7 @@ let aws_json11_sparse_lists_serialize_null () =
 let aws_json11_sparse_maps_deserialize_null_values () =
   Eio.Switch.run ~name:"AwsJson11SparseMapsDeserializeNullValues" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\n    \"sparseStringMap\": {\n        \"foo\": null\n    }\n}")
@@ -6331,7 +6331,7 @@ let aws_json11_sparse_maps_deserialize_null_values () =
 let aws_json11_sparse_lists_deserialize_null () =
   Eio.Switch.run ~name:"AwsJson11SparseListsDeserializeNull" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:(Some "{\n    \"sparseStringList\": [\n        null\n    ]\n}")

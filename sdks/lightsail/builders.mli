@@ -118,6 +118,7 @@ val make_update_domain_entry_request :
   domain_entry:domain_entry -> domain_name:domain_name -> unit -> update_domain_entry_request
 
 val make_input_origin :
+  ?ip_address_type:origin_ip_address_type_enum ->
   ?response_timeout:integer ->
   ?protocol_policy:origin_protocol_policy_enum ->
   ?region_name:region_name ->
@@ -274,7 +275,20 @@ val make_bucket_access_log_config :
   unit ->
   bucket_access_log_config
 
+val make_bucket_cors_rule :
+  ?max_age_seconds:integer ->
+  ?expose_headers:bucket_cors_expose_headers ->
+  ?allowed_headers:bucket_cors_allowed_headers ->
+  ?id:bucket_cors_rule_id ->
+  allowed_origins:bucket_cors_allowed_origins ->
+  allowed_methods:bucket_cors_allowed_methods ->
+  unit ->
+  bucket_cors_rule
+
+val make_bucket_cors_config : ?rules:bucket_cors_rules -> unit -> bucket_cors_config
+
 val make_bucket :
+  ?cors:bucket_cors_config ->
   ?access_log_config:bucket_access_log_config ->
   ?state:bucket_state ->
   ?resources_receiving_access:access_receiver_list ->
@@ -295,6 +309,7 @@ val make_bucket :
   bucket
 
 val make_update_bucket_request :
+  ?cors:bucket_cors_config ->
   ?access_log_config:bucket_access_log_config ->
   ?readonly_access_accounts:partner_id_list ->
   ?versioning:non_empty_string ->
@@ -607,6 +622,7 @@ val make_put_instance_public_ports_request :
   put_instance_public_ports_request
 
 val make_put_alarm_request :
+  ?tags:tag_list ->
   ?notification_enabled:boolean_ ->
   ?notification_triggers:notification_trigger_list ->
   ?contact_protocols:contact_protocols_list ->
@@ -627,6 +643,7 @@ val make_password_data :
   ?key_pair_name:resource_name -> ?ciphertext:string_ -> unit -> password_data
 
 val make_origin :
+  ?ip_address_type:origin_ip_address_type_enum ->
   ?response_timeout:integer ->
   ?protocol_policy:origin_protocol_policy_enum ->
   ?region_name:region_name ->
@@ -1268,6 +1285,7 @@ val make_get_container_images_request :
 val make_get_container_api_metadata_request : unit -> unit
 
 val make_contact_method :
+  ?tags:tag_list ->
   ?support_code:string_ ->
   ?resource_type:resource_type ->
   ?location:resource_location ->
@@ -1380,6 +1398,7 @@ val make_account_level_bpa_sync :
   account_level_bpa_sync
 
 val make_get_buckets_request :
+  ?include_cors:boolean_ ->
   ?include_connected_resources:boolean_ ->
   ?page_token:string_ ->
   ?bucket_name:bucket_name ->
@@ -1467,6 +1486,7 @@ val make_get_auto_snapshots_request :
   resource_name:resource_name -> unit -> get_auto_snapshots_request
 
 val make_alarm :
+  ?tags:tag_list ->
   ?notification_enabled:boolean_ ->
   ?notification_triggers:notification_trigger_list ->
   ?contact_protocols:contact_protocols_list ->
@@ -1803,6 +1823,7 @@ val make_create_container_service_request :
   create_container_service_request
 
 val make_create_contact_method_request :
+  ?tags:tag_list ->
   contact_endpoint:string_max256 ->
   protocol:contact_protocol ->
   unit ->

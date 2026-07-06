@@ -153,8 +153,8 @@ module GetHypervisorPropertyMappings : sig
 end
 [@@ocaml.doc
   "This action retrieves the property mappings for the specified hypervisor. A hypervisor property \
-   mapping displays the relationship of entity properties available from the on-premises \
-   hypervisor to the properties available in Amazon Web Services.\n"]
+   mapping displays the relationship of entity properties available from the hypervisor to the \
+   properties available in Amazon Web Services.\n"]
 
 module GetVirtualMachine : sig
   val error_to_string :
@@ -278,8 +278,8 @@ module PutHypervisorPropertyMappings : sig
 end
 [@@ocaml.doc
   "This action sets the property mappings for the specified hypervisor. A hypervisor property \
-   mapping displays the relationship of entity properties available from the on-premises \
-   hypervisor to the properties available in Amazon Web Services.\n"]
+   mapping displays the relationship of entity properties available from the hypervisor to the \
+   properties available in Amazon Web Services.\n"]
 
 module PutMaintenanceStartTime : sig
   val error_to_string :

@@ -1,5 +1,5 @@
 Logs.set_reporter (Logs.format_reporter ());;
-Logs.set_level (Some Logs.Debug)
+Logs.set_level (Some Logs.Debug);;
 
 (** Live round-trip: STS GetCallerIdentity over the awsQuery protocol.
 

@@ -316,7 +316,11 @@ val make_application_snapshot_configuration_description :
 val make_application_system_rollback_configuration_description :
   rollback_enabled:boolean_object -> unit -> application_system_rollback_configuration_description
 
+val make_application_encryption_configuration_description :
+  ?key_id:key_id -> key_type:key_type -> unit -> application_encryption_configuration_description
+
 val make_application_configuration_description :
+  ?application_encryption_configuration_description:application_encryption_configuration_description ->
   ?zeppelin_application_configuration_description:zeppelin_application_configuration_description ->
   ?vpc_configuration_descriptions:vpc_configuration_descriptions ->
   ?application_system_rollback_configuration_description:
@@ -505,7 +509,14 @@ val make_application_snapshot_configuration_update :
 val make_application_system_rollback_configuration_update :
   rollback_enabled_update:boolean_object -> unit -> application_system_rollback_configuration_update
 
+val make_application_encryption_configuration_update :
+  ?key_id_update:key_id ->
+  key_type_update:key_type ->
+  unit ->
+  application_encryption_configuration_update
+
 val make_application_configuration_update :
+  ?application_encryption_configuration_update:application_encryption_configuration_update ->
   ?zeppelin_application_configuration_update:zeppelin_application_configuration_update ->
   ?vpc_configuration_updates:vpc_configuration_updates ->
   ?application_system_rollback_configuration_update:application_system_rollback_configuration_update ->
@@ -646,6 +657,7 @@ val make_sql_application_configuration :
   sql_application_configuration
 
 val make_snapshot_details :
+  ?application_encryption_configuration_description:application_encryption_configuration_description ->
   ?runtime_environment:runtime_environment ->
   ?snapshot_creation_timestamp:timestamp ->
   application_version_id:application_version_id ->
@@ -986,7 +998,11 @@ val make_application_snapshot_configuration :
 val make_application_system_rollback_configuration :
   rollback_enabled:boolean_object -> unit -> application_system_rollback_configuration
 
+val make_application_encryption_configuration :
+  ?key_id:key_id -> key_type:key_type -> unit -> application_encryption_configuration
+
 val make_application_configuration :
+  ?application_encryption_configuration:application_encryption_configuration ->
   ?zeppelin_application_configuration:zeppelin_application_configuration ->
   ?vpc_configurations:vpc_configurations ->
   ?application_system_rollback_configuration:application_system_rollback_configuration ->

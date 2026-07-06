@@ -5,6 +5,7 @@ module BatchExecuteStatement = struct
   let error_to_string = function
     | `InternalServerError _ -> "com.amazonaws.dynamodb#InternalServerError"
     | `RequestLimitExceeded _ -> "com.amazonaws.dynamodb#RequestLimitExceeded"
+    | `ThrottlingException _ -> "com.amazonaws.dynamodb#ThrottlingException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -13,6 +14,8 @@ module BatchExecuteStatement = struct
           `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
       | _, "RequestLimitExceeded" ->
           `RequestLimitExceeded (Json_deserializers.request_limit_exceeded_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -34,6 +37,7 @@ module BatchGetItem = struct
         "com.amazonaws.dynamodb#ProvisionedThroughputExceededException"
     | `RequestLimitExceeded _ -> "com.amazonaws.dynamodb#RequestLimitExceeded"
     | `ResourceNotFoundException _ -> "com.amazonaws.dynamodb#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.dynamodb#ThrottlingException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -51,6 +55,8 @@ module BatchGetItem = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -75,6 +81,7 @@ module BatchWriteItem = struct
         "com.amazonaws.dynamodb#ReplicatedWriteConflictException"
     | `RequestLimitExceeded _ -> "com.amazonaws.dynamodb#RequestLimitExceeded"
     | `ResourceNotFoundException _ -> "com.amazonaws.dynamodb#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.dynamodb#ThrottlingException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -98,6 +105,8 @@ module BatchWriteItem = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -267,6 +276,7 @@ module DeleteItem = struct
         "com.amazonaws.dynamodb#ReplicatedWriteConflictException"
     | `RequestLimitExceeded _ -> "com.amazonaws.dynamodb#RequestLimitExceeded"
     | `ResourceNotFoundException _ -> "com.amazonaws.dynamodb#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.dynamodb#ThrottlingException"
     | `TransactionConflictException _ -> "com.amazonaws.dynamodb#TransactionConflictException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
@@ -294,6 +304,8 @@ module DeleteItem = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _, "TransactionConflictException" ->
           `TransactionConflictException
             (Json_deserializers.transaction_conflict_exception_of_yojson tree path)
@@ -815,6 +827,7 @@ module ExecuteStatement = struct
         "com.amazonaws.dynamodb#ProvisionedThroughputExceededException"
     | `RequestLimitExceeded _ -> "com.amazonaws.dynamodb#RequestLimitExceeded"
     | `ResourceNotFoundException _ -> "com.amazonaws.dynamodb#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.dynamodb#ThrottlingException"
     | `TransactionConflictException _ -> "com.amazonaws.dynamodb#TransactionConflictException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
@@ -838,6 +851,8 @@ module ExecuteStatement = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _, "TransactionConflictException" ->
           `TransactionConflictException
             (Json_deserializers.transaction_conflict_exception_of_yojson tree path)
@@ -862,6 +877,7 @@ module ExecuteTransaction = struct
         "com.amazonaws.dynamodb#ProvisionedThroughputExceededException"
     | `RequestLimitExceeded _ -> "com.amazonaws.dynamodb#RequestLimitExceeded"
     | `ResourceNotFoundException _ -> "com.amazonaws.dynamodb#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.dynamodb#ThrottlingException"
     | `TransactionCanceledException _ -> "com.amazonaws.dynamodb#TransactionCanceledException"
     | `TransactionInProgressException _ -> "com.amazonaws.dynamodb#TransactionInProgressException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -881,6 +897,8 @@ module ExecuteTransaction = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _, "TransactionCanceledException" ->
           `TransactionCanceledException
             (Json_deserializers.transaction_canceled_exception_of_yojson tree path)
@@ -948,6 +966,7 @@ module GetItem = struct
         "com.amazonaws.dynamodb#ProvisionedThroughputExceededException"
     | `RequestLimitExceeded _ -> "com.amazonaws.dynamodb#RequestLimitExceeded"
     | `ResourceNotFoundException _ -> "com.amazonaws.dynamodb#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.dynamodb#ThrottlingException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -965,6 +984,8 @@ module GetItem = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -1225,6 +1246,7 @@ module PutItem = struct
         "com.amazonaws.dynamodb#ReplicatedWriteConflictException"
     | `RequestLimitExceeded _ -> "com.amazonaws.dynamodb#RequestLimitExceeded"
     | `ResourceNotFoundException _ -> "com.amazonaws.dynamodb#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.dynamodb#ThrottlingException"
     | `TransactionConflictException _ -> "com.amazonaws.dynamodb#TransactionConflictException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
@@ -1252,6 +1274,8 @@ module PutItem = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _, "TransactionConflictException" ->
           `TransactionConflictException
             (Json_deserializers.transaction_conflict_exception_of_yojson tree path)
@@ -1313,6 +1337,7 @@ module Query = struct
         "com.amazonaws.dynamodb#ProvisionedThroughputExceededException"
     | `RequestLimitExceeded _ -> "com.amazonaws.dynamodb#RequestLimitExceeded"
     | `ResourceNotFoundException _ -> "com.amazonaws.dynamodb#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.dynamodb#ThrottlingException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -1330,6 +1355,8 @@ module Query = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -1440,6 +1467,7 @@ module Scan = struct
         "com.amazonaws.dynamodb#ProvisionedThroughputExceededException"
     | `RequestLimitExceeded _ -> "com.amazonaws.dynamodb#RequestLimitExceeded"
     | `ResourceNotFoundException _ -> "com.amazonaws.dynamodb#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.dynamodb#ThrottlingException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
   let error_deserializer tree path =
@@ -1457,6 +1485,8 @@ module Scan = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _type -> handler tree path _type
     in
     Smaws_Lib.Protocols.AwsJson.(
@@ -1511,6 +1541,7 @@ module TransactGetItems = struct
         "com.amazonaws.dynamodb#ProvisionedThroughputExceededException"
     | `RequestLimitExceeded _ -> "com.amazonaws.dynamodb#RequestLimitExceeded"
     | `ResourceNotFoundException _ -> "com.amazonaws.dynamodb#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.dynamodb#ThrottlingException"
     | `TransactionCanceledException _ -> "com.amazonaws.dynamodb#TransactionCanceledException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
@@ -1529,6 +1560,8 @@ module TransactGetItems = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _, "TransactionCanceledException" ->
           `TransactionCanceledException
             (Json_deserializers.transaction_canceled_exception_of_yojson tree path)
@@ -1554,6 +1587,7 @@ module TransactWriteItems = struct
         "com.amazonaws.dynamodb#ProvisionedThroughputExceededException"
     | `RequestLimitExceeded _ -> "com.amazonaws.dynamodb#RequestLimitExceeded"
     | `ResourceNotFoundException _ -> "com.amazonaws.dynamodb#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.dynamodb#ThrottlingException"
     | `TransactionCanceledException _ -> "com.amazonaws.dynamodb#TransactionCanceledException"
     | `TransactionInProgressException _ -> "com.amazonaws.dynamodb#TransactionInProgressException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
@@ -1576,6 +1610,8 @@ module TransactWriteItems = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _, "TransactionCanceledException" ->
           `TransactionCanceledException
             (Json_deserializers.transaction_canceled_exception_of_yojson tree path)
@@ -1785,6 +1821,7 @@ module UpdateItem = struct
         "com.amazonaws.dynamodb#ReplicatedWriteConflictException"
     | `RequestLimitExceeded _ -> "com.amazonaws.dynamodb#RequestLimitExceeded"
     | `ResourceNotFoundException _ -> "com.amazonaws.dynamodb#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.dynamodb#ThrottlingException"
     | `TransactionConflictException _ -> "com.amazonaws.dynamodb#TransactionConflictException"
     | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
 
@@ -1812,6 +1849,8 @@ module UpdateItem = struct
       | _, "ResourceNotFoundException" ->
           `ResourceNotFoundException
             (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
       | _, "TransactionConflictException" ->
           `TransactionConflictException
             (Json_deserializers.transaction_conflict_exception_of_yojson tree path)

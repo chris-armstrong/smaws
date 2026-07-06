@@ -263,6 +263,7 @@ val make_conformance_pack_input_parameter :
   conformance_pack_input_parameter
 
 val make_put_organization_conformance_pack_request :
+  ?tags:tags_list ->
   ?excluded_accounts:excluded_accounts ->
   ?conformance_pack_input_parameters:conformance_pack_input_parameters ->
   ?delivery_s3_key_prefix:delivery_s3_key_prefix ->
@@ -284,7 +285,7 @@ val make_organization_managed_rule_metadata :
   ?resource_id_scope:string_with_char_limit768 ->
   ?resource_types_scope:resource_types_scope ->
   ?maximum_execution_frequency:maximum_execution_frequency ->
-  ?input_parameters:string_with_char_limit2048 ->
+  ?input_parameters:string_with_char_limit1024 ->
   ?description:string_with_char_limit256_min0 ->
   rule_identifier:string_with_char_limit256 ->
   unit ->
@@ -296,7 +297,7 @@ val make_organization_custom_rule_metadata :
   ?resource_id_scope:string_with_char_limit768 ->
   ?resource_types_scope:resource_types_scope ->
   ?maximum_execution_frequency:maximum_execution_frequency ->
-  ?input_parameters:string_with_char_limit2048 ->
+  ?input_parameters:string_with_char_limit1024 ->
   ?description:string_with_char_limit256_min0 ->
   organization_config_rule_trigger_types:organization_config_rule_trigger_types ->
   lambda_function_arn:string_with_char_limit256 ->
@@ -310,7 +311,7 @@ val make_organization_custom_policy_rule_metadata :
   ?resource_id_scope:string_with_char_limit768 ->
   ?resource_types_scope:resource_types_scope ->
   ?maximum_execution_frequency:maximum_execution_frequency ->
-  ?input_parameters:string_with_char_limit2048 ->
+  ?input_parameters:string_with_char_limit1024 ->
   ?organization_config_rule_trigger_types:organization_config_rule_trigger_type_no_s_ns ->
   ?description:string_with_char_limit256_min0 ->
   policy_text:policy_text ->
@@ -319,6 +320,7 @@ val make_organization_custom_policy_rule_metadata :
   organization_custom_policy_rule_metadata
 
 val make_put_organization_config_rule_request :
+  ?tags:tags_list ->
   ?organization_custom_policy_rule_metadata:organization_custom_policy_rule_metadata ->
   ?excluded_accounts:excluded_accounts ->
   ?organization_custom_rule_metadata:organization_custom_rule_metadata ->
@@ -383,6 +385,7 @@ val make_put_conformance_pack_response :
   ?conformance_pack_arn:conformance_pack_arn -> unit -> put_conformance_pack_response
 
 val make_put_conformance_pack_request :
+  ?tags:tags_list ->
   ?template_ssm_document_details:template_ssm_document_details ->
   ?conformance_pack_input_parameters:conformance_pack_input_parameters ->
   ?delivery_s3_key_prefix:delivery_s3_key_prefix ->
@@ -496,6 +499,7 @@ val make_put_configuration_aggregator_request :
   put_configuration_aggregator_request
 
 val make_scope :
+  ?service_principals:service_principals ->
   ?compliance_resource_id:base_resource_id ->
   ?tag_value:string_with_char_limit256 ->
   ?tag_key:string_with_char_limit128 ->
@@ -529,6 +533,7 @@ val make_evaluation_mode_configuration :
   ?mode:evaluation_mode -> unit -> evaluation_mode_configuration
 
 val make_config_rule :
+  ?rule_evaluation_visibility:rule_evaluation_visibility ->
   ?evaluation_modes:evaluation_modes ->
   ?created_by:string_with_char_limit256 ->
   ?config_rule_state:config_rule_state ->
@@ -1264,7 +1269,7 @@ val make_organization_custom_policy_rule_metadata_no_policy :
   ?resource_id_scope:string_with_char_limit768 ->
   ?resource_types_scope:resource_types_scope ->
   ?maximum_execution_frequency:maximum_execution_frequency ->
-  ?input_parameters:string_with_char_limit2048 ->
+  ?input_parameters:string_with_char_limit1024 ->
   ?organization_config_rule_trigger_types:organization_config_rule_trigger_type_no_s_ns ->
   ?description:string_with_char_limit256_min0 ->
   unit ->
@@ -1495,7 +1500,10 @@ val make_describe_config_rules_response :
   ?next_token:string_ -> ?config_rules:config_rules -> unit -> describe_config_rules_response
 
 val make_describe_config_rules_filters :
-  ?evaluation_mode:evaluation_mode -> unit -> describe_config_rules_filters
+  ?rule_evaluation_visibility:rule_evaluation_visibility ->
+  ?evaluation_mode:evaluation_mode ->
+  unit ->
+  describe_config_rules_filters
 
 val make_describe_config_rules_request :
   ?filters:describe_config_rules_filters ->

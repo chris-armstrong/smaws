@@ -498,8 +498,9 @@ let make_put_resource_policy_request ~resource_policy:(resource_policy_ : resour
   ({ resource_policy = resource_policy_; resource_arn = resource_arn_ }
     : put_resource_policy_request)
 
-let make_insight_selector ?insight_type:(insight_type_ : insight_type option) () =
-  ({ insight_type = insight_type_ } : insight_selector)
+let make_insight_selector ?event_categories:(event_categories_ : source_event_categories option)
+    ?insight_type:(insight_type_ : insight_type option) () =
+  ({ event_categories = event_categories_; insight_type = insight_type_ } : insight_selector)
 
 let make_put_insight_selectors_response
     ?insights_destination:(insights_destination_ : event_data_store_arn option)
@@ -570,24 +571,37 @@ let make_put_event_selectors_request
 let make_context_key_selector ~equals:(equals_ : operator_target_list) ~type_:(type__ : type_) () =
   ({ equals = equals_; type_ = type__ } : context_key_selector)
 
+let make_aggregation_configuration ~event_category:(event_category_ : event_category_aggregation)
+    ~templates:(templates_ : templates) () =
+  ({ event_category = event_category_; templates = templates_ } : aggregation_configuration)
+
 let make_put_event_configuration_response
+    ?aggregation_configurations:(aggregation_configurations_ : aggregation_configurations option)
     ?context_key_selectors:(context_key_selectors_ : context_key_selectors option)
     ?max_event_size:(max_event_size_ : max_event_size option)
-    ?event_data_store_arn:(event_data_store_arn_ : event_data_store_arn option) () =
+    ?event_data_store_arn:(event_data_store_arn_ : event_data_store_arn option)
+    ?trail_ar_n:(trail_ar_n_ : string_ option) () =
   ({
+     aggregation_configurations = aggregation_configurations_;
      context_key_selectors = context_key_selectors_;
      max_event_size = max_event_size_;
      event_data_store_arn = event_data_store_arn_;
+     trail_ar_n = trail_ar_n_;
    }
     : put_event_configuration_response)
 
-let make_put_event_configuration_request ?event_data_store:(event_data_store_ : string_ option)
-    ~context_key_selectors:(context_key_selectors_ : context_key_selectors)
-    ~max_event_size:(max_event_size_ : max_event_size) () =
+let make_put_event_configuration_request
+    ?aggregation_configurations:(aggregation_configurations_ : aggregation_configurations option)
+    ?context_key_selectors:(context_key_selectors_ : context_key_selectors option)
+    ?max_event_size:(max_event_size_ : max_event_size option)
+    ?event_data_store:(event_data_store_ : string_ option)
+    ?trail_name:(trail_name_ : string_ option) () =
   ({
+     aggregation_configurations = aggregation_configurations_;
      context_key_selectors = context_key_selectors_;
      max_event_size = max_event_size_;
      event_data_store = event_data_store_;
+     trail_name = trail_name_;
    }
     : put_event_configuration_request)
 
@@ -696,7 +710,8 @@ let make_list_insights_metric_data_response
     ?error_code:(error_code_ : error_code option)
     ?insight_type:(insight_type_ : insight_type option)
     ?event_name:(event_name_ : event_name option)
-    ?event_source:(event_source_ : event_source option) () =
+    ?event_source:(event_source_ : event_source option) ?trail_ar_n:(trail_ar_n_ : string_ option)
+    () =
   ({
      next_token = next_token_;
      values = values_;
@@ -705,6 +720,7 @@ let make_list_insights_metric_data_response
      insight_type = insight_type_;
      event_name = event_name_;
      event_source = event_source_;
+     trail_ar_n = trail_ar_n_;
    }
     : list_insights_metric_data_response)
 
@@ -714,8 +730,8 @@ let make_list_insights_metric_data_request
     ?data_type:(data_type_ : insights_metric_data_type option)
     ?period:(period_ : insights_metric_period option) ?end_time:(end_time_ : date option)
     ?start_time:(start_time_ : date option) ?error_code:(error_code_ : error_code option)
-    ~insight_type:(insight_type_ : insight_type) ~event_name:(event_name_ : event_name)
-    ~event_source:(event_source_ : event_source) () =
+    ?trail_name:(trail_name_ : string_ option) ~insight_type:(insight_type_ : insight_type)
+    ~event_name:(event_name_ : event_name) ~event_source:(event_source_ : event_source) () =
   ({
      next_token = next_token_;
      max_results = max_results_;
@@ -727,8 +743,30 @@ let make_list_insights_metric_data_request
      insight_type = insight_type_;
      event_name = event_name_;
      event_source = event_source_;
+     trail_name = trail_name_;
    }
     : list_insights_metric_data_request)
+
+let make_list_insights_data_response ?next_token:(next_token_ : pagination_token option)
+    ?events:(events_ : events_list option) () =
+  ({ next_token = next_token_; events = events_ } : list_insights_data_response)
+
+let make_list_insights_data_request ?next_token:(next_token_ : pagination_token option)
+    ?max_results:(max_results_ : list_insights_data_max_results_count option)
+    ?end_time:(end_time_ : date option) ?start_time:(start_time_ : date option)
+    ?dimensions:(dimensions_ : list_insights_data_dimensions option)
+    ~data_type:(data_type_ : list_insights_data_type)
+    ~insight_source:(insight_source_ : resource_arn) () =
+  ({
+     next_token = next_token_;
+     max_results = max_results_;
+     end_time = end_time_;
+     start_time = start_time_;
+     dimensions = dimensions_;
+     data_type = data_type_;
+     insight_source = insight_source_;
+   }
+    : list_insights_data_request)
 
 let make_imports_list_item ?updated_timestamp:(updated_timestamp_ : date option)
     ?created_timestamp:(created_timestamp_ : date option)
@@ -1051,18 +1089,24 @@ let make_get_event_data_store_request ~event_data_store:(event_data_store_ : eve
   ({ event_data_store = event_data_store_ } : get_event_data_store_request)
 
 let make_get_event_configuration_response
+    ?aggregation_configurations:(aggregation_configurations_ : aggregation_configurations option)
     ?context_key_selectors:(context_key_selectors_ : context_key_selectors option)
     ?max_event_size:(max_event_size_ : max_event_size option)
-    ?event_data_store_arn:(event_data_store_arn_ : event_data_store_arn option) () =
+    ?event_data_store_arn:(event_data_store_arn_ : event_data_store_arn option)
+    ?trail_ar_n:(trail_ar_n_ : string_ option) () =
   ({
+     aggregation_configurations = aggregation_configurations_;
      context_key_selectors = context_key_selectors_;
      max_event_size = max_event_size_;
      event_data_store_arn = event_data_store_arn_;
+     trail_ar_n = trail_ar_n_;
    }
     : get_event_configuration_response)
 
-let make_get_event_configuration_request ?event_data_store:(event_data_store_ : string_ option) () =
-  ({ event_data_store = event_data_store_ } : get_event_configuration_request)
+let make_get_event_configuration_request ?event_data_store:(event_data_store_ : string_ option)
+    ?trail_name:(trail_name_ : string_ option) () =
+  ({ event_data_store = event_data_store_; trail_name = trail_name_ }
+    : get_event_configuration_request)
 
 let make_get_dashboard_response
     ?termination_protection_enabled:

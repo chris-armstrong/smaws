@@ -279,8 +279,8 @@ val make_put_identity_provider_configuration_request :
 val make_put_email_monitoring_configuration_response : unit -> unit
 
 val make_put_email_monitoring_configuration_request :
+  ?role_arn:role_arn ->
   log_group_arn:log_group_arn ->
-  role_arn:role_arn ->
   organization_id:organization_id ->
   unit ->
   put_email_monitoring_configuration_request

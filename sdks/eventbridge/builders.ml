@@ -3,12 +3,17 @@ open Types
 let make_dead_letter_config ?arn:(arn_ : resource_arn option) () =
   ({ arn = arn_ } : dead_letter_config)
 
-let make_update_event_bus_response
+let make_log_config ?level:(level_ : level option)
+    ?include_detail:(include_detail_ : include_detail option) () =
+  ({ level = level_; include_detail = include_detail_ } : log_config)
+
+let make_update_event_bus_response ?log_config:(log_config_ : log_config option)
     ?dead_letter_config:(dead_letter_config_ : dead_letter_config option)
     ?description:(description_ : event_bus_description option)
     ?kms_key_identifier:(kms_key_identifier_ : kms_key_identifier option)
     ?name:(name_ : event_bus_name option) ?arn:(arn_ : string_ option) () =
   ({
+     log_config = log_config_;
      dead_letter_config = dead_letter_config_;
      description = description_;
      kms_key_identifier = kms_key_identifier_;
@@ -17,12 +22,13 @@ let make_update_event_bus_response
    }
     : update_event_bus_response)
 
-let make_update_event_bus_request
+let make_update_event_bus_request ?log_config:(log_config_ : log_config option)
     ?dead_letter_config:(dead_letter_config_ : dead_letter_config option)
     ?description:(description_ : event_bus_description option)
     ?kms_key_identifier:(kms_key_identifier_ : kms_key_identifier option)
     ?name:(name_ : event_bus_name option) () =
   ({
+     log_config = log_config_;
      dead_letter_config = dead_letter_config_;
      description = description_;
      kms_key_identifier = kms_key_identifier_;
@@ -1047,7 +1053,8 @@ let make_describe_event_source_request ~name:(name_ : event_source_name) () =
   ({ name = name_ } : describe_event_source_request)
 
 let make_describe_event_bus_response ?last_modified_time:(last_modified_time_ : timestamp option)
-    ?creation_time:(creation_time_ : timestamp option) ?policy:(policy_ : string_ option)
+    ?creation_time:(creation_time_ : timestamp option) ?log_config:(log_config_ : log_config option)
+    ?policy:(policy_ : string_ option)
     ?dead_letter_config:(dead_letter_config_ : dead_letter_config option)
     ?kms_key_identifier:(kms_key_identifier_ : kms_key_identifier option)
     ?description:(description_ : event_bus_description option) ?arn:(arn_ : string_ option)
@@ -1055,6 +1062,7 @@ let make_describe_event_bus_response ?last_modified_time:(last_modified_time_ : 
   ({
      last_modified_time = last_modified_time_;
      creation_time = creation_time_;
+     log_config = log_config_;
      policy = policy_;
      dead_letter_config = dead_letter_config_;
      kms_key_identifier = kms_key_identifier_;
@@ -1320,12 +1328,13 @@ let make_create_partner_event_source_request ~account:(account_ : account_id)
     ~name:(name_ : event_source_name) () =
   ({ account = account_; name = name_ } : create_partner_event_source_request)
 
-let make_create_event_bus_response
+let make_create_event_bus_response ?log_config:(log_config_ : log_config option)
     ?dead_letter_config:(dead_letter_config_ : dead_letter_config option)
     ?kms_key_identifier:(kms_key_identifier_ : kms_key_identifier option)
     ?description:(description_ : event_bus_description option)
     ?event_bus_arn:(event_bus_arn_ : string_ option) () =
   ({
+     log_config = log_config_;
      dead_letter_config = dead_letter_config_;
      kms_key_identifier = kms_key_identifier_;
      description = description_;
@@ -1334,6 +1343,7 @@ let make_create_event_bus_response
     : create_event_bus_response)
 
 let make_create_event_bus_request ?tags:(tags_ : tag_list option)
+    ?log_config:(log_config_ : log_config option)
     ?dead_letter_config:(dead_letter_config_ : dead_letter_config option)
     ?kms_key_identifier:(kms_key_identifier_ : kms_key_identifier option)
     ?description:(description_ : event_bus_description option)
@@ -1341,6 +1351,7 @@ let make_create_event_bus_request ?tags:(tags_ : tag_list option)
     ~name:(name_ : event_bus_name) () =
   ({
      tags = tags_;
+     log_config = log_config_;
      dead_letter_config = dead_letter_config_;
      kms_key_identifier = kms_key_identifier_;
      description = description_;

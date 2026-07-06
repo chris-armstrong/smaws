@@ -194,6 +194,22 @@ let shard_iterator_type_of_yojson (tree : t) path =
 
 let shard_iterator_of_yojson = string_of_yojson
 
+let shard_filter_type_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "CHILD_SHARDS" -> CHILD_SHARDS
+    | `String value -> raise (deserialize_unknown_enum_value_error path "ShardFilterType" value)
+    | _ -> raise (deserialize_wrong_type_error path "ShardFilterType")
+     : shard_filter_type)
+    : shard_filter_type)
+
+let shard_filter_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     shard_id = option_of_yojson (value_for_key shard_id_of_yojson "ShardId") _list path;
+     type_ = option_of_yojson (value_for_key shard_filter_type_of_yojson "Type") _list path;
+   }
+    : shard_filter)
+
 let resource_not_found_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({ message = option_of_yojson (value_for_key error_message_of_yojson "message") _list path }
@@ -315,6 +331,7 @@ let describe_stream_output_of_yojson tree path =
 let describe_stream_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     shard_filter = option_of_yojson (value_for_key shard_filter_of_yojson "ShardFilter") _list path;
      exclusive_start_shard_id =
        option_of_yojson (value_for_key shard_id_of_yojson "ExclusiveStartShardId") _list path;
      limit = option_of_yojson (value_for_key positive_integer_object_of_yojson "Limit") _list path;

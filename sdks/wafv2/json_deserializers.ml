@@ -725,9 +725,20 @@ let challenge_action_of_yojson tree path =
    }
     : challenge_action)
 
+let price_multiplier_of_yojson = string_of_yojson
+
+let monetize_action_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     price_multiplier =
+       option_of_yojson (value_for_key price_multiplier_of_yojson "PriceMultiplier") _list path;
+   }
+    : monetize_action)
+
 let rule_action_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     monetize = option_of_yojson (value_for_key monetize_action_of_yojson "Monetize") _list path;
      challenge = option_of_yojson (value_for_key challenge_action_of_yojson "Challenge") _list path;
      captcha = option_of_yojson (value_for_key captcha_action_of_yojson "Captcha") _list path;
      count = option_of_yojson (value_for_key count_action_of_yojson "Count") _list path;
@@ -1611,6 +1622,7 @@ let request_body_associated_resource_type_config_of_yojson tree path =
 
 let associated_resource_type_of_yojson (tree : t) path =
   ((match tree with
+    | `String "AGENTCORE_GATEWAY" -> AGENTCORE_GATEWAY
     | `String "VERIFIED_ACCESS_INSTANCE" -> VERIFIED_ACCESS_INSTANCE
     | `String "APP_RUNNER_SERVICE" -> APP_RUNNER_SERVICE
     | `String "COGNITO_USER_POOL" -> COGNITO_USER_POOL
@@ -1673,9 +1685,80 @@ let application_config_of_yojson tree path =
    }
     : application_config)
 
+let blockchain_chain_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "SOLANA_DEVNET" -> SOLANA_DEVNET
+    | `String "BASE_SEPOLIA" -> BASE_SEPOLIA
+    | `String "SOLANA" -> SOLANA
+    | `String "BASE" -> BASE
+    | `String value -> raise (deserialize_unknown_enum_value_error path "BlockchainChain" value)
+    | _ -> raise (deserialize_wrong_type_error path "BlockchainChain")
+     : blockchain_chain)
+    : blockchain_chain)
+
+let wallet_address_of_yojson = string_of_yojson
+let price_amount_of_yojson = string_of_yojson
+
+let crypto_currency_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "USDC" -> USDC
+    | `String value -> raise (deserialize_unknown_enum_value_error path "CryptoCurrency" value)
+    | _ -> raise (deserialize_wrong_type_error path "CryptoCurrency")
+     : crypto_currency)
+    : crypto_currency)
+
+let price_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     currency = value_for_key crypto_currency_of_yojson "Currency" _list path;
+     amount = value_for_key price_amount_of_yojson "Amount" _list path;
+   }
+    : price)
+
+let prices_of_yojson tree path = list_of_yojson price_of_yojson tree path
+
+let payment_network_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     prices = value_for_key prices_of_yojson "Prices" _list path;
+     wallet_address = value_for_key wallet_address_of_yojson "WalletAddress" _list path;
+     chain = value_for_key blockchain_chain_of_yojson "Chain" _list path;
+   }
+    : payment_network)
+
+let payment_networks_of_yojson tree path = list_of_yojson payment_network_of_yojson tree path
+
+let crypto_config_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({ payment_networks = value_for_key payment_networks_of_yojson "PaymentNetworks" _list path }
+    : crypto_config)
+
+let currency_mode_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "TEST" -> TEST
+    | `String "REAL" -> REAL
+    | `String value -> raise (deserialize_unknown_enum_value_error path "CurrencyMode" value)
+    | _ -> raise (deserialize_wrong_type_error path "CurrencyMode")
+     : currency_mode)
+    : currency_mode)
+
+let monetization_config_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     currency_mode =
+       option_of_yojson (value_for_key currency_mode_of_yojson "CurrencyMode") _list path;
+     crypto_config =
+       option_of_yojson (value_for_key crypto_config_of_yojson "CryptoConfig") _list path;
+   }
+    : monetization_config)
+
 let web_ac_l_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     monetization_config =
+       option_of_yojson
+         (value_for_key monetization_config_of_yojson "MonetizationConfig")
+         _list path;
      application_config =
        option_of_yojson (value_for_key application_config_of_yojson "ApplicationConfig") _list path;
      on_source_d_do_s_protection_config =
@@ -1794,6 +1877,10 @@ let waf_invalid_permission_policy_exception_of_yojson tree path =
 
 let parameter_exception_field_of_yojson (tree : t) path =
   ((match tree with
+    | `String "PAYMENT_NETWORK" -> PAYMENT_NETWORK
+    | `String "PRICE_AMOUNT" -> PRICE_AMOUNT
+    | `String "WALLET_ADDRESS" -> WALLET_ADDRESS
+    | `String "MONETIZATION_CONFIG" -> MONETIZATION_CONFIG
     | `String "LOW_REPUTATION_MODE" -> LOW_REPUTATION_MODE
     | `String "DATA_PROTECTION_CONFIG" -> DATA_PROTECTION_CONFIG
     | `String "ACP_RULE_SET_RESPONSE_INSPECTION" -> ACP_RULE_SET_RESPONSE_INSPECTION
@@ -1898,6 +1985,34 @@ let waf_internal_error_exception_of_yojson tree path =
   ({ message = option_of_yojson (value_for_key error_message_of_yojson "Message") _list path }
     : waf_internal_error_exception)
 
+let pricing_plan_feature_name_of_yojson = string_of_yojson
+let required_pricing_plan_name_of_yojson = string_of_yojson
+
+let disallowed_feature_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     required_pricing_plan =
+       option_of_yojson
+         (value_for_key required_pricing_plan_name_of_yojson "RequiredPricingPlan")
+         _list path;
+     feature =
+       option_of_yojson (value_for_key pricing_plan_feature_name_of_yojson "Feature") _list path;
+   }
+    : disallowed_feature)
+
+let disallowed_features_of_yojson tree path = list_of_yojson disallowed_feature_of_yojson tree path
+
+let waf_feature_not_included_in_pricing_plan_exception_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     disallowed_features =
+       option_of_yojson
+         (value_for_key disallowed_features_of_yojson "DisallowedFeatures")
+         _list path;
+     message = option_of_yojson (value_for_key error_message_of_yojson "Message") _list path;
+   }
+    : waf_feature_not_included_in_pricing_plan_exception)
+
 let waf_expired_managed_rule_group_version_exception_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({ message = option_of_yojson (value_for_key error_message_of_yojson "Message") _list path }
@@ -1933,6 +2048,9 @@ let version_to_publish_of_yojson tree path =
 let versions_to_publish_of_yojson tree path =
   map_of_yojson version_key_string_of_yojson version_to_publish_of_yojson tree path
 
+let verified_status_of_yojson = bool_of_yojson
+let uri_path_prefix_string_of_yojson = string_of_yojson
+
 let update_web_acl_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -1953,6 +2071,12 @@ let scope_of_yojson (tree : t) path =
 let update_web_acl_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     monetization_config =
+       option_of_yojson
+         (value_for_key monetization_config_of_yojson "MonetizationConfig")
+         _list path;
+     application_config =
+       option_of_yojson (value_for_key application_config_of_yojson "ApplicationConfig") _list path;
      on_source_d_do_s_protection_config =
        option_of_yojson
          (value_for_key on_source_d_do_s_protection_config_of_yojson "OnSourceDDoSProtectionConfig")
@@ -1996,6 +2120,10 @@ let update_rule_group_response_of_yojson tree path =
 let update_rule_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     monetization_config =
+       option_of_yojson
+         (value_for_key monetization_config_of_yojson "MonetizationConfig")
+         _list path;
      custom_response_bodies =
        option_of_yojson
          (value_for_key custom_response_bodies_of_yojson "CustomResponseBodies")
@@ -2108,6 +2236,16 @@ let time_window_of_yojson tree path =
    }
     : time_window)
 
+let time_series_statistic_type_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "PAYMENT_TRAFFIC" -> PAYMENT_TRAFFIC
+    | `String "DATE_HISTOGRAM" -> DATE_HISTOGRAM
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "TimeSeriesStatisticType" value)
+    | _ -> raise (deserialize_wrong_type_error path "TimeSeriesStatisticType")
+     : time_series_statistic_type)
+    : time_series_statistic_type)
+
 let tag_value_of_yojson = string_of_yojson
 
 let tag_resource_response_of_yojson tree path =
@@ -2141,7 +2279,117 @@ let tag_info_for_resource_of_yojson tree path =
    }
     : tag_info_for_resource)
 
+let filter_string_of_yojson = string_of_yojson
+let percentage_value_of_yojson = double_of_yojson
+let monetization_amount_value_of_yojson = string_of_yojson
+let request_count_of_yojson = long_of_yojson
+
+let source_statistics_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     group_by_value =
+       option_of_yojson (value_for_key filter_string_of_yojson "GroupByValue") _list path;
+     verified = option_of_yojson (value_for_key verified_status_of_yojson "Verified") _list path;
+     organization =
+       option_of_yojson (value_for_key filter_string_of_yojson "Organization") _list path;
+     intent = option_of_yojson (value_for_key filter_string_of_yojson "Intent") _list path;
+     source_category =
+       option_of_yojson (value_for_key filter_string_of_yojson "SourceCategory") _list path;
+     request_count = value_for_key request_count_of_yojson "RequestCount" _list path;
+     amount = value_for_key monetization_amount_value_of_yojson "Amount" _list path;
+     percentage = value_for_key percentage_value_of_yojson "Percentage" _list path;
+     source_name = value_for_key filter_string_of_yojson "SourceName" _list path;
+   }
+    : source_statistics)
+
+let source_statistics_list_of_yojson tree path =
+  list_of_yojson source_statistics_of_yojson tree path
+
+let sort_order_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "DESC" -> DESC
+    | `String "ASC" -> ASC
+    | `String value -> raise (deserialize_unknown_enum_value_error path "SortOrder" value)
+    | _ -> raise (deserialize_wrong_type_error path "SortOrder")
+     : sort_order)
+    : sort_order)
+
 let solve_timestamp_of_yojson = long_of_yojson
+
+let settlement_status_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "DUPLICATE" -> DUPLICATE
+    | `String "SKIPPED_ORIGIN_ERROR" -> SKIPPED_ORIGIN_ERROR
+    | `String "SERVICE_ERROR" -> SERVICE_ERROR
+    | `String "FAILED" -> FAILED
+    | `String "PENDING" -> PENDING
+    | `String "SETTLED" -> SETTLED
+    | `String value -> raise (deserialize_unknown_enum_value_error path "SettlementStatus" value)
+    | _ -> raise (deserialize_wrong_type_error path "SettlementStatus")
+     : settlement_status)
+    : settlement_status)
+
+let settlement_sort_by_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "STATUS" -> STATUS
+    | `String "NAME" -> NAME
+    | `String "AMOUNT" -> AMOUNT
+    | `String "TIMESTAMP" -> TIMESTAMP
+    | `String value -> raise (deserialize_unknown_enum_value_error path "SettlementSortBy" value)
+    | _ -> raise (deserialize_wrong_type_error path "SettlementSortBy")
+     : settlement_sort_by)
+    : settlement_sort_by)
+
+let settlement_filter_string_of_yojson = string_of_yojson
+
+let currency_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "USDC" -> USDC
+    | `String value -> raise (deserialize_unknown_enum_value_error path "Currency" value)
+    | _ -> raise (deserialize_wrong_type_error path "Currency")
+     : currency)
+    : currency)
+
+let settlement_id_string_of_yojson = string_of_yojson
+
+let settlement_record_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     request_timestamp =
+       option_of_yojson (value_for_key timestamp_of_yojson "RequestTimestamp") _list path;
+     web_acl_arn = option_of_yojson (value_for_key resource_arn_of_yojson "WebAclArn") _list path;
+     content_path =
+       option_of_yojson (value_for_key filter_string_of_yojson "ContentPath") _list path;
+     verified = option_of_yojson (value_for_key verified_status_of_yojson "Verified") _list path;
+     intent = option_of_yojson (value_for_key filter_string_of_yojson "Intent") _list path;
+     source_category =
+       option_of_yojson (value_for_key filter_string_of_yojson "SourceCategory") _list path;
+     organization =
+       option_of_yojson (value_for_key filter_string_of_yojson "Organization") _list path;
+     source_name = option_of_yojson (value_for_key filter_string_of_yojson "SourceName") _list path;
+     request_id =
+       option_of_yojson (value_for_key settlement_filter_string_of_yojson "RequestId") _list path;
+     transaction_id =
+       option_of_yojson (value_for_key settlement_id_string_of_yojson "TransactionId") _list path;
+     network =
+       option_of_yojson (value_for_key settlement_filter_string_of_yojson "Network") _list path;
+     currency = option_of_yojson (value_for_key currency_of_yojson "Currency") _list path;
+     amount = value_for_key monetization_amount_value_of_yojson "Amount" _list path;
+     status = value_for_key settlement_status_of_yojson "Status" _list path;
+     wallet_address =
+       option_of_yojson
+         (value_for_key settlement_filter_string_of_yojson "WalletAddress")
+         _list path;
+     payer_address =
+       option_of_yojson (value_for_key settlement_filter_string_of_yojson "PayerAddress") _list path;
+     timestamp = value_for_key timestamp_of_yojson "Timestamp" _list path;
+   }
+    : settlement_record)
+
+let settlement_record_list_of_yojson tree path =
+  list_of_yojson settlement_record_of_yojson tree path
+
+let settlement_record_limit_of_yojson = int_of_yojson
 let ip_string_of_yojson = string_of_yojson
 let country_of_yojson = string_of_yojson
 let http_method_of_yojson = string_of_yojson
@@ -2271,6 +2519,10 @@ let label_summaries_of_yojson tree path = list_of_yojson label_summary_of_yojson
 let rule_group_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     monetization_config =
+       option_of_yojson
+         (value_for_key monetization_config_of_yojson "MonetizationConfig")
+         _list path;
      consumed_labels =
        option_of_yojson (value_for_key label_summaries_of_yojson "ConsumedLabels") _list path;
      available_labels =
@@ -2292,8 +2544,45 @@ let rule_group_of_yojson tree path =
    }
     : rule_group)
 
+let path_string_of_yojson = string_of_yojson
+
+let revenue_path_statistics_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     request_count = value_for_key request_count_of_yojson "RequestCount" _list path;
+     amount = value_for_key monetization_amount_value_of_yojson "Amount" _list path;
+     percentage = value_for_key percentage_value_of_yojson "Percentage" _list path;
+     path = value_for_key path_string_of_yojson "Path" _list path;
+   }
+    : revenue_path_statistics)
+
+let revenue_path_statistics_list_of_yojson tree path =
+  list_of_yojson revenue_path_statistics_of_yojson tree path
+
+let revenue_breakdown_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     total_monetize_served =
+       option_of_yojson (value_for_key request_count_of_yojson "TotalMonetizeServed") _list path;
+     total_settled =
+       option_of_yojson (value_for_key request_count_of_yojson "TotalSettled") _list path;
+     currency = option_of_yojson (value_for_key currency_of_yojson "Currency") _list path;
+     unverified_amount =
+       option_of_yojson
+         (value_for_key monetization_amount_value_of_yojson "UnverifiedAmount")
+         _list path;
+     verified_amount =
+       option_of_yojson
+         (value_for_key monetization_amount_value_of_yojson "VerifiedAmount")
+         _list path;
+     total_amount =
+       option_of_yojson (value_for_key monetization_amount_value_of_yojson "TotalAmount") _list path;
+   }
+    : revenue_breakdown)
+
 let resource_type_of_yojson (tree : t) path =
   ((match tree with
+    | `String "AGENTCORE_GATEWAY" -> AGENTCORE_GATEWAY
     | `String "AMPLIFY" -> AMPLIFY
     | `String "VERIFIED_ACCESS_INSTANCE" -> VERIFIED_ACCESS_INSTANCE
     | `String "APP_RUNNER_SERVICE" -> APP_RUNNER_SERVICE
@@ -2370,6 +2659,26 @@ let rate_based_statement_managed_keys_ip_set_of_yojson tree path =
    }
     : rate_based_statement_managed_keys_ip_set)
 
+let ranking_statistic_type_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "TOP_PATHS_BY_REVENUE" -> TOP_PATHS_BY_REVENUE
+    | `String "TOP_SOURCES_BY_REVENUE" -> TOP_SOURCES_BY_REVENUE
+    | `String value ->
+        raise (deserialize_unknown_enum_value_error path "RankingStatisticType" value)
+    | _ -> raise (deserialize_wrong_type_error path "RankingStatisticType")
+     : ranking_statistic_type)
+    : ranking_statistic_type)
+
+let ranking_sort_by_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "NAME" -> NAME
+    | `String "PERCENTAGE" -> PERCENTAGE
+    | `String "REVENUE" -> REVENUE
+    | `String value -> raise (deserialize_unknown_enum_value_error path "RankingSortBy" value)
+    | _ -> raise (deserialize_wrong_type_error path "RankingSortBy")
+     : ranking_sort_by)
+    : ranking_sort_by)
+
 let put_permission_policy_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   (() : unit)
@@ -2429,6 +2738,7 @@ let filter_requirement_of_yojson (tree : t) path =
 let action_value_of_yojson (tree : t) path =
   ((match tree with
     | `String "EXCLUDED_AS_COUNT" -> EXCLUDED_AS_COUNT
+    | `String "MONETIZE" -> MONETIZE
     | `String "CHALLENGE" -> CHALLENGE
     | `String "CAPTCHA" -> CAPTCHA
     | `String "COUNT" -> COUNT
@@ -2491,6 +2801,7 @@ let log_type_of_yojson (tree : t) path =
 
 let log_scope_of_yojson (tree : t) path =
   ((match tree with
+    | `String "CLOUDWATCH_TELEMETRY_RULE_MANAGED" -> CLOUDWATCH_TELEMETRY_RULE_MANAGED
     | `String "SECURITY_LAKE" -> SECURITY_LAKE
     | `String "CUSTOMER" -> CUSTOMER
     | `String value -> raise (deserialize_unknown_enum_value_error path "LogScope" value)
@@ -2568,9 +2879,62 @@ let platform_of_yojson (tree : t) path =
      : platform)
     : platform)
 
+let filter_source_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     bot_name = option_of_yojson (value_for_key filter_string_of_yojson "BotName") _list path;
+     bot_organization =
+       option_of_yojson (value_for_key filter_string_of_yojson "BotOrganization") _list path;
+     bot_category =
+       option_of_yojson (value_for_key filter_string_of_yojson "BotCategory") _list path;
+   }
+    : filter_source)
+
+let bot_statistics_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     percentage = value_for_key percentage_value_of_yojson "Percentage" _list path;
+     request_count = value_for_key request_count_of_yojson "RequestCount" _list path;
+     bot_name = value_for_key filter_string_of_yojson "BotName" _list path;
+   }
+    : bot_statistics)
+
+let bot_statistics_list_of_yojson tree path = list_of_yojson bot_statistics_of_yojson tree path
+
+let path_statistics_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     top_bots = option_of_yojson (value_for_key bot_statistics_list_of_yojson "TopBots") _list path;
+     percentage = value_for_key percentage_value_of_yojson "Percentage" _list path;
+     request_count = value_for_key request_count_of_yojson "RequestCount" _list path;
+     path = value_for_key path_string_of_yojson "Path" _list path;
+     source = option_of_yojson (value_for_key filter_source_of_yojson "Source") _list path;
+   }
+    : path_statistics)
+
+let path_statistics_list_of_yojson tree path = list_of_yojson path_statistics_of_yojson tree path
+let path_statistics_limit_of_yojson = int_of_yojson
 let pagination_limit_of_yojson = int_of_yojson
 let output_url_of_yojson = string_of_yojson
+let number_of_top_traffic_bots_per_path_of_yojson = int_of_yojson
 let next_marker_of_yojson = string_of_yojson
+let monetization_filter_value_of_yojson = string_of_yojson
+
+let monetization_filter_value_list_of_yojson tree path =
+  list_of_yojson monetization_filter_value_of_yojson tree path
+
+let monetization_filter_name_of_yojson = string_of_yojson
+
+let monetization_filter_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     values = value_for_key monetization_filter_value_list_of_yojson "Values" _list path;
+     name = value_for_key monetization_filter_name_of_yojson "Name" _list path;
+   }
+    : monetization_filter)
+
+let monetization_filter_list_of_yojson tree path =
+  list_of_yojson monetization_filter_of_yojson tree path
 
 let mobile_sdk_release_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -2583,6 +2947,8 @@ let mobile_sdk_release_of_yojson tree path =
        option_of_yojson (value_for_key version_key_string_of_yojson "ReleaseVersion") _list path;
    }
     : mobile_sdk_release)
+
+let max_data_points_of_yojson = int_of_yojson
 
 let managed_rule_set_summary_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -2710,6 +3076,30 @@ let list_tags_for_resource_request_of_yojson tree path =
      next_marker = option_of_yojson (value_for_key next_marker_of_yojson "NextMarker") _list path;
    }
     : list_tags_for_resource_request)
+
+let list_settlement_records_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_marker = option_of_yojson (value_for_key next_marker_of_yojson "NextMarker") _list path;
+     settlements =
+       option_of_yojson (value_for_key settlement_record_list_of_yojson "Settlements") _list path;
+   }
+    : list_settlement_records_response)
+
+let list_settlement_records_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_marker = option_of_yojson (value_for_key next_marker_of_yojson "NextMarker") _list path;
+     limit = option_of_yojson (value_for_key settlement_record_limit_of_yojson "Limit") _list path;
+     sort_order = option_of_yojson (value_for_key sort_order_of_yojson "SortOrder") _list path;
+     sort_by = option_of_yojson (value_for_key settlement_sort_by_of_yojson "SortBy") _list path;
+     filters =
+       option_of_yojson (value_for_key monetization_filter_list_of_yojson "Filters") _list path;
+     currency = value_for_key currency_of_yojson "Currency" _list path;
+     scope = value_for_key scope_of_yojson "Scope" _list path;
+     time_window = value_for_key time_window_of_yojson "TimeWindow" _list path;
+   }
+    : list_settlement_records_request)
 
 let list_rule_groups_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -2939,6 +3329,17 @@ let list_api_keys_request_of_yojson tree path =
    }
     : list_api_keys_request)
 
+let interval_type_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "DAILY" -> DAILY
+    | `String "HOURLY" -> HOURLY
+    | `String "FIVE_MINUTELY" -> FIVE_MINUTELY
+    | `String "MINUTELY" -> MINUTELY
+    | `String value -> raise (deserialize_unknown_enum_value_error path "IntervalType" value)
+    | _ -> raise (deserialize_wrong_type_error path "IntervalType")
+     : interval_type)
+    : interval_type)
+
 let ip_set_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
@@ -2951,6 +3352,18 @@ let ip_set_of_yojson tree path =
      name = value_for_key entity_name_of_yojson "Name" _list path;
    }
     : ip_set)
+
+let group_by_type_of_yojson (tree : t) path =
+  ((match tree with
+    | `String "WEBACL" -> WEBACL
+    | `String "ORGANIZATION" -> ORGANIZATION
+    | `String "INTENT" -> INTENT
+    | `String "CATEGORY" -> CATEGORY
+    | `String "NAME" -> NAME
+    | `String value -> raise (deserialize_unknown_enum_value_error path "GroupByType" value)
+    | _ -> raise (deserialize_wrong_type_error path "GroupByType")
+     : group_by_type)
+    : group_by_type)
 
 let get_web_acl_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -2981,6 +3394,38 @@ let get_web_acl_for_resource_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({ resource_arn = value_for_key resource_arn_of_yojson "ResourceArn" _list path }
     : get_web_acl_for_resource_request)
+
+let get_top_path_statistics_by_traffic_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     top_categories =
+       option_of_yojson (value_for_key path_statistics_list_of_yojson "TopCategories") _list path;
+     next_marker = option_of_yojson (value_for_key next_marker_of_yojson "NextMarker") _list path;
+     total_request_count = value_for_key request_count_of_yojson "TotalRequestCount" _list path;
+     path_statistics = value_for_key path_statistics_list_of_yojson "PathStatistics" _list path;
+   }
+    : get_top_path_statistics_by_traffic_response)
+
+let get_top_path_statistics_by_traffic_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_marker = option_of_yojson (value_for_key next_marker_of_yojson "NextMarker") _list path;
+     number_of_top_traffic_bots_per_path =
+       value_for_key number_of_top_traffic_bots_per_path_of_yojson "NumberOfTopTrafficBotsPerPath"
+         _list path;
+     limit = value_for_key path_statistics_limit_of_yojson "Limit" _list path;
+     bot_name = option_of_yojson (value_for_key filter_string_of_yojson "BotName") _list path;
+     bot_organization =
+       option_of_yojson (value_for_key filter_string_of_yojson "BotOrganization") _list path;
+     bot_category =
+       option_of_yojson (value_for_key filter_string_of_yojson "BotCategory") _list path;
+     time_window = value_for_key time_window_of_yojson "TimeWindow" _list path;
+     uri_path_prefix =
+       option_of_yojson (value_for_key uri_path_prefix_string_of_yojson "UriPathPrefix") _list path;
+     scope = value_for_key scope_of_yojson "Scope" _list path;
+     web_acl_arn = value_for_key resource_arn_of_yojson "WebAclArn" _list path;
+   }
+    : get_top_path_statistics_by_traffic_request)
 
 let get_sampled_requests_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -3021,6 +3466,101 @@ let get_rule_group_request_of_yojson tree path =
      name = option_of_yojson (value_for_key entity_name_of_yojson "Name") _list path;
    }
     : get_rule_group_request)
+
+let data_point_entry_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     group_by_value =
+       option_of_yojson (value_for_key filter_string_of_yojson "GroupByValue") _list path;
+     intent = option_of_yojson (value_for_key filter_string_of_yojson "Intent") _list path;
+     category = option_of_yojson (value_for_key filter_string_of_yojson "Category") _list path;
+     total_amount =
+       option_of_yojson (value_for_key monetization_amount_value_of_yojson "TotalAmount") _list path;
+     settled_count =
+       option_of_yojson (value_for_key request_count_of_yojson "SettledCount") _list path;
+     monetize_served_count =
+       option_of_yojson (value_for_key request_count_of_yojson "MonetizeServedCount") _list path;
+     date = option_of_yojson (value_for_key timestamp_of_yojson "Date") _list path;
+   }
+    : data_point_entry)
+
+let data_points_list_of_yojson tree path = list_of_yojson data_point_entry_of_yojson tree path
+
+let get_revenue_statistics_time_series_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_marker = option_of_yojson (value_for_key next_marker_of_yojson "NextMarker") _list path;
+     data_points =
+       option_of_yojson (value_for_key data_points_list_of_yojson "DataPoints") _list path;
+   }
+    : get_revenue_statistics_time_series_response)
+
+let get_revenue_statistics_time_series_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_marker = option_of_yojson (value_for_key next_marker_of_yojson "NextMarker") _list path;
+     limit = option_of_yojson (value_for_key max_data_points_of_yojson "Limit") _list path;
+     filters =
+       option_of_yojson (value_for_key monetization_filter_list_of_yojson "Filters") _list path;
+     group_by = option_of_yojson (value_for_key group_by_type_of_yojson "GroupBy") _list path;
+     currency = value_for_key currency_of_yojson "Currency" _list path;
+     interval = value_for_key interval_type_of_yojson "Interval" _list path;
+     scope = value_for_key scope_of_yojson "Scope" _list path;
+     time_window = value_for_key time_window_of_yojson "TimeWindow" _list path;
+     statistic_type = value_for_key time_series_statistic_type_of_yojson "StatisticType" _list path;
+   }
+    : get_revenue_statistics_time_series_request)
+
+let get_revenue_statistics_summary_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     revenue_breakdown =
+       option_of_yojson (value_for_key revenue_breakdown_of_yojson "RevenueBreakdown") _list path;
+   }
+    : get_revenue_statistics_summary_response)
+
+let get_revenue_statistics_summary_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     filters =
+       option_of_yojson (value_for_key monetization_filter_list_of_yojson "Filters") _list path;
+     currency = value_for_key currency_of_yojson "Currency" _list path;
+     scope = value_for_key scope_of_yojson "Scope" _list path;
+     time_window = value_for_key time_window_of_yojson "TimeWindow" _list path;
+   }
+    : get_revenue_statistics_summary_request)
+
+let get_revenue_statistics_response_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     next_marker = option_of_yojson (value_for_key next_marker_of_yojson "NextMarker") _list path;
+     revenue_path_statistics =
+       option_of_yojson
+         (value_for_key revenue_path_statistics_list_of_yojson "RevenuePathStatistics")
+         _list path;
+     source_statistics =
+       option_of_yojson
+         (value_for_key source_statistics_list_of_yojson "SourceStatistics")
+         _list path;
+   }
+    : get_revenue_statistics_response)
+
+let get_revenue_statistics_request_of_yojson tree path =
+  let _list = assoc_of_yojson tree path in
+  ({
+     sort_order = option_of_yojson (value_for_key sort_order_of_yojson "SortOrder") _list path;
+     sort_by = option_of_yojson (value_for_key ranking_sort_by_of_yojson "SortBy") _list path;
+     limit = option_of_yojson (value_for_key path_statistics_limit_of_yojson "Limit") _list path;
+     next_marker = option_of_yojson (value_for_key next_marker_of_yojson "NextMarker") _list path;
+     filters =
+       option_of_yojson (value_for_key monetization_filter_list_of_yojson "Filters") _list path;
+     group_by = option_of_yojson (value_for_key group_by_type_of_yojson "GroupBy") _list path;
+     currency = value_for_key currency_of_yojson "Currency" _list path;
+     scope = value_for_key scope_of_yojson "Scope" _list path;
+     time_window = value_for_key time_window_of_yojson "TimeWindow" _list path;
+     statistic_type = value_for_key ranking_statistic_type_of_yojson "StatisticType" _list path;
+   }
+    : get_revenue_statistics_request)
 
 let get_regex_pattern_set_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
@@ -3364,6 +3904,10 @@ let create_web_acl_response_of_yojson tree path =
 let create_web_acl_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     monetization_config =
+       option_of_yojson
+         (value_for_key monetization_config_of_yojson "MonetizationConfig")
+         _list path;
      application_config =
        option_of_yojson (value_for_key application_config_of_yojson "ApplicationConfig") _list path;
      on_source_d_do_s_protection_config =
@@ -3405,6 +3949,10 @@ let create_rule_group_response_of_yojson tree path =
 let create_rule_group_request_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
+     monetization_config =
+       option_of_yojson
+         (value_for_key monetization_config_of_yojson "MonetizationConfig")
+         _list path;
      custom_response_bodies =
        option_of_yojson
          (value_for_key custom_response_bodies_of_yojson "CustomResponseBodies")

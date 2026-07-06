@@ -215,6 +215,7 @@ module CreateEventDataStore : sig
     | `OperationNotPermittedException of operation_not_permitted_exception
     | `OrganizationNotInAllFeaturesModeException of organization_not_in_all_features_mode_exception
     | `OrganizationsNotInUseException of organizations_not_in_use_exception
+    | `ThrottlingException of throttling_exception
     | `UnsupportedOperationException of unsupported_operation_exception ] ->
     string
 
@@ -242,6 +243,7 @@ module CreateEventDataStore : sig
       | `OrganizationNotInAllFeaturesModeException of
         organization_not_in_all_features_mode_exception
       | `OrganizationsNotInUseException of organizations_not_in_use_exception
+      | `ThrottlingException of throttling_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
 end
@@ -503,7 +505,19 @@ end
 [@@ocaml.doc
   "Deletes a trail. This operation must be called from the Region in which the trail was created. \
    [DeleteTrail] cannot be called on the shadow trails (replicated trails in other Regions) of a \
-   trail that is enabled in all Regions.\n"]
+   trail that is enabled in all Regions.\n\n\
+  \   While deleting a CloudTrail trail is an irreversible action, CloudTrail does not delete log \
+   files in the Amazon S3 bucket for that trail, the Amazon S3 bucket itself, or the CloudWatchlog \
+   group to which the trail delivers events. Deleting a multi-Region trail will stop logging of \
+   events in all Amazon Web Services Regions enabled in your Amazon Web Services account. Deleting \
+   a single-Region trail will stop logging of events in that Region only. It will not stop logging \
+   of events in other Regions even if the trails in those other Regions have identical names to \
+   the deleted trail. \n\
+  \  \n\
+  \   For information about account closure and deletion of CloudTrail trails, see \
+   {{:https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-account-closure.html}https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-account-closure.html}.\n\
+  \   \n\
+  \    "]
 
 module DeregisterOrganizationDelegatedAdmin : sig
   val error_to_string :
@@ -821,8 +835,10 @@ module GetEventConfiguration : sig
     | `InvalidEventDataStoreStatusException of invalid_event_data_store_status_exception
     | `InvalidParameterCombinationException of invalid_parameter_combination_exception
     | `InvalidParameterException of invalid_parameter_exception
+    | `InvalidTrailNameException of invalid_trail_name_exception
     | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
     | `OperationNotPermittedException of operation_not_permitted_exception
+    | `TrailNotFoundException of trail_not_found_exception
     | `UnsupportedOperationException of unsupported_operation_exception ] ->
     string
 
@@ -838,15 +854,17 @@ module GetEventConfiguration : sig
       | `InvalidEventDataStoreStatusException of invalid_event_data_store_status_exception
       | `InvalidParameterCombinationException of invalid_parameter_combination_exception
       | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
+      | `TrailNotFoundException of trail_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
 end
 [@@ocaml.doc
-  "Retrieves the current event configuration settings for the specified event data store, \
-   including details about maximum event size and context key selectors configured for the event \
-   data store.\n"]
+  "Retrieves the current event configuration settings for the specified event data store or trail. \
+   The response includes maximum event size configuration, the context key selectors configured \
+   for the event data store, and any aggregation settings configured for the trail.\n"]
 
 module GetEventDataStore : sig
   val error_to_string :
@@ -998,8 +1016,8 @@ module GetInsightSelectors : sig
 end
 [@@ocaml.doc
   "Describes the settings for the Insights event selectors that you configured for your trail or \
-   event data store. [GetInsightSelectors] shows if CloudTrail Insights event logging is enabled \
-   on the trail or event data store, and if it is, which Insights types are enabled. If you run \
+   event data store. [GetInsightSelectors] shows if CloudTrail Insights logging is enabled and \
+   which Insights types are configured with corresponding event categories. If you run \
    [GetInsightSelectors] on a trail or event data store that does not have Insights events \
    enabled, the operation throws the exception [InsightNotEnabledException] \n\n\
   \ Specify either the [EventDataStore] parameter to get Insights event selectors for an event \
@@ -1238,10 +1256,52 @@ end
   " Returns information on all imports, or a select set of imports by [ImportStatus] or \
    [Destination]. \n"]
 
+module ListInsightsData : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidParameterException of invalid_parameter_exception
+    | `OperationNotPermittedException of operation_not_permitted_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_insights_data_request ->
+    ( list_insights_data_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+end
+[@@ocaml.doc
+  "Returns Insights events generated on a trail that logs data events. You can list Insights \
+   events that occurred in a Region within the last 90 days.\n\n\
+  \ ListInsightsData supports the following Dimensions for Insights events:\n\
+  \ \n\
+  \  {ul\n\
+  \        {-  Event ID\n\
+  \            \n\
+  \             }\n\
+  \        {-  Event name\n\
+  \            \n\
+  \             }\n\
+  \        {-  Event source\n\
+  \            \n\
+  \             }\n\
+  \        }\n\
+  \   All dimensions are optional. The default number of results returned is 50, with a maximum of \
+   50 possible. The response includes a token that you can use to get the next page of results.\n\
+  \   \n\
+  \    The rate of ListInsightsData requests is limited to two per second, per account, per \
+   Region. If this limit is exceeded, a throttling error occurs.\n\
+  \    "]
+
 module ListInsightsMetricData : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `InvalidParameterException of invalid_parameter_exception
+    | `InvalidTrailNameException of invalid_trail_name_exception
     | `OperationNotPermittedException of operation_not_permitted_exception
     | `UnsupportedOperationException of unsupported_operation_exception ] ->
     string
@@ -1252,6 +1312,7 @@ module ListInsightsMetricData : sig
     ( list_insights_metric_data_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
@@ -1276,10 +1337,23 @@ end
   \             \n\
   \              }\n\
   \         }\n\
-  \   Access to the [ListInsightsMetricData] API operation is linked to the \
-   [cloudtrail:LookupEvents] action. To use this operation, you must have permissions to perform \
-   the [cloudtrail:LookupEvents] action.\n\
-  \   "]
+  \   To use [ListInsightsMetricData] operation, you must have the following permissions:\n\
+  \   \n\
+  \    {ul\n\
+  \          {-  If [ListInsightsMetricData] is invoked with [TrailName] parameter, access to the \
+   [ListInsightsMetricData] API operation is linked to the [cloudtrail:LookupEvents] action and \
+   [cloudtrail:ListInsightsData]. To use this operation, you must have permissions to perform the \
+   [cloudtrail:LookupEvents] and [cloudtrail:ListInsightsData] action on the specific trail.\n\
+  \              \n\
+  \               }\n\
+  \          {-  If [ListInsightsMetricData] is invoked without [TrailName] parameter, access to \
+   the [ListInsightsMetricData] API operation is linked to the [cloudtrail:LookupEvents] action \
+   only. To use this operation, you must have permissions to perform the [cloudtrail:LookupEvents] \
+   action.\n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \  "]
 
 module ListPublicKeys : sig
   val error_to_string :
@@ -1509,12 +1583,15 @@ module PutEventConfiguration : sig
     | `InsufficientIAMAccessPermissionException of insufficient_iam_access_permission_exception
     | `InvalidEventDataStoreCategoryException of invalid_event_data_store_category_exception
     | `InvalidEventDataStoreStatusException of invalid_event_data_store_status_exception
+    | `InvalidHomeRegionException of invalid_home_region_exception
     | `InvalidParameterCombinationException of invalid_parameter_combination_exception
     | `InvalidParameterException of invalid_parameter_exception
+    | `InvalidTrailNameException of invalid_trail_name_exception
     | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
     | `NotOrganizationMasterAccountException of not_organization_master_account_exception
     | `OperationNotPermittedException of operation_not_permitted_exception
     | `ThrottlingException of throttling_exception
+    | `TrailNotFoundException of trail_not_found_exception
     | `UnsupportedOperationException of unsupported_operation_exception ] ->
     string
 
@@ -1533,18 +1610,22 @@ module PutEventConfiguration : sig
       | `InsufficientIAMAccessPermissionException of insufficient_iam_access_permission_exception
       | `InvalidEventDataStoreCategoryException of invalid_event_data_store_category_exception
       | `InvalidEventDataStoreStatusException of invalid_event_data_store_status_exception
+      | `InvalidHomeRegionException of invalid_home_region_exception
       | `InvalidParameterCombinationException of invalid_parameter_combination_exception
       | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `NotOrganizationMasterAccountException of not_organization_master_account_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `ThrottlingException of throttling_exception
+      | `TrailNotFoundException of trail_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
 end
 [@@ocaml.doc
-  "Updates the event configuration settings for the specified event data store. You can update the \
-   maximum event size and context key selectors.\n"]
+  "Updates the event configuration settings for the specified event data store or trail. This \
+   operation supports updating the maximum event size, adding or modifying context key selectors \
+   for event data store, and configuring aggregation settings for the trail.\n"]
 
 module PutEventSelectors : sig
   val error_to_string :
@@ -1707,20 +1788,37 @@ module PutInsightSelectors : sig
     result
 end
 [@@ocaml.doc
-  "Lets you enable Insights event logging by specifying the Insights selectors that you want to \
-   enable on an existing trail or event data store. You also use [PutInsightSelectors] to turn off \
-   Insights event logging, by passing an empty list of Insights types. The valid Insights event \
-   types are [ApiErrorRateInsight] and [ApiCallRateInsight].\n\n\
-  \ To enable Insights on an event data store, you must specify the ARNs (or ID suffix of the \
+  "Lets you enable Insights event logging on specific event categories by specifying the Insights \
+   selectors that you want to enable on an existing trail or event data store. You also use \
+   [PutInsightSelectors] to turn off Insights event logging, by passing an empty list of Insights \
+   types. The valid Insights event types are [ApiErrorRateInsight] and [ApiCallRateInsight], and \
+   valid EventCategories are [Management] and [Data].\n\n\
+  \   Insights on data events are not supported on event data stores. For event data stores, you \
+   can only enable Insights on management events. \n\
+  \  \n\
+  \    To enable Insights on an event data store, you must specify the ARNs (or ID suffix of the \
    ARNs) for the source event data store ([EventDataStore]) and the destination event data store \
    ([InsightsDestination]). The source event data store logs management events and enables \
    Insights. The destination event data store logs Insights events based upon the management event \
    activity of the source event data store. The source and destination event data stores must \
    belong to the same Amazon Web Services account.\n\
-  \ \n\
-  \  To log Insights events for a trail, you must specify the name ([TrailName]) of the CloudTrail \
-   trail for which you want to change or add Insights selectors.\n\
-  \  \n\
+  \    \n\
+  \     To log Insights events for a trail, you must specify the name ([TrailName]) of the \
+   CloudTrail trail for which you want to change or add Insights selectors.\n\
+  \     \n\
+  \      {ul\n\
+  \            {-   For Management events Insights: To log CloudTrail Insights on the API call \
+   rate, the trail or event data store must log [write] management events. To log CloudTrail \
+   Insights on the API error rate, the trail or event data store must log [read] or [write] \
+   management events. \n\
+  \                \n\
+  \                 }\n\
+  \            {-   For Data events Insights: To log CloudTrail Insights on the API call rate or \
+   API error rate, the trail must log [read] or [write] data events. Data events Insights are not \
+   supported on event data store. \n\
+  \                \n\
+  \                 }\n\
+  \            }\n\
   \   To log CloudTrail Insights events on API call volume, the trail or event data store must log \
    [write] management events. To log CloudTrail Insights events on API error rate, the trail or \
    event data store must log [read] or [write] management events. You can call [GetEventSelectors] \
@@ -2341,6 +2439,7 @@ module UpdateEventDataStore : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `CloudTrailAccessNotEnabledException of cloud_trail_access_not_enabled_exception
+    | `ConflictException of conflict_exception
     | `EventDataStoreAlreadyExistsException of event_data_store_already_exists_exception
     | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
     | `EventDataStoreHasOngoingImportException of event_data_store_has_ongoing_import_exception
@@ -2360,6 +2459,7 @@ module UpdateEventDataStore : sig
     | `OperationNotPermittedException of operation_not_permitted_exception
     | `OrganizationNotInAllFeaturesModeException of organization_not_in_all_features_mode_exception
     | `OrganizationsNotInUseException of organizations_not_in_use_exception
+    | `ThrottlingException of throttling_exception
     | `UnsupportedOperationException of unsupported_operation_exception ] ->
     string
 
@@ -2369,6 +2469,7 @@ module UpdateEventDataStore : sig
     ( update_event_data_store_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `CloudTrailAccessNotEnabledException of cloud_trail_access_not_enabled_exception
+      | `ConflictException of conflict_exception
       | `EventDataStoreAlreadyExistsException of event_data_store_already_exists_exception
       | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
       | `EventDataStoreHasOngoingImportException of event_data_store_has_ongoing_import_exception
@@ -2389,6 +2490,7 @@ module UpdateEventDataStore : sig
       | `OrganizationNotInAllFeaturesModeException of
         organization_not_in_all_features_mode_exception
       | `OrganizationsNotInUseException of organizations_not_in_use_exception
+      | `ThrottlingException of throttling_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
 end

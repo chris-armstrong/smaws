@@ -5,7 +5,7 @@ open Query
 let aws_query_date_time_with_negative_offset () =
   Eio.Switch.run ~name:"AwsQueryDateTimeWithNegativeOffset" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -35,7 +35,7 @@ let aws_query_date_time_with_negative_offset () =
 let aws_query_date_time_with_positive_offset () =
   Eio.Switch.run ~name:"AwsQueryDateTimeWithPositiveOffset" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -72,7 +72,7 @@ let datetime_offsets_test_suite : unit Alcotest.test =
 let query_empty_input_and_empty_output () =
   Eio.Switch.run ~name:"QueryEmptyInputAndEmptyOutput" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.empty_input_and_empty_output_input = () in
@@ -84,10 +84,10 @@ let query_empty_input_and_empty_output () =
       (Some "Action=EmptyInputAndEmptyOutput&Version=2020-01-08")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -103,7 +103,7 @@ let query_empty_input_and_empty_output () =
 let query_empty_input_and_empty_output () =
   Eio.Switch.run ~name:"QueryEmptyInputAndEmptyOutput" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:None ~status:200 ~headers:[] ();
@@ -127,7 +127,7 @@ let empty_input_and_empty_output_test_suite : unit Alcotest.test =
 let aws_query_endpoint_trait () =
   Eio.Switch.run ~name:"AwsQueryEndpointTrait" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config =
     {
       Config.dummy with
@@ -144,10 +144,10 @@ let aws_query_endpoint_trait () =
       (Some "Action=EndpointOperation&Version=2020-01-08")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -167,7 +167,7 @@ let endpoint_operation_test_suite : unit Alcotest.test =
 let aws_query_endpoint_trait_with_host_label () =
   Eio.Switch.run ~name:"AwsQueryEndpointTraitWithHostLabel" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config =
     {
       Config.dummy with
@@ -184,10 +184,10 @@ let aws_query_endpoint_trait_with_host_label () =
       (Some "Action=EndpointWithHostLabelOperation&Version=2020-01-08&label=bar")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -207,7 +207,7 @@ let endpoint_with_host_label_operation_test_suite : unit Alcotest.test =
 let query_query_flattened_xml_map () =
   Eio.Switch.run ~name:"QueryQueryFlattenedXmlMap" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -247,7 +247,7 @@ let flattened_xml_map_test_suite : unit Alcotest.test =
 let query_query_flattened_xml_map_with_xml_name () =
   Eio.Switch.run ~name:"QueryQueryFlattenedXmlMapWithXmlName" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -290,7 +290,7 @@ let flattened_xml_map_with_xml_name_test_suite : unit Alcotest.test =
 let query_query_flattened_xml_map_with_xml_namespace () =
   Eio.Switch.run ~name:"QueryQueryFlattenedXmlMapWithXmlNamespace" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -335,7 +335,7 @@ let flattened_xml_map_with_xml_namespace_test_suite : unit Alcotest.test =
 let aws_query_date_time_with_fractional_seconds () =
   Eio.Switch.run ~name:"AwsQueryDateTimeWithFractionalSeconds" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -376,7 +376,7 @@ let fractional_seconds_test_suite : unit Alcotest.test =
 let query_greeting_with_errors () =
   Eio.Switch.run ~name:"QueryGreetingWithErrors" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -403,7 +403,7 @@ let query_greeting_with_errors () =
 let query_complex_error () =
   Eio.Switch.run ~name:"QueryComplexError" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -438,7 +438,7 @@ let query_complex_error () =
 let query_customized_error () =
   Eio.Switch.run ~name:"QueryCustomizedError" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -468,7 +468,7 @@ let query_customized_error () =
 let query_invalid_greeting_error () =
   Eio.Switch.run ~name:"QueryInvalidGreetingError" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -507,7 +507,7 @@ let greeting_with_errors_test_suite : unit Alcotest.test =
 let query_host_with_path () =
   Eio.Switch.run ~name:"QueryHostWithPath" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config =
     {
       Config.dummy with
@@ -524,10 +524,10 @@ let query_host_with_path () =
       (Some "Action=HostWithPathOperation&Version=2020-01-08")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -543,7 +543,7 @@ let host_with_path_operation_test_suite : unit Alcotest.test =
 let query_ignores_wrapping_xml_name () =
   Eio.Switch.run ~name:"QueryIgnoresWrappingXmlName" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -574,7 +574,7 @@ let ignores_wrapping_xml_name_test_suite : unit Alcotest.test =
 let nested_structures () =
   Eio.Switch.run ~name:"NestedStructures" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.nested_structures_input =
@@ -597,10 +597,10 @@ let nested_structures () =
          "Action=NestedStructures&Version=2020-01-08&Nested.StringArg=foo&Nested.OtherArg=true&Nested.RecursiveArg.StringArg=baz")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -619,7 +619,7 @@ let nested_structures_test_suite : unit Alcotest.test =
 let query_no_input_and_no_output () =
   Eio.Switch.run ~name:"QueryNoInputAndNoOutput" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Smaws_Lib.Smithy_api.Types.unit_ = () in
@@ -631,10 +631,10 @@ let query_no_input_and_no_output () =
       (Some "Action=NoInputAndNoOutput&Version=2020-01-08")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -650,10 +650,32 @@ let query_no_input_and_no_output () =
 let query_no_input_and_no_output () =
   Eio.Switch.run ~name:"QueryNoInputAndNoOutput" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:None ~status:200 ~headers:[] ();
+  let response = NoInputAndNoOutput.request ctx () in
+  match response with
+  | Ok result ->
+      let expected = () in
+      check Alcotest.unit "expected output" expected result
+  | Error error -> failwith (NoInputAndNoOutput.error_to_string error)
+
+let query_no_input_and_no_output_with_response_metadata () =
+  Eio.Switch.run ~name:"QueryNoInputAndNoOutputWithResponseMetadata" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "<NoInputAndNoOutputResponse>\n\
+         \    <ResponseMetadata>\n\
+         \        <RequestId>abc-123</RequestId>\n\
+         \    </ResponseMetadata>\n\
+          </NoInputAndNoOutputResponse>\n")
+    ~status:200 ~headers:[] ();
   let response = NoInputAndNoOutput.request ctx () in
   match response with
   | Ok result ->
@@ -666,12 +688,13 @@ let no_input_and_no_output_test_suite : unit Alcotest.test =
     [
       ("QueryNoInputAndNoOutput", `Quick, query_no_input_and_no_output);
       ("QueryNoInputAndNoOutput", `Quick, query_no_input_and_no_output);
+      ("QueryNoInputAndNoOutputWithResponseMetadata", `Quick, fun () -> Alcotest.skip ());
     ] )
 
 let query_no_input_and_output () =
   Eio.Switch.run ~name:"QueryNoInputAndOutput" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.no_input_and_output_input = () in
@@ -683,10 +706,10 @@ let query_no_input_and_output () =
       (Some "Action=NoInputAndOutput&Version=2020-01-08")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -702,7 +725,7 @@ let query_no_input_and_output () =
 let query_no_input_and_output () =
   Eio.Switch.run ~name:"QueryNoInputAndOutput" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response ?body:None ~status:200 ~headers:[] ();
@@ -729,7 +752,7 @@ let put_with_content_encoding_test_suite : unit Alcotest.test =
 let query_protocol_idempotency_token_auto_fill_is_set () =
   Eio.Switch.run ~name:"QueryProtocolIdempotencyTokenAutoFillIsSet" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_idempotency_token_auto_fill_input =
@@ -744,10 +767,10 @@ let query_protocol_idempotency_token_auto_fill_is_set () =
          "Action=QueryIdempotencyTokenAutoFill&Version=2020-01-08&token=00000000-0000-4000-8000-000000000123")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -771,7 +794,7 @@ let query_idempotency_token_auto_fill_test_suite : unit Alcotest.test =
 let query_lists () =
   Eio.Switch.run ~name:"QueryLists" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_lists_input =
@@ -793,10 +816,10 @@ let query_lists () =
          "Action=QueryLists&Version=2020-01-08&ListArg.member.1=foo&ListArg.member.2=bar&ListArg.member.3=baz&ComplexListArg.member.1.hi=hello&ComplexListArg.member.2.hi=hola")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -812,7 +835,7 @@ let query_lists () =
 let empty_query_lists () =
   Eio.Switch.run ~name:"EmptyQueryLists" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_lists_input =
@@ -833,10 +856,10 @@ let empty_query_lists () =
       (Some "Action=QueryLists&Version=2020-01-08&ListArg=")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -852,7 +875,7 @@ let empty_query_lists () =
 let flattened_query_lists () =
   Eio.Switch.run ~name:"FlattenedQueryLists" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_lists_input =
@@ -873,10 +896,10 @@ let flattened_query_lists () =
       (Some "Action=QueryLists&Version=2020-01-08&FlattenedListArg.1=A&FlattenedListArg.2=B")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -892,7 +915,7 @@ let flattened_query_lists () =
 let query_list_arg_with_xml_name_member () =
   Eio.Switch.run ~name:"QueryListArgWithXmlNameMember" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_lists_input =
@@ -914,10 +937,10 @@ let query_list_arg_with_xml_name_member () =
          "Action=QueryLists&Version=2020-01-08&ListArgWithXmlNameMember.item.1=A&ListArgWithXmlNameMember.item.2=B")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -933,7 +956,7 @@ let query_list_arg_with_xml_name_member () =
 let query_flattened_list_arg_with_xml_name () =
   Eio.Switch.run ~name:"QueryFlattenedListArgWithXmlName" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_lists_input =
@@ -954,10 +977,10 @@ let query_flattened_list_arg_with_xml_name () =
       (Some "Action=QueryLists&Version=2020-01-08&Hi.1=A&Hi.2=B")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -973,7 +996,7 @@ let query_flattened_list_arg_with_xml_name () =
 let query_nested_struct_with_list () =
   Eio.Switch.run ~name:"QueryNestedStructWithList" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_lists_input =
@@ -995,10 +1018,10 @@ let query_nested_struct_with_list () =
          "Action=QueryLists&Version=2020-01-08&NestedWithList.ListArg.member.1=A&NestedWithList.ListArg.member.2=B")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1025,7 +1048,7 @@ let query_lists_test_suite : unit Alcotest.test =
 let query_simple_query_maps () =
   Eio.Switch.run ~name:"QuerySimpleQueryMaps" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
@@ -1049,10 +1072,10 @@ let query_simple_query_maps () =
          "Action=QueryMaps&Version=2020-01-08&MapArg.entry.1.key=bar&MapArg.entry.1.value=Bar&MapArg.entry.2.key=foo&MapArg.entry.2.value=Foo")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1068,7 +1091,7 @@ let query_simple_query_maps () =
 let query_simple_query_maps_with_xml_name () =
   Eio.Switch.run ~name:"QuerySimpleQueryMapsWithXmlName" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
@@ -1091,10 +1114,10 @@ let query_simple_query_maps_with_xml_name () =
       (Some "Action=QueryMaps&Version=2020-01-08&Foo.entry.1.key=foo&Foo.entry.1.value=Foo")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1110,7 +1133,7 @@ let query_simple_query_maps_with_xml_name () =
 let query_complex_query_maps () =
   Eio.Switch.run ~name:"QueryComplexQueryMaps" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
@@ -1134,10 +1157,10 @@ let query_complex_query_maps () =
          "Action=QueryMaps&Version=2020-01-08&ComplexMapArg.entry.1.key=bar&ComplexMapArg.entry.1.value.hi=Bar&ComplexMapArg.entry.2.key=foo&ComplexMapArg.entry.2.value.hi=Foo")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1153,7 +1176,7 @@ let query_complex_query_maps () =
 let query_empty_query_maps () =
   Eio.Switch.run ~name:"QueryEmptyQueryMaps" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
@@ -1176,10 +1199,10 @@ let query_empty_query_maps () =
       (Some "Action=QueryMaps&Version=2020-01-08")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1195,7 +1218,7 @@ let query_empty_query_maps () =
 let query_query_map_with_member_xml_name () =
   Eio.Switch.run ~name:"QueryQueryMapWithMemberXmlName" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
@@ -1219,10 +1242,10 @@ let query_query_map_with_member_xml_name () =
          "Action=QueryMaps&Version=2020-01-08&MapWithXmlMemberName.entry.1.K=bar&MapWithXmlMemberName.entry.1.V=Bar&MapWithXmlMemberName.entry.2.K=foo&MapWithXmlMemberName.entry.2.V=Foo")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1238,7 +1261,7 @@ let query_query_map_with_member_xml_name () =
 let query_flattened_query_maps () =
   Eio.Switch.run ~name:"QueryFlattenedQueryMaps" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
@@ -1262,10 +1285,10 @@ let query_flattened_query_maps () =
          "Action=QueryMaps&Version=2020-01-08&FlattenedMap.1.key=bar&FlattenedMap.1.value=Bar&FlattenedMap.2.key=foo&FlattenedMap.2.value=Foo")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1281,7 +1304,7 @@ let query_flattened_query_maps () =
 let query_flattened_query_maps_with_xml_name () =
   Eio.Switch.run ~name:"QueryFlattenedQueryMapsWithXmlName" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
@@ -1304,10 +1327,10 @@ let query_flattened_query_maps_with_xml_name () =
       (Some "Action=QueryMaps&Version=2020-01-08&Hi.1.K=bar&Hi.1.V=Bar&Hi.2.K=foo&Hi.2.V=Foo")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1323,7 +1346,7 @@ let query_flattened_query_maps_with_xml_name () =
 let query_query_map_of_lists () =
   Eio.Switch.run ~name:"QueryQueryMapOfLists" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
@@ -1347,10 +1370,10 @@ let query_query_map_of_lists () =
          "Action=QueryMaps&Version=2020-01-08&MapOfLists.entry.1.key=bar&MapOfLists.entry.1.value.member.1=C&MapOfLists.entry.1.value.member.2=D&MapOfLists.entry.2.key=foo&MapOfLists.entry.2.value.member.1=A&MapOfLists.entry.2.value.member.2=B")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1366,7 +1389,7 @@ let query_query_map_of_lists () =
 let query_nested_struct_with_map () =
   Eio.Switch.run ~name:"QueryNestedStructWithMap" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
@@ -1390,10 +1413,10 @@ let query_nested_struct_with_map () =
          "Action=QueryMaps&Version=2020-01-08&NestedStructWithMap.MapArg.entry.1.key=bar&NestedStructWithMap.MapArg.entry.1.value=Bar&NestedStructWithMap.MapArg.entry.2.key=foo&NestedStructWithMap.MapArg.entry.2.value=Foo")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1423,7 +1446,7 @@ let query_maps_test_suite : unit Alcotest.test =
 let query_timestamps_input () =
   Eio.Switch.run ~name:"QueryTimestampsInput" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_timestamps_input =
@@ -1442,10 +1465,10 @@ let query_timestamps_input () =
          "Action=QueryTimestamps&Version=2020-01-08&normalFormat=2015-01-25T08%3A00%3A00Z&epochMember=1422172800&epochTarget=1422172800")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1465,7 +1488,7 @@ let query_timestamps_test_suite : unit Alcotest.test =
 let query_recursive_shapes () =
   Eio.Switch.run ~name:"QueryRecursiveShapes" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -1527,7 +1550,7 @@ let recursive_xml_shapes_test_suite : unit Alcotest.test =
 let query_simple_input_params_strings () =
   Eio.Switch.run ~name:"QuerySimpleInputParamsStrings" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
@@ -1551,10 +1574,10 @@ let query_simple_input_params_strings () =
       (Some "Action=SimpleInputParams&Version=2020-01-08&Foo=val1&Bar=val2")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1570,7 +1593,7 @@ let query_simple_input_params_strings () =
 let query_simple_input_params_string_and_boolean_true () =
   Eio.Switch.run ~name:"QuerySimpleInputParamsStringAndBooleanTrue" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
@@ -1594,10 +1617,10 @@ let query_simple_input_params_string_and_boolean_true () =
       (Some "Action=SimpleInputParams&Version=2020-01-08&Foo=val1&Baz=true")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1613,7 +1636,7 @@ let query_simple_input_params_string_and_boolean_true () =
 let query_simple_input_params_strings_and_boolean_false () =
   Eio.Switch.run ~name:"QuerySimpleInputParamsStringsAndBooleanFalse" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
@@ -1637,10 +1660,10 @@ let query_simple_input_params_strings_and_boolean_false () =
       (Some "Action=SimpleInputParams&Version=2020-01-08&Baz=false")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1656,7 +1679,7 @@ let query_simple_input_params_strings_and_boolean_false () =
 let query_simple_input_params_integer () =
   Eio.Switch.run ~name:"QuerySimpleInputParamsInteger" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
@@ -1680,10 +1703,10 @@ let query_simple_input_params_integer () =
       (Some "Action=SimpleInputParams&Version=2020-01-08&Bam=10")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1699,7 +1722,7 @@ let query_simple_input_params_integer () =
 let query_simple_input_params_float () =
   Eio.Switch.run ~name:"QuerySimpleInputParamsFloat" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
@@ -1723,10 +1746,10 @@ let query_simple_input_params_float () =
       (Some "Action=SimpleInputParams&Version=2020-01-08&Boo=10.8")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1742,7 +1765,7 @@ let query_simple_input_params_float () =
 let query_simple_input_params_blob () =
   Eio.Switch.run ~name:"QuerySimpleInputParamsBlob" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
@@ -1766,10 +1789,10 @@ let query_simple_input_params_blob () =
       (Some "Action=SimpleInputParams&Version=2020-01-08&Qux=dmFsdWU%3D")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1785,7 +1808,7 @@ let query_simple_input_params_blob () =
 let query_enums () =
   Eio.Switch.run ~name:"QueryEnums" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
@@ -1809,10 +1832,10 @@ let query_enums () =
       (Some "Action=SimpleInputParams&Version=2020-01-08&FooEnum=Foo")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1828,7 +1851,7 @@ let query_enums () =
 let query_int_enums () =
   Eio.Switch.run ~name:"QueryIntEnums" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
@@ -1852,10 +1875,10 @@ let query_int_enums () =
       (Some "Action=SimpleInputParams&Version=2020-01-08&IntegerEnum=1")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1871,7 +1894,7 @@ let query_int_enums () =
 let aws_query_supports_na_n_float_inputs () =
   Eio.Switch.run ~name:"AwsQuerySupportsNaNFloatInputs" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
@@ -1895,10 +1918,10 @@ let aws_query_supports_na_n_float_inputs () =
       (Some "Action=SimpleInputParams&Version=2020-01-08&FloatValue=NaN&Boo=NaN")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1914,7 +1937,7 @@ let aws_query_supports_na_n_float_inputs () =
 let aws_query_supports_infinity_float_inputs () =
   Eio.Switch.run ~name:"AwsQuerySupportsInfinityFloatInputs" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
@@ -1938,10 +1961,10 @@ let aws_query_supports_infinity_float_inputs () =
       (Some "Action=SimpleInputParams&Version=2020-01-08&FloatValue=Infinity&Boo=Infinity")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -1957,7 +1980,7 @@ let aws_query_supports_infinity_float_inputs () =
 let aws_query_supports_negative_infinity_float_inputs () =
   Eio.Switch.run ~name:"AwsQuerySupportsNegativeInfinityFloatInputs" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
@@ -1981,10 +2004,10 @@ let aws_query_supports_negative_infinity_float_inputs () =
       (Some "Action=SimpleInputParams&Version=2020-01-08&FloatValue=-Infinity&Boo=-Infinity")
       (request.body
       |> Option.map (function
-           | `Form x -> Uri.encoded_of_query x
-           | `String x -> x
-           | `Compressed (x, _) -> x
-           | `None -> ""))
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
   in
   let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
   let () =
@@ -2022,7 +2045,7 @@ let simple_input_params_test_suite : unit Alcotest.test =
 let query_simple_scalar_properties () =
   Eio.Switch.run ~name:"QuerySimpleScalarProperties" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2072,7 +2095,7 @@ let query_simple_scalar_properties () =
 let aws_query_supports_na_n_float_outputs () =
   Eio.Switch.run ~name:"AwsQuerySupportsNaNFloatOutputs" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2114,7 +2137,7 @@ let aws_query_supports_na_n_float_outputs () =
 let aws_query_supports_infinity_float_outputs () =
   Eio.Switch.run ~name:"AwsQuerySupportsInfinityFloatOutputs" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2156,7 +2179,7 @@ let aws_query_supports_infinity_float_outputs () =
 let aws_query_supports_negative_infinity_float_outputs () =
   Eio.Switch.run ~name:"AwsQuerySupportsNegativeInfinityFloatOutputs" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2209,7 +2232,7 @@ let simple_scalar_xml_properties_test_suite : unit Alcotest.test =
 let query_xml_blobs () =
   Eio.Switch.run ~name:"QueryXmlBlobs" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2240,7 +2263,7 @@ let xml_blobs_test_suite : unit Alcotest.test =
 let query_xml_empty_blobs () =
   Eio.Switch.run ~name:"QueryXmlEmptyBlobs" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2268,7 +2291,7 @@ let query_xml_empty_blobs () =
 let query_xml_empty_self_closed_blobs () =
   Eio.Switch.run ~name:"QueryXmlEmptySelfClosedBlobs" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2303,7 +2326,7 @@ let xml_empty_blobs_test_suite : unit Alcotest.test =
 let query_xml_empty_lists () =
   Eio.Switch.run ~name:"QueryXmlEmptyLists" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2352,7 +2375,7 @@ let xml_empty_lists_test_suite : unit Alcotest.test =
 let query_xml_empty_maps () =
   Eio.Switch.run ~name:"QueryXmlEmptyMaps" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2379,7 +2402,7 @@ let query_xml_empty_maps () =
 let query_xml_empty_self_closed_maps () =
   Eio.Switch.run ~name:"QueryXmlEmptySelfClosedMaps" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2412,7 +2435,7 @@ let xml_empty_maps_test_suite : unit Alcotest.test =
 let query_xml_enums () =
   Eio.Switch.run ~name:"QueryXmlEnums" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2471,7 +2494,7 @@ let xml_enums_test_suite : unit Alcotest.test =
 let query_xml_int_enums () =
   Eio.Switch.run ~name:"QueryXmlIntEnums" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2531,7 +2554,7 @@ let xml_int_enums_test_suite : unit Alcotest.test =
 let query_xml_lists () =
   Eio.Switch.run ~name:"QueryXmlLists" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2644,7 +2667,7 @@ let xml_lists_test_suite : unit Alcotest.test =
 let query_xml_maps () =
   Eio.Switch.run ~name:"QueryXmlMaps" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2689,7 +2712,7 @@ let xml_maps_test_suite : unit Alcotest.test =
 let query_query_xml_maps_xml_name () =
   Eio.Switch.run ~name:"QueryQueryXmlMapsXmlName" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2736,7 +2759,7 @@ let xml_maps_xml_name_test_suite : unit Alcotest.test =
 let query_xml_namespaces () =
   Eio.Switch.run ~name:"QueryXmlNamespaces" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2775,7 +2798,7 @@ let xml_namespaces_test_suite : unit Alcotest.test =
 let query_xml_timestamps () =
   Eio.Switch.run ~name:"QueryXmlTimestamps" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2813,7 +2836,7 @@ let query_xml_timestamps () =
 let query_xml_timestamps_with_date_time_format () =
   Eio.Switch.run ~name:"QueryXmlTimestampsWithDateTimeFormat" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2851,7 +2874,7 @@ let query_xml_timestamps_with_date_time_format () =
 let query_xml_timestamps_with_date_time_on_target_format () =
   Eio.Switch.run ~name:"QueryXmlTimestampsWithDateTimeOnTargetFormat" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2890,7 +2913,7 @@ let query_xml_timestamps_with_date_time_on_target_format () =
 let query_xml_timestamps_with_epoch_seconds_format () =
   Eio.Switch.run ~name:"QueryXmlTimestampsWithEpochSecondsFormat" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2928,7 +2951,7 @@ let query_xml_timestamps_with_epoch_seconds_format () =
 let query_xml_timestamps_with_epoch_seconds_on_target_format () =
   Eio.Switch.run ~name:"QueryXmlTimestampsWithEpochSecondsOnTargetFormat" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -2967,7 +2990,7 @@ let query_xml_timestamps_with_epoch_seconds_on_target_format () =
 let query_xml_timestamps_with_http_date_format () =
   Eio.Switch.run ~name:"QueryXmlTimestampsWithHttpDateFormat" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response
@@ -3005,7 +3028,7 @@ let query_xml_timestamps_with_http_date_format () =
 let query_xml_timestamps_with_http_date_on_target_format () =
   Eio.Switch.run ~name:"QueryXmlTimestampsWithHttpDateOnTargetFormat" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
-  let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   Mock.mock_response

@@ -26,6 +26,7 @@ let owner_id_of_yojson = string_of_yojson
 
 let provider_type_of_yojson (tree : t) path =
   ((match tree with
+    | `String "AzureDevOps" -> AZURE_DEV_OPS
     | `String "GitLabSelfManaged" -> GITLAB_SELF_MANAGED
     | `String "GitLab" -> GITLAB
     | `String "GitHubEnterpriseServer" -> GITHUB_ENTERPRISE_SERVER

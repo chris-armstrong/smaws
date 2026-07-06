@@ -1,11 +1,24 @@
 open Types
 
 let unit_of_xml _ = ()
+let web_identity_token_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
+
+let web_identity_token_duration_seconds_type_of_xml i =
+  Smaws_Lib.Protocols.AwsQuery.Deserialize.int_of_string (Smaws_Lib.Xml.Parse.Read.data i)
+
+let web_identity_token_audience_string_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
+
+let web_identity_token_audience_list_type_of_xml i =
+  Smaws_Lib.Xml.Parse.Read.sequences i "member"
+    (fun i _ -> web_identity_token_audience_string_type_of_xml i)
+    ()
+
 let web_identity_subject_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let user_name_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let user_id_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let url_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let unrestricted_session_policy_document_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
+let trade_in_token_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let token_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let token_code_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let tag_value_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
@@ -66,12 +79,14 @@ let non_negative_integer_type_of_xml i =
   Smaws_Lib.Protocols.AwsQuery.Deserialize.int_of_string (Smaws_Lib.Xml.Parse.Read.data i)
 
 let malformed_policy_document_message_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
+let jwt_algorithm_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let invalid_identity_token_message_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let invalid_authorization_message_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let idp_rejected_claim_message_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let idp_communication_error_message_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let federated_id_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let external_id_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
+let expired_trade_in_token_exception_message_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let expired_identity_token_message_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let encoded_message_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 
@@ -92,6 +107,21 @@ let access_key_id_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let target_principal_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let subject_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 let subject_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
+let session_duration_escalation_exception2_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
+
+let session_duration_escalation_exception_of_xml i =
+  let r_message = ref None in
+  Smaws_Lib.Xml.Parse.Structure.scanSequence i [ "message" ] (fun tag _ ->
+      match tag with
+      | "message" ->
+          r_message :=
+            Some
+              (Smaws_Lib.Xml.Parse.Read.sequence i "message"
+                 (fun i _ -> session_duration_escalation_exception2_of_xml i)
+                 ())
+      | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
+  ({ message = ( ! ) r_message } : session_duration_escalation_exception)
+
 let saml_assertion_type_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 
 let root_duration_seconds_type_of_xml i =
@@ -145,6 +175,21 @@ let packed_policy_too_large_exception_of_xml i =
       | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
   ({ message = ( ! ) r_message } : packed_policy_too_large_exception)
 
+let outbound_web_identity_federation_disabled_exception2_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
+
+let outbound_web_identity_federation_disabled_exception_of_xml i =
+  let r_message = ref None in
+  Smaws_Lib.Xml.Parse.Structure.scanSequence i [ "message" ] (fun tag _ ->
+      match tag with
+      | "message" ->
+          r_message :=
+            Some
+              (Smaws_Lib.Xml.Parse.Read.sequence i "message"
+                 (fun i _ -> outbound_web_identity_federation_disabled_exception2_of_xml i)
+                 ())
+      | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
+  ({ message = ( ! ) r_message } : outbound_web_identity_federation_disabled_exception)
+
 let name_qualifier_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 
 let malformed_policy_document_exception_of_xml i =
@@ -159,6 +204,21 @@ let malformed_policy_document_exception_of_xml i =
                  ())
       | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
   ({ message = ( ! ) r_message } : malformed_policy_document_exception)
+
+let jwt_payload_size_exceeded_exception2_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
+
+let jwt_payload_size_exceeded_exception_of_xml i =
+  let r_message = ref None in
+  Smaws_Lib.Xml.Parse.Structure.scanSequence i [ "message" ] (fun tag _ ->
+      match tag with
+      | "message" ->
+          r_message :=
+            Some
+              (Smaws_Lib.Xml.Parse.Read.sequence i "message"
+                 (fun i _ -> jwt_payload_size_exceeded_exception2_of_xml i)
+                 ())
+      | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
+  ({ message = ( ! ) r_message } : jwt_payload_size_exceeded_exception)
 
 let issuer_of_xml i = Smaws_Lib.Xml.Parse.Read.data i
 
@@ -213,6 +273,71 @@ let idp_communication_error_exception_of_xml i =
                  ())
       | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
   ({ message = ( ! ) r_message } : idp_communication_error_exception)
+
+let get_web_identity_token_response_of_xml i =
+  let r_expiration = ref None in
+  let r_web_identity_token = ref None in
+  Smaws_Lib.Xml.Parse.Structure.scanSequence i [ "Expiration"; "WebIdentityToken" ] (fun tag _ ->
+      match tag with
+      | "Expiration" ->
+          r_expiration :=
+            Some
+              (Smaws_Lib.Xml.Parse.Read.sequence i "Expiration" (fun i _ -> date_type_of_xml i) ())
+      | "WebIdentityToken" ->
+          r_web_identity_token :=
+            Some
+              (Smaws_Lib.Xml.Parse.Read.sequence i "WebIdentityToken"
+                 (fun i _ -> web_identity_token_type_of_xml i)
+                 ())
+      | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
+  ({ expiration = ( ! ) r_expiration; web_identity_token = ( ! ) r_web_identity_token }
+    : get_web_identity_token_response)
+
+let get_web_identity_token_request_of_xml i =
+  let r_tags = ref None in
+  let r_signing_algorithm = ref None in
+  let r_duration_seconds = ref None in
+  let r_audience = ref None in
+  Smaws_Lib.Xml.Parse.Structure.scanSequence i
+    [ "Tags"; "SigningAlgorithm"; "DurationSeconds"; "Audience" ] (fun tag _ ->
+      match tag with
+      | "Tags" ->
+          r_tags :=
+            Some
+              (Smaws_Lib.Xml.Parse.Read.sequence i "Tags"
+                 (fun i _ ->
+                   Smaws_Lib.Xml.Parse.Read.sequences i "member" (fun i _ -> tag_of_xml i) ())
+                 ())
+      | "SigningAlgorithm" ->
+          r_signing_algorithm :=
+            Some
+              (Smaws_Lib.Xml.Parse.Read.sequence i "SigningAlgorithm"
+                 (fun i _ -> jwt_algorithm_type_of_xml i)
+                 ())
+      | "DurationSeconds" ->
+          r_duration_seconds :=
+            Some
+              (Smaws_Lib.Xml.Parse.Read.sequence i "DurationSeconds"
+                 (fun i _ -> web_identity_token_duration_seconds_type_of_xml i)
+                 ())
+      | "Audience" ->
+          r_audience :=
+            Some
+              (Smaws_Lib.Xml.Parse.Read.sequence i "Audience"
+                 (fun i _ ->
+                   Smaws_Lib.Xml.Parse.Read.sequences i "member"
+                     (fun i _ -> web_identity_token_audience_string_type_of_xml i)
+                     ())
+                 ())
+      | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
+  ({
+     tags = ( ! ) r_tags;
+     signing_algorithm =
+       Smaws_Lib.Xml.Parse.required "SigningAlgorithm" (( ! ) r_signing_algorithm) i;
+     duration_seconds = ( ! ) r_duration_seconds;
+     audience = Smaws_Lib.Xml.Parse.required "Audience" (( ! ) r_audience) i;
+   }
+    : get_web_identity_token_request)
 
 let credentials_of_xml i =
   let r_expiration = ref None in
@@ -405,6 +530,66 @@ let get_federation_token_request_of_xml i =
      name = Smaws_Lib.Xml.Parse.required "Name" (( ! ) r_name) i;
    }
     : get_federation_token_request)
+
+let get_delegated_access_token_response_of_xml i =
+  let r_assumed_principal = ref None in
+  let r_packed_policy_size = ref None in
+  let r_credentials = ref None in
+  Smaws_Lib.Xml.Parse.Structure.scanSequence i
+    [ "AssumedPrincipal"; "PackedPolicySize"; "Credentials" ] (fun tag _ ->
+      match tag with
+      | "AssumedPrincipal" ->
+          r_assumed_principal :=
+            Some
+              (Smaws_Lib.Xml.Parse.Read.sequence i "AssumedPrincipal"
+                 (fun i _ -> arn_type_of_xml i)
+                 ())
+      | "PackedPolicySize" ->
+          r_packed_policy_size :=
+            Some
+              (Smaws_Lib.Xml.Parse.Read.sequence i "PackedPolicySize"
+                 (fun i _ -> non_negative_integer_type_of_xml i)
+                 ())
+      | "Credentials" ->
+          r_credentials :=
+            Some
+              (Smaws_Lib.Xml.Parse.Read.sequence i "Credentials"
+                 (fun i _ -> credentials_of_xml i)
+                 ())
+      | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
+  ({
+     assumed_principal = ( ! ) r_assumed_principal;
+     packed_policy_size = ( ! ) r_packed_policy_size;
+     credentials = ( ! ) r_credentials;
+   }
+    : get_delegated_access_token_response)
+
+let get_delegated_access_token_request_of_xml i =
+  let r_trade_in_token = ref None in
+  Smaws_Lib.Xml.Parse.Structure.scanSequence i [ "TradeInToken" ] (fun tag _ ->
+      match tag with
+      | "TradeInToken" ->
+          r_trade_in_token :=
+            Some
+              (Smaws_Lib.Xml.Parse.Read.sequence i "TradeInToken"
+                 (fun i _ -> trade_in_token_type_of_xml i)
+                 ())
+      | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
+  ({ trade_in_token = Smaws_Lib.Xml.Parse.required "TradeInToken" (( ! ) r_trade_in_token) i }
+    : get_delegated_access_token_request)
+
+let expired_trade_in_token_exception_of_xml i =
+  let r_message = ref None in
+  Smaws_Lib.Xml.Parse.Structure.scanSequence i [ "message" ] (fun tag _ ->
+      match tag with
+      | "message" ->
+          r_message :=
+            Some
+              (Smaws_Lib.Xml.Parse.Read.sequence i "message"
+                 (fun i _ -> expired_trade_in_token_exception_message_of_xml i)
+                 ())
+      | _ -> Smaws_Lib.Xml.Parse.Read.skip_element i);
+  ({ message = ( ! ) r_message } : expired_trade_in_token_exception)
 
 let get_caller_identity_response_of_xml i =
   let r_arn = ref None in

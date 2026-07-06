@@ -183,6 +183,43 @@ module GetTagValues = struct
       ~output_deserializer:Json_deserializers.get_tag_values_output_of_yojson ~error_deserializer
 end
 
+module ListRequiredTags = struct
+  let error_to_string = function
+    | `InternalServiceException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InternalServiceException"
+    | `InvalidParameterException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#InvalidParameterException"
+    | `PaginationTokenExpiredException _ ->
+        "com.amazonaws.resourcegroupstaggingapi#PaginationTokenExpiredException"
+    | `ThrottledException _ -> "com.amazonaws.resourcegroupstaggingapi#ThrottledException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServiceException" ->
+          `InternalServiceException
+            (Json_deserializers.internal_service_exception_of_yojson tree path)
+      | _, "InvalidParameterException" ->
+          `InvalidParameterException
+            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "PaginationTokenExpiredException" ->
+          `PaginationTokenExpiredException
+            (Json_deserializers.pagination_token_expired_exception_of_yojson tree path)
+      | _, "ThrottledException" ->
+          `ThrottledException (Json_deserializers.throttled_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_required_tags_input) =
+    let input = Json_serializers.list_required_tags_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"ResourceGroupsTaggingAPI_20170126.ListRequiredTags" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_required_tags_output_of_yojson
+      ~error_deserializer
+end
+
 module StartReportCreation = struct
   let error_to_string = function
     | `ConcurrentModificationException _ ->

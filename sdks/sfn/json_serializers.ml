@@ -274,6 +274,7 @@ let too_many_tags_to_yojson (x : too_many_tags) =
     ]
 
 let timeout_in_seconds_to_yojson = long_to_yojson
+let test_state_state_name_to_yojson = string_to_yojson
 let sensitive_data_to_yojson = string_to_yojson
 let sensitive_error_to_yojson = string_to_yojson
 let sensitive_cause_to_yojson = string_to_yojson
@@ -305,9 +306,37 @@ let inspection_data_response_to_yojson (x : inspection_data_response) =
       ("protocol", option_to_yojson http_protocol_to_yojson x.protocol);
     ]
 
+let exception_handler_index_to_yojson = int_to_yojson
+let retry_backoff_interval_seconds_to_yojson = int_to_yojson
+
+let inspection_error_details_to_yojson (x : inspection_error_details) =
+  assoc_to_yojson
+    [
+      ( "retryBackoffIntervalSeconds",
+        option_to_yojson retry_backoff_interval_seconds_to_yojson x.retry_backoff_interval_seconds
+      );
+      ("retryIndex", option_to_yojson exception_handler_index_to_yojson x.retry_index);
+      ("catchIndex", option_to_yojson exception_handler_index_to_yojson x.catch_index);
+    ]
+
+let inspection_tolerated_failure_count_to_yojson = int_to_yojson
+let inspection_tolerated_failure_percentage_to_yojson = float_to_yojson
+let inspection_max_concurrency_to_yojson = int_to_yojson
+
 let inspection_data_to_yojson (x : inspection_data) =
   assoc_to_yojson
     [
+      ("maxConcurrency", option_to_yojson inspection_max_concurrency_to_yojson x.max_concurrency);
+      ( "toleratedFailurePercentage",
+        option_to_yojson inspection_tolerated_failure_percentage_to_yojson
+          x.tolerated_failure_percentage );
+      ( "toleratedFailureCount",
+        option_to_yojson inspection_tolerated_failure_count_to_yojson x.tolerated_failure_count );
+      ("afterItemsPointer", option_to_yojson sensitive_data_to_yojson x.after_items_pointer);
+      ("afterItemBatcher", option_to_yojson sensitive_data_to_yojson x.after_item_batcher);
+      ("afterItemSelector", option_to_yojson sensitive_data_to_yojson x.after_item_selector);
+      ("afterItemsPath", option_to_yojson sensitive_data_to_yojson x.after_items_path);
+      ("errorDetails", option_to_yojson inspection_error_details_to_yojson x.error_details);
       ("variables", option_to_yojson sensitive_data_to_yojson x.variables);
       ("response", option_to_yojson inspection_data_response_to_yojson x.response);
       ("request", option_to_yojson inspection_data_request_to_yojson x.request);
@@ -343,9 +372,47 @@ let inspection_level_to_yojson (x : inspection_level) =
 
 let reveal_secrets_to_yojson = bool_to_yojson
 
+let mock_error_output_to_yojson (x : mock_error_output) =
+  assoc_to_yojson
+    [
+      ("cause", option_to_yojson sensitive_cause_to_yojson x.cause);
+      ("error", option_to_yojson sensitive_error_to_yojson x.error);
+    ]
+
+let mock_response_validation_mode_to_yojson (x : mock_response_validation_mode) =
+  match x with NONE -> `String "NONE" | PRESENT -> `String "PRESENT" | STRICT -> `String "STRICT"
+
+let mock_input_to_yojson (x : mock_input) =
+  assoc_to_yojson
+    [
+      ( "fieldValidationMode",
+        option_to_yojson mock_response_validation_mode_to_yojson x.field_validation_mode );
+      ("errorOutput", option_to_yojson mock_error_output_to_yojson x.error_output);
+      ("result", option_to_yojson sensitive_data_to_yojson x.result);
+    ]
+
+let retrier_retry_count_to_yojson = int_to_yojson
+let map_iteration_failure_count_to_yojson = int_to_yojson
+
+let test_state_configuration_to_yojson (x : test_state_configuration) =
+  assoc_to_yojson
+    [
+      ("mapItemReaderData", option_to_yojson sensitive_data_to_yojson x.map_item_reader_data);
+      ( "mapIterationFailureCount",
+        option_to_yojson map_iteration_failure_count_to_yojson x.map_iteration_failure_count );
+      ( "errorCausedByState",
+        option_to_yojson test_state_state_name_to_yojson x.error_caused_by_state );
+      ("retrierRetryCount", option_to_yojson retrier_retry_count_to_yojson x.retrier_retry_count);
+    ]
+
 let test_state_input_to_yojson (x : test_state_input) =
   assoc_to_yojson
     [
+      ( "stateConfiguration",
+        option_to_yojson test_state_configuration_to_yojson x.state_configuration );
+      ("context", option_to_yojson sensitive_data_to_yojson x.context);
+      ("mock", option_to_yojson mock_input_to_yojson x.mock);
+      ("stateName", option_to_yojson test_state_state_name_to_yojson x.state_name);
       ("variables", option_to_yojson sensitive_data_to_yojson x.variables);
       ("revealSecrets", option_to_yojson reveal_secrets_to_yojson x.reveal_secrets);
       ("inspectionLevel", option_to_yojson inspection_level_to_yojson x.inspection_level);

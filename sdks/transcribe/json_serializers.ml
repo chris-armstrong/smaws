@@ -29,6 +29,7 @@ let language_code_to_yojson (x : language_code) =
   | SW_BI -> `String "sw-BI"
   | SU_ID -> `String "su-ID"
   | SR_RS -> `String "sr-RS"
+  | SQ_AL -> `String "sq-AL"
   | SO_SO -> `String "so-SO"
   | SL_SI -> `String "sl-SI"
   | SK_SK -> `String "sk-SK"
@@ -39,6 +40,7 @@ let language_code_to_yojson (x : language_code) =
   | PL_PL -> `String "pl-PL"
   | PA_IN -> `String "pa-IN"
   | OR_IN -> `String "or-IN"
+  | NE_NP -> `String "ne-NP"
   | NO_NO -> `String "no-NO"
   | MT_MT -> `String "mt-MT"
   | MR_IN -> `String "mr-IN"
@@ -95,16 +97,24 @@ let language_code_to_yojson (x : language_code) =
   | PT_BR -> `String "pt-BR"
   | NL_NL -> `String "nl-NL"
   | MS_MY -> `String "ms-MY"
+  | MY_MM -> `String "my-MM"
   | KO_KR -> `String "ko-KR"
+  | KM_KH -> `String "km-KH"
+  | JV_ID -> `String "jv-ID"
   | JA_JP -> `String "ja-JP"
   | IT_IT -> `String "it-IT"
   | ID_ID -> `String "id-ID"
+  | HT_HT -> `String "ht-HT"
   | HI_IN -> `String "hi-IN"
   | HE_IL -> `String "he-IL"
+  | GD_GB -> `String "gd-GB"
+  | GA_IE -> `String "ga-IE"
   | FR_FR -> `String "fr-FR"
   | FR_CA -> `String "fr-CA"
   | FA_IR -> `String "fa-IR"
+  | FA_AF -> `String "fa-AF"
   | ES_US -> `String "es-US"
+  | ES_MX -> `String "es-MX"
   | ES_ES -> `String "es-ES"
   | EN_WL -> `String "en-WL"
   | EN_US -> `String "en-US"
@@ -116,6 +126,8 @@ let language_code_to_yojson (x : language_code) =
   | DE_DE -> `String "de-DE"
   | DE_CH -> `String "de-CH"
   | DA_DK -> `String "da-DK"
+  | CY_GB -> `String "cy-GB"
+  | AM_ET -> `String "am-ET"
   | AR_SA -> `String "ar-SA"
   | AR_AE -> `String "ar-AE"
   | AF_ZA -> `String "af-ZA"
@@ -795,6 +807,8 @@ let medical_scribe_job_to_yojson (x : medical_scribe_job) =
   assoc_to_yojson
     [
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);
+      ( "MedicalScribeContextProvided",
+        option_to_yojson boolean__to_yojson x.medical_scribe_context_provided );
       ( "ChannelDefinitions",
         option_to_yojson medical_scribe_channel_definitions_to_yojson x.channel_definitions );
       ("DataAccessRoleArn", option_to_yojson data_access_role_arn_to_yojson x.data_access_role_arn);
@@ -817,9 +831,26 @@ let start_medical_scribe_job_response_to_yojson (x : start_medical_scribe_job_re
   assoc_to_yojson
     [ ("MedicalScribeJob", option_to_yojson medical_scribe_job_to_yojson x.medical_scribe_job) ]
 
+let pronouns_to_yojson (x : pronouns) =
+  match x with
+  | THEY_THEM -> `String "THEY_THEM"
+  | SHE_HER -> `String "SHE_HER"
+  | HE_HIM -> `String "HE_HIM"
+
+let medical_scribe_patient_context_to_yojson (x : medical_scribe_patient_context) =
+  assoc_to_yojson [ ("Pronouns", option_to_yojson pronouns_to_yojson x.pronouns) ]
+
+let medical_scribe_context_to_yojson (x : medical_scribe_context) =
+  assoc_to_yojson
+    [
+      ("PatientContext", option_to_yojson medical_scribe_patient_context_to_yojson x.patient_context);
+    ]
+
 let start_medical_scribe_job_request_to_yojson (x : start_medical_scribe_job_request) =
   assoc_to_yojson
     [
+      ( "MedicalScribeContext",
+        option_to_yojson medical_scribe_context_to_yojson x.medical_scribe_context );
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);
       ( "ChannelDefinitions",
         option_to_yojson medical_scribe_channel_definitions_to_yojson x.channel_definitions );

@@ -1879,7 +1879,8 @@ module RegisterToWorkMail : sig
     | `MailDomainNotFoundException of mail_domain_not_found_exception
     | `MailDomainStateException of mail_domain_state_exception
     | `OrganizationNotFoundException of organization_not_found_exception
-    | `OrganizationStateException of organization_state_exception ] ->
+    | `OrganizationStateException of organization_state_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
     string
 
   val request :
@@ -1898,7 +1899,8 @@ module RegisterToWorkMail : sig
       | `MailDomainNotFoundException of mail_domain_not_found_exception
       | `MailDomainStateException of mail_domain_state_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
 end
 [@@ocaml.doc

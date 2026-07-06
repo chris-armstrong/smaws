@@ -1,14 +1,61 @@
 name: Build and test
 
 on:
-  - push
-  - pull_request
-
+  push:
+  # Build at PR open/reopen. `synchronize` (pushes to a PR branch) is handled
+  # by the `push` trigger below, so it is excluded here to avoid duplicates.
+  pull_request:
+    types: [opened, reopened]
 
 permissions: read-all
 
 jobs:
+  # Run the build matrix only when it matters:
+  #   - any pull_request event (PR opened/reopened), or
+  #   - a push to main (merges), or
+  #   - a push to a branch that currently has an open pull request.
+  # Pushes to stray branches with no PR are skipped.
+  gate:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+      contents: read
+    outputs:
+      should_run: ${{ steps.gate.outputs.should_run }}
+    steps:
+      - id: gate
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENT: ${{ github.event_name }}
+          REF: ${{ github.ref_name }}
+          PR_HEAD: ${{ github.event.pull_request.head.ref }}
+        run: |
+          set -eu
+          if [ "$EVENT" = "pull_request" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            echo "Building: pull_request event ('$PR_HEAD')."
+            exit 0
+          fi
+          branch="$REF"
+          if [ "$branch" = "main" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            echo "Building: push to main."
+            exit 0
+          fi
+          count=$(gh pr list --repo ${{ github.repository }} --head "$branch" \
+                    --state open --json number --jq 'length' || echo 0)
+          if [ "$count" -gt 0 ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            echo "Building: branch '$branch' has $count open PR(s)."
+          else
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping: branch '$branch' is not main and has no open PR."
+          fi
+
   build-and-test:
+    needs: gate
+    if: needs.gate.outputs.should_run == 'true'
+
     permissions:
       attestations: write
       contents: read
@@ -38,5 +85,7 @@ jobs:
       - run: opam install ./smaws-lib.opam ./smaws-gen.opam ./smaws-clients.opam --deps-only --with-test --with-dev-setup --with-doc --assume-depexts
 
       - run: opam exec -- dune build
+      - name: Check formatting
+        run: opam exec -- dune build @fmt
       - run: opam exec -- dune runtest
       - run: opam exec -- dune build @doc

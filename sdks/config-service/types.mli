@@ -116,6 +116,97 @@ type nonrec aws_region = string [@@ocaml.doc ""]
 type nonrec resource_id = string [@@ocaml.doc ""]
 
 type nonrec resource_type =
+  | ApiGatewayMethod [@ocaml.doc ""]
+  | SageMakerUserProfile [@ocaml.doc ""]
+  | Route53DNSSEC [@ocaml.doc ""]
+  | AppStreamAppBlockBuilder [@ocaml.doc ""]
+  | CleanRoomsMLTrainingDataset [@ocaml.doc ""]
+  | ConnectSecurityProfile [@ocaml.doc ""]
+  | EC2SubnetCidrBlock [@ocaml.doc ""]
+  | ECRReplicationConfiguration [@ocaml.doc ""]
+  | GameLiftBuild [@ocaml.doc ""]
+  | ImageBuilderLifecyclePolicy [@ocaml.doc ""]
+  | IoTThingGroup [@ocaml.doc ""]
+  | SSMContactsContact [@ocaml.doc ""]
+  | SecretsManagerResourcePolicy [@ocaml.doc ""]
+  | S3TablesTableBucketPolicy [@ocaml.doc ""]
+  | PCAConnectorADConnector [@ocaml.doc ""]
+  | MediaPackageV2OriginEndpoint [@ocaml.doc ""]
+  | LocationAPIKey [@ocaml.doc ""]
+  | GuardDutyMalwareProtectionPlan [@ocaml.doc ""]
+  | DeadlineMonitor [@ocaml.doc ""]
+  | CloudFrontKeyValueStore [@ocaml.doc ""]
+  | B2BICapability [@ocaml.doc ""]
+  | IoTSiteWiseAsset [@ocaml.doc ""]
+  | MSKServerlessCluster [@ocaml.doc ""]
+  | MediaTailorLiveSource [@ocaml.doc ""]
+  | DataSyncAgent [@ocaml.doc ""]
+  | ComprehendFlywheel [@ocaml.doc ""]
+  | BedrockPrompt [@ocaml.doc ""]
+  | EC2VPCGatewayAttachment [@ocaml.doc ""]
+  | EC2IPAMPoolCidr [@ocaml.doc ""]
+  | OrganizationsOrganizationalUnit [@ocaml.doc ""]
+  | GlueDatabase [@ocaml.doc ""]
+  | TransferServer [@ocaml.doc ""]
+  | SSMIncidentsResponsePlan [@ocaml.doc ""]
+  | Route53ProfilesProfileAssociation [@ocaml.doc ""]
+  | RolesAnywhereTrustAnchor [@ocaml.doc ""]
+  | RedshiftIntegration [@ocaml.doc ""]
+  | OpenSearchServerlessSecurityConfig [@ocaml.doc ""]
+  | NetworkManagerTransitGatewayPeering [@ocaml.doc ""]
+  | KafkaConnectCustomPlugin [@ocaml.doc ""]
+  | EC2VerifiedAccessInstance [@ocaml.doc ""]
+  | EC2SecurityGroupVpcAssociation [@ocaml.doc ""]
+  | IoTCoreDeviceAdvisorSuiteDefinition [@ocaml.doc ""]
+  | EntityResolutionMatchingWorkflow [@ocaml.doc ""]
+  | EMRContainersVirtualCluster [@ocaml.doc ""]
+  | ElasticLoadBalancingV2TargetGroup [@ocaml.doc ""]
+  | BedrockAgentCoreBrowserCustom [@ocaml.doc ""]
+  | BedrockAgentCoreRuntime [@ocaml.doc ""]
+  | SSMResourceDataSync [@ocaml.doc ""]
+  | SESMailManagerTrafficPolicy [@ocaml.doc ""]
+  | SESDedicatedIpPool [@ocaml.doc ""]
+  | SageMakerStudioLifecycleConfig [@ocaml.doc ""]
+  | SageMakerModelQualityJobDefinition [@ocaml.doc ""]
+  | SageMakerModelExplainabilityJobDefinition [@ocaml.doc ""]
+  | SageMakerDataQualityJobDefinition [@ocaml.doc ""]
+  | ConfigStoredQuery [@ocaml.doc ""]
+  | BackupRestoreTestingPlan [@ocaml.doc ""]
+  | CodeArtifactDomain [@ocaml.doc ""]
+  | RolesAnywhereProfile [@ocaml.doc ""]
+  | ConfigConformancePack [@ocaml.doc ""]
+  | RDSIntegration [@ocaml.doc ""]
+  | PCAConnectorADDirectoryRegistration [@ocaml.doc ""]
+  | IoTDomainConfiguration [@ocaml.doc ""]
+  | EntityResolutionSchemaMapping [@ocaml.doc ""]
+  | EntityResolutionIdMappingWorkflow [@ocaml.doc ""]
+  | CloudTrailEventDataStore [@ocaml.doc ""]
+  | CloudFrontPublicKey [@ocaml.doc ""]
+  | CloudFormationGuardHook [@ocaml.doc ""]
+  | BCMDataExportsExport [@ocaml.doc ""]
+  | BackupGatewayHypervisor [@ocaml.doc ""]
+  | CloudFrontRealtimeLogConfig [@ocaml.doc ""]
+  | S3TablesTableBucket [@ocaml.doc ""]
+  | EMRStudio [@ocaml.doc ""]
+  | DeadlineFleet [@ocaml.doc ""]
+  | AppConfigExtension [@ocaml.doc ""]
+  | ApiGatewayUsagePlan [@ocaml.doc ""]
+  | EC2SubnetNetworkAclAssociation [@ocaml.doc ""]
+  | CloudFormationLambdaHook [@ocaml.doc ""]
+  | ECRRepositoryCreationTemplate [@ocaml.doc ""]
+  | DeadlineQueueFleetAssociation [@ocaml.doc ""]
+  | SecretsManagerRotationSchedule [@ocaml.doc ""]
+  | SageMakerModelBiasJobDefinition [@ocaml.doc ""]
+  | SageMakerMlflowTrackingServer [@ocaml.doc ""]
+  | ApiGatewayV2Integration [@ocaml.doc ""]
+  | BedrockApplicationInferenceProfile [@ocaml.doc ""]
+  | ConfigAggregationAuthorization [@ocaml.doc ""]
+  | EMRServerlessApplication [@ocaml.doc ""]
+  | S3AccessGrantsInstance [@ocaml.doc ""]
+  | S3AccessGrant [@ocaml.doc ""]
+  | S3AccessGrantsLocation [@ocaml.doc ""]
+  | MediaPackageV2Channel [@ocaml.doc ""]
+  | CloudFormationStackSet [@ocaml.doc ""]
   | TransferProfile [@ocaml.doc ""]
   | SecurityHubStandard [@ocaml.doc ""]
   | SageMakerInferenceExperiment [@ocaml.doc ""]
@@ -736,8 +827,6 @@ type nonrec string_with_char_limit256_min0 = string [@@ocaml.doc ""]
 
 type nonrec string_with_char_limit256 = string [@@ocaml.doc ""]
 
-type nonrec string_with_char_limit2048 = string [@@ocaml.doc ""]
-
 type nonrec string_with_char_limit128 = string [@@ocaml.doc ""]
 
 type nonrec string_with_char_limit1024 = string [@@ocaml.doc ""]
@@ -947,7 +1036,7 @@ type nonrec start_resource_evaluation_request = {
          greater than 3600. If you specify 0, Config uses the default.\n"]
   evaluation_mode : evaluation_mode;
       [@ocaml.doc
-        "The mode of an evaluation. The valid values for this API are [DETECTIVE] and [PROACTIVE].\n"]
+        "The mode of an evaluation.\n\n  The only valid value for this API is [PROACTIVE].\n  \n   "]
   evaluation_context : evaluation_context option;
       [@ocaml.doc "Returns an [EvaluationContext] object.\n"]
   resource_details : resource_details; [@ocaml.doc "Returns a [ResourceDetails] object.\n"]
@@ -1293,7 +1382,8 @@ type nonrec put_service_linked_configuration_recorder_response = {
       [@ocaml.doc
         "The name of the specified configuration recorder.\n\n\
         \ For service-linked configuration recorders, Config automatically assigns a name that has \
-         the prefix \"[AWS]\" to the new service-linked configuration recorder.\n\
+         the prefix \"[AWSConfigurationRecorderFor]\" to the new service-linked configuration \
+         recorder.\n\
         \ "]
   arn : amazon_resource_name option;
       [@ocaml.doc "The Amazon Resource Name (ARN) of the specified configuration recorder.\n"]
@@ -1678,6 +1768,10 @@ type nonrec conformance_pack_input_parameters = conformance_pack_input_parameter
 type nonrec excluded_accounts = account_id list [@@ocaml.doc ""]
 
 type nonrec put_organization_conformance_pack_request = {
+  tags : tags_list option;
+      [@ocaml.doc
+        "The tags for the organization conformance pack. Each tag consists of a key and an \
+         optional value, both of which you define.\n"]
   excluded_accounts : excluded_accounts option;
       [@ocaml.doc
         "A list of Amazon Web Services accounts to be excluded from an organization conformance \
@@ -1694,7 +1788,7 @@ type nonrec put_organization_conformance_pack_request = {
         \   "]
   template_body : template_body option;
       [@ocaml.doc
-        "A string containing full conformance pack template body. Structure containing the \
+        "A string that contains the full conformance pack template body. Structure containing the \
          template body with a minimum length of 1 byte and a maximum length of 51,200 bytes.\n"]
   template_s3_uri : template_s3_uri option;
       [@ocaml.doc
@@ -1759,7 +1853,7 @@ type nonrec organization_managed_rule_metadata = {
          frequency, specify a valid value for the [MaximumExecutionFrequency] parameter.\n\
         \  \n\
         \   "]
-  input_parameters : string_with_char_limit2048 option;
+  input_parameters : string_with_char_limit1024 option;
       [@ocaml.doc
         "A string, in JSON format, that is passed to your organization Config rule Lambda function.\n"]
   rule_identifier : string_with_char_limit256;
@@ -1807,7 +1901,7 @@ type nonrec organization_custom_rule_metadata = {
          frequency, specify a valid value for the [MaximumExecutionFrequency] parameter.\n\
         \  \n\
         \   "]
-  input_parameters : string_with_char_limit2048 option;
+  input_parameters : string_with_char_limit1024 option;
       [@ocaml.doc
         "A string, in JSON format, that is passed to your organization Config rule Lambda function.\n"]
   organization_config_rule_trigger_types : organization_config_rule_trigger_types;
@@ -1888,7 +1982,7 @@ type nonrec organization_custom_policy_rule_metadata = {
         "The maximum frequency with which Config runs evaluations for a rule. Your Config Custom \
          Policy rule is triggered when Config delivers the configuration snapshot. For more \
          information, see [ConfigSnapshotDeliveryProperties].\n"]
-  input_parameters : string_with_char_limit2048 option;
+  input_parameters : string_with_char_limit1024 option;
       [@ocaml.doc
         "A string, in JSON format, that is passed to your organization Config Custom Policy rule.\n"]
   organization_config_rule_trigger_types : organization_config_rule_trigger_type_no_s_ns option;
@@ -1920,6 +2014,10 @@ type nonrec organization_custom_policy_rule_metadata = {
    against a rule.\n"]
 
 type nonrec put_organization_config_rule_request = {
+  tags : tags_list option;
+      [@ocaml.doc
+        "The tags for the organization Config rule. Each tag consists of a key and an optional \
+         value, both of which you define.\n"]
   organization_custom_policy_rule_metadata : organization_custom_policy_rule_metadata option;
       [@ocaml.doc
         "An [OrganizationCustomPolicyRuleMetadata] object. This object specifies metadata for your \
@@ -2220,6 +2318,10 @@ type nonrec put_conformance_pack_response = {
 type nonrec conformance_pack_name = string [@@ocaml.doc ""]
 
 type nonrec put_conformance_pack_request = {
+  tags : tags_list option;
+      [@ocaml.doc
+        "The tags for the conformance pack. Each tag consists of a key and an optional value, both \
+         of which you define.\n"]
   template_ssm_document_details : template_ssm_document_details option;
       [@ocaml.doc
         "An object of type [TemplateSSMDocumentDetails], which contains the name or the Amazon \
@@ -2237,8 +2339,8 @@ type nonrec put_conformance_pack_request = {
         \   "]
   template_body : template_body option;
       [@ocaml.doc
-        "A string containing the full conformance pack template body. The structure containing the \
-         template body has a minimum length of 1 byte and a maximum length of 51,200 bytes.\n\n\
+        "A string that contains the full conformance pack template body. The structure containing \
+         the template body has a minimum length of 1 byte and a maximum length of 51,200 bytes.\n\n\
         \  You can use a YAML template with two resource types: Config rule \
          ([AWS::Config::ConfigRule]) and remediation action \
          ([AWS::Config::RemediationConfiguration]).\n\
@@ -2315,7 +2417,8 @@ type nonrec invalid_configuration_recorder_name_exception = {
   message : error_message option; [@ocaml.doc "Error executing the command\n"]
 }
 [@@ocaml.doc
-  "You have provided a name for the customer managed configuration recorder that is not valid.\n"]
+  "The configuration recorder name is not valid. The prefix \"[AWSConfigurationRecorderFor]\" is \
+   reserved for service-linked configuration recorders.\n"]
 
 type nonrec all_supported = bool [@@ocaml.doc ""]
 
@@ -2892,8 +2995,8 @@ type nonrec configuration_recorder = {
         \       {b Keep Minimum Permisions When Reusing an IAM role} \n\
         \      \n\
         \       If you use an Amazon Web Services service that uses Config, such as Security Hub \
-         or Control Tower, and an IAM role has already been created, make sure that the IAM role \
-         that you use when setting up Config keeps the same minimum permissions as the \
+         CSPM or Control Tower, and an IAM role has already been created, make sure that the IAM \
+         role that you use when setting up Config keeps the same minimum permissions as the \
          pre-existing IAM role. You must do this to ensure that the other Amazon Web Services \
          service continues to run as expected. \n\
         \       \n\
@@ -2917,7 +3020,8 @@ type nonrec configuration_recorder = {
          creation time.\n\
         \ \n\
         \  For service-linked configuration recorders, Config automatically assigns a name that \
-         has the prefix \"[AWS]\" to a new service-linked configuration recorder.\n\
+         has the prefix \"[AWSConfigurationRecorderFor]\" to a new service-linked configuration \
+         recorder.\n\
         \  \n\
         \     {b Changing the name of a configuration recorder} \n\
         \    \n\
@@ -3083,7 +3187,16 @@ type nonrec emptiable_string_with_char_limit256 = string [@@ocaml.doc ""]
 
 type nonrec compliance_resource_types = string_with_char_limit256 list [@@ocaml.doc ""]
 
+type nonrec service_principals = string_with_char_limit128 list [@@ocaml.doc ""]
+
 type nonrec scope = {
+  service_principals : service_principals option;
+      [@ocaml.doc
+        "The service principals of the Amazon Web Services services for the rule.\n\n\
+        \  The field is populated only if the service-linked rule is created by a service. The \
+         field is empty if you create your own rule.\n\
+        \  \n\
+        \   "]
   compliance_resource_id : base_resource_id option;
       [@ocaml.doc
         "The ID of the only Amazon Web Services resource that you want to trigger an evaluation \
@@ -3262,7 +3375,16 @@ type nonrec evaluation_mode_configuration = {
 
 type nonrec evaluation_modes = evaluation_mode_configuration list [@@ocaml.doc ""]
 
+type nonrec rule_evaluation_visibility = INTERNAL [@ocaml.doc ""] | EXTERNAL [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
 type nonrec config_rule = {
+  rule_evaluation_visibility : rule_evaluation_visibility option;
+      [@ocaml.doc
+        "Indicates whether you can get [Evaluation]s for the Config rule. You can get \
+         [Evaluation]s for the Amazon Web Services Config rule if this value is [EXTERNAL]. You \
+         cannot get [Evaluation]s for the Amazon Web Services Config rule if this value is \
+         [INTERNAL].\n"]
   evaluation_modes : evaluation_modes option;
       [@ocaml.doc
         "The modes the Config rule can be evaluated in. The valid values are distinct objects. By \
@@ -3320,10 +3442,7 @@ type nonrec config_rule = {
          or more resource types, a combination of one resource type and one resource ID, or a \
          combination of a tag key and value. Specify a scope to constrain the resources that can \
          trigger an evaluation for the rule. If you do not specify a scope, evaluations are \
-         triggered when any resource in the recording group changes.\n\n\
-        \  The scope can be empty. \n\
-        \  \n\
-        \   "]
+         triggered when any resource in the recording group changes.\n"]
   description : emptiable_string_with_char_limit256 option;
       [@ocaml.doc "The description that you provide for the Config rule.\n"]
   config_rule_id : string_with_char_limit64 option; [@ocaml.doc "The ID of the Config rule.\n"]
@@ -3900,21 +4019,36 @@ type nonrec configuration_item = {
         \  This field is optional and is not guaranteed to be present in a configuration item \
          (CI). If you are using daily recording, this field will be populated. However, if you are \
          using continuous recording, this field will be omitted since the delivery time is \
-         instantaneous as the CI is available right away. For more information on daily recording \
-         and continuous recording, see \
+         instantaneous as the CI is available right away.\n\
+        \  \n\
+        \   For more information on daily recording and continuous recording, see \
+         {{:https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html#select-resources-recording-frequency}Recording \
+         Frequency} in the {i Config Developer Guide}.\n\
+        \   \n\
+        \    "]
+  recording_frequency : recording_frequency option;
+      [@ocaml.doc
+        "The recording frequency that Config uses to record configuration changes for the \
+         resource.\n\n\
+        \  This field only appears in the API response when [DAILY] recording is enabled for a \
+         resource type. If this field is not present, [CONTINUOUS] recording is enabled for that \
+         resource type. For more information on daily recording and continuous recording, see \
          {{:https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html#select-resources-recording-frequency}Recording \
          Frequency} in the {i Config Developer Guide}.\n\
         \  \n\
         \   "]
-  recording_frequency : recording_frequency option;
-      [@ocaml.doc
-        "The recording frequency that Config uses to record configuration changes for the resource.\n"]
   supplementary_configuration : supplementary_configuration option;
       [@ocaml.doc
-        "Configuration attributes that Config returns for certain resource types to supplement the \
-         information returned for the [configuration] parameter.\n"]
+        "A string to string map that contains additional contents for the resource \
+         configuration.Config returns this field for certain resource types to supplement the \
+         information returned for the [configuration] field.\n\n\
+        \ This string to string map needs to be deserialized using [json.loads()] before you can \
+         accessing the contents.\n\
+        \ "]
   configuration : configuration option;
-      [@ocaml.doc "The description of the resource configuration.\n"]
+      [@ocaml.doc
+        "A JSON-encoded string that contains the contents for the resource configuration. This \
+         string needs to be deserialized using [json.loads()] before you can access the contents.\n"]
   relationships : relationship_list option;
       [@ocaml.doc "A list of related Amazon Web Services resources.\n"]
   related_events : related_event_list option;
@@ -3991,7 +4125,9 @@ type nonrec get_resource_config_history_response = {
         "The string that you use in a subsequent request to get the next page of results in a \
          paginated response.\n"]
   configuration_items : configuration_item_list option;
-      [@ocaml.doc "A list that contains the configuration history of one or more resources.\n"]
+      [@ocaml.doc
+        "An array of [ConfigurationItems] Objects. Contatins the configuration history for one or \
+         more resources.\n"]
 }
 [@@ocaml.doc "The output for the [GetResourceConfigHistory] action.\n"]
 
@@ -5063,6 +5199,7 @@ type nonrec describe_retention_configurations_request = {
 [@@ocaml.doc ""]
 
 type nonrec remediation_execution_state =
+  | UNKNOWN [@ocaml.doc ""]
   | FAILED [@ocaml.doc ""]
   | SUCCEEDED [@ocaml.doc ""]
   | IN_PROGRESS [@ocaml.doc ""]
@@ -5070,6 +5207,9 @@ type nonrec remediation_execution_state =
 [@@ocaml.doc ""]
 
 type nonrec remediation_execution_step_state =
+  | UNKNOWN [@ocaml.doc ""]
+  | EXITED [@ocaml.doc ""]
+  | IN_PROGRESS [@ocaml.doc ""]
   | FAILED [@ocaml.doc ""]
   | PENDING [@ocaml.doc ""]
   | SUCCEEDED [@ocaml.doc ""]
@@ -5506,7 +5646,7 @@ type nonrec organization_custom_policy_rule_metadata_no_policy = {
         "The maximum frequency with which Config runs evaluations for a rule. Your Config Custom \
          Policy rule is triggered when Config delivers the configuration snapshot. For more \
          information, see [ConfigSnapshotDeliveryProperties].\n"]
-  input_parameters : string_with_char_limit2048 option;
+  input_parameters : string_with_char_limit1024 option;
       [@ocaml.doc
         "A string, in JSON format, that is passed to your organization Config Custom Policy rule.\n"]
   organization_config_rule_trigger_types : organization_config_rule_trigger_type_no_s_ns option;
@@ -5931,7 +6071,7 @@ type nonrec describe_configuration_recorder_status_request = {
          linked Amazon Web Services service to specify the configuration recorder.\n"]
   configuration_recorder_names : configuration_recorder_name_list option;
       [@ocaml.doc
-        "The name of the configuration recorder. If the name is not specified, the opertation \
+        "The name of the configuration recorder. If the name is not specified, the operation \
          returns the status for the customer managed configuration recorder configured for the \
          account, if applicable.\n\n\
         \  When making a request to this operation, you can only specify one configuration recorder.\n\
@@ -5958,7 +6098,11 @@ type nonrec describe_configuration_recorders_request = {
         "For service-linked configuration recorders, you can use the service principal of the \
          linked Amazon Web Services service to specify the configuration recorder.\n"]
   configuration_recorder_names : configuration_recorder_name_list option;
-      [@ocaml.doc "A list of names of the configuration recorders that you want to specify.\n"]
+      [@ocaml.doc
+        "A list of names of the configuration recorders that you want to specify.\n\n\
+        \  When making a request to this operation, you can only specify one configuration recorder.\n\
+        \  \n\
+        \   "]
 }
 [@@ocaml.doc "The input for the [DescribeConfigurationRecorders] action.\n"]
 
@@ -6084,6 +6228,8 @@ type nonrec describe_config_rules_response = {
 [@@ocaml.doc "\n"]
 
 type nonrec describe_config_rules_filters = {
+  rule_evaluation_visibility : rule_evaluation_visibility option;
+      [@ocaml.doc "Filters the results by [RuleEvaluationVisibility].\n"]
   evaluation_mode : evaluation_mode option;
       [@ocaml.doc "The mode of an evaluation. The valid values are Detective or Proactive.\n"]
 }
@@ -6692,13 +6838,27 @@ type nonrec base_configuration_item = {
         \   "]
   recording_frequency : recording_frequency option;
       [@ocaml.doc
-        "The recording frequency that Config uses to record configuration changes for the resource.\n"]
+        "The recording frequency that Config uses to record configuration changes for the \
+         resource.\n\n\
+        \  This field only appears in the API response when [DAILY] recording is enabled for a \
+         resource type. If this field is not present, [CONTINUOUS] recording is enabled for that \
+         resource type. For more information on daily recording and continuous recording, see \
+         {{:https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html#select-resources-recording-frequency}Recording \
+         Frequency} in the {i Config Developer Guide}.\n\
+        \  \n\
+        \   "]
   supplementary_configuration : supplementary_configuration option;
       [@ocaml.doc
-        "Configuration attributes that Config returns for certain resource types to supplement the \
-         information returned for the configuration parameter.\n"]
+        "A string to string map that contains additional contents for the resource \
+         configuration.Config returns this field for certain resource types to supplement the \
+         information returned for the [configuration] field.\n\n\
+        \ This string needs to be deserialized using [json.loads()] before you can access the \
+         contents.\n\
+        \ "]
   configuration : configuration option;
-      [@ocaml.doc "The description of the resource configuration.\n"]
+      [@ocaml.doc
+        "A JSON-encoded string that contains the contents for the resource configuration. This \
+         string needs to be deserialized using [json.loads()] before you can access the contents. \n"]
   resource_creation_time : resource_creation_time option;
       [@ocaml.doc "The time stamp when the resource was created.\n"]
   availability_zone : availability_zone option;

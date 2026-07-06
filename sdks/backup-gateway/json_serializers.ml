@@ -421,6 +421,8 @@ let get_hypervisor_input_to_yojson (x : get_hypervisor_input) =
 let gateway_details_to_yojson (x : gateway_details) =
   assoc_to_yojson
     [
+      ("SoftwareVersion", option_to_yojson name_to_yojson x.software_version);
+      ("DeprecationDate", option_to_yojson time_to_yojson x.deprecation_date);
       ("VpcEndpoint", option_to_yojson vpc_endpoint_to_yojson x.vpc_endpoint);
       ("NextUpdateAvailabilityTime", option_to_yojson time_to_yojson x.next_update_availability_time);
       ( "MaintenanceStartTime",

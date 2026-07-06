@@ -1,8 +1,10 @@
 open Types
 
 val make_dead_letter_config : ?arn:resource_arn -> unit -> dead_letter_config
+val make_log_config : ?level:level -> ?include_detail:include_detail -> unit -> log_config
 
 val make_update_event_bus_response :
+  ?log_config:log_config ->
   ?dead_letter_config:dead_letter_config ->
   ?description:event_bus_description ->
   ?kms_key_identifier:kms_key_identifier ->
@@ -12,6 +14,7 @@ val make_update_event_bus_response :
   update_event_bus_response
 
 val make_update_event_bus_request :
+  ?log_config:log_config ->
   ?dead_letter_config:dead_letter_config ->
   ?description:event_bus_description ->
   ?kms_key_identifier:kms_key_identifier ->
@@ -788,6 +791,7 @@ val make_describe_event_source_request :
 val make_describe_event_bus_response :
   ?last_modified_time:timestamp ->
   ?creation_time:timestamp ->
+  ?log_config:log_config ->
   ?policy:string_ ->
   ?dead_letter_config:dead_letter_config ->
   ?kms_key_identifier:kms_key_identifier ->
@@ -964,6 +968,7 @@ val make_create_partner_event_source_request :
   account:account_id -> name:event_source_name -> unit -> create_partner_event_source_request
 
 val make_create_event_bus_response :
+  ?log_config:log_config ->
   ?dead_letter_config:dead_letter_config ->
   ?kms_key_identifier:kms_key_identifier ->
   ?description:event_bus_description ->
@@ -973,6 +978,7 @@ val make_create_event_bus_response :
 
 val make_create_event_bus_request :
   ?tags:tag_list ->
+  ?log_config:log_config ->
   ?dead_letter_config:dead_letter_config ->
   ?kms_key_identifier:kms_key_identifier ->
   ?description:event_bus_description ->

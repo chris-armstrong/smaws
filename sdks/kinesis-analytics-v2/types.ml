@@ -337,6 +337,7 @@ type nonrec application_description = string [@@ocaml.doc ""]
 type nonrec application_name = string [@@ocaml.doc ""]
 
 type nonrec runtime_environment =
+  | FLINK_2_2 [@ocaml.doc ""]
   | FLINK_1_20 [@ocaml.doc ""]
   | FLINK_1_19 [@ocaml.doc ""]
   | FLINK_1_18 [@ocaml.doc ""]
@@ -841,9 +842,9 @@ type nonrec flink_run_configuration = {
          that cannot be mapped to the new program. This will happen if the program is updated \
          between snapshots to remove stateful parameters, and state data in the snapshot no longer \
          corresponds to valid application data. For more information, see \
-         {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/ops/state/savepoints/#allowing-non-restored-state} \
+         {{:https://nightlies.apache.org/flink/flink-docs-release-2.2/docs/ops/state/savepoints/#allowing-non-restored-state} \
          Allowing Non-Restored State} in the \
-         {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/}Apache Flink \
+         {{:https://nightlies.apache.org/flink/flink-docs-release-2.2/}Apache Flink \
          documentation}.\n\n\
         \  This value defaults to [false]. If you update your application without specifying this \
          parameter, [AllowNonRestoredState] will be set to [false], even if it was previously set \
@@ -965,7 +966,7 @@ type nonrec parallelism_configuration_description = {
          Apache Flink can increase the [CurrentParallelism] value in response to application load. \
          The service can increase [CurrentParallelism] up to the maximum parallelism, which is \
          [ParalellismPerKPU] times the maximum KPUs for the application. The maximum KPUs for an \
-         application is 32 by default, and can be increased by requesting a limit increase. If \
+         application is 64 by default, and can be increased by requesting a limit increase. If \
          application load is reduced, the service can reduce the [CurrentParallelism] value down \
          to the [Parallelism] setting.\n"]
   configuration_type : configuration_type option;
@@ -983,9 +984,9 @@ type nonrec flink_application_configuration_description = {
   job_plan_description : job_plan_description option;
       [@ocaml.doc
         "The job plan for an application. For more information about the job plan, see \
-         {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/internals/job_scheduling.html}Jobs \
+         {{:https://nightlies.apache.org/flink/flink-docs-release-2.2/internals/job_scheduling.html}Jobs \
          and Scheduling} in the \
-         {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/}Apache Flink \
+         {{:https://nightlies.apache.org/flink/flink-docs-release-2.2/}Apache Flink \
          Documentation}. To retrieve the job plan for the application, use the \
          [DescribeApplicationRequest$IncludeAdditionalDetails] parameter of the \
          [DescribeApplication] operation.\n"]
@@ -1037,12 +1038,28 @@ type nonrec application_system_rollback_configuration_description = {
   rollback_enabled : boolean_object;
       [@ocaml.doc
         "Describes whether system rollbacks are enabled for a Managed Service for Apache Flink \
-         application"]
+         application.\n"]
 }
 [@@ocaml.doc
-  "Describes system rollback configuration for a Managed Service for Apache Flink application"]
+  "Describes the system rollback configuration for a Managed Service for Apache Flink application.\n"]
+
+type nonrec key_id = string [@@ocaml.doc ""]
+
+type nonrec key_type = CUSTOMER_MANAGED_KEY [@ocaml.doc ""] | AWS_OWNED_KEY [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec application_encryption_configuration_description = {
+  key_type : key_type; [@ocaml.doc "Specifies the type of key used for encryption at rest.\n"]
+  key_id : key_id option;
+      [@ocaml.doc
+        "The key ARN, key ID, alias ARN, or alias name of the KMS key used for encryption at rest.\n"]
+}
+[@@ocaml.doc "Describes the encryption at rest configuration.\n"]
 
 type nonrec application_configuration_description = {
+  application_encryption_configuration_description :
+    application_encryption_configuration_description option;
+      [@ocaml.doc "Describes the encryption at rest configuration.\n"]
   zeppelin_application_configuration_description :
     zeppelin_application_configuration_description option;
       [@ocaml.doc
@@ -1051,7 +1068,9 @@ type nonrec application_configuration_description = {
       [@ocaml.doc "The array of descriptions of VPC configurations available to the application.\n"]
   application_system_rollback_configuration_description :
     application_system_rollback_configuration_description option;
-      [@ocaml.doc ""]
+      [@ocaml.doc
+        "Describes whether system rollbacks are enabled for a Managed Service for Apache Flink \
+         application.\n"]
   application_snapshot_configuration_description :
     application_snapshot_configuration_description option;
       [@ocaml.doc
@@ -1126,7 +1145,7 @@ type nonrec application_detail = {
   conditional_token : conditional_token option;
       [@ocaml.doc "A value you use to implement strong concurrency for application updates.\n"]
   application_version_create_timestamp : timestamp option;
-      [@ocaml.doc "The current timestamp when the application version was created."]
+      [@ocaml.doc "The timestamp that indicates when the application version was created.\n"]
   application_version_rolled_back_from : application_version_id option;
       [@ocaml.doc
         "If you reverted the application using [RollbackApplication], the application version when \
@@ -1171,7 +1190,7 @@ type nonrec operation_id = string [@@ocaml.doc ""]
 
 type nonrec update_application_response = {
   operation_id : operation_id option;
-      [@ocaml.doc "Operation ID for tracking UpdateApplication request"]
+      [@ocaml.doc "The operation ID that can be used to track the request.\n"]
   application_detail : application_detail; [@ocaml.doc "Describes application updates.\n"]
 }
 [@@ocaml.doc ""]
@@ -1552,12 +1571,24 @@ type nonrec application_system_rollback_configuration_update = {
   rollback_enabled_update : boolean_object;
       [@ocaml.doc
         "Describes whether system rollbacks are enabled for a Managed Service for Apache Flink \
-         application"]
+         application.\n"]
 }
 [@@ocaml.doc
-  "Describes system rollback configuration for a Managed Service for Apache Flink application"]
+  "Describes the system rollback configuration for a Managed Service for Apache Flink application.\n"]
+
+type nonrec application_encryption_configuration_update = {
+  key_type_update : key_type;
+      [@ocaml.doc "Specifies the type of key to be used for encryption at rest.\n"]
+  key_id_update : key_id option;
+      [@ocaml.doc
+        "The key ARN, key ID, alias ARN, or alias name of the KMS key to be used for encryption at \
+         rest.\n"]
+}
+[@@ocaml.doc "Describes configuration updates to encryption at rest.\n"]
 
 type nonrec application_configuration_update = {
+  application_encryption_configuration_update : application_encryption_configuration_update option;
+      [@ocaml.doc "Represents an update for encryption at rest configuration.\n"]
   zeppelin_application_configuration_update : zeppelin_application_configuration_update option;
       [@ocaml.doc
         "Updates to the configuration of a Managed Service for Apache Flink Studio notebook.\n"]
@@ -1566,7 +1597,9 @@ type nonrec application_configuration_update = {
         "Updates to the array of descriptions of VPC configurations available to the application.\n"]
   application_system_rollback_configuration_update :
     application_system_rollback_configuration_update option;
-      [@ocaml.doc ""]
+      [@ocaml.doc
+        "Describes whether system rollbacks are enabled for a Managed Service for Apache Flink \
+         application.\n"]
   application_snapshot_configuration_update : application_snapshot_configuration_update option;
       [@ocaml.doc
         "Describes whether snapshots are enabled for a Managed Service for Apache Flink application.\n"]
@@ -1781,7 +1814,7 @@ type nonrec tag_resource_request = {
 
 type nonrec stop_application_response = {
   operation_id : operation_id option;
-      [@ocaml.doc "Operation ID for tracking StopApplication request"]
+      [@ocaml.doc "The operation ID that can be used to track the request.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -1806,7 +1839,7 @@ type nonrec stop_application_request = {
 
 type nonrec start_application_response = {
   operation_id : operation_id option;
-      [@ocaml.doc "Operation ID for tracking StartApplication request"]
+      [@ocaml.doc "The operation ID that can be used to track the request.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -2037,6 +2070,10 @@ type nonrec snapshot_status =
 [@@ocaml.doc ""]
 
 type nonrec snapshot_details = {
+  application_encryption_configuration_description :
+    application_encryption_configuration_description option;
+      [@ocaml.doc
+        "Specifies the encryption settings of data at rest for the application snapshot.\n"]
   runtime_environment : runtime_environment option;
       [@ocaml.doc "The Flink Runtime for the application snapshot.\n"]
   snapshot_creation_timestamp : timestamp option;
@@ -2066,7 +2103,7 @@ type nonrec s3_configuration = {
 
 type nonrec rollback_application_response = {
   operation_id : operation_id option;
-      [@ocaml.doc "Operation ID for tracking RollbackApplication request"]
+      [@ocaml.doc "The operation ID that can be used to track the request.\n"]
   application_detail : application_detail; [@ocaml.doc ""]
 }
 [@@ocaml.doc ""]
@@ -2114,7 +2151,7 @@ type nonrec parallelism_configuration = {
          Apache Flink increases the [CurrentParallelism] value in response to application load. \
          The service can increase the [CurrentParallelism] value up to the maximum parallelism, \
          which is [ParalellismPerKPU] times the maximum KPUs for the application. The maximum KPUs \
-         for an application is 32 by default, and can be increased by requesting a limit increase. \
+         for an application is 64 by default, and can be increased by requesting a limit increase. \
          If application load is reduced, the service can reduce the [CurrentParallelism] value \
          down to the [Parallelism] setting.\n"]
   configuration_type : configuration_type;
@@ -2126,8 +2163,8 @@ type nonrec parallelism_configuration = {
 [@@ocaml.doc
   "Describes parameters for how a Managed Service for Apache Flink application executes multiple \
    tasks simultaneously. For more information about parallelism, see \
-   {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/dev/parallel.html}Parallel \
-   Execution} in the {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/}Apache Flink \
+   {{:https://nightlies.apache.org/flink/flink-docs-release-2.2/dev/parallel.html}Parallel \
+   Execution} in the {{:https://nightlies.apache.org/flink/flink-docs-release-2.2/}Apache Flink \
    Documentation}.\n"]
 
 type nonrec operation_status =
@@ -2135,21 +2172,21 @@ type nonrec operation_status =
   | SUCCESSFUL [@ocaml.doc ""]
   | CANCELLED [@ocaml.doc ""]
   | IN_PROGRESS [@ocaml.doc ""]
-[@@ocaml.doc "Status of the operation performed on an application"]
+[@@ocaml.doc "The status of the operation.\n"]
 
 type nonrec error_string = string [@@ocaml.doc ""]
 
 type nonrec error_info = { error_string : error_string option [@ocaml.doc ""] }
-[@@ocaml.doc "Provides a description of the operation failure error"]
+[@@ocaml.doc "A description of the error that caused an operation to fail.\n"]
 
 type nonrec operation_failure_details = {
   error_info : error_info option; [@ocaml.doc ""]
   rollback_operation_id : operation_id option;
       [@ocaml.doc
-        "Provides the operation ID of a system-rollback operation executed due to failure in the \
-         current operation"]
+        "The rollback operation ID of the system-rollback operation that executed due to failure \
+         in the current operation.\n"]
 }
-[@@ocaml.doc "Provides a description of the operation failure"]
+[@@ocaml.doc "Provides a description of the operation failure.\n"]
 
 type nonrec operation = string [@@ocaml.doc ""]
 
@@ -2303,12 +2340,15 @@ type nonrec list_application_snapshots_request = {
 type nonrec application_operation_info = {
   operation_status : operation_status option; [@ocaml.doc ""]
   end_time : timestamp option;
-      [@ocaml.doc "The timestamp at which the operation finished for the application"]
-  start_time : timestamp option; [@ocaml.doc "The timestamp at which the operation was created"]
+      [@ocaml.doc "The timestamp that indicates when the operation finished.\n"]
+  start_time : timestamp option;
+      [@ocaml.doc "The timestamp that indicates when the operation was created.\n"]
   operation_id : operation_id option; [@ocaml.doc ""]
   operation : operation option; [@ocaml.doc ""]
 }
-[@@ocaml.doc "Provides a description of the operation, such as the type and status of operation"]
+[@@ocaml.doc
+  "A description of the aplication operation that provides information about the updates that were \
+   made to the application.\n"]
 
 type nonrec application_operation_info_list = application_operation_info list [@@ocaml.doc ""]
 
@@ -2316,7 +2356,7 @@ type nonrec list_application_operations_response = {
   next_token : next_token option; [@ocaml.doc ""]
   application_operation_info_list : application_operation_info_list option; [@ocaml.doc ""]
 }
-[@@ocaml.doc "Response with the list of operations for an application"]
+[@@ocaml.doc "A response that returns a list of operations for an application.\n"]
 
 type nonrec list_application_operations_input_limit = int [@@ocaml.doc ""]
 
@@ -2327,7 +2367,7 @@ type nonrec list_application_operations_request = {
   limit : list_application_operations_input_limit option; [@ocaml.doc ""]
   application_name : application_name; [@ocaml.doc ""]
 }
-[@@ocaml.doc "Request to list operations performed on an application"]
+[@@ocaml.doc "A request for a list of operations performed on an application.\n"]
 
 type nonrec discover_input_schema_response = {
   raw_input_records : raw_input_records option;
@@ -2396,39 +2436,40 @@ type nonrec describe_application_snapshot_request = {
 
 type nonrec application_version_change_details = {
   application_version_updated_to : application_version_id;
-      [@ocaml.doc
-        "The operation execution resulted in the transition to the following version of the \
-         application"]
+      [@ocaml.doc "The version that the operation execution applied to the applicartion.\n"]
   application_version_updated_from : application_version_id;
-      [@ocaml.doc "The operation was performed on this version of the application"]
+      [@ocaml.doc "The new version that the application was updated to.\n"]
 }
-[@@ocaml.doc "Contains information about the application version changes due to an operation"]
+[@@ocaml.doc
+  "Contains information about the version changes that the operation applied to the application.\n"]
 
 type nonrec application_operation_info_details = {
   operation_failure_details : operation_failure_details option; [@ocaml.doc ""]
   application_version_change_details : application_version_change_details option; [@ocaml.doc ""]
   operation_status : operation_status; [@ocaml.doc ""]
-  end_time : timestamp;
-      [@ocaml.doc "The timestamp at which the operation finished for the application"]
-  start_time : timestamp; [@ocaml.doc "The timestamp at which the operation was created"]
+  end_time : timestamp; [@ocaml.doc "The timestamp that indicates when the operation finished.\n"]
+  start_time : timestamp;
+      [@ocaml.doc "The timestamp that indicates when the operation was created.\n"]
   operation : operation; [@ocaml.doc ""]
 }
-[@@ocaml.doc "Provides a description of the operation, such as the operation-type and status"]
+[@@ocaml.doc
+  "A description of the application operation that provides information about the updates that \
+   were made to the application.\n"]
 
 type nonrec describe_application_operation_response = {
   application_operation_info_details : application_operation_info_details option; [@ocaml.doc ""]
 }
 [@@ocaml.doc
-  "Provides details of the operation corresponding to the operation-ID on a Managed Service for \
-   Apache Flink application"]
+  "Provides details of the operation that corresponds to the operation ID on a Managed Service for \
+   Apache Flink application.\n"]
 
 type nonrec describe_application_operation_request = {
   operation_id : operation_id; [@ocaml.doc ""]
   application_name : application_name; [@ocaml.doc ""]
 }
 [@@ocaml.doc
-  "Request for information about a specific operation performed on a Managed Service for Apache \
-   Flink application"]
+  "A request for information about a specific operation that was performed on a Managed Service \
+   for Apache Flink application.\n"]
 
 type nonrec describe_application_response = {
   application_detail : application_detail;
@@ -2449,7 +2490,7 @@ type nonrec describe_application_request = {
 
 type nonrec delete_application_vpc_configuration_response = {
   operation_id : operation_id option;
-      [@ocaml.doc "Operation ID for tracking DeleteApplicationVpcConfiguration request"]
+      [@ocaml.doc "The operation ID that can be used to track the request.\n"]
   application_version_id : application_version_id option;
       [@ocaml.doc "The updated version ID of the application.\n"]
   application_ar_n : resource_ar_n option;
@@ -2561,7 +2602,7 @@ type nonrec delete_application_input_processing_configuration_request = {
 
 type nonrec delete_application_cloud_watch_logging_option_response = {
   operation_id : operation_id option;
-      [@ocaml.doc "Operation ID for tracking DeleteApplicationCloudWatchLoggingOption request"]
+      [@ocaml.doc "The operation ID that can be used to track the request.\n"]
   cloud_watch_logging_option_descriptions : cloud_watch_logging_option_descriptions option;
       [@ocaml.doc
         "The descriptions of the remaining CloudWatch logging options for the application.\n"]
@@ -2645,9 +2686,9 @@ type nonrec checkpoint_configuration = {
          new checkpoint operation can start. If a checkpoint operation takes longer than the \
          [CheckpointInterval], the application otherwise performs continual checkpoint operations. \
          For more information, see \
-         {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/ops/state/large_state_tuning/#tuning-checkpointing} \
+         {{:https://nightlies.apache.org/flink/flink-docs-release-2.2/docs/ops/state/large_state_tuning/#tuning-checkpointing} \
          Tuning Checkpointing} in the \
-         {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/}Apache Flink \
+         {{:https://nightlies.apache.org/flink/flink-docs-release-2.2/}Apache Flink \
          Documentation}.\n\n\
         \  If [CheckpointConfiguration.ConfigurationType] is [DEFAULT], the application will use a \
          [MinPauseBetweenCheckpoints] value of 5000, even if this value is set using this API or \
@@ -2696,9 +2737,9 @@ type nonrec checkpoint_configuration = {
 [@@ocaml.doc
   "Describes an application's checkpointing configuration. Checkpointing is the process of \
    persisting application state for fault tolerance. For more information, see \
-   {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/dev/datastream/fault-tolerance/checkpointing/#enabling-and-configuring-checkpointing} \
+   {{:https://nightlies.apache.org/flink/flink-docs-release-2.2/docs/dev/datastream/fault-tolerance/checkpointing/#enabling-and-configuring-checkpointing} \
    Checkpoints for Fault Tolerance} in the \
-   {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/}Apache Flink Documentation}.\n"]
+   {{:https://nightlies.apache.org/flink/flink-docs-release-2.2/}Apache Flink Documentation}.\n"]
 
 type nonrec flink_application_configuration = {
   parallelism_configuration : parallelism_configuration option;
@@ -2711,9 +2752,9 @@ type nonrec flink_application_configuration = {
       [@ocaml.doc
         "Describes an application's checkpointing configuration. Checkpointing is the process of \
          persisting application state for fault tolerance. For more information, see \
-         {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/dev/datastream/fault-tolerance/checkpointing/#enabling-and-configuring-checkpointing} \
+         {{:https://nightlies.apache.org/flink/flink-docs-release-2.2/docs/dev/datastream/fault-tolerance/checkpointing/#enabling-and-configuring-checkpointing} \
          Checkpoints for Fault Tolerance} in the \
-         {{:https://nightlies.apache.org/flink/flink-docs-release-1.19/}Apache Flink \
+         {{:https://nightlies.apache.org/flink/flink-docs-release-2.2/}Apache Flink \
          Documentation}. \n"]
 }
 [@@ocaml.doc
@@ -2756,19 +2797,31 @@ type nonrec application_system_rollback_configuration = {
   rollback_enabled : boolean_object;
       [@ocaml.doc
         "Describes whether system rollbacks are enabled for a Managed Service for Apache Flink \
-         application"]
+         application.\n"]
 }
 [@@ocaml.doc
-  "Describes system rollback configuration for a Managed Service for Apache Flink application"]
+  "Describes the system rollback configuration for a Managed Service for Apache Flink application.\n"]
+
+type nonrec application_encryption_configuration = {
+  key_type : key_type; [@ocaml.doc "Specifies the type of key used for encryption at rest.\n"]
+  key_id : key_id option;
+      [@ocaml.doc
+        "The key ARN, key ID, alias ARN, or alias name of the KMS key used for encryption at rest.\n"]
+}
+[@@ocaml.doc "Specifies the configuration to manage encryption at rest.\n"]
 
 type nonrec application_configuration = {
+  application_encryption_configuration : application_encryption_configuration option;
+      [@ocaml.doc "The configuration to manage encryption at rest.\n"]
   zeppelin_application_configuration : zeppelin_application_configuration option;
       [@ocaml.doc
         "The configuration parameters for a Managed Service for Apache Flink Studio notebook.\n"]
   vpc_configurations : vpc_configurations option;
       [@ocaml.doc "The array of descriptions of VPC configurations available to the application.\n"]
   application_system_rollback_configuration : application_system_rollback_configuration option;
-      [@ocaml.doc ""]
+      [@ocaml.doc
+        "Describes whether system rollbacks are enabled for a Managed Service for Apache Flink \
+         application.\n"]
   application_snapshot_configuration : application_snapshot_configuration option;
       [@ocaml.doc
         "Describes whether snapshots are enabled for a Managed Service for Apache Flink application.\n"]
@@ -2832,7 +2885,7 @@ type nonrec create_application_request = {
 
 type nonrec add_application_vpc_configuration_response = {
   operation_id : operation_id option;
-      [@ocaml.doc "Operation ID for tracking AddApplicationVpcConfiguration request"]
+      [@ocaml.doc "The operation ID that can be used to track the request.\n"]
   vpc_configuration_description : vpc_configuration_description option;
       [@ocaml.doc "The parameters of the new VPC configuration.\n"]
   application_version_id : application_version_id option;
@@ -2987,7 +3040,7 @@ type nonrec add_application_input_request = {
 
 type nonrec add_application_cloud_watch_logging_option_response = {
   operation_id : operation_id option;
-      [@ocaml.doc "Operation ID for tracking AddApplicationCloudWatchLoggingOption request"]
+      [@ocaml.doc "The operation ID that can be used to track the request.\n"]
   cloud_watch_logging_option_descriptions : cloud_watch_logging_option_descriptions option;
       [@ocaml.doc
         "The descriptions of the current CloudWatch logging options for the SQL-based Kinesis Data \

@@ -1,3 +1,12 @@
+type nonrec web_identity_token_type = string [@@ocaml.doc ""]
+
+type nonrec web_identity_token_duration_seconds_type = int [@@ocaml.doc ""]
+
+type nonrec web_identity_token_audience_string_type = string [@@ocaml.doc ""]
+
+type nonrec web_identity_token_audience_list_type = web_identity_token_audience_string_type list
+[@@ocaml.doc ""]
+
 type nonrec web_identity_subject_type = string [@@ocaml.doc ""]
 
 type nonrec user_name_type = string [@@ocaml.doc ""]
@@ -7,6 +16,8 @@ type nonrec user_id_type = string [@@ocaml.doc ""]
 type nonrec url_type = string [@@ocaml.doc ""]
 
 type nonrec unrestricted_session_policy_document_type = string [@@ocaml.doc ""]
+
+type nonrec trade_in_token_type = string [@@ocaml.doc ""]
 
 type nonrec token_type = string [@@ocaml.doc ""]
 
@@ -80,6 +91,8 @@ type nonrec non_negative_integer_type = int [@@ocaml.doc ""]
 
 type nonrec malformed_policy_document_message = string [@@ocaml.doc ""]
 
+type nonrec jwt_algorithm_type = string [@@ocaml.doc ""]
+
 type nonrec invalid_identity_token_message = string [@@ocaml.doc ""]
 
 type nonrec invalid_authorization_message = string [@@ocaml.doc ""]
@@ -91,6 +104,8 @@ type nonrec idp_communication_error_message = string [@@ocaml.doc ""]
 type nonrec federated_id_type = string [@@ocaml.doc ""]
 
 type nonrec external_id_type = string [@@ocaml.doc ""]
+
+type nonrec expired_trade_in_token_exception_message = string [@@ocaml.doc ""]
 
 type nonrec expired_identity_token_message = string [@@ocaml.doc ""]
 
@@ -120,6 +135,16 @@ type nonrec subject_type = string [@@ocaml.doc ""]
 
 type nonrec subject = string [@@ocaml.doc ""]
 
+type nonrec session_duration_escalation_exception2 = string [@@ocaml.doc ""]
+
+type nonrec session_duration_escalation_exception = {
+  message : session_duration_escalation_exception2 option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "The requested token duration would extend the session beyond its original expiration time. You \
+   cannot use this operation to extend the lifetime of a session beyond what was granted when the \
+   session was originally created.\n"]
+
 type nonrec saml_assertion_type = string [@@ocaml.doc ""]
 
 type nonrec root_duration_seconds_type = int [@@ocaml.doc ""]
@@ -129,7 +154,7 @@ type nonrec region_disabled_exception = { message : region_disabled_message opti
   "STS is not activated in the requested region for the account that is being asked to generate \
    credentials. The account administrator must use the IAM console to activate STS in that region. \
    For more information, see \
-   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_enable-regions.html}Activating \
+   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_enable-regions.html#sts-regions-activate-deactivate}Activating \
    and Deactivating STS in an Amazon Web Services Region} in the {i IAM User Guide}.\n"]
 
 type nonrec provided_context = {
@@ -165,6 +190,15 @@ type nonrec packed_policy_too_large_exception = {
    and STS Entity Character Limits} in the {i IAM User Guide}.\n\
   \ "]
 
+type nonrec outbound_web_identity_federation_disabled_exception2 = string [@@ocaml.doc ""]
+
+type nonrec outbound_web_identity_federation_disabled_exception = {
+  message : outbound_web_identity_federation_disabled_exception2 option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "The outbound web identity federation feature is not enabled for this account. To use this \
+   feature, you must first enable it through the Amazon Web Services Management Console or API.\n"]
+
 type nonrec name_qualifier = string [@@ocaml.doc ""]
 
 type nonrec malformed_policy_document_exception = {
@@ -173,6 +207,15 @@ type nonrec malformed_policy_document_exception = {
 [@@ocaml.doc
   "The request was rejected because the policy document was malformed. The error message describes \
    the specific error.\n"]
+
+type nonrec jwt_payload_size_exceeded_exception2 = string [@@ocaml.doc ""]
+
+type nonrec jwt_payload_size_exceeded_exception = {
+  message : jwt_payload_size_exceeded_exception2 option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "The requested token payload size exceeds the maximum allowed size. Reduce the number of request \
+   tags included in the [GetWebIdentityToken] API call to reduce the token payload size.\n"]
 
 type nonrec issuer = string [@@ocaml.doc ""]
 
@@ -209,6 +252,49 @@ type nonrec idp_communication_error_exception = {
    the incoming identity token could not be reached. This is often a transient error caused by \
    network conditions. Retry the request a limited number of times so that you don't exceed the \
    request rate. If the error persists, the identity provider might be down or not responding.\n"]
+
+type nonrec get_web_identity_token_response = {
+  expiration : date_type option;
+      [@ocaml.doc
+        "The date and time when the web identity token expires, in UTC. The expiration is \
+         determined by adding the [DurationSeconds] value to the time the token was issued. After \
+         this time, the token should no longer be considered valid.\n"]
+  web_identity_token : web_identity_token_type option;
+      [@ocaml.doc
+        "A signed JSON Web Token (JWT) that represents the caller's Amazon Web Services identity. \
+         The token contains standard JWT claims such as subject, audience, expiration time, and \
+         additional identity attributes added by STS as custom claims. You can also add your own \
+         custom claims to the token by passing tags as request parameters to the \
+         [GetWebIdentityToken] API. The token is signed using the specified signing algorithm and \
+         can be verified using the verification keys available at the issuer's JWKS endpoint.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_web_identity_token_request = {
+  tags : tag_list_type option;
+      [@ocaml.doc
+        "An optional list of tags to include in the JSON Web Token (JWT). These tags are added as \
+         custom claims to the JWT and can be used by the downstream service for authorization \
+         decisions. \n"]
+  signing_algorithm : jwt_algorithm_type;
+      [@ocaml.doc
+        "The cryptographic algorithm to use for signing the JSON Web Token (JWT). Valid values are \
+         RS256 (RSA with SHA-256) and ES384 (ECDSA using P-384 curve with SHA-384). \n"]
+  duration_seconds : web_identity_token_duration_seconds_type option;
+      [@ocaml.doc
+        "The duration, in seconds, for which the JSON Web Token (JWT) will remain valid. The value \
+         can range from 60 seconds (1 minute) to 3600 seconds (1 hour). If not specified, the \
+         default duration is 300 seconds (5 minutes). The token is designed to be short-lived and \
+         should be used for proof of identity, then exchanged for credentials or short-lived \
+         tokens in the external service.\n"]
+  audience : web_identity_token_audience_list_type;
+      [@ocaml.doc
+        "The intended recipient of the web identity token. This value populates the [aud] claim in \
+         the JWT and should identify the service or application that will validate and use the \
+         token. The external service should verify this claim to ensure the token was intended for \
+         their use.\n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec credentials = {
   expiration : date_type; [@ocaml.doc "The date on which the current credentials expire.\n"]
@@ -435,6 +521,36 @@ type nonrec get_federation_token_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec get_delegated_access_token_response = {
+  assumed_principal : arn_type option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the principal that was assumed when obtaining the \
+         delegated access token. This ARN identifies the IAM entity whose permissions are granted \
+         by the temporary credentials.\n"]
+  packed_policy_size : non_negative_integer_type option;
+      [@ocaml.doc
+        "The percentage of the maximum policy size that is used by the session policy. The policy \
+         size is calculated as the sum of all the session policies and permission boundaries \
+         attached to the session. If the packed size exceeds 100%, the request fails.\n"]
+  credentials : credentials option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""]
+
+type nonrec get_delegated_access_token_request = {
+  trade_in_token : trade_in_token_type;
+      [@ocaml.doc
+        "The token to exchange for temporary Amazon Web Services credentials. This token must be \
+         valid and unexpired at the time of the request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec expired_trade_in_token_exception = {
+  message : expired_trade_in_token_exception_message option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "The trade-in token provided in the request has expired and can no longer be exchanged for \
+   credentials. Request a new token and retry the operation.\n"]
+
 type nonrec get_caller_identity_response = {
   arn : arn_type option;
       [@ocaml.doc "The Amazon Web Services ARN associated with the calling entity.\n"]
@@ -546,8 +662,8 @@ type nonrec assume_root_request = {
   task_policy_arn : policy_descriptor_type;
       [@ocaml.doc
         "The identity based policy that scopes the session to the privileged tasks that can be \
-         performed. You can use one of following Amazon Web Services managed policies to scope \
-         root session actions.\n\n\
+         performed. You must use one of following Amazon Web Services managed policies to scope \
+         root session actions:\n\n\
         \ {ul\n\
         \       {-   \
          {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/security-iam-awsmanpol.html#security-iam-awsmanpol-IAMAuditRootUserCredentials}IAMAuditRootUserCredentials} \n\
@@ -1051,7 +1167,7 @@ type nonrec assume_role_request = {
          (ARN) for a virtual device (such as [arn:aws:iam::123456789012:mfa/user]).\n\n\
         \ The regex used to validate this parameter is a string of characters consisting of upper- \
          and lower-case alphanumeric characters with no spaces. You can also include underscores \
-         or any of the following characters: =,.\\@-\n\
+         or any of the following characters: +=/:,.\\@-\n\
         \ "]
   external_id : external_id_type option;
       [@ocaml.doc
@@ -1068,7 +1184,7 @@ type nonrec assume_role_request = {
          Third Party} in the {i IAM User Guide}.\n\n\
         \ The regex used to validate this parameter is a string of characters consisting of upper- \
          and lower-case alphanumeric characters with no spaces. You can also include underscores \
-         or any of the following characters: =,.\\@:/-\n\
+         or any of the following characters: +=,.\\@:\\/-\n\
         \ "]
   transitive_tag_keys : tag_key_list_type option;
       [@ocaml.doc
@@ -1220,7 +1336,7 @@ type nonrec assume_role_request = {
         \  \n\
         \   The regex used to validate this parameter is a string of characters consisting of \
          upper- and lower-case alphanumeric characters with no spaces. You can also include \
-         underscores or any of the following characters: =,.\\@-\n\
+         underscores or any of the following characters: +=,.\\@-\n\
         \   "]
   role_arn : arn_type; [@ocaml.doc "The Amazon Resource Name (ARN) of the role to assume.\n"]
 }

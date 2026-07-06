@@ -8,6 +8,8 @@ do
 		# service_long_name=$(grep "cloudFormationName" ../awssdkjsv3/codegen/sdk-codegen/aws-models/${service_short_name}.json | sed -E -e 's/.*"cloudFormationName": "(.*)".*/\1/')
 		model_file=$(ls ../api-models-aws/models/${service_short_name}/service/*/*.json)
 		service_long_name=$(grep "sdkId" "$model_file" | sed -E -e 's/.*"sdkId": "(.*)".*/\1/' -e 's/ //g')
+		# match AwsGenerator.ml, which applies Base.String.capitalize to the sdkId
+		service_long_name=$(printf '%s' "${service_long_name}" | awk '{ print toupper(substr($0,1,1)) substr($0,2) }')
 		if [ -z "${service_long_name}" ]; then
 			echo "Unable to generate for $service_short_name!"
 			exit 1
