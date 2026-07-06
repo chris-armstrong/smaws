@@ -23,6 +23,19 @@ module AcceptEnvironmentAccountConnection : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    accept_environment_account_connection_input ->
+    ( accept_environment_account_connection_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "In a management account, an environment account connection request is accepted. When the \
@@ -56,6 +69,19 @@ module CancelComponentDeployment : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_component_deployment_input ->
+    ( cancel_component_deployment_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Attempts to cancel a component deployment (for a component that is in the [IN_PROGRESS] \
@@ -80,6 +106,19 @@ module CancelEnvironmentDeployment : sig
     'http_type Smaws_Lib.Context.t ->
     cancel_environment_deployment_input ->
     ( cancel_environment_deployment_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_environment_deployment_input ->
+    ( cancel_environment_deployment_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -134,6 +173,19 @@ module CancelServiceInstanceDeployment : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_service_instance_deployment_input ->
+    ( cancel_service_instance_deployment_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Attempts to cancel a service instance deployment on an [UpdateServiceInstance] action, if the \
@@ -172,6 +224,19 @@ module CancelServicePipelineDeployment : sig
     'http_type Smaws_Lib.Context.t ->
     cancel_service_pipeline_deployment_input ->
     ( cancel_service_pipeline_deployment_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_service_pipeline_deployment_input ->
+    ( cancel_service_pipeline_deployment_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -228,6 +293,20 @@ module CreateComponent : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_component_input ->
+    ( create_component_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Create an Proton component. A component is an infrastructure extension for a service instance.\n\n\
@@ -252,6 +331,20 @@ module CreateEnvironment : sig
     'http_type Smaws_Lib.Context.t ->
     create_environment_input ->
     ( create_environment_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_environment_input ->
+    ( create_environment_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -306,6 +399,19 @@ module CreateEnvironmentAccountConnection : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_environment_account_connection_input ->
+    ( create_environment_account_connection_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Create an environment account connection in an environment account so that environment \
@@ -333,6 +439,19 @@ module CreateEnvironmentTemplate : sig
     'http_type Smaws_Lib.Context.t ->
     create_environment_template_input ->
     ( create_environment_template_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_environment_template_input ->
+    ( create_environment_template_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -390,6 +509,20 @@ module CreateEnvironmentTemplateVersion : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_environment_template_version_input ->
+    ( create_environment_template_version_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Create a new major or minor version of an environment template. A major version of an \
@@ -411,6 +544,19 @@ module CreateRepository : sig
     'http_type Smaws_Lib.Context.t ->
     create_repository_input ->
     ( create_repository_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_repository_input ->
+    ( create_repository_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -462,6 +608,20 @@ module CreateService : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_service_input ->
+    ( create_service_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Create an Proton service. An Proton service is an instantiation of a service template and often \
@@ -484,6 +644,19 @@ module CreateServiceInstance : sig
     'http_type Smaws_Lib.Context.t ->
     create_service_instance_input ->
     ( create_service_instance_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_service_instance_input ->
+    ( create_service_instance_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -518,6 +691,19 @@ module CreateServiceSyncConfig : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_service_sync_config_input ->
+    ( create_service_sync_config_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Create the Proton Ops configuration file.\n"]
 
@@ -536,6 +722,19 @@ module CreateServiceTemplate : sig
     'http_type Smaws_Lib.Context.t ->
     create_service_template_input ->
     ( create_service_template_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_service_template_input ->
+    ( create_service_template_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -579,6 +778,20 @@ module CreateServiceTemplateVersion : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_service_template_version_input ->
+    ( create_service_template_version_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Create a new major or minor version of a service template. A major version of a service \
@@ -600,6 +813,19 @@ module CreateTemplateSyncConfig : sig
     'http_type Smaws_Lib.Context.t ->
     create_template_sync_config_input ->
     ( create_template_sync_config_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_template_sync_config_input ->
+    ( create_template_sync_config_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -644,6 +870,19 @@ module DeleteComponent : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_component_input ->
+    ( delete_component_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Delete an Proton component resource.\n\n\
@@ -666,6 +905,18 @@ module DeleteDeployment : sig
     'http_type Smaws_Lib.Context.t ->
     delete_deployment_input ->
     ( delete_deployment_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_deployment_input ->
+    ( delete_deployment_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -699,6 +950,19 @@ module DeleteEnvironment : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_environment_input ->
+    ( delete_environment_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Delete an environment.\n"]
 
@@ -717,6 +981,19 @@ module DeleteEnvironmentAccountConnection : sig
     'http_type Smaws_Lib.Context.t ->
     delete_environment_account_connection_input ->
     ( delete_environment_account_connection_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_environment_account_connection_input ->
+    ( delete_environment_account_connection_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -762,6 +1039,19 @@ module DeleteEnvironmentTemplate : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_environment_template_input ->
+    ( delete_environment_template_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "If no other major or minor versions of an environment template exist, delete the environment \
@@ -782,6 +1072,19 @@ module DeleteEnvironmentTemplateVersion : sig
     'http_type Smaws_Lib.Context.t ->
     delete_environment_template_version_input ->
     ( delete_environment_template_version_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_environment_template_version_input ->
+    ( delete_environment_template_version_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -826,6 +1129,19 @@ module DeleteRepository : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_repository_input ->
+    ( delete_repository_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "De-register and unlink your repository.\n"]
 
@@ -844,6 +1160,19 @@ module DeleteService : sig
     'http_type Smaws_Lib.Context.t ->
     delete_service_input ->
     ( delete_service_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_service_input ->
+    ( delete_service_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -887,6 +1216,19 @@ module DeleteServiceSyncConfig : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_service_sync_config_input ->
+    ( delete_service_sync_config_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Delete the Proton Ops file.\n"]
 
@@ -905,6 +1247,19 @@ module DeleteServiceTemplate : sig
     'http_type Smaws_Lib.Context.t ->
     delete_service_template_input ->
     ( delete_service_template_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_service_template_input ->
+    ( delete_service_template_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -932,6 +1287,19 @@ module DeleteServiceTemplateVersion : sig
     'http_type Smaws_Lib.Context.t ->
     delete_service_template_version_input ->
     ( delete_service_template_version_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_service_template_version_input ->
+    ( delete_service_template_version_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -974,6 +1342,19 @@ module DeleteTemplateSyncConfig : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_template_sync_config_input ->
+    ( delete_template_sync_config_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Delete a template sync configuration.\n"]
 
@@ -998,6 +1379,18 @@ module GetAccountSettings : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_account_settings_input ->
+    ( get_account_settings_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Get detail data for Proton account-wide settings.\n"]
 
@@ -1015,6 +1408,18 @@ module GetComponent : sig
     'http_type Smaws_Lib.Context.t ->
     get_component_input ->
     ( get_component_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_component_input ->
+    ( get_component_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1051,6 +1456,18 @@ module GetDeployment : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_deployment_input ->
+    ( get_deployment_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Get detailed data for a deployment.\n"]
 
@@ -1075,6 +1492,18 @@ module GetEnvironment : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_environment_input ->
+    ( get_environment_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Get detailed data for an environment.\n"]
 
@@ -1092,6 +1521,18 @@ module GetEnvironmentAccountConnection : sig
     'http_type Smaws_Lib.Context.t ->
     get_environment_account_connection_input ->
     ( get_environment_account_connection_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_environment_account_connection_input ->
+    ( get_environment_account_connection_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1128,6 +1569,18 @@ module GetEnvironmentTemplate : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_environment_template_input ->
+    ( get_environment_template_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Get detailed data for an environment template.\n"]
 
@@ -1145,6 +1598,18 @@ module GetEnvironmentTemplateVersion : sig
     'http_type Smaws_Lib.Context.t ->
     get_environment_template_version_input ->
     ( get_environment_template_version_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_environment_template_version_input ->
+    ( get_environment_template_version_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1176,6 +1641,18 @@ module GetRepository : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_repository_input ->
+    ( get_repository_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Get detail data for a linked repository.\n"]
 
@@ -1193,6 +1670,18 @@ module GetRepositorySyncStatus : sig
     'http_type Smaws_Lib.Context.t ->
     get_repository_sync_status_input ->
     ( get_repository_sync_status_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_repository_sync_status_input ->
+    ( get_repository_sync_status_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1228,6 +1717,17 @@ module GetResourcesSummary : sig
     'http_type Smaws_Lib.Context.t ->
     get_resources_summary_input ->
     ( get_resources_summary_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_resources_summary_input ->
+    ( get_resources_summary_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1277,6 +1777,18 @@ module GetService : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_service_input ->
+    ( get_service_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Get detailed data for a service.\n"]
 
@@ -1294,6 +1806,18 @@ module GetServiceInstance : sig
     'http_type Smaws_Lib.Context.t ->
     get_service_instance_input ->
     ( get_service_instance_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_service_instance_input ->
+    ( get_service_instance_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1327,6 +1851,18 @@ module GetServiceInstanceSyncStatus : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_service_instance_sync_status_input ->
+    ( get_service_instance_sync_status_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Get the status of the synced service instance.\n"]
 
@@ -1344,6 +1880,18 @@ module GetServiceSyncBlockerSummary : sig
     'http_type Smaws_Lib.Context.t ->
     get_service_sync_blocker_summary_input ->
     ( get_service_sync_blocker_summary_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_service_sync_blocker_summary_input ->
+    ( get_service_sync_blocker_summary_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1375,6 +1923,18 @@ module GetServiceSyncConfig : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_service_sync_config_input ->
+    ( get_service_sync_config_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Get detailed information for the service sync configuration.\n"]
 
@@ -1392,6 +1952,18 @@ module GetServiceTemplate : sig
     'http_type Smaws_Lib.Context.t ->
     get_service_template_input ->
     ( get_service_template_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_service_template_input ->
+    ( get_service_template_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1423,6 +1995,18 @@ module GetServiceTemplateVersion : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_service_template_version_input ->
+    ( get_service_template_version_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Get detailed data for a major or minor version of a service template.\n"]
 
@@ -1440,6 +2024,18 @@ module GetTemplateSyncConfig : sig
     'http_type Smaws_Lib.Context.t ->
     get_template_sync_config_input ->
     ( get_template_sync_config_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_template_sync_config_input ->
+    ( get_template_sync_config_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1471,6 +2067,18 @@ module GetTemplateSyncStatus : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_template_sync_status_input ->
+    ( get_template_sync_status_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Get the status of a template sync.\n"]
 
@@ -1488,6 +2096,18 @@ module ListComponentOutputs : sig
     'http_type Smaws_Lib.Context.t ->
     list_component_outputs_input ->
     ( list_component_outputs_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_component_outputs_input ->
+    ( list_component_outputs_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1524,6 +2144,18 @@ module ListComponentProvisionedResources : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_component_provisioned_resources_input ->
+    ( list_component_provisioned_resources_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "List provisioned resources for a component with details.\n\n\
@@ -1545,6 +2177,17 @@ module ListComponents : sig
     'http_type Smaws_Lib.Context.t ->
     list_components_input ->
     ( list_components_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_components_input ->
+    ( list_components_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1581,6 +2224,18 @@ module ListDeployments : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_deployments_input ->
+    ( list_deployments_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "List deployments. You can filter the result list by environment, service, or a single service \
@@ -1599,6 +2254,17 @@ module ListEnvironmentAccountConnections : sig
     'http_type Smaws_Lib.Context.t ->
     list_environment_account_connections_input ->
     ( list_environment_account_connections_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_environment_account_connections_input ->
+    ( list_environment_account_connections_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1634,6 +2300,18 @@ module ListEnvironmentOutputs : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_environment_outputs_input ->
+    ( list_environment_outputs_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "List the infrastructure as code outputs for your environment.\n"]
 
@@ -1651,6 +2329,18 @@ module ListEnvironmentProvisionedResources : sig
     'http_type Smaws_Lib.Context.t ->
     list_environment_provisioned_resources_input ->
     ( list_environment_provisioned_resources_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_environment_provisioned_resources_input ->
+    ( list_environment_provisioned_resources_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1682,6 +2372,18 @@ module ListEnvironmentTemplateVersions : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_environment_template_versions_input ->
+    ( list_environment_template_versions_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "List major or minor versions of an environment template with detail data.\n"]
 
@@ -1698,6 +2400,17 @@ module ListEnvironmentTemplates : sig
     'http_type Smaws_Lib.Context.t ->
     list_environment_templates_input ->
     ( list_environment_templates_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_environment_templates_input ->
+    ( list_environment_templates_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1721,6 +2434,18 @@ module ListEnvironments : sig
     'http_type Smaws_Lib.Context.t ->
     list_environments_input ->
     ( list_environments_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_environments_input ->
+    ( list_environments_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1752,6 +2477,18 @@ module ListRepositories : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_repositories_input ->
+    ( list_repositories_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "List linked repositories with detail data.\n"]
 
@@ -1768,6 +2505,17 @@ module ListRepositorySyncDefinitions : sig
     'http_type Smaws_Lib.Context.t ->
     list_repository_sync_definitions_input ->
     ( list_repository_sync_definitions_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_repository_sync_definitions_input ->
+    ( list_repository_sync_definitions_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1791,6 +2539,18 @@ module ListServiceInstanceOutputs : sig
     'http_type Smaws_Lib.Context.t ->
     list_service_instance_outputs_input ->
     ( list_service_instance_outputs_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_service_instance_outputs_input ->
+    ( list_service_instance_outputs_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1822,6 +2582,18 @@ module ListServiceInstanceProvisionedResources : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_service_instance_provisioned_resources_input ->
+    ( list_service_instance_provisioned_resources_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "List provisioned resources for a service instance with details.\n"]
 
@@ -1839,6 +2611,18 @@ module ListServiceInstances : sig
     'http_type Smaws_Lib.Context.t ->
     list_service_instances_input ->
     ( list_service_instances_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_service_instances_input ->
+    ( list_service_instances_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1872,6 +2656,18 @@ module ListServicePipelineOutputs : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_service_pipeline_outputs_input ->
+    ( list_service_pipeline_outputs_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Get a list of service pipeline Infrastructure as Code (IaC) outputs.\n"]
 
@@ -1889,6 +2685,18 @@ module ListServicePipelineProvisionedResources : sig
     'http_type Smaws_Lib.Context.t ->
     list_service_pipeline_provisioned_resources_input ->
     ( list_service_pipeline_provisioned_resources_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_service_pipeline_provisioned_resources_input ->
+    ( list_service_pipeline_provisioned_resources_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1920,6 +2728,18 @@ module ListServiceTemplateVersions : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_service_template_versions_input ->
+    ( list_service_template_versions_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "List major or minor versions of a service template with detail data.\n"]
 
@@ -1936,6 +2756,17 @@ module ListServiceTemplates : sig
     'http_type Smaws_Lib.Context.t ->
     list_service_templates_input ->
     ( list_service_templates_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_service_templates_input ->
+    ( list_service_templates_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -1964,6 +2795,17 @@ module ListServices : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_services_input ->
+    ( list_services_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "List services with summaries of detail data.\n"]
 
@@ -1981,6 +2823,18 @@ module ListTagsForResource : sig
     'http_type Smaws_Lib.Context.t ->
     list_tags_for_resource_input ->
     ( list_tags_for_resource_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_input ->
+    ( list_tags_for_resource_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -2019,6 +2873,20 @@ module NotifyResourceDeploymentStatusChange : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    notify_resource_deployment_status_change_input ->
+    ( notify_resource_deployment_status_change_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Notify Proton of status changes to a provisioned resource when you use self-managed \
@@ -2043,6 +2911,19 @@ module RejectEnvironmentAccountConnection : sig
     'http_type Smaws_Lib.Context.t ->
     reject_environment_account_connection_input ->
     ( reject_environment_account_connection_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    reject_environment_account_connection_input ->
+    ( reject_environment_account_connection_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -2089,6 +2970,19 @@ module TagResource : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_input ->
+    ( tag_resource_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Tag a resource. A tag is a key-value pair of metadata that you associate with an Proton \
@@ -2113,6 +3007,19 @@ module UntagResource : sig
     'http_type Smaws_Lib.Context.t ->
     untag_resource_input ->
     ( untag_resource_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_input ->
+    ( untag_resource_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -2151,6 +3058,18 @@ module UpdateAccountSettings : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_account_settings_input ->
+    ( update_account_settings_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Update Proton settings that are used for multiple services in the Amazon Web Services account.\n"]
@@ -2171,6 +3090,20 @@ module UpdateComponent : sig
     'http_type Smaws_Lib.Context.t ->
     update_component_input ->
     ( update_component_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_component_input ->
+    ( update_component_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -2208,6 +3141,19 @@ module UpdateEnvironment : sig
     'http_type Smaws_Lib.Context.t ->
     update_environment_input ->
     ( update_environment_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_environment_input ->
+    ( update_environment_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -2299,6 +3245,19 @@ module UpdateEnvironmentAccountConnection : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_environment_account_connection_input ->
+    ( update_environment_account_connection_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "In an environment account, update an environment account connection to use a new IAM role.\n\n\
@@ -2322,6 +3281,19 @@ module UpdateEnvironmentTemplate : sig
     'http_type Smaws_Lib.Context.t ->
     update_environment_template_input ->
     ( update_environment_template_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_environment_template_input ->
+    ( update_environment_template_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -2356,6 +3328,19 @@ module UpdateEnvironmentTemplateVersion : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_environment_template_version_input ->
+    ( update_environment_template_version_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Update a major or minor version of an environment template.\n"]
 
@@ -2375,6 +3360,20 @@ module UpdateService : sig
     'http_type Smaws_Lib.Context.t ->
     update_service_input ->
     ( update_service_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_service_input ->
+    ( update_service_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -2426,6 +3425,19 @@ module UpdateServiceInstance : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_service_instance_input ->
+    ( update_service_instance_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Update a service instance.\n\n\
@@ -2456,6 +3468,19 @@ module UpdateServicePipeline : sig
     'http_type Smaws_Lib.Context.t ->
     update_service_pipeline_input ->
     ( update_service_pipeline_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_service_pipeline_input ->
+    ( update_service_pipeline_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -2519,6 +3544,19 @@ module UpdateServiceSyncBlocker : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_service_sync_blocker_input ->
+    ( update_service_sync_blocker_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Update the service sync blocker by resolving it.\n"]
 
@@ -2537,6 +3575,19 @@ module UpdateServiceSyncConfig : sig
     'http_type Smaws_Lib.Context.t ->
     update_service_sync_config_input ->
     ( update_service_sync_config_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_service_sync_config_input ->
+    ( update_service_sync_config_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -2571,6 +3622,19 @@ module UpdateServiceTemplate : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_service_template_input ->
+    ( update_service_template_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Update a service template.\n"]
 
@@ -2597,6 +3661,19 @@ module UpdateServiceTemplateVersion : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_service_template_version_input ->
+    ( update_service_template_version_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Update a major or minor version of a service template.\n"]
 
@@ -2615,6 +3692,19 @@ module UpdateTemplateSyncConfig : sig
     'http_type Smaws_Lib.Context.t ->
     update_template_sync_config_input ->
     ( update_template_sync_config_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_template_sync_config_input ->
+    ( update_template_sync_config_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception

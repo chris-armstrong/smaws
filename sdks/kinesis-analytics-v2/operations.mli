@@ -23,6 +23,19 @@ module AddApplicationCloudWatchLoggingOption : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_application_cloud_watch_logging_option_request ->
+    ( add_application_cloud_watch_logging_option_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidApplicationConfigurationException of invalid_application_configuration_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc "Adds an Amazon CloudWatch log stream to monitor application configuration errors.\n"]
 
@@ -41,6 +54,19 @@ module AddApplicationInput : sig
     'http_type Smaws_Lib.Context.t ->
     add_application_input_request ->
     ( add_application_input_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CodeValidationException of code_validation_exception
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_application_input_request ->
+    ( add_application_input_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `CodeValidationException of code_validation_exception
       | `ConcurrentModificationException of concurrent_modification_exception
@@ -82,6 +108,18 @@ module AddApplicationInputProcessingConfiguration : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_application_input_processing_configuration_request ->
+    ( add_application_input_processing_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Adds an [InputProcessingConfiguration] to a SQL-based Kinesis Data Analytics application. An \
@@ -103,6 +141,18 @@ module AddApplicationOutput : sig
     'http_type Smaws_Lib.Context.t ->
     add_application_output_request ->
     ( add_application_output_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_application_output_request ->
+    ( add_application_output_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -148,6 +198,18 @@ module AddApplicationReferenceDataSource : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_application_reference_data_source_request ->
+    ( add_application_reference_data_source_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Adds a reference data source to an existing SQL-based Kinesis Data Analytics application.\n\n\
@@ -172,6 +234,18 @@ module AddApplicationVpcConfiguration : sig
     'http_type Smaws_Lib.Context.t ->
     add_application_vpc_configuration_request ->
     ( add_application_vpc_configuration_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidApplicationConfigurationException of invalid_application_configuration_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_application_vpc_configuration_request ->
+    ( add_application_vpc_configuration_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InvalidApplicationConfigurationException of invalid_application_configuration_exception
@@ -224,6 +298,21 @@ module CreateApplication : sig
       | `TooManyTagsException of too_many_tags_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_application_request ->
+    ( create_application_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CodeValidationException of code_validation_exception
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `TooManyTagsException of too_many_tags_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Creates a Managed Service for Apache Flink application. For information about creating a \
@@ -243,6 +332,16 @@ module CreateApplicationPresignedUrl : sig
     'http_type Smaws_Lib.Context.t ->
     create_application_presigned_url_request ->
     ( create_application_presigned_url_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_application_presigned_url_request ->
+    ( create_application_presigned_url_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceInUseException of resource_in_use_exception
@@ -291,6 +390,20 @@ module CreateApplicationSnapshot : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_application_snapshot_request ->
+    ( create_application_snapshot_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidApplicationConfigurationException of invalid_application_configuration_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
 end
 [@@ocaml.doc "Creates a snapshot of the application's state data.\n"]
 
@@ -309,6 +422,19 @@ module DeleteApplication : sig
     'http_type Smaws_Lib.Context.t ->
     delete_application_request ->
     ( delete_application_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidApplicationConfigurationException of invalid_application_configuration_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_application_request ->
+    ( delete_application_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InvalidApplicationConfigurationException of invalid_application_configuration_exception
@@ -345,6 +471,19 @@ module DeleteApplicationCloudWatchLoggingOption : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_application_cloud_watch_logging_option_request ->
+    ( delete_application_cloud_watch_logging_option_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidApplicationConfigurationException of invalid_application_configuration_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Deletes an Amazon CloudWatch log stream from an SQL-based Kinesis Data Analytics application. \n"]
@@ -363,6 +502,18 @@ module DeleteApplicationInputProcessingConfiguration : sig
     'http_type Smaws_Lib.Context.t ->
     delete_application_input_processing_configuration_request ->
     ( delete_application_input_processing_configuration_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_application_input_processing_configuration_request ->
+    ( delete_application_input_processing_configuration_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -394,6 +545,18 @@ module DeleteApplicationOutput : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_application_output_request ->
+    ( delete_application_output_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Deletes the output destination configuration from your SQL-based Kinesis Data Analytics \
@@ -414,6 +577,18 @@ module DeleteApplicationReferenceDataSource : sig
     'http_type Smaws_Lib.Context.t ->
     delete_application_reference_data_source_request ->
     ( delete_application_reference_data_source_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_application_reference_data_source_request ->
+    ( delete_application_reference_data_source_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -452,6 +627,19 @@ module DeleteApplicationSnapshot : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_application_snapshot_request ->
+    ( delete_application_snapshot_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
 end
 [@@ocaml.doc "Deletes a snapshot of application state.\n"]
 
@@ -469,6 +657,18 @@ module DeleteApplicationVpcConfiguration : sig
     'http_type Smaws_Lib.Context.t ->
     delete_application_vpc_configuration_request ->
     ( delete_application_vpc_configuration_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidApplicationConfigurationException of invalid_application_configuration_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_application_vpc_configuration_request ->
+    ( delete_application_vpc_configuration_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InvalidApplicationConfigurationException of invalid_application_configuration_exception
@@ -496,6 +696,16 @@ module DescribeApplication : sig
       | `InvalidRequestException of invalid_request_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_application_request ->
+    ( describe_application_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Returns information about a specific Managed Service for Apache Flink application.\n\n\
@@ -515,6 +725,16 @@ module DescribeApplicationOperation : sig
     'http_type Smaws_Lib.Context.t ->
     describe_application_operation_request ->
     ( describe_application_operation_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_application_operation_request ->
+    ( describe_application_operation_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceNotFoundException of resource_not_found_exception
@@ -545,6 +765,16 @@ module DescribeApplicationSnapshot : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_application_snapshot_request ->
+    ( describe_application_snapshot_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
 end
 [@@ocaml.doc "Returns information about a snapshot of application state data.\n"]
 
@@ -560,6 +790,16 @@ module DescribeApplicationVersion : sig
     'http_type Smaws_Lib.Context.t ->
     describe_application_version_request ->
     ( describe_application_version_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_application_version_request ->
+    ( describe_application_version_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceNotFoundException of resource_not_found_exception
@@ -598,6 +838,20 @@ module DiscoverInputSchema : sig
       | `UnableToDetectSchemaException of unable_to_detect_schema_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    discover_input_schema_request ->
+    ( discover_input_schema_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceProvisionedThroughputExceededException of
+        resource_provisioned_throughput_exceeded_exception
+      | `ServiceUnavailableException of service_unavailable_exception
+      | `UnableToDetectSchemaException of unable_to_detect_schema_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Infers a schema for a SQL-based Kinesis Data Analytics application by evaluating sample records \
@@ -621,6 +875,16 @@ module ListApplicationOperations : sig
     'http_type Smaws_Lib.Context.t ->
     list_application_operations_request ->
     ( list_application_operations_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_application_operations_request ->
+    ( list_application_operations_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceNotFoundException of resource_not_found_exception
@@ -652,6 +916,15 @@ module ListApplicationSnapshots : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_application_snapshots_request ->
+    ( list_application_snapshots_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
 end
 [@@ocaml.doc "Lists information about the current application snapshots.\n"]
 
@@ -667,6 +940,16 @@ module ListApplicationVersions : sig
     'http_type Smaws_Lib.Context.t ->
     list_application_versions_request ->
     ( list_application_versions_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_application_versions_request ->
+    ( list_application_versions_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceNotFoundException of resource_not_found_exception
@@ -695,6 +978,14 @@ module ListApplications : sig
       [> Smaws_Lib.Protocols.AwsJson.error | `InvalidRequestException of invalid_request_exception ]
     )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_applications_request ->
+    ( list_applications_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidRequestException of invalid_request_exception ]
+    )
+    result
 end
 [@@ocaml.doc
   "Returns a list of Managed Service for Apache Flink applications in your account. For each \
@@ -720,6 +1011,16 @@ module ListTagsForResource : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Retrieves the list of key-value tags assigned to the application. For more information, see \
@@ -740,6 +1041,19 @@ module RollbackApplication : sig
     'http_type Smaws_Lib.Context.t ->
     rollback_application_request ->
     ( rollback_application_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    rollback_application_request ->
+    ( rollback_application_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -780,6 +1094,18 @@ module StartApplication : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_application_request ->
+    ( start_application_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidApplicationConfigurationException of invalid_application_configuration_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Starts the specified Managed Service for Apache Flink application. After creating an \
@@ -800,6 +1126,19 @@ module StopApplication : sig
     'http_type Smaws_Lib.Context.t ->
     stop_application_request ->
     ( stop_application_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidApplicationConfigurationException of invalid_application_configuration_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    stop_application_request ->
+    ( stop_application_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InvalidApplicationConfigurationException of invalid_application_configuration_exception
@@ -839,6 +1178,18 @@ module TagResource : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TooManyTagsException of too_many_tags_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyTagsException of too_many_tags_exception ] )
+    result
 end
 [@@ocaml.doc
   "Adds one or more key-value tags to a Managed Service for Apache Flink application. Note that \
@@ -860,6 +1211,18 @@ module UntagResource : sig
     'http_type Smaws_Lib.Context.t ->
     untag_resource_request ->
     ( untag_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyTagsException of too_many_tags_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_request ->
+    ( untag_resource_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -900,6 +1263,21 @@ module UpdateApplication : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_application_request ->
+    ( update_application_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CodeValidationException of code_validation_exception
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidApplicationConfigurationException of invalid_application_configuration_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Updates an existing Managed Service for Apache Flink application. Using this operation, you can \
@@ -922,6 +1300,18 @@ module UpdateApplicationMaintenanceConfiguration : sig
     'http_type Smaws_Lib.Context.t ->
     update_application_maintenance_configuration_request ->
     ( update_application_maintenance_configuration_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_application_maintenance_configuration_request ->
+    ( update_application_maintenance_configuration_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InvalidArgumentException of invalid_argument_exception

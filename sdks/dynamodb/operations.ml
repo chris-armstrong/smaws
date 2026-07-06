@@ -27,6 +27,13 @@ module BatchExecuteStatement = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.batch_execute_statement_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : batch_execute_statement_input) =
+    let input = Json_serializers.batch_execute_statement_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.BatchExecuteStatement" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_execute_statement_output_of_yojson
+      ~error_deserializer
 end
 
 module BatchGetItem = struct
@@ -67,6 +74,12 @@ module BatchGetItem = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.BatchGetItem" ~service
       ~context ~input ~output_deserializer:Json_deserializers.batch_get_item_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_item_input) =
+    let input = Json_serializers.batch_get_item_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.BatchGetItem"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_item_output_of_yojson ~error_deserializer
 end
 
 module BatchWriteItem = struct
@@ -117,6 +130,12 @@ module BatchWriteItem = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.BatchWriteItem" ~service
       ~context ~input ~output_deserializer:Json_deserializers.batch_write_item_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : batch_write_item_input) =
+    let input = Json_serializers.batch_write_item_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.BatchWriteItem"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_write_item_output_of_yojson ~error_deserializer
 end
 
 module CreateBackup = struct
@@ -159,6 +178,12 @@ module CreateBackup = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.CreateBackup" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_backup_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_backup_input) =
+    let input = Json_serializers.create_backup_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.CreateBackup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_backup_output_of_yojson ~error_deserializer
 end
 
 module CreateGlobalTable = struct
@@ -195,6 +220,13 @@ module CreateGlobalTable = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.CreateGlobalTable" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_global_table_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_global_table_input) =
+    let input = Json_serializers.create_global_table_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.CreateGlobalTable" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_global_table_output_of_yojson
+      ~error_deserializer
 end
 
 module CreateTable = struct
@@ -225,6 +257,12 @@ module CreateTable = struct
     let input = Json_serializers.create_table_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.CreateTable" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_table_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_table_input) =
+    let input = Json_serializers.create_table_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.CreateTable"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.create_table_output_of_yojson
       ~error_deserializer
 end
 
@@ -261,6 +299,12 @@ module DeleteBackup = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.DeleteBackup" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_backup_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_backup_input) =
+    let input = Json_serializers.delete_backup_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.DeleteBackup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_backup_output_of_yojson ~error_deserializer
 end
 
 module DeleteItem = struct
@@ -319,6 +363,12 @@ module DeleteItem = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.DeleteItem" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_item_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_item_input) =
+    let input = Json_serializers.delete_item_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.DeleteItem"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.delete_item_output_of_yojson
+      ~error_deserializer
 end
 
 module DeleteResourcePolicy = struct
@@ -359,6 +409,13 @@ module DeleteResourcePolicy = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_resource_policy_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_resource_policy_input) =
+    let input = Json_serializers.delete_resource_policy_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.DeleteResourcePolicy" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_resource_policy_output_of_yojson
+      ~error_deserializer
 end
 
 module DeleteTable = struct
@@ -394,6 +451,12 @@ module DeleteTable = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.DeleteTable" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_table_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_table_input) =
+    let input = Json_serializers.delete_table_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.DeleteTable"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.delete_table_output_of_yojson
+      ~error_deserializer
 end
 
 module DescribeBackup = struct
@@ -423,6 +486,12 @@ module DescribeBackup = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.DescribeBackup" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_backup_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_backup_input) =
+    let input = Json_serializers.describe_backup_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.DescribeBackup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_backup_output_of_yojson ~error_deserializer
 end
 
 module DescribeContinuousBackups = struct
@@ -452,6 +521,13 @@ module DescribeContinuousBackups = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_continuous_backups_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_continuous_backups_input) =
+    let input = Json_serializers.describe_continuous_backups_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.DescribeContinuousBackups" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_continuous_backups_output_of_yojson
+      ~error_deserializer
 end
 
 module DescribeContributorInsights = struct
@@ -478,6 +554,13 @@ module DescribeContributorInsights = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_contributor_insights_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_contributor_insights_input) =
+    let input = Json_serializers.describe_contributor_insights_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.DescribeContributorInsights" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_contributor_insights_output_of_yojson
+      ~error_deserializer
 end
 
 module DescribeEndpoints = struct
@@ -492,6 +575,13 @@ module DescribeEndpoints = struct
     let input = Json_serializers.describe_endpoints_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.DescribeEndpoints" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_endpoints_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_endpoints_request) =
+    let input = Json_serializers.describe_endpoints_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.DescribeEndpoints" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_endpoints_response_of_yojson
       ~error_deserializer
 end
 
@@ -521,6 +611,12 @@ module DescribeExport = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.DescribeExport" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_export_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_export_input) =
+    let input = Json_serializers.describe_export_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.DescribeExport"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_export_output_of_yojson ~error_deserializer
 end
 
 module DescribeGlobalTable = struct
@@ -549,6 +645,13 @@ module DescribeGlobalTable = struct
     let input = Json_serializers.describe_global_table_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.DescribeGlobalTable" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_global_table_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_global_table_input) =
+    let input = Json_serializers.describe_global_table_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.DescribeGlobalTable" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_global_table_output_of_yojson
       ~error_deserializer
 end
 
@@ -580,6 +683,13 @@ module DescribeGlobalTableSettings = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_global_table_settings_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_global_table_settings_input) =
+    let input = Json_serializers.describe_global_table_settings_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.DescribeGlobalTableSettings" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_global_table_settings_output_of_yojson
+      ~error_deserializer
 end
 
 module DescribeImport = struct
@@ -602,6 +712,12 @@ module DescribeImport = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.DescribeImport" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_import_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_import_input) =
+    let input = Json_serializers.describe_import_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.DescribeImport"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_import_output_of_yojson ~error_deserializer
 end
 
 module DescribeKinesisStreamingDestination = struct
@@ -633,6 +749,14 @@ module DescribeKinesisStreamingDestination = struct
       ~output_deserializer:
         Json_deserializers.describe_kinesis_streaming_destination_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_kinesis_streaming_destination_input) =
+    let input = Json_serializers.describe_kinesis_streaming_destination_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.DescribeKinesisStreamingDestination" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_kinesis_streaming_destination_output_of_yojson
+      ~error_deserializer
 end
 
 module DescribeLimits = struct
@@ -658,6 +782,12 @@ module DescribeLimits = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.DescribeLimits" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_limits_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_limits_input) =
+    let input = Json_serializers.describe_limits_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.DescribeLimits"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_limits_output_of_yojson ~error_deserializer
 end
 
 module DescribeTable = struct
@@ -687,6 +817,12 @@ module DescribeTable = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.DescribeTable" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_table_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_table_input) =
+    let input = Json_serializers.describe_table_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.DescribeTable"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_table_output_of_yojson ~error_deserializer
 end
 
 module DescribeTableReplicaAutoScaling = struct
@@ -710,6 +846,13 @@ module DescribeTableReplicaAutoScaling = struct
   let request context (request : describe_table_replica_auto_scaling_input) =
     let input = Json_serializers.describe_table_replica_auto_scaling_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DynamoDB_20120810.DescribeTableReplicaAutoScaling" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_table_replica_auto_scaling_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_table_replica_auto_scaling_input) =
+    let input = Json_serializers.describe_table_replica_auto_scaling_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"DynamoDB_20120810.DescribeTableReplicaAutoScaling" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_table_replica_auto_scaling_output_of_yojson
       ~error_deserializer
@@ -741,6 +884,13 @@ module DescribeTimeToLive = struct
     let input = Json_serializers.describe_time_to_live_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.DescribeTimeToLive" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_time_to_live_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_time_to_live_input) =
+    let input = Json_serializers.describe_time_to_live_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.DescribeTimeToLive" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_time_to_live_output_of_yojson
       ~error_deserializer
 end
 
@@ -778,6 +928,13 @@ module DisableKinesisStreamingDestination = struct
       ~shape_name:"DynamoDB_20120810.DisableKinesisStreamingDestination" ~service ~context ~input
       ~output_deserializer:Json_deserializers.kinesis_streaming_destination_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : kinesis_streaming_destination_input) =
+    let input = Json_serializers.kinesis_streaming_destination_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.DisableKinesisStreamingDestination" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.kinesis_streaming_destination_output_of_yojson
+      ~error_deserializer
 end
 
 module EnableKinesisStreamingDestination = struct
@@ -811,6 +968,13 @@ module EnableKinesisStreamingDestination = struct
   let request context (request : kinesis_streaming_destination_input) =
     let input = Json_serializers.kinesis_streaming_destination_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DynamoDB_20120810.EnableKinesisStreamingDestination" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.kinesis_streaming_destination_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : kinesis_streaming_destination_input) =
+    let input = Json_serializers.kinesis_streaming_destination_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"DynamoDB_20120810.EnableKinesisStreamingDestination" ~service ~context ~input
       ~output_deserializer:Json_deserializers.kinesis_streaming_destination_output_of_yojson
       ~error_deserializer
@@ -866,6 +1030,12 @@ module ExecuteStatement = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.ExecuteStatement" ~service
       ~context ~input ~output_deserializer:Json_deserializers.execute_statement_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : execute_statement_input) =
+    let input = Json_serializers.execute_statement_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.ExecuteStatement" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.execute_statement_output_of_yojson ~error_deserializer
 end
 
 module ExecuteTransaction = struct
@@ -915,6 +1085,13 @@ module ExecuteTransaction = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.ExecuteTransaction" ~service
       ~context ~input ~output_deserializer:Json_deserializers.execute_transaction_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : execute_transaction_input) =
+    let input = Json_serializers.execute_transaction_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.ExecuteTransaction" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.execute_transaction_output_of_yojson
+      ~error_deserializer
 end
 
 module ExportTableToPointInTime = struct
@@ -956,6 +1133,13 @@ module ExportTableToPointInTime = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.export_table_to_point_in_time_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : export_table_to_point_in_time_input) =
+    let input = Json_serializers.export_table_to_point_in_time_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.ExportTableToPointInTime" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.export_table_to_point_in_time_output_of_yojson
+      ~error_deserializer
 end
 
 module GetItem = struct
@@ -995,6 +1179,12 @@ module GetItem = struct
     let input = Json_serializers.get_item_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.GetItem" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_item_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_item_input) =
+    let input = Json_serializers.get_item_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.GetItem"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.get_item_output_of_yojson
+      ~error_deserializer
 end
 
 module GetResourcePolicy = struct
@@ -1028,6 +1218,13 @@ module GetResourcePolicy = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.GetResourcePolicy" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_resource_policy_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_resource_policy_input) =
+    let input = Json_serializers.get_resource_policy_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.GetResourcePolicy" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_resource_policy_output_of_yojson
+      ~error_deserializer
 end
 
 module ImportTable = struct
@@ -1056,6 +1253,12 @@ module ImportTable = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.ImportTable" ~service
       ~context ~input ~output_deserializer:Json_deserializers.import_table_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : import_table_input) =
+    let input = Json_serializers.import_table_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.ImportTable"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.import_table_output_of_yojson
+      ~error_deserializer
 end
 
 module ListBackups = struct
@@ -1080,6 +1283,12 @@ module ListBackups = struct
     let input = Json_serializers.list_backups_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.ListBackups" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_backups_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_backups_input) =
+    let input = Json_serializers.list_backups_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.ListBackups"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.list_backups_output_of_yojson
       ~error_deserializer
 end
 
@@ -1107,6 +1316,13 @@ module ListContributorInsights = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_contributor_insights_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_contributor_insights_input) =
+    let input = Json_serializers.list_contributor_insights_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.ListContributorInsights" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_contributor_insights_output_of_yojson
+      ~error_deserializer
 end
 
 module ListExports = struct
@@ -1130,6 +1346,12 @@ module ListExports = struct
     let input = Json_serializers.list_exports_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.ListExports" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_exports_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_exports_input) =
+    let input = Json_serializers.list_exports_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.ListExports"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.list_exports_output_of_yojson
       ~error_deserializer
 end
 
@@ -1156,6 +1378,13 @@ module ListGlobalTables = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.ListGlobalTables" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_global_tables_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_global_tables_input) =
+    let input = Json_serializers.list_global_tables_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.ListGlobalTables" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_global_tables_output_of_yojson
+      ~error_deserializer
 end
 
 module ListImports = struct
@@ -1176,6 +1405,12 @@ module ListImports = struct
     let input = Json_serializers.list_imports_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.ListImports" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_imports_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_imports_input) =
+    let input = Json_serializers.list_imports_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.ListImports"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.list_imports_output_of_yojson
       ~error_deserializer
 end
 
@@ -1201,6 +1436,12 @@ module ListTables = struct
     let input = Json_serializers.list_tables_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.ListTables" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_tables_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_tables_input) =
+    let input = Json_serializers.list_tables_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.ListTables"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.list_tables_output_of_yojson
       ~error_deserializer
 end
 
@@ -1230,6 +1471,13 @@ module ListTagsOfResource = struct
     let input = Json_serializers.list_tags_of_resource_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.ListTagsOfResource" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_tags_of_resource_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_of_resource_input) =
+    let input = Json_serializers.list_tags_of_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.ListTagsOfResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_of_resource_output_of_yojson
       ~error_deserializer
 end
 
@@ -1288,6 +1536,12 @@ module PutItem = struct
     let input = Json_serializers.put_item_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.PutItem" ~service ~context
       ~input ~output_deserializer:Json_deserializers.put_item_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : put_item_input) =
+    let input = Json_serializers.put_item_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.PutItem"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.put_item_output_of_yojson
+      ~error_deserializer
 end
 
 module PutResourcePolicy = struct
@@ -1326,6 +1580,13 @@ module PutResourcePolicy = struct
     let input = Json_serializers.put_resource_policy_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.PutResourcePolicy" ~service
       ~context ~input ~output_deserializer:Json_deserializers.put_resource_policy_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_resource_policy_input) =
+    let input = Json_serializers.put_resource_policy_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.PutResourcePolicy" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_resource_policy_output_of_yojson
       ~error_deserializer
 end
 
@@ -1366,6 +1627,12 @@ module Query = struct
     let input = Json_serializers.query_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.Query" ~service ~context
       ~input ~output_deserializer:Json_deserializers.query_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : query_input) =
+    let input = Json_serializers.query_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.Query" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.query_output_of_yojson
+      ~error_deserializer
 end
 
 module RestoreTableFromBackup = struct
@@ -1407,6 +1674,13 @@ module RestoreTableFromBackup = struct
     let input = Json_serializers.restore_table_from_backup_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.RestoreTableFromBackup"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.restore_table_from_backup_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : restore_table_from_backup_input) =
+    let input = Json_serializers.restore_table_from_backup_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.RestoreTableFromBackup" ~service ~context ~input
       ~output_deserializer:Json_deserializers.restore_table_from_backup_output_of_yojson
       ~error_deserializer
 end
@@ -1457,6 +1731,13 @@ module RestoreTableToPointInTime = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.restore_table_to_point_in_time_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : restore_table_to_point_in_time_input) =
+    let input = Json_serializers.restore_table_to_point_in_time_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.RestoreTableToPointInTime" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.restore_table_to_point_in_time_output_of_yojson
+      ~error_deserializer
 end
 
 module Scan = struct
@@ -1496,6 +1777,12 @@ module Scan = struct
     let input = Json_serializers.scan_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.Scan" ~service ~context
       ~input ~output_deserializer:Json_deserializers.scan_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : scan_input) =
+    let input = Json_serializers.scan_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.Scan" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.scan_output_of_yojson
+      ~error_deserializer
 end
 
 module TagResource = struct
@@ -1530,6 +1817,13 @@ module TagResource = struct
     let input = Json_serializers.tag_resource_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.TagResource" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_input) =
+    let input = Json_serializers.tag_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.TagResource"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -1574,6 +1868,13 @@ module TransactGetItems = struct
     let input = Json_serializers.transact_get_items_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.TransactGetItems" ~service
       ~context ~input ~output_deserializer:Json_deserializers.transact_get_items_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : transact_get_items_input) =
+    let input = Json_serializers.transact_get_items_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.TransactGetItems" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.transact_get_items_output_of_yojson
       ~error_deserializer
 end
 
@@ -1628,6 +1929,13 @@ module TransactWriteItems = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.TransactWriteItems" ~service
       ~context ~input ~output_deserializer:Json_deserializers.transact_write_items_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : transact_write_items_input) =
+    let input = Json_serializers.transact_write_items_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.TransactWriteItems" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.transact_write_items_output_of_yojson
+      ~error_deserializer
 end
 
 module UntagResource = struct
@@ -1663,6 +1971,13 @@ module UntagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.UntagResource" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_input) =
+    let input = Json_serializers.untag_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.UntagResource"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module UpdateContinuousBackups = struct
@@ -1697,6 +2012,13 @@ module UpdateContinuousBackups = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_continuous_backups_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_continuous_backups_input) =
+    let input = Json_serializers.update_continuous_backups_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.UpdateContinuousBackups" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_continuous_backups_output_of_yojson
+      ~error_deserializer
 end
 
 module UpdateContributorInsights = struct
@@ -1721,6 +2043,13 @@ module UpdateContributorInsights = struct
     let input = Json_serializers.update_contributor_insights_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.UpdateContributorInsights"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_contributor_insights_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_contributor_insights_input) =
+    let input = Json_serializers.update_contributor_insights_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.UpdateContributorInsights" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_contributor_insights_output_of_yojson
       ~error_deserializer
 end
@@ -1763,6 +2092,13 @@ module UpdateGlobalTable = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.UpdateGlobalTable" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_global_table_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_global_table_input) =
+    let input = Json_serializers.update_global_table_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.UpdateGlobalTable" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_global_table_output_of_yojson
+      ~error_deserializer
 end
 
 module UpdateGlobalTableSettings = struct
@@ -1804,6 +2140,13 @@ module UpdateGlobalTableSettings = struct
     let input = Json_serializers.update_global_table_settings_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.UpdateGlobalTableSettings"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_global_table_settings_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_global_table_settings_input) =
+    let input = Json_serializers.update_global_table_settings_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.UpdateGlobalTableSettings" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_global_table_settings_output_of_yojson
       ~error_deserializer
 end
@@ -1864,6 +2207,12 @@ module UpdateItem = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.UpdateItem" ~service ~context
       ~input ~output_deserializer:Json_deserializers.update_item_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_item_input) =
+    let input = Json_serializers.update_item_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.UpdateItem"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.update_item_output_of_yojson
+      ~error_deserializer
 end
 
 module UpdateKinesisStreamingDestination = struct
@@ -1897,6 +2246,13 @@ module UpdateKinesisStreamingDestination = struct
   let request context (request : update_kinesis_streaming_destination_input) =
     let input = Json_serializers.update_kinesis_streaming_destination_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DynamoDB_20120810.UpdateKinesisStreamingDestination" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_kinesis_streaming_destination_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_kinesis_streaming_destination_input) =
+    let input = Json_serializers.update_kinesis_streaming_destination_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"DynamoDB_20120810.UpdateKinesisStreamingDestination" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_kinesis_streaming_destination_output_of_yojson
       ~error_deserializer
@@ -1935,6 +2291,12 @@ module UpdateTable = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.UpdateTable" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_table_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_table_input) =
+    let input = Json_serializers.update_table_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DynamoDB_20120810.UpdateTable"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.update_table_output_of_yojson
+      ~error_deserializer
 end
 
 module UpdateTableReplicaAutoScaling = struct
@@ -1964,6 +2326,13 @@ module UpdateTableReplicaAutoScaling = struct
   let request context (request : update_table_replica_auto_scaling_input) =
     let input = Json_serializers.update_table_replica_auto_scaling_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DynamoDB_20120810.UpdateTableReplicaAutoScaling" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_table_replica_auto_scaling_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_table_replica_auto_scaling_input) =
+    let input = Json_serializers.update_table_replica_auto_scaling_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"DynamoDB_20120810.UpdateTableReplicaAutoScaling" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_table_replica_auto_scaling_output_of_yojson
       ~error_deserializer
@@ -2001,5 +2370,12 @@ module UpdateTimeToLive = struct
     let input = Json_serializers.update_time_to_live_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDB_20120810.UpdateTimeToLive" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_time_to_live_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_time_to_live_input) =
+    let input = Json_serializers.update_time_to_live_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDB_20120810.UpdateTimeToLive" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_time_to_live_output_of_yojson
       ~error_deserializer
 end

@@ -21,6 +21,18 @@ module CreateKeyspace : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_keyspace_request ->
+    ( create_keyspace_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "The [CreateKeyspace] operation adds a new keyspace to your account. In an Amazon Web Services \
@@ -48,6 +60,19 @@ module CreateTable : sig
     'http_type Smaws_Lib.Context.t ->
     create_table_request ->
     ( create_table_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_table_request ->
+    ( create_table_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -93,6 +118,19 @@ module CreateType : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_type_request ->
+    ( create_type_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   " The [CreateType] operation creates a new user-defined type in the specified keyspace. \n\n\
@@ -128,6 +166,19 @@ module DeleteKeyspace : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_keyspace_request ->
+    ( delete_keyspace_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "The [DeleteKeyspace] operation deletes a keyspace and all of its tables. \n"]
 
@@ -146,6 +197,19 @@ module DeleteTable : sig
     'http_type Smaws_Lib.Context.t ->
     delete_table_request ->
     ( delete_table_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_table_request ->
+    ( delete_table_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -186,6 +250,19 @@ module DeleteType : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_type_request ->
+    ( delete_type_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   " The [DeleteType] operation deletes a user-defined type (UDT). You can only delete a type that \
@@ -209,6 +286,18 @@ module GetKeyspace : sig
     'http_type Smaws_Lib.Context.t ->
     get_keyspace_request ->
     ( get_keyspace_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_keyspace_request ->
+    ( get_keyspace_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -243,6 +332,18 @@ module GetTable : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_table_request ->
+    ( get_table_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Returns information about the table, including the table's name and current status, the \
@@ -265,6 +366,18 @@ module GetTableAutoScalingSettings : sig
     'http_type Smaws_Lib.Context.t ->
     get_table_auto_scaling_settings_request ->
     ( get_table_auto_scaling_settings_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_table_auto_scaling_settings_request ->
+    ( get_table_auto_scaling_settings_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -320,6 +433,18 @@ module GetType : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_type_request ->
+    ( get_type_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   " The [GetType] operation returns information about the type, for example the field definitions, \
@@ -352,6 +477,18 @@ module ListKeyspaces : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_keyspaces_request ->
+    ( list_keyspaces_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "The [ListKeyspaces] operation returns a list of keyspaces.\n"]
 
@@ -369,6 +506,18 @@ module ListTables : sig
     'http_type Smaws_Lib.Context.t ->
     list_tables_request ->
     ( list_tables_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tables_request ->
+    ( list_tables_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -404,6 +553,18 @@ module ListTagsForResource : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Returns a list of all tags associated with the specified Amazon Keyspaces resource.\n\n\
@@ -425,6 +586,18 @@ module ListTypes : sig
     'http_type Smaws_Lib.Context.t ->
     list_types_request ->
     ( list_types_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_types_request ->
+    ( list_types_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -456,6 +629,19 @@ module RestoreTable : sig
     'http_type Smaws_Lib.Context.t ->
     restore_table_request ->
     ( restore_table_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    restore_table_request ->
+    ( restore_table_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -543,6 +729,19 @@ module TagResource : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Associates a set of tags with a Amazon Keyspaces resource. You can then activate these \
@@ -579,6 +778,19 @@ module UntagResource : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_request ->
+    ( untag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Removes the association of tags from a Amazon Keyspaces resource.\n"]
 
@@ -597,6 +809,19 @@ module UpdateKeyspace : sig
     'http_type Smaws_Lib.Context.t ->
     update_keyspace_request ->
     ( update_keyspace_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_keyspace_request ->
+    ( update_keyspace_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -702,6 +927,19 @@ module UpdateTable : sig
     'http_type Smaws_Lib.Context.t ->
     update_table_request ->
     ( update_table_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_table_request ->
+    ( update_table_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception

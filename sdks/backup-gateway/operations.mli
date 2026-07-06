@@ -10,6 +10,13 @@ module AssociateGatewayToServer : sig
     ( associate_gateway_to_server_output,
       [> Smaws_Lib.Protocols.AwsJson.error | `ConflictException of conflict_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    associate_gateway_to_server_input ->
+    ( associate_gateway_to_server_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `ConflictException of conflict_exception ] )
+    result
 end
 [@@ocaml.doc
   "Associates a backup gateway with your server. After you complete the association process, you \
@@ -22,6 +29,11 @@ module CreateGateway : sig
     'http_type Smaws_Lib.Context.t ->
     create_gateway_input ->
     (create_gateway_output, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_gateway_input ->
+    (create_gateway_output Smaws_Lib.Response.t, [> Smaws_Lib.Protocols.AwsJson.error ]) result
 end
 [@@ocaml.doc
   "Creates a backup gateway. After you create a gateway, you can associate it with a server using \
@@ -37,6 +49,14 @@ module DeleteGateway : sig
     'http_type Smaws_Lib.Context.t ->
     delete_gateway_input ->
     ( delete_gateway_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_gateway_input ->
+    ( delete_gateway_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
@@ -60,6 +80,16 @@ module DeleteHypervisor : sig
       | `ConflictException of conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_hypervisor_input ->
+    ( delete_hypervisor_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc "Deletes a hypervisor.\n"]
 
@@ -74,6 +104,15 @@ module DisassociateGatewayFromServer : sig
     'http_type Smaws_Lib.Context.t ->
     disassociate_gateway_from_server_input ->
     ( disassociate_gateway_from_server_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    disassociate_gateway_from_server_input ->
+    ( disassociate_gateway_from_server_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConflictException of conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
@@ -96,6 +135,14 @@ module GetBandwidthRateLimitSchedule : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_bandwidth_rate_limit_schedule_input ->
+    ( get_bandwidth_rate_limit_schedule_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Retrieves the bandwidth rate limit schedule for a specified gateway. By default, gateways do \
@@ -115,6 +162,14 @@ module GetGateway : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_gateway_input ->
+    ( get_gateway_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc "By providing the ARN (Amazon Resource Name), this API returns the gateway.\n"]
 
@@ -128,6 +183,14 @@ module GetHypervisor : sig
     'http_type Smaws_Lib.Context.t ->
     get_hypervisor_input ->
     ( get_hypervisor_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_hypervisor_input ->
+    ( get_hypervisor_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
@@ -150,6 +213,14 @@ module GetHypervisorPropertyMappings : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_hypervisor_property_mappings_input ->
+    ( get_hypervisor_property_mappings_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "This action retrieves the property mappings for the specified hypervisor. A hypervisor property \
@@ -166,6 +237,14 @@ module GetVirtualMachine : sig
     'http_type Smaws_Lib.Context.t ->
     get_virtual_machine_input ->
     ( get_virtual_machine_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_virtual_machine_input ->
+    ( get_virtual_machine_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
@@ -187,6 +266,15 @@ module ImportHypervisorConfiguration : sig
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    import_hypervisor_configuration_input ->
+    ( import_hypervisor_configuration_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception ] )
+    result
 end
 [@@ocaml.doc "Connect to a hypervisor by importing its configuration.\n"]
 
@@ -197,6 +285,11 @@ module ListGateways : sig
     'http_type Smaws_Lib.Context.t ->
     list_gateways_input ->
     (list_gateways_output, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_gateways_input ->
+    (list_gateways_output Smaws_Lib.Response.t, [> Smaws_Lib.Protocols.AwsJson.error ]) result
 end
 [@@ocaml.doc
   "Lists backup gateways owned by an Amazon Web Services account in an Amazon Web Services Region. \
@@ -209,6 +302,11 @@ module ListHypervisors : sig
     'http_type Smaws_Lib.Context.t ->
     list_hypervisors_input ->
     (list_hypervisors_output, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_hypervisors_input ->
+    (list_hypervisors_output Smaws_Lib.Response.t, [> Smaws_Lib.Protocols.AwsJson.error ]) result
 end
 [@@ocaml.doc "Lists your hypervisors.\n"]
 
@@ -225,6 +323,14 @@ module ListTagsForResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_input ->
+    ( list_tags_for_resource_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Lists the tags applied to the resource identified by its Amazon Resource Name (ARN).\n"]
@@ -236,6 +342,13 @@ module ListVirtualMachines : sig
     'http_type Smaws_Lib.Context.t ->
     list_virtual_machines_input ->
     (list_virtual_machines_output, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_virtual_machines_input ->
+    ( list_virtual_machines_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] )
+    result
 end
 [@@ocaml.doc "Lists your virtual machines.\n"]
 
@@ -249,6 +362,14 @@ module PutBandwidthRateLimitSchedule : sig
     'http_type Smaws_Lib.Context.t ->
     put_bandwidth_rate_limit_schedule_input ->
     ( put_bandwidth_rate_limit_schedule_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_bandwidth_rate_limit_schedule_input ->
+    ( put_bandwidth_rate_limit_schedule_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
@@ -275,6 +396,16 @@ module PutHypervisorPropertyMappings : sig
       | `ConflictException of conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_hypervisor_property_mappings_input ->
+    ( put_hypervisor_property_mappings_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "This action sets the property mappings for the specified hypervisor. A hypervisor property \
@@ -292,6 +423,15 @@ module PutMaintenanceStartTime : sig
     'http_type Smaws_Lib.Context.t ->
     put_maintenance_start_time_input ->
     ( put_maintenance_start_time_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_maintenance_start_time_input ->
+    ( put_maintenance_start_time_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConflictException of conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
@@ -314,6 +454,15 @@ module StartVirtualMachinesMetadataSync : sig
       | `AccessDeniedException of access_denied_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_virtual_machines_metadata_sync_input ->
+    ( start_virtual_machines_metadata_sync_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "This action sends a request to sync metadata across the specified virtual machines.\n"]
@@ -331,6 +480,14 @@ module TagResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_input ->
+    ( tag_resource_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc "Tag the resource.\n"]
 
@@ -345,6 +502,15 @@ module TestHypervisorConfiguration : sig
     'http_type Smaws_Lib.Context.t ->
     test_hypervisor_configuration_input ->
     ( test_hypervisor_configuration_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    test_hypervisor_configuration_input ->
+    ( test_hypervisor_configuration_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConflictException of conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
@@ -367,6 +533,14 @@ module UntagResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_input ->
+    ( untag_resource_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc "Removes tags from the resource.\n"]
 
@@ -381,6 +555,15 @@ module UpdateGatewayInformation : sig
     'http_type Smaws_Lib.Context.t ->
     update_gateway_information_input ->
     ( update_gateway_information_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_gateway_information_input ->
+    ( update_gateway_information_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConflictException of conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
@@ -400,6 +583,14 @@ module UpdateGatewaySoftwareNow : sig
     'http_type Smaws_Lib.Context.t ->
     update_gateway_software_now_input ->
     ( update_gateway_software_now_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_gateway_software_now_input ->
+    ( update_gateway_software_now_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
@@ -424,6 +615,16 @@ module UpdateHypervisor : sig
     'http_type Smaws_Lib.Context.t ->
     update_hypervisor_input ->
     ( update_hypervisor_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_hypervisor_input ->
+    ( update_hypervisor_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception

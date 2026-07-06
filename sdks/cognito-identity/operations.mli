@@ -23,6 +23,19 @@ module CreateIdentityPool : sig
       | `ResourceConflictException of resource_conflict_exception
       | `TooManyRequestsException of too_many_requests_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_identity_pool_input ->
+    ( identity_pool Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceConflictException of resource_conflict_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
 end
 [@@ocaml.doc
   "Creates a new identity pool. The identity pool is a store of user identity information that is \
@@ -70,6 +83,16 @@ module DeleteIdentities : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `TooManyRequestsException of too_many_requests_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_identities_input ->
+    ( delete_identities_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
 end
 [@@ocaml.doc
   "Deletes identities from an identity pool. You can specify a list of 1-60 identities that you \
@@ -91,6 +114,18 @@ module DeleteIdentityPool : sig
     'http_type Smaws_Lib.Context.t ->
     delete_identity_pool_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_identity_pool_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `InvalidParameterException of invalid_parameter_exception
@@ -126,6 +161,18 @@ module DescribeIdentity : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TooManyRequestsException of too_many_requests_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_identity_input ->
+    ( identity_description Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
 end
 [@@ocaml.doc
   "Returns metadata related to the given identity, including when the identity was created and any \
@@ -147,6 +194,18 @@ module DescribeIdentityPool : sig
     'http_type Smaws_Lib.Context.t ->
     describe_identity_pool_input ->
     ( identity_pool,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_identity_pool_input ->
+    ( identity_pool Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `InvalidParameterException of invalid_parameter_exception
@@ -178,6 +237,21 @@ module GetCredentialsForIdentity : sig
     'http_type Smaws_Lib.Context.t ->
     get_credentials_for_identity_input ->
     ( get_credentials_for_identity_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ExternalServiceException of external_service_exception
+      | `InternalErrorException of internal_error_exception
+      | `InvalidIdentityPoolConfigurationException of invalid_identity_pool_configuration_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceConflictException of resource_conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_credentials_for_identity_input ->
+    ( get_credentials_for_identity_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ExternalServiceException of external_service_exception
       | `InternalErrorException of internal_error_exception
@@ -223,6 +297,21 @@ module GetId : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TooManyRequestsException of too_many_requests_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_id_input ->
+    ( get_id_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ExternalServiceException of external_service_exception
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceConflictException of resource_conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
 end
 [@@ocaml.doc
   "Generates (or retrieves) IdentityID. Supplying multiple logins will create an implicit linked \
@@ -245,6 +334,19 @@ module GetIdentityPoolRoles : sig
     'http_type Smaws_Lib.Context.t ->
     get_identity_pool_roles_input ->
     ( get_identity_pool_roles_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceConflictException of resource_conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_identity_pool_roles_input ->
+    ( get_identity_pool_roles_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `InvalidParameterException of invalid_parameter_exception
@@ -284,6 +386,20 @@ module GetOpenIdToken : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TooManyRequestsException of too_many_requests_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_open_id_token_input ->
+    ( get_open_id_token_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ExternalServiceException of external_service_exception
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceConflictException of resource_conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
 end
 [@@ocaml.doc
   "Gets an OpenID token, using a known Cognito ID. This known Cognito ID is returned by [GetId]. \
@@ -310,6 +426,20 @@ module GetOpenIdTokenForDeveloperIdentity : sig
     'http_type Smaws_Lib.Context.t ->
     get_open_id_token_for_developer_identity_input ->
     ( get_open_id_token_for_developer_identity_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DeveloperUserAlreadyRegisteredException of developer_user_already_registered_exception
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceConflictException of resource_conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_open_id_token_for_developer_identity_input ->
+    ( get_open_id_token_for_developer_identity_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DeveloperUserAlreadyRegisteredException of developer_user_already_registered_exception
       | `InternalErrorException of internal_error_exception
@@ -357,6 +487,18 @@ module GetPrincipalTagAttributeMap : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TooManyRequestsException of too_many_requests_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_principal_tag_attribute_map_input ->
+    ( get_principal_tag_attribute_map_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
 end
 [@@ocaml.doc
   "Use [GetPrincipalTagAttributeMap] to list all mappings between [PrincipalTags] and user \
@@ -376,6 +518,18 @@ module ListIdentities : sig
     'http_type Smaws_Lib.Context.t ->
     list_identities_input ->
     ( list_identities_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_identities_input ->
+    ( list_identities_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `InvalidParameterException of invalid_parameter_exception
@@ -410,6 +564,18 @@ module ListIdentityPools : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TooManyRequestsException of too_many_requests_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_identity_pools_input ->
+    ( list_identity_pools_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
 end
 [@@ocaml.doc
   "Lists all of the Cognito identity pools registered for your account.\n\n\
@@ -430,6 +596,18 @@ module ListTagsForResource : sig
     'http_type Smaws_Lib.Context.t ->
     list_tags_for_resource_input ->
     ( list_tags_for_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_input ->
+    ( list_tags_for_resource_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `InvalidParameterException of invalid_parameter_exception
@@ -461,6 +639,19 @@ module LookupDeveloperIdentity : sig
     'http_type Smaws_Lib.Context.t ->
     lookup_developer_identity_input ->
     ( lookup_developer_identity_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceConflictException of resource_conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    lookup_developer_identity_input ->
+    ( lookup_developer_identity_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `InvalidParameterException of invalid_parameter_exception
@@ -510,6 +701,19 @@ module MergeDeveloperIdentities : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TooManyRequestsException of too_many_requests_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    merge_developer_identities_input ->
+    ( merge_developer_identities_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceConflictException of resource_conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
 end
 [@@ocaml.doc
   "Merges two users having different [IdentityId]s, existing in the same identity pool, and \
@@ -551,6 +755,20 @@ module SetIdentityPoolRoles : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TooManyRequestsException of too_many_requests_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    set_identity_pool_roles_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceConflictException of resource_conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
 end
 [@@ocaml.doc
   "Sets the roles for an identity pool. These roles are used when making calls to \
@@ -579,6 +797,18 @@ module SetPrincipalTagAttributeMap : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TooManyRequestsException of too_many_requests_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    set_principal_tag_attribute_map_input ->
+    ( set_principal_tag_attribute_map_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
 end
 [@@ocaml.doc
   "You can use this operation to use default (username and clientID) attribute or custom attribute \
@@ -598,6 +828,18 @@ module TagResource : sig
     'http_type Smaws_Lib.Context.t ->
     tag_resource_input ->
     ( tag_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_input ->
+    ( tag_resource_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `InvalidParameterException of invalid_parameter_exception
@@ -648,6 +890,19 @@ module UnlinkDeveloperIdentity : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TooManyRequestsException of too_many_requests_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    unlink_developer_identity_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceConflictException of resource_conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
 end
 [@@ocaml.doc
   "Unlinks a [DeveloperUserIdentifier] from an existing identity. Unlinked developer users will be \
@@ -673,6 +928,20 @@ module UnlinkIdentity : sig
     'http_type Smaws_Lib.Context.t ->
     unlink_identity_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ExternalServiceException of external_service_exception
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceConflictException of resource_conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    unlink_identity_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ExternalServiceException of external_service_exception
       | `InternalErrorException of internal_error_exception
@@ -711,6 +980,18 @@ module UntagResource : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TooManyRequestsException of too_many_requests_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_input ->
+    ( untag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
 end
 [@@ocaml.doc
   "Removes the specified tags from the specified Amazon Cognito identity pool. You can use this \
@@ -733,6 +1014,21 @@ module UpdateIdentityPool : sig
     'http_type Smaws_Lib.Context.t ->
     identity_pool ->
     ( identity_pool,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotAuthorizedException of not_authorized_exception
+      | `ResourceConflictException of resource_conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    identity_pool ->
+    ( identity_pool Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalErrorException of internal_error_exception

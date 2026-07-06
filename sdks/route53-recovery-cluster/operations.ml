@@ -41,6 +41,13 @@ module GetRoutingControlState = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_routing_control_state_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_routing_control_state_request) =
+    let input = Json_serializers.get_routing_control_state_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ToggleCustomerAPI.GetRoutingControlState" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_routing_control_state_response_of_yojson
+      ~error_deserializer
 end
 
 module ListRoutingControls = struct
@@ -81,6 +88,13 @@ module ListRoutingControls = struct
     let input = Json_serializers.list_routing_controls_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ToggleCustomerAPI.ListRoutingControls" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.list_routing_controls_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_routing_controls_request) =
+    let input = Json_serializers.list_routing_controls_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ToggleCustomerAPI.ListRoutingControls" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_routing_controls_response_of_yojson
       ~error_deserializer
 end
@@ -126,6 +140,13 @@ module UpdateRoutingControlState = struct
     let input = Json_serializers.update_routing_control_state_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ToggleCustomerAPI.UpdateRoutingControlState"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_routing_control_state_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_routing_control_state_request) =
+    let input = Json_serializers.update_routing_control_state_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ToggleCustomerAPI.UpdateRoutingControlState" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_routing_control_state_response_of_yojson
       ~error_deserializer
 end
@@ -176,6 +197,13 @@ module UpdateRoutingControlStates = struct
     let input = Json_serializers.update_routing_control_states_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ToggleCustomerAPI.UpdateRoutingControlStates"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_routing_control_states_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_routing_control_states_request) =
+    let input = Json_serializers.update_routing_control_states_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ToggleCustomerAPI.UpdateRoutingControlStates" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_routing_control_states_response_of_yojson
       ~error_deserializer
 end

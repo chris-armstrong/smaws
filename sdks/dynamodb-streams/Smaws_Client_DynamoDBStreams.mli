@@ -119,6 +119,15 @@ module DescribeStream : sig
       | `InternalServerError of internal_server_error
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stream_input ->
+    ( describe_stream_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Returns information about a stream, including the current status of the stream, its Amazon \
@@ -146,6 +155,18 @@ module GetRecords : sig
     'http_type Smaws_Lib.Context.t ->
     get_records_input ->
     ( get_records_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ExpiredIteratorException of expired_iterator_exception
+      | `InternalServerError of internal_server_error
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TrimmedDataAccessException of trimmed_data_access_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_records_input ->
+    ( get_records_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ExpiredIteratorException of expired_iterator_exception
       | `InternalServerError of internal_server_error
@@ -184,6 +205,16 @@ module GetShardIterator : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TrimmedDataAccessException of trimmed_data_access_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_shard_iterator_input ->
+    ( get_shard_iterator_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TrimmedDataAccessException of trimmed_data_access_exception ] )
+    result
 end
 [@@ocaml.doc
   "Returns a shard iterator. A shard iterator provides information about how to retrieve the \
@@ -205,6 +236,15 @@ module ListStreams : sig
     'http_type Smaws_Lib.Context.t ->
     list_streams_input ->
     ( list_streams_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_streams_input ->
+    ( list_streams_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `ResourceNotFoundException of resource_not_found_exception ] )

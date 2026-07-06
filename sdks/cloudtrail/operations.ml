@@ -85,6 +85,12 @@ module AddTags = struct
     let input = Json_serializers.add_tags_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.AddTags" ~service ~context
       ~input ~output_deserializer:Json_deserializers.add_tags_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_request) =
+    let input = Json_serializers.add_tags_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.AddTags"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.add_tags_response_of_yojson
+      ~error_deserializer
 end
 
 module CancelQuery = struct
@@ -145,6 +151,12 @@ module CancelQuery = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.CancelQuery" ~service
       ~context ~input ~output_deserializer:Json_deserializers.cancel_query_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : cancel_query_request) =
+    let input = Json_serializers.cancel_query_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.CancelQuery"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.cancel_query_response_of_yojson ~error_deserializer
 end
 
 module CreateChannel = struct
@@ -215,6 +227,12 @@ module CreateChannel = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.CreateChannel" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_channel_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_channel_request) =
+    let input = Json_serializers.create_channel_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.CreateChannel" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_channel_response_of_yojson ~error_deserializer
 end
 
 module CreateDashboard = struct
@@ -266,6 +284,13 @@ module CreateDashboard = struct
     let input = Json_serializers.create_dashboard_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.CreateDashboard" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_dashboard_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_dashboard_request) =
+    let input = Json_serializers.create_dashboard_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.CreateDashboard" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_dashboard_response_of_yojson
       ~error_deserializer
 end
 
@@ -365,6 +390,13 @@ module CreateEventDataStore = struct
     let input = Json_serializers.create_event_data_store_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.CreateEventDataStore"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_event_data_store_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_event_data_store_request) =
+    let input = Json_serializers.create_event_data_store_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.CreateEventDataStore" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_event_data_store_response_of_yojson
       ~error_deserializer
 end
@@ -528,6 +560,12 @@ module CreateTrail = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.CreateTrail" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_trail_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_trail_request) =
+    let input = Json_serializers.create_trail_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.CreateTrail"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_trail_response_of_yojson ~error_deserializer
 end
 
 module DeleteChannel = struct
@@ -562,6 +600,12 @@ module DeleteChannel = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.DeleteChannel" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_channel_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_channel_request) =
+    let input = Json_serializers.delete_channel_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.DeleteChannel" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_channel_response_of_yojson ~error_deserializer
 end
 
 module DeleteDashboard = struct
@@ -590,6 +634,13 @@ module DeleteDashboard = struct
     let input = Json_serializers.delete_dashboard_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.DeleteDashboard" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_dashboard_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_dashboard_request) =
+    let input = Json_serializers.delete_dashboard_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.DeleteDashboard" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_dashboard_response_of_yojson
       ~error_deserializer
 end
 
@@ -675,6 +726,13 @@ module DeleteEventDataStore = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_event_data_store_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_event_data_store_request) =
+    let input = Json_serializers.delete_event_data_store_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.DeleteEventDataStore" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_event_data_store_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteResourcePolicy = struct
@@ -721,6 +779,13 @@ module DeleteResourcePolicy = struct
     let input = Json_serializers.delete_resource_policy_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.DeleteResourcePolicy"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_resource_policy_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_resource_policy_request) =
+    let input = Json_serializers.delete_resource_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.DeleteResourcePolicy" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_resource_policy_response_of_yojson
       ~error_deserializer
 end
@@ -786,6 +851,12 @@ module DeleteTrail = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.DeleteTrail" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_trail_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_trail_request) =
+    let input = Json_serializers.delete_trail_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.DeleteTrail"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_trail_response_of_yojson ~error_deserializer
 end
 
 module DeregisterOrganizationDelegatedAdmin = struct
@@ -857,6 +928,17 @@ module DeregisterOrganizationDelegatedAdmin = struct
       ~output_deserializer:
         Json_deserializers.deregister_organization_delegated_admin_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : deregister_organization_delegated_admin_request) =
+    let input =
+      Json_serializers.deregister_organization_delegated_admin_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.DeregisterOrganizationDelegatedAdmin" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.deregister_organization_delegated_admin_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeQuery = struct
@@ -911,6 +993,12 @@ module DescribeQuery = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.DescribeQuery" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_query_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_query_request) =
+    let input = Json_serializers.describe_query_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.DescribeQuery" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_query_response_of_yojson ~error_deserializer
 end
 
 module DescribeTrails = struct
@@ -950,6 +1038,12 @@ module DescribeTrails = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.DescribeTrails" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_trails_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_trails_request) =
+    let input = Json_serializers.describe_trails_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.DescribeTrails" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_trails_response_of_yojson ~error_deserializer
 end
 
 module DisableFederation = struct
@@ -1032,6 +1126,13 @@ module DisableFederation = struct
     let input = Json_serializers.disable_federation_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.DisableFederation" ~service
       ~context ~input ~output_deserializer:Json_deserializers.disable_federation_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : disable_federation_request) =
+    let input = Json_serializers.disable_federation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.DisableFederation" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.disable_federation_response_of_yojson
       ~error_deserializer
 end
 
@@ -1121,6 +1222,13 @@ module EnableFederation = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.EnableFederation" ~service
       ~context ~input ~output_deserializer:Json_deserializers.enable_federation_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : enable_federation_request) =
+    let input = Json_serializers.enable_federation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.EnableFederation" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.enable_federation_response_of_yojson
+      ~error_deserializer
 end
 
 module GenerateQuery = struct
@@ -1175,6 +1283,12 @@ module GenerateQuery = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.GenerateQuery" ~service
       ~context ~input ~output_deserializer:Json_deserializers.generate_query_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : generate_query_request) =
+    let input = Json_serializers.generate_query_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.GenerateQuery" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.generate_query_response_of_yojson ~error_deserializer
 end
 
 module GetChannel = struct
@@ -1209,6 +1323,12 @@ module GetChannel = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.GetChannel" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_channel_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_channel_request) =
+    let input = Json_serializers.get_channel_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.GetChannel"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_channel_response_of_yojson ~error_deserializer
 end
 
 module GetDashboard = struct
@@ -1235,6 +1355,12 @@ module GetDashboard = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.GetDashboard" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_dashboard_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_dashboard_request) =
+    let input = Json_serializers.get_dashboard_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.GetDashboard"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_dashboard_response_of_yojson ~error_deserializer
 end
 
 module GetEventConfiguration = struct
@@ -1307,6 +1433,13 @@ module GetEventConfiguration = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_event_configuration_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_event_configuration_request) =
+    let input = Json_serializers.get_event_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.GetEventConfiguration" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_event_configuration_response_of_yojson
+      ~error_deserializer
 end
 
 module GetEventDataStore = struct
@@ -1353,6 +1486,13 @@ module GetEventDataStore = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.get_event_data_store_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_event_data_store_request) =
+    let input = Json_serializers.get_event_data_store_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.GetEventDataStore" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_event_data_store_response_of_yojson
+      ~error_deserializer
 end
 
 module GetEventSelectors = struct
@@ -1395,6 +1535,13 @@ module GetEventSelectors = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.GetEventSelectors" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_event_selectors_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_event_selectors_request) =
+    let input = Json_serializers.get_event_selectors_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.GetEventSelectors" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_event_selectors_response_of_yojson
+      ~error_deserializer
 end
 
 module GetImport = struct
@@ -1428,6 +1575,12 @@ module GetImport = struct
     let input = Json_serializers.get_import_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.GetImport" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_import_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_import_request) =
+    let input = Json_serializers.get_import_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.GetImport"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.get_import_response_of_yojson
       ~error_deserializer
 end
 
@@ -1486,6 +1639,13 @@ module GetInsightSelectors = struct
     let input = Json_serializers.get_insight_selectors_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.GetInsightSelectors"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_insight_selectors_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_insight_selectors_request) =
+    let input = Json_serializers.get_insight_selectors_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.GetInsightSelectors" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_insight_selectors_response_of_yojson
       ~error_deserializer
 end
@@ -1555,6 +1715,13 @@ module GetQueryResults = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.GetQueryResults" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_query_results_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_query_results_request) =
+    let input = Json_serializers.get_query_results_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.GetQueryResults" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_query_results_response_of_yojson
+      ~error_deserializer
 end
 
 module GetResourcePolicy = struct
@@ -1599,6 +1766,13 @@ module GetResourcePolicy = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.GetResourcePolicy" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_resource_policy_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_resource_policy_request) =
+    let input = Json_serializers.get_resource_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.GetResourcePolicy" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_resource_policy_response_of_yojson
+      ~error_deserializer
 end
 
 module GetTrail = struct
@@ -1635,6 +1809,12 @@ module GetTrail = struct
     let input = Json_serializers.get_trail_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.GetTrail" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_trail_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_trail_request) =
+    let input = Json_serializers.get_trail_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.GetTrail"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.get_trail_response_of_yojson
       ~error_deserializer
 end
 
@@ -1673,6 +1853,13 @@ module GetTrailStatus = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.GetTrailStatus" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_trail_status_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_trail_status_request) =
+    let input = Json_serializers.get_trail_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.GetTrailStatus" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_trail_status_response_of_yojson
+      ~error_deserializer
 end
 
 module ListChannels = struct
@@ -1703,6 +1890,12 @@ module ListChannels = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.ListChannels" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_channels_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_channels_request) =
+    let input = Json_serializers.list_channels_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.ListChannels"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_channels_response_of_yojson ~error_deserializer
 end
 
 module ListDashboards = struct
@@ -1725,6 +1918,12 @@ module ListDashboards = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.ListDashboards" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_dashboards_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_dashboards_request) =
+    let input = Json_serializers.list_dashboards_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.ListDashboards" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_dashboards_response_of_yojson ~error_deserializer
 end
 
 module ListEventDataStores = struct
@@ -1765,6 +1964,13 @@ module ListEventDataStores = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_event_data_stores_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_event_data_stores_request) =
+    let input = Json_serializers.list_event_data_stores_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.ListEventDataStores" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_event_data_stores_response_of_yojson
+      ~error_deserializer
 end
 
 module ListImportFailures = struct
@@ -1798,6 +2004,13 @@ module ListImportFailures = struct
     let input = Json_serializers.list_import_failures_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.ListImportFailures"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_import_failures_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_import_failures_request) =
+    let input = Json_serializers.list_import_failures_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.ListImportFailures" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_import_failures_response_of_yojson
       ~error_deserializer
 end
@@ -1839,6 +2052,12 @@ module ListImports = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.ListImports" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_imports_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_imports_request) =
+    let input = Json_serializers.list_imports_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.ListImports"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_imports_response_of_yojson ~error_deserializer
 end
 
 module ListInsightsData = struct
@@ -1868,6 +2087,13 @@ module ListInsightsData = struct
     let input = Json_serializers.list_insights_data_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.ListInsightsData" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_insights_data_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_insights_data_request) =
+    let input = Json_serializers.list_insights_data_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.ListInsightsData" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_insights_data_response_of_yojson
       ~error_deserializer
 end
 
@@ -1904,6 +2130,13 @@ module ListInsightsMetricData = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_insights_metric_data_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_insights_metric_data_request) =
+    let input = Json_serializers.list_insights_metric_data_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.ListInsightsMetricData" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_insights_metric_data_response_of_yojson
+      ~error_deserializer
 end
 
 module ListPublicKeys = struct
@@ -1936,6 +2169,13 @@ module ListPublicKeys = struct
     let input = Json_serializers.list_public_keys_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.ListPublicKeys" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_public_keys_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_public_keys_request) =
+    let input = Json_serializers.list_public_keys_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.ListPublicKeys" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_public_keys_response_of_yojson
       ~error_deserializer
 end
 
@@ -2003,6 +2243,12 @@ module ListQueries = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.ListQueries" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_queries_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_queries_request) =
+    let input = Json_serializers.list_queries_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.ListQueries"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_queries_response_of_yojson ~error_deserializer
 end
 
 module ListTags = struct
@@ -2073,6 +2319,12 @@ module ListTags = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.ListTags" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_tags_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_request) =
+    let input = Json_serializers.list_tags_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.ListTags"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.list_tags_response_of_yojson
+      ~error_deserializer
 end
 
 module ListTrails = struct
@@ -2099,6 +2351,12 @@ module ListTrails = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.ListTrails" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_trails_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_trails_request) =
+    let input = Json_serializers.list_trails_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.ListTrails"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_trails_response_of_yojson ~error_deserializer
 end
 
 module LookupEvents = struct
@@ -2146,6 +2404,12 @@ module LookupEvents = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.LookupEvents" ~service
       ~context ~input ~output_deserializer:Json_deserializers.lookup_events_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : lookup_events_request) =
+    let input = Json_serializers.lookup_events_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.LookupEvents"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.lookup_events_response_of_yojson ~error_deserializer
 end
 
 module PutEventConfiguration = struct
@@ -2249,6 +2513,13 @@ module PutEventConfiguration = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_event_configuration_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_event_configuration_request) =
+    let input = Json_serializers.put_event_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.PutEventConfiguration" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_event_configuration_response_of_yojson
+      ~error_deserializer
 end
 
 module PutEventSelectors = struct
@@ -2315,6 +2586,13 @@ module PutEventSelectors = struct
     let input = Json_serializers.put_event_selectors_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.PutEventSelectors" ~service
       ~context ~input ~output_deserializer:Json_deserializers.put_event_selectors_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_event_selectors_request) =
+    let input = Json_serializers.put_event_selectors_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.PutEventSelectors" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_event_selectors_response_of_yojson
       ~error_deserializer
 end
 
@@ -2401,6 +2679,13 @@ module PutInsightSelectors = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_insight_selectors_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_insight_selectors_request) =
+    let input = Json_serializers.put_insight_selectors_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.PutInsightSelectors" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_insight_selectors_response_of_yojson
+      ~error_deserializer
 end
 
 module PutResourcePolicy = struct
@@ -2447,6 +2732,13 @@ module PutResourcePolicy = struct
     let input = Json_serializers.put_resource_policy_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.PutResourcePolicy" ~service
       ~context ~input ~output_deserializer:Json_deserializers.put_resource_policy_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_resource_policy_request) =
+    let input = Json_serializers.put_resource_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.PutResourcePolicy" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_resource_policy_response_of_yojson
       ~error_deserializer
 end
 
@@ -2527,6 +2819,14 @@ module RegisterOrganizationDelegatedAdmin = struct
   let request context (request : register_organization_delegated_admin_request) =
     let input = Json_serializers.register_organization_delegated_admin_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CloudTrail_20131101.RegisterOrganizationDelegatedAdmin" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.register_organization_delegated_admin_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : register_organization_delegated_admin_request) =
+    let input = Json_serializers.register_organization_delegated_admin_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"CloudTrail_20131101.RegisterOrganizationDelegatedAdmin" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.register_organization_delegated_admin_response_of_yojson
@@ -2614,6 +2914,12 @@ module RemoveTags = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.RemoveTags" ~service
       ~context ~input ~output_deserializer:Json_deserializers.remove_tags_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : remove_tags_request) =
+    let input = Json_serializers.remove_tags_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.RemoveTags"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.remove_tags_response_of_yojson ~error_deserializer
 end
 
 module RestoreEventDataStore = struct
@@ -2695,6 +3001,13 @@ module RestoreEventDataStore = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.restore_event_data_store_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : restore_event_data_store_request) =
+    let input = Json_serializers.restore_event_data_store_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.RestoreEventDataStore" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.restore_event_data_store_response_of_yojson
+      ~error_deserializer
 end
 
 module SearchSampleQueries = struct
@@ -2724,6 +3037,13 @@ module SearchSampleQueries = struct
     let input = Json_serializers.search_sample_queries_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.SearchSampleQueries"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.search_sample_queries_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : search_sample_queries_request) =
+    let input = Json_serializers.search_sample_queries_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.SearchSampleQueries" ~service ~context ~input
       ~output_deserializer:Json_deserializers.search_sample_queries_response_of_yojson
       ~error_deserializer
 end
@@ -2765,6 +3085,13 @@ module StartDashboardRefresh = struct
     let input = Json_serializers.start_dashboard_refresh_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.StartDashboardRefresh"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_dashboard_refresh_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : start_dashboard_refresh_request) =
+    let input = Json_serializers.start_dashboard_refresh_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.StartDashboardRefresh" ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_dashboard_refresh_response_of_yojson
       ~error_deserializer
 end
@@ -2834,6 +3161,13 @@ module StartEventDataStoreIngestion = struct
   let request context (request : start_event_data_store_ingestion_request) =
     let input = Json_serializers.start_event_data_store_ingestion_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CloudTrail_20131101.StartEventDataStoreIngestion" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_event_data_store_ingestion_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : start_event_data_store_ingestion_request) =
+    let input = Json_serializers.start_event_data_store_ingestion_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"CloudTrail_20131101.StartEventDataStoreIngestion" ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_event_data_store_ingestion_response_of_yojson
       ~error_deserializer
@@ -2910,6 +3244,12 @@ module StartImport = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.StartImport" ~service
       ~context ~input ~output_deserializer:Json_deserializers.start_import_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_import_request) =
+    let input = Json_serializers.start_import_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.StartImport"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_import_response_of_yojson ~error_deserializer
 end
 
 module StartLogging = struct
@@ -2973,6 +3313,12 @@ module StartLogging = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.StartLogging" ~service
       ~context ~input ~output_deserializer:Json_deserializers.start_logging_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_logging_request) =
+    let input = Json_serializers.start_logging_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.StartLogging"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_logging_response_of_yojson ~error_deserializer
 end
 
 module StartQuery = struct
@@ -3053,6 +3399,12 @@ module StartQuery = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.StartQuery" ~service
       ~context ~input ~output_deserializer:Json_deserializers.start_query_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_query_request) =
+    let input = Json_serializers.start_query_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.StartQuery"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_query_response_of_yojson ~error_deserializer
 end
 
 module StopEventDataStoreIngestion = struct
@@ -3123,6 +3475,13 @@ module StopEventDataStoreIngestion = struct
       ~shape_name:"CloudTrail_20131101.StopEventDataStoreIngestion" ~service ~context ~input
       ~output_deserializer:Json_deserializers.stop_event_data_store_ingestion_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : stop_event_data_store_ingestion_request) =
+    let input = Json_serializers.stop_event_data_store_ingestion_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.StopEventDataStoreIngestion" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.stop_event_data_store_ingestion_response_of_yojson
+      ~error_deserializer
 end
 
 module StopImport = struct
@@ -3157,6 +3516,12 @@ module StopImport = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.StopImport" ~service
       ~context ~input ~output_deserializer:Json_deserializers.stop_import_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : stop_import_request) =
+    let input = Json_serializers.stop_import_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.StopImport"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.stop_import_response_of_yojson ~error_deserializer
 end
 
 module StopLogging = struct
@@ -3220,6 +3585,12 @@ module StopLogging = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.StopLogging" ~service
       ~context ~input ~output_deserializer:Json_deserializers.stop_logging_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : stop_logging_request) =
+    let input = Json_serializers.stop_logging_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.StopLogging"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.stop_logging_response_of_yojson ~error_deserializer
 end
 
 module UpdateChannel = struct
@@ -3282,6 +3653,12 @@ module UpdateChannel = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.UpdateChannel" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_channel_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_channel_request) =
+    let input = Json_serializers.update_channel_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.UpdateChannel" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_channel_response_of_yojson ~error_deserializer
 end
 
 module UpdateDashboard = struct
@@ -3333,6 +3710,13 @@ module UpdateDashboard = struct
     let input = Json_serializers.update_dashboard_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.UpdateDashboard" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_dashboard_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_dashboard_request) =
+    let input = Json_serializers.update_dashboard_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.UpdateDashboard" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_dashboard_response_of_yojson
       ~error_deserializer
 end
 
@@ -3448,6 +3832,13 @@ module UpdateEventDataStore = struct
     let input = Json_serializers.update_event_data_store_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.UpdateEventDataStore"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_event_data_store_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_event_data_store_request) =
+    let input = Json_serializers.update_event_data_store_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CloudTrail_20131101.UpdateEventDataStore" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_event_data_store_response_of_yojson
       ~error_deserializer
 end
@@ -3609,4 +4000,10 @@ module UpdateTrail = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CloudTrail_20131101.UpdateTrail" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_trail_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_trail_request) =
+    let input = Json_serializers.update_trail_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CloudTrail_20131101.UpdateTrail"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_trail_response_of_yojson ~error_deserializer
 end

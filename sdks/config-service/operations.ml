@@ -29,6 +29,13 @@ module AssociateResourceTypes = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.associate_resource_types_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : associate_resource_types_request) =
+    let input = Json_serializers.associate_resource_types_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.AssociateResourceTypes" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.associate_resource_types_response_of_yojson
+      ~error_deserializer
 end
 
 module BatchGetAggregateResourceConfig = struct
@@ -53,6 +60,13 @@ module BatchGetAggregateResourceConfig = struct
   let request context (request : batch_get_aggregate_resource_config_request) =
     let input = Json_serializers.batch_get_aggregate_resource_config_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.BatchGetAggregateResourceConfig" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_aggregate_resource_config_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_aggregate_resource_config_request) =
+    let input = Json_serializers.batch_get_aggregate_resource_config_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.BatchGetAggregateResourceConfig" ~service ~context ~input
       ~output_deserializer:Json_deserializers.batch_get_aggregate_resource_config_response_of_yojson
       ~error_deserializer
@@ -83,6 +97,13 @@ module BatchGetResourceConfig = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.batch_get_resource_config_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_resource_config_request) =
+    let input = Json_serializers.batch_get_resource_config_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.BatchGetResourceConfig" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_resource_config_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteAggregationAuthorization = struct
@@ -104,6 +125,13 @@ module DeleteAggregationAuthorization = struct
   let request context (request : delete_aggregation_authorization_request) =
     let input = Json_serializers.delete_aggregation_authorization_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DeleteAggregationAuthorization" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_aggregation_authorization_request) =
+    let input = Json_serializers.delete_aggregation_authorization_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.DeleteAggregationAuthorization" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
@@ -132,6 +160,13 @@ module DeleteConfigRule = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DeleteConfigRule" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_config_rule_request) =
+    let input = Json_serializers.delete_config_rule_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DeleteConfigRule" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeleteConfigurationAggregator = struct
@@ -153,6 +188,13 @@ module DeleteConfigurationAggregator = struct
   let request context (request : delete_configuration_aggregator_request) =
     let input = Json_serializers.delete_configuration_aggregator_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DeleteConfigurationAggregator" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_configuration_aggregator_request) =
+    let input = Json_serializers.delete_configuration_aggregator_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.DeleteConfigurationAggregator" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
@@ -184,6 +226,13 @@ module DeleteConfigurationRecorder = struct
       ~shape_name:"StarlingDoveService.DeleteConfigurationRecorder" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_configuration_recorder_request) =
+    let input = Json_serializers.delete_configuration_recorder_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DeleteConfigurationRecorder" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeleteConformancePack = struct
@@ -209,6 +258,13 @@ module DeleteConformancePack = struct
     let input = Json_serializers.delete_conformance_pack_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DeleteConformancePack"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_conformance_pack_request) =
+    let input = Json_serializers.delete_conformance_pack_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DeleteConformancePack" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -240,6 +296,13 @@ module DeleteDeliveryChannel = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_delivery_channel_request) =
+    let input = Json_serializers.delete_delivery_channel_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DeleteDeliveryChannel" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeleteEvaluationResults = struct
@@ -264,6 +327,13 @@ module DeleteEvaluationResults = struct
     let input = Json_serializers.delete_evaluation_results_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DeleteEvaluationResults"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_evaluation_results_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_evaluation_results_request) =
+    let input = Json_serializers.delete_evaluation_results_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DeleteEvaluationResults" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_evaluation_results_response_of_yojson
       ~error_deserializer
 end
@@ -295,6 +365,13 @@ module DeleteOrganizationConfigRule = struct
   let request context (request : delete_organization_config_rule_request) =
     let input = Json_serializers.delete_organization_config_rule_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DeleteOrganizationConfigRule" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_organization_config_rule_request) =
+    let input = Json_serializers.delete_organization_config_rule_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.DeleteOrganizationConfigRule" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
@@ -330,6 +407,13 @@ module DeleteOrganizationConformancePack = struct
       ~shape_name:"StarlingDoveService.DeleteOrganizationConformancePack" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_organization_conformance_pack_request) =
+    let input = Json_serializers.delete_organization_conformance_pack_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DeleteOrganizationConformancePack" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeletePendingAggregationRequest = struct
@@ -351,6 +435,13 @@ module DeletePendingAggregationRequest = struct
   let request context (request : delete_pending_aggregation_request_request) =
     let input = Json_serializers.delete_pending_aggregation_request_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DeletePendingAggregationRequest" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_pending_aggregation_request_request) =
+    let input = Json_serializers.delete_pending_aggregation_request_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.DeletePendingAggregationRequest" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
@@ -393,6 +484,13 @@ module DeleteRemediationConfiguration = struct
       ~shape_name:"StarlingDoveService.DeleteRemediationConfiguration" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_remediation_configuration_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_remediation_configuration_request) =
+    let input = Json_serializers.delete_remediation_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DeleteRemediationConfiguration" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_remediation_configuration_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteRemediationExceptions = struct
@@ -414,6 +512,13 @@ module DeleteRemediationExceptions = struct
   let request context (request : delete_remediation_exceptions_request) =
     let input = Json_serializers.delete_remediation_exceptions_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DeleteRemediationExceptions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_remediation_exceptions_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_remediation_exceptions_request) =
+    let input = Json_serializers.delete_remediation_exceptions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.DeleteRemediationExceptions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_remediation_exceptions_response_of_yojson
       ~error_deserializer
@@ -444,6 +549,13 @@ module DeleteResourceConfig = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_resource_config_request) =
+    let input = Json_serializers.delete_resource_config_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DeleteResourceConfig" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeleteRetentionConfiguration = struct
@@ -470,6 +582,13 @@ module DeleteRetentionConfiguration = struct
   let request context (request : delete_retention_configuration_request) =
     let input = Json_serializers.delete_retention_configuration_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DeleteRetentionConfiguration" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_retention_configuration_request) =
+    let input = Json_serializers.delete_retention_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.DeleteRetentionConfiguration" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
@@ -507,6 +626,18 @@ module DeleteServiceLinkedConfigurationRecorder = struct
       ~output_deserializer:
         Json_deserializers.delete_service_linked_configuration_recorder_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_service_linked_configuration_recorder_request)
+      =
+    let input =
+      Json_serializers.delete_service_linked_configuration_recorder_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DeleteServiceLinkedConfigurationRecorder" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.delete_service_linked_configuration_recorder_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteStoredQuery = struct
@@ -531,6 +662,13 @@ module DeleteStoredQuery = struct
     let input = Json_serializers.delete_stored_query_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DeleteStoredQuery" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_stored_query_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_stored_query_request) =
+    let input = Json_serializers.delete_stored_query_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DeleteStoredQuery" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_stored_query_response_of_yojson
       ~error_deserializer
 end
 
@@ -566,6 +704,13 @@ module DeliverConfigSnapshot = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.deliver_config_snapshot_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : deliver_config_snapshot_request) =
+    let input = Json_serializers.deliver_config_snapshot_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DeliverConfigSnapshot" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.deliver_config_snapshot_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeAggregateComplianceByConfigRules = struct
@@ -599,6 +744,18 @@ module DescribeAggregateComplianceByConfigRules = struct
       Json_serializers.describe_aggregate_compliance_by_config_rules_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DescribeAggregateComplianceByConfigRules" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.describe_aggregate_compliance_by_config_rules_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context
+      (request : describe_aggregate_compliance_by_config_rules_request) =
+    let input =
+      Json_serializers.describe_aggregate_compliance_by_config_rules_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.DescribeAggregateComplianceByConfigRules" ~service ~context
       ~input
       ~output_deserializer:
@@ -642,6 +799,18 @@ module DescribeAggregateComplianceByConformancePacks = struct
       ~output_deserializer:
         Json_deserializers.describe_aggregate_compliance_by_conformance_packs_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context
+      (request : describe_aggregate_compliance_by_conformance_packs_request) =
+    let input =
+      Json_serializers.describe_aggregate_compliance_by_conformance_packs_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribeAggregateComplianceByConformancePacks" ~service
+      ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_aggregate_compliance_by_conformance_packs_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeAggregationAuthorizations = struct
@@ -670,6 +839,13 @@ module DescribeAggregationAuthorizations = struct
   let request context (request : describe_aggregation_authorizations_request) =
     let input = Json_serializers.describe_aggregation_authorizations_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DescribeAggregationAuthorizations" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_aggregation_authorizations_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_aggregation_authorizations_request) =
+    let input = Json_serializers.describe_aggregation_authorizations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.DescribeAggregationAuthorizations" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_aggregation_authorizations_response_of_yojson
       ~error_deserializer
@@ -705,6 +881,13 @@ module DescribeComplianceByConfigRule = struct
       ~shape_name:"StarlingDoveService.DescribeComplianceByConfigRule" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_compliance_by_config_rule_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_compliance_by_config_rule_request) =
+    let input = Json_serializers.describe_compliance_by_config_rule_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribeComplianceByConfigRule" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_compliance_by_config_rule_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeComplianceByResource = struct
@@ -730,6 +913,13 @@ module DescribeComplianceByResource = struct
   let request context (request : describe_compliance_by_resource_request) =
     let input = Json_serializers.describe_compliance_by_resource_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DescribeComplianceByResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_compliance_by_resource_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_compliance_by_resource_request) =
+    let input = Json_serializers.describe_compliance_by_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.DescribeComplianceByResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_compliance_by_resource_response_of_yojson
       ~error_deserializer
@@ -766,6 +956,14 @@ module DescribeConfigRuleEvaluationStatus = struct
       ~output_deserializer:
         Json_deserializers.describe_config_rule_evaluation_status_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_config_rule_evaluation_status_request) =
+    let input = Json_serializers.describe_config_rule_evaluation_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribeConfigRuleEvaluationStatus" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_config_rule_evaluation_status_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeConfigRules = struct
@@ -796,6 +994,13 @@ module DescribeConfigRules = struct
     let input = Json_serializers.describe_config_rules_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DescribeConfigRules"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_config_rules_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_config_rules_request) =
+    let input = Json_serializers.describe_config_rules_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribeConfigRules" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_config_rules_response_of_yojson
       ~error_deserializer
 end
@@ -831,6 +1036,13 @@ module DescribeConfigurationAggregators = struct
   let request context (request : describe_configuration_aggregators_request) =
     let input = Json_serializers.describe_configuration_aggregators_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DescribeConfigurationAggregators" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_configuration_aggregators_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_configuration_aggregators_request) =
+    let input = Json_serializers.describe_configuration_aggregators_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.DescribeConfigurationAggregators" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_configuration_aggregators_response_of_yojson
       ~error_deserializer
@@ -874,6 +1086,18 @@ module DescribeConfigurationAggregatorSourcesStatus = struct
       ~output_deserializer:
         Json_deserializers.describe_configuration_aggregator_sources_status_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context
+      (request : describe_configuration_aggregator_sources_status_request) =
+    let input =
+      Json_serializers.describe_configuration_aggregator_sources_status_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribeConfigurationAggregatorSourcesStatus" ~service
+      ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_configuration_aggregator_sources_status_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeConfigurationRecorders = struct
@@ -901,6 +1125,13 @@ module DescribeConfigurationRecorders = struct
       ~shape_name:"StarlingDoveService.DescribeConfigurationRecorders" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_configuration_recorders_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_configuration_recorders_request) =
+    let input = Json_serializers.describe_configuration_recorders_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribeConfigurationRecorders" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_configuration_recorders_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeConfigurationRecorderStatus = struct
@@ -925,6 +1156,14 @@ module DescribeConfigurationRecorderStatus = struct
   let request context (request : describe_configuration_recorder_status_request) =
     let input = Json_serializers.describe_configuration_recorder_status_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DescribeConfigurationRecorderStatus" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_configuration_recorder_status_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_configuration_recorder_status_request) =
+    let input = Json_serializers.describe_configuration_recorder_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.DescribeConfigurationRecorderStatus" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.describe_configuration_recorder_status_response_of_yojson
@@ -972,6 +1211,14 @@ module DescribeConformancePackCompliance = struct
       ~output_deserializer:
         Json_deserializers.describe_conformance_pack_compliance_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_conformance_pack_compliance_request) =
+    let input = Json_serializers.describe_conformance_pack_compliance_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribeConformancePackCompliance" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_conformance_pack_compliance_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeConformancePacks = struct
@@ -1008,6 +1255,13 @@ module DescribeConformancePacks = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_conformance_packs_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_conformance_packs_request) =
+    let input = Json_serializers.describe_conformance_packs_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribeConformancePacks" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_conformance_packs_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeConformancePackStatus = struct
@@ -1039,6 +1293,13 @@ module DescribeConformancePackStatus = struct
       ~shape_name:"StarlingDoveService.DescribeConformancePackStatus" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_conformance_pack_status_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_conformance_pack_status_request) =
+    let input = Json_serializers.describe_conformance_pack_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribeConformancePackStatus" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_conformance_pack_status_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeDeliveryChannels = struct
@@ -1063,6 +1324,13 @@ module DescribeDeliveryChannels = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_delivery_channels_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_delivery_channels_request) =
+    let input = Json_serializers.describe_delivery_channels_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribeDeliveryChannels" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_delivery_channels_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeDeliveryChannelStatus = struct
@@ -1084,6 +1352,13 @@ module DescribeDeliveryChannelStatus = struct
   let request context (request : describe_delivery_channel_status_request) =
     let input = Json_serializers.describe_delivery_channel_status_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DescribeDeliveryChannelStatus" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_delivery_channel_status_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_delivery_channel_status_request) =
+    let input = Json_serializers.describe_delivery_channel_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.DescribeDeliveryChannelStatus" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_delivery_channel_status_response_of_yojson
       ~error_deserializer
@@ -1123,6 +1398,13 @@ module DescribeOrganizationConfigRules = struct
       ~shape_name:"StarlingDoveService.DescribeOrganizationConfigRules" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_organization_config_rules_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_organization_config_rules_request) =
+    let input = Json_serializers.describe_organization_config_rules_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribeOrganizationConfigRules" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_organization_config_rules_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeOrganizationConfigRuleStatuses = struct
@@ -1158,6 +1440,17 @@ module DescribeOrganizationConfigRuleStatuses = struct
       Json_serializers.describe_organization_config_rule_statuses_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DescribeOrganizationConfigRuleStatuses" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.describe_organization_config_rule_statuses_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_organization_config_rule_statuses_request) =
+    let input =
+      Json_serializers.describe_organization_config_rule_statuses_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.DescribeOrganizationConfigRuleStatuses" ~service ~context
       ~input
       ~output_deserializer:
@@ -1203,6 +1496,17 @@ module DescribeOrganizationConformancePacks = struct
       ~output_deserializer:
         Json_deserializers.describe_organization_conformance_packs_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_organization_conformance_packs_request) =
+    let input =
+      Json_serializers.describe_organization_conformance_packs_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribeOrganizationConformancePacks" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.describe_organization_conformance_packs_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeOrganizationConformancePackStatuses = struct
@@ -1243,6 +1547,18 @@ module DescribeOrganizationConformancePackStatuses = struct
       ~output_deserializer:
         Json_deserializers.describe_organization_conformance_pack_statuses_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context
+      (request : describe_organization_conformance_pack_statuses_request) =
+    let input =
+      Json_serializers.describe_organization_conformance_pack_statuses_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribeOrganizationConformancePackStatuses" ~service
+      ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_organization_conformance_pack_statuses_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribePendingAggregationRequests = struct
@@ -1275,6 +1591,14 @@ module DescribePendingAggregationRequests = struct
       ~output_deserializer:
         Json_deserializers.describe_pending_aggregation_requests_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_pending_aggregation_requests_request) =
+    let input = Json_serializers.describe_pending_aggregation_requests_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribePendingAggregationRequests" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_pending_aggregation_requests_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeRemediationConfigurations = struct
@@ -1288,6 +1612,13 @@ module DescribeRemediationConfigurations = struct
   let request context (request : describe_remediation_configurations_request) =
     let input = Json_serializers.describe_remediation_configurations_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DescribeRemediationConfigurations" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_remediation_configurations_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_remediation_configurations_request) =
+    let input = Json_serializers.describe_remediation_configurations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.DescribeRemediationConfigurations" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_remediation_configurations_response_of_yojson
       ~error_deserializer
@@ -1316,6 +1647,13 @@ module DescribeRemediationExceptions = struct
   let request context (request : describe_remediation_exceptions_request) =
     let input = Json_serializers.describe_remediation_exceptions_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.DescribeRemediationExceptions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_remediation_exceptions_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_remediation_exceptions_request) =
+    let input = Json_serializers.describe_remediation_exceptions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.DescribeRemediationExceptions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_remediation_exceptions_response_of_yojson
       ~error_deserializer
@@ -1353,6 +1691,14 @@ module DescribeRemediationExecutionStatus = struct
       ~output_deserializer:
         Json_deserializers.describe_remediation_execution_status_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_remediation_execution_status_request) =
+    let input = Json_serializers.describe_remediation_execution_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribeRemediationExecutionStatus" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_remediation_execution_status_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeRetentionConfigurations = struct
@@ -1386,6 +1732,13 @@ module DescribeRetentionConfigurations = struct
       ~shape_name:"StarlingDoveService.DescribeRetentionConfigurations" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_retention_configurations_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_retention_configurations_request) =
+    let input = Json_serializers.describe_retention_configurations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DescribeRetentionConfigurations" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_retention_configurations_response_of_yojson
+      ~error_deserializer
 end
 
 module DisassociateResourceTypes = struct
@@ -1414,6 +1767,13 @@ module DisassociateResourceTypes = struct
     let input = Json_serializers.disassociate_resource_types_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.DisassociateResourceTypes"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.disassociate_resource_types_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : disassociate_resource_types_request) =
+    let input = Json_serializers.disassociate_resource_types_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.DisassociateResourceTypes" ~service ~context ~input
       ~output_deserializer:Json_deserializers.disassociate_resource_types_response_of_yojson
       ~error_deserializer
 end
@@ -1449,6 +1809,18 @@ module GetAggregateComplianceDetailsByConfigRule = struct
       Json_serializers.get_aggregate_compliance_details_by_config_rule_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.GetAggregateComplianceDetailsByConfigRule" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.get_aggregate_compliance_details_by_config_rule_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context
+      (request : get_aggregate_compliance_details_by_config_rule_request) =
+    let input =
+      Json_serializers.get_aggregate_compliance_details_by_config_rule_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.GetAggregateComplianceDetailsByConfigRule" ~service ~context
       ~input
       ~output_deserializer:
@@ -1492,6 +1864,18 @@ module GetAggregateConfigRuleComplianceSummary = struct
       ~output_deserializer:
         Json_deserializers.get_aggregate_config_rule_compliance_summary_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_aggregate_config_rule_compliance_summary_request)
+      =
+    let input =
+      Json_serializers.get_aggregate_config_rule_compliance_summary_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.GetAggregateConfigRuleComplianceSummary" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.get_aggregate_config_rule_compliance_summary_response_of_yojson
+      ~error_deserializer
 end
 
 module GetAggregateConformancePackComplianceSummary = struct
@@ -1525,6 +1909,18 @@ module GetAggregateConformancePackComplianceSummary = struct
       Json_serializers.get_aggregate_conformance_pack_compliance_summary_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.GetAggregateConformancePackComplianceSummary" ~service
+      ~context ~input
+      ~output_deserializer:
+        Json_deserializers.get_aggregate_conformance_pack_compliance_summary_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context
+      (request : get_aggregate_conformance_pack_compliance_summary_request) =
+    let input =
+      Json_serializers.get_aggregate_conformance_pack_compliance_summary_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.GetAggregateConformancePackComplianceSummary" ~service
       ~context ~input
       ~output_deserializer:
@@ -1568,6 +1964,17 @@ module GetAggregateDiscoveredResourceCounts = struct
       ~output_deserializer:
         Json_deserializers.get_aggregate_discovered_resource_counts_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_aggregate_discovered_resource_counts_request) =
+    let input =
+      Json_serializers.get_aggregate_discovered_resource_counts_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.GetAggregateDiscoveredResourceCounts" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.get_aggregate_discovered_resource_counts_response_of_yojson
+      ~error_deserializer
 end
 
 module GetAggregateResourceConfig = struct
@@ -1605,6 +2012,13 @@ module GetAggregateResourceConfig = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_aggregate_resource_config_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_aggregate_resource_config_request) =
+    let input = Json_serializers.get_aggregate_resource_config_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.GetAggregateResourceConfig" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_aggregate_resource_config_response_of_yojson
+      ~error_deserializer
 end
 
 module GetComplianceDetailsByConfigRule = struct
@@ -1638,6 +2052,14 @@ module GetComplianceDetailsByConfigRule = struct
       ~output_deserializer:
         Json_deserializers.get_compliance_details_by_config_rule_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_compliance_details_by_config_rule_request) =
+    let input = Json_serializers.get_compliance_details_by_config_rule_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.GetComplianceDetailsByConfigRule" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.get_compliance_details_by_config_rule_response_of_yojson
+      ~error_deserializer
 end
 
 module GetComplianceDetailsByResource = struct
@@ -1662,6 +2084,13 @@ module GetComplianceDetailsByResource = struct
       ~shape_name:"StarlingDoveService.GetComplianceDetailsByResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_compliance_details_by_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_compliance_details_by_resource_request) =
+    let input = Json_serializers.get_compliance_details_by_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.GetComplianceDetailsByResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_compliance_details_by_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module GetComplianceSummaryByConfigRule = struct
@@ -1675,6 +2104,14 @@ module GetComplianceSummaryByConfigRule = struct
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
     let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.GetComplianceSummaryByConfigRule" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.get_compliance_summary_by_config_rule_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.GetComplianceSummaryByConfigRule" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.get_compliance_summary_by_config_rule_response_of_yojson
@@ -1702,6 +2139,16 @@ module GetComplianceSummaryByResourceType = struct
       Json_serializers.get_compliance_summary_by_resource_type_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.GetComplianceSummaryByResourceType" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.get_compliance_summary_by_resource_type_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_compliance_summary_by_resource_type_request) =
+    let input =
+      Json_serializers.get_compliance_summary_by_resource_type_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.GetComplianceSummaryByResourceType" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.get_compliance_summary_by_resource_type_response_of_yojson
@@ -1751,6 +2198,16 @@ module GetConformancePackComplianceDetails = struct
       ~output_deserializer:
         Json_deserializers.get_conformance_pack_compliance_details_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_conformance_pack_compliance_details_request) =
+    let input =
+      Json_serializers.get_conformance_pack_compliance_details_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.GetConformancePackComplianceDetails" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.get_conformance_pack_compliance_details_response_of_yojson
+      ~error_deserializer
 end
 
 module GetConformancePackComplianceSummary = struct
@@ -1785,6 +2242,16 @@ module GetConformancePackComplianceSummary = struct
       ~output_deserializer:
         Json_deserializers.get_conformance_pack_compliance_summary_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_conformance_pack_compliance_summary_request) =
+    let input =
+      Json_serializers.get_conformance_pack_compliance_summary_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.GetConformancePackComplianceSummary" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.get_conformance_pack_compliance_summary_response_of_yojson
+      ~error_deserializer
 end
 
 module GetCustomRulePolicy = struct
@@ -1806,6 +2273,13 @@ module GetCustomRulePolicy = struct
     let input = Json_serializers.get_custom_rule_policy_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.GetCustomRulePolicy"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_custom_rule_policy_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_custom_rule_policy_request) =
+    let input = Json_serializers.get_custom_rule_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.GetCustomRulePolicy" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_custom_rule_policy_response_of_yojson
       ~error_deserializer
 end
@@ -1834,6 +2308,13 @@ module GetDiscoveredResourceCounts = struct
   let request context (request : get_discovered_resource_counts_request) =
     let input = Json_serializers.get_discovered_resource_counts_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.GetDiscoveredResourceCounts" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_discovered_resource_counts_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_discovered_resource_counts_request) =
+    let input = Json_serializers.get_discovered_resource_counts_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.GetDiscoveredResourceCounts" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_discovered_resource_counts_response_of_yojson
       ~error_deserializer
@@ -1872,6 +2353,18 @@ module GetOrganizationConfigRuleDetailedStatus = struct
       Json_serializers.get_organization_config_rule_detailed_status_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.GetOrganizationConfigRuleDetailedStatus" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.get_organization_config_rule_detailed_status_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_organization_config_rule_detailed_status_request)
+      =
+    let input =
+      Json_serializers.get_organization_config_rule_detailed_status_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.GetOrganizationConfigRuleDetailedStatus" ~service ~context
       ~input
       ~output_deserializer:
@@ -1917,6 +2410,18 @@ module GetOrganizationConformancePackDetailedStatus = struct
       ~output_deserializer:
         Json_deserializers.get_organization_conformance_pack_detailed_status_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context
+      (request : get_organization_conformance_pack_detailed_status_request) =
+    let input =
+      Json_serializers.get_organization_conformance_pack_detailed_status_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.GetOrganizationConformancePackDetailedStatus" ~service
+      ~context ~input
+      ~output_deserializer:
+        Json_deserializers.get_organization_conformance_pack_detailed_status_response_of_yojson
+      ~error_deserializer
 end
 
 module GetOrganizationCustomRulePolicy = struct
@@ -1943,6 +2448,13 @@ module GetOrganizationCustomRulePolicy = struct
   let request context (request : get_organization_custom_rule_policy_request) =
     let input = Json_serializers.get_organization_custom_rule_policy_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.GetOrganizationCustomRulePolicy" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_organization_custom_rule_policy_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_organization_custom_rule_policy_request) =
+    let input = Json_serializers.get_organization_custom_rule_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.GetOrganizationCustomRulePolicy" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_organization_custom_rule_policy_response_of_yojson
       ~error_deserializer
@@ -1989,6 +2501,13 @@ module GetResourceConfigHistory = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_resource_config_history_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_resource_config_history_request) =
+    let input = Json_serializers.get_resource_config_history_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.GetResourceConfigHistory" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_resource_config_history_response_of_yojson
+      ~error_deserializer
 end
 
 module GetResourceEvaluationSummary = struct
@@ -2009,6 +2528,13 @@ module GetResourceEvaluationSummary = struct
   let request context (request : get_resource_evaluation_summary_request) =
     let input = Json_serializers.get_resource_evaluation_summary_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.GetResourceEvaluationSummary" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_resource_evaluation_summary_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_resource_evaluation_summary_request) =
+    let input = Json_serializers.get_resource_evaluation_summary_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.GetResourceEvaluationSummary" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_resource_evaluation_summary_response_of_yojson
       ~error_deserializer
@@ -2036,6 +2562,13 @@ module GetStoredQuery = struct
     let input = Json_serializers.get_stored_query_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.GetStoredQuery" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_stored_query_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_stored_query_request) =
+    let input = Json_serializers.get_stored_query_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.GetStoredQuery" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_stored_query_response_of_yojson
       ~error_deserializer
 end
 
@@ -2071,6 +2604,13 @@ module ListAggregateDiscoveredResources = struct
       ~shape_name:"StarlingDoveService.ListAggregateDiscoveredResources" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_aggregate_discovered_resources_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_aggregate_discovered_resources_request) =
+    let input = Json_serializers.list_aggregate_discovered_resources_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.ListAggregateDiscoveredResources" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_aggregate_discovered_resources_response_of_yojson
+      ~error_deserializer
 end
 
 module ListConfigurationRecorders = struct
@@ -2091,6 +2631,13 @@ module ListConfigurationRecorders = struct
     let input = Json_serializers.list_configuration_recorders_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.ListConfigurationRecorders"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_configuration_recorders_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_configuration_recorders_request) =
+    let input = Json_serializers.list_configuration_recorders_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.ListConfigurationRecorders" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_configuration_recorders_response_of_yojson
       ~error_deserializer
 end
@@ -2123,6 +2670,16 @@ module ListConformancePackComplianceScores = struct
       Json_serializers.list_conformance_pack_compliance_scores_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.ListConformancePackComplianceScores" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.list_conformance_pack_compliance_scores_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_conformance_pack_compliance_scores_request) =
+    let input =
+      Json_serializers.list_conformance_pack_compliance_scores_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.ListConformancePackComplianceScores" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.list_conformance_pack_compliance_scores_response_of_yojson
@@ -2161,6 +2718,13 @@ module ListDiscoveredResources = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_discovered_resources_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_discovered_resources_request) =
+    let input = Json_serializers.list_discovered_resources_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.ListDiscoveredResources" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_discovered_resources_response_of_yojson
+      ~error_deserializer
 end
 
 module ListResourceEvaluations = struct
@@ -2193,6 +2757,13 @@ module ListResourceEvaluations = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_resource_evaluations_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_resource_evaluations_request) =
+    let input = Json_serializers.list_resource_evaluations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.ListResourceEvaluations" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_resource_evaluations_response_of_yojson
+      ~error_deserializer
 end
 
 module ListStoredQueries = struct
@@ -2217,6 +2788,13 @@ module ListStoredQueries = struct
     let input = Json_serializers.list_stored_queries_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.ListStoredQueries" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_stored_queries_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_stored_queries_request) =
+    let input = Json_serializers.list_stored_queries_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.ListStoredQueries" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_stored_queries_response_of_yojson
       ~error_deserializer
 end
 
@@ -2251,6 +2829,13 @@ module ListTagsForResource = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_resource_request) =
+    let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.ListTagsForResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module PutAggregationAuthorization = struct
@@ -2272,6 +2857,13 @@ module PutAggregationAuthorization = struct
   let request context (request : put_aggregation_authorization_request) =
     let input = Json_serializers.put_aggregation_authorization_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.PutAggregationAuthorization" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_aggregation_authorization_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_aggregation_authorization_request) =
+    let input = Json_serializers.put_aggregation_authorization_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.PutAggregationAuthorization" ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_aggregation_authorization_response_of_yojson
       ~error_deserializer
@@ -2316,6 +2908,13 @@ module PutConfigRule = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutConfigRule" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_config_rule_request) =
+    let input = Json_serializers.put_config_rule_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.PutConfigRule" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module PutConfigurationAggregator = struct
@@ -2359,6 +2958,13 @@ module PutConfigurationAggregator = struct
     let input = Json_serializers.put_configuration_aggregator_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutConfigurationAggregator"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_configuration_aggregator_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_configuration_aggregator_request) =
+    let input = Json_serializers.put_configuration_aggregator_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.PutConfigurationAggregator" ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_configuration_aggregator_response_of_yojson
       ~error_deserializer
 end
@@ -2406,6 +3012,13 @@ module PutConfigurationRecorder = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_configuration_recorder_request) =
+    let input = Json_serializers.put_configuration_recorder_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.PutConfigurationRecorder" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module PutConformancePack = struct
@@ -2447,6 +3060,13 @@ module PutConformancePack = struct
     let input = Json_serializers.put_conformance_pack_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutConformancePack"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_conformance_pack_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_conformance_pack_request) =
+    let input = Json_serializers.put_conformance_pack_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.PutConformancePack" ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_conformance_pack_response_of_yojson
       ~error_deserializer
 end
@@ -2504,6 +3124,13 @@ module PutDeliveryChannel = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_delivery_channel_request) =
+    let input = Json_serializers.put_delivery_channel_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.PutDeliveryChannel" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module PutEvaluations = struct
@@ -2535,6 +3162,12 @@ module PutEvaluations = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutEvaluations" ~service
       ~context ~input ~output_deserializer:Json_deserializers.put_evaluations_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_evaluations_request) =
+    let input = Json_serializers.put_evaluations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.PutEvaluations" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_evaluations_response_of_yojson ~error_deserializer
 end
 
 module PutExternalEvaluation = struct
@@ -2561,6 +3194,13 @@ module PutExternalEvaluation = struct
     let input = Json_serializers.put_external_evaluation_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutExternalEvaluation"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_external_evaluation_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_external_evaluation_request) =
+    let input = Json_serializers.put_external_evaluation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.PutExternalEvaluation" ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_external_evaluation_response_of_yojson
       ~error_deserializer
 end
@@ -2617,6 +3257,13 @@ module PutOrganizationConfigRule = struct
     let input = Json_serializers.put_organization_config_rule_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutOrganizationConfigRule"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_organization_config_rule_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_organization_config_rule_request) =
+    let input = Json_serializers.put_organization_config_rule_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.PutOrganizationConfigRule" ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_organization_config_rule_response_of_yojson
       ~error_deserializer
 end
@@ -2676,6 +3323,13 @@ module PutOrganizationConformancePack = struct
       ~shape_name:"StarlingDoveService.PutOrganizationConformancePack" ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_organization_conformance_pack_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_organization_conformance_pack_request) =
+    let input = Json_serializers.put_organization_conformance_pack_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.PutOrganizationConformancePack" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_organization_conformance_pack_response_of_yojson
+      ~error_deserializer
 end
 
 module PutRemediationConfigurations = struct
@@ -2702,6 +3356,13 @@ module PutRemediationConfigurations = struct
   let request context (request : put_remediation_configurations_request) =
     let input = Json_serializers.put_remediation_configurations_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"StarlingDoveService.PutRemediationConfigurations" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_remediation_configurations_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_remediation_configurations_request) =
+    let input = Json_serializers.put_remediation_configurations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"StarlingDoveService.PutRemediationConfigurations" ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_remediation_configurations_response_of_yojson
       ~error_deserializer
@@ -2732,6 +3393,13 @@ module PutRemediationExceptions = struct
     let input = Json_serializers.put_remediation_exceptions_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutRemediationExceptions"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_remediation_exceptions_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_remediation_exceptions_request) =
+    let input = Json_serializers.put_remediation_exceptions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.PutRemediationExceptions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_remediation_exceptions_response_of_yojson
       ~error_deserializer
 end
@@ -2770,6 +3438,13 @@ module PutResourceConfig = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutResourceConfig" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_resource_config_request) =
+    let input = Json_serializers.put_resource_config_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.PutResourceConfig" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module PutRetentionConfiguration = struct
@@ -2798,6 +3473,13 @@ module PutRetentionConfiguration = struct
     let input = Json_serializers.put_retention_configuration_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutRetentionConfiguration"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_retention_configuration_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_retention_configuration_request) =
+    let input = Json_serializers.put_retention_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.PutRetentionConfiguration" ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_retention_configuration_response_of_yojson
       ~error_deserializer
 end
@@ -2837,6 +3519,17 @@ module PutServiceLinkedConfigurationRecorder = struct
       ~output_deserializer:
         Json_deserializers.put_service_linked_configuration_recorder_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_service_linked_configuration_recorder_request) =
+    let input =
+      Json_serializers.put_service_linked_configuration_recorder_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.PutServiceLinkedConfigurationRecorder" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.put_service_linked_configuration_recorder_response_of_yojson
+      ~error_deserializer
 end
 
 module PutStoredQuery = struct
@@ -2865,6 +3558,13 @@ module PutStoredQuery = struct
     let input = Json_serializers.put_stored_query_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.PutStoredQuery" ~service
       ~context ~input ~output_deserializer:Json_deserializers.put_stored_query_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_stored_query_request) =
+    let input = Json_serializers.put_stored_query_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.PutStoredQuery" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_stored_query_response_of_yojson
       ~error_deserializer
 end
 
@@ -2901,6 +3601,13 @@ module SelectAggregateResourceConfig = struct
       ~shape_name:"StarlingDoveService.SelectAggregateResourceConfig" ~service ~context ~input
       ~output_deserializer:Json_deserializers.select_aggregate_resource_config_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : select_aggregate_resource_config_request) =
+    let input = Json_serializers.select_aggregate_resource_config_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.SelectAggregateResourceConfig" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.select_aggregate_resource_config_response_of_yojson
+      ~error_deserializer
 end
 
 module SelectResourceConfig = struct
@@ -2929,6 +3636,13 @@ module SelectResourceConfig = struct
     let input = Json_serializers.select_resource_config_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.SelectResourceConfig"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.select_resource_config_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : select_resource_config_request) =
+    let input = Json_serializers.select_resource_config_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.SelectResourceConfig" ~service ~context ~input
       ~output_deserializer:Json_deserializers.select_resource_config_response_of_yojson
       ~error_deserializer
 end
@@ -2965,6 +3679,13 @@ module StartConfigRulesEvaluation = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_config_rules_evaluation_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_config_rules_evaluation_request) =
+    let input = Json_serializers.start_config_rules_evaluation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.StartConfigRulesEvaluation" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_config_rules_evaluation_response_of_yojson
+      ~error_deserializer
 end
 
 module StartConfigurationRecorder = struct
@@ -2996,6 +3717,13 @@ module StartConfigurationRecorder = struct
     let input = Json_serializers.start_configuration_recorder_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.StartConfigurationRecorder"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : start_configuration_recorder_request) =
+    let input = Json_serializers.start_configuration_recorder_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.StartConfigurationRecorder" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -3032,6 +3760,13 @@ module StartRemediationExecution = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_remediation_execution_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_remediation_execution_request) =
+    let input = Json_serializers.start_remediation_execution_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.StartRemediationExecution" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_remediation_execution_response_of_yojson
+      ~error_deserializer
 end
 
 module StartResourceEvaluation = struct
@@ -3058,6 +3793,13 @@ module StartResourceEvaluation = struct
     let input = Json_serializers.start_resource_evaluation_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.StartResourceEvaluation"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_resource_evaluation_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : start_resource_evaluation_request) =
+    let input = Json_serializers.start_resource_evaluation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.StartResourceEvaluation" ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_resource_evaluation_response_of_yojson
       ~error_deserializer
 end
@@ -3088,6 +3830,13 @@ module StopConfigurationRecorder = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : stop_configuration_recorder_request) =
+    let input = Json_serializers.stop_configuration_recorder_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.StopConfigurationRecorder" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module TagResource = struct
@@ -3116,6 +3865,13 @@ module TagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.TagResource" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_request) =
+    let input = Json_serializers.tag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"StarlingDoveService.TagResource"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module UntagResource = struct
@@ -3140,5 +3896,12 @@ module UntagResource = struct
     let input = Json_serializers.untag_resource_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"StarlingDoveService.UntagResource" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_request) =
+    let input = Json_serializers.untag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"StarlingDoveService.UntagResource" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end

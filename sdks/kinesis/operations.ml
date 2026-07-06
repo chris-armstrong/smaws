@@ -34,6 +34,13 @@ module AddTagsToStream = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.AddTagsToStream" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_to_stream_input) =
+    let input = Json_serializers.add_tags_to_stream_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"Kinesis_20131202.AddTagsToStream"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module CreateStream = struct
@@ -64,6 +71,13 @@ module CreateStream = struct
     let input = Json_serializers.create_stream_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.CreateStream" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_stream_input) =
+    let input = Json_serializers.create_stream_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"Kinesis_20131202.CreateStream"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -101,6 +115,13 @@ module DecreaseStreamRetentionPeriod = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : decrease_stream_retention_period_input) =
+    let input = Json_serializers.decrease_stream_retention_period_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.DecreaseStreamRetentionPeriod" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeleteResourcePolicy = struct
@@ -135,6 +156,13 @@ module DeleteResourcePolicy = struct
     let input = Json_serializers.delete_resource_policy_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.DeleteResourcePolicy" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_resource_policy_input) =
+    let input = Json_serializers.delete_resource_policy_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.DeleteResourcePolicy" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -171,6 +199,13 @@ module DeleteStream = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.DeleteStream" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_stream_input) =
+    let input = Json_serializers.delete_stream_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"Kinesis_20131202.DeleteStream"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeregisterStreamConsumer = struct
@@ -201,6 +236,13 @@ module DeregisterStreamConsumer = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : deregister_stream_consumer_input) =
+    let input = Json_serializers.deregister_stream_consumer_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.DeregisterStreamConsumer" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DescribeAccountSettings = struct
@@ -221,6 +263,13 @@ module DescribeAccountSettings = struct
     let input = Json_serializers.describe_account_settings_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.DescribeAccountSettings"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_account_settings_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_account_settings_input) =
+    let input = Json_serializers.describe_account_settings_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.DescribeAccountSettings" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_account_settings_output_of_yojson
       ~error_deserializer
 end
@@ -244,6 +293,12 @@ module DescribeLimits = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.DescribeLimits" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_limits_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_limits_input) =
+    let input = Json_serializers.describe_limits_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"Kinesis_20131202.DescribeLimits"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_limits_output_of_yojson ~error_deserializer
 end
 
 module DescribeStream = struct
@@ -276,6 +331,12 @@ module DescribeStream = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.DescribeStream" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_stream_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_stream_input) =
+    let input = Json_serializers.describe_stream_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"Kinesis_20131202.DescribeStream"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_stream_output_of_yojson ~error_deserializer
 end
 
 module DescribeStreamConsumer = struct
@@ -304,6 +365,13 @@ module DescribeStreamConsumer = struct
     let input = Json_serializers.describe_stream_consumer_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.DescribeStreamConsumer"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_stream_consumer_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_stream_consumer_input) =
+    let input = Json_serializers.describe_stream_consumer_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.DescribeStreamConsumer" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_stream_consumer_output_of_yojson
       ~error_deserializer
 end
@@ -337,6 +405,13 @@ module DescribeStreamSummary = struct
     let input = Json_serializers.describe_stream_summary_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.DescribeStreamSummary"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_stream_summary_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_stream_summary_input) =
+    let input = Json_serializers.describe_stream_summary_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.DescribeStreamSummary" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_stream_summary_output_of_yojson
       ~error_deserializer
 end
@@ -375,6 +450,13 @@ module DisableEnhancedMonitoring = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.enhanced_monitoring_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : disable_enhanced_monitoring_input) =
+    let input = Json_serializers.disable_enhanced_monitoring_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.DisableEnhancedMonitoring" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.enhanced_monitoring_output_of_yojson
+      ~error_deserializer
 end
 
 module EnableEnhancedMonitoring = struct
@@ -409,6 +491,13 @@ module EnableEnhancedMonitoring = struct
     let input = Json_serializers.enable_enhanced_monitoring_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.EnableEnhancedMonitoring"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.enhanced_monitoring_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : enable_enhanced_monitoring_input) =
+    let input = Json_serializers.enable_enhanced_monitoring_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.EnableEnhancedMonitoring" ~service ~context ~input
       ~output_deserializer:Json_deserializers.enhanced_monitoring_output_of_yojson
       ~error_deserializer
 end
@@ -473,6 +562,12 @@ module GetRecords = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.GetRecords" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_records_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_records_input) =
+    let input = Json_serializers.get_records_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"Kinesis_20131202.GetRecords"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.get_records_output_of_yojson
+      ~error_deserializer
 end
 
 module GetResourcePolicy = struct
@@ -507,6 +602,13 @@ module GetResourcePolicy = struct
     let input = Json_serializers.get_resource_policy_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.GetResourcePolicy" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_resource_policy_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_resource_policy_input) =
+    let input = Json_serializers.get_resource_policy_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.GetResourcePolicy" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_resource_policy_output_of_yojson
       ~error_deserializer
 end
 
@@ -546,6 +648,13 @@ module GetShardIterator = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.GetShardIterator" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_shard_iterator_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_shard_iterator_input) =
+    let input = Json_serializers.get_shard_iterator_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.GetShardIterator" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_shard_iterator_output_of_yojson
+      ~error_deserializer
 end
 
 module IncreaseStreamRetentionPeriod = struct
@@ -580,6 +689,13 @@ module IncreaseStreamRetentionPeriod = struct
     let input = Json_serializers.increase_stream_retention_period_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.IncreaseStreamRetentionPeriod"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : increase_stream_retention_period_input) =
+    let input = Json_serializers.increase_stream_retention_period_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.IncreaseStreamRetentionPeriod" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -621,6 +737,12 @@ module ListShards = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.ListShards" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_shards_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_shards_input) =
+    let input = Json_serializers.list_shards_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"Kinesis_20131202.ListShards"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.list_shards_output_of_yojson
+      ~error_deserializer
 end
 
 module ListStreamConsumers = struct
@@ -657,6 +779,13 @@ module ListStreamConsumers = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.ListStreamConsumers" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_stream_consumers_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_stream_consumers_input) =
+    let input = Json_serializers.list_stream_consumers_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.ListStreamConsumers" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_stream_consumers_output_of_yojson
+      ~error_deserializer
 end
 
 module ListStreams = struct
@@ -685,6 +814,12 @@ module ListStreams = struct
     let input = Json_serializers.list_streams_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.ListStreams" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_streams_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_streams_input) =
+    let input = Json_serializers.list_streams_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"Kinesis_20131202.ListStreams"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.list_streams_output_of_yojson
       ~error_deserializer
 end
 
@@ -722,6 +857,13 @@ module ListTagsForResource = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_resource_input) =
+    let input = Json_serializers.list_tags_for_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.ListTagsForResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_output_of_yojson
+      ~error_deserializer
 end
 
 module ListTagsForStream = struct
@@ -753,6 +895,13 @@ module ListTagsForStream = struct
     let input = Json_serializers.list_tags_for_stream_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.ListTagsForStream" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_tags_for_stream_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_stream_input) =
+    let input = Json_serializers.list_tags_for_stream_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.ListTagsForStream" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_stream_output_of_yojson
       ~error_deserializer
 end
 
@@ -791,6 +940,13 @@ module MergeShards = struct
     let input = Json_serializers.merge_shards_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.MergeShards" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : merge_shards_input) =
+    let input = Json_serializers.merge_shards_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"Kinesis_20131202.MergeShards"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -849,6 +1005,12 @@ module PutRecord = struct
     let input = Json_serializers.put_record_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.PutRecord" ~service ~context
       ~input ~output_deserializer:Json_deserializers.put_record_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : put_record_input) =
+    let input = Json_serializers.put_record_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"Kinesis_20131202.PutRecord"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.put_record_output_of_yojson
+      ~error_deserializer
 end
 
 module PutRecords = struct
@@ -907,6 +1069,12 @@ module PutRecords = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.PutRecords" ~service ~context
       ~input ~output_deserializer:Json_deserializers.put_records_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_records_input) =
+    let input = Json_serializers.put_records_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"Kinesis_20131202.PutRecords"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.put_records_output_of_yojson
+      ~error_deserializer
 end
 
 module PutResourcePolicy = struct
@@ -942,6 +1110,13 @@ module PutResourcePolicy = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.PutResourcePolicy" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_resource_policy_input) =
+    let input = Json_serializers.put_resource_policy_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.PutResourcePolicy" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module RegisterStreamConsumer = struct
@@ -973,6 +1148,13 @@ module RegisterStreamConsumer = struct
     let input = Json_serializers.register_stream_consumer_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.RegisterStreamConsumer"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.register_stream_consumer_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : register_stream_consumer_input) =
+    let input = Json_serializers.register_stream_consumer_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.RegisterStreamConsumer" ~service ~context ~input
       ~output_deserializer:Json_deserializers.register_stream_consumer_output_of_yojson
       ~error_deserializer
 end
@@ -1009,6 +1191,13 @@ module RemoveTagsFromStream = struct
     let input = Json_serializers.remove_tags_from_stream_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.RemoveTagsFromStream" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : remove_tags_from_stream_input) =
+    let input = Json_serializers.remove_tags_from_stream_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.RemoveTagsFromStream" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -1047,6 +1236,13 @@ module SplitShard = struct
     let input = Json_serializers.split_shard_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.SplitShard" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : split_shard_input) =
+    let input = Json_serializers.split_shard_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"Kinesis_20131202.SplitShard"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -1104,6 +1300,13 @@ module StartStreamEncryption = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_stream_encryption_input) =
+    let input = Json_serializers.start_stream_encryption_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.StartStreamEncryption" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module StopStreamEncryption = struct
@@ -1138,6 +1341,13 @@ module StopStreamEncryption = struct
     let input = Json_serializers.stop_stream_encryption_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.StopStreamEncryption" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : stop_stream_encryption_input) =
+    let input = Json_serializers.stop_stream_encryption_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.StopStreamEncryption" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -1174,6 +1384,13 @@ module SubscribeToShard = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.SubscribeToShard" ~service
       ~context ~input ~output_deserializer:Json_deserializers.subscribe_to_shard_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : subscribe_to_shard_input) =
+    let input = Json_serializers.subscribe_to_shard_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.SubscribeToShard" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.subscribe_to_shard_output_of_yojson
+      ~error_deserializer
 end
 
 module TagResource = struct
@@ -1208,6 +1425,13 @@ module TagResource = struct
     let input = Json_serializers.tag_resource_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.TagResource" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_input) =
+    let input = Json_serializers.tag_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"Kinesis_20131202.TagResource"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -1244,6 +1468,13 @@ module UntagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.UntagResource" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_input) =
+    let input = Json_serializers.untag_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"Kinesis_20131202.UntagResource"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module UpdateAccountSettings = struct
@@ -1271,6 +1502,13 @@ module UpdateAccountSettings = struct
     let input = Json_serializers.update_account_settings_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.UpdateAccountSettings"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_account_settings_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_account_settings_input) =
+    let input = Json_serializers.update_account_settings_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.UpdateAccountSettings" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_account_settings_output_of_yojson
       ~error_deserializer
 end
@@ -1311,6 +1549,13 @@ module UpdateMaxRecordSize = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.UpdateMaxRecordSize" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_max_record_size_input) =
+    let input = Json_serializers.update_max_record_size_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.UpdateMaxRecordSize" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module UpdateShardCount = struct
@@ -1349,6 +1594,13 @@ module UpdateShardCount = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.UpdateShardCount" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_shard_count_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_shard_count_input) =
+    let input = Json_serializers.update_shard_count_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.UpdateShardCount" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_shard_count_output_of_yojson
+      ~error_deserializer
 end
 
 module UpdateStreamMode = struct
@@ -1383,6 +1635,13 @@ module UpdateStreamMode = struct
     let input = Json_serializers.update_stream_mode_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.UpdateStreamMode" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_stream_mode_input) =
+    let input = Json_serializers.update_stream_mode_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.UpdateStreamMode" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -1421,6 +1680,13 @@ module UpdateStreamWarmThroughput = struct
     let input = Json_serializers.update_stream_warm_throughput_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Kinesis_20131202.UpdateStreamWarmThroughput"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_stream_warm_throughput_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_stream_warm_throughput_input) =
+    let input = Json_serializers.update_stream_warm_throughput_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Kinesis_20131202.UpdateStreamWarmThroughput" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_stream_warm_throughput_output_of_yojson
       ~error_deserializer
 end

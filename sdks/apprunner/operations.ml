@@ -29,6 +29,13 @@ module AssociateCustomDomain = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.associate_custom_domain_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : associate_custom_domain_request) =
+    let input = Json_serializers.associate_custom_domain_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.AssociateCustomDomain"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.associate_custom_domain_response_of_yojson
+      ~error_deserializer
 end
 
 module CreateAutoScalingConfiguration = struct
@@ -58,6 +65,13 @@ module CreateAutoScalingConfiguration = struct
     let input = Json_serializers.create_auto_scaling_configuration_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.CreateAutoScalingConfiguration"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_auto_scaling_configuration_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_auto_scaling_configuration_request) =
+    let input = Json_serializers.create_auto_scaling_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AppRunner.CreateAutoScalingConfiguration" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_auto_scaling_configuration_response_of_yojson
       ~error_deserializer
 end
@@ -90,6 +104,13 @@ module CreateConnection = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.CreateConnection" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_connection_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_connection_request) =
+    let input = Json_serializers.create_connection_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.CreateConnection"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_connection_response_of_yojson
+      ~error_deserializer
 end
 
 module CreateObservabilityConfiguration = struct
@@ -119,6 +140,13 @@ module CreateObservabilityConfiguration = struct
     let input = Json_serializers.create_observability_configuration_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.CreateObservabilityConfiguration"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_observability_configuration_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_observability_configuration_request) =
+    let input = Json_serializers.create_observability_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AppRunner.CreateObservabilityConfiguration" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_observability_configuration_response_of_yojson
       ~error_deserializer
 end
@@ -151,6 +179,12 @@ module CreateService = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.CreateService" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_service_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_service_request) =
+    let input = Json_serializers.create_service_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.CreateService" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.create_service_response_of_yojson
+      ~error_deserializer
 end
 
 module CreateVpcConnector = struct
@@ -180,6 +214,13 @@ module CreateVpcConnector = struct
     let input = Json_serializers.create_vpc_connector_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.CreateVpcConnector" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_vpc_connector_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_vpc_connector_request) =
+    let input = Json_serializers.create_vpc_connector_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.CreateVpcConnector"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_vpc_connector_response_of_yojson
       ~error_deserializer
 end
 
@@ -215,6 +256,13 @@ module CreateVpcIngressConnection = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.create_vpc_ingress_connection_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_vpc_ingress_connection_request) =
+    let input = Json_serializers.create_vpc_ingress_connection_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AppRunner.CreateVpcIngressConnection" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_vpc_ingress_connection_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteAutoScalingConfiguration = struct
@@ -244,6 +292,13 @@ module DeleteAutoScalingConfiguration = struct
     let input = Json_serializers.delete_auto_scaling_configuration_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.DeleteAutoScalingConfiguration"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_auto_scaling_configuration_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_auto_scaling_configuration_request) =
+    let input = Json_serializers.delete_auto_scaling_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AppRunner.DeleteAutoScalingConfiguration" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_auto_scaling_configuration_response_of_yojson
       ~error_deserializer
 end
@@ -276,6 +331,13 @@ module DeleteConnection = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.DeleteConnection" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_connection_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_connection_request) =
+    let input = Json_serializers.delete_connection_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.DeleteConnection"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_connection_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteObservabilityConfiguration = struct
@@ -305,6 +367,13 @@ module DeleteObservabilityConfiguration = struct
     let input = Json_serializers.delete_observability_configuration_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.DeleteObservabilityConfiguration"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_observability_configuration_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_observability_configuration_request) =
+    let input = Json_serializers.delete_observability_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AppRunner.DeleteObservabilityConfiguration" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_observability_configuration_response_of_yojson
       ~error_deserializer
 end
@@ -340,6 +409,12 @@ module DeleteService = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.DeleteService" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_service_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_service_request) =
+    let input = Json_serializers.delete_service_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.DeleteService" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.delete_service_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteVpcConnector = struct
@@ -369,6 +444,13 @@ module DeleteVpcConnector = struct
     let input = Json_serializers.delete_vpc_connector_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.DeleteVpcConnector" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_vpc_connector_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_vpc_connector_request) =
+    let input = Json_serializers.delete_vpc_connector_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.DeleteVpcConnector"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_vpc_connector_response_of_yojson
       ~error_deserializer
 end
 
@@ -404,6 +486,13 @@ module DeleteVpcIngressConnection = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.delete_vpc_ingress_connection_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_vpc_ingress_connection_request) =
+    let input = Json_serializers.delete_vpc_ingress_connection_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AppRunner.DeleteVpcIngressConnection" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_vpc_ingress_connection_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeAutoScalingConfiguration = struct
@@ -435,6 +524,13 @@ module DescribeAutoScalingConfiguration = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_auto_scaling_configuration_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_auto_scaling_configuration_request) =
+    let input = Json_serializers.describe_auto_scaling_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AppRunner.DescribeAutoScalingConfiguration" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_auto_scaling_configuration_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeCustomDomains = struct
@@ -464,6 +560,13 @@ module DescribeCustomDomains = struct
     let input = Json_serializers.describe_custom_domains_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.DescribeCustomDomains" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.describe_custom_domains_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_custom_domains_request) =
+    let input = Json_serializers.describe_custom_domains_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.DescribeCustomDomains"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_custom_domains_response_of_yojson
       ~error_deserializer
 end
@@ -498,6 +601,14 @@ module DescribeObservabilityConfiguration = struct
       ~output_deserializer:
         Json_deserializers.describe_observability_configuration_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_observability_configuration_request) =
+    let input = Json_serializers.describe_observability_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AppRunner.DescribeObservabilityConfiguration" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_observability_configuration_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeService = struct
@@ -527,6 +638,13 @@ module DescribeService = struct
     let input = Json_serializers.describe_service_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.DescribeService" ~service ~context
       ~input ~output_deserializer:Json_deserializers.describe_service_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_service_request) =
+    let input = Json_serializers.describe_service_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.DescribeService"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_service_response_of_yojson
       ~error_deserializer
 end
 
@@ -559,6 +677,13 @@ module DescribeVpcConnector = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.describe_vpc_connector_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_vpc_connector_request) =
+    let input = Json_serializers.describe_vpc_connector_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.DescribeVpcConnector"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_vpc_connector_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeVpcIngressConnection = struct
@@ -588,6 +713,13 @@ module DescribeVpcIngressConnection = struct
     let input = Json_serializers.describe_vpc_ingress_connection_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.DescribeVpcIngressConnection"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_vpc_ingress_connection_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_vpc_ingress_connection_request) =
+    let input = Json_serializers.describe_vpc_ingress_connection_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AppRunner.DescribeVpcIngressConnection" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_vpc_ingress_connection_response_of_yojson
       ~error_deserializer
 end
@@ -624,6 +756,13 @@ module DisassociateCustomDomain = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.disassociate_custom_domain_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : disassociate_custom_domain_request) =
+    let input = Json_serializers.disassociate_custom_domain_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AppRunner.DisassociateCustomDomain" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.disassociate_custom_domain_response_of_yojson
+      ~error_deserializer
 end
 
 module ListAutoScalingConfigurations = struct
@@ -649,6 +788,13 @@ module ListAutoScalingConfigurations = struct
     let input = Json_serializers.list_auto_scaling_configurations_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.ListAutoScalingConfigurations"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_auto_scaling_configurations_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_auto_scaling_configurations_request) =
+    let input = Json_serializers.list_auto_scaling_configurations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AppRunner.ListAutoScalingConfigurations" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_auto_scaling_configurations_response_of_yojson
       ~error_deserializer
 end
@@ -677,6 +823,13 @@ module ListConnections = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.ListConnections" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_connections_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_connections_request) =
+    let input = Json_serializers.list_connections_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.ListConnections"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_connections_response_of_yojson
+      ~error_deserializer
 end
 
 module ListObservabilityConfigurations = struct
@@ -702,6 +855,13 @@ module ListObservabilityConfigurations = struct
     let input = Json_serializers.list_observability_configurations_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.ListObservabilityConfigurations"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_observability_configurations_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_observability_configurations_request) =
+    let input = Json_serializers.list_observability_configurations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AppRunner.ListObservabilityConfigurations" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_observability_configurations_response_of_yojson
       ~error_deserializer
 end
@@ -734,6 +894,12 @@ module ListOperations = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.ListOperations" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_operations_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_operations_request) =
+    let input = Json_serializers.list_operations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.ListOperations"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_operations_response_of_yojson ~error_deserializer
 end
 
 module ListServices = struct
@@ -759,6 +925,12 @@ module ListServices = struct
     let input = Json_serializers.list_services_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.ListServices" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_services_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_services_request) =
+    let input = Json_serializers.list_services_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.ListServices" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_services_response_of_yojson
       ~error_deserializer
 end
 
@@ -790,6 +962,17 @@ module ListServicesForAutoScalingConfiguration = struct
       Json_serializers.list_services_for_auto_scaling_configuration_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AppRunner.ListServicesForAutoScalingConfiguration" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.list_services_for_auto_scaling_configuration_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_services_for_auto_scaling_configuration_request)
+      =
+    let input =
+      Json_serializers.list_services_for_auto_scaling_configuration_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AppRunner.ListServicesForAutoScalingConfiguration" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.list_services_for_auto_scaling_configuration_response_of_yojson
@@ -828,6 +1011,13 @@ module ListTagsForResource = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_resource_request) =
+    let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.ListTagsForResource"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module ListVpcConnectors = struct
@@ -854,6 +1044,13 @@ module ListVpcConnectors = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.ListVpcConnectors" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_vpc_connectors_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_vpc_connectors_request) =
+    let input = Json_serializers.list_vpc_connectors_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.ListVpcConnectors"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_vpc_connectors_response_of_yojson
+      ~error_deserializer
 end
 
 module ListVpcIngressConnections = struct
@@ -879,6 +1076,13 @@ module ListVpcIngressConnections = struct
     let input = Json_serializers.list_vpc_ingress_connections_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.ListVpcIngressConnections" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.list_vpc_ingress_connections_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_vpc_ingress_connections_request) =
+    let input = Json_serializers.list_vpc_ingress_connections_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AppRunner.ListVpcIngressConnections" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_vpc_ingress_connections_response_of_yojson
       ~error_deserializer
 end
@@ -914,6 +1118,12 @@ module PauseService = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.PauseService" ~service ~context
       ~input ~output_deserializer:Json_deserializers.pause_service_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : pause_service_request) =
+    let input = Json_serializers.pause_service_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.PauseService" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.pause_service_response_of_yojson
+      ~error_deserializer
 end
 
 module ResumeService = struct
@@ -947,6 +1157,12 @@ module ResumeService = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.ResumeService" ~service ~context
       ~input ~output_deserializer:Json_deserializers.resume_service_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : resume_service_request) =
+    let input = Json_serializers.resume_service_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.ResumeService" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.resume_service_response_of_yojson
+      ~error_deserializer
 end
 
 module StartDeployment = struct
@@ -976,6 +1192,13 @@ module StartDeployment = struct
     let input = Json_serializers.start_deployment_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.StartDeployment" ~service ~context
       ~input ~output_deserializer:Json_deserializers.start_deployment_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : start_deployment_request) =
+    let input = Json_serializers.start_deployment_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.StartDeployment"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_deployment_response_of_yojson
       ~error_deserializer
 end
 
@@ -1009,6 +1232,12 @@ module TagResource = struct
     let input = Json_serializers.tag_resource_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.TagResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_request) =
+    let input = Json_serializers.tag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.TagResource" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module UntagResource = struct
@@ -1042,6 +1271,12 @@ module UntagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.UntagResource" ~service ~context
       ~input ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_request) =
+    let input = Json_serializers.untag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.UntagResource" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module UpdateDefaultAutoScalingConfiguration = struct
@@ -1072,6 +1307,16 @@ module UpdateDefaultAutoScalingConfiguration = struct
       Json_serializers.update_default_auto_scaling_configuration_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AppRunner.UpdateDefaultAutoScalingConfiguration" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.update_default_auto_scaling_configuration_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_default_auto_scaling_configuration_request) =
+    let input =
+      Json_serializers.update_default_auto_scaling_configuration_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AppRunner.UpdateDefaultAutoScalingConfiguration" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.update_default_auto_scaling_configuration_response_of_yojson
@@ -1109,6 +1354,12 @@ module UpdateService = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.UpdateService" ~service ~context
       ~input ~output_deserializer:Json_deserializers.update_service_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_service_request) =
+    let input = Json_serializers.update_service_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AppRunner.UpdateService" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.update_service_response_of_yojson
+      ~error_deserializer
 end
 
 module UpdateVpcIngressConnection = struct
@@ -1141,6 +1392,13 @@ module UpdateVpcIngressConnection = struct
     let input = Json_serializers.update_vpc_ingress_connection_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AppRunner.UpdateVpcIngressConnection" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.update_vpc_ingress_connection_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_vpc_ingress_connection_request) =
+    let input = Json_serializers.update_vpc_ingress_connection_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AppRunner.UpdateVpcIngressConnection" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_vpc_ingress_connection_response_of_yojson
       ~error_deserializer
 end

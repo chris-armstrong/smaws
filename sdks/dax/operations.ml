@@ -79,6 +79,12 @@ module CreateCluster = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.CreateCluster" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_cluster_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_cluster_request) =
+    let input = Json_serializers.create_cluster_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.CreateCluster"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_cluster_response_of_yojson ~error_deserializer
 end
 
 module CreateParameterGroup = struct
@@ -123,6 +129,13 @@ module CreateParameterGroup = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.create_parameter_group_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_parameter_group_request) =
+    let input = Json_serializers.create_parameter_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.CreateParameterGroup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_parameter_group_response_of_yojson
+      ~error_deserializer
 end
 
 module CreateSubnetGroup = struct
@@ -161,6 +174,13 @@ module CreateSubnetGroup = struct
     let input = Json_serializers.create_subnet_group_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.CreateSubnetGroup" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_subnet_group_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_subnet_group_request) =
+    let input = Json_serializers.create_subnet_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.CreateSubnetGroup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_subnet_group_response_of_yojson
       ~error_deserializer
 end
 
@@ -204,6 +224,13 @@ module DecreaseReplicationFactor = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.decrease_replication_factor_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : decrease_replication_factor_request) =
+    let input = Json_serializers.decrease_replication_factor_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonDAXV3.DecreaseReplicationFactor" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.decrease_replication_factor_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteCluster = struct
@@ -242,6 +269,12 @@ module DeleteCluster = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.DeleteCluster" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_cluster_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_cluster_request) =
+    let input = Json_serializers.delete_cluster_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.DeleteCluster"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_cluster_response_of_yojson ~error_deserializer
 end
 
 module DeleteParameterGroup = struct
@@ -282,6 +315,13 @@ module DeleteParameterGroup = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.delete_parameter_group_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_parameter_group_request) =
+    let input = Json_serializers.delete_parameter_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.DeleteParameterGroup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_parameter_group_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteSubnetGroup = struct
@@ -310,6 +350,13 @@ module DeleteSubnetGroup = struct
     let input = Json_serializers.delete_subnet_group_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.DeleteSubnetGroup" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_subnet_group_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_subnet_group_request) =
+    let input = Json_serializers.delete_subnet_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.DeleteSubnetGroup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_subnet_group_response_of_yojson
       ~error_deserializer
 end
 
@@ -345,6 +392,13 @@ module DescribeClusters = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.DescribeClusters" ~service ~context
       ~input ~output_deserializer:Json_deserializers.describe_clusters_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_clusters_request) =
+    let input = Json_serializers.describe_clusters_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.DescribeClusters"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_clusters_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeDefaultParameters = struct
@@ -375,6 +429,13 @@ module DescribeDefaultParameters = struct
     let input = Json_serializers.describe_default_parameters_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.DescribeDefaultParameters" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.describe_default_parameters_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_default_parameters_request) =
+    let input = Json_serializers.describe_default_parameters_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonDAXV3.DescribeDefaultParameters" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_default_parameters_response_of_yojson
       ~error_deserializer
 end
@@ -408,6 +469,12 @@ module DescribeEvents = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.DescribeEvents" ~service ~context
       ~input ~output_deserializer:Json_deserializers.describe_events_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_events_request) =
+    let input = Json_serializers.describe_events_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.DescribeEvents"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_events_response_of_yojson ~error_deserializer
 end
 
 module DescribeParameterGroups = struct
@@ -442,6 +509,13 @@ module DescribeParameterGroups = struct
     let input = Json_serializers.describe_parameter_groups_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.DescribeParameterGroups" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.describe_parameter_groups_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_parameter_groups_request) =
+    let input = Json_serializers.describe_parameter_groups_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonDAXV3.DescribeParameterGroups" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_parameter_groups_response_of_yojson
       ~error_deserializer
 end
@@ -479,6 +553,13 @@ module DescribeParameters = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.DescribeParameters" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_parameters_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_parameters_request) =
+    let input = Json_serializers.describe_parameters_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.DescribeParameters"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_parameters_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeSubnetGroups = struct
@@ -504,6 +585,13 @@ module DescribeSubnetGroups = struct
     let input = Json_serializers.describe_subnet_groups_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.DescribeSubnetGroups" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.describe_subnet_groups_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_subnet_groups_request) =
+    let input = Json_serializers.describe_subnet_groups_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.DescribeSubnetGroups"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_subnet_groups_response_of_yojson
       ~error_deserializer
 end
@@ -561,6 +649,13 @@ module IncreaseReplicationFactor = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.increase_replication_factor_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : increase_replication_factor_request) =
+    let input = Json_serializers.increase_replication_factor_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonDAXV3.IncreaseReplicationFactor" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.increase_replication_factor_response_of_yojson
+      ~error_deserializer
 end
 
 module ListTags = struct
@@ -601,6 +696,12 @@ module ListTags = struct
     let input = Json_serializers.list_tags_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.ListTags" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_request) =
+    let input = Json_serializers.list_tags_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.ListTags" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_tags_response_of_yojson
+      ~error_deserializer
 end
 
 module RebootNode = struct
@@ -641,6 +742,12 @@ module RebootNode = struct
     let input = Json_serializers.reboot_node_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.RebootNode" ~service ~context
       ~input ~output_deserializer:Json_deserializers.reboot_node_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : reboot_node_request) =
+    let input = Json_serializers.reboot_node_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.RebootNode" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.reboot_node_response_of_yojson
       ~error_deserializer
 end
 
@@ -687,6 +794,12 @@ module TagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.TagResource" ~service ~context
       ~input ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_request) =
+    let input = Json_serializers.tag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.TagResource" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module UntagResource = struct
@@ -731,6 +844,12 @@ module UntagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.UntagResource" ~service ~context
       ~input ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_request) =
+    let input = Json_serializers.untag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.UntagResource"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson ~error_deserializer
 end
 
 module UpdateCluster = struct
@@ -777,6 +896,12 @@ module UpdateCluster = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.UpdateCluster" ~service ~context
       ~input ~output_deserializer:Json_deserializers.update_cluster_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_cluster_request) =
+    let input = Json_serializers.update_cluster_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.UpdateCluster"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_cluster_response_of_yojson ~error_deserializer
 end
 
 module UpdateParameterGroup = struct
@@ -817,6 +942,13 @@ module UpdateParameterGroup = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.update_parameter_group_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_parameter_group_request) =
+    let input = Json_serializers.update_parameter_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.UpdateParameterGroup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_parameter_group_response_of_yojson
+      ~error_deserializer
 end
 
 module UpdateSubnetGroup = struct
@@ -853,5 +985,12 @@ module UpdateSubnetGroup = struct
     let input = Json_serializers.update_subnet_group_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonDAXV3.UpdateSubnetGroup" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_subnet_group_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_subnet_group_request) =
+    let input = Json_serializers.update_subnet_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonDAXV3.UpdateSubnetGroup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_subnet_group_response_of_yojson
       ~error_deserializer
 end

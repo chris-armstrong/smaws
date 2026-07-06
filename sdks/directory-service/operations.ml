@@ -37,6 +37,13 @@ module AcceptSharedDirectory = struct
       ~shape_name:"DirectoryService_20150416.AcceptSharedDirectory" ~service ~context ~input
       ~output_deserializer:Json_deserializers.accept_shared_directory_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : accept_shared_directory_request) =
+    let input = Json_serializers.accept_shared_directory_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.AcceptSharedDirectory" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.accept_shared_directory_result_of_yojson
+      ~error_deserializer
 end
 
 module AddIpRoutes = struct
@@ -84,6 +91,12 @@ module AddIpRoutes = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.AddIpRoutes" ~service
       ~context ~input ~output_deserializer:Json_deserializers.add_ip_routes_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : add_ip_routes_request) =
+    let input = Json_serializers.add_ip_routes_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.AddIpRoutes" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.add_ip_routes_result_of_yojson ~error_deserializer
 end
 
 module AddRegion = struct
@@ -144,6 +157,12 @@ module AddRegion = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.AddRegion" ~service
       ~context ~input ~output_deserializer:Json_deserializers.add_region_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : add_region_request) =
+    let input = Json_serializers.add_region_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.AddRegion" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.add_region_result_of_yojson ~error_deserializer
 end
 
 module AddTagsToResource = struct
@@ -181,6 +200,13 @@ module AddTagsToResource = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.add_tags_to_resource_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_to_resource_request) =
+    let input = Json_serializers.add_tags_to_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.AddTagsToResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.add_tags_to_resource_result_of_yojson
+      ~error_deserializer
 end
 
 module CancelSchemaExtension = struct
@@ -207,6 +233,13 @@ module CancelSchemaExtension = struct
   let request context (request : cancel_schema_extension_request) =
     let input = Json_serializers.cancel_schema_extension_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DirectoryService_20150416.CancelSchemaExtension" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.cancel_schema_extension_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : cancel_schema_extension_request) =
+    let input = Json_serializers.cancel_schema_extension_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"DirectoryService_20150416.CancelSchemaExtension" ~service ~context ~input
       ~output_deserializer:Json_deserializers.cancel_schema_extension_result_of_yojson
       ~error_deserializer
@@ -242,6 +275,12 @@ module ConnectDirectory = struct
     let input = Json_serializers.connect_directory_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.ConnectDirectory"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.connect_directory_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : connect_directory_request) =
+    let input = Json_serializers.connect_directory_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.ConnectDirectory" ~service ~context ~input
       ~output_deserializer:Json_deserializers.connect_directory_result_of_yojson ~error_deserializer
 end
 
@@ -280,6 +319,12 @@ module CreateAlias = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.CreateAlias" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_alias_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_alias_request) =
+    let input = Json_serializers.create_alias_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.CreateAlias" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_alias_result_of_yojson ~error_deserializer
 end
 
 module CreateComputer = struct
@@ -332,6 +377,12 @@ module CreateComputer = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.CreateComputer"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_computer_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : create_computer_request) =
+    let input = Json_serializers.create_computer_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.CreateComputer" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_computer_result_of_yojson ~error_deserializer
 end
 
 module CreateConditionalForwarder = struct
@@ -380,6 +431,13 @@ module CreateConditionalForwarder = struct
       ~shape_name:"DirectoryService_20150416.CreateConditionalForwarder" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_conditional_forwarder_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_conditional_forwarder_request) =
+    let input = Json_serializers.create_conditional_forwarder_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.CreateConditionalForwarder" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_conditional_forwarder_result_of_yojson
+      ~error_deserializer
 end
 
 module CreateDirectory = struct
@@ -412,6 +470,12 @@ module CreateDirectory = struct
     let input = Json_serializers.create_directory_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.CreateDirectory"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_directory_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : create_directory_request) =
+    let input = Json_serializers.create_directory_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.CreateDirectory" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_directory_result_of_yojson ~error_deserializer
 end
 
@@ -460,6 +524,12 @@ module CreateHybridAD = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.CreateHybridAD"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_hybrid_ad_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : create_hybrid_ad_request) =
+    let input = Json_serializers.create_hybrid_ad_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.CreateHybridAD" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_hybrid_ad_result_of_yojson ~error_deserializer
 end
 
 module CreateLogSubscription = struct
@@ -504,6 +574,13 @@ module CreateLogSubscription = struct
       ~shape_name:"DirectoryService_20150416.CreateLogSubscription" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_log_subscription_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_log_subscription_request) =
+    let input = Json_serializers.create_log_subscription_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.CreateLogSubscription" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_log_subscription_result_of_yojson
+      ~error_deserializer
 end
 
 module CreateMicrosoftAD = struct
@@ -543,6 +620,13 @@ module CreateMicrosoftAD = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_microsoft_ad_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_microsoft_ad_request) =
+    let input = Json_serializers.create_microsoft_ad_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.CreateMicrosoftAD" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_microsoft_ad_result_of_yojson
+      ~error_deserializer
 end
 
 module CreateSnapshot = struct
@@ -579,6 +663,12 @@ module CreateSnapshot = struct
     let input = Json_serializers.create_snapshot_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.CreateSnapshot"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_snapshot_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : create_snapshot_request) =
+    let input = Json_serializers.create_snapshot_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.CreateSnapshot" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_snapshot_result_of_yojson ~error_deserializer
 end
 
@@ -622,6 +712,12 @@ module CreateTrust = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.CreateTrust" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_trust_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_trust_request) =
+    let input = Json_serializers.create_trust_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.CreateTrust" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_trust_result_of_yojson ~error_deserializer
 end
 
 module DeleteADAssessment = struct
@@ -658,6 +754,13 @@ module DeleteADAssessment = struct
     let input = Json_serializers.delete_ad_assessment_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DeleteADAssessment"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_ad_assessment_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_ad_assessment_request) =
+    let input = Json_serializers.delete_ad_assessment_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DeleteADAssessment" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_ad_assessment_result_of_yojson
       ~error_deserializer
 end
@@ -703,6 +806,13 @@ module DeleteConditionalForwarder = struct
       ~shape_name:"DirectoryService_20150416.DeleteConditionalForwarder" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_conditional_forwarder_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_conditional_forwarder_request) =
+    let input = Json_serializers.delete_conditional_forwarder_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DeleteConditionalForwarder" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_conditional_forwarder_result_of_yojson
+      ~error_deserializer
 end
 
 module DeleteDirectory = struct
@@ -730,6 +840,12 @@ module DeleteDirectory = struct
     let input = Json_serializers.delete_directory_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DeleteDirectory"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_directory_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : delete_directory_request) =
+    let input = Json_serializers.delete_directory_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DeleteDirectory" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_directory_result_of_yojson ~error_deserializer
 end
 
@@ -765,6 +881,13 @@ module DeleteLogSubscription = struct
       ~shape_name:"DirectoryService_20150416.DeleteLogSubscription" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_log_subscription_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_log_subscription_request) =
+    let input = Json_serializers.delete_log_subscription_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DeleteLogSubscription" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_log_subscription_result_of_yojson
+      ~error_deserializer
 end
 
 module DeleteSnapshot = struct
@@ -796,6 +919,12 @@ module DeleteSnapshot = struct
     let input = Json_serializers.delete_snapshot_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DeleteSnapshot"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_snapshot_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : delete_snapshot_request) =
+    let input = Json_serializers.delete_snapshot_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DeleteSnapshot" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_snapshot_result_of_yojson ~error_deserializer
 end
 
@@ -834,6 +963,12 @@ module DeleteTrust = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DeleteTrust" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_trust_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_trust_request) =
+    let input = Json_serializers.delete_trust_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DeleteTrust" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_trust_result_of_yojson ~error_deserializer
 end
 
 module DeregisterCertificate = struct
@@ -887,6 +1022,13 @@ module DeregisterCertificate = struct
       ~shape_name:"DirectoryService_20150416.DeregisterCertificate" ~service ~context ~input
       ~output_deserializer:Json_deserializers.deregister_certificate_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : deregister_certificate_request) =
+    let input = Json_serializers.deregister_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DeregisterCertificate" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.deregister_certificate_result_of_yojson
+      ~error_deserializer
 end
 
 module DeregisterEventTopic = struct
@@ -918,6 +1060,13 @@ module DeregisterEventTopic = struct
     let input = Json_serializers.deregister_event_topic_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DeregisterEventTopic"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.deregister_event_topic_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : deregister_event_topic_request) =
+    let input = Json_serializers.deregister_event_topic_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DeregisterEventTopic" ~service ~context ~input
       ~output_deserializer:Json_deserializers.deregister_event_topic_result_of_yojson
       ~error_deserializer
 end
@@ -958,6 +1107,13 @@ module DescribeADAssessment = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_ad_assessment_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_ad_assessment_request) =
+    let input = Json_serializers.describe_ad_assessment_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DescribeADAssessment" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_ad_assessment_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeCAEnrollmentPolicy = struct
@@ -990,6 +1146,13 @@ module DescribeCAEnrollmentPolicy = struct
   let request context (request : describe_ca_enrollment_policy_request) =
     let input = Json_serializers.describe_ca_enrollment_policy_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DirectoryService_20150416.DescribeCAEnrollmentPolicy" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_ca_enrollment_policy_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_ca_enrollment_policy_request) =
+    let input = Json_serializers.describe_ca_enrollment_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"DirectoryService_20150416.DescribeCAEnrollmentPolicy" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_ca_enrollment_policy_result_of_yojson
       ~error_deserializer
@@ -1035,6 +1198,13 @@ module DescribeCertificate = struct
     let input = Json_serializers.describe_certificate_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DescribeCertificate"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_certificate_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_certificate_request) =
+    let input = Json_serializers.describe_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DescribeCertificate" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_certificate_result_of_yojson
       ~error_deserializer
 end
@@ -1083,6 +1253,17 @@ module DescribeClientAuthenticationSettings = struct
       ~output_deserializer:
         Json_deserializers.describe_client_authentication_settings_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_client_authentication_settings_request) =
+    let input =
+      Json_serializers.describe_client_authentication_settings_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DescribeClientAuthenticationSettings" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.describe_client_authentication_settings_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeConditionalForwarders = struct
@@ -1126,6 +1307,13 @@ module DescribeConditionalForwarders = struct
       ~shape_name:"DirectoryService_20150416.DescribeConditionalForwarders" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_conditional_forwarders_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_conditional_forwarders_request) =
+    let input = Json_serializers.describe_conditional_forwarders_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DescribeConditionalForwarders" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_conditional_forwarders_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeDirectories = struct
@@ -1163,6 +1351,13 @@ module DescribeDirectories = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_directories_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_directories_request) =
+    let input = Json_serializers.describe_directories_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DescribeDirectories" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_directories_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeDirectoryDataAccess = struct
@@ -1198,6 +1393,13 @@ module DescribeDirectoryDataAccess = struct
   let request context (request : describe_directory_data_access_request) =
     let input = Json_serializers.describe_directory_data_access_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DirectoryService_20150416.DescribeDirectoryDataAccess" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_directory_data_access_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_directory_data_access_request) =
+    let input = Json_serializers.describe_directory_data_access_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"DirectoryService_20150416.DescribeDirectoryDataAccess" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_directory_data_access_result_of_yojson
       ~error_deserializer
@@ -1243,6 +1445,13 @@ module DescribeDomainControllers = struct
       ~shape_name:"DirectoryService_20150416.DescribeDomainControllers" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_domain_controllers_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_domain_controllers_request) =
+    let input = Json_serializers.describe_domain_controllers_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DescribeDomainControllers" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_domain_controllers_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeEventTopics = struct
@@ -1274,6 +1483,13 @@ module DescribeEventTopics = struct
     let input = Json_serializers.describe_event_topics_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DescribeEventTopics"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_event_topics_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_event_topics_request) =
+    let input = Json_serializers.describe_event_topics_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DescribeEventTopics" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_event_topics_result_of_yojson
       ~error_deserializer
 end
@@ -1319,6 +1535,13 @@ module DescribeHybridADUpdate = struct
       ~shape_name:"DirectoryService_20150416.DescribeHybridADUpdate" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_hybrid_ad_update_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_hybrid_ad_update_request) =
+    let input = Json_serializers.describe_hybrid_ad_update_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DescribeHybridADUpdate" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_hybrid_ad_update_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeLDAPSSettings = struct
@@ -1359,6 +1582,13 @@ module DescribeLDAPSSettings = struct
   let request context (request : describe_ldaps_settings_request) =
     let input = Json_serializers.describe_ldaps_settings_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DirectoryService_20150416.DescribeLDAPSSettings" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_ldaps_settings_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_ldaps_settings_request) =
+    let input = Json_serializers.describe_ldaps_settings_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"DirectoryService_20150416.DescribeLDAPSSettings" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_ldaps_settings_result_of_yojson
       ~error_deserializer
@@ -1407,6 +1637,12 @@ module DescribeRegions = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DescribeRegions"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_regions_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : describe_regions_request) =
+    let input = Json_serializers.describe_regions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DescribeRegions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_regions_result_of_yojson ~error_deserializer
 end
 
 module DescribeSettings = struct
@@ -1448,6 +1684,12 @@ module DescribeSettings = struct
     let input = Json_serializers.describe_settings_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DescribeSettings"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_settings_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : describe_settings_request) =
+    let input = Json_serializers.describe_settings_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DescribeSettings" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_settings_result_of_yojson ~error_deserializer
 end
 
@@ -1491,6 +1733,13 @@ module DescribeSharedDirectories = struct
       ~shape_name:"DirectoryService_20150416.DescribeSharedDirectories" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_shared_directories_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_shared_directories_request) =
+    let input = Json_serializers.describe_shared_directories_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DescribeSharedDirectories" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_shared_directories_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeSnapshots = struct
@@ -1526,6 +1775,13 @@ module DescribeSnapshots = struct
     let input = Json_serializers.describe_snapshots_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DescribeSnapshots"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_snapshots_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_snapshots_request) =
+    let input = Json_serializers.describe_snapshots_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DescribeSnapshots" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_snapshots_result_of_yojson
       ~error_deserializer
 end
@@ -1569,6 +1825,12 @@ module DescribeTrusts = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DescribeTrusts"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_trusts_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : describe_trusts_request) =
+    let input = Json_serializers.describe_trusts_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DescribeTrusts" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_trusts_result_of_yojson ~error_deserializer
 end
 
 module DescribeUpdateDirectory = struct
@@ -1607,6 +1869,13 @@ module DescribeUpdateDirectory = struct
   let request context (request : describe_update_directory_request) =
     let input = Json_serializers.describe_update_directory_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DirectoryService_20150416.DescribeUpdateDirectory" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_update_directory_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_update_directory_request) =
+    let input = Json_serializers.describe_update_directory_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"DirectoryService_20150416.DescribeUpdateDirectory" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_update_directory_result_of_yojson
       ~error_deserializer
@@ -1661,6 +1930,13 @@ module DisableCAEnrollmentPolicy = struct
       ~shape_name:"DirectoryService_20150416.DisableCAEnrollmentPolicy" ~service ~context ~input
       ~output_deserializer:Json_deserializers.disable_ca_enrollment_policy_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : disable_ca_enrollment_policy_request) =
+    let input = Json_serializers.disable_ca_enrollment_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DisableCAEnrollmentPolicy" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.disable_ca_enrollment_policy_result_of_yojson
+      ~error_deserializer
 end
 
 module DisableClientAuthentication = struct
@@ -1701,6 +1977,13 @@ module DisableClientAuthentication = struct
   let request context (request : disable_client_authentication_request) =
     let input = Json_serializers.disable_client_authentication_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DirectoryService_20150416.DisableClientAuthentication" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.disable_client_authentication_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : disable_client_authentication_request) =
+    let input = Json_serializers.disable_client_authentication_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"DirectoryService_20150416.DisableClientAuthentication" ~service ~context ~input
       ~output_deserializer:Json_deserializers.disable_client_authentication_result_of_yojson
       ~error_deserializer
@@ -1752,6 +2035,13 @@ module DisableDirectoryDataAccess = struct
       ~shape_name:"DirectoryService_20150416.DisableDirectoryDataAccess" ~service ~context ~input
       ~output_deserializer:Json_deserializers.disable_directory_data_access_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : disable_directory_data_access_request) =
+    let input = Json_serializers.disable_directory_data_access_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DisableDirectoryDataAccess" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.disable_directory_data_access_result_of_yojson
+      ~error_deserializer
 end
 
 module DisableLDAPS = struct
@@ -1799,6 +2089,12 @@ module DisableLDAPS = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DisableLDAPS"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.disable_ldaps_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : disable_ldaps_request) =
+    let input = Json_serializers.disable_ldaps_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DisableLDAPS" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.disable_ldaps_result_of_yojson ~error_deserializer
 end
 
 module DisableRadius = struct
@@ -1826,6 +2122,12 @@ module DisableRadius = struct
     let input = Json_serializers.disable_radius_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DisableRadius"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.disable_radius_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : disable_radius_request) =
+    let input = Json_serializers.disable_radius_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DisableRadius" ~service ~context ~input
       ~output_deserializer:Json_deserializers.disable_radius_result_of_yojson ~error_deserializer
 end
 
@@ -1865,6 +2167,12 @@ module DisableSso = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.DisableSso" ~service
       ~context ~input ~output_deserializer:Json_deserializers.disable_sso_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : disable_sso_request) =
+    let input = Json_serializers.disable_sso_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.DisableSso" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.disable_sso_result_of_yojson ~error_deserializer
 end
 
 module EnableCAEnrollmentPolicy = struct
@@ -1921,6 +2229,13 @@ module EnableCAEnrollmentPolicy = struct
       ~shape_name:"DirectoryService_20150416.EnableCAEnrollmentPolicy" ~service ~context ~input
       ~output_deserializer:Json_deserializers.enable_ca_enrollment_policy_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : enable_ca_enrollment_policy_request) =
+    let input = Json_serializers.enable_ca_enrollment_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.EnableCAEnrollmentPolicy" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.enable_ca_enrollment_policy_result_of_yojson
+      ~error_deserializer
 end
 
 module EnableClientAuthentication = struct
@@ -1969,6 +2284,13 @@ module EnableClientAuthentication = struct
       ~shape_name:"DirectoryService_20150416.EnableClientAuthentication" ~service ~context ~input
       ~output_deserializer:Json_deserializers.enable_client_authentication_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : enable_client_authentication_request) =
+    let input = Json_serializers.enable_client_authentication_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.EnableClientAuthentication" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.enable_client_authentication_result_of_yojson
+      ~error_deserializer
 end
 
 module EnableDirectoryDataAccess = struct
@@ -2014,6 +2336,13 @@ module EnableDirectoryDataAccess = struct
   let request context (request : enable_directory_data_access_request) =
     let input = Json_serializers.enable_directory_data_access_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DirectoryService_20150416.EnableDirectoryDataAccess" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.enable_directory_data_access_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : enable_directory_data_access_request) =
+    let input = Json_serializers.enable_directory_data_access_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"DirectoryService_20150416.EnableDirectoryDataAccess" ~service ~context ~input
       ~output_deserializer:Json_deserializers.enable_directory_data_access_result_of_yojson
       ~error_deserializer
@@ -2069,6 +2398,12 @@ module EnableLDAPS = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.EnableLDAPS" ~service
       ~context ~input ~output_deserializer:Json_deserializers.enable_ldaps_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : enable_ldaps_request) =
+    let input = Json_serializers.enable_ldaps_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.EnableLDAPS" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.enable_ldaps_result_of_yojson ~error_deserializer
 end
 
 module EnableRadius = struct
@@ -2105,6 +2440,12 @@ module EnableRadius = struct
     let input = Json_serializers.enable_radius_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.EnableRadius"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.enable_radius_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : enable_radius_request) =
+    let input = Json_serializers.enable_radius_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.EnableRadius" ~service ~context ~input
       ~output_deserializer:Json_deserializers.enable_radius_result_of_yojson ~error_deserializer
 end
 
@@ -2144,6 +2485,12 @@ module EnableSso = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.EnableSso" ~service
       ~context ~input ~output_deserializer:Json_deserializers.enable_sso_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : enable_sso_request) =
+    let input = Json_serializers.enable_sso_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.EnableSso" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.enable_sso_result_of_yojson ~error_deserializer
 end
 
 module GetDirectoryLimits = struct
@@ -2173,6 +2520,13 @@ module GetDirectoryLimits = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_directory_limits_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_directory_limits_request) =
+    let input = Json_serializers.get_directory_limits_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.GetDirectoryLimits" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_directory_limits_result_of_yojson
+      ~error_deserializer
 end
 
 module GetSnapshotLimits = struct
@@ -2200,6 +2554,13 @@ module GetSnapshotLimits = struct
     let input = Json_serializers.get_snapshot_limits_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.GetSnapshotLimits"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_snapshot_limits_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_snapshot_limits_request) =
+    let input = Json_serializers.get_snapshot_limits_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.GetSnapshotLimits" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_snapshot_limits_result_of_yojson
       ~error_deserializer
 end
@@ -2239,6 +2600,13 @@ module ListADAssessments = struct
     let input = Json_serializers.list_ad_assessments_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.ListADAssessments"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_ad_assessments_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_ad_assessments_request) =
+    let input = Json_serializers.list_ad_assessments_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.ListADAssessments" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_ad_assessments_result_of_yojson
       ~error_deserializer
 end
@@ -2283,6 +2651,12 @@ module ListCertificates = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.ListCertificates"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_certificates_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_certificates_request) =
+    let input = Json_serializers.list_certificates_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.ListCertificates" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_certificates_result_of_yojson ~error_deserializer
 end
 
 module ListIpRoutes = struct
@@ -2319,6 +2693,12 @@ module ListIpRoutes = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.ListIpRoutes"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_ip_routes_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_ip_routes_request) =
+    let input = Json_serializers.list_ip_routes_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.ListIpRoutes" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_ip_routes_result_of_yojson ~error_deserializer
 end
 
 module ListLogSubscriptions = struct
@@ -2352,6 +2732,13 @@ module ListLogSubscriptions = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_log_subscriptions_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_log_subscriptions_request) =
+    let input = Json_serializers.list_log_subscriptions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.ListLogSubscriptions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_log_subscriptions_result_of_yojson
+      ~error_deserializer
 end
 
 module ListSchemaExtensions = struct
@@ -2383,6 +2770,13 @@ module ListSchemaExtensions = struct
     let input = Json_serializers.list_schema_extensions_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.ListSchemaExtensions"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_schema_extensions_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_schema_extensions_request) =
+    let input = Json_serializers.list_schema_extensions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.ListSchemaExtensions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_schema_extensions_result_of_yojson
       ~error_deserializer
 end
@@ -2420,6 +2814,13 @@ module ListTagsForResource = struct
     let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.ListTagsForResource"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_resource_request) =
+    let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.ListTagsForResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_result_of_yojson
       ~error_deserializer
 end
@@ -2480,6 +2881,13 @@ module RegisterCertificate = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.register_certificate_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : register_certificate_request) =
+    let input = Json_serializers.register_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.RegisterCertificate" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.register_certificate_result_of_yojson
+      ~error_deserializer
 end
 
 module RegisterEventTopic = struct
@@ -2511,6 +2919,13 @@ module RegisterEventTopic = struct
     let input = Json_serializers.register_event_topic_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.RegisterEventTopic"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.register_event_topic_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : register_event_topic_request) =
+    let input = Json_serializers.register_event_topic_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.RegisterEventTopic" ~service ~context ~input
       ~output_deserializer:Json_deserializers.register_event_topic_result_of_yojson
       ~error_deserializer
 end
@@ -2551,6 +2966,13 @@ module RejectSharedDirectory = struct
       ~shape_name:"DirectoryService_20150416.RejectSharedDirectory" ~service ~context ~input
       ~output_deserializer:Json_deserializers.reject_shared_directory_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : reject_shared_directory_request) =
+    let input = Json_serializers.reject_shared_directory_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.RejectSharedDirectory" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.reject_shared_directory_result_of_yojson
+      ~error_deserializer
 end
 
 module RemoveIpRoutes = struct
@@ -2587,6 +3009,12 @@ module RemoveIpRoutes = struct
     let input = Json_serializers.remove_ip_routes_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.RemoveIpRoutes"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.remove_ip_routes_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : remove_ip_routes_request) =
+    let input = Json_serializers.remove_ip_routes_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.RemoveIpRoutes" ~service ~context ~input
       ~output_deserializer:Json_deserializers.remove_ip_routes_result_of_yojson ~error_deserializer
 end
 
@@ -2630,6 +3058,12 @@ module RemoveRegion = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.RemoveRegion"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.remove_region_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : remove_region_request) =
+    let input = Json_serializers.remove_region_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.RemoveRegion" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.remove_region_result_of_yojson ~error_deserializer
 end
 
 module RemoveTagsFromResource = struct
@@ -2660,6 +3094,13 @@ module RemoveTagsFromResource = struct
   let request context (request : remove_tags_from_resource_request) =
     let input = Json_serializers.remove_tags_from_resource_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DirectoryService_20150416.RemoveTagsFromResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.remove_tags_from_resource_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : remove_tags_from_resource_request) =
+    let input = Json_serializers.remove_tags_from_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"DirectoryService_20150416.RemoveTagsFromResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.remove_tags_from_resource_result_of_yojson
       ~error_deserializer
@@ -2710,6 +3151,13 @@ module ResetUserPassword = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.reset_user_password_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : reset_user_password_request) =
+    let input = Json_serializers.reset_user_password_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.ResetUserPassword" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.reset_user_password_result_of_yojson
+      ~error_deserializer
 end
 
 module RestoreFromSnapshot = struct
@@ -2741,6 +3189,13 @@ module RestoreFromSnapshot = struct
     let input = Json_serializers.restore_from_snapshot_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.RestoreFromSnapshot"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.restore_from_snapshot_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : restore_from_snapshot_request) =
+    let input = Json_serializers.restore_from_snapshot_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.RestoreFromSnapshot" ~service ~context ~input
       ~output_deserializer:Json_deserializers.restore_from_snapshot_result_of_yojson
       ~error_deserializer
 end
@@ -2798,6 +3253,12 @@ module ShareDirectory = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.ShareDirectory"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.share_directory_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : share_directory_request) =
+    let input = Json_serializers.share_directory_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.ShareDirectory" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.share_directory_result_of_yojson ~error_deserializer
 end
 
 module StartADAssessment = struct
@@ -2840,6 +3301,13 @@ module StartADAssessment = struct
     let input = Json_serializers.start_ad_assessment_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.StartADAssessment"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_ad_assessment_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : start_ad_assessment_request) =
+    let input = Json_serializers.start_ad_assessment_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.StartADAssessment" ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_ad_assessment_result_of_yojson
       ~error_deserializer
 end
@@ -2885,6 +3353,13 @@ module StartSchemaExtension = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_schema_extension_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_schema_extension_request) =
+    let input = Json_serializers.start_schema_extension_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.StartSchemaExtension" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_schema_extension_result_of_yojson
+      ~error_deserializer
 end
 
 module UnshareDirectory = struct
@@ -2919,6 +3394,12 @@ module UnshareDirectory = struct
     let input = Json_serializers.unshare_directory_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.UnshareDirectory"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.unshare_directory_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : unshare_directory_request) =
+    let input = Json_serializers.unshare_directory_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.UnshareDirectory" ~service ~context ~input
       ~output_deserializer:Json_deserializers.unshare_directory_result_of_yojson ~error_deserializer
 end
 
@@ -2960,6 +3441,13 @@ module UpdateConditionalForwarder = struct
   let request context (request : update_conditional_forwarder_request) =
     let input = Json_serializers.update_conditional_forwarder_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"DirectoryService_20150416.UpdateConditionalForwarder" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_conditional_forwarder_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_conditional_forwarder_request) =
+    let input = Json_serializers.update_conditional_forwarder_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"DirectoryService_20150416.UpdateConditionalForwarder" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_conditional_forwarder_result_of_yojson
       ~error_deserializer
@@ -3020,6 +3508,13 @@ module UpdateDirectorySetup = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_directory_setup_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_directory_setup_request) =
+    let input = Json_serializers.update_directory_setup_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.UpdateDirectorySetup" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_directory_setup_result_of_yojson
+      ~error_deserializer
 end
 
 module UpdateHybridAD = struct
@@ -3062,6 +3557,12 @@ module UpdateHybridAD = struct
     let input = Json_serializers.update_hybrid_ad_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.UpdateHybridAD"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_hybrid_ad_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : update_hybrid_ad_request) =
+    let input = Json_serializers.update_hybrid_ad_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.UpdateHybridAD" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_hybrid_ad_result_of_yojson ~error_deserializer
 end
 
@@ -3112,6 +3613,14 @@ module UpdateNumberOfDomainControllers = struct
       ~input
       ~output_deserializer:Json_deserializers.update_number_of_domain_controllers_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_number_of_domain_controllers_request) =
+    let input = Json_serializers.update_number_of_domain_controllers_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.UpdateNumberOfDomainControllers" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.update_number_of_domain_controllers_result_of_yojson
+      ~error_deserializer
 end
 
 module UpdateRadius = struct
@@ -3143,6 +3652,12 @@ module UpdateRadius = struct
     let input = Json_serializers.update_radius_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.UpdateRadius"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_radius_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : update_radius_request) =
+    let input = Json_serializers.update_radius_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.UpdateRadius" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_radius_result_of_yojson ~error_deserializer
 end
 
@@ -3197,6 +3712,12 @@ module UpdateSettings = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.UpdateSettings"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_settings_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : update_settings_request) =
+    let input = Json_serializers.update_settings_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.UpdateSettings" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_settings_result_of_yojson ~error_deserializer
 end
 
 module UpdateTrust = struct
@@ -3229,6 +3750,12 @@ module UpdateTrust = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.UpdateTrust" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_trust_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_trust_request) =
+    let input = Json_serializers.update_trust_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.UpdateTrust" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_trust_result_of_yojson ~error_deserializer
 end
 
 module VerifyTrust = struct
@@ -3266,4 +3793,10 @@ module VerifyTrust = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DirectoryService_20150416.VerifyTrust" ~service
       ~context ~input ~output_deserializer:Json_deserializers.verify_trust_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : verify_trust_request) =
+    let input = Json_serializers.verify_trust_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DirectoryService_20150416.VerifyTrust" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.verify_trust_result_of_yojson ~error_deserializer
 end

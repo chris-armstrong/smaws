@@ -23,6 +23,19 @@ module AcceptAgreementCancellationRequest : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    accept_agreement_cancellation_request_input ->
+    ( accept_agreement_cancellation_request_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Allows buyers (acceptors) to accept a cancellation request that is in [PENDING_APPROVAL] \
@@ -48,6 +61,19 @@ module AcceptAgreementPaymentRequest : sig
     'http_type Smaws_Lib.Context.t ->
     accept_agreement_payment_request_input ->
     ( accept_agreement_payment_request_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    accept_agreement_payment_request_input ->
+    ( accept_agreement_payment_request_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -90,6 +116,19 @@ module AcceptAgreementRequest : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    accept_agreement_request_input ->
+    ( accept_agreement_request_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Accepts an agreement request to finalize the agreement. The acceptor can optionally provide \
@@ -109,6 +148,18 @@ module BatchCreateBillingAdjustmentRequest : sig
     'http_type Smaws_Lib.Context.t ->
     batch_create_billing_adjustment_request_input ->
     ( batch_create_billing_adjustment_request_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_create_billing_adjustment_request_input ->
+    ( batch_create_billing_adjustment_request_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -149,6 +200,19 @@ module CancelAgreement : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_agreement_input ->
+    ( cancel_agreement_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Allows an acceptor to cancel an active agreement. Not all agreements are eligible for \
@@ -169,6 +233,19 @@ module CancelAgreementCancellationRequest : sig
     'http_type Smaws_Lib.Context.t ->
     cancel_agreement_cancellation_request_input ->
     ( cancel_agreement_cancellation_request_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_agreement_cancellation_request_input ->
+    ( cancel_agreement_cancellation_request_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -202,6 +279,19 @@ module CancelAgreementPaymentRequest : sig
     'http_type Smaws_Lib.Context.t ->
     cancel_agreement_payment_request_input ->
     ( cancel_agreement_payment_request_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_agreement_payment_request_input ->
+    ( cancel_agreement_payment_request_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -245,6 +335,20 @@ module CreateAgreementRequest : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_agreement_request_input ->
+    ( create_agreement_request_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Creates an agreement request that acts as a quote for the terms you want to accept. The \
@@ -272,6 +376,18 @@ module DescribeAgreement : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_agreement_input ->
+    ( describe_agreement_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Provides details about an agreement, such as the proposer, acceptor, start date, and end date.\n"]
@@ -290,6 +406,18 @@ module GetAgreementCancellationRequest : sig
     'http_type Smaws_Lib.Context.t ->
     get_agreement_cancellation_request_input ->
     ( get_agreement_cancellation_request_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_agreement_cancellation_request_input ->
+    ( get_agreement_cancellation_request_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -324,6 +452,18 @@ module GetAgreementEntitlements : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_agreement_entitlements_input ->
+    ( get_agreement_entitlements_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc "Obtains details about the entitlements of an agreement.\n"]
 
@@ -341,6 +481,18 @@ module GetAgreementPaymentRequest : sig
     'http_type Smaws_Lib.Context.t ->
     get_agreement_payment_request_input ->
     ( get_agreement_payment_request_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_agreement_payment_request_input ->
+    ( get_agreement_payment_request_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -373,6 +525,18 @@ module GetAgreementTerms : sig
     'http_type Smaws_Lib.Context.t ->
     get_agreement_terms_input ->
     ( get_agreement_terms_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_agreement_terms_input ->
+    ( get_agreement_terms_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -431,6 +595,18 @@ module GetBillingAdjustmentRequest : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_billing_adjustment_request_input ->
+    ( get_billing_adjustment_request_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Retrieves detailed information about a specific billing adjustment request. Sellers (proposers) \
@@ -450,6 +626,17 @@ module ListAgreementCancellationRequests : sig
     'http_type Smaws_Lib.Context.t ->
     list_agreement_cancellation_requests_input ->
     ( list_agreement_cancellation_requests_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_agreement_cancellation_requests_input ->
+    ( list_agreement_cancellation_requests_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -485,6 +672,17 @@ module ListAgreementCharges : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_agreement_charges_input ->
+    ( list_agreement_charges_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Allows acceptors to view charges and purchase orders that are associated with an agreement. The \
@@ -505,6 +703,18 @@ module ListAgreementInvoiceLineItems : sig
     'http_type Smaws_Lib.Context.t ->
     list_agreement_invoice_line_items_input ->
     ( list_agreement_invoice_line_items_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_agreement_invoice_line_items_input ->
+    ( list_agreement_invoice_line_items_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -541,6 +751,17 @@ module ListAgreementPaymentRequests : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_agreement_payment_requests_input ->
+    ( list_agreement_payment_requests_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Lists payment requests available to you as a seller or buyer. Both sellers (proposers) and \
@@ -571,6 +792,17 @@ module ListBillingAdjustmentRequests : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_billing_adjustment_requests_input ->
+    ( list_billing_adjustment_requests_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Lists billing adjustment requests for a specific agreement. Sellers (proposers) can use this \
@@ -591,6 +823,19 @@ module RejectAgreementCancellationRequest : sig
     'http_type Smaws_Lib.Context.t ->
     reject_agreement_cancellation_request_input ->
     ( reject_agreement_cancellation_request_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    reject_agreement_cancellation_request_input ->
+    ( reject_agreement_cancellation_request_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -632,6 +877,19 @@ module RejectAgreementPaymentRequest : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    reject_agreement_payment_request_input ->
+    ( reject_agreement_payment_request_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Allows buyers (acceptors) to reject a payment request that is in [PENDING_APPROVAL] status. \
@@ -655,6 +913,17 @@ module SearchAgreements : sig
     'http_type Smaws_Lib.Context.t ->
     search_agreements_input ->
     ( search_agreements_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    search_agreements_input ->
+    ( search_agreements_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
@@ -863,6 +1132,19 @@ module SendAgreementCancellationRequest : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    send_agreement_cancellation_request_input ->
+    ( send_agreement_cancellation_request_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Allows sellers (proposers) to submit a cancellation request for an active agreement. The \
@@ -884,6 +1166,19 @@ module SendAgreementPaymentRequest : sig
     'http_type Smaws_Lib.Context.t ->
     send_agreement_payment_request_input ->
     ( send_agreement_payment_request_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    send_agreement_payment_request_input ->
+    ( send_agreement_payment_request_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -918,6 +1213,19 @@ module UpdatePurchaseOrders : sig
     'http_type Smaws_Lib.Context.t ->
     update_purchase_orders_input ->
     ( update_purchase_orders_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_purchase_orders_input ->
+    ( update_purchase_orders_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception

@@ -1139,6 +1139,18 @@ module ActivateEventSource : sig
       | `OperationDisabledException of operation_disabled_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    activate_event_source_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `InvalidStateException of invalid_state_exception
+      | `OperationDisabledException of operation_disabled_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Activates a partner event source that has been deactivated. Once activated, your matching event \
@@ -1163,6 +1175,17 @@ module CancelReplay : sig
       | `InternalException of internal_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_replay_request ->
+    ( cancel_replay_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `IllegalStatusException of illegal_status_exception
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc "Cancels the specified replay.\n"]
 
@@ -1179,6 +1202,17 @@ module CreateApiDestination : sig
     'http_type Smaws_Lib.Context.t ->
     create_api_destination_request ->
     ( create_api_destination_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceAlreadyExistsException of resource_already_exists_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_api_destination_request ->
+    ( create_api_destination_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
       | `LimitExceededException of limit_exceeded_exception
@@ -1211,6 +1245,19 @@ module CreateArchive : sig
     'http_type Smaws_Lib.Context.t ->
     create_archive_request ->
     ( create_archive_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `InvalidEventPatternException of invalid_event_pattern_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceAlreadyExistsException of resource_already_exists_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_archive_request ->
+    ( create_archive_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
@@ -1259,6 +1306,19 @@ module CreateConnection : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_connection_request ->
+    ( create_connection_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalException of internal_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceAlreadyExistsException of resource_already_exists_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
+    result
 end
 [@@ocaml.doc
   "Creates a connection. A connection defines the authorization type and credentials to use for \
@@ -1280,6 +1340,16 @@ module CreateEndpoint : sig
     'http_type Smaws_Lib.Context.t ->
     create_endpoint_request ->
     ( create_endpoint_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceAlreadyExistsException of resource_already_exists_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_endpoint_request ->
+    ( create_endpoint_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
       | `LimitExceededException of limit_exceeded_exception
@@ -1319,6 +1389,20 @@ module CreateEventBus : sig
       | `ResourceAlreadyExistsException of resource_already_exists_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_event_bus_request ->
+    ( create_event_bus_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `InvalidStateException of invalid_state_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `OperationDisabledException of operation_disabled_exception
+      | `ResourceAlreadyExistsException of resource_already_exists_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Creates a new event bus within your account. This can be a custom event bus which you can use \
@@ -1339,6 +1423,18 @@ module CreatePartnerEventSource : sig
     'http_type Smaws_Lib.Context.t ->
     create_partner_event_source_request ->
     ( create_partner_event_source_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `OperationDisabledException of operation_disabled_exception
+      | `ResourceAlreadyExistsException of resource_already_exists_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_partner_event_source_request ->
+    ( create_partner_event_source_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
@@ -1412,6 +1508,18 @@ module DeactivateEventSource : sig
       | `OperationDisabledException of operation_disabled_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    deactivate_event_source_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `InvalidStateException of invalid_state_exception
+      | `OperationDisabledException of operation_disabled_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "You can use this operation to temporarily stop receiving events from the specified partner \
@@ -1440,6 +1548,16 @@ module DeauthorizeConnection : sig
       | `InternalException of internal_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    deauthorize_connection_request ->
+    ( deauthorize_connection_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Removes all authorization parameters from the connection. This lets you remove the secret from \
@@ -1457,6 +1575,16 @@ module DeleteApiDestination : sig
     'http_type Smaws_Lib.Context.t ->
     delete_api_destination_request ->
     ( delete_api_destination_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_api_destination_request ->
+    ( delete_api_destination_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
@@ -1482,6 +1610,16 @@ module DeleteArchive : sig
       | `InternalException of internal_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_archive_request ->
+    ( delete_archive_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc "Deletes the specified archive.\n"]
 
@@ -1502,6 +1640,16 @@ module DeleteConnection : sig
       | `InternalException of internal_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_connection_request ->
+    ( delete_connection_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc "Deletes a connection.\n"]
 
@@ -1517,6 +1665,16 @@ module DeleteEndpoint : sig
     'http_type Smaws_Lib.Context.t ->
     delete_endpoint_request ->
     ( delete_endpoint_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_endpoint_request ->
+    ( delete_endpoint_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
@@ -1544,6 +1702,15 @@ module DeleteEventBus : sig
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_event_bus_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception ] )
+    result
 end
 [@@ocaml.doc
   "Deletes the specified custom event bus or partner event bus. All rules associated with this \
@@ -1561,6 +1728,16 @@ module DeletePartnerEventSource : sig
     'http_type Smaws_Lib.Context.t ->
     delete_partner_event_source_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `OperationDisabledException of operation_disabled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_partner_event_source_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
@@ -1589,6 +1766,17 @@ module DeleteRule : sig
     'http_type Smaws_Lib.Context.t ->
     delete_rule_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `ManagedRuleException of managed_rule_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_rule_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
@@ -1628,6 +1816,15 @@ module DescribeApiDestination : sig
       | `InternalException of internal_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_api_destination_request ->
+    ( describe_api_destination_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc "Retrieves details about an API destination.\n"]
 
@@ -1643,6 +1840,16 @@ module DescribeArchive : sig
     'http_type Smaws_Lib.Context.t ->
     describe_archive_request ->
     ( describe_archive_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `ResourceAlreadyExistsException of resource_already_exists_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_archive_request ->
+    ( describe_archive_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
       | `ResourceAlreadyExistsException of resource_already_exists_exception
@@ -1666,6 +1873,15 @@ module DescribeConnection : sig
       | `InternalException of internal_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_connection_request ->
+    ( describe_connection_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc "Retrieves details about a connection.\n"]
 
@@ -1680,6 +1896,15 @@ module DescribeEndpoint : sig
     'http_type Smaws_Lib.Context.t ->
     describe_endpoint_request ->
     ( describe_endpoint_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_endpoint_request ->
+    ( describe_endpoint_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
@@ -1703,6 +1928,15 @@ module DescribeEventBus : sig
     'http_type Smaws_Lib.Context.t ->
     describe_event_bus_request ->
     ( describe_event_bus_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_event_bus_request ->
+    ( describe_event_bus_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
@@ -1737,6 +1971,16 @@ module DescribeEventSource : sig
       | `OperationDisabledException of operation_disabled_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_event_source_request ->
+    ( describe_event_source_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `OperationDisabledException of operation_disabled_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "This operation lists details about a partner event source that is shared with your account.\n"]
@@ -1753,6 +1997,16 @@ module DescribePartnerEventSource : sig
     'http_type Smaws_Lib.Context.t ->
     describe_partner_event_source_request ->
     ( describe_partner_event_source_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `OperationDisabledException of operation_disabled_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_partner_event_source_request ->
+    ( describe_partner_event_source_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
       | `OperationDisabledException of operation_disabled_exception
@@ -1777,6 +2031,15 @@ module DescribeReplay : sig
     'http_type Smaws_Lib.Context.t ->
     describe_replay_request ->
     ( describe_replay_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_replay_request ->
+    ( describe_replay_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
@@ -1807,6 +2070,15 @@ module DescribeRule : sig
       | `InternalException of internal_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_rule_request ->
+    ( describe_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Describes the specified rule.\n\n\
@@ -1828,6 +2100,17 @@ module DisableRule : sig
     'http_type Smaws_Lib.Context.t ->
     disable_rule_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `ManagedRuleException of managed_rule_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    disable_rule_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
@@ -1861,6 +2144,17 @@ module EnableRule : sig
       | `ManagedRuleException of managed_rule_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    enable_rule_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `ManagedRuleException of managed_rule_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Enables the specified rule. If the rule does not exist, the operation fails.\n\n\
@@ -1876,6 +2170,13 @@ module ListApiDestinations : sig
     'http_type Smaws_Lib.Context.t ->
     list_api_destinations_request ->
     ( list_api_destinations_response,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_api_destinations_request ->
+    ( list_api_destinations_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
     result
 end
@@ -1896,6 +2197,15 @@ module ListArchives : sig
       | `InternalException of internal_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_archives_request ->
+    ( list_archives_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Lists your archives. You can either list all the archives or you can provide a prefix to match \
@@ -1911,6 +2221,13 @@ module ListConnections : sig
     ( list_connections_response,
       [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_connections_request ->
+    ( list_connections_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
+    result
 end
 [@@ocaml.doc "Retrieves a list of connections from the account.\n"]
 
@@ -1922,6 +2239,13 @@ module ListEndpoints : sig
     'http_type Smaws_Lib.Context.t ->
     list_endpoints_request ->
     ( list_endpoints_response,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_endpoints_request ->
+    ( list_endpoints_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
     result
 end
@@ -1942,6 +2266,13 @@ module ListEventBuses : sig
     ( list_event_buses_response,
       [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_event_buses_request ->
+    ( list_event_buses_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
+    result
 end
 [@@ocaml.doc
   "Lists all the event buses in your account, including the default event bus, custom event buses, \
@@ -1958,6 +2289,15 @@ module ListEventSources : sig
     'http_type Smaws_Lib.Context.t ->
     list_event_sources_request ->
     ( list_event_sources_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `OperationDisabledException of operation_disabled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_event_sources_request ->
+    ( list_event_sources_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
       | `OperationDisabledException of operation_disabled_exception ] )
@@ -1985,6 +2325,16 @@ module ListPartnerEventSourceAccounts : sig
       | `OperationDisabledException of operation_disabled_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_partner_event_source_accounts_request ->
+    ( list_partner_event_source_accounts_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `OperationDisabledException of operation_disabled_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "An SaaS partner can use this operation to display the Amazon Web Services account ID that a \
@@ -2006,6 +2356,15 @@ module ListPartnerEventSources : sig
       | `InternalException of internal_exception
       | `OperationDisabledException of operation_disabled_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_partner_event_sources_request ->
+    ( list_partner_event_sources_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `OperationDisabledException of operation_disabled_exception ] )
+    result
 end
 [@@ocaml.doc
   "An SaaS partner can use this operation to list all the partner event source names that they \
@@ -2019,6 +2378,13 @@ module ListReplays : sig
     'http_type Smaws_Lib.Context.t ->
     list_replays_request ->
     ( list_replays_response,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_replays_request ->
+    ( list_replays_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
     result
 end
@@ -2041,6 +2407,15 @@ module ListRuleNamesByTarget : sig
       | `InternalException of internal_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_rule_names_by_target_request ->
+    ( list_rule_names_by_target_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Lists the rules for the specified target. You can see which of the rules in Amazon EventBridge \
@@ -2059,6 +2434,15 @@ module ListRules : sig
     'http_type Smaws_Lib.Context.t ->
     list_rules_request ->
     ( list_rules_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_rules_request ->
+    ( list_rules_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
@@ -2088,6 +2472,15 @@ module ListTagsForResource : sig
       | `InternalException of internal_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Displays the tags associated with an EventBridge resource. In EventBridge, rules and event \
@@ -2108,6 +2501,15 @@ module ListTargetsByRule : sig
       | `InternalException of internal_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_targets_by_rule_request ->
+    ( list_targets_by_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Lists the targets assigned to the specified rule.\n\n\
@@ -2122,6 +2524,13 @@ module PutEvents : sig
     'http_type Smaws_Lib.Context.t ->
     put_events_request ->
     ( put_events_response,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_events_request ->
+    ( put_events_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
     result
 end
@@ -2156,6 +2565,15 @@ module PutPartnerEvents : sig
       | `InternalException of internal_exception
       | `OperationDisabledException of operation_disabled_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_partner_events_request ->
+    ( put_partner_events_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `OperationDisabledException of operation_disabled_exception ] )
+    result
 end
 [@@ocaml.doc
   "This is used by SaaS partners to write events to a customer's partner event bus. Amazon Web \
@@ -2179,6 +2597,18 @@ module PutPermission : sig
     'http_type Smaws_Lib.Context.t ->
     put_permission_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `OperationDisabledException of operation_disabled_exception
+      | `PolicyLengthExceededException of policy_length_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_permission_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
@@ -2225,6 +2655,19 @@ module PutRule : sig
     'http_type Smaws_Lib.Context.t ->
     put_rule_request ->
     ( put_rule_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `InvalidEventPatternException of invalid_event_pattern_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ManagedRuleException of managed_rule_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_rule_request ->
+    ( put_rule_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
@@ -2310,6 +2753,18 @@ module PutTargets : sig
     'http_type Smaws_Lib.Context.t ->
     put_targets_request ->
     ( put_targets_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ManagedRuleException of managed_rule_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_targets_request ->
+    ( put_targets_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
@@ -2452,6 +2907,17 @@ module RemovePermission : sig
       | `OperationDisabledException of operation_disabled_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    remove_permission_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `OperationDisabledException of operation_disabled_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Revokes the permission of another Amazon Web Services account to be able to put events to the \
@@ -2473,6 +2939,17 @@ module RemoveTargets : sig
     'http_type Smaws_Lib.Context.t ->
     remove_targets_request ->
     ( remove_targets_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `ManagedRuleException of managed_rule_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    remove_targets_request ->
+    ( remove_targets_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
@@ -2517,6 +2994,18 @@ module StartReplay : sig
       | `ResourceAlreadyExistsException of resource_already_exists_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_replay_request ->
+    ( start_replay_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidEventPatternException of invalid_event_pattern_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceAlreadyExistsException of resource_already_exists_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Starts the specified replay. Events are not necessarily replayed in the exact same order that \
@@ -2541,6 +3030,17 @@ module TagResource : sig
     'http_type Smaws_Lib.Context.t ->
     tag_resource_request ->
     ( tag_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `ManagedRuleException of managed_rule_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
@@ -2579,6 +3079,15 @@ module TestEventPattern : sig
       | `InternalException of internal_exception
       | `InvalidEventPatternException of invalid_event_pattern_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    test_event_pattern_request ->
+    ( test_event_pattern_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidEventPatternException of invalid_event_pattern_exception ] )
+    result
 end
 [@@ocaml.doc
   "Tests whether the specified event pattern matches the provided event.\n\n\
@@ -2601,6 +3110,17 @@ module UntagResource : sig
     'http_type Smaws_Lib.Context.t ->
     untag_resource_request ->
     ( untag_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `ManagedRuleException of managed_rule_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_request ->
+    ( untag_resource_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
@@ -2631,6 +3151,17 @@ module UpdateApiDestination : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_api_destination_request ->
+    ( update_api_destination_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc "Updates an API destination.\n"]
 
@@ -2648,6 +3179,18 @@ module UpdateArchive : sig
     'http_type Smaws_Lib.Context.t ->
     update_archive_request ->
     ( update_archive_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `InvalidEventPatternException of invalid_event_pattern_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_archive_request ->
+    ( update_archive_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
@@ -2681,6 +3224,19 @@ module UpdateConnection : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_connection_request ->
+    ( update_connection_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception ] )
+    result
 end
 [@@ocaml.doc "Updates settings for a connection.\n"]
 
@@ -2696,6 +3252,16 @@ module UpdateEndpoint : sig
     'http_type Smaws_Lib.Context.t ->
     update_endpoint_request ->
     ( update_endpoint_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_endpoint_request ->
+    ( update_endpoint_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
@@ -2722,6 +3288,17 @@ module UpdateEventBus : sig
     'http_type Smaws_Lib.Context.t ->
     update_event_bus_request ->
     ( update_event_bus_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InternalException of internal_exception
+      | `OperationDisabledException of operation_disabled_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_event_bus_request ->
+    ( update_event_bus_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception

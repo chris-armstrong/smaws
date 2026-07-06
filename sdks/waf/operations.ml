@@ -41,6 +41,13 @@ module CreateByteMatchSet = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.create_byte_match_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_byte_match_set_request) =
+    let input = Json_serializers.create_byte_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.CreateByteMatchSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_byte_match_set_response_of_yojson
+      ~error_deserializer
 end
 
 module CreateGeoMatchSet = struct
@@ -81,6 +88,13 @@ module CreateGeoMatchSet = struct
     let input = Json_serializers.create_geo_match_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.CreateGeoMatchSet" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.create_geo_match_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_geo_match_set_request) =
+    let input = Json_serializers.create_geo_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.CreateGeoMatchSet" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_geo_match_set_response_of_yojson
       ~error_deserializer
 end
@@ -124,6 +138,12 @@ module CreateIPSet = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.CreateIPSet" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_ip_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_ip_set_request) =
+    let input = Json_serializers.create_ip_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.CreateIPSet"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_ip_set_response_of_yojson ~error_deserializer
 end
 
 module CreateRateBasedRule = struct
@@ -174,6 +194,13 @@ module CreateRateBasedRule = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.create_rate_based_rule_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_rate_based_rule_request) =
+    let input = Json_serializers.create_rate_based_rule_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.CreateRateBasedRule" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_rate_based_rule_response_of_yojson
+      ~error_deserializer
 end
 
 module CreateRegexMatchSet = struct
@@ -208,6 +235,13 @@ module CreateRegexMatchSet = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.create_regex_match_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_regex_match_set_request) =
+    let input = Json_serializers.create_regex_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.CreateRegexMatchSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_regex_match_set_response_of_yojson
+      ~error_deserializer
 end
 
 module CreateRegexPatternSet = struct
@@ -240,6 +274,13 @@ module CreateRegexPatternSet = struct
     let input = Json_serializers.create_regex_pattern_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.CreateRegexPatternSet" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.create_regex_pattern_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_regex_pattern_set_request) =
+    let input = Json_serializers.create_regex_pattern_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.CreateRegexPatternSet" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_regex_pattern_set_response_of_yojson
       ~error_deserializer
 end
@@ -291,6 +332,12 @@ module CreateRule = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.CreateRule" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_rule_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_rule_request) =
+    let input = Json_serializers.create_rule_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.CreateRule"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_rule_response_of_yojson ~error_deserializer
 end
 
 module CreateRuleGroup = struct
@@ -336,6 +383,13 @@ module CreateRuleGroup = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.CreateRuleGroup" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_rule_group_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_rule_group_request) =
+    let input = Json_serializers.create_rule_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.CreateRuleGroup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_rule_group_response_of_yojson
+      ~error_deserializer
 end
 
 module CreateSizeConstraintSet = struct
@@ -378,6 +432,13 @@ module CreateSizeConstraintSet = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_size_constraint_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_size_constraint_set_request) =
+    let input = Json_serializers.create_size_constraint_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.CreateSizeConstraintSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_size_constraint_set_response_of_yojson
+      ~error_deserializer
 end
 
 module CreateSqlInjectionMatchSet = struct
@@ -418,6 +479,13 @@ module CreateSqlInjectionMatchSet = struct
     let input = Json_serializers.create_sql_injection_match_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.CreateSqlInjectionMatchSet"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_sql_injection_match_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_sql_injection_match_set_request) =
+    let input = Json_serializers.create_sql_injection_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.CreateSqlInjectionMatchSet" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_sql_injection_match_set_response_of_yojson
       ~error_deserializer
 end
@@ -473,6 +541,12 @@ module CreateWebACL = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.CreateWebACL" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_web_acl_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_web_acl_request) =
+    let input = Json_serializers.create_web_acl_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.CreateWebACL"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_web_acl_response_of_yojson ~error_deserializer
 end
 
 module CreateWebACLMigrationStack = struct
@@ -510,6 +584,13 @@ module CreateWebACLMigrationStack = struct
     let input = Json_serializers.create_web_acl_migration_stack_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.CreateWebACLMigrationStack"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_web_acl_migration_stack_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_web_acl_migration_stack_request) =
+    let input = Json_serializers.create_web_acl_migration_stack_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.CreateWebACLMigrationStack" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_web_acl_migration_stack_response_of_yojson
       ~error_deserializer
 end
@@ -554,6 +635,13 @@ module CreateXssMatchSet = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.create_xss_match_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_xss_match_set_request) =
+    let input = Json_serializers.create_xss_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.CreateXssMatchSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_xss_match_set_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteByteMatchSet = struct
@@ -594,6 +682,13 @@ module DeleteByteMatchSet = struct
     let input = Json_serializers.delete_byte_match_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.DeleteByteMatchSet" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.delete_byte_match_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_byte_match_set_request) =
+    let input = Json_serializers.delete_byte_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.DeleteByteMatchSet" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_byte_match_set_response_of_yojson
       ~error_deserializer
 end
@@ -638,6 +733,13 @@ module DeleteGeoMatchSet = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.delete_geo_match_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_geo_match_set_request) =
+    let input = Json_serializers.delete_geo_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.DeleteGeoMatchSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_geo_match_set_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteIPSet = struct
@@ -679,6 +781,12 @@ module DeleteIPSet = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.DeleteIPSet" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_ip_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_ip_set_request) =
+    let input = Json_serializers.delete_ip_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.DeleteIPSet"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_ip_set_response_of_yojson ~error_deserializer
 end
 
 module DeleteLoggingConfiguration = struct
@@ -709,6 +817,13 @@ module DeleteLoggingConfiguration = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_logging_configuration_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_logging_configuration_request) =
+    let input = Json_serializers.delete_logging_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.DeleteLoggingConfiguration" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_logging_configuration_response_of_yojson
+      ~error_deserializer
 end
 
 module DeletePermissionPolicy = struct
@@ -737,6 +852,13 @@ module DeletePermissionPolicy = struct
     let input = Json_serializers.delete_permission_policy_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.DeletePermissionPolicy"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_permission_policy_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_permission_policy_request) =
+    let input = Json_serializers.delete_permission_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.DeletePermissionPolicy" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_permission_policy_response_of_yojson
       ~error_deserializer
 end
@@ -790,6 +912,13 @@ module DeleteRateBasedRule = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.delete_rate_based_rule_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_rate_based_rule_request) =
+    let input = Json_serializers.delete_rate_based_rule_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.DeleteRateBasedRule" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_rate_based_rule_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteRegexMatchSet = struct
@@ -832,6 +961,13 @@ module DeleteRegexMatchSet = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.delete_regex_match_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_regex_match_set_request) =
+    let input = Json_serializers.delete_regex_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.DeleteRegexMatchSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_regex_match_set_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteRegexPatternSet = struct
@@ -872,6 +1008,13 @@ module DeleteRegexPatternSet = struct
     let input = Json_serializers.delete_regex_pattern_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.DeleteRegexPatternSet" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.delete_regex_pattern_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_regex_pattern_set_request) =
+    let input = Json_serializers.delete_regex_pattern_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.DeleteRegexPatternSet" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_regex_pattern_set_response_of_yojson
       ~error_deserializer
 end
@@ -924,6 +1067,12 @@ module DeleteRule = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.DeleteRule" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_rule_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_rule_request) =
+    let input = Json_serializers.delete_rule_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.DeleteRule"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_rule_response_of_yojson ~error_deserializer
 end
 
 module DeleteRuleGroup = struct
@@ -974,6 +1123,13 @@ module DeleteRuleGroup = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.DeleteRuleGroup" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_rule_group_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_rule_group_request) =
+    let input = Json_serializers.delete_rule_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.DeleteRuleGroup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_rule_group_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteSizeConstraintSet = struct
@@ -1016,6 +1172,13 @@ module DeleteSizeConstraintSet = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_size_constraint_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_size_constraint_set_request) =
+    let input = Json_serializers.delete_size_constraint_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.DeleteSizeConstraintSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_size_constraint_set_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteSqlInjectionMatchSet = struct
@@ -1056,6 +1219,13 @@ module DeleteSqlInjectionMatchSet = struct
     let input = Json_serializers.delete_sql_injection_match_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.DeleteSqlInjectionMatchSet"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_sql_injection_match_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_sql_injection_match_set_request) =
+    let input = Json_serializers.delete_sql_injection_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.DeleteSqlInjectionMatchSet" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_sql_injection_match_set_response_of_yojson
       ~error_deserializer
 end
@@ -1108,6 +1278,12 @@ module DeleteWebACL = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.DeleteWebACL" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_web_acl_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_web_acl_request) =
+    let input = Json_serializers.delete_web_acl_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.DeleteWebACL"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_web_acl_response_of_yojson ~error_deserializer
 end
 
 module DeleteXssMatchSet = struct
@@ -1150,6 +1326,13 @@ module DeleteXssMatchSet = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.delete_xss_match_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_xss_match_set_request) =
+    let input = Json_serializers.delete_xss_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.DeleteXssMatchSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_xss_match_set_response_of_yojson
+      ~error_deserializer
 end
 
 module GetByteMatchSet = struct
@@ -1180,6 +1363,13 @@ module GetByteMatchSet = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.GetByteMatchSet" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_byte_match_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_byte_match_set_request) =
+    let input = Json_serializers.get_byte_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.GetByteMatchSet"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_byte_match_set_response_of_yojson
+      ~error_deserializer
 end
 
 module GetChangeToken = struct
@@ -1201,6 +1391,13 @@ module GetChangeToken = struct
     let input = Json_serializers.get_change_token_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.GetChangeToken" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_change_token_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_change_token_request) =
+    let input = Json_serializers.get_change_token_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.GetChangeToken"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_change_token_response_of_yojson
       ~error_deserializer
 end
 
@@ -1227,6 +1424,13 @@ module GetChangeTokenStatus = struct
     let input = Json_serializers.get_change_token_status_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.GetChangeTokenStatus" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.get_change_token_status_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_change_token_status_request) =
+    let input = Json_serializers.get_change_token_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.GetChangeTokenStatus" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_change_token_status_response_of_yojson
       ~error_deserializer
 end
@@ -1259,6 +1463,13 @@ module GetGeoMatchSet = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.GetGeoMatchSet" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_geo_match_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_geo_match_set_request) =
+    let input = Json_serializers.get_geo_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.GetGeoMatchSet"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_geo_match_set_response_of_yojson
+      ~error_deserializer
 end
 
 module GetIPSet = struct
@@ -1289,6 +1500,12 @@ module GetIPSet = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.GetIPSet" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_ip_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_ip_set_request) =
+    let input = Json_serializers.get_ip_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.GetIPSet"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.get_ip_set_response_of_yojson
+      ~error_deserializer
 end
 
 module GetLoggingConfiguration = struct
@@ -1316,6 +1533,13 @@ module GetLoggingConfiguration = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_logging_configuration_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_logging_configuration_request) =
+    let input = Json_serializers.get_logging_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.GetLoggingConfiguration" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_logging_configuration_response_of_yojson
+      ~error_deserializer
 end
 
 module GetPermissionPolicy = struct
@@ -1341,6 +1565,13 @@ module GetPermissionPolicy = struct
     let input = Json_serializers.get_permission_policy_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.GetPermissionPolicy" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.get_permission_policy_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_permission_policy_request) =
+    let input = Json_serializers.get_permission_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.GetPermissionPolicy" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_permission_policy_response_of_yojson
       ~error_deserializer
 end
@@ -1372,6 +1603,13 @@ module GetRateBasedRule = struct
     let input = Json_serializers.get_rate_based_rule_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.GetRateBasedRule" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_rate_based_rule_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_rate_based_rule_request) =
+    let input = Json_serializers.get_rate_based_rule_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.GetRateBasedRule"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_rate_based_rule_response_of_yojson
       ~error_deserializer
 end
 
@@ -1408,6 +1646,13 @@ module GetRateBasedRuleManagedKeys = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_rate_based_rule_managed_keys_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_rate_based_rule_managed_keys_request) =
+    let input = Json_serializers.get_rate_based_rule_managed_keys_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.GetRateBasedRuleManagedKeys" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_rate_based_rule_managed_keys_response_of_yojson
+      ~error_deserializer
 end
 
 module GetRegexMatchSet = struct
@@ -1437,6 +1682,13 @@ module GetRegexMatchSet = struct
     let input = Json_serializers.get_regex_match_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.GetRegexMatchSet" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_regex_match_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_regex_match_set_request) =
+    let input = Json_serializers.get_regex_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.GetRegexMatchSet"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_regex_match_set_response_of_yojson
       ~error_deserializer
 end
 
@@ -1469,6 +1721,13 @@ module GetRegexPatternSet = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.get_regex_pattern_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_regex_pattern_set_request) =
+    let input = Json_serializers.get_regex_pattern_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.GetRegexPatternSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_regex_pattern_set_response_of_yojson
+      ~error_deserializer
 end
 
 module GetRule = struct
@@ -1498,6 +1757,12 @@ module GetRule = struct
     let input = Json_serializers.get_rule_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.GetRule" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_rule_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_rule_request) =
+    let input = Json_serializers.get_rule_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.GetRule" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_rule_response_of_yojson
+      ~error_deserializer
 end
 
 module GetRuleGroup = struct
@@ -1524,6 +1789,12 @@ module GetRuleGroup = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.GetRuleGroup" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_rule_group_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_rule_group_request) =
+    let input = Json_serializers.get_rule_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.GetRuleGroup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_rule_group_response_of_yojson ~error_deserializer
 end
 
 module GetSampledRequests = struct
@@ -1549,6 +1820,13 @@ module GetSampledRequests = struct
     let input = Json_serializers.get_sampled_requests_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.GetSampledRequests" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.get_sampled_requests_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_sampled_requests_request) =
+    let input = Json_serializers.get_sampled_requests_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.GetSampledRequests" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_sampled_requests_response_of_yojson
       ~error_deserializer
 end
@@ -1582,6 +1860,13 @@ module GetSizeConstraintSet = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.get_size_constraint_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_size_constraint_set_request) =
+    let input = Json_serializers.get_size_constraint_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.GetSizeConstraintSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_size_constraint_set_response_of_yojson
+      ~error_deserializer
 end
 
 module GetSqlInjectionMatchSet = struct
@@ -1611,6 +1896,13 @@ module GetSqlInjectionMatchSet = struct
     let input = Json_serializers.get_sql_injection_match_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.GetSqlInjectionMatchSet"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_sql_injection_match_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_sql_injection_match_set_request) =
+    let input = Json_serializers.get_sql_injection_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.GetSqlInjectionMatchSet" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_sql_injection_match_set_response_of_yojson
       ~error_deserializer
 end
@@ -1643,6 +1935,12 @@ module GetWebACL = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.GetWebACL" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_web_acl_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_web_acl_request) =
+    let input = Json_serializers.get_web_acl_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.GetWebACL"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_web_acl_response_of_yojson ~error_deserializer
 end
 
 module GetXssMatchSet = struct
@@ -1672,6 +1970,13 @@ module GetXssMatchSet = struct
     let input = Json_serializers.get_xss_match_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.GetXssMatchSet" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_xss_match_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_xss_match_set_request) =
+    let input = Json_serializers.get_xss_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.GetXssMatchSet"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_xss_match_set_response_of_yojson
       ~error_deserializer
 end
 
@@ -1704,6 +2009,13 @@ module ListActivatedRulesInRuleGroup = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_activated_rules_in_rule_group_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_activated_rules_in_rule_group_request) =
+    let input = Json_serializers.list_activated_rules_in_rule_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.ListActivatedRulesInRuleGroup" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_activated_rules_in_rule_group_response_of_yojson
+      ~error_deserializer
 end
 
 module ListByteMatchSets = struct
@@ -1729,6 +2041,13 @@ module ListByteMatchSets = struct
     let input = Json_serializers.list_byte_match_sets_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.ListByteMatchSets" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.list_byte_match_sets_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_byte_match_sets_request) =
+    let input = Json_serializers.list_byte_match_sets_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.ListByteMatchSets" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_byte_match_sets_response_of_yojson
       ~error_deserializer
 end
@@ -1757,6 +2076,13 @@ module ListGeoMatchSets = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.ListGeoMatchSets" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_geo_match_sets_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_geo_match_sets_request) =
+    let input = Json_serializers.list_geo_match_sets_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.ListGeoMatchSets"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_geo_match_sets_response_of_yojson
+      ~error_deserializer
 end
 
 module ListIPSets = struct
@@ -1783,6 +2109,12 @@ module ListIPSets = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.ListIPSets" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_ip_sets_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_ip_sets_request) =
+    let input = Json_serializers.list_ip_sets_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.ListIPSets"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_ip_sets_response_of_yojson ~error_deserializer
 end
 
 module ListLoggingConfigurations = struct
@@ -1814,6 +2146,13 @@ module ListLoggingConfigurations = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_logging_configurations_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_logging_configurations_request) =
+    let input = Json_serializers.list_logging_configurations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.ListLoggingConfigurations" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_logging_configurations_response_of_yojson
+      ~error_deserializer
 end
 
 module ListRateBasedRules = struct
@@ -1839,6 +2178,13 @@ module ListRateBasedRules = struct
     let input = Json_serializers.list_rate_based_rules_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.ListRateBasedRules" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.list_rate_based_rules_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_rate_based_rules_request) =
+    let input = Json_serializers.list_rate_based_rules_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.ListRateBasedRules" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_rate_based_rules_response_of_yojson
       ~error_deserializer
 end
@@ -1868,6 +2214,13 @@ module ListRegexMatchSets = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.list_regex_match_sets_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_regex_match_sets_request) =
+    let input = Json_serializers.list_regex_match_sets_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.ListRegexMatchSets" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_regex_match_sets_response_of_yojson
+      ~error_deserializer
 end
 
 module ListRegexPatternSets = struct
@@ -1895,6 +2248,13 @@ module ListRegexPatternSets = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.list_regex_pattern_sets_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_regex_pattern_sets_request) =
+    let input = Json_serializers.list_regex_pattern_sets_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.ListRegexPatternSets" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_regex_pattern_sets_response_of_yojson
+      ~error_deserializer
 end
 
 module ListRuleGroups = struct
@@ -1916,6 +2276,13 @@ module ListRuleGroups = struct
     let input = Json_serializers.list_rule_groups_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.ListRuleGroups" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_rule_groups_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_rule_groups_request) =
+    let input = Json_serializers.list_rule_groups_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.ListRuleGroups"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_rule_groups_response_of_yojson
       ~error_deserializer
 end
 
@@ -1943,6 +2310,12 @@ module ListRules = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.ListRules" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_rules_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_rules_request) =
+    let input = Json_serializers.list_rules_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.ListRules"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.list_rules_response_of_yojson
+      ~error_deserializer
 end
 
 module ListSizeConstraintSets = struct
@@ -1968,6 +2341,13 @@ module ListSizeConstraintSets = struct
     let input = Json_serializers.list_size_constraint_sets_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.ListSizeConstraintSets"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_size_constraint_sets_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_size_constraint_sets_request) =
+    let input = Json_serializers.list_size_constraint_sets_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.ListSizeConstraintSets" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_size_constraint_sets_response_of_yojson
       ~error_deserializer
 end
@@ -1997,6 +2377,13 @@ module ListSqlInjectionMatchSets = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_sql_injection_match_sets_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_sql_injection_match_sets_request) =
+    let input = Json_serializers.list_sql_injection_match_sets_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.ListSqlInjectionMatchSets" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_sql_injection_match_sets_response_of_yojson
+      ~error_deserializer
 end
 
 module ListSubscribedRuleGroups = struct
@@ -2022,6 +2409,13 @@ module ListSubscribedRuleGroups = struct
     let input = Json_serializers.list_subscribed_rule_groups_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.ListSubscribedRuleGroups"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_subscribed_rule_groups_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_subscribed_rule_groups_request) =
+    let input = Json_serializers.list_subscribed_rule_groups_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.ListSubscribedRuleGroups" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_subscribed_rule_groups_response_of_yojson
       ~error_deserializer
 end
@@ -2067,6 +2461,13 @@ module ListTagsForResource = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_resource_request) =
+    let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.ListTagsForResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module ListWebACLs = struct
@@ -2093,6 +2494,12 @@ module ListWebACLs = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.ListWebACLs" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_web_ac_ls_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_web_ac_ls_request) =
+    let input = Json_serializers.list_web_ac_ls_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.ListWebACLs"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_web_ac_ls_response_of_yojson ~error_deserializer
 end
 
 module ListXssMatchSets = struct
@@ -2118,6 +2525,13 @@ module ListXssMatchSets = struct
     let input = Json_serializers.list_xss_match_sets_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.ListXssMatchSets" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_xss_match_sets_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_xss_match_sets_request) =
+    let input = Json_serializers.list_xss_match_sets_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.ListXssMatchSets"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_xss_match_sets_response_of_yojson
       ~error_deserializer
 end
 
@@ -2154,6 +2568,13 @@ module PutLoggingConfiguration = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_logging_configuration_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_logging_configuration_request) =
+    let input = Json_serializers.put_logging_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.PutLoggingConfiguration" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_logging_configuration_response_of_yojson
+      ~error_deserializer
 end
 
 module PutPermissionPolicy = struct
@@ -2187,6 +2608,13 @@ module PutPermissionPolicy = struct
     let input = Json_serializers.put_permission_policy_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.PutPermissionPolicy" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.put_permission_policy_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_permission_policy_request) =
+    let input = Json_serializers.put_permission_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.PutPermissionPolicy" ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_permission_policy_response_of_yojson
       ~error_deserializer
 end
@@ -2235,6 +2663,12 @@ module TagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.TagResource" ~service ~context
       ~input ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_request) =
+    let input = Json_serializers.tag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.TagResource"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson ~error_deserializer
 end
 
 module UntagResource = struct
@@ -2277,6 +2711,12 @@ module UntagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.UntagResource" ~service
       ~context ~input ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_request) =
+    let input = Json_serializers.untag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.UntagResource"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson ~error_deserializer
 end
 
 module UpdateByteMatchSet = struct
@@ -2325,6 +2765,13 @@ module UpdateByteMatchSet = struct
     let input = Json_serializers.update_byte_match_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.UpdateByteMatchSet" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.update_byte_match_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_byte_match_set_request) =
+    let input = Json_serializers.update_byte_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.UpdateByteMatchSet" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_byte_match_set_response_of_yojson
       ~error_deserializer
 end
@@ -2381,6 +2828,13 @@ module UpdateGeoMatchSet = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.update_geo_match_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_geo_match_set_request) =
+    let input = Json_serializers.update_geo_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.UpdateGeoMatchSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_geo_match_set_response_of_yojson
+      ~error_deserializer
 end
 
 module UpdateIPSet = struct
@@ -2434,6 +2888,12 @@ module UpdateIPSet = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.UpdateIPSet" ~service ~context
       ~input ~output_deserializer:Json_deserializers.update_ip_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_ip_set_request) =
+    let input = Json_serializers.update_ip_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.UpdateIPSet"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_ip_set_response_of_yojson ~error_deserializer
 end
 
 module UpdateRateBasedRule = struct
@@ -2488,6 +2948,13 @@ module UpdateRateBasedRule = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.update_rate_based_rule_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_rate_based_rule_request) =
+    let input = Json_serializers.update_rate_based_rule_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.UpdateRateBasedRule" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_rate_based_rule_response_of_yojson
+      ~error_deserializer
 end
 
 module UpdateRegexMatchSet = struct
@@ -2538,6 +3005,13 @@ module UpdateRegexMatchSet = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.update_regex_match_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_regex_match_set_request) =
+    let input = Json_serializers.update_regex_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.UpdateRegexMatchSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_regex_match_set_response_of_yojson
+      ~error_deserializer
 end
 
 module UpdateRegexPatternSet = struct
@@ -2586,6 +3060,13 @@ module UpdateRegexPatternSet = struct
     let input = Json_serializers.update_regex_pattern_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.UpdateRegexPatternSet" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.update_regex_pattern_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_regex_pattern_set_request) =
+    let input = Json_serializers.update_regex_pattern_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.UpdateRegexPatternSet" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_regex_pattern_set_response_of_yojson
       ~error_deserializer
 end
@@ -2641,6 +3122,12 @@ module UpdateRule = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.UpdateRule" ~service ~context
       ~input ~output_deserializer:Json_deserializers.update_rule_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_rule_request) =
+    let input = Json_serializers.update_rule_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.UpdateRule"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_rule_response_of_yojson ~error_deserializer
 end
 
 module UpdateRuleGroup = struct
@@ -2685,6 +3172,13 @@ module UpdateRuleGroup = struct
     let input = Json_serializers.update_rule_group_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.UpdateRuleGroup" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_rule_group_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_rule_group_request) =
+    let input = Json_serializers.update_rule_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.UpdateRuleGroup"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_rule_group_response_of_yojson
       ~error_deserializer
 end
 
@@ -2740,6 +3234,13 @@ module UpdateSizeConstraintSet = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_size_constraint_set_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_size_constraint_set_request) =
+    let input = Json_serializers.update_size_constraint_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.UpdateSizeConstraintSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_size_constraint_set_response_of_yojson
+      ~error_deserializer
 end
 
 module UpdateSqlInjectionMatchSet = struct
@@ -2788,6 +3289,13 @@ module UpdateSqlInjectionMatchSet = struct
     let input = Json_serializers.update_sql_injection_match_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.UpdateSqlInjectionMatchSet"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_sql_injection_match_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_sql_injection_match_set_request) =
+    let input = Json_serializers.update_sql_injection_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.UpdateSqlInjectionMatchSet" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_sql_injection_match_set_response_of_yojson
       ~error_deserializer
 end
@@ -2847,6 +3355,12 @@ module UpdateWebACL = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.UpdateWebACL" ~service ~context
       ~input ~output_deserializer:Json_deserializers.update_web_acl_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_web_acl_request) =
+    let input = Json_serializers.update_web_acl_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSWAF_20150824.UpdateWebACL"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_web_acl_response_of_yojson ~error_deserializer
 end
 
 module UpdateXssMatchSet = struct
@@ -2895,6 +3409,13 @@ module UpdateXssMatchSet = struct
     let input = Json_serializers.update_xss_match_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSWAF_20150824.UpdateXssMatchSet" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.update_xss_match_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_xss_match_set_request) =
+    let input = Json_serializers.update_xss_match_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSWAF_20150824.UpdateXssMatchSet" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_xss_match_set_response_of_yojson
       ~error_deserializer
 end

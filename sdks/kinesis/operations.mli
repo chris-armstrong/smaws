@@ -21,6 +21,18 @@ module AddTagsToStream : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_stream_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Adds or updates tags for the specified Kinesis data stream. You can assign up to 50 tags to a \
@@ -47,6 +59,17 @@ module CreateStream : sig
     'http_type Smaws_Lib.Context.t ->
     create_stream_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_stream_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
@@ -137,6 +160,18 @@ module DecreaseStreamRetentionPeriod : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    decrease_stream_retention_period_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Decreases the Kinesis data stream's retention period, which is the length of time data records \
@@ -164,6 +199,18 @@ module DeleteResourcePolicy : sig
     'http_type Smaws_Lib.Context.t ->
     delete_resource_policy_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_resource_policy_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -200,6 +247,18 @@ module DeleteStream : sig
     'http_type Smaws_Lib.Context.t ->
     delete_stream_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_stream_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -249,6 +308,16 @@ module DeregisterStreamConsumer : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    deregister_stream_consumer_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "To deregister a consumer, provide its ARN. Alternatively, you can provide the ARN of the data \
@@ -269,6 +338,14 @@ module DescribeAccountSettings : sig
     'http_type Smaws_Lib.Context.t ->
     describe_account_settings_input ->
     ( describe_account_settings_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
+    )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_account_settings_input ->
+    ( describe_account_settings_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
     )
     result
@@ -293,6 +370,14 @@ module DescribeLimits : sig
       [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
     )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_limits_input ->
+    ( describe_limits_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
+    )
+    result
 end
 [@@ocaml.doc
   "Describes the shard limits and usage for the account.\n\n\
@@ -314,6 +399,17 @@ module DescribeStream : sig
     'http_type Smaws_Lib.Context.t ->
     describe_stream_input ->
     ( describe_stream_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stream_input ->
+    ( describe_stream_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -366,6 +462,16 @@ module DescribeStreamConsumer : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stream_consumer_input ->
+    ( describe_stream_consumer_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "To get the description of a registered consumer, provide the ARN of the consumer. \
@@ -394,6 +500,17 @@ module DescribeStreamSummary : sig
     'http_type Smaws_Lib.Context.t ->
     describe_stream_summary_input ->
     ( describe_stream_summary_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stream_summary_input ->
+    ( describe_stream_summary_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -434,6 +551,18 @@ module DisableEnhancedMonitoring : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    disable_enhanced_monitoring_input ->
+    ( enhanced_monitoring_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Disables enhanced monitoring.\n\n\
@@ -456,6 +585,18 @@ module EnableEnhancedMonitoring : sig
     'http_type Smaws_Lib.Context.t ->
     enable_enhanced_monitoring_input ->
     ( enhanced_monitoring_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    enable_enhanced_monitoring_input ->
+    ( enhanced_monitoring_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -492,6 +633,25 @@ module GetRecords : sig
     'http_type Smaws_Lib.Context.t ->
     get_records_input ->
     ( get_records_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ExpiredIteratorException of expired_iterator_exception
+      | `InternalFailureException of internal_failure_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `KMSAccessDeniedException of kms_access_denied_exception
+      | `KMSDisabledException of kms_disabled_exception
+      | `KMSInvalidStateException of kms_invalid_state_exception
+      | `KMSNotFoundException of kms_not_found_exception
+      | `KMSOptInRequired of kms_opt_in_required
+      | `KMSThrottlingException of kms_throttling_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_records_input ->
+    ( get_records_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ExpiredIteratorException of expired_iterator_exception
@@ -587,6 +747,18 @@ module GetResourcePolicy : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_resource_policy_input ->
+    ( get_resource_policy_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Returns a policy attached to the specified data stream or consumer. Request patterns can be one \
@@ -616,6 +788,18 @@ module GetShardIterator : sig
     'http_type Smaws_Lib.Context.t ->
     get_shard_iterator_input ->
     ( get_shard_iterator_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalFailureException of internal_failure_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_shard_iterator_input ->
+    ( get_shard_iterator_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalFailureException of internal_failure_exception
@@ -686,6 +870,18 @@ module IncreaseStreamRetentionPeriod : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    increase_stream_retention_period_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Increases the Kinesis data stream's retention period, which is the length of time data records \
@@ -717,6 +913,19 @@ module ListShards : sig
     'http_type Smaws_Lib.Context.t ->
     list_shards_input ->
     ( list_shards_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ExpiredNextTokenException of expired_next_token_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_shards_input ->
+    ( list_shards_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ExpiredNextTokenException of expired_next_token_exception
@@ -765,6 +974,18 @@ module ListStreamConsumers : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_stream_consumers_input ->
+    ( list_stream_consumers_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ExpiredNextTokenException of expired_next_token_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Lists the consumers registered to receive data from a stream using enhanced fan-out, and \
@@ -784,6 +1005,16 @@ module ListStreams : sig
     'http_type Smaws_Lib.Context.t ->
     list_streams_input ->
     ( list_streams_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ExpiredNextTokenException of expired_next_token_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_streams_input ->
+    ( list_streams_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ExpiredNextTokenException of expired_next_token_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -827,6 +1058,18 @@ module ListTagsForResource : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_input ->
+    ( list_tags_for_resource_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "List all tags added to the specified Kinesis resource. Each tag is a label consisting of a \
@@ -850,6 +1093,17 @@ module ListTagsForStream : sig
     'http_type Smaws_Lib.Context.t ->
     list_tags_for_stream_input ->
     ( list_tags_for_stream_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_stream_input ->
+    ( list_tags_for_stream_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -880,6 +1134,19 @@ module MergeShards : sig
     'http_type Smaws_Lib.Context.t ->
     merge_shards_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    merge_shards_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -962,6 +1229,24 @@ module PutRecord : sig
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_record_input ->
+    ( put_record_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalFailureException of internal_failure_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `KMSAccessDeniedException of kms_access_denied_exception
+      | `KMSDisabledException of kms_disabled_exception
+      | `KMSInvalidStateException of kms_invalid_state_exception
+      | `KMSNotFoundException of kms_not_found_exception
+      | `KMSOptInRequired of kms_opt_in_required
+      | `KMSThrottlingException of kms_throttling_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Writes a single data record into an Amazon Kinesis data stream. Call [PutRecord] to send data \
@@ -1031,6 +1316,24 @@ module PutRecords : sig
     'http_type Smaws_Lib.Context.t ->
     put_records_input ->
     ( put_records_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalFailureException of internal_failure_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `KMSAccessDeniedException of kms_access_denied_exception
+      | `KMSDisabledException of kms_disabled_exception
+      | `KMSInvalidStateException of kms_invalid_state_exception
+      | `KMSNotFoundException of kms_not_found_exception
+      | `KMSOptInRequired of kms_opt_in_required
+      | `KMSThrottlingException of kms_throttling_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_records_input ->
+    ( put_records_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InternalFailureException of internal_failure_exception
@@ -1134,6 +1437,18 @@ module PutResourcePolicy : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_resource_policy_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Attaches a resource-based policy to a data stream or registered consumer. If you are using an \
@@ -1172,6 +1487,17 @@ module RegisterStreamConsumer : sig
     'http_type Smaws_Lib.Context.t ->
     register_stream_consumer_input ->
     ( register_stream_consumer_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    register_stream_consumer_input ->
+    ( register_stream_consumer_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
@@ -1226,6 +1552,18 @@ module RemoveTagsFromStream : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    remove_tags_from_stream_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Removes tags from the specified Kinesis data stream. Removed tags are deleted and cannot be \
@@ -1253,6 +1591,19 @@ module SplitShard : sig
     'http_type Smaws_Lib.Context.t ->
     split_shard_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    split_shard_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -1345,6 +1696,24 @@ module StartStreamEncryption : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_stream_encryption_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `KMSAccessDeniedException of kms_access_denied_exception
+      | `KMSDisabledException of kms_disabled_exception
+      | `KMSInvalidStateException of kms_invalid_state_exception
+      | `KMSNotFoundException of kms_not_found_exception
+      | `KMSOptInRequired of kms_opt_in_required
+      | `KMSThrottlingException of kms_throttling_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Enables or updates server-side encryption using an Amazon Web Services KMS key for a specified \
@@ -1381,6 +1750,18 @@ module StopStreamEncryption : sig
     'http_type Smaws_Lib.Context.t ->
     stop_stream_encryption_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    stop_stream_encryption_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -1425,6 +1806,18 @@ module SubscribeToShard : sig
     'http_type Smaws_Lib.Context.t ->
     subscribe_to_shard_input ->
     ( subscribe_to_shard_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    subscribe_to_shard_input ->
+    ( subscribe_to_shard_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -1480,6 +1873,18 @@ module TagResource : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Adds or updates tags for the specified Kinesis resource. Each tag is a label consisting of a \
@@ -1507,6 +1912,18 @@ module UntagResource : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc
   "Removes tags from the specified Kinesis resource. Removed tags are deleted and can't be \
@@ -1524,6 +1941,16 @@ module UpdateAccountSettings : sig
     'http_type Smaws_Lib.Context.t ->
     update_account_settings_input ->
     ( update_account_settings_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_account_settings_input ->
+    ( update_account_settings_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
@@ -1573,6 +2000,19 @@ module UpdateMaxRecordSize : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_max_record_size_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "This allows you to update the [MaxRecordSize] of a single record that you can write to, and \
@@ -1593,6 +2033,19 @@ module UpdateShardCount : sig
     'http_type Smaws_Lib.Context.t ->
     update_shard_count_input ->
     ( update_shard_count_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_shard_count_input ->
+    ( update_shard_count_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InvalidArgumentException of invalid_argument_exception
@@ -1678,6 +2131,18 @@ module UpdateStreamMode : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_stream_mode_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   " Updates the capacity mode of the data stream. Currently, in Kinesis Data Streams, you can \
@@ -1705,6 +2170,19 @@ module UpdateStreamWarmThroughput : sig
     'http_type Smaws_Lib.Context.t ->
     update_stream_warm_throughput_input ->
     ( update_stream_warm_throughput_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_stream_warm_throughput_input ->
+    ( update_stream_warm_throughput_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `InvalidArgumentException of invalid_argument_exception

@@ -32,6 +32,13 @@ module CreateHttpNamespace = struct
       ~shape_name:"Route53AutoNaming_v20170314.CreateHttpNamespace" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_http_namespace_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_http_namespace_request) =
+    let input = Json_serializers.create_http_namespace_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.CreateHttpNamespace" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_http_namespace_response_of_yojson
+      ~error_deserializer
 end
 
 module CreatePrivateDnsNamespace = struct
@@ -62,6 +69,13 @@ module CreatePrivateDnsNamespace = struct
   let request context (request : create_private_dns_namespace_request) =
     let input = Json_serializers.create_private_dns_namespace_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"Route53AutoNaming_v20170314.CreatePrivateDnsNamespace" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_private_dns_namespace_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_private_dns_namespace_request) =
+    let input = Json_serializers.create_private_dns_namespace_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"Route53AutoNaming_v20170314.CreatePrivateDnsNamespace" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_private_dns_namespace_response_of_yojson
       ~error_deserializer
@@ -98,6 +112,13 @@ module CreatePublicDnsNamespace = struct
       ~shape_name:"Route53AutoNaming_v20170314.CreatePublicDnsNamespace" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_public_dns_namespace_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_public_dns_namespace_request) =
+    let input = Json_serializers.create_public_dns_namespace_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.CreatePublicDnsNamespace" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_public_dns_namespace_response_of_yojson
+      ~error_deserializer
 end
 
 module CreateService = struct
@@ -130,6 +151,12 @@ module CreateService = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.CreateService"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_service_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : create_service_request) =
+    let input = Json_serializers.create_service_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.CreateService" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_service_response_of_yojson ~error_deserializer
 end
 
 module DeleteNamespace = struct
@@ -160,6 +187,13 @@ module DeleteNamespace = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_namespace_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_namespace_request) =
+    let input = Json_serializers.delete_namespace_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.DeleteNamespace" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_namespace_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteService = struct
@@ -186,6 +220,12 @@ module DeleteService = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.DeleteService"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_service_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : delete_service_request) =
+    let input = Json_serializers.delete_service_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.DeleteService" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_service_response_of_yojson ~error_deserializer
 end
 
 module DeleteServiceAttributes = struct
@@ -207,6 +247,13 @@ module DeleteServiceAttributes = struct
   let request context (request : delete_service_attributes_request) =
     let input = Json_serializers.delete_service_attributes_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"Route53AutoNaming_v20170314.DeleteServiceAttributes" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_service_attributes_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_service_attributes_request) =
+    let input = Json_serializers.delete_service_attributes_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"Route53AutoNaming_v20170314.DeleteServiceAttributes" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_service_attributes_response_of_yojson
       ~error_deserializer
@@ -243,6 +290,13 @@ module DeregisterInstance = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.deregister_instance_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : deregister_instance_request) =
+    let input = Json_serializers.deregister_instance_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.DeregisterInstance" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.deregister_instance_response_of_yojson
+      ~error_deserializer
 end
 
 module DiscoverInstances = struct
@@ -271,6 +325,13 @@ module DiscoverInstances = struct
     let input = Json_serializers.discover_instances_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.DiscoverInstances"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.discover_instances_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : discover_instances_request) =
+    let input = Json_serializers.discover_instances_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.DiscoverInstances" ~service ~context ~input
       ~output_deserializer:Json_deserializers.discover_instances_response_of_yojson
       ~error_deserializer
 end
@@ -303,6 +364,13 @@ module DiscoverInstancesRevision = struct
       ~shape_name:"Route53AutoNaming_v20170314.DiscoverInstancesRevision" ~service ~context ~input
       ~output_deserializer:Json_deserializers.discover_instances_revision_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : discover_instances_revision_request) =
+    let input = Json_serializers.discover_instances_revision_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.DiscoverInstancesRevision" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.discover_instances_revision_response_of_yojson
+      ~error_deserializer
 end
 
 module GetInstance = struct
@@ -328,6 +396,12 @@ module GetInstance = struct
     let input = Json_serializers.get_instance_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.GetInstance"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_instance_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_instance_request) =
+    let input = Json_serializers.get_instance_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.GetInstance" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_instance_response_of_yojson ~error_deserializer
 end
 
@@ -356,6 +430,13 @@ module GetInstancesHealthStatus = struct
       ~shape_name:"Route53AutoNaming_v20170314.GetInstancesHealthStatus" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_instances_health_status_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_instances_health_status_request) =
+    let input = Json_serializers.get_instances_health_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.GetInstancesHealthStatus" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_instances_health_status_response_of_yojson
+      ~error_deserializer
 end
 
 module GetNamespace = struct
@@ -378,6 +459,12 @@ module GetNamespace = struct
     let input = Json_serializers.get_namespace_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.GetNamespace"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_namespace_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_namespace_request) =
+    let input = Json_serializers.get_namespace_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.GetNamespace" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_namespace_response_of_yojson ~error_deserializer
 end
 
@@ -402,6 +489,12 @@ module GetOperation = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.GetOperation"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_operation_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_operation_request) =
+    let input = Json_serializers.get_operation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.GetOperation" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_operation_response_of_yojson ~error_deserializer
 end
 
 module GetService = struct
@@ -425,6 +518,12 @@ module GetService = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.GetService"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_service_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_service_request) =
+    let input = Json_serializers.get_service_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.GetService" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_service_response_of_yojson ~error_deserializer
 end
 
 module GetServiceAttributes = struct
@@ -446,6 +545,13 @@ module GetServiceAttributes = struct
   let request context (request : get_service_attributes_request) =
     let input = Json_serializers.get_service_attributes_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"Route53AutoNaming_v20170314.GetServiceAttributes" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_service_attributes_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_service_attributes_request) =
+    let input = Json_serializers.get_service_attributes_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"Route53AutoNaming_v20170314.GetServiceAttributes" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_service_attributes_response_of_yojson
       ~error_deserializer
@@ -472,6 +578,12 @@ module ListInstances = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.ListInstances"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_instances_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_instances_request) =
+    let input = Json_serializers.list_instances_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.ListInstances" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_instances_response_of_yojson ~error_deserializer
 end
 
 module ListNamespaces = struct
@@ -491,6 +603,12 @@ module ListNamespaces = struct
     let input = Json_serializers.list_namespaces_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.ListNamespaces"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_namespaces_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_namespaces_request) =
+    let input = Json_serializers.list_namespaces_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.ListNamespaces" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_namespaces_response_of_yojson ~error_deserializer
 end
 
@@ -512,6 +630,12 @@ module ListOperations = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.ListOperations"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_operations_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_operations_request) =
+    let input = Json_serializers.list_operations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.ListOperations" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_operations_response_of_yojson ~error_deserializer
 end
 
 module ListServices = struct
@@ -531,6 +655,12 @@ module ListServices = struct
     let input = Json_serializers.list_services_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.ListServices"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_services_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_services_request) =
+    let input = Json_serializers.list_services_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.ListServices" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_services_response_of_yojson ~error_deserializer
 end
 
@@ -554,6 +684,13 @@ module ListTagsForResource = struct
   let request context (request : list_tags_for_resource_request) =
     let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"Route53AutoNaming_v20170314.ListTagsForResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_resource_request) =
+    let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"Route53AutoNaming_v20170314.ListTagsForResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
       ~error_deserializer
@@ -590,6 +727,13 @@ module RegisterInstance = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.register_instance_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : register_instance_request) =
+    let input = Json_serializers.register_instance_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.RegisterInstance" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.register_instance_response_of_yojson
+      ~error_deserializer
 end
 
 module TagResource = struct
@@ -617,6 +761,12 @@ module TagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.TagResource"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_request) =
+    let input = Json_serializers.tag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.TagResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson ~error_deserializer
 end
 
 module UntagResource = struct
@@ -640,6 +790,12 @@ module UntagResource = struct
     let input = Json_serializers.untag_resource_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.UntagResource"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_request) =
+    let input = Json_serializers.untag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.UntagResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson ~error_deserializer
 end
 
@@ -668,6 +824,13 @@ module UpdateHttpNamespace = struct
   let request context (request : update_http_namespace_request) =
     let input = Json_serializers.update_http_namespace_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"Route53AutoNaming_v20170314.UpdateHttpNamespace" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_http_namespace_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_http_namespace_request) =
+    let input = Json_serializers.update_http_namespace_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"Route53AutoNaming_v20170314.UpdateHttpNamespace" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_http_namespace_response_of_yojson
       ~error_deserializer
@@ -701,6 +864,13 @@ module UpdateInstanceCustomHealthStatus = struct
       ~shape_name:"Route53AutoNaming_v20170314.UpdateInstanceCustomHealthStatus" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_instance_custom_health_status_request) =
+    let input = Json_serializers.update_instance_custom_health_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.UpdateInstanceCustomHealthStatus" ~service ~context
+      ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module UpdatePrivateDnsNamespace = struct
@@ -728,6 +898,13 @@ module UpdatePrivateDnsNamespace = struct
   let request context (request : update_private_dns_namespace_request) =
     let input = Json_serializers.update_private_dns_namespace_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"Route53AutoNaming_v20170314.UpdatePrivateDnsNamespace" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_private_dns_namespace_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_private_dns_namespace_request) =
+    let input = Json_serializers.update_private_dns_namespace_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"Route53AutoNaming_v20170314.UpdatePrivateDnsNamespace" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_private_dns_namespace_response_of_yojson
       ~error_deserializer
@@ -761,6 +938,13 @@ module UpdatePublicDnsNamespace = struct
       ~shape_name:"Route53AutoNaming_v20170314.UpdatePublicDnsNamespace" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_public_dns_namespace_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_public_dns_namespace_request) =
+    let input = Json_serializers.update_public_dns_namespace_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.UpdatePublicDnsNamespace" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_public_dns_namespace_response_of_yojson
+      ~error_deserializer
 end
 
 module UpdateService = struct
@@ -786,6 +970,12 @@ module UpdateService = struct
     let input = Json_serializers.update_service_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Route53AutoNaming_v20170314.UpdateService"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_service_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : update_service_request) =
+    let input = Json_serializers.update_service_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Route53AutoNaming_v20170314.UpdateService" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_service_response_of_yojson ~error_deserializer
 end
 
@@ -813,6 +1003,13 @@ module UpdateServiceAttributes = struct
   let request context (request : update_service_attributes_request) =
     let input = Json_serializers.update_service_attributes_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"Route53AutoNaming_v20170314.UpdateServiceAttributes" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_service_attributes_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_service_attributes_request) =
+    let input = Json_serializers.update_service_attributes_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"Route53AutoNaming_v20170314.UpdateServiceAttributes" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_service_attributes_response_of_yojson
       ~error_deserializer

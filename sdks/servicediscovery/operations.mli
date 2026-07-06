@@ -21,6 +21,18 @@ module CreateHttpNamespace : sig
       | `ResourceLimitExceeded of resource_limit_exceeded
       | `TooManyTagsException of too_many_tags_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_http_namespace_request ->
+    ( create_http_namespace_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DuplicateRequest of duplicate_request
+      | `InvalidInput of invalid_input
+      | `NamespaceAlreadyExists of namespace_already_exists
+      | `ResourceLimitExceeded of resource_limit_exceeded
+      | `TooManyTagsException of too_many_tags_exception ] )
+    result
 end
 [@@ocaml.doc
   "Creates an HTTP namespace. Service instances registered using an HTTP namespace can be \
@@ -45,6 +57,18 @@ module CreatePrivateDnsNamespace : sig
     'http_type Smaws_Lib.Context.t ->
     create_private_dns_namespace_request ->
     ( create_private_dns_namespace_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DuplicateRequest of duplicate_request
+      | `InvalidInput of invalid_input
+      | `NamespaceAlreadyExists of namespace_already_exists
+      | `ResourceLimitExceeded of resource_limit_exceeded
+      | `TooManyTagsException of too_many_tags_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_private_dns_namespace_request ->
+    ( create_private_dns_namespace_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DuplicateRequest of duplicate_request
       | `InvalidInput of invalid_input
@@ -84,6 +108,18 @@ module CreatePublicDnsNamespace : sig
       | `ResourceLimitExceeded of resource_limit_exceeded
       | `TooManyTagsException of too_many_tags_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_public_dns_namespace_request ->
+    ( create_public_dns_namespace_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DuplicateRequest of duplicate_request
+      | `InvalidInput of invalid_input
+      | `NamespaceAlreadyExists of namespace_already_exists
+      | `ResourceLimitExceeded of resource_limit_exceeded
+      | `TooManyTagsException of too_many_tags_exception ] )
+    result
 end
 [@@ocaml.doc
   "Creates a public namespace based on DNS, which is visible on the internet. The namespace \
@@ -113,6 +149,18 @@ module CreateService : sig
     'http_type Smaws_Lib.Context.t ->
     create_service_request ->
     ( create_service_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInput of invalid_input
+      | `NamespaceNotFound of namespace_not_found
+      | `ResourceLimitExceeded of resource_limit_exceeded
+      | `ServiceAlreadyExists of service_already_exists
+      | `TooManyTagsException of too_many_tags_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_service_request ->
+    ( create_service_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
       | `NamespaceNotFound of namespace_not_found
@@ -179,6 +227,17 @@ module DeleteNamespace : sig
       | `NamespaceNotFound of namespace_not_found
       | `ResourceInUse of resource_in_use ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_namespace_request ->
+    ( delete_namespace_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DuplicateRequest of duplicate_request
+      | `InvalidInput of invalid_input
+      | `NamespaceNotFound of namespace_not_found
+      | `ResourceInUse of resource_in_use ] )
+    result
 end
 [@@ocaml.doc
   "Deletes a namespace from the current account. If the namespace still contains one or more \
@@ -201,6 +260,16 @@ module DeleteService : sig
       | `ResourceInUse of resource_in_use
       | `ServiceNotFound of service_not_found ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_service_request ->
+    ( delete_service_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInput of invalid_input
+      | `ResourceInUse of resource_in_use
+      | `ServiceNotFound of service_not_found ] )
+    result
 end
 [@@ocaml.doc
   "Deletes a specified service and all associated service attributes. If the service still \
@@ -217,6 +286,15 @@ module DeleteServiceAttributes : sig
     'http_type Smaws_Lib.Context.t ->
     delete_service_attributes_request ->
     ( delete_service_attributes_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInput of invalid_input
+      | `ServiceNotFound of service_not_found ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_service_attributes_request ->
+    ( delete_service_attributes_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
       | `ServiceNotFound of service_not_found ] )
@@ -245,6 +323,18 @@ module DeregisterInstance : sig
       | `ResourceInUse of resource_in_use
       | `ServiceNotFound of service_not_found ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    deregister_instance_request ->
+    ( deregister_instance_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DuplicateRequest of duplicate_request
+      | `InstanceNotFound of instance_not_found
+      | `InvalidInput of invalid_input
+      | `ResourceInUse of resource_in_use
+      | `ServiceNotFound of service_not_found ] )
+    result
 end
 [@@ocaml.doc
   "Deletes the Amazon Route\194\16053 DNS records and health check, if any, that Cloud Map created \
@@ -263,6 +353,17 @@ module DiscoverInstances : sig
     'http_type Smaws_Lib.Context.t ->
     discover_instances_request ->
     ( discover_instances_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInput of invalid_input
+      | `NamespaceNotFound of namespace_not_found
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ServiceNotFound of service_not_found ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    discover_instances_request ->
+    ( discover_instances_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
       | `NamespaceNotFound of namespace_not_found
@@ -296,6 +397,17 @@ module DiscoverInstancesRevision : sig
       | `RequestLimitExceeded of request_limit_exceeded
       | `ServiceNotFound of service_not_found ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    discover_instances_revision_request ->
+    ( discover_instances_revision_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInput of invalid_input
+      | `NamespaceNotFound of namespace_not_found
+      | `RequestLimitExceeded of request_limit_exceeded
+      | `ServiceNotFound of service_not_found ] )
+    result
 end
 [@@ocaml.doc "Discovers the increasing revision associated with an instance.\n"]
 
@@ -316,6 +428,16 @@ module GetInstance : sig
       | `InvalidInput of invalid_input
       | `ServiceNotFound of service_not_found ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_instance_request ->
+    ( get_instance_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InstanceNotFound of instance_not_found
+      | `InvalidInput of invalid_input
+      | `ServiceNotFound of service_not_found ] )
+    result
 end
 [@@ocaml.doc "Gets information about a specified instance.\n"]
 
@@ -331,6 +453,16 @@ module GetInstancesHealthStatus : sig
     'http_type Smaws_Lib.Context.t ->
     get_instances_health_status_request ->
     ( get_instances_health_status_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InstanceNotFound of instance_not_found
+      | `InvalidInput of invalid_input
+      | `ServiceNotFound of service_not_found ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_instances_health_status_request ->
+    ( get_instances_health_status_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InstanceNotFound of instance_not_found
       | `InvalidInput of invalid_input
@@ -360,6 +492,15 @@ module GetNamespace : sig
       | `InvalidInput of invalid_input
       | `NamespaceNotFound of namespace_not_found ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_namespace_request ->
+    ( get_namespace_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInput of invalid_input
+      | `NamespaceNotFound of namespace_not_found ] )
+    result
 end
 [@@ocaml.doc "Gets information about a namespace.\n"]
 
@@ -374,6 +515,15 @@ module GetOperation : sig
     'http_type Smaws_Lib.Context.t ->
     get_operation_request ->
     ( get_operation_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInput of invalid_input
+      | `OperationNotFound of operation_not_found ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_operation_request ->
+    ( get_operation_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
       | `OperationNotFound of operation_not_found ] )
@@ -402,6 +552,15 @@ module GetService : sig
       | `InvalidInput of invalid_input
       | `ServiceNotFound of service_not_found ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_service_request ->
+    ( get_service_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInput of invalid_input
+      | `ServiceNotFound of service_not_found ] )
+    result
 end
 [@@ocaml.doc "Gets the settings for a specified service.\n"]
 
@@ -416,6 +575,15 @@ module GetServiceAttributes : sig
     'http_type Smaws_Lib.Context.t ->
     get_service_attributes_request ->
     ( get_service_attributes_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInput of invalid_input
+      | `ServiceNotFound of service_not_found ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_service_attributes_request ->
+    ( get_service_attributes_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
       | `ServiceNotFound of service_not_found ] )
@@ -438,6 +606,15 @@ module ListInstances : sig
       | `InvalidInput of invalid_input
       | `ServiceNotFound of service_not_found ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_instances_request ->
+    ( list_instances_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInput of invalid_input
+      | `ServiceNotFound of service_not_found ] )
+    result
 end
 [@@ocaml.doc
   "Lists summary information about the instances that you registered by using a specified service.\n"]
@@ -450,6 +627,13 @@ module ListNamespaces : sig
     'http_type Smaws_Lib.Context.t ->
     list_namespaces_request ->
     ( list_namespaces_response,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInput of invalid_input ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_namespaces_request ->
+    ( list_namespaces_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInput of invalid_input ] )
     result
 end
@@ -467,6 +651,13 @@ module ListOperations : sig
     ( list_operations_response,
       [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInput of invalid_input ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_operations_request ->
+    ( list_operations_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInput of invalid_input ] )
+    result
 end
 [@@ocaml.doc "Lists operations that match the criteria that you specify.\n"]
 
@@ -478,6 +669,13 @@ module ListServices : sig
     'http_type Smaws_Lib.Context.t ->
     list_services_request ->
     ( list_services_response,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInput of invalid_input ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_services_request ->
+    ( list_services_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInput of invalid_input ] )
     result
 end
@@ -499,6 +697,15 @@ module ListTagsForResource : sig
       | `InvalidInput of invalid_input
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInput of invalid_input
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
 end
 [@@ocaml.doc "Lists tags for the specified resource.\n"]
 
@@ -516,6 +723,18 @@ module RegisterInstance : sig
     'http_type Smaws_Lib.Context.t ->
     register_instance_request ->
     ( register_instance_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DuplicateRequest of duplicate_request
+      | `InvalidInput of invalid_input
+      | `ResourceInUse of resource_in_use
+      | `ResourceLimitExceeded of resource_limit_exceeded
+      | `ServiceNotFound of service_not_found ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    register_instance_request ->
+    ( register_instance_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DuplicateRequest of duplicate_request
       | `InvalidInput of invalid_input
@@ -587,6 +806,16 @@ module TagResource : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TooManyTagsException of too_many_tags_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInput of invalid_input
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyTagsException of too_many_tags_exception ] )
+    result
 end
 [@@ocaml.doc "Adds one or more tags to the specified resource.\n"]
 
@@ -601,6 +830,15 @@ module UntagResource : sig
     'http_type Smaws_Lib.Context.t ->
     untag_resource_request ->
     ( untag_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInput of invalid_input
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_request ->
+    ( untag_resource_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
       | `ResourceNotFoundException of resource_not_found_exception ] )
@@ -627,6 +865,17 @@ module UpdateHttpNamespace : sig
       | `NamespaceNotFound of namespace_not_found
       | `ResourceInUse of resource_in_use ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_http_namespace_request ->
+    ( update_http_namespace_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DuplicateRequest of duplicate_request
+      | `InvalidInput of invalid_input
+      | `NamespaceNotFound of namespace_not_found
+      | `ResourceInUse of resource_in_use ] )
+    result
 end
 [@@ocaml.doc "Updates an HTTP namespace.\n"]
 
@@ -643,6 +892,17 @@ module UpdateInstanceCustomHealthStatus : sig
     'http_type Smaws_Lib.Context.t ->
     update_instance_custom_health_status_request ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CustomHealthNotFound of custom_health_not_found
+      | `InstanceNotFound of instance_not_found
+      | `InvalidInput of invalid_input
+      | `ServiceNotFound of service_not_found ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_instance_custom_health_status_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `CustomHealthNotFound of custom_health_not_found
       | `InstanceNotFound of instance_not_found
@@ -680,6 +940,17 @@ module UpdatePrivateDnsNamespace : sig
       | `NamespaceNotFound of namespace_not_found
       | `ResourceInUse of resource_in_use ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_private_dns_namespace_request ->
+    ( update_private_dns_namespace_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DuplicateRequest of duplicate_request
+      | `InvalidInput of invalid_input
+      | `NamespaceNotFound of namespace_not_found
+      | `ResourceInUse of resource_in_use ] )
+    result
 end
 [@@ocaml.doc "Updates a private DNS namespace.\n"]
 
@@ -702,6 +973,17 @@ module UpdatePublicDnsNamespace : sig
       | `NamespaceNotFound of namespace_not_found
       | `ResourceInUse of resource_in_use ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_public_dns_namespace_request ->
+    ( update_public_dns_namespace_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DuplicateRequest of duplicate_request
+      | `InvalidInput of invalid_input
+      | `NamespaceNotFound of namespace_not_found
+      | `ResourceInUse of resource_in_use ] )
+    result
 end
 [@@ocaml.doc "Updates a public DNS namespace.\n"]
 
@@ -717,6 +999,16 @@ module UpdateService : sig
     'http_type Smaws_Lib.Context.t ->
     update_service_request ->
     ( update_service_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DuplicateRequest of duplicate_request
+      | `InvalidInput of invalid_input
+      | `ServiceNotFound of service_not_found ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_service_request ->
+    ( update_service_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DuplicateRequest of duplicate_request
       | `InvalidInput of invalid_input
@@ -775,6 +1067,16 @@ module UpdateServiceAttributes : sig
     'http_type Smaws_Lib.Context.t ->
     update_service_attributes_request ->
     ( update_service_attributes_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInput of invalid_input
+      | `ServiceAttributesLimitExceededException of service_attributes_limit_exceeded_exception
+      | `ServiceNotFound of service_not_found ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_service_attributes_request ->
+    ( update_service_attributes_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
       | `ServiceAttributesLimitExceededException of service_attributes_limit_exceeded_exception

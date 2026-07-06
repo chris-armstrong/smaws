@@ -36,6 +36,13 @@ module DescribeReportCreation = struct
       ~shape_name:"ResourceGroupsTaggingAPI_20170126.DescribeReportCreation" ~service ~context
       ~input ~output_deserializer:Json_deserializers.describe_report_creation_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_report_creation_input) =
+    let input = Json_serializers.describe_report_creation_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ResourceGroupsTaggingAPI_20170126.DescribeReportCreation" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.describe_report_creation_output_of_yojson
+      ~error_deserializer
 end
 
 module GetComplianceSummary = struct
@@ -70,6 +77,13 @@ module GetComplianceSummary = struct
   let request context (request : get_compliance_summary_input) =
     let input = Json_serializers.get_compliance_summary_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"ResourceGroupsTaggingAPI_20170126.GetComplianceSummary" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_compliance_summary_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_compliance_summary_input) =
+    let input = Json_serializers.get_compliance_summary_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"ResourceGroupsTaggingAPI_20170126.GetComplianceSummary" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_compliance_summary_output_of_yojson
       ~error_deserializer
@@ -109,6 +123,12 @@ module GetResources = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ResourceGroupsTaggingAPI_20170126.GetResources"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_resources_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_resources_input) =
+    let input = Json_serializers.get_resources_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ResourceGroupsTaggingAPI_20170126.GetResources" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_resources_output_of_yojson ~error_deserializer
 end
 
 module GetTagKeys = struct
@@ -145,6 +165,12 @@ module GetTagKeys = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ResourceGroupsTaggingAPI_20170126.GetTagKeys"
       ~service ~context ~input ~output_deserializer:Json_deserializers.get_tag_keys_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_tag_keys_input) =
+    let input = Json_serializers.get_tag_keys_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ResourceGroupsTaggingAPI_20170126.GetTagKeys" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_tag_keys_output_of_yojson ~error_deserializer
 end
 
 module GetTagValues = struct
@@ -181,6 +207,12 @@ module GetTagValues = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ResourceGroupsTaggingAPI_20170126.GetTagValues"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_tag_values_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_tag_values_input) =
+    let input = Json_serializers.get_tag_values_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ResourceGroupsTaggingAPI_20170126.GetTagValues" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_tag_values_output_of_yojson ~error_deserializer
 end
 
 module ListRequiredTags = struct
@@ -215,6 +247,13 @@ module ListRequiredTags = struct
   let request context (request : list_required_tags_input) =
     let input = Json_serializers.list_required_tags_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"ResourceGroupsTaggingAPI_20170126.ListRequiredTags" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_required_tags_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_required_tags_input) =
+    let input = Json_serializers.list_required_tags_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"ResourceGroupsTaggingAPI_20170126.ListRequiredTags" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_required_tags_output_of_yojson
       ~error_deserializer
@@ -260,6 +299,13 @@ module StartReportCreation = struct
       ~shape_name:"ResourceGroupsTaggingAPI_20170126.StartReportCreation" ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_report_creation_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_report_creation_input) =
+    let input = Json_serializers.start_report_creation_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ResourceGroupsTaggingAPI_20170126.StartReportCreation" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_report_creation_output_of_yojson
+      ~error_deserializer
 end
 
 module TagResources = struct
@@ -291,6 +337,12 @@ module TagResources = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ResourceGroupsTaggingAPI_20170126.TagResources"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.tag_resources_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : tag_resources_input) =
+    let input = Json_serializers.tag_resources_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ResourceGroupsTaggingAPI_20170126.TagResources" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.tag_resources_output_of_yojson ~error_deserializer
 end
 
 module UntagResources = struct
@@ -320,6 +372,12 @@ module UntagResources = struct
   let request context (request : untag_resources_input) =
     let input = Json_serializers.untag_resources_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"ResourceGroupsTaggingAPI_20170126.UntagResources" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.untag_resources_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : untag_resources_input) =
+    let input = Json_serializers.untag_resources_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"ResourceGroupsTaggingAPI_20170126.UntagResources" ~service ~context ~input
       ~output_deserializer:Json_deserializers.untag_resources_output_of_yojson ~error_deserializer
 end

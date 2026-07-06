@@ -23,6 +23,19 @@ module GetRoutingControlState : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_routing_control_state_request ->
+    ( get_routing_control_state_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Get the state for a routing control. A routing control is a simple on/off switch that you can \
@@ -75,6 +88,19 @@ module ListRoutingControls : sig
     'http_type Smaws_Lib.Context.t ->
     list_routing_controls_request ->
     ( list_routing_controls_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_routing_controls_request ->
+    ( list_routing_controls_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
@@ -145,6 +171,20 @@ module UpdateRoutingControlState : sig
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_routing_control_state_request ->
+    ( update_routing_control_state_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
 end
 [@@ocaml.doc
   "Set the state of the routing control to reroute traffic. You can set the value to ON or OFF. \
@@ -203,6 +243,21 @@ module UpdateRoutingControlStates : sig
     'http_type Smaws_Lib.Context.t ->
     update_routing_control_states_request ->
     ( update_routing_control_states_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `EndpointTemporarilyUnavailableException of endpoint_temporarily_unavailable_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceLimitExceededException of service_limit_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_routing_control_states_request ->
+    ( update_routing_control_states_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception

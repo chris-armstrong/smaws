@@ -19,6 +19,17 @@ module AssumeRole : sig
       | `PackedPolicyTooLargeException of packed_policy_too_large_exception
       | `RegionDisabledException of region_disabled_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    assume_role_request ->
+    ( assume_role_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ExpiredTokenException of expired_token_exception
+      | `MalformedPolicyDocumentException of malformed_policy_document_exception
+      | `PackedPolicyTooLargeException of packed_policy_too_large_exception
+      | `RegionDisabledException of region_disabled_exception ] )
+    result
 end
 [@@ocaml.doc
   "Returns a set of temporary security credentials that you can use to access Amazon Web Services \
@@ -136,6 +147,19 @@ module AssumeRoleWithSAML : sig
     'http_type Smaws_Lib.Context.t ->
     assume_role_with_saml_request ->
     ( assume_role_with_saml_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ExpiredTokenException of expired_token_exception
+      | `IDPRejectedClaimException of idp_rejected_claim_exception
+      | `InvalidIdentityTokenException of invalid_identity_token_exception
+      | `MalformedPolicyDocumentException of malformed_policy_document_exception
+      | `PackedPolicyTooLargeException of packed_policy_too_large_exception
+      | `RegionDisabledException of region_disabled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    assume_role_with_saml_request ->
+    ( assume_role_with_saml_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsQuery.error
       | `ExpiredTokenException of expired_token_exception
       | `IDPRejectedClaimException of idp_rejected_claim_exception
@@ -311,6 +335,20 @@ module AssumeRoleWithWebIdentity : sig
       | `PackedPolicyTooLargeException of packed_policy_too_large_exception
       | `RegionDisabledException of region_disabled_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    assume_role_with_web_identity_request ->
+    ( assume_role_with_web_identity_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ExpiredTokenException of expired_token_exception
+      | `IDPCommunicationErrorException of idp_communication_error_exception
+      | `IDPRejectedClaimException of idp_rejected_claim_exception
+      | `InvalidIdentityTokenException of invalid_identity_token_exception
+      | `MalformedPolicyDocumentException of malformed_policy_document_exception
+      | `PackedPolicyTooLargeException of packed_policy_too_large_exception
+      | `RegionDisabledException of region_disabled_exception ] )
+    result
 end
 [@@ocaml.doc
   "Returns a set of temporary security credentials for users who have been authenticated in a \
@@ -467,6 +505,15 @@ module AssumeRoot : sig
       | `ExpiredTokenException of expired_token_exception
       | `RegionDisabledException of region_disabled_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    assume_root_request ->
+    ( assume_root_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ExpiredTokenException of expired_token_exception
+      | `RegionDisabledException of region_disabled_exception ] )
+    result
 end
 [@@ocaml.doc
   "Returns a set of short term credentials you can use to perform privileged tasks on a member \
@@ -507,6 +554,14 @@ module DecodeAuthorizationMessage : sig
     'http_type Smaws_Lib.Context.t ->
     decode_authorization_message_request ->
     ( decode_authorization_message_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidAuthorizationMessageException of invalid_authorization_message_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    decode_authorization_message_request ->
+    ( decode_authorization_message_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsQuery.error
       | `InvalidAuthorizationMessageException of invalid_authorization_message_exception ] )
     result
@@ -560,6 +615,13 @@ module GetAccessKeyInfo : sig
     'http_type Smaws_Lib.Context.t ->
     get_access_key_info_request ->
     (get_access_key_info_response, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_access_key_info_request ->
+    ( get_access_key_info_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] )
+    result
 end
 [@@ocaml.doc
   "Returns the account identifier for the specified access key ID.\n\n\
@@ -593,6 +655,13 @@ module GetCallerIdentity : sig
     'http_type Smaws_Lib.Context.t ->
     get_caller_identity_request ->
     (get_caller_identity_response, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_caller_identity_request ->
+    ( get_caller_identity_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] )
+    result
 end
 [@@ocaml.doc
   "Returns details about the IAM user or role whose credentials are used to call the operation.\n\n\
@@ -622,6 +691,16 @@ module GetDelegatedAccessToken : sig
       | `PackedPolicyTooLargeException of packed_policy_too_large_exception
       | `RegionDisabledException of region_disabled_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_delegated_access_token_request ->
+    ( get_delegated_access_token_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ExpiredTradeInTokenException of expired_trade_in_token_exception
+      | `PackedPolicyTooLargeException of packed_policy_too_large_exception
+      | `RegionDisabledException of region_disabled_exception ] )
+    result
 end
 [@@ocaml.doc
   "Exchanges a trade-in token for temporary Amazon Web Services credentials with the permissions \
@@ -641,6 +720,16 @@ module GetFederationToken : sig
     'http_type Smaws_Lib.Context.t ->
     get_federation_token_request ->
     ( get_federation_token_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `MalformedPolicyDocumentException of malformed_policy_document_exception
+      | `PackedPolicyTooLargeException of packed_policy_too_large_exception
+      | `RegionDisabledException of region_disabled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_federation_token_request ->
+    ( get_federation_token_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsQuery.error
       | `MalformedPolicyDocumentException of malformed_policy_document_exception
       | `PackedPolicyTooLargeException of packed_policy_too_large_exception
@@ -762,6 +851,14 @@ module GetSessionToken : sig
       [> Smaws_Lib.Protocols.AwsQuery.error | `RegionDisabledException of region_disabled_exception ]
     )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_session_token_request ->
+    ( get_session_token_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `RegionDisabledException of region_disabled_exception ]
+    )
+    result
 end
 [@@ocaml.doc
   "Returns a set of temporary credentials for an Amazon Web Services account or IAM user. The \
@@ -836,6 +933,17 @@ module GetWebIdentityToken : sig
     'http_type Smaws_Lib.Context.t ->
     get_web_identity_token_request ->
     ( get_web_identity_token_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `JWTPayloadSizeExceededException of jwt_payload_size_exceeded_exception
+      | `OutboundWebIdentityFederationDisabledException of
+        outbound_web_identity_federation_disabled_exception
+      | `SessionDurationEscalationException of session_duration_escalation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_web_identity_token_request ->
+    ( get_web_identity_token_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsQuery.error
       | `JWTPayloadSizeExceededException of jwt_payload_size_exceeded_exception
       | `OutboundWebIdentityFederationDisabledException of

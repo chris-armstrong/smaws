@@ -44,6 +44,13 @@ module AddTagsToCertificate = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_to_certificate_request) =
+    let input = Json_serializers.add_tags_to_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.AddTagsToCertificate" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module CreateAcmeDomainValidation = struct
@@ -87,6 +94,13 @@ module CreateAcmeDomainValidation = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_acme_domain_validation_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_acme_domain_validation_request) =
+    let input = Json_serializers.create_acme_domain_validation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.CreateAcmeDomainValidation" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_acme_domain_validation_response_of_yojson
+      ~error_deserializer
 end
 
 module CreateAcmeEndpoint = struct
@@ -124,6 +138,13 @@ module CreateAcmeEndpoint = struct
     let input = Json_serializers.create_acme_endpoint_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.CreateAcmeEndpoint" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.create_acme_endpoint_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_acme_endpoint_request) =
+    let input = Json_serializers.create_acme_endpoint_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.CreateAcmeEndpoint" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_acme_endpoint_response_of_yojson
       ~error_deserializer
 end
@@ -170,6 +191,14 @@ module CreateAcmeExternalAccountBinding = struct
       ~output_deserializer:
         Json_deserializers.create_acme_external_account_binding_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_acme_external_account_binding_request) =
+    let input = Json_serializers.create_acme_external_account_binding_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.CreateAcmeExternalAccountBinding" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.create_acme_external_account_binding_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteAcmeDomainValidation = struct
@@ -203,6 +232,13 @@ module DeleteAcmeDomainValidation = struct
     let input = Json_serializers.delete_acme_domain_validation_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.DeleteAcmeDomainValidation"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_acme_domain_validation_request) =
+    let input = Json_serializers.delete_acme_domain_validation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.DeleteAcmeDomainValidation" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -239,6 +275,13 @@ module DeleteAcmeEndpoint = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.DeleteAcmeEndpoint" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_acme_endpoint_request) =
+    let input = Json_serializers.delete_acme_endpoint_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.DeleteAcmeEndpoint" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeleteAcmeExternalAccountBinding = struct
@@ -268,6 +311,13 @@ module DeleteAcmeExternalAccountBinding = struct
   let request context (request : delete_acme_external_account_binding_request) =
     let input = Json_serializers.delete_acme_external_account_binding_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CertificateManager.DeleteAcmeExternalAccountBinding" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_acme_external_account_binding_request) =
+    let input = Json_serializers.delete_acme_external_account_binding_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"CertificateManager.DeleteAcmeExternalAccountBinding" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
@@ -311,6 +361,13 @@ module DeleteCertificate = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.DeleteCertificate" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_certificate_request) =
+    let input = Json_serializers.delete_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.DeleteCertificate" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DescribeAcmeAccount = struct
@@ -347,6 +404,13 @@ module DescribeAcmeAccount = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_acme_account_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_acme_account_request) =
+    let input = Json_serializers.describe_acme_account_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.DescribeAcmeAccount" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_acme_account_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeAcmeDomainValidation = struct
@@ -380,6 +444,13 @@ module DescribeAcmeDomainValidation = struct
   let request context (request : describe_acme_domain_validation_request) =
     let input = Json_serializers.describe_acme_domain_validation_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CertificateManager.DescribeAcmeDomainValidation" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_acme_domain_validation_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_acme_domain_validation_request) =
+    let input = Json_serializers.describe_acme_domain_validation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"CertificateManager.DescribeAcmeDomainValidation" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_acme_domain_validation_response_of_yojson
       ~error_deserializer
@@ -419,6 +490,13 @@ module DescribeAcmeEndpoint = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_acme_endpoint_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_acme_endpoint_request) =
+    let input = Json_serializers.describe_acme_endpoint_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.DescribeAcmeEndpoint" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_acme_endpoint_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeAcmeExternalAccountBinding = struct
@@ -456,6 +534,14 @@ module DescribeAcmeExternalAccountBinding = struct
       ~output_deserializer:
         Json_deserializers.describe_acme_external_account_binding_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_acme_external_account_binding_request) =
+    let input = Json_serializers.describe_acme_external_account_binding_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.DescribeAcmeExternalAccountBinding" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_acme_external_account_binding_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeCertificate = struct
@@ -483,6 +569,13 @@ module DescribeCertificate = struct
     let input = Json_serializers.describe_certificate_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.DescribeCertificate"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_certificate_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_certificate_request) =
+    let input = Json_serializers.describe_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.DescribeCertificate" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_certificate_response_of_yojson
       ~error_deserializer
 end
@@ -520,6 +613,13 @@ module ExportCertificate = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ExportCertificate" ~service
       ~context ~input ~output_deserializer:Json_deserializers.export_certificate_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : export_certificate_request) =
+    let input = Json_serializers.export_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.ExportCertificate" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.export_certificate_response_of_yojson
+      ~error_deserializer
 end
 
 module GetAccountConfiguration = struct
@@ -543,6 +643,13 @@ module GetAccountConfiguration = struct
     let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.GetAccountConfiguration"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_account_configuration_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let input = Smaws_Lib.Smithy_api.Json_serializers.unit__to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.GetAccountConfiguration" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_account_configuration_response_of_yojson
       ~error_deserializer
 end
@@ -585,6 +692,18 @@ module GetAcmeExternalAccountBindingCredentials = struct
       ~output_deserializer:
         Json_deserializers.get_acme_external_account_binding_credentials_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context
+      (request : get_acme_external_account_binding_credentials_request) =
+    let input =
+      Json_serializers.get_acme_external_account_binding_credentials_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.GetAcmeExternalAccountBindingCredentials" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.get_acme_external_account_binding_credentials_response_of_yojson
+      ~error_deserializer
 end
 
 module GetCertificate = struct
@@ -617,6 +736,12 @@ module GetCertificate = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.GetCertificate" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_certificate_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_certificate_request) =
+    let input = Json_serializers.get_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.GetCertificate" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_certificate_response_of_yojson ~error_deserializer
 end
 
 module ImportCertificate = struct
@@ -664,6 +789,13 @@ module ImportCertificate = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ImportCertificate" ~service
       ~context ~input ~output_deserializer:Json_deserializers.import_certificate_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : import_certificate_request) =
+    let input = Json_serializers.import_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.ImportCertificate" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.import_certificate_response_of_yojson
+      ~error_deserializer
 end
 
 module ListAcmeAccounts = struct
@@ -698,6 +830,13 @@ module ListAcmeAccounts = struct
     let input = Json_serializers.list_acme_accounts_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ListAcmeAccounts" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_acme_accounts_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_acme_accounts_request) =
+    let input = Json_serializers.list_acme_accounts_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.ListAcmeAccounts" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_acme_accounts_response_of_yojson
       ~error_deserializer
 end
 
@@ -735,6 +874,13 @@ module ListAcmeDomainValidations = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_acme_domain_validations_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_acme_domain_validations_request) =
+    let input = Json_serializers.list_acme_domain_validations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.ListAcmeDomainValidations" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_acme_domain_validations_response_of_yojson
+      ~error_deserializer
 end
 
 module ListAcmeEndpoints = struct
@@ -765,6 +911,13 @@ module ListAcmeEndpoints = struct
     let input = Json_serializers.list_acme_endpoints_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ListAcmeEndpoints" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_acme_endpoints_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_acme_endpoints_request) =
+    let input = Json_serializers.list_acme_endpoints_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.ListAcmeEndpoints" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_acme_endpoints_response_of_yojson
       ~error_deserializer
 end
 
@@ -802,6 +955,13 @@ module ListAcmeExternalAccountBindings = struct
       ~shape_name:"CertificateManager.ListAcmeExternalAccountBindings" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_acme_external_account_bindings_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_acme_external_account_bindings_request) =
+    let input = Json_serializers.list_acme_external_account_bindings_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.ListAcmeExternalAccountBindings" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_acme_external_account_bindings_response_of_yojson
+      ~error_deserializer
 end
 
 module ListCertificates = struct
@@ -825,6 +985,13 @@ module ListCertificates = struct
     let input = Json_serializers.list_certificates_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ListCertificates" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_certificates_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_certificates_request) =
+    let input = Json_serializers.list_certificates_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.ListCertificates" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_certificates_response_of_yojson
       ~error_deserializer
 end
 
@@ -855,6 +1022,13 @@ module ListTagsForCertificate = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_certificate_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_certificate_request) =
+    let input = Json_serializers.list_tags_for_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.ListTagsForCertificate" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_certificate_response_of_yojson
+      ~error_deserializer
 end
 
 module ListTagsForResource = struct
@@ -879,6 +1053,13 @@ module ListTagsForResource = struct
     let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ListTagsForResource"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_resource_request) =
+    let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.ListTagsForResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
       ~error_deserializer
 end
@@ -910,6 +1091,13 @@ module PutAccountConfiguration = struct
     let input = Json_serializers.put_account_configuration_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.PutAccountConfiguration"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_account_configuration_request) =
+    let input = Json_serializers.put_account_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.PutAccountConfiguration" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -954,6 +1142,13 @@ module RemoveTagsFromCertificate = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : remove_tags_from_certificate_request) =
+    let input = Json_serializers.remove_tags_from_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.RemoveTagsFromCertificate" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module RenewCertificate = struct
@@ -985,6 +1180,13 @@ module RenewCertificate = struct
     let input = Json_serializers.renew_certificate_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.RenewCertificate" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : renew_certificate_request) =
+    let input = Json_serializers.renew_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.RenewCertificate" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -1028,6 +1230,13 @@ module RequestCertificate = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.RequestCertificate" ~service
       ~context ~input ~output_deserializer:Json_deserializers.request_certificate_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : request_certificate_request) =
+    let input = Json_serializers.request_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.RequestCertificate" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.request_certificate_response_of_yojson
+      ~error_deserializer
 end
 
 module ResendValidationEmail = struct
@@ -1063,6 +1272,13 @@ module ResendValidationEmail = struct
     let input = Json_serializers.resend_validation_email_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.ResendValidationEmail"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : resend_validation_email_request) =
+    let input = Json_serializers.resend_validation_email_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.ResendValidationEmail" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -1103,6 +1319,13 @@ module RevokeAcmeAccount = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.RevokeAcmeAccount" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : revoke_acme_account_request) =
+    let input = Json_serializers.revoke_acme_account_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.RevokeAcmeAccount" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module RevokeAcmeExternalAccountBinding = struct
@@ -1139,6 +1362,13 @@ module RevokeAcmeExternalAccountBinding = struct
   let request context (request : revoke_acme_external_account_binding_request) =
     let input = Json_serializers.revoke_acme_external_account_binding_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"CertificateManager.RevokeAcmeExternalAccountBinding" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : revoke_acme_external_account_binding_request) =
+    let input = Json_serializers.revoke_acme_external_account_binding_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"CertificateManager.RevokeAcmeExternalAccountBinding" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
@@ -1182,6 +1412,13 @@ module RevokeCertificate = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.RevokeCertificate" ~service
       ~context ~input ~output_deserializer:Json_deserializers.revoke_certificate_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : revoke_certificate_request) =
+    let input = Json_serializers.revoke_certificate_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.RevokeCertificate" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.revoke_certificate_response_of_yojson
+      ~error_deserializer
 end
 
 module SearchCertificates = struct
@@ -1208,6 +1445,13 @@ module SearchCertificates = struct
     let input = Json_serializers.search_certificates_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.SearchCertificates" ~service
       ~context ~input ~output_deserializer:Json_deserializers.search_certificates_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : search_certificates_request) =
+    let input = Json_serializers.search_certificates_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.SearchCertificates" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.search_certificates_response_of_yojson
       ~error_deserializer
 end
 
@@ -1238,6 +1482,13 @@ module TagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.TagResource" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_request) =
+    let input = Json_serializers.tag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CertificateManager.TagResource"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module UntagResource = struct
@@ -1262,6 +1513,13 @@ module UntagResource = struct
     let input = Json_serializers.untag_resource_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.UntagResource" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_request) =
+    let input = Json_serializers.untag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"CertificateManager.UntagResource"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -1302,6 +1560,13 @@ module UpdateAcmeDomainValidation = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_acme_domain_validation_request) =
+    let input = Json_serializers.update_acme_domain_validation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.UpdateAcmeDomainValidation" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module UpdateAcmeEndpoint = struct
@@ -1340,6 +1605,13 @@ module UpdateAcmeEndpoint = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.UpdateAcmeEndpoint" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_acme_endpoint_request) =
+    let input = Json_serializers.update_acme_endpoint_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.UpdateAcmeEndpoint" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module UpdateCertificateOptions = struct
@@ -1373,6 +1645,13 @@ module UpdateCertificateOptions = struct
     let input = Json_serializers.update_certificate_options_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"CertificateManager.UpdateCertificateOptions"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_certificate_options_request) =
+    let input = Json_serializers.update_certificate_options_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"CertificateManager.UpdateCertificateOptions" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end

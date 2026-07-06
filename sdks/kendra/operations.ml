@@ -39,6 +39,13 @@ module AssociateEntitiesToExperience = struct
       ~shape_name:"AWSKendraFrontendService.AssociateEntitiesToExperience" ~service ~context ~input
       ~output_deserializer:Json_deserializers.associate_entities_to_experience_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : associate_entities_to_experience_request) =
+    let input = Json_serializers.associate_entities_to_experience_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.AssociateEntitiesToExperience" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.associate_entities_to_experience_response_of_yojson
+      ~error_deserializer
 end
 
 module AssociatePersonasToEntities = struct
@@ -76,6 +83,13 @@ module AssociatePersonasToEntities = struct
   let request context (request : associate_personas_to_entities_request) =
     let input = Json_serializers.associate_personas_to_entities_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.AssociatePersonasToEntities" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.associate_personas_to_entities_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : associate_personas_to_entities_request) =
+    let input = Json_serializers.associate_personas_to_entities_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.AssociatePersonasToEntities" ~service ~context ~input
       ~output_deserializer:Json_deserializers.associate_personas_to_entities_response_of_yojson
       ~error_deserializer
@@ -118,6 +132,13 @@ module BatchDeleteDocument = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.batch_delete_document_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : batch_delete_document_request) =
+    let input = Json_serializers.batch_delete_document_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.BatchDeleteDocument" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_delete_document_response_of_yojson
+      ~error_deserializer
 end
 
 module BatchDeleteFeaturedResultsSet = struct
@@ -151,6 +172,13 @@ module BatchDeleteFeaturedResultsSet = struct
   let request context (request : batch_delete_featured_results_set_request) =
     let input = Json_serializers.batch_delete_featured_results_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.BatchDeleteFeaturedResultsSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_delete_featured_results_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_delete_featured_results_set_request) =
+    let input = Json_serializers.batch_delete_featured_results_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.BatchDeleteFeaturedResultsSet" ~service ~context ~input
       ~output_deserializer:Json_deserializers.batch_delete_featured_results_set_response_of_yojson
       ~error_deserializer
@@ -190,6 +218,13 @@ module BatchGetDocumentStatus = struct
   let request context (request : batch_get_document_status_request) =
     let input = Json_serializers.batch_get_document_status_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.BatchGetDocumentStatus" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_get_document_status_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : batch_get_document_status_request) =
+    let input = Json_serializers.batch_get_document_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.BatchGetDocumentStatus" ~service ~context ~input
       ~output_deserializer:Json_deserializers.batch_get_document_status_response_of_yojson
       ~error_deserializer
@@ -236,6 +271,13 @@ module BatchPutDocument = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.batch_put_document_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : batch_put_document_request) =
+    let input = Json_serializers.batch_put_document_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.BatchPutDocument" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_put_document_response_of_yojson
+      ~error_deserializer
 end
 
 module ClearQuerySuggestions = struct
@@ -273,6 +315,13 @@ module ClearQuerySuggestions = struct
     let input = Json_serializers.clear_query_suggestions_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.ClearQuerySuggestions"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : clear_query_suggestions_request) =
+    let input = Json_serializers.clear_query_suggestions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.ClearQuerySuggestions" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -315,6 +364,14 @@ module CreateAccessControlConfiguration = struct
   let request context (request : create_access_control_configuration_request) =
     let input = Json_serializers.create_access_control_configuration_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.CreateAccessControlConfiguration" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.create_access_control_configuration_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_access_control_configuration_request) =
+    let input = Json_serializers.create_access_control_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.CreateAccessControlConfiguration" ~service ~context
       ~input
       ~output_deserializer:Json_deserializers.create_access_control_configuration_response_of_yojson
@@ -366,6 +423,13 @@ module CreateDataSource = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_data_source_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_data_source_request) =
+    let input = Json_serializers.create_data_source_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.CreateDataSource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_data_source_response_of_yojson
+      ~error_deserializer
 end
 
 module CreateExperience = struct
@@ -407,6 +471,13 @@ module CreateExperience = struct
     let input = Json_serializers.create_experience_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.CreateExperience"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_experience_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_experience_request) =
+    let input = Json_serializers.create_experience_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.CreateExperience" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_experience_response_of_yojson
       ~error_deserializer
 end
@@ -451,6 +522,12 @@ module CreateFaq = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.CreateFaq" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_faq_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_faq_request) =
+    let input = Json_serializers.create_faq_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.CreateFaq" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_faq_response_of_yojson ~error_deserializer
 end
 
 module CreateFeaturedResultsSet = struct
@@ -491,6 +568,13 @@ module CreateFeaturedResultsSet = struct
   let request context (request : create_featured_results_set_request) =
     let input = Json_serializers.create_featured_results_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.CreateFeaturedResultsSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_featured_results_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_featured_results_set_request) =
+    let input = Json_serializers.create_featured_results_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.CreateFeaturedResultsSet" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_featured_results_set_response_of_yojson
       ~error_deserializer
@@ -536,6 +620,12 @@ module CreateIndex = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.CreateIndex" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_index_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_index_request) =
+    let input = Json_serializers.create_index_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.CreateIndex" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_index_response_of_yojson ~error_deserializer
 end
 
 module CreateQuerySuggestionsBlockList = struct
@@ -576,6 +666,14 @@ module CreateQuerySuggestionsBlockList = struct
   let request context (request : create_query_suggestions_block_list_request) =
     let input = Json_serializers.create_query_suggestions_block_list_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.CreateQuerySuggestionsBlockList" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.create_query_suggestions_block_list_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_query_suggestions_block_list_request) =
+    let input = Json_serializers.create_query_suggestions_block_list_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.CreateQuerySuggestionsBlockList" ~service ~context
       ~input
       ~output_deserializer:Json_deserializers.create_query_suggestions_block_list_response_of_yojson
@@ -623,6 +721,13 @@ module CreateThesaurus = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_thesaurus_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_thesaurus_request) =
+    let input = Json_serializers.create_thesaurus_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.CreateThesaurus" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_thesaurus_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteAccessControlConfiguration = struct
@@ -659,6 +764,14 @@ module DeleteAccessControlConfiguration = struct
   let request context (request : delete_access_control_configuration_request) =
     let input = Json_serializers.delete_access_control_configuration_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.DeleteAccessControlConfiguration" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.delete_access_control_configuration_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_access_control_configuration_request) =
+    let input = Json_serializers.delete_access_control_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.DeleteAccessControlConfiguration" ~service ~context
       ~input
       ~output_deserializer:Json_deserializers.delete_access_control_configuration_response_of_yojson
@@ -702,6 +815,13 @@ module DeleteDataSource = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_data_source_request) =
+    let input = Json_serializers.delete_data_source_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.DeleteDataSource" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeleteExperience = struct
@@ -739,6 +859,13 @@ module DeleteExperience = struct
     let input = Json_serializers.delete_experience_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.DeleteExperience"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_experience_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_experience_request) =
+    let input = Json_serializers.delete_experience_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.DeleteExperience" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_experience_response_of_yojson
       ~error_deserializer
 end
@@ -779,6 +906,13 @@ module DeleteFaq = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.DeleteFaq" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_faq_request) =
+    let input = Json_serializers.delete_faq_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.DeleteFaq" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeleteIndex = struct
@@ -817,6 +951,13 @@ module DeleteIndex = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.DeleteIndex" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_index_request) =
+    let input = Json_serializers.delete_index_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.DeleteIndex" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeletePrincipalMapping = struct
@@ -853,6 +994,13 @@ module DeletePrincipalMapping = struct
   let request context (request : delete_principal_mapping_request) =
     let input = Json_serializers.delete_principal_mapping_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.DeletePrincipalMapping" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_principal_mapping_request) =
+    let input = Json_serializers.delete_principal_mapping_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.DeletePrincipalMapping" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
@@ -895,6 +1043,13 @@ module DeleteQuerySuggestionsBlockList = struct
       ~shape_name:"AWSKendraFrontendService.DeleteQuerySuggestionsBlockList" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_query_suggestions_block_list_request) =
+    let input = Json_serializers.delete_query_suggestions_block_list_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.DeleteQuerySuggestionsBlockList" ~service ~context
+      ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeleteThesaurus = struct
@@ -934,6 +1089,13 @@ module DeleteThesaurus = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_thesaurus_request) =
+    let input = Json_serializers.delete_thesaurus_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.DeleteThesaurus" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DescribeAccessControlConfiguration = struct
@@ -967,6 +1129,15 @@ module DescribeAccessControlConfiguration = struct
   let request context (request : describe_access_control_configuration_request) =
     let input = Json_serializers.describe_access_control_configuration_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.DescribeAccessControlConfiguration" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.describe_access_control_configuration_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_access_control_configuration_request) =
+    let input = Json_serializers.describe_access_control_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.DescribeAccessControlConfiguration" ~service ~context
       ~input
       ~output_deserializer:
@@ -1008,6 +1179,13 @@ module DescribeDataSource = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_data_source_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_data_source_request) =
+    let input = Json_serializers.describe_data_source_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.DescribeDataSource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_data_source_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeExperience = struct
@@ -1042,6 +1220,13 @@ module DescribeExperience = struct
     let input = Json_serializers.describe_experience_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.DescribeExperience"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_experience_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_experience_request) =
+    let input = Json_serializers.describe_experience_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.DescribeExperience" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_experience_response_of_yojson
       ~error_deserializer
 end
@@ -1079,6 +1264,12 @@ module DescribeFaq = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.DescribeFaq" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_faq_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_faq_request) =
+    let input = Json_serializers.describe_faq_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.DescribeFaq" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_faq_response_of_yojson ~error_deserializer
 end
 
 module DescribeFeaturedResultsSet = struct
@@ -1112,6 +1303,13 @@ module DescribeFeaturedResultsSet = struct
   let request context (request : describe_featured_results_set_request) =
     let input = Json_serializers.describe_featured_results_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.DescribeFeaturedResultsSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_featured_results_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_featured_results_set_request) =
+    let input = Json_serializers.describe_featured_results_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.DescribeFeaturedResultsSet" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_featured_results_set_response_of_yojson
       ~error_deserializer
@@ -1150,6 +1348,12 @@ module DescribeIndex = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.DescribeIndex"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_index_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : describe_index_request) =
+    let input = Json_serializers.describe_index_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.DescribeIndex" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_index_response_of_yojson ~error_deserializer
 end
 
 module DescribePrincipalMapping = struct
@@ -1183,6 +1387,13 @@ module DescribePrincipalMapping = struct
   let request context (request : describe_principal_mapping_request) =
     let input = Json_serializers.describe_principal_mapping_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.DescribePrincipalMapping" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_principal_mapping_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_principal_mapping_request) =
+    let input = Json_serializers.describe_principal_mapping_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.DescribePrincipalMapping" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_principal_mapping_response_of_yojson
       ~error_deserializer
@@ -1224,6 +1435,15 @@ module DescribeQuerySuggestionsBlockList = struct
       ~output_deserializer:
         Json_deserializers.describe_query_suggestions_block_list_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_query_suggestions_block_list_request) =
+    let input = Json_serializers.describe_query_suggestions_block_list_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.DescribeQuerySuggestionsBlockList" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.describe_query_suggestions_block_list_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeQuerySuggestionsConfig = struct
@@ -1257,6 +1477,13 @@ module DescribeQuerySuggestionsConfig = struct
   let request context (request : describe_query_suggestions_config_request) =
     let input = Json_serializers.describe_query_suggestions_config_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.DescribeQuerySuggestionsConfig" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_query_suggestions_config_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_query_suggestions_config_request) =
+    let input = Json_serializers.describe_query_suggestions_config_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.DescribeQuerySuggestionsConfig" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_query_suggestions_config_response_of_yojson
       ~error_deserializer
@@ -1294,6 +1521,13 @@ module DescribeThesaurus = struct
     let input = Json_serializers.describe_thesaurus_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.DescribeThesaurus"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_thesaurus_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_thesaurus_request) =
+    let input = Json_serializers.describe_thesaurus_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.DescribeThesaurus" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_thesaurus_response_of_yojson
       ~error_deserializer
 end
@@ -1334,6 +1568,15 @@ module DisassociateEntitiesFromExperience = struct
       ~output_deserializer:
         Json_deserializers.disassociate_entities_from_experience_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : disassociate_entities_from_experience_request) =
+    let input = Json_serializers.disassociate_entities_from_experience_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.DisassociateEntitiesFromExperience" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.disassociate_entities_from_experience_response_of_yojson
+      ~error_deserializer
 end
 
 module DisassociatePersonasFromEntities = struct
@@ -1367,6 +1610,14 @@ module DisassociatePersonasFromEntities = struct
   let request context (request : disassociate_personas_from_entities_request) =
     let input = Json_serializers.disassociate_personas_from_entities_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.DisassociatePersonasFromEntities" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.disassociate_personas_from_entities_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : disassociate_personas_from_entities_request) =
+    let input = Json_serializers.disassociate_personas_from_entities_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.DisassociatePersonasFromEntities" ~service ~context
       ~input
       ~output_deserializer:Json_deserializers.disassociate_personas_from_entities_response_of_yojson
@@ -1414,6 +1665,13 @@ module GetQuerySuggestions = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_query_suggestions_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_query_suggestions_request) =
+    let input = Json_serializers.get_query_suggestions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.GetQuerySuggestions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_query_suggestions_response_of_yojson
+      ~error_deserializer
 end
 
 module GetSnapshots = struct
@@ -1447,6 +1705,12 @@ module GetSnapshots = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.GetSnapshots" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_snapshots_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_snapshots_request) =
+    let input = Json_serializers.get_snapshots_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.GetSnapshots" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_snapshots_response_of_yojson ~error_deserializer
 end
 
 module ListAccessControlConfigurations = struct
@@ -1480,6 +1744,14 @@ module ListAccessControlConfigurations = struct
   let request context (request : list_access_control_configurations_request) =
     let input = Json_serializers.list_access_control_configurations_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.ListAccessControlConfigurations" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.list_access_control_configurations_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_access_control_configurations_request) =
+    let input = Json_serializers.list_access_control_configurations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.ListAccessControlConfigurations" ~service ~context
       ~input
       ~output_deserializer:Json_deserializers.list_access_control_configurations_response_of_yojson
@@ -1523,6 +1795,13 @@ module ListDataSourceSyncJobs = struct
       ~shape_name:"AWSKendraFrontendService.ListDataSourceSyncJobs" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_data_source_sync_jobs_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_data_source_sync_jobs_request) =
+    let input = Json_serializers.list_data_source_sync_jobs_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.ListDataSourceSyncJobs" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_data_source_sync_jobs_response_of_yojson
+      ~error_deserializer
 end
 
 module ListDataSources = struct
@@ -1557,6 +1836,13 @@ module ListDataSources = struct
     let input = Json_serializers.list_data_sources_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.ListDataSources"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_data_sources_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_data_sources_request) =
+    let input = Json_serializers.list_data_sources_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.ListDataSources" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_data_sources_response_of_yojson
       ~error_deserializer
 end
@@ -1595,6 +1881,13 @@ module ListEntityPersonas = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_entity_personas_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_entity_personas_request) =
+    let input = Json_serializers.list_entity_personas_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.ListEntityPersonas" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_entity_personas_response_of_yojson
+      ~error_deserializer
 end
 
 module ListExperienceEntities = struct
@@ -1628,6 +1921,13 @@ module ListExperienceEntities = struct
   let request context (request : list_experience_entities_request) =
     let input = Json_serializers.list_experience_entities_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.ListExperienceEntities" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_experience_entities_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_experience_entities_request) =
+    let input = Json_serializers.list_experience_entities_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.ListExperienceEntities" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_experience_entities_response_of_yojson
       ~error_deserializer
@@ -1667,6 +1967,13 @@ module ListExperiences = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_experiences_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_experiences_request) =
+    let input = Json_serializers.list_experiences_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.ListExperiences" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_experiences_response_of_yojson
+      ~error_deserializer
 end
 
 module ListFaqs = struct
@@ -1702,6 +2009,12 @@ module ListFaqs = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.ListFaqs" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_faqs_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_faqs_request) =
+    let input = Json_serializers.list_faqs_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.ListFaqs" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_faqs_response_of_yojson ~error_deserializer
 end
 
 module ListFeaturedResultsSets = struct
@@ -1735,6 +2048,13 @@ module ListFeaturedResultsSets = struct
   let request context (request : list_featured_results_sets_request) =
     let input = Json_serializers.list_featured_results_sets_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.ListFeaturedResultsSets" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_featured_results_sets_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_featured_results_sets_request) =
+    let input = Json_serializers.list_featured_results_sets_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.ListFeaturedResultsSets" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_featured_results_sets_response_of_yojson
       ~error_deserializer
@@ -1777,6 +2097,13 @@ module ListGroupsOlderThanOrderingId = struct
       ~shape_name:"AWSKendraFrontendService.ListGroupsOlderThanOrderingId" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_groups_older_than_ordering_id_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_groups_older_than_ordering_id_request) =
+    let input = Json_serializers.list_groups_older_than_ordering_id_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.ListGroupsOlderThanOrderingId" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_groups_older_than_ordering_id_response_of_yojson
+      ~error_deserializer
 end
 
 module ListIndices = struct
@@ -1808,6 +2135,12 @@ module ListIndices = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.ListIndices" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_indices_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_indices_request) =
+    let input = Json_serializers.list_indices_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.ListIndices" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_indices_response_of_yojson ~error_deserializer
 end
 
 module ListQuerySuggestionsBlockLists = struct
@@ -1841,6 +2174,13 @@ module ListQuerySuggestionsBlockLists = struct
   let request context (request : list_query_suggestions_block_lists_request) =
     let input = Json_serializers.list_query_suggestions_block_lists_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.ListQuerySuggestionsBlockLists" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_query_suggestions_block_lists_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_query_suggestions_block_lists_request) =
+    let input = Json_serializers.list_query_suggestions_block_lists_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.ListQuerySuggestionsBlockLists" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_query_suggestions_block_lists_response_of_yojson
       ~error_deserializer
@@ -1880,6 +2220,13 @@ module ListTagsForResource = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_resource_request) =
+    let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.ListTagsForResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module ListThesauri = struct
@@ -1915,6 +2262,12 @@ module ListThesauri = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.ListThesauri" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_thesauri_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_thesauri_request) =
+    let input = Json_serializers.list_thesauri_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.ListThesauri" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_thesauri_response_of_yojson ~error_deserializer
 end
 
 module PutPrincipalMapping = struct
@@ -1956,6 +2309,13 @@ module PutPrincipalMapping = struct
     let input = Json_serializers.put_principal_mapping_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.PutPrincipalMapping"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_principal_mapping_request) =
+    let input = Json_serializers.put_principal_mapping_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.PutPrincipalMapping" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -2000,6 +2360,12 @@ module Query = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.Query" ~service
       ~context ~input ~output_deserializer:Json_deserializers.query_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : query_request) =
+    let input = Json_serializers.query_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSKendraFrontendService.Query"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.query_result_of_yojson
+      ~error_deserializer
 end
 
 module Retrieve = struct
@@ -2042,6 +2408,12 @@ module Retrieve = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.Retrieve" ~service
       ~context ~input ~output_deserializer:Json_deserializers.retrieve_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : retrieve_request) =
+    let input = Json_serializers.retrieve_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.Retrieve" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.retrieve_result_of_yojson ~error_deserializer
 end
 
 module StartDataSourceSyncJob = struct
@@ -2084,6 +2456,13 @@ module StartDataSourceSyncJob = struct
       ~shape_name:"AWSKendraFrontendService.StartDataSourceSyncJob" ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_data_source_sync_job_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_data_source_sync_job_request) =
+    let input = Json_serializers.start_data_source_sync_job_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.StartDataSourceSyncJob" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_data_source_sync_job_response_of_yojson
+      ~error_deserializer
 end
 
 module StopDataSourceSyncJob = struct
@@ -2118,6 +2497,13 @@ module StopDataSourceSyncJob = struct
     let input = Json_serializers.stop_data_source_sync_job_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.StopDataSourceSyncJob"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : stop_data_source_sync_job_request) =
+    let input = Json_serializers.stop_data_source_sync_job_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.StopDataSourceSyncJob" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -2160,6 +2546,13 @@ module SubmitFeedback = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : submit_feedback_request) =
+    let input = Json_serializers.submit_feedback_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.SubmitFeedback" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module TagResource = struct
@@ -2195,6 +2588,12 @@ module TagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.TagResource" ~service
       ~context ~input ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_request) =
+    let input = Json_serializers.tag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.TagResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson ~error_deserializer
 end
 
 module UntagResource = struct
@@ -2229,6 +2628,12 @@ module UntagResource = struct
     let input = Json_serializers.untag_resource_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.UntagResource"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_request) =
+    let input = Json_serializers.untag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.UntagResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson ~error_deserializer
 end
 
@@ -2274,6 +2679,14 @@ module UpdateAccessControlConfiguration = struct
       ~input
       ~output_deserializer:Json_deserializers.update_access_control_configuration_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_access_control_configuration_request) =
+    let input = Json_serializers.update_access_control_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.UpdateAccessControlConfiguration" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.update_access_control_configuration_response_of_yojson
+      ~error_deserializer
 end
 
 module UpdateDataSource = struct
@@ -2311,6 +2724,13 @@ module UpdateDataSource = struct
     let input = Json_serializers.update_data_source_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.UpdateDataSource"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_data_source_request) =
+    let input = Json_serializers.update_data_source_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.UpdateDataSource" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -2352,6 +2772,13 @@ module UpdateExperience = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_experience_request) =
+    let input = Json_serializers.update_experience_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.UpdateExperience" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module UpdateFeaturedResultsSet = struct
@@ -2389,6 +2816,13 @@ module UpdateFeaturedResultsSet = struct
   let request context (request : update_featured_results_set_request) =
     let input = Json_serializers.update_featured_results_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.UpdateFeaturedResultsSet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_featured_results_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_featured_results_set_request) =
+    let input = Json_serializers.update_featured_results_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.UpdateFeaturedResultsSet" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_featured_results_set_response_of_yojson
       ~error_deserializer
@@ -2434,6 +2868,13 @@ module UpdateIndex = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.UpdateIndex" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_index_request) =
+    let input = Json_serializers.update_index_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.UpdateIndex" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module UpdateQuerySuggestionsBlockList = struct
@@ -2470,6 +2911,13 @@ module UpdateQuerySuggestionsBlockList = struct
   let request context (request : update_query_suggestions_block_list_request) =
     let input = Json_serializers.update_query_suggestions_block_list_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSKendraFrontendService.UpdateQuerySuggestionsBlockList" ~service ~context
+      ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_query_suggestions_block_list_request) =
+    let input = Json_serializers.update_query_suggestions_block_list_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSKendraFrontendService.UpdateQuerySuggestionsBlockList" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
@@ -2512,6 +2960,13 @@ module UpdateQuerySuggestionsConfig = struct
       ~shape_name:"AWSKendraFrontendService.UpdateQuerySuggestionsConfig" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_query_suggestions_config_request) =
+    let input = Json_serializers.update_query_suggestions_config_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.UpdateQuerySuggestionsConfig" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module UpdateThesaurus = struct
@@ -2549,6 +3004,13 @@ module UpdateThesaurus = struct
     let input = Json_serializers.update_thesaurus_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSKendraFrontendService.UpdateThesaurus"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_thesaurus_request) =
+    let input = Json_serializers.update_thesaurus_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSKendraFrontendService.UpdateThesaurus" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end

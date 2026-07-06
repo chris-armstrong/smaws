@@ -159,6 +159,17 @@ module DescribeReportCreation : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `ThrottledException of throttled_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_report_creation_input ->
+    ( describe_report_creation_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConstraintViolationException of constraint_violation_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ThrottledException of throttled_exception ] )
+    result
 end
 [@@ocaml.doc
   "Describes the status of the [StartReportCreation] operation. \n\n\
@@ -179,6 +190,17 @@ module GetComplianceSummary : sig
     'http_type Smaws_Lib.Context.t ->
     get_compliance_summary_input ->
     ( get_compliance_summary_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConstraintViolationException of constraint_violation_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ThrottledException of throttled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_compliance_summary_input ->
+    ( get_compliance_summary_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConstraintViolationException of constraint_violation_exception
       | `InternalServiceException of internal_service_exception
@@ -215,6 +237,17 @@ module GetResources : sig
     'http_type Smaws_Lib.Context.t ->
     get_resources_input ->
     ( get_resources_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `PaginationTokenExpiredException of pagination_token_expired_exception
+      | `ThrottledException of throttled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_resources_input ->
+    ( get_resources_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceException of internal_service_exception
       | `InvalidParameterException of invalid_parameter_exception
@@ -273,6 +306,17 @@ module GetTagKeys : sig
       | `PaginationTokenExpiredException of pagination_token_expired_exception
       | `ThrottledException of throttled_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_tag_keys_input ->
+    ( get_tag_keys_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `PaginationTokenExpiredException of pagination_token_expired_exception
+      | `ThrottledException of throttled_exception ] )
+    result
 end
 [@@ocaml.doc
   "Returns all tag keys currently in use in the specified Amazon Web Services Region for the \
@@ -297,6 +341,17 @@ module GetTagValues : sig
     'http_type Smaws_Lib.Context.t ->
     get_tag_values_input ->
     ( get_tag_values_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `PaginationTokenExpiredException of pagination_token_expired_exception
+      | `ThrottledException of throttled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_tag_values_input ->
+    ( get_tag_values_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceException of internal_service_exception
       | `InvalidParameterException of invalid_parameter_exception
@@ -333,6 +388,17 @@ module ListRequiredTags : sig
       | `PaginationTokenExpiredException of pagination_token_expired_exception
       | `ThrottledException of throttled_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_required_tags_input ->
+    ( list_required_tags_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `PaginationTokenExpiredException of pagination_token_expired_exception
+      | `ThrottledException of throttled_exception ] )
+    result
 end
 [@@ocaml.doc
   "Lists the required tags for supported resource types in an Amazon Web Services account.\n"]
@@ -351,6 +417,18 @@ module StartReportCreation : sig
     'http_type Smaws_Lib.Context.t ->
     start_report_creation_input ->
     ( start_report_creation_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `ConstraintViolationException of constraint_violation_exception
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ThrottledException of throttled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_report_creation_input ->
+    ( start_report_creation_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `ConstraintViolationException of constraint_violation_exception
@@ -396,6 +474,16 @@ module TagResources : sig
     'http_type Smaws_Lib.Context.t ->
     tag_resources_input ->
     ( tag_resources_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ThrottledException of throttled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resources_input ->
+    ( tag_resources_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceException of internal_service_exception
       | `InvalidParameterException of invalid_parameter_exception
@@ -478,6 +566,16 @@ module UntagResources : sig
     'http_type Smaws_Lib.Context.t ->
     untag_resources_input ->
     ( untag_resources_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceException of internal_service_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `ThrottledException of throttled_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resources_input ->
+    ( untag_resources_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceException of internal_service_exception
       | `InvalidParameterException of invalid_parameter_exception

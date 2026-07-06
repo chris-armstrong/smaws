@@ -15,6 +15,15 @@ module CountClosedWorkflowExecutions : sig
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    count_closed_workflow_executions_input ->
+    ( workflow_execution_count Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc
   "Returns the number of closed workflow executions within the given domain that meet the \
@@ -72,6 +81,15 @@ module CountOpenWorkflowExecutions : sig
     'http_type Smaws_Lib.Context.t ->
     count_open_workflow_executions_input ->
     ( workflow_execution_count,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    count_open_workflow_executions_input ->
+    ( workflow_execution_count Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
@@ -137,6 +155,15 @@ module CountPendingActivityTasks : sig
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    count_pending_activity_tasks_input ->
+    ( pending_task_count Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc
   "Returns the estimated number of activity tasks in the specified task list. The count returned \
@@ -178,6 +205,15 @@ module CountPendingDecisionTasks : sig
     'http_type Smaws_Lib.Context.t ->
     count_pending_decision_tasks_input ->
     ( pending_task_count,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    count_pending_decision_tasks_input ->
+    ( pending_task_count Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
@@ -224,6 +260,16 @@ module DeleteActivityType : sig
     'http_type Smaws_Lib.Context.t ->
     delete_activity_type_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `TypeNotDeprecatedFault of type_not_deprecated_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_activity_type_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TypeNotDeprecatedFault of type_not_deprecated_fault
@@ -290,6 +336,16 @@ module DeleteWorkflowType : sig
       | `TypeNotDeprecatedFault of type_not_deprecated_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_workflow_type_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `TypeNotDeprecatedFault of type_not_deprecated_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc
   "Deletes the specified {i workflow type}.\n\n\
@@ -346,6 +402,16 @@ module DeprecateActivityType : sig
     'http_type Smaws_Lib.Context.t ->
     deprecate_activity_type_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `TypeDeprecatedFault of type_deprecated_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    deprecate_activity_type_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TypeDeprecatedFault of type_deprecated_fault
@@ -409,6 +475,16 @@ module DeprecateDomain : sig
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    deprecate_domain_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DomainDeprecatedFault of domain_deprecated_fault
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc
   "Deprecates the specified domain. After a domain has been deprecated it cannot be used to create \
@@ -454,6 +530,16 @@ module DeprecateWorkflowType : sig
     'http_type Smaws_Lib.Context.t ->
     deprecate_workflow_type_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `TypeDeprecatedFault of type_deprecated_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    deprecate_workflow_type_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TypeDeprecatedFault of type_deprecated_fault
@@ -519,6 +605,15 @@ module DescribeActivityType : sig
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_activity_type_input ->
+    ( activity_type_detail Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc
   "Returns information about the specified activity type. This includes configuration settings \
@@ -574,6 +669,15 @@ module DescribeDomain : sig
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_domain_input ->
+    ( domain_detail Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc
   "Returns information about the specified domain, including description and status.\n\n\
@@ -612,6 +716,15 @@ module DescribeWorkflowExecution : sig
     'http_type Smaws_Lib.Context.t ->
     describe_workflow_execution_input ->
     ( workflow_execution_detail,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_workflow_execution_input ->
+    ( workflow_execution_detail Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
@@ -658,6 +771,15 @@ module DescribeWorkflowType : sig
     'http_type Smaws_Lib.Context.t ->
     describe_workflow_type_input ->
     ( workflow_type_detail,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_workflow_type_input ->
+    ( workflow_type_detail Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
@@ -718,6 +840,15 @@ module GetWorkflowExecutionHistory : sig
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_workflow_execution_history_input ->
+    ( history Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc
   "Returns the history of the specified workflow execution. The results may be split into multiple \
@@ -765,6 +896,15 @@ module ListActivityTypes : sig
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_activity_types_input ->
+    ( activity_type_infos Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc
   "Returns information about all activities registered in the specified domain that match the \
@@ -806,6 +946,15 @@ module ListClosedWorkflowExecutions : sig
     'http_type Smaws_Lib.Context.t ->
     list_closed_workflow_executions_input ->
     ( workflow_execution_infos,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_closed_workflow_executions_input ->
+    ( workflow_execution_infos Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
@@ -870,6 +1019,14 @@ module ListDomains : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_domains_input ->
+    ( domain_infos Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault ] )
+    result
 end
 [@@ocaml.doc
   "Returns the list of domains registered in the account. The results may be split into multiple \
@@ -914,6 +1071,15 @@ module ListOpenWorkflowExecutions : sig
     'http_type Smaws_Lib.Context.t ->
     list_open_workflow_executions_input ->
     ( workflow_execution_infos,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_open_workflow_executions_input ->
+    ( workflow_execution_infos Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
@@ -982,6 +1148,16 @@ module ListTagsForResource : sig
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_input ->
+    ( list_tags_for_resource_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `LimitExceededFault of limit_exceeded_fault
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc "List tags for a given domain.\n"]
 
@@ -996,6 +1172,15 @@ module ListWorkflowTypes : sig
     'http_type Smaws_Lib.Context.t ->
     list_workflow_types_input ->
     ( workflow_type_infos,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_workflow_types_input ->
+    ( workflow_type_infos Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
@@ -1040,6 +1225,16 @@ module PollForActivityTask : sig
     'http_type Smaws_Lib.Context.t ->
     poll_for_activity_task_input ->
     ( activity_task,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `LimitExceededFault of limit_exceeded_fault
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    poll_for_activity_task_input ->
+    ( activity_task Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `LimitExceededFault of limit_exceeded_fault
       | `OperationNotPermittedFault of operation_not_permitted_fault
@@ -1094,6 +1289,16 @@ module PollForDecisionTask : sig
     'http_type Smaws_Lib.Context.t ->
     poll_for_decision_task_input ->
     ( decision_task,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `LimitExceededFault of limit_exceeded_fault
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    poll_for_decision_task_input ->
+    ( decision_task Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `LimitExceededFault of limit_exceeded_fault
       | `OperationNotPermittedFault of operation_not_permitted_fault
@@ -1157,6 +1362,15 @@ module RecordActivityTaskHeartbeat : sig
     'http_type Smaws_Lib.Context.t ->
     record_activity_task_heartbeat_input ->
     ( activity_task_status,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    record_activity_task_heartbeat_input ->
+    ( activity_task_status Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
@@ -1231,6 +1445,17 @@ module RegisterActivityType : sig
       | `TypeAlreadyExistsFault of type_already_exists_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    register_activity_type_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `LimitExceededFault of limit_exceeded_fault
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `TypeAlreadyExistsFault of type_already_exists_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc
   "Registers a new {i activity type} along with its configuration settings in the specified \
@@ -1296,6 +1521,17 @@ module RegisterDomain : sig
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TooManyTagsFault of too_many_tags_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    register_domain_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DomainAlreadyExistsFault of domain_already_exists_fault
+      | `LimitExceededFault of limit_exceeded_fault
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `TooManyTagsFault of too_many_tags_fault ] )
+    result
 end
 [@@ocaml.doc
   "Registers a new domain.\n\n\
@@ -1336,6 +1572,17 @@ module RegisterWorkflowType : sig
     'http_type Smaws_Lib.Context.t ->
     register_workflow_type_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `LimitExceededFault of limit_exceeded_fault
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `TypeAlreadyExistsFault of type_already_exists_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    register_workflow_type_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `LimitExceededFault of limit_exceeded_fault
       | `OperationNotPermittedFault of operation_not_permitted_fault
@@ -1405,6 +1652,15 @@ module RequestCancelWorkflowExecution : sig
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    request_cancel_workflow_execution_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc
   "Records a [WorkflowExecutionCancelRequested] event in the currently running workflow execution \
@@ -1453,6 +1709,15 @@ module RespondActivityTaskCanceled : sig
     'http_type Smaws_Lib.Context.t ->
     respond_activity_task_canceled_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    respond_activity_task_canceled_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
@@ -1514,6 +1779,15 @@ module RespondActivityTaskCompleted : sig
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    respond_activity_task_completed_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc
   "Used by workers to tell the service that the [ActivityTask] identified by the [taskToken] \
@@ -1571,6 +1845,15 @@ module RespondActivityTaskFailed : sig
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    respond_activity_task_failed_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc
   "Used by workers to tell the service that the [ActivityTask] identified by the [taskToken] has \
@@ -1622,6 +1905,15 @@ module RespondDecisionTaskCompleted : sig
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    respond_decision_task_completed_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc
   "Used by deciders to tell the service that the [DecisionTask] identified by the [taskToken] has \
@@ -1652,6 +1944,15 @@ module SignalWorkflowExecution : sig
     'http_type Smaws_Lib.Context.t ->
     signal_workflow_execution_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    signal_workflow_execution_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
@@ -1706,6 +2007,19 @@ module StartWorkflowExecution : sig
     'http_type Smaws_Lib.Context.t ->
     start_workflow_execution_input ->
     ( run,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DefaultUndefinedFault of default_undefined_fault
+      | `LimitExceededFault of limit_exceeded_fault
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `TypeDeprecatedFault of type_deprecated_fault
+      | `UnknownResourceFault of unknown_resource_fault
+      | `WorkflowExecutionAlreadyStartedFault of workflow_execution_already_started_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_workflow_execution_input ->
+    ( run Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DefaultUndefinedFault of default_undefined_fault
       | `LimitExceededFault of limit_exceeded_fault
@@ -1793,6 +2107,17 @@ module TagResource : sig
       | `TooManyTagsFault of too_many_tags_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `LimitExceededFault of limit_exceeded_fault
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `TooManyTagsFault of too_many_tags_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc
   "Add a tag to a Amazon SWF domain.\n\n\
@@ -1811,6 +2136,15 @@ module TerminateWorkflowExecution : sig
     'http_type Smaws_Lib.Context.t ->
     terminate_workflow_execution_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    terminate_workflow_execution_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
@@ -1866,6 +2200,16 @@ module UndeprecateActivityType : sig
     'http_type Smaws_Lib.Context.t ->
     undeprecate_activity_type_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `TypeAlreadyExistsFault of type_already_exists_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    undeprecate_activity_type_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TypeAlreadyExistsFault of type_already_exists_fault
@@ -1931,6 +2275,16 @@ module UndeprecateDomain : sig
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `UnknownResourceFault of unknown_resource_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    undeprecate_domain_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `DomainAlreadyExistsFault of domain_already_exists_fault
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
 end
 [@@ocaml.doc
   "Undeprecates a previously deprecated domain. After a domain has been undeprecated it can be \
@@ -1974,6 +2328,16 @@ module UndeprecateWorkflowType : sig
     'http_type Smaws_Lib.Context.t ->
     undeprecate_workflow_type_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `TypeAlreadyExistsFault of type_already_exists_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    undeprecate_workflow_type_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TypeAlreadyExistsFault of type_already_exists_fault
@@ -2034,6 +2398,16 @@ module UntagResource : sig
     'http_type Smaws_Lib.Context.t ->
     untag_resource_input ->
     ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `LimitExceededFault of limit_exceeded_fault
+      | `OperationNotPermittedFault of operation_not_permitted_fault
+      | `UnknownResourceFault of unknown_resource_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `LimitExceededFault of limit_exceeded_fault
       | `OperationNotPermittedFault of operation_not_permitted_fault
