@@ -115,6 +115,6 @@
   ;; ocamlformat is required to build the generated sdks in development
   ;; (the codegen action runs `ocamlformat -i` on its targets) and to run
   ;; `dune build @fmt`. Pinned to match .ocamlformat's `version`.
-  (ocamlformat (= "0.29.0" :with-dev-setup))
+  (ocamlformat (and (= "0.29.0") :with-dev-setup))
   (alcotest :with-test)
   (odoc :with-doc)))
