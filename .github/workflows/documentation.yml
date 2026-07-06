@@ -37,7 +37,7 @@ jobs:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
 
       - name: Install opam dependencies
-        run: opam install ./smaws-lib.opam ./smaws-gen.opam ./smaws-clients.opam --deps-only --with-doc --assume-depexts
+        run: opam install ./smaws-lib.opam ./smaws-gen.opam ./smaws-clients.opam --deps-only --with-doc --with-dev-setup --assume-depexts
 
       - name: Build documentation
         run: opam exec -- dune build @doc

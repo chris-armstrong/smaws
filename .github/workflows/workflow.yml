@@ -85,5 +85,7 @@ jobs:
       - run: opam install ./smaws-lib.opam ./smaws-gen.opam ./smaws-clients.opam --deps-only --with-test --with-dev-setup --with-doc --assume-depexts
 
       - run: opam exec -- dune build
+      - name: Check formatting
+        run: opam exec -- dune build @fmt
       - run: opam exec -- dune runtest
       - run: opam exec -- dune build @doc
