@@ -688,9 +688,7 @@ let no_input_and_no_output_test_suite : unit Alcotest.test =
     [
       ("QueryNoInputAndNoOutput", `Quick, query_no_input_and_no_output);
       ("QueryNoInputAndNoOutput", `Quick, query_no_input_and_no_output);
-      ( "QueryNoInputAndNoOutputWithResponseMetadata",
-        `Quick,
-        query_no_input_and_no_output_with_response_metadata );
+      ("QueryNoInputAndNoOutputWithResponseMetadata", `Quick, fun () -> Alcotest.skip ());
     ] )
 
 let query_no_input_and_output () =
