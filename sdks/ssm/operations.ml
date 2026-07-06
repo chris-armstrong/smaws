@@ -32,6 +32,13 @@ module AddTagsToResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.AddTagsToResource" ~service ~context
       ~input ~output_deserializer:Json_deserializers.add_tags_to_resource_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_to_resource_request) =
+    let input = Json_serializers.add_tags_to_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.AddTagsToResource"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.add_tags_to_resource_result_of_yojson
+      ~error_deserializer
 end
 
 module AssociateOpsItemRelatedItem = struct
@@ -75,6 +82,13 @@ module AssociateOpsItemRelatedItem = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.associate_ops_item_related_item_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : associate_ops_item_related_item_request) =
+    let input = Json_serializers.associate_ops_item_related_item_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.AssociateOpsItemRelatedItem" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.associate_ops_item_related_item_response_of_yojson
+      ~error_deserializer
 end
 
 module CancelCommand = struct
@@ -105,6 +119,12 @@ module CancelCommand = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.CancelCommand" ~service ~context
       ~input ~output_deserializer:Json_deserializers.cancel_command_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : cancel_command_request) =
+    let input = Json_serializers.cancel_command_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.CancelCommand" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.cancel_command_result_of_yojson
+      ~error_deserializer
 end
 
 module CancelMaintenanceWindowExecution = struct
@@ -128,6 +148,13 @@ module CancelMaintenanceWindowExecution = struct
     let input = Json_serializers.cancel_maintenance_window_execution_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.CancelMaintenanceWindowExecution"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.cancel_maintenance_window_execution_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : cancel_maintenance_window_execution_request) =
+    let input = Json_serializers.cancel_maintenance_window_execution_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.CancelMaintenanceWindowExecution" ~service ~context ~input
       ~output_deserializer:Json_deserializers.cancel_maintenance_window_execution_result_of_yojson
       ~error_deserializer
 end
@@ -154,6 +181,12 @@ module CreateActivation = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.CreateActivation" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_activation_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_activation_request) =
+    let input = Json_serializers.create_activation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.CreateActivation"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_activation_result_of_yojson ~error_deserializer
 end
 
 module CreateAssociation = struct
@@ -212,6 +245,13 @@ module CreateAssociation = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.CreateAssociation" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_association_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_association_request) =
+    let input = Json_serializers.create_association_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.CreateAssociation"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_association_result_of_yojson
+      ~error_deserializer
 end
 
 module CreateAssociationBatch = struct
@@ -268,6 +308,13 @@ module CreateAssociationBatch = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.create_association_batch_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_association_batch_request) =
+    let input = Json_serializers.create_association_batch_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.CreateAssociationBatch"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_association_batch_result_of_yojson
+      ~error_deserializer
 end
 
 module CreateDocument = struct
@@ -313,6 +360,12 @@ module CreateDocument = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.CreateDocument" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_document_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_document_request) =
+    let input = Json_serializers.create_document_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.CreateDocument"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_document_result_of_yojson ~error_deserializer
 end
 
 module CreateMaintenanceWindow = struct
@@ -341,6 +394,13 @@ module CreateMaintenanceWindow = struct
     let input = Json_serializers.create_maintenance_window_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.CreateMaintenanceWindow" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.create_maintenance_window_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_maintenance_window_request) =
+    let input = Json_serializers.create_maintenance_window_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.CreateMaintenanceWindow" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_maintenance_window_result_of_yojson
       ~error_deserializer
 end
@@ -379,6 +439,12 @@ module CreateOpsItem = struct
     let input = Json_serializers.create_ops_item_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.CreateOpsItem" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_ops_item_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_ops_item_request) =
+    let input = Json_serializers.create_ops_item_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.CreateOpsItem" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.create_ops_item_response_of_yojson
       ~error_deserializer
 end
 
@@ -419,6 +485,13 @@ module CreateOpsMetadata = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.CreateOpsMetadata" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_ops_metadata_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_ops_metadata_request) =
+    let input = Json_serializers.create_ops_metadata_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.CreateOpsMetadata"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_ops_metadata_result_of_yojson
+      ~error_deserializer
 end
 
 module CreatePatchBaseline = struct
@@ -447,6 +520,13 @@ module CreatePatchBaseline = struct
     let input = Json_serializers.create_patch_baseline_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.CreatePatchBaseline" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_patch_baseline_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_patch_baseline_request) =
+    let input = Json_serializers.create_patch_baseline_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.CreatePatchBaseline"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_patch_baseline_result_of_yojson
       ~error_deserializer
 end
 
@@ -486,6 +566,13 @@ module CreateResourceDataSync = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.create_resource_data_sync_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_resource_data_sync_request) =
+    let input = Json_serializers.create_resource_data_sync_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.CreateResourceDataSync"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_resource_data_sync_result_of_yojson
+      ~error_deserializer
 end
 
 module DeleteActivation = struct
@@ -516,6 +603,12 @@ module DeleteActivation = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DeleteActivation" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_activation_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_activation_request) =
+    let input = Json_serializers.delete_activation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DeleteActivation"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_activation_result_of_yojson ~error_deserializer
 end
 
 module DeleteAssociation = struct
@@ -549,6 +642,13 @@ module DeleteAssociation = struct
     let input = Json_serializers.delete_association_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DeleteAssociation" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_association_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_association_request) =
+    let input = Json_serializers.delete_association_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DeleteAssociation"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_association_result_of_yojson
       ~error_deserializer
 end
 
@@ -584,6 +684,12 @@ module DeleteDocument = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DeleteDocument" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_document_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_document_request) =
+    let input = Json_serializers.delete_document_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DeleteDocument"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_document_result_of_yojson ~error_deserializer
 end
 
 module DeleteInventory = struct
@@ -621,6 +727,12 @@ module DeleteInventory = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DeleteInventory" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_inventory_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_inventory_request) =
+    let input = Json_serializers.delete_inventory_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DeleteInventory"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_inventory_result_of_yojson ~error_deserializer
 end
 
 module DeleteMaintenanceWindow = struct
@@ -641,6 +753,13 @@ module DeleteMaintenanceWindow = struct
     let input = Json_serializers.delete_maintenance_window_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DeleteMaintenanceWindow" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.delete_maintenance_window_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_maintenance_window_request) =
+    let input = Json_serializers.delete_maintenance_window_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DeleteMaintenanceWindow" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_maintenance_window_result_of_yojson
       ~error_deserializer
 end
@@ -667,6 +786,12 @@ module DeleteOpsItem = struct
     let input = Json_serializers.delete_ops_item_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DeleteOpsItem" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_ops_item_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_ops_item_request) =
+    let input = Json_serializers.delete_ops_item_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DeleteOpsItem" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.delete_ops_item_response_of_yojson
       ~error_deserializer
 end
 
@@ -698,6 +823,13 @@ module DeleteOpsMetadata = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DeleteOpsMetadata" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_ops_metadata_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_ops_metadata_request) =
+    let input = Json_serializers.delete_ops_metadata_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DeleteOpsMetadata"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_ops_metadata_result_of_yojson
+      ~error_deserializer
 end
 
 module DeleteParameter = struct
@@ -722,6 +854,12 @@ module DeleteParameter = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DeleteParameter" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_parameter_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_parameter_request) =
+    let input = Json_serializers.delete_parameter_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DeleteParameter"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_parameter_result_of_yojson ~error_deserializer
 end
 
 module DeleteParameters = struct
@@ -743,6 +881,12 @@ module DeleteParameters = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DeleteParameters" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_parameters_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_parameters_request) =
+    let input = Json_serializers.delete_parameters_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DeleteParameters"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_parameters_result_of_yojson ~error_deserializer
 end
 
 module DeletePatchBaseline = struct
@@ -766,6 +910,13 @@ module DeletePatchBaseline = struct
     let input = Json_serializers.delete_patch_baseline_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DeletePatchBaseline" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_patch_baseline_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_patch_baseline_request) =
+    let input = Json_serializers.delete_patch_baseline_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DeletePatchBaseline"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_patch_baseline_result_of_yojson
       ~error_deserializer
 end
 
@@ -797,6 +948,13 @@ module DeleteResourceDataSync = struct
     let input = Json_serializers.delete_resource_data_sync_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DeleteResourceDataSync" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.delete_resource_data_sync_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_resource_data_sync_request) =
+    let input = Json_serializers.delete_resource_data_sync_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DeleteResourceDataSync"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_resource_data_sync_result_of_yojson
       ~error_deserializer
 end
@@ -843,6 +1001,13 @@ module DeleteResourcePolicy = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.delete_resource_policy_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_resource_policy_request) =
+    let input = Json_serializers.delete_resource_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DeleteResourcePolicy"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_resource_policy_response_of_yojson
+      ~error_deserializer
 end
 
 module DeregisterManagedInstance = struct
@@ -866,6 +1031,13 @@ module DeregisterManagedInstance = struct
     let input = Json_serializers.deregister_managed_instance_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DeregisterManagedInstance" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.deregister_managed_instance_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : deregister_managed_instance_request) =
+    let input = Json_serializers.deregister_managed_instance_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DeregisterManagedInstance" ~service ~context ~input
       ~output_deserializer:Json_deserializers.deregister_managed_instance_result_of_yojson
       ~error_deserializer
 end
@@ -893,6 +1065,16 @@ module DeregisterPatchBaselineForPatchGroup = struct
     in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DeregisterPatchBaselineForPatchGroup"
       ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.deregister_patch_baseline_for_patch_group_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : deregister_patch_baseline_for_patch_group_request) =
+    let input =
+      Json_serializers.deregister_patch_baseline_for_patch_group_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DeregisterPatchBaselineForPatchGroup" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.deregister_patch_baseline_for_patch_group_result_of_yojson
       ~error_deserializer
@@ -927,6 +1109,16 @@ module DeregisterTargetFromMaintenanceWindow = struct
       ~output_deserializer:
         Json_deserializers.deregister_target_from_maintenance_window_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : deregister_target_from_maintenance_window_request) =
+    let input =
+      Json_serializers.deregister_target_from_maintenance_window_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DeregisterTargetFromMaintenanceWindow" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.deregister_target_from_maintenance_window_result_of_yojson
+      ~error_deserializer
 end
 
 module DeregisterTaskFromMaintenanceWindow = struct
@@ -955,6 +1147,16 @@ module DeregisterTaskFromMaintenanceWindow = struct
       ~output_deserializer:
         Json_deserializers.deregister_task_from_maintenance_window_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : deregister_task_from_maintenance_window_request) =
+    let input =
+      Json_serializers.deregister_task_from_maintenance_window_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DeregisterTaskFromMaintenanceWindow" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.deregister_task_from_maintenance_window_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeActivations = struct
@@ -980,6 +1182,13 @@ module DescribeActivations = struct
     let input = Json_serializers.describe_activations_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeActivations" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_activations_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_activations_request) =
+    let input = Json_serializers.describe_activations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DescribeActivations"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_activations_result_of_yojson
       ~error_deserializer
 end
 
@@ -1016,6 +1225,13 @@ module DescribeAssociation = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeAssociation" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_association_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_association_request) =
+    let input = Json_serializers.describe_association_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DescribeAssociation"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_association_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeAssociationExecutionTargets = struct
@@ -1050,6 +1266,14 @@ module DescribeAssociationExecutionTargets = struct
       ~output_deserializer:
         Json_deserializers.describe_association_execution_targets_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_association_execution_targets_request) =
+    let input = Json_serializers.describe_association_execution_targets_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeAssociationExecutionTargets" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_association_execution_targets_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeAssociationExecutions = struct
@@ -1077,6 +1301,13 @@ module DescribeAssociationExecutions = struct
     let input = Json_serializers.describe_association_executions_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeAssociationExecutions"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_association_executions_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_association_executions_request) =
+    let input = Json_serializers.describe_association_executions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeAssociationExecutions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_association_executions_result_of_yojson
       ~error_deserializer
 end
@@ -1108,6 +1339,13 @@ module DescribeAutomationExecutions = struct
     let input = Json_serializers.describe_automation_executions_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeAutomationExecutions"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_automation_executions_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_automation_executions_request) =
+    let input = Json_serializers.describe_automation_executions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeAutomationExecutions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_automation_executions_result_of_yojson
       ~error_deserializer
 end
@@ -1146,6 +1384,13 @@ module DescribeAutomationStepExecutions = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_automation_step_executions_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_automation_step_executions_request) =
+    let input = Json_serializers.describe_automation_step_executions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeAutomationStepExecutions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_automation_step_executions_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeAvailablePatches = struct
@@ -1166,6 +1411,13 @@ module DescribeAvailablePatches = struct
     let input = Json_serializers.describe_available_patches_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeAvailablePatches" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.describe_available_patches_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_available_patches_request) =
+    let input = Json_serializers.describe_available_patches_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeAvailablePatches" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_available_patches_result_of_yojson
       ~error_deserializer
 end
@@ -1195,6 +1447,12 @@ module DescribeDocument = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeDocument" ~service ~context
       ~input ~output_deserializer:Json_deserializers.describe_document_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_document_request) =
+    let input = Json_serializers.describe_document_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DescribeDocument"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_document_result_of_yojson ~error_deserializer
 end
 
 module DescribeDocumentPermission = struct
@@ -1230,6 +1488,13 @@ module DescribeDocumentPermission = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.describe_document_permission_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_document_permission_request) =
+    let input = Json_serializers.describe_document_permission_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeDocumentPermission" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_document_permission_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeEffectiveInstanceAssociations = struct
@@ -1257,6 +1522,16 @@ module DescribeEffectiveInstanceAssociations = struct
       Json_serializers.describe_effective_instance_associations_request_to_yojson request
     in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AmazonSSM.DescribeEffectiveInstanceAssociations" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_effective_instance_associations_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_effective_instance_associations_request) =
+    let input =
+      Json_serializers.describe_effective_instance_associations_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AmazonSSM.DescribeEffectiveInstanceAssociations" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.describe_effective_instance_associations_result_of_yojson
@@ -1296,6 +1571,17 @@ module DescribeEffectivePatchesForPatchBaseline = struct
       ~output_deserializer:
         Json_deserializers.describe_effective_patches_for_patch_baseline_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context
+      (request : describe_effective_patches_for_patch_baseline_request) =
+    let input =
+      Json_serializers.describe_effective_patches_for_patch_baseline_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeEffectivePatchesForPatchBaseline" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_effective_patches_for_patch_baseline_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeInstanceAssociationsStatus = struct
@@ -1322,6 +1608,13 @@ module DescribeInstanceAssociationsStatus = struct
     let input = Json_serializers.describe_instance_associations_status_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeInstanceAssociationsStatus"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_instance_associations_status_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_instance_associations_status_request) =
+    let input = Json_serializers.describe_instance_associations_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeInstanceAssociationsStatus" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_instance_associations_status_result_of_yojson
       ~error_deserializer
 end
@@ -1360,6 +1653,13 @@ module DescribeInstanceInformation = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.describe_instance_information_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_instance_information_request) =
+    let input = Json_serializers.describe_instance_information_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeInstanceInformation" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_instance_information_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeInstancePatchStates = struct
@@ -1383,6 +1683,13 @@ module DescribeInstancePatchStates = struct
     let input = Json_serializers.describe_instance_patch_states_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeInstancePatchStates" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.describe_instance_patch_states_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_instance_patch_states_request) =
+    let input = Json_serializers.describe_instance_patch_states_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeInstancePatchStates" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_instance_patch_states_result_of_yojson
       ~error_deserializer
 end
@@ -1415,6 +1722,17 @@ module DescribeInstancePatchStatesForPatchGroup = struct
       ~output_deserializer:
         Json_deserializers.describe_instance_patch_states_for_patch_group_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context
+      (request : describe_instance_patch_states_for_patch_group_request) =
+    let input =
+      Json_serializers.describe_instance_patch_states_for_patch_group_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeInstancePatchStatesForPatchGroup" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_instance_patch_states_for_patch_group_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeInstancePatches = struct
@@ -1443,6 +1761,13 @@ module DescribeInstancePatches = struct
     let input = Json_serializers.describe_instance_patches_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeInstancePatches" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.describe_instance_patches_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_instance_patches_request) =
+    let input = Json_serializers.describe_instance_patches_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeInstancePatches" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_instance_patches_result_of_yojson
       ~error_deserializer
 end
@@ -1487,6 +1812,13 @@ module DescribeInstanceProperties = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.describe_instance_properties_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_instance_properties_request) =
+    let input = Json_serializers.describe_instance_properties_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeInstanceProperties" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_instance_properties_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeInventoryDeletions = struct
@@ -1516,6 +1848,13 @@ module DescribeInventoryDeletions = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.describe_inventory_deletions_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_inventory_deletions_request) =
+    let input = Json_serializers.describe_inventory_deletions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeInventoryDeletions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_inventory_deletions_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeMaintenanceWindowExecutionTaskInvocations = struct
@@ -1541,6 +1880,19 @@ module DescribeMaintenanceWindowExecutionTaskInvocations = struct
         request
     in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AmazonSSM.DescribeMaintenanceWindowExecutionTaskInvocations" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.describe_maintenance_window_execution_task_invocations_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context
+      (request : describe_maintenance_window_execution_task_invocations_request) =
+    let input =
+      Json_serializers.describe_maintenance_window_execution_task_invocations_request_to_yojson
+        request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AmazonSSM.DescribeMaintenanceWindowExecutionTaskInvocations" ~service ~context
       ~input
       ~output_deserializer:
@@ -1574,6 +1926,17 @@ module DescribeMaintenanceWindowExecutionTasks = struct
       ~output_deserializer:
         Json_deserializers.describe_maintenance_window_execution_tasks_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_maintenance_window_execution_tasks_request)
+      =
+    let input =
+      Json_serializers.describe_maintenance_window_execution_tasks_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeMaintenanceWindowExecutionTasks" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_maintenance_window_execution_tasks_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeMaintenanceWindowExecutions = struct
@@ -1594,6 +1957,14 @@ module DescribeMaintenanceWindowExecutions = struct
     let input = Json_serializers.describe_maintenance_window_executions_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeMaintenanceWindowExecutions"
       ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_maintenance_window_executions_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_maintenance_window_executions_request) =
+    let input = Json_serializers.describe_maintenance_window_executions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeMaintenanceWindowExecutions" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.describe_maintenance_window_executions_result_of_yojson
       ~error_deserializer
@@ -1622,6 +1993,13 @@ module DescribeMaintenanceWindowSchedule = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_maintenance_window_schedule_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_maintenance_window_schedule_request) =
+    let input = Json_serializers.describe_maintenance_window_schedule_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeMaintenanceWindowSchedule" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_maintenance_window_schedule_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeMaintenanceWindowTargets = struct
@@ -1645,6 +2023,13 @@ module DescribeMaintenanceWindowTargets = struct
     let input = Json_serializers.describe_maintenance_window_targets_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeMaintenanceWindowTargets"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_maintenance_window_targets_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_maintenance_window_targets_request) =
+    let input = Json_serializers.describe_maintenance_window_targets_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeMaintenanceWindowTargets" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_maintenance_window_targets_result_of_yojson
       ~error_deserializer
 end
@@ -1672,6 +2057,13 @@ module DescribeMaintenanceWindowTasks = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_maintenance_window_tasks_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_maintenance_window_tasks_request) =
+    let input = Json_serializers.describe_maintenance_window_tasks_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeMaintenanceWindowTasks" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_maintenance_window_tasks_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeMaintenanceWindows = struct
@@ -1692,6 +2084,13 @@ module DescribeMaintenanceWindows = struct
     let input = Json_serializers.describe_maintenance_windows_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeMaintenanceWindows" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.describe_maintenance_windows_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_maintenance_windows_request) =
+    let input = Json_serializers.describe_maintenance_windows_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeMaintenanceWindows" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_maintenance_windows_result_of_yojson
       ~error_deserializer
 end
@@ -1719,6 +2118,16 @@ module DescribeMaintenanceWindowsForTarget = struct
       ~output_deserializer:
         Json_deserializers.describe_maintenance_windows_for_target_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_maintenance_windows_for_target_request) =
+    let input =
+      Json_serializers.describe_maintenance_windows_for_target_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribeMaintenanceWindowsForTarget" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.describe_maintenance_windows_for_target_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeOpsItems = struct
@@ -1739,6 +2148,13 @@ module DescribeOpsItems = struct
     let input = Json_serializers.describe_ops_items_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeOpsItems" ~service ~context
       ~input ~output_deserializer:Json_deserializers.describe_ops_items_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_ops_items_request) =
+    let input = Json_serializers.describe_ops_items_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DescribeOpsItems"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_ops_items_response_of_yojson
       ~error_deserializer
 end
 
@@ -1773,6 +2189,13 @@ module DescribeParameters = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeParameters" ~service ~context
       ~input ~output_deserializer:Json_deserializers.describe_parameters_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_parameters_request) =
+    let input = Json_serializers.describe_parameters_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DescribeParameters"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_parameters_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribePatchBaselines = struct
@@ -1793,6 +2216,13 @@ module DescribePatchBaselines = struct
     let input = Json_serializers.describe_patch_baselines_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribePatchBaselines" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.describe_patch_baselines_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_patch_baselines_request) =
+    let input = Json_serializers.describe_patch_baselines_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DescribePatchBaselines"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_patch_baselines_result_of_yojson
       ~error_deserializer
 end
@@ -1820,6 +2250,13 @@ module DescribePatchGroupState = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.describe_patch_group_state_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_patch_group_state_request) =
+    let input = Json_serializers.describe_patch_group_state_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribePatchGroupState" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_patch_group_state_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribePatchGroups = struct
@@ -1841,6 +2278,13 @@ module DescribePatchGroups = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribePatchGroups" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_patch_groups_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_patch_groups_request) =
+    let input = Json_serializers.describe_patch_groups_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DescribePatchGroups"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_patch_groups_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribePatchProperties = struct
@@ -1861,6 +2305,13 @@ module DescribePatchProperties = struct
     let input = Json_serializers.describe_patch_properties_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribePatchProperties" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.describe_patch_properties_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_patch_properties_request) =
+    let input = Json_serializers.describe_patch_properties_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DescribePatchProperties" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_patch_properties_result_of_yojson
       ~error_deserializer
 end
@@ -1889,6 +2340,13 @@ module DescribeSessions = struct
     let input = Json_serializers.describe_sessions_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.DescribeSessions" ~service ~context
       ~input ~output_deserializer:Json_deserializers.describe_sessions_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_sessions_request) =
+    let input = Json_serializers.describe_sessions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.DescribeSessions"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_sessions_response_of_yojson
       ~error_deserializer
 end
 
@@ -1930,6 +2388,13 @@ module DisassociateOpsItemRelatedItem = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.disassociate_ops_item_related_item_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : disassociate_ops_item_related_item_request) =
+    let input = Json_serializers.disassociate_ops_item_related_item_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.DisassociateOpsItemRelatedItem" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.disassociate_ops_item_related_item_response_of_yojson
+      ~error_deserializer
 end
 
 module GetAccessToken = struct
@@ -1964,6 +2429,13 @@ module GetAccessToken = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetAccessToken" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_access_token_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_access_token_request) =
+    let input = Json_serializers.get_access_token_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetAccessToken"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_access_token_response_of_yojson
+      ~error_deserializer
 end
 
 module GetAutomationExecution = struct
@@ -1989,6 +2461,13 @@ module GetAutomationExecution = struct
     let input = Json_serializers.get_automation_execution_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetAutomationExecution" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.get_automation_execution_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_automation_execution_request) =
+    let input = Json_serializers.get_automation_execution_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetAutomationExecution"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_automation_execution_result_of_yojson
       ~error_deserializer
 end
@@ -2021,6 +2500,13 @@ module GetCalendarState = struct
     let input = Json_serializers.get_calendar_state_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetCalendarState" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_calendar_state_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_calendar_state_request) =
+    let input = Json_serializers.get_calendar_state_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetCalendarState"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_calendar_state_response_of_yojson
       ~error_deserializer
 end
 
@@ -2056,6 +2542,13 @@ module GetCommandInvocation = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.get_command_invocation_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_command_invocation_request) =
+    let input = Json_serializers.get_command_invocation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetCommandInvocation"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_command_invocation_result_of_yojson
+      ~error_deserializer
 end
 
 module GetConnectionStatus = struct
@@ -2078,6 +2571,13 @@ module GetConnectionStatus = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.get_connection_status_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_connection_status_request) =
+    let input = Json_serializers.get_connection_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetConnectionStatus"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_connection_status_response_of_yojson
+      ~error_deserializer
 end
 
 module GetDefaultPatchBaseline = struct
@@ -2098,6 +2598,13 @@ module GetDefaultPatchBaseline = struct
     let input = Json_serializers.get_default_patch_baseline_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetDefaultPatchBaseline" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.get_default_patch_baseline_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_default_patch_baseline_request) =
+    let input = Json_serializers.get_default_patch_baseline_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.GetDefaultPatchBaseline" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_default_patch_baseline_result_of_yojson
       ~error_deserializer
 end
@@ -2134,6 +2641,16 @@ module GetDeployablePatchSnapshotForInstance = struct
       ~output_deserializer:
         Json_deserializers.get_deployable_patch_snapshot_for_instance_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_deployable_patch_snapshot_for_instance_request) =
+    let input =
+      Json_serializers.get_deployable_patch_snapshot_for_instance_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.GetDeployablePatchSnapshotForInstance" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.get_deployable_patch_snapshot_for_instance_result_of_yojson
+      ~error_deserializer
 end
 
 module GetDocument = struct
@@ -2160,6 +2677,12 @@ module GetDocument = struct
     let input = Json_serializers.get_document_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetDocument" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_document_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_document_request) =
+    let input = Json_serializers.get_document_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetDocument" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_document_result_of_yojson
+      ~error_deserializer
 end
 
 module GetExecutionPreview = struct
@@ -2184,6 +2707,13 @@ module GetExecutionPreview = struct
     let input = Json_serializers.get_execution_preview_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetExecutionPreview" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.get_execution_preview_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_execution_preview_request) =
+    let input = Json_serializers.get_execution_preview_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetExecutionPreview"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_execution_preview_response_of_yojson
       ~error_deserializer
 end
@@ -2228,6 +2758,12 @@ module GetInventory = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetInventory" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_inventory_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_inventory_request) =
+    let input = Json_serializers.get_inventory_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetInventory" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_inventory_result_of_yojson
+      ~error_deserializer
 end
 
 module GetInventorySchema = struct
@@ -2256,6 +2792,13 @@ module GetInventorySchema = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetInventorySchema" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_inventory_schema_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_inventory_schema_request) =
+    let input = Json_serializers.get_inventory_schema_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetInventorySchema"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_inventory_schema_result_of_yojson
+      ~error_deserializer
 end
 
 module GetMaintenanceWindow = struct
@@ -2279,6 +2822,13 @@ module GetMaintenanceWindow = struct
     let input = Json_serializers.get_maintenance_window_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetMaintenanceWindow" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.get_maintenance_window_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_maintenance_window_request) =
+    let input = Json_serializers.get_maintenance_window_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetMaintenanceWindow"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_maintenance_window_result_of_yojson
       ~error_deserializer
 end
@@ -2306,6 +2856,13 @@ module GetMaintenanceWindowExecution = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_maintenance_window_execution_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_maintenance_window_execution_request) =
+    let input = Json_serializers.get_maintenance_window_execution_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.GetMaintenanceWindowExecution" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_maintenance_window_execution_result_of_yojson
+      ~error_deserializer
 end
 
 module GetMaintenanceWindowExecutionTask = struct
@@ -2329,6 +2886,13 @@ module GetMaintenanceWindowExecutionTask = struct
     let input = Json_serializers.get_maintenance_window_execution_task_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetMaintenanceWindowExecutionTask"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_maintenance_window_execution_task_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_maintenance_window_execution_task_request) =
+    let input = Json_serializers.get_maintenance_window_execution_task_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.GetMaintenanceWindowExecutionTask" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_maintenance_window_execution_task_result_of_yojson
       ~error_deserializer
 end
@@ -2359,6 +2923,17 @@ module GetMaintenanceWindowExecutionTaskInvocation = struct
       ~output_deserializer:
         Json_deserializers.get_maintenance_window_execution_task_invocation_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context
+      (request : get_maintenance_window_execution_task_invocation_request) =
+    let input =
+      Json_serializers.get_maintenance_window_execution_task_invocation_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.GetMaintenanceWindowExecutionTaskInvocation" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.get_maintenance_window_execution_task_invocation_result_of_yojson
+      ~error_deserializer
 end
 
 module GetMaintenanceWindowTask = struct
@@ -2382,6 +2957,13 @@ module GetMaintenanceWindowTask = struct
     let input = Json_serializers.get_maintenance_window_task_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetMaintenanceWindowTask" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.get_maintenance_window_task_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_maintenance_window_task_request) =
+    let input = Json_serializers.get_maintenance_window_task_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.GetMaintenanceWindowTask" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_maintenance_window_task_result_of_yojson
       ~error_deserializer
 end
@@ -2412,6 +2994,12 @@ module GetOpsItem = struct
     let input = Json_serializers.get_ops_item_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetOpsItem" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_ops_item_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_ops_item_request) =
+    let input = Json_serializers.get_ops_item_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetOpsItem" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_ops_item_response_of_yojson
+      ~error_deserializer
 end
 
 module GetOpsMetadata = struct
@@ -2442,6 +3030,12 @@ module GetOpsMetadata = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetOpsMetadata" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_ops_metadata_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_ops_metadata_request) =
+    let input = Json_serializers.get_ops_metadata_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetOpsMetadata"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_ops_metadata_result_of_yojson ~error_deserializer
 end
 
 module GetOpsSummary = struct
@@ -2480,6 +3074,12 @@ module GetOpsSummary = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetOpsSummary" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_ops_summary_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_ops_summary_request) =
+    let input = Json_serializers.get_ops_summary_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetOpsSummary" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_ops_summary_result_of_yojson
+      ~error_deserializer
 end
 
 module GetParameter = struct
@@ -2510,6 +3110,12 @@ module GetParameter = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetParameter" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_parameter_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_parameter_request) =
+    let input = Json_serializers.get_parameter_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetParameter" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_parameter_result_of_yojson
+      ~error_deserializer
 end
 
 module GetParameterHistory = struct
@@ -2539,6 +3145,13 @@ module GetParameterHistory = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetParameterHistory" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_parameter_history_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_parameter_history_request) =
+    let input = Json_serializers.get_parameter_history_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetParameterHistory"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_parameter_history_result_of_yojson
+      ~error_deserializer
 end
 
 module GetParameters = struct
@@ -2561,6 +3174,12 @@ module GetParameters = struct
     let input = Json_serializers.get_parameters_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetParameters" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_parameters_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_parameters_request) =
+    let input = Json_serializers.get_parameters_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetParameters" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_parameters_result_of_yojson
       ~error_deserializer
 end
 
@@ -2598,6 +3217,13 @@ module GetParametersByPath = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.get_parameters_by_path_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_parameters_by_path_request) =
+    let input = Json_serializers.get_parameters_by_path_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetParametersByPath"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_parameters_by_path_result_of_yojson
+      ~error_deserializer
 end
 
 module GetPatchBaseline = struct
@@ -2625,6 +3251,13 @@ module GetPatchBaseline = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetPatchBaseline" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_patch_baseline_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_patch_baseline_request) =
+    let input = Json_serializers.get_patch_baseline_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetPatchBaseline"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_patch_baseline_result_of_yojson
+      ~error_deserializer
 end
 
 module GetPatchBaselineForPatchGroup = struct
@@ -2645,6 +3278,13 @@ module GetPatchBaselineForPatchGroup = struct
     let input = Json_serializers.get_patch_baseline_for_patch_group_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetPatchBaselineForPatchGroup"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_patch_baseline_for_patch_group_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_patch_baseline_for_patch_group_request) =
+    let input = Json_serializers.get_patch_baseline_for_patch_group_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.GetPatchBaselineForPatchGroup" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_patch_baseline_for_patch_group_result_of_yojson
       ~error_deserializer
 end
@@ -2678,6 +3318,13 @@ module GetResourcePolicies = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.get_resource_policies_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_resource_policies_request) =
+    let input = Json_serializers.get_resource_policies_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetResourcePolicies"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_resource_policies_response_of_yojson
+      ~error_deserializer
 end
 
 module GetServiceSetting = struct
@@ -2701,6 +3348,13 @@ module GetServiceSetting = struct
     let input = Json_serializers.get_service_setting_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.GetServiceSetting" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_service_setting_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_service_setting_request) =
+    let input = Json_serializers.get_service_setting_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.GetServiceSetting"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_service_setting_result_of_yojson
       ~error_deserializer
 end
 
@@ -2739,6 +3393,13 @@ module LabelParameterVersion = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.label_parameter_version_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : label_parameter_version_request) =
+    let input = Json_serializers.label_parameter_version_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.LabelParameterVersion"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.label_parameter_version_result_of_yojson
+      ~error_deserializer
 end
 
 module ListAssociationVersions = struct
@@ -2768,6 +3429,13 @@ module ListAssociationVersions = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.list_association_versions_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_association_versions_request) =
+    let input = Json_serializers.list_association_versions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.ListAssociationVersions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_association_versions_result_of_yojson
+      ~error_deserializer
 end
 
 module ListAssociations = struct
@@ -2792,6 +3460,12 @@ module ListAssociations = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListAssociations" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_associations_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_associations_request) =
+    let input = Json_serializers.list_associations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListAssociations"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_associations_result_of_yojson ~error_deserializer
 end
 
 module ListCommandInvocations = struct
@@ -2824,6 +3498,13 @@ module ListCommandInvocations = struct
     let input = Json_serializers.list_command_invocations_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListCommandInvocations" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.list_command_invocations_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_command_invocations_request) =
+    let input = Json_serializers.list_command_invocations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListCommandInvocations"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_command_invocations_result_of_yojson
       ~error_deserializer
 end
@@ -2859,6 +3540,12 @@ module ListCommands = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListCommands" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_commands_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_commands_request) =
+    let input = Json_serializers.list_commands_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListCommands" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_commands_result_of_yojson
+      ~error_deserializer
 end
 
 module ListComplianceItems = struct
@@ -2891,6 +3578,13 @@ module ListComplianceItems = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListComplianceItems" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_compliance_items_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_compliance_items_request) =
+    let input = Json_serializers.list_compliance_items_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListComplianceItems"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_compliance_items_result_of_yojson
+      ~error_deserializer
 end
 
 module ListComplianceSummaries = struct
@@ -2916,6 +3610,13 @@ module ListComplianceSummaries = struct
     let input = Json_serializers.list_compliance_summaries_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListComplianceSummaries" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.list_compliance_summaries_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_compliance_summaries_request) =
+    let input = Json_serializers.list_compliance_summaries_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.ListComplianceSummaries" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_compliance_summaries_result_of_yojson
       ~error_deserializer
 end
@@ -2949,6 +3650,13 @@ module ListDocumentMetadataHistory = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.list_document_metadata_history_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_document_metadata_history_request) =
+    let input = Json_serializers.list_document_metadata_history_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.ListDocumentMetadataHistory" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_document_metadata_history_response_of_yojson
+      ~error_deserializer
 end
 
 module ListDocumentVersions = struct
@@ -2977,6 +3685,13 @@ module ListDocumentVersions = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.list_document_versions_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_document_versions_request) =
+    let input = Json_serializers.list_document_versions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListDocumentVersions"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_document_versions_result_of_yojson
+      ~error_deserializer
 end
 
 module ListDocuments = struct
@@ -3003,6 +3718,12 @@ module ListDocuments = struct
     let input = Json_serializers.list_documents_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListDocuments" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_documents_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_documents_request) =
+    let input = Json_serializers.list_documents_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListDocuments" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_documents_result_of_yojson
       ~error_deserializer
 end
 
@@ -3038,6 +3759,13 @@ module ListInventoryEntries = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.list_inventory_entries_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_inventory_entries_request) =
+    let input = Json_serializers.list_inventory_entries_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListInventoryEntries"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_inventory_entries_result_of_yojson
+      ~error_deserializer
 end
 
 module ListNodes = struct
@@ -3071,6 +3799,12 @@ module ListNodes = struct
     let input = Json_serializers.list_nodes_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListNodes" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_nodes_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_nodes_request) =
+    let input = Json_serializers.list_nodes_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListNodes" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_nodes_result_of_yojson
+      ~error_deserializer
 end
 
 module ListNodesSummary = struct
@@ -3109,6 +3843,13 @@ module ListNodesSummary = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListNodesSummary" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_nodes_summary_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_nodes_summary_request) =
+    let input = Json_serializers.list_nodes_summary_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListNodesSummary"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_nodes_summary_result_of_yojson
+      ~error_deserializer
 end
 
 module ListOpsItemEvents = struct
@@ -3142,6 +3883,13 @@ module ListOpsItemEvents = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListOpsItemEvents" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_ops_item_events_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_ops_item_events_request) =
+    let input = Json_serializers.list_ops_item_events_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListOpsItemEvents"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_ops_item_events_response_of_yojson
+      ~error_deserializer
 end
 
 module ListOpsItemRelatedItems = struct
@@ -3166,6 +3914,13 @@ module ListOpsItemRelatedItems = struct
     let input = Json_serializers.list_ops_item_related_items_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListOpsItemRelatedItems" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.list_ops_item_related_items_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_ops_item_related_items_request) =
+    let input = Json_serializers.list_ops_item_related_items_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.ListOpsItemRelatedItems" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_ops_item_related_items_response_of_yojson
       ~error_deserializer
 end
@@ -3194,6 +3949,12 @@ module ListOpsMetadata = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListOpsMetadata" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_ops_metadata_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_ops_metadata_request) =
+    let input = Json_serializers.list_ops_metadata_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListOpsMetadata"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_ops_metadata_result_of_yojson ~error_deserializer
 end
 
 module ListResourceComplianceSummaries = struct
@@ -3219,6 +3980,13 @@ module ListResourceComplianceSummaries = struct
     let input = Json_serializers.list_resource_compliance_summaries_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListResourceComplianceSummaries"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_resource_compliance_summaries_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_resource_compliance_summaries_request) =
+    let input = Json_serializers.list_resource_compliance_summaries_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.ListResourceComplianceSummaries" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_resource_compliance_summaries_result_of_yojson
       ~error_deserializer
 end
@@ -3252,6 +4020,13 @@ module ListResourceDataSync = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.list_resource_data_sync_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_resource_data_sync_request) =
+    let input = Json_serializers.list_resource_data_sync_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListResourceDataSync"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_resource_data_sync_result_of_yojson
+      ~error_deserializer
 end
 
 module ListTagsForResource = struct
@@ -3278,6 +4053,13 @@ module ListTagsForResource = struct
     let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ListTagsForResource" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_resource_request) =
+    let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ListTagsForResource"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_result_of_yojson
       ~error_deserializer
 end
@@ -3313,6 +4095,13 @@ module ModifyDocumentPermission = struct
     let input = Json_serializers.modify_document_permission_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ModifyDocumentPermission" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.modify_document_permission_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : modify_document_permission_request) =
+    let input = Json_serializers.modify_document_permission_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.ModifyDocumentPermission" ~service ~context ~input
       ~output_deserializer:Json_deserializers.modify_document_permission_response_of_yojson
       ~error_deserializer
 end
@@ -3358,6 +4147,13 @@ module PutComplianceItems = struct
     let input = Json_serializers.put_compliance_items_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.PutComplianceItems" ~service ~context
       ~input ~output_deserializer:Json_deserializers.put_compliance_items_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_compliance_items_request) =
+    let input = Json_serializers.put_compliance_items_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.PutComplianceItems"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_compliance_items_result_of_yojson
       ~error_deserializer
 end
 
@@ -3427,6 +4223,12 @@ module PutInventory = struct
     let input = Json_serializers.put_inventory_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.PutInventory" ~service ~context
       ~input ~output_deserializer:Json_deserializers.put_inventory_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_inventory_request) =
+    let input = Json_serializers.put_inventory_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.PutInventory" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.put_inventory_result_of_yojson
       ~error_deserializer
 end
 
@@ -3501,6 +4303,12 @@ module PutParameter = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.PutParameter" ~service ~context
       ~input ~output_deserializer:Json_deserializers.put_parameter_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_parameter_request) =
+    let input = Json_serializers.put_parameter_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.PutParameter" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.put_parameter_result_of_yojson
+      ~error_deserializer
 end
 
 module PutResourcePolicy = struct
@@ -3549,6 +4357,13 @@ module PutResourcePolicy = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.PutResourcePolicy" ~service ~context
       ~input ~output_deserializer:Json_deserializers.put_resource_policy_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_resource_policy_request) =
+    let input = Json_serializers.put_resource_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.PutResourcePolicy"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_resource_policy_response_of_yojson
+      ~error_deserializer
 end
 
 module RegisterDefaultPatchBaseline = struct
@@ -3575,6 +4390,13 @@ module RegisterDefaultPatchBaseline = struct
     let input = Json_serializers.register_default_patch_baseline_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.RegisterDefaultPatchBaseline"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.register_default_patch_baseline_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : register_default_patch_baseline_request) =
+    let input = Json_serializers.register_default_patch_baseline_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.RegisterDefaultPatchBaseline" ~service ~context ~input
       ~output_deserializer:Json_deserializers.register_default_patch_baseline_result_of_yojson
       ~error_deserializer
 end
@@ -3615,6 +4437,16 @@ module RegisterPatchBaselineForPatchGroup = struct
       ~output_deserializer:
         Json_deserializers.register_patch_baseline_for_patch_group_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : register_patch_baseline_for_patch_group_request) =
+    let input =
+      Json_serializers.register_patch_baseline_for_patch_group_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.RegisterPatchBaselineForPatchGroup" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.register_patch_baseline_for_patch_group_result_of_yojson
+      ~error_deserializer
 end
 
 module RegisterTargetWithMaintenanceWindow = struct
@@ -3648,6 +4480,16 @@ module RegisterTargetWithMaintenanceWindow = struct
     in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.RegisterTargetWithMaintenanceWindow"
       ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.register_target_with_maintenance_window_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : register_target_with_maintenance_window_request) =
+    let input =
+      Json_serializers.register_target_with_maintenance_window_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.RegisterTargetWithMaintenanceWindow" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.register_target_with_maintenance_window_result_of_yojson
       ~error_deserializer
@@ -3688,6 +4530,13 @@ module RegisterTaskWithMaintenanceWindow = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.register_task_with_maintenance_window_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : register_task_with_maintenance_window_request) =
+    let input = Json_serializers.register_task_with_maintenance_window_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.RegisterTaskWithMaintenanceWindow" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.register_task_with_maintenance_window_result_of_yojson
+      ~error_deserializer
 end
 
 module RemoveTagsFromResource = struct
@@ -3719,6 +4568,13 @@ module RemoveTagsFromResource = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.remove_tags_from_resource_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : remove_tags_from_resource_request) =
+    let input = Json_serializers.remove_tags_from_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.RemoveTagsFromResource"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.remove_tags_from_resource_result_of_yojson
+      ~error_deserializer
 end
 
 module ResetServiceSetting = struct
@@ -3746,6 +4602,13 @@ module ResetServiceSetting = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ResetServiceSetting" ~service
       ~context ~input ~output_deserializer:Json_deserializers.reset_service_setting_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : reset_service_setting_request) =
+    let input = Json_serializers.reset_service_setting_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ResetServiceSetting"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.reset_service_setting_result_of_yojson
+      ~error_deserializer
 end
 
 module ResumeSession = struct
@@ -3769,6 +4632,12 @@ module ResumeSession = struct
     let input = Json_serializers.resume_session_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.ResumeSession" ~service ~context
       ~input ~output_deserializer:Json_deserializers.resume_session_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : resume_session_request) =
+    let input = Json_serializers.resume_session_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.ResumeSession" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.resume_session_response_of_yojson
       ~error_deserializer
 end
 
@@ -3803,6 +4672,13 @@ module SendAutomationSignal = struct
     let input = Json_serializers.send_automation_signal_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.SendAutomationSignal" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.send_automation_signal_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : send_automation_signal_request) =
+    let input = Json_serializers.send_automation_signal_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.SendAutomationSignal"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.send_automation_signal_result_of_yojson
       ~error_deserializer
 end
@@ -3857,6 +4733,12 @@ module SendCommand = struct
     let input = Json_serializers.send_command_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.SendCommand" ~service ~context ~input
       ~output_deserializer:Json_deserializers.send_command_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : send_command_request) =
+    let input = Json_serializers.send_command_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.SendCommand" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.send_command_result_of_yojson
+      ~error_deserializer
 end
 
 module StartAccessRequest = struct
@@ -3895,6 +4777,13 @@ module StartAccessRequest = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.StartAccessRequest" ~service ~context
       ~input ~output_deserializer:Json_deserializers.start_access_request_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_access_request_request) =
+    let input = Json_serializers.start_access_request_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.StartAccessRequest"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_access_request_response_of_yojson
+      ~error_deserializer
 end
 
 module StartAssociationsOnce = struct
@@ -3919,6 +4808,13 @@ module StartAssociationsOnce = struct
     let input = Json_serializers.start_associations_once_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.StartAssociationsOnce" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.start_associations_once_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : start_associations_once_request) =
+    let input = Json_serializers.start_associations_once_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.StartAssociationsOnce"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_associations_once_result_of_yojson
       ~error_deserializer
 end
@@ -3969,6 +4865,13 @@ module StartAutomationExecution = struct
     let input = Json_serializers.start_automation_execution_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.StartAutomationExecution" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.start_automation_execution_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : start_automation_execution_request) =
+    let input = Json_serializers.start_automation_execution_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.StartAutomationExecution" ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_automation_execution_result_of_yojson
       ~error_deserializer
 end
@@ -4028,6 +4931,13 @@ module StartChangeRequestExecution = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.start_change_request_execution_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_change_request_execution_request) =
+    let input = Json_serializers.start_change_request_execution_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.StartChangeRequestExecution" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_change_request_execution_result_of_yojson
+      ~error_deserializer
 end
 
 module StartExecutionPreview = struct
@@ -4051,6 +4961,13 @@ module StartExecutionPreview = struct
     let input = Json_serializers.start_execution_preview_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.StartExecutionPreview" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.start_execution_preview_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : start_execution_preview_request) =
+    let input = Json_serializers.start_execution_preview_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.StartExecutionPreview"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.start_execution_preview_response_of_yojson
       ~error_deserializer
 end
@@ -4079,6 +4996,12 @@ module StartSession = struct
     let input = Json_serializers.start_session_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.StartSession" ~service ~context
       ~input ~output_deserializer:Json_deserializers.start_session_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : start_session_request) =
+    let input = Json_serializers.start_session_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.StartSession" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.start_session_response_of_yojson
       ~error_deserializer
 end
 
@@ -4112,6 +5035,13 @@ module StopAutomationExecution = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.stop_automation_execution_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : stop_automation_execution_request) =
+    let input = Json_serializers.stop_automation_execution_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.StopAutomationExecution" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.stop_automation_execution_result_of_yojson
+      ~error_deserializer
 end
 
 module TerminateSession = struct
@@ -4132,6 +5062,13 @@ module TerminateSession = struct
     let input = Json_serializers.terminate_session_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.TerminateSession" ~service ~context
       ~input ~output_deserializer:Json_deserializers.terminate_session_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : terminate_session_request) =
+    let input = Json_serializers.terminate_session_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.TerminateSession"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.terminate_session_response_of_yojson
       ~error_deserializer
 end
 
@@ -4163,6 +5100,13 @@ module UnlabelParameterVersion = struct
     let input = Json_serializers.unlabel_parameter_version_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.UnlabelParameterVersion" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.unlabel_parameter_version_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : unlabel_parameter_version_request) =
+    let input = Json_serializers.unlabel_parameter_version_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.UnlabelParameterVersion" ~service ~context ~input
       ~output_deserializer:Json_deserializers.unlabel_parameter_version_result_of_yojson
       ~error_deserializer
 end
@@ -4223,6 +5167,13 @@ module UpdateAssociation = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.UpdateAssociation" ~service ~context
       ~input ~output_deserializer:Json_deserializers.update_association_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_association_request) =
+    let input = Json_serializers.update_association_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.UpdateAssociation"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_association_result_of_yojson
+      ~error_deserializer
 end
 
 module UpdateAssociationStatus = struct
@@ -4259,6 +5210,13 @@ module UpdateAssociationStatus = struct
     let input = Json_serializers.update_association_status_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.UpdateAssociationStatus" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.update_association_status_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_association_status_request) =
+    let input = Json_serializers.update_association_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.UpdateAssociationStatus" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_association_status_result_of_yojson
       ~error_deserializer
 end
@@ -4315,6 +5273,12 @@ module UpdateDocument = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.UpdateDocument" ~service ~context
       ~input ~output_deserializer:Json_deserializers.update_document_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_document_request) =
+    let input = Json_serializers.update_document_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.UpdateDocument"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_document_result_of_yojson ~error_deserializer
 end
 
 module UpdateDocumentDefaultVersion = struct
@@ -4345,6 +5309,13 @@ module UpdateDocumentDefaultVersion = struct
     let input = Json_serializers.update_document_default_version_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.UpdateDocumentDefaultVersion"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_document_default_version_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_document_default_version_request) =
+    let input = Json_serializers.update_document_default_version_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.UpdateDocumentDefaultVersion" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_document_default_version_result_of_yojson
       ~error_deserializer
 end
@@ -4382,6 +5353,13 @@ module UpdateDocumentMetadata = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.update_document_metadata_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_document_metadata_request) =
+    let input = Json_serializers.update_document_metadata_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.UpdateDocumentMetadata"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_document_metadata_response_of_yojson
+      ~error_deserializer
 end
 
 module UpdateMaintenanceWindow = struct
@@ -4405,6 +5383,13 @@ module UpdateMaintenanceWindow = struct
     let input = Json_serializers.update_maintenance_window_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.UpdateMaintenanceWindow" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.update_maintenance_window_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_maintenance_window_request) =
+    let input = Json_serializers.update_maintenance_window_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.UpdateMaintenanceWindow" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_maintenance_window_result_of_yojson
       ~error_deserializer
 end
@@ -4432,6 +5417,13 @@ module UpdateMaintenanceWindowTarget = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_maintenance_window_target_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_maintenance_window_target_request) =
+    let input = Json_serializers.update_maintenance_window_target_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.UpdateMaintenanceWindowTarget" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_maintenance_window_target_result_of_yojson
+      ~error_deserializer
 end
 
 module UpdateMaintenanceWindowTask = struct
@@ -4457,6 +5449,13 @@ module UpdateMaintenanceWindowTask = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.update_maintenance_window_task_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_maintenance_window_task_request) =
+    let input = Json_serializers.update_maintenance_window_task_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.UpdateMaintenanceWindowTask" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_maintenance_window_task_result_of_yojson
+      ~error_deserializer
 end
 
 module UpdateManagedInstanceRole = struct
@@ -4480,6 +5479,13 @@ module UpdateManagedInstanceRole = struct
     let input = Json_serializers.update_managed_instance_role_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.UpdateManagedInstanceRole" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.update_managed_instance_role_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_managed_instance_role_request) =
+    let input = Json_serializers.update_managed_instance_role_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSSM.UpdateManagedInstanceRole" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_managed_instance_role_result_of_yojson
       ~error_deserializer
 end
@@ -4527,6 +5533,12 @@ module UpdateOpsItem = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.UpdateOpsItem" ~service ~context
       ~input ~output_deserializer:Json_deserializers.update_ops_item_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_ops_item_request) =
+    let input = Json_serializers.update_ops_item_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.UpdateOpsItem" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.update_ops_item_response_of_yojson
+      ~error_deserializer
 end
 
 module UpdateOpsMetadata = struct
@@ -4567,6 +5579,13 @@ module UpdateOpsMetadata = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.UpdateOpsMetadata" ~service ~context
       ~input ~output_deserializer:Json_deserializers.update_ops_metadata_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_ops_metadata_request) =
+    let input = Json_serializers.update_ops_metadata_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.UpdateOpsMetadata"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_ops_metadata_result_of_yojson
+      ~error_deserializer
 end
 
 module UpdatePatchBaseline = struct
@@ -4590,6 +5609,13 @@ module UpdatePatchBaseline = struct
     let input = Json_serializers.update_patch_baseline_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.UpdatePatchBaseline" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_patch_baseline_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_patch_baseline_request) =
+    let input = Json_serializers.update_patch_baseline_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.UpdatePatchBaseline"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_patch_baseline_result_of_yojson
       ~error_deserializer
 end
 
@@ -4627,6 +5653,13 @@ module UpdateResourceDataSync = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.update_resource_data_sync_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_resource_data_sync_request) =
+    let input = Json_serializers.update_resource_data_sync_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.UpdateResourceDataSync"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_resource_data_sync_result_of_yojson
+      ~error_deserializer
 end
 
 module UpdateServiceSetting = struct
@@ -4653,6 +5686,13 @@ module UpdateServiceSetting = struct
     let input = Json_serializers.update_service_setting_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSSM.UpdateServiceSetting" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.update_service_setting_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_service_setting_request) =
+    let input = Json_serializers.update_service_setting_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSSM.UpdateServiceSetting"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_service_setting_result_of_yojson
       ~error_deserializer
 end

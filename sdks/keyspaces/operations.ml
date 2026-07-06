@@ -34,6 +34,12 @@ module CreateKeyspace = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.CreateKeyspace" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_keyspace_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_keyspace_request) =
+    let input = Json_serializers.create_keyspace_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.CreateKeyspace"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_keyspace_response_of_yojson ~error_deserializer
 end
 
 module CreateTable = struct
@@ -73,6 +79,12 @@ module CreateTable = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.CreateTable" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_table_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_table_request) =
+    let input = Json_serializers.create_table_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.CreateTable"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_table_response_of_yojson ~error_deserializer
 end
 
 module CreateType = struct
@@ -112,6 +124,12 @@ module CreateType = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.CreateType" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_type_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_type_request) =
+    let input = Json_serializers.create_type_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.CreateType"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_type_response_of_yojson ~error_deserializer
 end
 
 module DeleteKeyspace = struct
@@ -151,6 +169,12 @@ module DeleteKeyspace = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.DeleteKeyspace" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_keyspace_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_keyspace_request) =
+    let input = Json_serializers.delete_keyspace_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.DeleteKeyspace"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_keyspace_response_of_yojson ~error_deserializer
 end
 
 module DeleteTable = struct
@@ -190,6 +214,12 @@ module DeleteTable = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.DeleteTable" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_table_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_table_request) =
+    let input = Json_serializers.delete_table_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.DeleteTable"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_table_response_of_yojson ~error_deserializer
 end
 
 module DeleteType = struct
@@ -229,6 +259,12 @@ module DeleteType = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.DeleteType" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_type_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_type_request) =
+    let input = Json_serializers.delete_type_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.DeleteType"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_type_response_of_yojson ~error_deserializer
 end
 
 module GetKeyspace = struct
@@ -265,6 +301,12 @@ module GetKeyspace = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.GetKeyspace" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_keyspace_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_keyspace_request) =
+    let input = Json_serializers.get_keyspace_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.GetKeyspace"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_keyspace_response_of_yojson ~error_deserializer
 end
 
 module GetTable = struct
@@ -300,6 +342,12 @@ module GetTable = struct
     let input = Json_serializers.get_table_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.GetTable" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_table_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_table_request) =
+    let input = Json_serializers.get_table_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.GetTable"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.get_table_response_of_yojson
       ~error_deserializer
 end
 
@@ -338,6 +386,13 @@ module GetTableAutoScalingSettings = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_table_auto_scaling_settings_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_table_auto_scaling_settings_request) =
+    let input = Json_serializers.get_table_auto_scaling_settings_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"KeyspacesService.GetTableAutoScalingSettings" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_table_auto_scaling_settings_response_of_yojson
+      ~error_deserializer
 end
 
 module GetType = struct
@@ -373,6 +428,12 @@ module GetType = struct
     let input = Json_serializers.get_type_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.GetType" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_type_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_type_request) =
+    let input = Json_serializers.get_type_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.GetType"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.get_type_response_of_yojson
+      ~error_deserializer
 end
 
 module ListKeyspaces = struct
@@ -409,6 +470,12 @@ module ListKeyspaces = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.ListKeyspaces" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_keyspaces_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_keyspaces_request) =
+    let input = Json_serializers.list_keyspaces_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.ListKeyspaces"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_keyspaces_response_of_yojson ~error_deserializer
 end
 
 module ListTables = struct
@@ -445,6 +512,12 @@ module ListTables = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.ListTables" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_tables_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_tables_request) =
+    let input = Json_serializers.list_tables_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.ListTables"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tables_response_of_yojson ~error_deserializer
 end
 
 module ListTagsForResource = struct
@@ -482,6 +555,13 @@ module ListTagsForResource = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_resource_request) =
+    let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"KeyspacesService.ListTagsForResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module ListTypes = struct
@@ -517,6 +597,12 @@ module ListTypes = struct
     let input = Json_serializers.list_types_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.ListTypes" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_types_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_types_request) =
+    let input = Json_serializers.list_types_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.ListTypes"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.list_types_response_of_yojson
       ~error_deserializer
 end
 
@@ -557,6 +643,12 @@ module RestoreTable = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.RestoreTable" ~service
       ~context ~input ~output_deserializer:Json_deserializers.restore_table_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : restore_table_request) =
+    let input = Json_serializers.restore_table_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.RestoreTable"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.restore_table_response_of_yojson ~error_deserializer
 end
 
 module TagResource = struct
@@ -596,6 +688,12 @@ module TagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.TagResource" ~service ~context
       ~input ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_request) =
+    let input = Json_serializers.tag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.TagResource"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson ~error_deserializer
 end
 
 module UntagResource = struct
@@ -635,6 +733,12 @@ module UntagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.UntagResource" ~service
       ~context ~input ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_request) =
+    let input = Json_serializers.untag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.UntagResource"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson ~error_deserializer
 end
 
 module UpdateKeyspace = struct
@@ -674,6 +778,12 @@ module UpdateKeyspace = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.UpdateKeyspace" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_keyspace_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_keyspace_request) =
+    let input = Json_serializers.update_keyspace_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.UpdateKeyspace"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_keyspace_response_of_yojson ~error_deserializer
 end
 
 module UpdateTable = struct
@@ -713,4 +823,10 @@ module UpdateTable = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"KeyspacesService.UpdateTable" ~service ~context
       ~input ~output_deserializer:Json_deserializers.update_table_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_table_request) =
+    let input = Json_serializers.update_table_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"KeyspacesService.UpdateTable"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_table_response_of_yojson ~error_deserializer
 end

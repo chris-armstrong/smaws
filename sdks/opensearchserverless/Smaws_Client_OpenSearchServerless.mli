@@ -895,6 +895,18 @@ module CreateAccessPolicy : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_access_policy_request ->
+    ( create_access_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates a data access policy for OpenSearch Serverless. Access policies limit access to \
@@ -924,6 +936,19 @@ module CreateCollection : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_collection_request ->
+    ( create_collection_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `OcuLimitExceededException of ocu_limit_exceeded_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates a new OpenSearch Serverless collection. For more information, see \
@@ -948,6 +973,18 @@ module CreateCollectionGroup : sig
       | `InternalServerException of internal_server_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_collection_group_request ->
+    ( create_collection_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -978,6 +1015,18 @@ module CreateIndex : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_index_request ->
+    ( create_index_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates an index within an OpenSearch Serverless collection. Unlike other OpenSearch indexes, \
@@ -1005,6 +1054,18 @@ module CreateSecurityConfig : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_security_config_request ->
+    ( create_security_config_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Specifies a security configuration for OpenSearch Serverless. For more information, see \
@@ -1029,6 +1090,18 @@ module CreateVpcEndpoint : sig
       | `InternalServerException of internal_server_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_vpc_endpoint_request ->
+    ( create_vpc_endpoint_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1055,6 +1128,18 @@ module DeleteAccessPolicy : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_access_policy_request ->
+    ( delete_access_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes an OpenSearch Serverless access policy. For more information, see \
@@ -1079,6 +1164,18 @@ module DeleteCollection : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_collection_request ->
+    ( delete_collection_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1105,6 +1202,18 @@ module DeleteCollectionGroup : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_collection_group_request ->
+    ( delete_collection_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes a collection group. You can only delete empty collection groups that contain no \
@@ -1128,6 +1237,17 @@ module DeleteIndex : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_index_request ->
+    ( delete_index_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1156,6 +1276,18 @@ module DeleteLifecyclePolicy : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_lifecycle_policy_request ->
+    ( delete_lifecycle_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes an OpenSearch Serverless lifecycle policy. For more information, see \
@@ -1180,6 +1312,18 @@ module DeleteSecurityConfig : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_security_config_request ->
+    ( delete_security_config_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1206,6 +1350,18 @@ module DeleteSecurityPolicy : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_security_policy_request ->
+    ( delete_security_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Deletes an OpenSearch Serverless security policy.\n"]
 
@@ -1227,6 +1383,18 @@ module DeleteVpcEndpoint : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_vpc_endpoint_request ->
+    ( delete_vpc_endpoint_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1251,6 +1419,17 @@ module GetAccessPolicy : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_access_policy_request ->
+    ( get_access_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns an OpenSearch Serverless access policy. For more information, see \
@@ -1273,6 +1452,17 @@ module GetIndex : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_index_request ->
+    ( get_index_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1299,6 +1489,17 @@ module GetSecurityConfig : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_security_config_request ->
+    ( get_security_config_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns information about an OpenSearch Serverless security configuration. For more \
@@ -1322,6 +1523,17 @@ module GetSecurityPolicy : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_security_policy_request ->
+    ( get_security_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1347,6 +1559,16 @@ module ListAccessPolicies : sig
       | `InternalServerException of internal_server_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_access_policies_request ->
+    ( list_access_policies_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns information about a list of OpenSearch Serverless access policies.\n"]
 
@@ -1364,6 +1586,16 @@ module ListCollectionGroups : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerException of internal_server_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_collection_groups_request ->
+    ( list_collection_groups_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1385,6 +1617,16 @@ module ListCollections : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerException of internal_server_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_collections_request ->
+    ( list_collections_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1411,6 +1653,16 @@ module ListLifecyclePolicies : sig
       | `InternalServerException of internal_server_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_lifecycle_policies_request ->
+    ( list_lifecycle_policies_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns a list of OpenSearch Serverless lifecycle policies. For more information, see \
@@ -1431,6 +1683,16 @@ module ListSecurityConfigs : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerException of internal_server_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_security_configs_request ->
+    ( list_security_configs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1454,6 +1716,16 @@ module ListSecurityPolicies : sig
       | `InternalServerException of internal_server_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_security_policies_request ->
+    ( list_security_policies_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns information about configured OpenSearch Serverless security policies.\n"]
 
@@ -1471,6 +1743,16 @@ module ListVpcEndpoints : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerException of internal_server_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_vpc_endpoints_request ->
+    ( list_vpc_endpoints_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1494,6 +1776,16 @@ module BatchGetCollection : sig
       | `InternalServerException of internal_server_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_collection_request ->
+    ( batch_get_collection_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns attributes for one or more collections, including the collection endpoint, the \
@@ -1515,6 +1807,16 @@ module BatchGetCollectionGroup : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerException of internal_server_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_collection_group_request ->
+    ( batch_get_collection_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1538,6 +1840,16 @@ module BatchGetEffectiveLifecyclePolicy : sig
       | `InternalServerException of internal_server_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_effective_lifecycle_policy_request ->
+    ( batch_get_effective_lifecycle_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns a list of successful and failed retrievals for the OpenSearch Serverless indexes. For \
@@ -1560,6 +1872,16 @@ module BatchGetLifecyclePolicy : sig
       | `InternalServerException of internal_server_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_lifecycle_policy_request ->
+    ( batch_get_lifecycle_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns one or more configured OpenSearch Serverless lifecycle policies. For more information, \
@@ -1581,6 +1903,16 @@ module BatchGetVpcEndpoint : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerException of internal_server_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_vpc_endpoint_request ->
+    ( batch_get_vpc_endpoint_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1607,6 +1939,18 @@ module CreateLifecyclePolicy : sig
       | `InternalServerException of internal_server_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_lifecycle_policy_request ->
+    ( create_lifecycle_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1635,6 +1979,18 @@ module CreateSecurityPolicy : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_security_policy_request ->
+    ( create_security_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates a security policy to be used by one or more OpenSearch Serverless collections. Security \
@@ -1661,6 +2017,16 @@ module GetAccountSettings : sig
       | `InternalServerException of internal_server_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_account_settings_request ->
+    ( get_account_settings_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns account-level settings related to OpenSearch Serverless.\n"]
 
@@ -1675,6 +2041,14 @@ module GetPoliciesStats : sig
     ( get_policies_stats_response,
       [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerException of internal_server_exception ]
     )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_policies_stats_request ->
+    ( get_policies_stats_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerException of internal_server_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1697,6 +2071,17 @@ module ListTagsForResource : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1725,6 +2110,19 @@ module TagResource : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Associates tags with an OpenSearch Serverless resource. For more information, see \
@@ -1749,6 +2147,18 @@ module UntagResource : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_request ->
+    ( untag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1775,6 +2185,18 @@ module UpdateAccessPolicy : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_access_policy_request ->
+    ( update_access_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Updates an OpenSearch Serverless access policy. For more information, see \
@@ -1797,6 +2219,17 @@ module UpdateAccountSettings : sig
       | `InternalServerException of internal_server_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_account_settings_request ->
+    ( update_account_settings_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1822,6 +2255,17 @@ module UpdateCollection : sig
       | `InternalServerException of internal_server_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_collection_request ->
+    ( update_collection_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Updates an OpenSearch Serverless collection.\n"]
 
@@ -1844,6 +2288,18 @@ module UpdateCollectionGroup : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_collection_group_request ->
+    ( update_collection_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Updates the description and capacity limits of a collection group.\n"]
 
@@ -1863,6 +2319,17 @@ module UpdateIndex : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_index_request ->
+    ( update_index_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1893,6 +2360,19 @@ module UpdateLifecyclePolicy : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_lifecycle_policy_request ->
+    ( update_lifecycle_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Updates an OpenSearch Serverless access policy. For more information, see \
@@ -1917,6 +2397,18 @@ module UpdateSecurityConfig : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_security_config_request ->
+    ( update_security_config_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1945,6 +2437,19 @@ module UpdateSecurityPolicy : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_security_policy_request ->
+    ( update_security_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Updates an OpenSearch Serverless security policy. For more information, see \
@@ -1970,6 +2475,17 @@ module UpdateVpcEndpoint : sig
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_vpc_endpoint_request ->
+    ( update_vpc_endpoint_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

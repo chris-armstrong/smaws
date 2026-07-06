@@ -38,6 +38,13 @@ module AcceptEnvironmentAccountConnection = struct
       ~shape_name:"AwsProton20200720.AcceptEnvironmentAccountConnection" ~service ~context ~input
       ~output_deserializer:Json_deserializers.accept_environment_account_connection_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : accept_environment_account_connection_input) =
+    let input = Json_serializers.accept_environment_account_connection_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.AcceptEnvironmentAccountConnection" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.accept_environment_account_connection_output_of_yojson
+      ~error_deserializer
 end
 
 module CancelComponentDeployment = struct
@@ -75,6 +82,13 @@ module CancelComponentDeployment = struct
     let input = Json_serializers.cancel_component_deployment_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.CancelComponentDeployment"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.cancel_component_deployment_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : cancel_component_deployment_input) =
+    let input = Json_serializers.cancel_component_deployment_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.CancelComponentDeployment" ~service ~context ~input
       ~output_deserializer:Json_deserializers.cancel_component_deployment_output_of_yojson
       ~error_deserializer
 end
@@ -116,6 +130,13 @@ module CancelEnvironmentDeployment = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.cancel_environment_deployment_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : cancel_environment_deployment_input) =
+    let input = Json_serializers.cancel_environment_deployment_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.CancelEnvironmentDeployment" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.cancel_environment_deployment_output_of_yojson
+      ~error_deserializer
 end
 
 module CancelServiceInstanceDeployment = struct
@@ -155,6 +176,13 @@ module CancelServiceInstanceDeployment = struct
       ~shape_name:"AwsProton20200720.CancelServiceInstanceDeployment" ~service ~context ~input
       ~output_deserializer:Json_deserializers.cancel_service_instance_deployment_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : cancel_service_instance_deployment_input) =
+    let input = Json_serializers.cancel_service_instance_deployment_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.CancelServiceInstanceDeployment" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.cancel_service_instance_deployment_output_of_yojson
+      ~error_deserializer
 end
 
 module CancelServicePipelineDeployment = struct
@@ -191,6 +219,13 @@ module CancelServicePipelineDeployment = struct
   let request context (request : cancel_service_pipeline_deployment_input) =
     let input = Json_serializers.cancel_service_pipeline_deployment_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AwsProton20200720.CancelServicePipelineDeployment" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.cancel_service_pipeline_deployment_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : cancel_service_pipeline_deployment_input) =
+    let input = Json_serializers.cancel_service_pipeline_deployment_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AwsProton20200720.CancelServicePipelineDeployment" ~service ~context ~input
       ~output_deserializer:Json_deserializers.cancel_service_pipeline_deployment_output_of_yojson
       ~error_deserializer
@@ -236,6 +271,12 @@ module CreateComponent = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.CreateComponent" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_component_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_component_input) =
+    let input = Json_serializers.create_component_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.CreateComponent" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_component_output_of_yojson ~error_deserializer
 end
 
 module CreateEnvironment = struct
@@ -278,6 +319,13 @@ module CreateEnvironment = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.CreateEnvironment" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_environment_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_environment_input) =
+    let input = Json_serializers.create_environment_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.CreateEnvironment" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_environment_output_of_yojson
+      ~error_deserializer
 end
 
 module CreateEnvironmentAccountConnection = struct
@@ -314,6 +362,13 @@ module CreateEnvironmentAccountConnection = struct
   let request context (request : create_environment_account_connection_input) =
     let input = Json_serializers.create_environment_account_connection_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AwsProton20200720.CreateEnvironmentAccountConnection" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_environment_account_connection_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_environment_account_connection_input) =
+    let input = Json_serializers.create_environment_account_connection_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AwsProton20200720.CreateEnvironmentAccountConnection" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_environment_account_connection_output_of_yojson
       ~error_deserializer
@@ -354,6 +409,13 @@ module CreateEnvironmentTemplate = struct
     let input = Json_serializers.create_environment_template_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.CreateEnvironmentTemplate"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_environment_template_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_environment_template_input) =
+    let input = Json_serializers.create_environment_template_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.CreateEnvironmentTemplate" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_environment_template_output_of_yojson
       ~error_deserializer
 end
@@ -399,6 +461,13 @@ module CreateEnvironmentTemplateVersion = struct
       ~shape_name:"AwsProton20200720.CreateEnvironmentTemplateVersion" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_environment_template_version_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_environment_template_version_input) =
+    let input = Json_serializers.create_environment_template_version_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.CreateEnvironmentTemplateVersion" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_environment_template_version_output_of_yojson
+      ~error_deserializer
 end
 
 module CreateRepository = struct
@@ -437,6 +506,12 @@ module CreateRepository = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.CreateRepository" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_repository_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_repository_input) =
+    let input = Json_serializers.create_repository_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.CreateRepository" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_repository_output_of_yojson ~error_deserializer
 end
 
 module CreateService = struct
@@ -479,6 +554,12 @@ module CreateService = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.CreateService" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_service_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_service_input) =
+    let input = Json_serializers.create_service_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AwsProton20200720.CreateService"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_service_output_of_yojson ~error_deserializer
 end
 
 module CreateServiceInstance = struct
@@ -516,6 +597,13 @@ module CreateServiceInstance = struct
     let input = Json_serializers.create_service_instance_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.CreateServiceInstance"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_service_instance_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_service_instance_input) =
+    let input = Json_serializers.create_service_instance_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.CreateServiceInstance" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_service_instance_output_of_yojson
       ~error_deserializer
 end
@@ -557,6 +645,13 @@ module CreateServiceSyncConfig = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_service_sync_config_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_service_sync_config_input) =
+    let input = Json_serializers.create_service_sync_config_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.CreateServiceSyncConfig" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_service_sync_config_output_of_yojson
+      ~error_deserializer
 end
 
 module CreateServiceTemplate = struct
@@ -594,6 +689,13 @@ module CreateServiceTemplate = struct
     let input = Json_serializers.create_service_template_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.CreateServiceTemplate"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_service_template_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_service_template_input) =
+    let input = Json_serializers.create_service_template_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.CreateServiceTemplate" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_service_template_output_of_yojson
       ~error_deserializer
 end
@@ -639,6 +741,13 @@ module CreateServiceTemplateVersion = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_service_template_version_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_service_template_version_input) =
+    let input = Json_serializers.create_service_template_version_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.CreateServiceTemplateVersion" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_service_template_version_output_of_yojson
+      ~error_deserializer
 end
 
 module CreateTemplateSyncConfig = struct
@@ -676,6 +785,13 @@ module CreateTemplateSyncConfig = struct
     let input = Json_serializers.create_template_sync_config_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.CreateTemplateSyncConfig"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_template_sync_config_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_template_sync_config_input) =
+    let input = Json_serializers.create_template_sync_config_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.CreateTemplateSyncConfig" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_template_sync_config_output_of_yojson
       ~error_deserializer
 end
@@ -716,6 +832,12 @@ module DeleteComponent = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.DeleteComponent" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_component_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_component_input) =
+    let input = Json_serializers.delete_component_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.DeleteComponent" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_component_output_of_yojson ~error_deserializer
 end
 
 module DeleteDeployment = struct
@@ -751,6 +873,12 @@ module DeleteDeployment = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.DeleteDeployment" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_deployment_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_deployment_input) =
+    let input = Json_serializers.delete_deployment_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.DeleteDeployment" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_deployment_output_of_yojson ~error_deserializer
 end
 
 module DeleteEnvironment = struct
@@ -789,6 +917,13 @@ module DeleteEnvironment = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.DeleteEnvironment" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_environment_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_environment_input) =
+    let input = Json_serializers.delete_environment_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.DeleteEnvironment" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_environment_output_of_yojson
+      ~error_deserializer
 end
 
 module DeleteEnvironmentAccountConnection = struct
@@ -825,6 +960,13 @@ module DeleteEnvironmentAccountConnection = struct
   let request context (request : delete_environment_account_connection_input) =
     let input = Json_serializers.delete_environment_account_connection_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AwsProton20200720.DeleteEnvironmentAccountConnection" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_environment_account_connection_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_environment_account_connection_input) =
+    let input = Json_serializers.delete_environment_account_connection_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AwsProton20200720.DeleteEnvironmentAccountConnection" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_environment_account_connection_output_of_yojson
       ~error_deserializer
@@ -867,6 +1009,13 @@ module DeleteEnvironmentTemplate = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_environment_template_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_environment_template_input) =
+    let input = Json_serializers.delete_environment_template_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.DeleteEnvironmentTemplate" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_environment_template_output_of_yojson
+      ~error_deserializer
 end
 
 module DeleteEnvironmentTemplateVersion = struct
@@ -903,6 +1052,13 @@ module DeleteEnvironmentTemplateVersion = struct
   let request context (request : delete_environment_template_version_input) =
     let input = Json_serializers.delete_environment_template_version_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AwsProton20200720.DeleteEnvironmentTemplateVersion" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_environment_template_version_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_environment_template_version_input) =
+    let input = Json_serializers.delete_environment_template_version_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AwsProton20200720.DeleteEnvironmentTemplateVersion" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_environment_template_version_output_of_yojson
       ~error_deserializer
@@ -944,6 +1100,12 @@ module DeleteRepository = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.DeleteRepository" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_repository_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_repository_input) =
+    let input = Json_serializers.delete_repository_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.DeleteRepository" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_repository_output_of_yojson ~error_deserializer
 end
 
 module DeleteService = struct
@@ -982,6 +1144,12 @@ module DeleteService = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.DeleteService" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_service_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_service_input) =
+    let input = Json_serializers.delete_service_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AwsProton20200720.DeleteService"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_service_output_of_yojson ~error_deserializer
 end
 
 module DeleteServiceSyncConfig = struct
@@ -1019,6 +1187,13 @@ module DeleteServiceSyncConfig = struct
     let input = Json_serializers.delete_service_sync_config_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.DeleteServiceSyncConfig"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_service_sync_config_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_service_sync_config_input) =
+    let input = Json_serializers.delete_service_sync_config_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.DeleteServiceSyncConfig" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_service_sync_config_output_of_yojson
       ~error_deserializer
 end
@@ -1060,6 +1235,13 @@ module DeleteServiceTemplate = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_service_template_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_service_template_input) =
+    let input = Json_serializers.delete_service_template_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.DeleteServiceTemplate" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_service_template_output_of_yojson
+      ~error_deserializer
 end
 
 module DeleteServiceTemplateVersion = struct
@@ -1097,6 +1279,13 @@ module DeleteServiceTemplateVersion = struct
     let input = Json_serializers.delete_service_template_version_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.DeleteServiceTemplateVersion"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_service_template_version_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_service_template_version_input) =
+    let input = Json_serializers.delete_service_template_version_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.DeleteServiceTemplateVersion" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_service_template_version_output_of_yojson
       ~error_deserializer
 end
@@ -1138,6 +1327,13 @@ module DeleteTemplateSyncConfig = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_template_sync_config_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_template_sync_config_input) =
+    let input = Json_serializers.delete_template_sync_config_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.DeleteTemplateSyncConfig" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_template_sync_config_output_of_yojson
+      ~error_deserializer
 end
 
 module GetAccountSettings = struct
@@ -1172,6 +1368,13 @@ module GetAccountSettings = struct
     let input = Json_serializers.get_account_settings_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.GetAccountSettings" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_account_settings_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_account_settings_input) =
+    let input = Json_serializers.get_account_settings_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.GetAccountSettings" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_account_settings_output_of_yojson
       ~error_deserializer
 end
 
@@ -1208,6 +1411,12 @@ module GetComponent = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.GetComponent" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_component_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_component_input) =
+    let input = Json_serializers.get_component_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AwsProton20200720.GetComponent"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_component_output_of_yojson ~error_deserializer
 end
 
 module GetDeployment = struct
@@ -1243,6 +1452,12 @@ module GetDeployment = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.GetDeployment" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_deployment_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_deployment_input) =
+    let input = Json_serializers.get_deployment_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AwsProton20200720.GetDeployment"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_deployment_output_of_yojson ~error_deserializer
 end
 
 module GetEnvironment = struct
@@ -1278,6 +1493,12 @@ module GetEnvironment = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.GetEnvironment" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_environment_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_environment_input) =
+    let input = Json_serializers.get_environment_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AwsProton20200720.GetEnvironment"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_environment_output_of_yojson ~error_deserializer
 end
 
 module GetEnvironmentAccountConnection = struct
@@ -1311,6 +1532,13 @@ module GetEnvironmentAccountConnection = struct
   let request context (request : get_environment_account_connection_input) =
     let input = Json_serializers.get_environment_account_connection_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AwsProton20200720.GetEnvironmentAccountConnection" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_environment_account_connection_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_environment_account_connection_input) =
+    let input = Json_serializers.get_environment_account_connection_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AwsProton20200720.GetEnvironmentAccountConnection" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_environment_account_connection_output_of_yojson
       ~error_deserializer
@@ -1350,6 +1578,13 @@ module GetEnvironmentTemplate = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_environment_template_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_environment_template_input) =
+    let input = Json_serializers.get_environment_template_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.GetEnvironmentTemplate" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_environment_template_output_of_yojson
+      ~error_deserializer
 end
 
 module GetEnvironmentTemplateVersion = struct
@@ -1383,6 +1618,13 @@ module GetEnvironmentTemplateVersion = struct
   let request context (request : get_environment_template_version_input) =
     let input = Json_serializers.get_environment_template_version_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AwsProton20200720.GetEnvironmentTemplateVersion" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_environment_template_version_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_environment_template_version_input) =
+    let input = Json_serializers.get_environment_template_version_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AwsProton20200720.GetEnvironmentTemplateVersion" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_environment_template_version_output_of_yojson
       ~error_deserializer
@@ -1421,6 +1663,12 @@ module GetRepository = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.GetRepository" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_repository_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_repository_input) =
+    let input = Json_serializers.get_repository_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AwsProton20200720.GetRepository"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_repository_output_of_yojson ~error_deserializer
 end
 
 module GetRepositorySyncStatus = struct
@@ -1457,6 +1705,13 @@ module GetRepositorySyncStatus = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_repository_sync_status_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_repository_sync_status_input) =
+    let input = Json_serializers.get_repository_sync_status_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.GetRepositorySyncStatus" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_repository_sync_status_output_of_yojson
+      ~error_deserializer
 end
 
 module GetResourcesSummary = struct
@@ -1487,6 +1742,13 @@ module GetResourcesSummary = struct
     let input = Json_serializers.get_resources_summary_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.GetResourcesSummary" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_resources_summary_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_resources_summary_input) =
+    let input = Json_serializers.get_resources_summary_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.GetResourcesSummary" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_resources_summary_output_of_yojson
       ~error_deserializer
 end
 
@@ -1523,6 +1785,12 @@ module GetService = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.GetService" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_service_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_service_input) =
+    let input = Json_serializers.get_service_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AwsProton20200720.GetService"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.get_service_output_of_yojson
+      ~error_deserializer
 end
 
 module GetServiceInstance = struct
@@ -1558,6 +1826,13 @@ module GetServiceInstance = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.GetServiceInstance" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_service_instance_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_service_instance_input) =
+    let input = Json_serializers.get_service_instance_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.GetServiceInstance" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_service_instance_output_of_yojson
+      ~error_deserializer
 end
 
 module GetServiceInstanceSyncStatus = struct
@@ -1592,6 +1867,13 @@ module GetServiceInstanceSyncStatus = struct
     let input = Json_serializers.get_service_instance_sync_status_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.GetServiceInstanceSyncStatus"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_service_instance_sync_status_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_service_instance_sync_status_input) =
+    let input = Json_serializers.get_service_instance_sync_status_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.GetServiceInstanceSyncStatus" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_service_instance_sync_status_output_of_yojson
       ~error_deserializer
 end
@@ -1630,6 +1912,13 @@ module GetServiceSyncBlockerSummary = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_service_sync_blocker_summary_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_service_sync_blocker_summary_input) =
+    let input = Json_serializers.get_service_sync_blocker_summary_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.GetServiceSyncBlockerSummary" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_service_sync_blocker_summary_output_of_yojson
+      ~error_deserializer
 end
 
 module GetServiceSyncConfig = struct
@@ -1664,6 +1953,13 @@ module GetServiceSyncConfig = struct
     let input = Json_serializers.get_service_sync_config_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.GetServiceSyncConfig"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_service_sync_config_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_service_sync_config_input) =
+    let input = Json_serializers.get_service_sync_config_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.GetServiceSyncConfig" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_service_sync_config_output_of_yojson
       ~error_deserializer
 end
@@ -1701,6 +1997,13 @@ module GetServiceTemplate = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.GetServiceTemplate" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_service_template_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_service_template_input) =
+    let input = Json_serializers.get_service_template_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.GetServiceTemplate" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_service_template_output_of_yojson
+      ~error_deserializer
 end
 
 module GetServiceTemplateVersion = struct
@@ -1735,6 +2038,13 @@ module GetServiceTemplateVersion = struct
     let input = Json_serializers.get_service_template_version_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.GetServiceTemplateVersion"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_service_template_version_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_service_template_version_input) =
+    let input = Json_serializers.get_service_template_version_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.GetServiceTemplateVersion" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_service_template_version_output_of_yojson
       ~error_deserializer
 end
@@ -1773,6 +2083,13 @@ module GetTemplateSyncConfig = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_template_sync_config_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_template_sync_config_input) =
+    let input = Json_serializers.get_template_sync_config_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.GetTemplateSyncConfig" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_template_sync_config_output_of_yojson
+      ~error_deserializer
 end
 
 module GetTemplateSyncStatus = struct
@@ -1807,6 +2124,13 @@ module GetTemplateSyncStatus = struct
     let input = Json_serializers.get_template_sync_status_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.GetTemplateSyncStatus"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_template_sync_status_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_template_sync_status_input) =
+    let input = Json_serializers.get_template_sync_status_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.GetTemplateSyncStatus" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_template_sync_status_output_of_yojson
       ~error_deserializer
 end
@@ -1845,6 +2169,13 @@ module ListComponentOutputs = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_component_outputs_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_component_outputs_input) =
+    let input = Json_serializers.list_component_outputs_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListComponentOutputs" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_component_outputs_output_of_yojson
+      ~error_deserializer
 end
 
 module ListComponentProvisionedResources = struct
@@ -1881,6 +2212,13 @@ module ListComponentProvisionedResources = struct
       ~shape_name:"AwsProton20200720.ListComponentProvisionedResources" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_component_provisioned_resources_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_component_provisioned_resources_input) =
+    let input = Json_serializers.list_component_provisioned_resources_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListComponentProvisionedResources" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_component_provisioned_resources_output_of_yojson
+      ~error_deserializer
 end
 
 module ListComponents = struct
@@ -1912,6 +2250,12 @@ module ListComponents = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.ListComponents" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_components_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_components_input) =
+    let input = Json_serializers.list_components_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AwsProton20200720.ListComponents"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_components_output_of_yojson ~error_deserializer
 end
 
 module ListDeployments = struct
@@ -1947,6 +2291,12 @@ module ListDeployments = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.ListDeployments" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_deployments_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_deployments_input) =
+    let input = Json_serializers.list_deployments_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListDeployments" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_deployments_output_of_yojson ~error_deserializer
 end
 
 module ListEnvironmentAccountConnections = struct
@@ -1976,6 +2326,13 @@ module ListEnvironmentAccountConnections = struct
   let request context (request : list_environment_account_connections_input) =
     let input = Json_serializers.list_environment_account_connections_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AwsProton20200720.ListEnvironmentAccountConnections" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_environment_account_connections_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_environment_account_connections_input) =
+    let input = Json_serializers.list_environment_account_connections_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AwsProton20200720.ListEnvironmentAccountConnections" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_environment_account_connections_output_of_yojson
       ~error_deserializer
@@ -2015,6 +2372,13 @@ module ListEnvironmentOutputs = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_environment_outputs_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_environment_outputs_input) =
+    let input = Json_serializers.list_environment_outputs_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListEnvironmentOutputs" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_environment_outputs_output_of_yojson
+      ~error_deserializer
 end
 
 module ListEnvironmentProvisionedResources = struct
@@ -2048,6 +2412,14 @@ module ListEnvironmentProvisionedResources = struct
   let request context (request : list_environment_provisioned_resources_input) =
     let input = Json_serializers.list_environment_provisioned_resources_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AwsProton20200720.ListEnvironmentProvisionedResources" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.list_environment_provisioned_resources_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_environment_provisioned_resources_input) =
+    let input = Json_serializers.list_environment_provisioned_resources_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AwsProton20200720.ListEnvironmentProvisionedResources" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.list_environment_provisioned_resources_output_of_yojson
@@ -2088,6 +2460,13 @@ module ListEnvironmentTemplateVersions = struct
       ~shape_name:"AwsProton20200720.ListEnvironmentTemplateVersions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_environment_template_versions_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_environment_template_versions_input) =
+    let input = Json_serializers.list_environment_template_versions_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListEnvironmentTemplateVersions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_environment_template_versions_output_of_yojson
+      ~error_deserializer
 end
 
 module ListEnvironmentTemplates = struct
@@ -2118,6 +2497,13 @@ module ListEnvironmentTemplates = struct
     let input = Json_serializers.list_environment_templates_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.ListEnvironmentTemplates"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_environment_templates_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_environment_templates_input) =
+    let input = Json_serializers.list_environment_templates_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListEnvironmentTemplates" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_environment_templates_output_of_yojson
       ~error_deserializer
 end
@@ -2155,6 +2541,12 @@ module ListEnvironments = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.ListEnvironments" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_environments_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_environments_input) =
+    let input = Json_serializers.list_environments_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListEnvironments" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_environments_output_of_yojson ~error_deserializer
 end
 
 module ListRepositories = struct
@@ -2190,6 +2582,12 @@ module ListRepositories = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.ListRepositories" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_repositories_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_repositories_input) =
+    let input = Json_serializers.list_repositories_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListRepositories" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_repositories_output_of_yojson ~error_deserializer
 end
 
 module ListRepositorySyncDefinitions = struct
@@ -2219,6 +2617,13 @@ module ListRepositorySyncDefinitions = struct
   let request context (request : list_repository_sync_definitions_input) =
     let input = Json_serializers.list_repository_sync_definitions_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AwsProton20200720.ListRepositorySyncDefinitions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_repository_sync_definitions_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_repository_sync_definitions_input) =
+    let input = Json_serializers.list_repository_sync_definitions_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AwsProton20200720.ListRepositorySyncDefinitions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_repository_sync_definitions_output_of_yojson
       ~error_deserializer
@@ -2256,6 +2661,13 @@ module ListServiceInstanceOutputs = struct
     let input = Json_serializers.list_service_instance_outputs_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.ListServiceInstanceOutputs"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_service_instance_outputs_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_service_instance_outputs_input) =
+    let input = Json_serializers.list_service_instance_outputs_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListServiceInstanceOutputs" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_service_instance_outputs_output_of_yojson
       ~error_deserializer
 end
@@ -2298,6 +2710,17 @@ module ListServiceInstanceProvisionedResources = struct
       ~output_deserializer:
         Json_deserializers.list_service_instance_provisioned_resources_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_service_instance_provisioned_resources_input) =
+    let input =
+      Json_serializers.list_service_instance_provisioned_resources_input_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListServiceInstanceProvisionedResources" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.list_service_instance_provisioned_resources_output_of_yojson
+      ~error_deserializer
 end
 
 module ListServiceInstances = struct
@@ -2334,6 +2757,13 @@ module ListServiceInstances = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_service_instances_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_service_instances_input) =
+    let input = Json_serializers.list_service_instances_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListServiceInstances" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_service_instances_output_of_yojson
+      ~error_deserializer
 end
 
 module ListServicePipelineOutputs = struct
@@ -2368,6 +2798,13 @@ module ListServicePipelineOutputs = struct
     let input = Json_serializers.list_service_pipeline_outputs_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.ListServicePipelineOutputs"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_service_pipeline_outputs_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_service_pipeline_outputs_input) =
+    let input = Json_serializers.list_service_pipeline_outputs_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListServicePipelineOutputs" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_service_pipeline_outputs_output_of_yojson
       ~error_deserializer
 end
@@ -2410,6 +2847,17 @@ module ListServicePipelineProvisionedResources = struct
       ~output_deserializer:
         Json_deserializers.list_service_pipeline_provisioned_resources_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_service_pipeline_provisioned_resources_input) =
+    let input =
+      Json_serializers.list_service_pipeline_provisioned_resources_input_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListServicePipelineProvisionedResources" ~service ~context
+      ~input
+      ~output_deserializer:
+        Json_deserializers.list_service_pipeline_provisioned_resources_output_of_yojson
+      ~error_deserializer
 end
 
 module ListServiceTemplateVersions = struct
@@ -2446,6 +2894,13 @@ module ListServiceTemplateVersions = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_service_template_versions_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_service_template_versions_input) =
+    let input = Json_serializers.list_service_template_versions_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListServiceTemplateVersions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_service_template_versions_output_of_yojson
+      ~error_deserializer
 end
 
 module ListServiceTemplates = struct
@@ -2476,6 +2931,13 @@ module ListServiceTemplates = struct
     let input = Json_serializers.list_service_templates_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.ListServiceTemplates"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_service_templates_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_service_templates_input) =
+    let input = Json_serializers.list_service_templates_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListServiceTemplates" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_service_templates_output_of_yojson
       ~error_deserializer
 end
@@ -2509,6 +2971,12 @@ module ListServices = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.ListServices" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_services_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_services_input) =
+    let input = Json_serializers.list_services_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AwsProton20200720.ListServices"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_services_output_of_yojson ~error_deserializer
 end
 
 module ListTagsForResource = struct
@@ -2543,6 +3011,13 @@ module ListTagsForResource = struct
     let input = Json_serializers.list_tags_for_resource_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.ListTagsForResource" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_resource_input) =
+    let input = Json_serializers.list_tags_for_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.ListTagsForResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_output_of_yojson
       ~error_deserializer
 end
@@ -2589,6 +3064,14 @@ module NotifyResourceDeploymentStatusChange = struct
       ~output_deserializer:
         Json_deserializers.notify_resource_deployment_status_change_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : notify_resource_deployment_status_change_input) =
+    let input = Json_serializers.notify_resource_deployment_status_change_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.NotifyResourceDeploymentStatusChange" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.notify_resource_deployment_status_change_output_of_yojson
+      ~error_deserializer
 end
 
 module RejectEnvironmentAccountConnection = struct
@@ -2625,6 +3108,13 @@ module RejectEnvironmentAccountConnection = struct
   let request context (request : reject_environment_account_connection_input) =
     let input = Json_serializers.reject_environment_account_connection_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AwsProton20200720.RejectEnvironmentAccountConnection" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.reject_environment_account_connection_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : reject_environment_account_connection_input) =
+    let input = Json_serializers.reject_environment_account_connection_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AwsProton20200720.RejectEnvironmentAccountConnection" ~service ~context ~input
       ~output_deserializer:Json_deserializers.reject_environment_account_connection_output_of_yojson
       ~error_deserializer
@@ -2666,6 +3156,12 @@ module TagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.TagResource" ~service
       ~context ~input ~output_deserializer:Json_deserializers.tag_resource_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_input) =
+    let input = Json_serializers.tag_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AwsProton20200720.TagResource"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.tag_resource_output_of_yojson
+      ~error_deserializer
 end
 
 module UntagResource = struct
@@ -2704,6 +3200,12 @@ module UntagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.UntagResource" ~service
       ~context ~input ~output_deserializer:Json_deserializers.untag_resource_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_input) =
+    let input = Json_serializers.untag_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AwsProton20200720.UntagResource"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.untag_resource_output_of_yojson ~error_deserializer
 end
 
 module UpdateAccountSettings = struct
@@ -2737,6 +3239,13 @@ module UpdateAccountSettings = struct
     let input = Json_serializers.update_account_settings_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.UpdateAccountSettings"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_account_settings_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_account_settings_input) =
+    let input = Json_serializers.update_account_settings_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.UpdateAccountSettings" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_account_settings_output_of_yojson
       ~error_deserializer
 end
@@ -2781,6 +3290,12 @@ module UpdateComponent = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.UpdateComponent" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_component_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_component_input) =
+    let input = Json_serializers.update_component_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.UpdateComponent" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_component_output_of_yojson ~error_deserializer
 end
 
 module UpdateEnvironment = struct
@@ -2819,6 +3334,13 @@ module UpdateEnvironment = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.UpdateEnvironment" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_environment_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_environment_input) =
+    let input = Json_serializers.update_environment_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.UpdateEnvironment" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_environment_output_of_yojson
+      ~error_deserializer
 end
 
 module UpdateEnvironmentAccountConnection = struct
@@ -2855,6 +3377,13 @@ module UpdateEnvironmentAccountConnection = struct
   let request context (request : update_environment_account_connection_input) =
     let input = Json_serializers.update_environment_account_connection_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AwsProton20200720.UpdateEnvironmentAccountConnection" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_environment_account_connection_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_environment_account_connection_input) =
+    let input = Json_serializers.update_environment_account_connection_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AwsProton20200720.UpdateEnvironmentAccountConnection" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_environment_account_connection_output_of_yojson
       ~error_deserializer
@@ -2897,6 +3426,13 @@ module UpdateEnvironmentTemplate = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_environment_template_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_environment_template_input) =
+    let input = Json_serializers.update_environment_template_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.UpdateEnvironmentTemplate" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_environment_template_output_of_yojson
+      ~error_deserializer
 end
 
 module UpdateEnvironmentTemplateVersion = struct
@@ -2933,6 +3469,13 @@ module UpdateEnvironmentTemplateVersion = struct
   let request context (request : update_environment_template_version_input) =
     let input = Json_serializers.update_environment_template_version_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AwsProton20200720.UpdateEnvironmentTemplateVersion" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_environment_template_version_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_environment_template_version_input) =
+    let input = Json_serializers.update_environment_template_version_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AwsProton20200720.UpdateEnvironmentTemplateVersion" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_environment_template_version_output_of_yojson
       ~error_deserializer
@@ -2978,6 +3521,12 @@ module UpdateService = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.UpdateService" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_service_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_service_input) =
+    let input = Json_serializers.update_service_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AwsProton20200720.UpdateService"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_service_output_of_yojson ~error_deserializer
 end
 
 module UpdateServiceInstance = struct
@@ -3015,6 +3564,13 @@ module UpdateServiceInstance = struct
     let input = Json_serializers.update_service_instance_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.UpdateServiceInstance"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_service_instance_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_service_instance_input) =
+    let input = Json_serializers.update_service_instance_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.UpdateServiceInstance" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_service_instance_output_of_yojson
       ~error_deserializer
 end
@@ -3056,6 +3612,13 @@ module UpdateServicePipeline = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_service_pipeline_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_service_pipeline_input) =
+    let input = Json_serializers.update_service_pipeline_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.UpdateServicePipeline" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_service_pipeline_output_of_yojson
+      ~error_deserializer
 end
 
 module UpdateServiceSyncBlocker = struct
@@ -3093,6 +3656,13 @@ module UpdateServiceSyncBlocker = struct
     let input = Json_serializers.update_service_sync_blocker_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.UpdateServiceSyncBlocker"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_service_sync_blocker_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_service_sync_blocker_input) =
+    let input = Json_serializers.update_service_sync_blocker_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.UpdateServiceSyncBlocker" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_service_sync_blocker_output_of_yojson
       ~error_deserializer
 end
@@ -3134,6 +3704,13 @@ module UpdateServiceSyncConfig = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_service_sync_config_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_service_sync_config_input) =
+    let input = Json_serializers.update_service_sync_config_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.UpdateServiceSyncConfig" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_service_sync_config_output_of_yojson
+      ~error_deserializer
 end
 
 module UpdateServiceTemplate = struct
@@ -3171,6 +3748,13 @@ module UpdateServiceTemplate = struct
     let input = Json_serializers.update_service_template_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.UpdateServiceTemplate"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_service_template_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_service_template_input) =
+    let input = Json_serializers.update_service_template_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.UpdateServiceTemplate" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_service_template_output_of_yojson
       ~error_deserializer
 end
@@ -3212,6 +3796,13 @@ module UpdateServiceTemplateVersion = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_service_template_version_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_service_template_version_input) =
+    let input = Json_serializers.update_service_template_version_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.UpdateServiceTemplateVersion" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_service_template_version_output_of_yojson
+      ~error_deserializer
 end
 
 module UpdateTemplateSyncConfig = struct
@@ -3249,6 +3840,13 @@ module UpdateTemplateSyncConfig = struct
     let input = Json_serializers.update_template_sync_config_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AwsProton20200720.UpdateTemplateSyncConfig"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_template_sync_config_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_template_sync_config_input) =
+    let input = Json_serializers.update_template_sync_config_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AwsProton20200720.UpdateTemplateSyncConfig" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_template_sync_config_output_of_yojson
       ~error_deserializer
 end

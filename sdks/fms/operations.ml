@@ -34,6 +34,13 @@ module AssociateAdminAccount = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.AssociateAdminAccount" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : associate_admin_account_request) =
+    let input = Json_serializers.associate_admin_account_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.AssociateAdminAccount" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module AssociateThirdPartyFirewall = struct
@@ -65,6 +72,13 @@ module AssociateThirdPartyFirewall = struct
     let input = Json_serializers.associate_third_party_firewall_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.AssociateThirdPartyFirewall"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.associate_third_party_firewall_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : associate_third_party_firewall_request) =
+    let input = Json_serializers.associate_third_party_firewall_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.AssociateThirdPartyFirewall" ~service ~context ~input
       ~output_deserializer:Json_deserializers.associate_third_party_firewall_response_of_yojson
       ~error_deserializer
 end
@@ -103,6 +117,13 @@ module BatchAssociateResource = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.batch_associate_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : batch_associate_resource_request) =
+    let input = Json_serializers.batch_associate_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.BatchAssociateResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_associate_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module BatchDisassociateResource = struct
@@ -136,6 +157,13 @@ module BatchDisassociateResource = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.batch_disassociate_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : batch_disassociate_resource_request) =
+    let input = Json_serializers.batch_disassociate_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.BatchDisassociateResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.batch_disassociate_resource_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteAppsList = struct
@@ -165,6 +193,13 @@ module DeleteAppsList = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.DeleteAppsList" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_apps_list_request) =
+    let input = Json_serializers.delete_apps_list_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.DeleteAppsList"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeleteNotificationChannel = struct
@@ -193,6 +228,13 @@ module DeleteNotificationChannel = struct
     let input = Json_serializers.delete_notification_channel_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.DeleteNotificationChannel"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_notification_channel_request) =
+    let input = Json_serializers.delete_notification_channel_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.DeleteNotificationChannel" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -230,6 +272,13 @@ module DeletePolicy = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.DeletePolicy" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_policy_request) =
+    let input = Json_serializers.delete_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.DeletePolicy"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeleteProtocolsList = struct
@@ -258,6 +307,13 @@ module DeleteProtocolsList = struct
     let input = Json_serializers.delete_protocols_list_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.DeleteProtocolsList" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_protocols_list_request) =
+    let input = Json_serializers.delete_protocols_list_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.DeleteProtocolsList" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -291,6 +347,13 @@ module DeleteResourceSet = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.DeleteResourceSet" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_resource_set_request) =
+    let input = Json_serializers.delete_resource_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.DeleteResourceSet" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DisassociateAdminAccount = struct
@@ -319,6 +382,13 @@ module DisassociateAdminAccount = struct
     let input = Json_serializers.disassociate_admin_account_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.DisassociateAdminAccount"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : disassociate_admin_account_request) =
+    let input = Json_serializers.disassociate_admin_account_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.DisassociateAdminAccount" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -354,6 +424,13 @@ module DisassociateThirdPartyFirewall = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.disassociate_third_party_firewall_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : disassociate_third_party_firewall_request) =
+    let input = Json_serializers.disassociate_third_party_firewall_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.DisassociateThirdPartyFirewall" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.disassociate_third_party_firewall_response_of_yojson
+      ~error_deserializer
 end
 
 module GetAdminAccount = struct
@@ -382,6 +459,13 @@ module GetAdminAccount = struct
     let input = Json_serializers.get_admin_account_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.GetAdminAccount" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_admin_account_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_admin_account_request) =
+    let input = Json_serializers.get_admin_account_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.GetAdminAccount"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_admin_account_response_of_yojson
       ~error_deserializer
 end
 
@@ -418,6 +502,12 @@ module GetAdminScope = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.GetAdminScope" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_admin_scope_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_admin_scope_request) =
+    let input = Json_serializers.get_admin_scope_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.GetAdminScope"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_admin_scope_response_of_yojson ~error_deserializer
 end
 
 module GetAppsList = struct
@@ -447,6 +537,12 @@ module GetAppsList = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.GetAppsList" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_apps_list_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_apps_list_request) =
+    let input = Json_serializers.get_apps_list_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.GetAppsList"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_apps_list_response_of_yojson ~error_deserializer
 end
 
 module GetComplianceDetail = struct
@@ -480,6 +576,13 @@ module GetComplianceDetail = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.get_compliance_detail_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_compliance_detail_request) =
+    let input = Json_serializers.get_compliance_detail_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.GetComplianceDetail" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_compliance_detail_response_of_yojson
+      ~error_deserializer
 end
 
 module GetNotificationChannel = struct
@@ -508,6 +611,13 @@ module GetNotificationChannel = struct
     let input = Json_serializers.get_notification_channel_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.GetNotificationChannel"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_notification_channel_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_notification_channel_request) =
+    let input = Json_serializers.get_notification_channel_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.GetNotificationChannel" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_notification_channel_response_of_yojson
       ~error_deserializer
 end
@@ -542,6 +652,12 @@ module GetPolicy = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.GetPolicy" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_policy_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_policy_request) =
+    let input = Json_serializers.get_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.GetPolicy"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.get_policy_response_of_yojson
+      ~error_deserializer
 end
 
 module GetProtectionStatus = struct
@@ -569,6 +685,13 @@ module GetProtectionStatus = struct
     let input = Json_serializers.get_protection_status_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.GetProtectionStatus" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.get_protection_status_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_protection_status_request) =
+    let input = Json_serializers.get_protection_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.GetProtectionStatus" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_protection_status_response_of_yojson
       ~error_deserializer
 end
@@ -599,6 +722,13 @@ module GetProtocolsList = struct
     let input = Json_serializers.get_protocols_list_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.GetProtocolsList" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_protocols_list_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_protocols_list_request) =
+    let input = Json_serializers.get_protocols_list_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.GetProtocolsList"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_protocols_list_response_of_yojson
       ~error_deserializer
 end
 
@@ -631,6 +761,13 @@ module GetResourceSet = struct
     let input = Json_serializers.get_resource_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.GetResourceSet" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_resource_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_resource_set_request) =
+    let input = Json_serializers.get_resource_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.GetResourceSet"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_resource_set_response_of_yojson
       ~error_deserializer
 end
 
@@ -668,6 +805,17 @@ module GetThirdPartyFirewallAssociationStatus = struct
       ~output_deserializer:
         Json_deserializers.get_third_party_firewall_association_status_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_third_party_firewall_association_status_request)
+      =
+    let input =
+      Json_serializers.get_third_party_firewall_association_status_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.GetThirdPartyFirewallAssociationStatus" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.get_third_party_firewall_association_status_response_of_yojson
+      ~error_deserializer
 end
 
 module GetViolationDetails = struct
@@ -695,6 +843,13 @@ module GetViolationDetails = struct
     let input = Json_serializers.get_violation_details_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.GetViolationDetails" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.get_violation_details_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_violation_details_request) =
+    let input = Json_serializers.get_violation_details_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.GetViolationDetails" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_violation_details_response_of_yojson
       ~error_deserializer
 end
@@ -731,6 +886,14 @@ module ListAdminAccountsForOrganization = struct
       ~output_deserializer:
         Json_deserializers.list_admin_accounts_for_organization_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_admin_accounts_for_organization_request) =
+    let input = Json_serializers.list_admin_accounts_for_organization_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.ListAdminAccountsForOrganization" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.list_admin_accounts_for_organization_response_of_yojson
+      ~error_deserializer
 end
 
 module ListAdminsManagingAccount = struct
@@ -758,6 +921,13 @@ module ListAdminsManagingAccount = struct
     let input = Json_serializers.list_admins_managing_account_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.ListAdminsManagingAccount"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_admins_managing_account_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_admins_managing_account_request) =
+    let input = Json_serializers.list_admins_managing_account_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.ListAdminsManagingAccount" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_admins_managing_account_response_of_yojson
       ~error_deserializer
 end
@@ -792,6 +962,12 @@ module ListAppsLists = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.ListAppsLists" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_apps_lists_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_apps_lists_request) =
+    let input = Json_serializers.list_apps_lists_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.ListAppsLists"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_apps_lists_response_of_yojson ~error_deserializer
 end
 
 module ListComplianceStatus = struct
@@ -816,6 +992,13 @@ module ListComplianceStatus = struct
     let input = Json_serializers.list_compliance_status_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.ListComplianceStatus" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.list_compliance_status_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_compliance_status_request) =
+    let input = Json_serializers.list_compliance_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.ListComplianceStatus" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_compliance_status_response_of_yojson
       ~error_deserializer
 end
@@ -847,6 +1030,13 @@ module ListDiscoveredResources = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_discovered_resources_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_discovered_resources_request) =
+    let input = Json_serializers.list_discovered_resources_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.ListDiscoveredResources" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_discovered_resources_response_of_yojson
+      ~error_deserializer
 end
 
 module ListMemberAccounts = struct
@@ -871,6 +1061,13 @@ module ListMemberAccounts = struct
     let input = Json_serializers.list_member_accounts_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.ListMemberAccounts" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.list_member_accounts_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_member_accounts_request) =
+    let input = Json_serializers.list_member_accounts_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.ListMemberAccounts" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_member_accounts_response_of_yojson
       ~error_deserializer
 end
@@ -905,6 +1102,12 @@ module ListPolicies = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.ListPolicies" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_policies_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_policies_request) =
+    let input = Json_serializers.list_policies_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.ListPolicies"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_policies_response_of_yojson ~error_deserializer
 end
 
 module ListProtocolsLists = struct
@@ -933,6 +1136,13 @@ module ListProtocolsLists = struct
     let input = Json_serializers.list_protocols_lists_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.ListProtocolsLists" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.list_protocols_lists_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_protocols_lists_request) =
+    let input = Json_serializers.list_protocols_lists_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.ListProtocolsLists" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_protocols_lists_response_of_yojson
       ~error_deserializer
 end
@@ -968,6 +1178,13 @@ module ListResourceSetResources = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_resource_set_resources_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_resource_set_resources_request) =
+    let input = Json_serializers.list_resource_set_resources_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.ListResourceSetResources" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_resource_set_resources_response_of_yojson
+      ~error_deserializer
 end
 
 module ListResourceSets = struct
@@ -995,6 +1212,13 @@ module ListResourceSets = struct
     let input = Json_serializers.list_resource_sets_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.ListResourceSets" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_resource_sets_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_resource_sets_request) =
+    let input = Json_serializers.list_resource_sets_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.ListResourceSets"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_resource_sets_response_of_yojson
       ~error_deserializer
 end
 
@@ -1027,6 +1251,13 @@ module ListTagsForResource = struct
     let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.ListTagsForResource" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_resource_request) =
+    let input = Json_serializers.list_tags_for_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.ListTagsForResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_response_of_yojson
       ~error_deserializer
 end
@@ -1065,6 +1296,17 @@ module ListThirdPartyFirewallFirewallPolicies = struct
       ~output_deserializer:
         Json_deserializers.list_third_party_firewall_firewall_policies_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_third_party_firewall_firewall_policies_request)
+      =
+    let input =
+      Json_serializers.list_third_party_firewall_firewall_policies_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.ListThirdPartyFirewallFirewallPolicies" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.list_third_party_firewall_firewall_policies_response_of_yojson
+      ~error_deserializer
 end
 
 module PutAdminAccount = struct
@@ -1095,6 +1337,13 @@ module PutAdminAccount = struct
     let input = Json_serializers.put_admin_account_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.PutAdminAccount" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_admin_account_request) =
+    let input = Json_serializers.put_admin_account_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.PutAdminAccount"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -1131,6 +1380,12 @@ module PutAppsList = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.PutAppsList" ~service ~context
       ~input ~output_deserializer:Json_deserializers.put_apps_list_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_apps_list_request) =
+    let input = Json_serializers.put_apps_list_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.PutAppsList"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_apps_list_response_of_yojson ~error_deserializer
 end
 
 module PutNotificationChannel = struct
@@ -1159,6 +1414,13 @@ module PutNotificationChannel = struct
     let input = Json_serializers.put_notification_channel_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.PutNotificationChannel"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_notification_channel_request) =
+    let input = Json_serializers.put_notification_channel_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSFMS_20180101.PutNotificationChannel" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -1199,6 +1461,12 @@ module PutPolicy = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.PutPolicy" ~service ~context
       ~input ~output_deserializer:Json_deserializers.put_policy_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_policy_request) =
+    let input = Json_serializers.put_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.PutPolicy"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.put_policy_response_of_yojson
+      ~error_deserializer
 end
 
 module PutProtocolsList = struct
@@ -1234,6 +1502,13 @@ module PutProtocolsList = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.PutProtocolsList" ~service
       ~context ~input ~output_deserializer:Json_deserializers.put_protocols_list_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_protocols_list_request) =
+    let input = Json_serializers.put_protocols_list_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.PutProtocolsList"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_protocols_list_response_of_yojson
+      ~error_deserializer
 end
 
 module PutResourceSet = struct
@@ -1264,6 +1539,13 @@ module PutResourceSet = struct
     let input = Json_serializers.put_resource_set_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.PutResourceSet" ~service
       ~context ~input ~output_deserializer:Json_deserializers.put_resource_set_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_resource_set_request) =
+    let input = Json_serializers.put_resource_set_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.PutResourceSet"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_resource_set_response_of_yojson
       ~error_deserializer
 end
 
@@ -1300,6 +1582,12 @@ module TagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.TagResource" ~service ~context
       ~input ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_request) =
+    let input = Json_serializers.tag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.TagResource"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.tag_resource_response_of_yojson ~error_deserializer
 end
 
 module UntagResource = struct
@@ -1332,4 +1620,10 @@ module UntagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSFMS_20180101.UntagResource" ~service
       ~context ~input ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_request) =
+    let input = Json_serializers.untag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSFMS_20180101.UntagResource"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.untag_resource_response_of_yojson ~error_deserializer
 end

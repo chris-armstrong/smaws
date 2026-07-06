@@ -38,6 +38,12 @@ module CreateActivity = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.CreateActivity" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_activity_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_activity_input) =
+    let input = Json_serializers.create_activity_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSStepFunctions.CreateActivity"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_activity_output_of_yojson ~error_deserializer
 end
 
 module CreateStateMachine = struct
@@ -105,6 +111,13 @@ module CreateStateMachine = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.CreateStateMachine" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_state_machine_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_state_machine_input) =
+    let input = Json_serializers.create_state_machine_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.CreateStateMachine" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_state_machine_output_of_yojson
+      ~error_deserializer
 end
 
 module CreateStateMachineAlias = struct
@@ -144,6 +157,13 @@ module CreateStateMachineAlias = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_state_machine_alias_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_state_machine_alias_input) =
+    let input = Json_serializers.create_state_machine_alias_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.CreateStateMachineAlias" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_state_machine_alias_output_of_yojson
+      ~error_deserializer
 end
 
 module DeleteActivity = struct
@@ -164,6 +184,12 @@ module DeleteActivity = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.DeleteActivity" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_activity_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_activity_input) =
+    let input = Json_serializers.delete_activity_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSStepFunctions.DeleteActivity"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_activity_output_of_yojson ~error_deserializer
 end
 
 module DeleteStateMachine = struct
@@ -186,6 +212,13 @@ module DeleteStateMachine = struct
     let input = Json_serializers.delete_state_machine_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.DeleteStateMachine" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_state_machine_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_state_machine_input) =
+    let input = Json_serializers.delete_state_machine_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.DeleteStateMachine" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_state_machine_output_of_yojson
       ~error_deserializer
 end
 
@@ -217,6 +250,13 @@ module DeleteStateMachineAlias = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_state_machine_alias_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_state_machine_alias_input) =
+    let input = Json_serializers.delete_state_machine_alias_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.DeleteStateMachineAlias" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_state_machine_alias_output_of_yojson
+      ~error_deserializer
 end
 
 module DeleteStateMachineVersion = struct
@@ -244,6 +284,13 @@ module DeleteStateMachineVersion = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_state_machine_version_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_state_machine_version_input) =
+    let input = Json_serializers.delete_state_machine_version_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.DeleteStateMachineVersion" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_state_machine_version_output_of_yojson
+      ~error_deserializer
 end
 
 module DescribeActivity = struct
@@ -267,6 +314,12 @@ module DescribeActivity = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.DescribeActivity" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_activity_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_activity_input) =
+    let input = Json_serializers.describe_activity_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.DescribeActivity" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_activity_output_of_yojson ~error_deserializer
 end
 
 module DescribeExecution = struct
@@ -301,6 +354,13 @@ module DescribeExecution = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.DescribeExecution" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_execution_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_execution_input) =
+    let input = Json_serializers.describe_execution_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.DescribeExecution" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_execution_output_of_yojson
+      ~error_deserializer
 end
 
 module DescribeMapRun = struct
@@ -324,6 +384,12 @@ module DescribeMapRun = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.DescribeMapRun" ~service
       ~context ~input ~output_deserializer:Json_deserializers.describe_map_run_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_map_run_input) =
+    let input = Json_serializers.describe_map_run_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSStepFunctions.DescribeMapRun"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_map_run_output_of_yojson ~error_deserializer
 end
 
 module DescribeStateMachine = struct
@@ -360,6 +426,13 @@ module DescribeStateMachine = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.describe_state_machine_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_state_machine_input) =
+    let input = Json_serializers.describe_state_machine_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.DescribeStateMachine" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_state_machine_output_of_yojson
+      ~error_deserializer
 end
 
 module DescribeStateMachineAlias = struct
@@ -385,6 +458,13 @@ module DescribeStateMachineAlias = struct
     let input = Json_serializers.describe_state_machine_alias_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.DescribeStateMachineAlias"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_state_machine_alias_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_state_machine_alias_input) =
+    let input = Json_serializers.describe_state_machine_alias_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.DescribeStateMachineAlias" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_state_machine_alias_output_of_yojson
       ~error_deserializer
 end
@@ -419,6 +499,13 @@ module DescribeStateMachineForExecution = struct
   let request context (request : describe_state_machine_for_execution_input) =
     let input = Json_serializers.describe_state_machine_for_execution_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSStepFunctions.DescribeStateMachineForExecution" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_state_machine_for_execution_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_state_machine_for_execution_input) =
+    let input = Json_serializers.describe_state_machine_for_execution_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSStepFunctions.DescribeStateMachineForExecution" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_state_machine_for_execution_output_of_yojson
       ~error_deserializer
@@ -460,6 +547,12 @@ module GetActivityTask = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.GetActivityTask" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_activity_task_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_activity_task_input) =
+    let input = Json_serializers.get_activity_task_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSStepFunctions.GetActivityTask"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_activity_task_output_of_yojson ~error_deserializer
 end
 
 module GetExecutionHistory = struct
@@ -496,6 +589,13 @@ module GetExecutionHistory = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.GetExecutionHistory" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_execution_history_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_execution_history_input) =
+    let input = Json_serializers.get_execution_history_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.GetExecutionHistory" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_execution_history_output_of_yojson
+      ~error_deserializer
 end
 
 module ListActivities = struct
@@ -516,6 +616,12 @@ module ListActivities = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.ListActivities" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_activities_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_activities_input) =
+    let input = Json_serializers.list_activities_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSStepFunctions.ListActivities"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_activities_output_of_yojson ~error_deserializer
 end
 
 module ListExecutions = struct
@@ -552,6 +658,12 @@ module ListExecutions = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.ListExecutions" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_executions_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_executions_input) =
+    let input = Json_serializers.list_executions_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSStepFunctions.ListExecutions"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_executions_output_of_yojson ~error_deserializer
 end
 
 module ListMapRuns = struct
@@ -577,6 +689,12 @@ module ListMapRuns = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.ListMapRuns" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_map_runs_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_map_runs_input) =
+    let input = Json_serializers.list_map_runs_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSStepFunctions.ListMapRuns"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_map_runs_output_of_yojson ~error_deserializer
 end
 
 module ListStateMachineAliases = struct
@@ -610,6 +728,13 @@ module ListStateMachineAliases = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_state_machine_aliases_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_state_machine_aliases_input) =
+    let input = Json_serializers.list_state_machine_aliases_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.ListStateMachineAliases" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_state_machine_aliases_output_of_yojson
+      ~error_deserializer
 end
 
 module ListStateMachineVersions = struct
@@ -636,6 +761,13 @@ module ListStateMachineVersions = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_state_machine_versions_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_state_machine_versions_input) =
+    let input = Json_serializers.list_state_machine_versions_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.ListStateMachineVersions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_state_machine_versions_output_of_yojson
+      ~error_deserializer
 end
 
 module ListStateMachines = struct
@@ -655,6 +787,13 @@ module ListStateMachines = struct
     let input = Json_serializers.list_state_machines_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.ListStateMachines" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_state_machines_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_state_machines_input) =
+    let input = Json_serializers.list_state_machines_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.ListStateMachines" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_state_machines_output_of_yojson
       ~error_deserializer
 end
 
@@ -678,6 +817,13 @@ module ListTagsForResource = struct
     let input = Json_serializers.list_tags_for_resource_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.ListTagsForResource" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_resource_input) =
+    let input = Json_serializers.list_tags_for_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.ListTagsForResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_output_of_yojson
       ~error_deserializer
 end
@@ -718,6 +864,13 @@ module PublishStateMachineVersion = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.publish_state_machine_version_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : publish_state_machine_version_input) =
+    let input = Json_serializers.publish_state_machine_version_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.PublishStateMachineVersion" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.publish_state_machine_version_output_of_yojson
+      ~error_deserializer
 end
 
 module RedriveExecution = struct
@@ -750,6 +903,12 @@ module RedriveExecution = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.RedriveExecution" ~service
       ~context ~input ~output_deserializer:Json_deserializers.redrive_execution_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : redrive_execution_input) =
+    let input = Json_serializers.redrive_execution_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.RedriveExecution" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.redrive_execution_output_of_yojson ~error_deserializer
 end
 
 module SendTaskFailure = struct
@@ -786,6 +945,12 @@ module SendTaskFailure = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.SendTaskFailure" ~service
       ~context ~input ~output_deserializer:Json_deserializers.send_task_failure_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : send_task_failure_input) =
+    let input = Json_serializers.send_task_failure_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSStepFunctions.SendTaskFailure"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.send_task_failure_output_of_yojson ~error_deserializer
 end
 
 module SendTaskHeartbeat = struct
@@ -810,6 +975,13 @@ module SendTaskHeartbeat = struct
     let input = Json_serializers.send_task_heartbeat_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.SendTaskHeartbeat" ~service
       ~context ~input ~output_deserializer:Json_deserializers.send_task_heartbeat_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : send_task_heartbeat_input) =
+    let input = Json_serializers.send_task_heartbeat_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.SendTaskHeartbeat" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.send_task_heartbeat_output_of_yojson
       ~error_deserializer
 end
 
@@ -849,6 +1021,12 @@ module SendTaskSuccess = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.SendTaskSuccess" ~service
       ~context ~input ~output_deserializer:Json_deserializers.send_task_success_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : send_task_success_input) =
+    let input = Json_serializers.send_task_success_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSStepFunctions.SendTaskSuccess"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.send_task_success_output_of_yojson ~error_deserializer
 end
 
 module StartExecution = struct
@@ -901,6 +1079,12 @@ module StartExecution = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.StartExecution" ~service
       ~context ~input ~output_deserializer:Json_deserializers.start_execution_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_execution_input) =
+    let input = Json_serializers.start_execution_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSStepFunctions.StartExecution"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_execution_output_of_yojson ~error_deserializer
 end
 
 module StartSyncExecution = struct
@@ -948,6 +1132,13 @@ module StartSyncExecution = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.StartSyncExecution" ~service
       ~context ~input ~output_deserializer:Json_deserializers.start_sync_execution_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_sync_execution_input) =
+    let input = Json_serializers.start_sync_execution_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.StartSyncExecution" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_sync_execution_output_of_yojson
+      ~error_deserializer
 end
 
 module StopExecution = struct
@@ -985,6 +1176,12 @@ module StopExecution = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.StopExecution" ~service
       ~context ~input ~output_deserializer:Json_deserializers.stop_execution_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : stop_execution_input) =
+    let input = Json_serializers.stop_execution_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSStepFunctions.StopExecution"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.stop_execution_output_of_yojson ~error_deserializer
 end
 
 module TagResource = struct
@@ -1009,6 +1206,12 @@ module TagResource = struct
     let input = Json_serializers.tag_resource_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.TagResource" ~service ~context
       ~input ~output_deserializer:Json_deserializers.tag_resource_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_input) =
+    let input = Json_serializers.tag_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSStepFunctions.TagResource"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.tag_resource_output_of_yojson
       ~error_deserializer
 end
 
@@ -1038,6 +1241,12 @@ module TestState = struct
     let input = Json_serializers.test_state_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.TestState" ~service ~context
       ~input ~output_deserializer:Json_deserializers.test_state_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : test_state_input) =
+    let input = Json_serializers.test_state_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSStepFunctions.TestState"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.test_state_output_of_yojson
+      ~error_deserializer
 end
 
 module UntagResource = struct
@@ -1061,6 +1270,12 @@ module UntagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.UntagResource" ~service
       ~context ~input ~output_deserializer:Json_deserializers.untag_resource_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_input) =
+    let input = Json_serializers.untag_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSStepFunctions.UntagResource"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.untag_resource_output_of_yojson ~error_deserializer
 end
 
 module UpdateMapRun = struct
@@ -1087,6 +1302,12 @@ module UpdateMapRun = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.UpdateMapRun" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_map_run_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_map_run_input) =
+    let input = Json_serializers.update_map_run_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSStepFunctions.UpdateMapRun"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_map_run_output_of_yojson ~error_deserializer
 end
 
 module UpdateStateMachine = struct
@@ -1150,6 +1371,13 @@ module UpdateStateMachine = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSStepFunctions.UpdateStateMachine" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_state_machine_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_state_machine_input) =
+    let input = Json_serializers.update_state_machine_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.UpdateStateMachine" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_state_machine_output_of_yojson
+      ~error_deserializer
 end
 
 module UpdateStateMachineAlias = struct
@@ -1183,6 +1411,13 @@ module UpdateStateMachineAlias = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_state_machine_alias_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_state_machine_alias_input) =
+    let input = Json_serializers.update_state_machine_alias_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSStepFunctions.UpdateStateMachineAlias" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_state_machine_alias_output_of_yojson
+      ~error_deserializer
 end
 
 module ValidateStateMachineDefinition = struct
@@ -1202,6 +1437,13 @@ module ValidateStateMachineDefinition = struct
   let request context (request : validate_state_machine_definition_input) =
     let input = Json_serializers.validate_state_machine_definition_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSStepFunctions.ValidateStateMachineDefinition" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.validate_state_machine_definition_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : validate_state_machine_definition_input) =
+    let input = Json_serializers.validate_state_machine_definition_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSStepFunctions.ValidateStateMachineDefinition" ~service ~context ~input
       ~output_deserializer:Json_deserializers.validate_state_machine_definition_output_of_yojson
       ~error_deserializer

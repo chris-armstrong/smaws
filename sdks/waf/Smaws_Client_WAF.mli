@@ -899,6 +899,20 @@ module CreateByteMatchSet : sig
       | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_byte_match_set_request ->
+    ( create_byte_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFDisallowedNameException of waf_disallowed_name_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -963,6 +977,20 @@ module CreateGeoMatchSet : sig
       | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_geo_match_set_request ->
+    ( create_geo_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFDisallowedNameException of waf_disallowed_name_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -1025,6 +1053,20 @@ module CreateIPSet : sig
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_ip_set_request ->
+    ( create_ip_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFDisallowedNameException of waf_disallowed_name_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1092,6 +1134,22 @@ module CreateRateBasedRule : sig
       | `WAFStaleDataException of waf_stale_data_exception
       | `WAFTagOperationException of waf_tag_operation_exception
       | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_rate_based_rule_request ->
+    ( create_rate_based_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFBadRequestException of waf_bad_request_exception
+      | `WAFDisallowedNameException of waf_disallowed_name_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFStaleDataException of waf_stale_data_exception
+      | `WAFTagOperationException of waf_tag_operation_exception
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1201,6 +1259,18 @@ module CreateRegexMatchSet : sig
       | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_regex_match_set_request ->
+    ( create_regex_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFDisallowedNameException of waf_disallowed_name_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -1260,6 +1330,18 @@ module CreateRegexPatternSet : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_regex_pattern_set_request ->
+    ( create_regex_pattern_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFDisallowedNameException of waf_disallowed_name_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1325,6 +1407,22 @@ module CreateRule : sig
       | `WAFStaleDataException of waf_stale_data_exception
       | `WAFTagOperationException of waf_tag_operation_exception
       | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_rule_request ->
+    ( create_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFBadRequestException of waf_bad_request_exception
+      | `WAFDisallowedNameException of waf_disallowed_name_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFStaleDataException of waf_stale_data_exception
+      | `WAFTagOperationException of waf_tag_operation_exception
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1410,6 +1508,21 @@ module CreateRuleGroup : sig
       | `WAFTagOperationException of waf_tag_operation_exception
       | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_rule_group_request ->
+    ( create_rule_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFBadRequestException of waf_bad_request_exception
+      | `WAFDisallowedNameException of waf_disallowed_name_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFStaleDataException of waf_stale_data_exception
+      | `WAFTagOperationException of waf_tag_operation_exception
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -1464,6 +1577,20 @@ module CreateSizeConstraintSet : sig
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_size_constraint_set_request ->
+    ( create_size_constraint_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFDisallowedNameException of waf_disallowed_name_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1528,6 +1655,20 @@ module CreateSqlInjectionMatchSet : sig
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_sql_injection_match_set_request ->
+    ( create_sql_injection_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFDisallowedNameException of waf_disallowed_name_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1595,6 +1736,23 @@ module CreateWebACL : sig
       | `WAFStaleDataException of waf_stale_data_exception
       | `WAFTagOperationException of waf_tag_operation_exception
       | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_web_acl_request ->
+    ( create_web_acl_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFBadRequestException of waf_bad_request_exception
+      | `WAFDisallowedNameException of waf_disallowed_name_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFStaleDataException of waf_stale_data_exception
+      | `WAFTagOperationException of waf_tag_operation_exception
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1670,6 +1828,19 @@ module CreateWebACLMigrationStack : sig
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_web_acl_migration_stack_request ->
+    ( create_web_acl_migration_stack_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFEntityMigrationException of waf_entity_migration_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates an AWS CloudFormation WAFV2 template for the specified web ACL in the specified Amazon \
@@ -1707,6 +1878,20 @@ module CreateXssMatchSet : sig
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_xss_match_set_request ->
+    ( create_xss_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFDisallowedNameException of waf_disallowed_name_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1769,6 +1954,20 @@ module DeleteByteMatchSet : sig
       | `WAFReferencedItemException of waf_referenced_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_byte_match_set_request ->
+    ( delete_byte_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -1824,6 +2023,20 @@ module DeleteGeoMatchSet : sig
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFReferencedItemException of waf_referenced_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_geo_match_set_request ->
+    ( delete_geo_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1881,6 +2094,20 @@ module DeleteIPSet : sig
       | `WAFReferencedItemException of waf_referenced_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_ip_set_request ->
+    ( delete_ip_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -1931,6 +2158,17 @@ module DeleteLoggingConfiguration : sig
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_logging_configuration_request ->
+    ( delete_logging_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -1961,6 +2199,17 @@ module DeletePermissionPolicy : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_permission_policy_request ->
+    ( delete_permission_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2004,6 +2253,22 @@ module DeleteRateBasedRule : sig
       | `WAFStaleDataException of waf_stale_data_exception
       | `WAFTagOperationException of waf_tag_operation_exception
       | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_rate_based_rule_request ->
+    ( delete_rate_based_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception
+      | `WAFTagOperationException of waf_tag_operation_exception
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2061,6 +2326,20 @@ module DeleteRegexMatchSet : sig
       | `WAFReferencedItemException of waf_referenced_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_regex_match_set_request ->
+    ( delete_regex_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -2117,6 +2396,20 @@ module DeleteRegexPatternSet : sig
       | `WAFReferencedItemException of waf_referenced_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_regex_pattern_set_request ->
+    ( delete_regex_pattern_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -2158,6 +2451,22 @@ module DeleteRule : sig
       | `WAFStaleDataException of waf_stale_data_exception
       | `WAFTagOperationException of waf_tag_operation_exception
       | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_rule_request ->
+    ( delete_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception
+      | `WAFTagOperationException of waf_tag_operation_exception
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2219,6 +2528,22 @@ module DeleteRuleGroup : sig
       | `WAFTagOperationException of waf_tag_operation_exception
       | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_rule_group_request ->
+    ( delete_rule_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception
+      | `WAFTagOperationException of waf_tag_operation_exception
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -2275,6 +2600,20 @@ module DeleteSizeConstraintSet : sig
       | `WAFReferencedItemException of waf_referenced_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_size_constraint_set_request ->
+    ( delete_size_constraint_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -2330,6 +2669,20 @@ module DeleteSqlInjectionMatchSet : sig
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFReferencedItemException of waf_referenced_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_sql_injection_match_set_request ->
+    ( delete_sql_injection_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2391,6 +2744,22 @@ module DeleteWebACL : sig
       | `WAFTagOperationException of waf_tag_operation_exception
       | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_web_acl_request ->
+    ( delete_web_acl_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception
+      | `WAFTagOperationException of waf_tag_operation_exception
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -2444,6 +2813,20 @@ module DeleteXssMatchSet : sig
       | `WAFReferencedItemException of waf_referenced_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_xss_match_set_request ->
+    ( delete_xss_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonEmptyEntityException of waf_non_empty_entity_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -2494,6 +2877,17 @@ module GetByteMatchSet : sig
       | `WAFInvalidAccountException of waf_invalid_account_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_byte_match_set_request ->
+    ( get_byte_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -2520,6 +2914,15 @@ module GetChangeToken : sig
     ( get_change_token_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_change_token_request ->
+    ( get_change_token_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2560,6 +2963,16 @@ module GetChangeTokenStatus : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_change_token_status_request ->
+    ( get_change_token_status_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2607,6 +3020,17 @@ module GetGeoMatchSet : sig
       | `WAFInvalidAccountException of waf_invalid_account_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_geo_match_set_request ->
+    ( get_geo_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -2638,6 +3062,17 @@ module GetIPSet : sig
       | `WAFInvalidAccountException of waf_invalid_account_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_ip_set_request ->
+    ( get_ip_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -2667,6 +3102,16 @@ module GetLoggingConfiguration : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_logging_configuration_request ->
+    ( get_logging_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -2695,6 +3140,16 @@ module GetPermissionPolicy : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_permission_policy_request ->
+    ( get_permission_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2726,6 +3181,17 @@ module GetRateBasedRule : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidAccountException of waf_invalid_account_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_rate_based_rule_request ->
+    ( get_rate_based_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2761,6 +3227,18 @@ module GetRateBasedRuleManagedKeys : sig
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_rate_based_rule_managed_keys_request ->
+    ( get_rate_based_rule_managed_keys_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -2795,6 +3273,17 @@ module GetRegexMatchSet : sig
       | `WAFInvalidAccountException of waf_invalid_account_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_regex_match_set_request ->
+    ( get_regex_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -2825,6 +3314,17 @@ module GetRegexPatternSet : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidAccountException of waf_invalid_account_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_regex_pattern_set_request ->
+    ( get_regex_pattern_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2857,6 +3357,17 @@ module GetRule : sig
       | `WAFInvalidAccountException of waf_invalid_account_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_rule_request ->
+    ( get_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -2886,6 +3397,16 @@ module GetRuleGroup : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_rule_group_request ->
+    ( get_rule_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2918,6 +3439,16 @@ module GetSampledRequests : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_sampled_requests_request ->
+    ( get_sampled_requests_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2959,6 +3490,17 @@ module GetSizeConstraintSet : sig
       | `WAFInvalidAccountException of waf_invalid_account_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_size_constraint_set_request ->
+    ( get_size_constraint_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -2989,6 +3531,17 @@ module GetSqlInjectionMatchSet : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidAccountException of waf_invalid_account_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_sql_injection_match_set_request ->
+    ( get_sql_injection_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3021,6 +3574,17 @@ module GetWebACL : sig
       | `WAFInvalidAccountException of waf_invalid_account_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_web_acl_request ->
+    ( get_web_acl_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -3051,6 +3615,17 @@ module GetXssMatchSet : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidAccountException of waf_invalid_account_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_xss_match_set_request ->
+    ( get_xss_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3083,6 +3658,17 @@ module ListActivatedRulesInRuleGroup : sig
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_activated_rules_in_rule_group_request ->
+    ( list_activated_rules_in_rule_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -3111,6 +3697,16 @@ module ListByteMatchSets : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidAccountException of waf_invalid_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_byte_match_sets_request ->
+    ( list_byte_match_sets_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3141,6 +3737,16 @@ module ListGeoMatchSets : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidAccountException of waf_invalid_account_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_geo_match_sets_request ->
+    ( list_geo_match_sets_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -3169,6 +3775,16 @@ module ListIPSets : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidAccountException of waf_invalid_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_ip_sets_request ->
+    ( list_ip_sets_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3201,6 +3817,17 @@ module ListLoggingConfigurations : sig
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_logging_configurations_request ->
+    ( list_logging_configurations_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -3229,6 +3856,16 @@ module ListRateBasedRules : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidAccountException of waf_invalid_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_rate_based_rules_request ->
+    ( list_rate_based_rules_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3259,6 +3896,16 @@ module ListRegexMatchSets : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidAccountException of waf_invalid_account_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_regex_match_sets_request ->
+    ( list_regex_match_sets_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -3288,6 +3935,16 @@ module ListRegexPatternSets : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidAccountException of waf_invalid_account_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_regex_pattern_sets_request ->
+    ( list_regex_pattern_sets_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -3314,6 +3971,15 @@ module ListRuleGroups : sig
     ( list_rule_groups_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_rule_groups_request ->
+    ( list_rule_groups_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3344,6 +4010,16 @@ module ListRules : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidAccountException of waf_invalid_account_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_rules_request ->
+    ( list_rules_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -3372,6 +4048,16 @@ module ListSizeConstraintSets : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidAccountException of waf_invalid_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_size_constraint_sets_request ->
+    ( list_size_constraint_sets_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3402,6 +4088,16 @@ module ListSqlInjectionMatchSets : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidAccountException of waf_invalid_account_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_sql_injection_match_sets_request ->
+    ( list_sql_injection_match_sets_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -3430,6 +4126,16 @@ module ListSubscribedRuleGroups : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_subscribed_rule_groups_request ->
+    ( list_subscribed_rule_groups_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3468,6 +4174,20 @@ module ListTagsForResource : sig
       | `WAFTagOperationException of waf_tag_operation_exception
       | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFBadRequestException of waf_bad_request_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFTagOperationException of waf_tag_operation_exception
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -3504,6 +4224,16 @@ module ListWebACLs : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidAccountException of waf_invalid_account_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_web_ac_ls_request ->
+    ( list_web_ac_ls_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -3532,6 +4262,16 @@ module ListXssMatchSets : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidAccountException of waf_invalid_account_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_xss_match_sets_request ->
+    ( list_xss_match_sets_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3565,6 +4305,18 @@ module PutLoggingConfiguration : sig
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFServiceLinkedRoleErrorException of waf_service_linked_role_error_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_logging_configuration_request ->
+    ( put_logging_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFServiceLinkedRoleErrorException of waf_service_linked_role_error_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3622,6 +4374,18 @@ module PutPermissionPolicy : sig
       | `WAFInvalidPermissionPolicyException of waf_invalid_permission_policy_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_permission_policy_request ->
+    ( put_permission_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidPermissionPolicyException of waf_invalid_permission_policy_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3699,6 +4463,21 @@ module TagResource : sig
       | `WAFTagOperationException of waf_tag_operation_exception
       | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFBadRequestException of waf_bad_request_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFTagOperationException of waf_tag_operation_exception
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -3743,6 +4522,20 @@ module UntagResource : sig
       | `WAFTagOperationException of waf_tag_operation_exception
       | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_request ->
+    ( untag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFBadRequestException of waf_bad_request_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFTagOperationException of waf_tag_operation_exception
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -3783,6 +4576,22 @@ module UpdateByteMatchSet : sig
       | `WAFNonexistentContainerException of waf_nonexistent_container_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_byte_match_set_request ->
+    ( update_byte_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3873,6 +4682,23 @@ module UpdateGeoMatchSet : sig
       | `WAFReferencedItemException of waf_referenced_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_geo_match_set_request ->
+    ( update_geo_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -3951,6 +4777,23 @@ module UpdateIPSet : sig
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFReferencedItemException of waf_referenced_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_ip_set_request ->
+    ( update_ip_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4060,6 +4903,23 @@ module UpdateRateBasedRule : sig
       | `WAFReferencedItemException of waf_referenced_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_rate_based_rule_request ->
+    ( update_rate_based_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -4144,6 +5004,22 @@ module UpdateRegexMatchSet : sig
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_regex_match_set_request ->
+    ( update_regex_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFDisallowedNameException of waf_disallowed_name_exception
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -4226,6 +5102,22 @@ module UpdateRegexPatternSet : sig
       | `WAFNonexistentContainerException of waf_nonexistent_container_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_regex_pattern_set_request ->
+    ( update_regex_pattern_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidRegexPatternException of waf_invalid_regex_pattern_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4315,6 +5207,23 @@ module UpdateRule : sig
       | `WAFReferencedItemException of waf_referenced_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_rule_request ->
+    ( update_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -4396,6 +5305,21 @@ module UpdateRuleGroup : sig
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_rule_group_request ->
+    ( update_rule_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -4466,6 +5390,23 @@ module UpdateSizeConstraintSet : sig
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFReferencedItemException of waf_referenced_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_size_constraint_set_request ->
+    ( update_size_constraint_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4558,6 +5499,22 @@ module UpdateSqlInjectionMatchSet : sig
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_sql_injection_match_set_request ->
+    ( update_sql_injection_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This is {b AWS WAF Classic} documentation. For more information, see \
@@ -4644,6 +5601,24 @@ module UpdateWebACL : sig
       | `WAFReferencedItemException of waf_referenced_item_exception
       | `WAFStaleDataException of waf_stale_data_exception
       | `WAFSubscriptionNotFoundException of waf_subscription_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_web_acl_request ->
+    ( update_web_acl_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFReferencedItemException of waf_referenced_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception
+      | `WAFSubscriptionNotFoundException of waf_subscription_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4750,6 +5725,22 @@ module UpdateXssMatchSet : sig
       | `WAFNonexistentContainerException of waf_nonexistent_container_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFStaleDataException of waf_stale_data_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_xss_match_set_request ->
+    ( update_xss_match_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `WAFInternalErrorException of waf_internal_error_exception
+      | `WAFInvalidAccountException of waf_invalid_account_exception
+      | `WAFInvalidOperationException of waf_invalid_operation_exception
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception
+      | `WAFNonexistentContainerException of waf_nonexistent_container_exception
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception
+      | `WAFStaleDataException of waf_stale_data_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

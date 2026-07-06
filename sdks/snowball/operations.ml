@@ -29,6 +29,12 @@ module CancelCluster = struct
     Smaws_Lib.Protocols.AwsJson.request
       ~shape_name:"AWSIESnowballJobManagementService.CancelCluster" ~service ~context ~input
       ~output_deserializer:Json_deserializers.cancel_cluster_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : cancel_cluster_request) =
+    let input = Json_serializers.cancel_cluster_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.CancelCluster" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.cancel_cluster_result_of_yojson ~error_deserializer
 end
 
 module CancelJob = struct
@@ -59,6 +65,12 @@ module CancelJob = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSIESnowballJobManagementService.CancelJob"
       ~service ~context ~input ~output_deserializer:Json_deserializers.cancel_job_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : cancel_job_request) =
+    let input = Json_serializers.cancel_job_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.CancelJob" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.cancel_job_result_of_yojson ~error_deserializer
 end
 
 module CreateAddress = struct
@@ -83,6 +95,12 @@ module CreateAddress = struct
   let request context (request : create_address_request) =
     let input = Json_serializers.create_address_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSIESnowballJobManagementService.CreateAddress" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_address_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : create_address_request) =
+    let input = Json_serializers.create_address_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSIESnowballJobManagementService.CreateAddress" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_address_result_of_yojson ~error_deserializer
 end
@@ -118,6 +136,12 @@ module CreateCluster = struct
   let request context (request : create_cluster_request) =
     let input = Json_serializers.create_cluster_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSIESnowballJobManagementService.CreateCluster" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_cluster_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : create_cluster_request) =
+    let input = Json_serializers.create_cluster_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSIESnowballJobManagementService.CreateCluster" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_cluster_result_of_yojson ~error_deserializer
 end
@@ -159,6 +183,12 @@ module CreateJob = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSIESnowballJobManagementService.CreateJob"
       ~service ~context ~input ~output_deserializer:Json_deserializers.create_job_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_job_request) =
+    let input = Json_serializers.create_job_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.CreateJob" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_job_result_of_yojson ~error_deserializer
 end
 
 module CreateLongTermPricing = struct
@@ -179,6 +209,13 @@ module CreateLongTermPricing = struct
   let request context (request : create_long_term_pricing_request) =
     let input = Json_serializers.create_long_term_pricing_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSIESnowballJobManagementService.CreateLongTermPricing" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_long_term_pricing_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_long_term_pricing_request) =
+    let input = Json_serializers.create_long_term_pricing_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSIESnowballJobManagementService.CreateLongTermPricing" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_long_term_pricing_result_of_yojson
       ~error_deserializer
@@ -222,6 +259,13 @@ module CreateReturnShippingLabel = struct
       ~shape_name:"AWSIESnowballJobManagementService.CreateReturnShippingLabel" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_return_shipping_label_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_return_shipping_label_request) =
+    let input = Json_serializers.create_return_shipping_label_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.CreateReturnShippingLabel" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.create_return_shipping_label_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeAddress = struct
@@ -242,6 +286,12 @@ module DescribeAddress = struct
   let request context (request : describe_address_request) =
     let input = Json_serializers.describe_address_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSIESnowballJobManagementService.DescribeAddress" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_address_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : describe_address_request) =
+    let input = Json_serializers.describe_address_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSIESnowballJobManagementService.DescribeAddress" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_address_result_of_yojson ~error_deserializer
 end
@@ -271,6 +321,13 @@ module DescribeAddresses = struct
       ~shape_name:"AWSIESnowballJobManagementService.DescribeAddresses" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_addresses_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_addresses_request) =
+    let input = Json_serializers.describe_addresses_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.DescribeAddresses" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_addresses_result_of_yojson
+      ~error_deserializer
 end
 
 module DescribeCluster = struct
@@ -291,6 +348,12 @@ module DescribeCluster = struct
   let request context (request : describe_cluster_request) =
     let input = Json_serializers.describe_cluster_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSIESnowballJobManagementService.DescribeCluster" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_cluster_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : describe_cluster_request) =
+    let input = Json_serializers.describe_cluster_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSIESnowballJobManagementService.DescribeCluster" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_cluster_result_of_yojson ~error_deserializer
 end
@@ -315,6 +378,12 @@ module DescribeJob = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSIESnowballJobManagementService.DescribeJob"
       ~service ~context ~input ~output_deserializer:Json_deserializers.describe_job_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_job_request) =
+    let input = Json_serializers.describe_job_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.DescribeJob" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_job_result_of_yojson ~error_deserializer
 end
 
 module DescribeReturnShippingLabel = struct
@@ -345,6 +414,13 @@ module DescribeReturnShippingLabel = struct
       ~shape_name:"AWSIESnowballJobManagementService.DescribeReturnShippingLabel" ~service ~context
       ~input ~output_deserializer:Json_deserializers.describe_return_shipping_label_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_return_shipping_label_request) =
+    let input = Json_serializers.describe_return_shipping_label_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.DescribeReturnShippingLabel" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.describe_return_shipping_label_result_of_yojson
+      ~error_deserializer
 end
 
 module GetJobManifest = struct
@@ -369,6 +445,12 @@ module GetJobManifest = struct
   let request context (request : get_job_manifest_request) =
     let input = Json_serializers.get_job_manifest_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSIESnowballJobManagementService.GetJobManifest" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_job_manifest_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_job_manifest_request) =
+    let input = Json_serializers.get_job_manifest_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSIESnowballJobManagementService.GetJobManifest" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_job_manifest_result_of_yojson ~error_deserializer
 end
@@ -398,6 +480,13 @@ module GetJobUnlockCode = struct
       ~shape_name:"AWSIESnowballJobManagementService.GetJobUnlockCode" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_job_unlock_code_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_job_unlock_code_request) =
+    let input = Json_serializers.get_job_unlock_code_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.GetJobUnlockCode" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_job_unlock_code_result_of_yojson
+      ~error_deserializer
 end
 
 module GetSnowballUsage = struct
@@ -411,6 +500,13 @@ module GetSnowballUsage = struct
   let request context (request : get_snowball_usage_request) =
     let input = Json_serializers.get_snowball_usage_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSIESnowballJobManagementService.GetSnowballUsage" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_snowball_usage_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_snowball_usage_request) =
+    let input = Json_serializers.get_snowball_usage_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSIESnowballJobManagementService.GetSnowballUsage" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_snowball_usage_result_of_yojson
       ~error_deserializer
@@ -441,6 +537,13 @@ module GetSoftwareUpdates = struct
       ~shape_name:"AWSIESnowballJobManagementService.GetSoftwareUpdates" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_software_updates_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_software_updates_request) =
+    let input = Json_serializers.get_software_updates_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.GetSoftwareUpdates" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_software_updates_result_of_yojson
+      ~error_deserializer
 end
 
 module ListClusterJobs = struct
@@ -467,6 +570,12 @@ module ListClusterJobs = struct
     Smaws_Lib.Protocols.AwsJson.request
       ~shape_name:"AWSIESnowballJobManagementService.ListClusterJobs" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_cluster_jobs_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_cluster_jobs_request) =
+    let input = Json_serializers.list_cluster_jobs_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.ListClusterJobs" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_cluster_jobs_result_of_yojson ~error_deserializer
 end
 
 module ListClusters = struct
@@ -488,6 +597,12 @@ module ListClusters = struct
     let input = Json_serializers.list_clusters_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSIESnowballJobManagementService.ListClusters"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_clusters_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_clusters_request) =
+    let input = Json_serializers.list_clusters_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.ListClusters" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_clusters_result_of_yojson ~error_deserializer
 end
 
@@ -516,6 +631,13 @@ module ListCompatibleImages = struct
       ~shape_name:"AWSIESnowballJobManagementService.ListCompatibleImages" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_compatible_images_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_compatible_images_request) =
+    let input = Json_serializers.list_compatible_images_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.ListCompatibleImages" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_compatible_images_result_of_yojson
+      ~error_deserializer
 end
 
 module ListJobs = struct
@@ -538,6 +660,12 @@ module ListJobs = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSIESnowballJobManagementService.ListJobs"
       ~service ~context ~input ~output_deserializer:Json_deserializers.list_jobs_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_jobs_request) =
+    let input = Json_serializers.list_jobs_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.ListJobs" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_jobs_result_of_yojson ~error_deserializer
 end
 
 module ListLongTermPricing = struct
@@ -565,6 +693,13 @@ module ListLongTermPricing = struct
       ~shape_name:"AWSIESnowballJobManagementService.ListLongTermPricing" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_long_term_pricing_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_long_term_pricing_request) =
+    let input = Json_serializers.list_long_term_pricing_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.ListLongTermPricing" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_long_term_pricing_result_of_yojson
+      ~error_deserializer
 end
 
 module ListPickupLocations = struct
@@ -585,6 +720,13 @@ module ListPickupLocations = struct
   let request context (request : list_pickup_locations_request) =
     let input = Json_serializers.list_pickup_locations_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSIESnowballJobManagementService.ListPickupLocations" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_pickup_locations_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_pickup_locations_request) =
+    let input = Json_serializers.list_pickup_locations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSIESnowballJobManagementService.ListPickupLocations" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_pickup_locations_result_of_yojson
       ~error_deserializer
@@ -612,6 +754,13 @@ module ListServiceVersions = struct
   let request context (request : list_service_versions_request) =
     let input = Json_serializers.list_service_versions_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSIESnowballJobManagementService.ListServiceVersions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_service_versions_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_service_versions_request) =
+    let input = Json_serializers.list_service_versions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSIESnowballJobManagementService.ListServiceVersions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_service_versions_result_of_yojson
       ~error_deserializer
@@ -652,6 +801,12 @@ module UpdateCluster = struct
   let request context (request : update_cluster_request) =
     let input = Json_serializers.update_cluster_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSIESnowballJobManagementService.UpdateCluster" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_cluster_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : update_cluster_request) =
+    let input = Json_serializers.update_cluster_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSIESnowballJobManagementService.UpdateCluster" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_cluster_result_of_yojson ~error_deserializer
 end
@@ -697,6 +852,12 @@ module UpdateJob = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSIESnowballJobManagementService.UpdateJob"
       ~service ~context ~input ~output_deserializer:Json_deserializers.update_job_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_job_request) =
+    let input = Json_serializers.update_job_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.UpdateJob" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_job_result_of_yojson ~error_deserializer
 end
 
 module UpdateJobShipmentState = struct
@@ -724,6 +885,13 @@ module UpdateJobShipmentState = struct
       ~shape_name:"AWSIESnowballJobManagementService.UpdateJobShipmentState" ~service ~context
       ~input ~output_deserializer:Json_deserializers.update_job_shipment_state_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_job_shipment_state_request) =
+    let input = Json_serializers.update_job_shipment_state_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSIESnowballJobManagementService.UpdateJobShipmentState" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.update_job_shipment_state_result_of_yojson
+      ~error_deserializer
 end
 
 module UpdateLongTermPricing = struct
@@ -744,6 +912,13 @@ module UpdateLongTermPricing = struct
   let request context (request : update_long_term_pricing_request) =
     let input = Json_serializers.update_long_term_pricing_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSIESnowballJobManagementService.UpdateLongTermPricing" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_long_term_pricing_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_long_term_pricing_request) =
+    let input = Json_serializers.update_long_term_pricing_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSIESnowballJobManagementService.UpdateLongTermPricing" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_long_term_pricing_result_of_yojson
       ~error_deserializer

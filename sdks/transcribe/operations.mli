@@ -19,6 +19,18 @@ module CreateCallAnalyticsCategory : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_call_analytics_category_request ->
+    ( create_call_analytics_category_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates a new Call Analytics category.\n\n\
@@ -63,6 +75,18 @@ module CreateLanguageModel : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_language_model_request ->
+    ( create_language_model_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates a new custom language model.\n\n\
@@ -104,6 +128,18 @@ module CreateMedicalVocabulary : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_medical_vocabulary_request ->
+    ( create_medical_vocabulary_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates a new custom medical vocabulary.\n\n\
@@ -141,6 +177,18 @@ module CreateVocabulary : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_vocabulary_request ->
+    ( create_vocabulary_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates a new custom vocabulary.\n\n\
@@ -175,6 +223,18 @@ module CreateVocabularyFilter : sig
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_vocabulary_filter_request ->
+    ( create_vocabulary_filter_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -211,6 +271,18 @@ module DeleteCallAnalyticsCategory : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_call_analytics_category_request ->
+    ( delete_call_analytics_category_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes a Call Analytics category. To use this operation, specify the name of the category you \
@@ -232,6 +304,17 @@ module DeleteCallAnalyticsJob : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_call_analytics_job_request ->
+    ( delete_call_analytics_job_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -255,6 +338,17 @@ module DeleteLanguageModel : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_language_model_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes a custom language model. To use this operation, specify the name of the language model \
@@ -277,6 +371,17 @@ module DeleteMedicalScribeJob : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_medical_scribe_job_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes a Medical Scribe job. To use this operation, specify the name of the job you want to \
@@ -298,6 +403,17 @@ module DeleteMedicalTranscriptionJob : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_medical_transcription_job_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -323,6 +439,18 @@ module DeleteMedicalVocabulary : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_medical_vocabulary_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes a custom medical vocabulary. To use this operation, specify the name of the custom \
@@ -345,6 +473,17 @@ module DeleteTranscriptionJob : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_transcription_job_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -370,6 +509,18 @@ module DeleteVocabulary : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_vocabulary_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes a custom vocabulary. To use this operation, specify the name of the custom vocabulary \
@@ -393,6 +544,18 @@ module DeleteVocabularyFilter : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_vocabulary_filter_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -418,6 +581,18 @@ module DescribeLanguageModel : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_language_model_request ->
+    ( describe_language_model_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -449,6 +624,18 @@ module GetCallAnalyticsCategory : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_call_analytics_category_request ->
+    ( get_call_analytics_category_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Provides information about the specified Call Analytics category.\n\n\
@@ -473,6 +660,18 @@ module GetCallAnalyticsJob : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_call_analytics_job_request ->
+    ( get_call_analytics_job_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -510,6 +709,18 @@ module GetMedicalScribeJob : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_medical_scribe_job_request ->
+    ( get_medical_scribe_job_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Provides information about the specified Medical Scribe job.\n\n\
@@ -539,6 +750,18 @@ module GetMedicalTranscriptionJob : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_medical_transcription_job_request ->
+    ( get_medical_transcription_job_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -570,6 +793,18 @@ module GetMedicalVocabulary : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_medical_vocabulary_request ->
+    ( get_medical_vocabulary_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Provides information about the specified custom medical vocabulary.\n\n\
@@ -598,6 +833,18 @@ module GetTranscriptionJob : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_transcription_job_request ->
+    ( get_transcription_job_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -632,6 +879,18 @@ module GetVocabulary : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_vocabulary_request ->
+    ( get_vocabulary_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Provides information about the specified custom vocabulary.\n\n\
@@ -661,6 +920,18 @@ module GetVocabularyFilter : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_vocabulary_filter_request ->
+    ( get_vocabulary_filter_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Provides information about the specified custom vocabulary filter.\n\n\
@@ -684,6 +955,17 @@ module ListCallAnalyticsCategories : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_call_analytics_categories_request ->
+    ( list_call_analytics_categories_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Provides a list of Call Analytics categories, including all rules that make up each category.\n\n\
@@ -706,6 +988,17 @@ module ListCallAnalyticsJobs : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_call_analytics_jobs_request ->
+    ( list_call_analytics_jobs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -731,6 +1024,17 @@ module ListLanguageModels : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_language_models_request ->
+    ( list_language_models_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Provides a list of custom language models that match the specified criteria. If no criteria are \
@@ -754,6 +1058,17 @@ module ListMedicalScribeJobs : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_medical_scribe_jobs_request ->
+    ( list_medical_scribe_jobs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -779,6 +1094,17 @@ module ListMedicalTranscriptionJobs : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_medical_transcription_jobs_request ->
+    ( list_medical_transcription_jobs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Provides a list of medical transcription jobs that match the specified criteria. If no criteria \
@@ -802,6 +1128,17 @@ module ListMedicalVocabularies : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_medical_vocabularies_request ->
+    ( list_medical_vocabularies_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -829,6 +1166,18 @@ module ListTagsForResource : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Lists all tags associated with the specified transcription job, vocabulary, model, or resource.\n\n\
@@ -852,6 +1201,17 @@ module ListTranscriptionJobs : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_transcription_jobs_request ->
+    ( list_transcription_jobs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -877,6 +1237,17 @@ module ListVocabularies : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_vocabularies_request ->
+    ( list_vocabularies_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Provides a list of custom vocabularies that match the specified criteria. If no criteria are \
@@ -900,6 +1271,17 @@ module ListVocabularyFilters : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_vocabulary_filters_request ->
+    ( list_vocabulary_filters_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -926,6 +1308,18 @@ module StartCallAnalyticsJob : sig
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_call_analytics_job_request ->
+    ( start_call_analytics_job_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -998,6 +1392,18 @@ module StartMedicalScribeJob : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_medical_scribe_job_request ->
+    ( start_medical_scribe_job_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Transcribes patient-clinician conversations and generates clinical notes. \n\n\
@@ -1061,6 +1467,18 @@ module StartMedicalTranscriptionJob : sig
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_medical_transcription_job_request ->
+    ( start_medical_transcription_job_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1128,6 +1546,18 @@ module StartTranscriptionJob : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_transcription_job_request ->
+    ( start_transcription_job_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Transcribes the audio from a media file and applies any additional Request Parameters you \
@@ -1185,6 +1615,19 @@ module TagResource : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Adds one or more custom tags, each in the form of a key:value pair, to the specified resource.\n\n\
@@ -1213,6 +1656,19 @@ module UntagResource : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_request ->
+    ( untag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Removes the specified tags from the specified Amazon Transcribe resource.\n\n\
@@ -1240,6 +1696,19 @@ module UpdateCallAnalyticsCategory : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_call_analytics_category_request ->
+    ( update_call_analytics_category_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1270,6 +1739,19 @@ module UpdateMedicalVocabulary : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_medical_vocabulary_request ->
+    ( update_medical_vocabulary_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Updates an existing custom medical vocabulary with new values. This operation overwrites all \
@@ -1297,6 +1779,19 @@ module UpdateVocabulary : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_vocabulary_request ->
+    ( update_vocabulary_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Updates an existing custom vocabulary with new values. This operation overwrites all existing \
@@ -1321,6 +1816,18 @@ module UpdateVocabularyFilter : sig
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_vocabulary_filter_request ->
+    ( update_vocabulary_filter_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `InternalFailureException of internal_failure_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

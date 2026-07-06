@@ -24,6 +24,12 @@ module CountClosedWorkflowExecutions = struct
     Smaws_Lib.Protocols.AwsJson.request
       ~shape_name:"SimpleWorkflowService.CountClosedWorkflowExecutions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.workflow_execution_count_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : count_closed_workflow_executions_input) =
+    let input = Json_serializers.count_closed_workflow_executions_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.CountClosedWorkflowExecutions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.workflow_execution_count_of_yojson ~error_deserializer
 end
 
 module CountOpenWorkflowExecutions = struct
@@ -47,6 +53,12 @@ module CountOpenWorkflowExecutions = struct
   let request context (request : count_open_workflow_executions_input) =
     let input = Json_serializers.count_open_workflow_executions_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"SimpleWorkflowService.CountOpenWorkflowExecutions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.workflow_execution_count_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : count_open_workflow_executions_input) =
+    let input = Json_serializers.count_open_workflow_executions_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"SimpleWorkflowService.CountOpenWorkflowExecutions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.workflow_execution_count_of_yojson ~error_deserializer
 end
@@ -74,6 +86,12 @@ module CountPendingActivityTasks = struct
     Smaws_Lib.Protocols.AwsJson.request
       ~shape_name:"SimpleWorkflowService.CountPendingActivityTasks" ~service ~context ~input
       ~output_deserializer:Json_deserializers.pending_task_count_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : count_pending_activity_tasks_input) =
+    let input = Json_serializers.count_pending_activity_tasks_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.CountPendingActivityTasks" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.pending_task_count_of_yojson ~error_deserializer
 end
 
 module CountPendingDecisionTasks = struct
@@ -97,6 +115,12 @@ module CountPendingDecisionTasks = struct
   let request context (request : count_pending_decision_tasks_input) =
     let input = Json_serializers.count_pending_decision_tasks_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"SimpleWorkflowService.CountPendingDecisionTasks" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.pending_task_count_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : count_pending_decision_tasks_input) =
+    let input = Json_serializers.count_pending_decision_tasks_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"SimpleWorkflowService.CountPendingDecisionTasks" ~service ~context ~input
       ~output_deserializer:Json_deserializers.pending_task_count_of_yojson ~error_deserializer
 end
@@ -128,6 +152,13 @@ module DeleteActivityType = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_activity_type_input) =
+    let input = Json_serializers.delete_activity_type_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.DeleteActivityType" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeleteWorkflowType = struct
@@ -155,6 +186,13 @@ module DeleteWorkflowType = struct
     let input = Json_serializers.delete_workflow_type_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.DeleteWorkflowType"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_workflow_type_input) =
+    let input = Json_serializers.delete_workflow_type_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.DeleteWorkflowType" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -186,6 +224,13 @@ module DeprecateActivityType = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : deprecate_activity_type_input) =
+    let input = Json_serializers.deprecate_activity_type_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.DeprecateActivityType" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DeprecateDomain = struct
@@ -213,6 +258,13 @@ module DeprecateDomain = struct
     let input = Json_serializers.deprecate_domain_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.DeprecateDomain" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : deprecate_domain_input) =
+    let input = Json_serializers.deprecate_domain_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.DeprecateDomain" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -243,6 +295,13 @@ module DeprecateWorkflowType = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : deprecate_workflow_type_input) =
+    let input = Json_serializers.deprecate_workflow_type_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.DeprecateWorkflowType" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DescribeActivityType = struct
@@ -267,6 +326,12 @@ module DescribeActivityType = struct
     let input = Json_serializers.describe_activity_type_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.DescribeActivityType"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.activity_type_detail_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : describe_activity_type_input) =
+    let input = Json_serializers.describe_activity_type_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.DescribeActivityType" ~service ~context ~input
       ~output_deserializer:Json_deserializers.activity_type_detail_of_yojson ~error_deserializer
 end
 
@@ -293,6 +358,12 @@ module DescribeDomain = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.DescribeDomain" ~service
       ~context ~input ~output_deserializer:Json_deserializers.domain_detail_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_domain_input) =
+    let input = Json_serializers.describe_domain_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.DescribeDomain" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.domain_detail_of_yojson ~error_deserializer
 end
 
 module DescribeWorkflowExecution = struct
@@ -316,6 +387,13 @@ module DescribeWorkflowExecution = struct
   let request context (request : describe_workflow_execution_input) =
     let input = Json_serializers.describe_workflow_execution_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"SimpleWorkflowService.DescribeWorkflowExecution" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.workflow_execution_detail_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_workflow_execution_input) =
+    let input = Json_serializers.describe_workflow_execution_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"SimpleWorkflowService.DescribeWorkflowExecution" ~service ~context ~input
       ~output_deserializer:Json_deserializers.workflow_execution_detail_of_yojson
       ~error_deserializer
@@ -344,6 +422,12 @@ module DescribeWorkflowType = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.DescribeWorkflowType"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.workflow_type_detail_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : describe_workflow_type_input) =
+    let input = Json_serializers.describe_workflow_type_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.DescribeWorkflowType" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.workflow_type_detail_of_yojson ~error_deserializer
 end
 
 module GetWorkflowExecutionHistory = struct
@@ -367,6 +451,12 @@ module GetWorkflowExecutionHistory = struct
   let request context (request : get_workflow_execution_history_input) =
     let input = Json_serializers.get_workflow_execution_history_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"SimpleWorkflowService.GetWorkflowExecutionHistory" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.history_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_workflow_execution_history_input) =
+    let input = Json_serializers.get_workflow_execution_history_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"SimpleWorkflowService.GetWorkflowExecutionHistory" ~service ~context ~input
       ~output_deserializer:Json_deserializers.history_of_yojson ~error_deserializer
 end
@@ -394,6 +484,12 @@ module ListActivityTypes = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.ListActivityTypes"
       ~service ~context ~input ~output_deserializer:Json_deserializers.activity_type_infos_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_activity_types_input) =
+    let input = Json_serializers.list_activity_types_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.ListActivityTypes" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.activity_type_infos_of_yojson ~error_deserializer
 end
 
 module ListClosedWorkflowExecutions = struct
@@ -419,6 +515,12 @@ module ListClosedWorkflowExecutions = struct
     Smaws_Lib.Protocols.AwsJson.request
       ~shape_name:"SimpleWorkflowService.ListClosedWorkflowExecutions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.workflow_execution_infos_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_closed_workflow_executions_input) =
+    let input = Json_serializers.list_closed_workflow_executions_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.ListClosedWorkflowExecutions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.workflow_execution_infos_of_yojson ~error_deserializer
 end
 
 module ListDomains = struct
@@ -441,6 +543,12 @@ module ListDomains = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.ListDomains" ~service
       ~context ~input ~output_deserializer:Json_deserializers.domain_infos_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_domains_input) =
+    let input = Json_serializers.list_domains_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.ListDomains" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.domain_infos_of_yojson ~error_deserializer
 end
 
 module ListOpenWorkflowExecutions = struct
@@ -464,6 +572,12 @@ module ListOpenWorkflowExecutions = struct
   let request context (request : list_open_workflow_executions_input) =
     let input = Json_serializers.list_open_workflow_executions_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"SimpleWorkflowService.ListOpenWorkflowExecutions" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.workflow_execution_infos_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_open_workflow_executions_input) =
+    let input = Json_serializers.list_open_workflow_executions_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"SimpleWorkflowService.ListOpenWorkflowExecutions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.workflow_execution_infos_of_yojson ~error_deserializer
 end
@@ -495,6 +609,13 @@ module ListTagsForResource = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_resource_input) =
+    let input = Json_serializers.list_tags_for_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.ListTagsForResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_output_of_yojson
+      ~error_deserializer
 end
 
 module ListWorkflowTypes = struct
@@ -520,6 +641,12 @@ module ListWorkflowTypes = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.ListWorkflowTypes"
       ~service ~context ~input ~output_deserializer:Json_deserializers.workflow_type_infos_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_workflow_types_input) =
+    let input = Json_serializers.list_workflow_types_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.ListWorkflowTypes" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.workflow_type_infos_of_yojson ~error_deserializer
 end
 
 module PollForActivityTask = struct
@@ -548,6 +675,12 @@ module PollForActivityTask = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.PollForActivityTask"
       ~service ~context ~input ~output_deserializer:Json_deserializers.activity_task_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : poll_for_activity_task_input) =
+    let input = Json_serializers.poll_for_activity_task_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.PollForActivityTask" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.activity_task_of_yojson ~error_deserializer
 end
 
 module PollForDecisionTask = struct
@@ -576,6 +709,12 @@ module PollForDecisionTask = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.PollForDecisionTask"
       ~service ~context ~input ~output_deserializer:Json_deserializers.decision_task_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : poll_for_decision_task_input) =
+    let input = Json_serializers.poll_for_decision_task_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.PollForDecisionTask" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.decision_task_of_yojson ~error_deserializer
 end
 
 module RecordActivityTaskHeartbeat = struct
@@ -599,6 +738,12 @@ module RecordActivityTaskHeartbeat = struct
   let request context (request : record_activity_task_heartbeat_input) =
     let input = Json_serializers.record_activity_task_heartbeat_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"SimpleWorkflowService.RecordActivityTaskHeartbeat" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.activity_task_status_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : record_activity_task_heartbeat_input) =
+    let input = Json_serializers.record_activity_task_heartbeat_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"SimpleWorkflowService.RecordActivityTaskHeartbeat" ~service ~context ~input
       ~output_deserializer:Json_deserializers.activity_task_status_of_yojson ~error_deserializer
 end
@@ -633,6 +778,13 @@ module RegisterActivityType = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : register_activity_type_input) =
+    let input = Json_serializers.register_activity_type_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.RegisterActivityType" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module RegisterDomain = struct
@@ -664,6 +816,13 @@ module RegisterDomain = struct
     let input = Json_serializers.register_domain_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.RegisterDomain" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : register_domain_input) =
+    let input = Json_serializers.register_domain_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.RegisterDomain" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -697,6 +856,13 @@ module RegisterWorkflowType = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : register_workflow_type_input) =
+    let input = Json_serializers.register_workflow_type_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.RegisterWorkflowType" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module RequestCancelWorkflowExecution = struct
@@ -720,6 +886,13 @@ module RequestCancelWorkflowExecution = struct
   let request context (request : request_cancel_workflow_execution_input) =
     let input = Json_serializers.request_cancel_workflow_execution_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"SimpleWorkflowService.RequestCancelWorkflowExecution" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : request_cancel_workflow_execution_input) =
+    let input = Json_serializers.request_cancel_workflow_execution_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"SimpleWorkflowService.RequestCancelWorkflowExecution" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
@@ -749,6 +922,13 @@ module RespondActivityTaskCanceled = struct
       ~shape_name:"SimpleWorkflowService.RespondActivityTaskCanceled" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : respond_activity_task_canceled_input) =
+    let input = Json_serializers.respond_activity_task_canceled_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.RespondActivityTaskCanceled" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module RespondActivityTaskCompleted = struct
@@ -772,6 +952,13 @@ module RespondActivityTaskCompleted = struct
   let request context (request : respond_activity_task_completed_input) =
     let input = Json_serializers.respond_activity_task_completed_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"SimpleWorkflowService.RespondActivityTaskCompleted" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : respond_activity_task_completed_input) =
+    let input = Json_serializers.respond_activity_task_completed_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"SimpleWorkflowService.RespondActivityTaskCompleted" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
@@ -801,6 +988,13 @@ module RespondActivityTaskFailed = struct
       ~shape_name:"SimpleWorkflowService.RespondActivityTaskFailed" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : respond_activity_task_failed_input) =
+    let input = Json_serializers.respond_activity_task_failed_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.RespondActivityTaskFailed" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module RespondDecisionTaskCompleted = struct
@@ -824,6 +1018,13 @@ module RespondDecisionTaskCompleted = struct
   let request context (request : respond_decision_task_completed_input) =
     let input = Json_serializers.respond_decision_task_completed_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"SimpleWorkflowService.RespondDecisionTaskCompleted" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : respond_decision_task_completed_input) =
+    let input = Json_serializers.respond_decision_task_completed_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"SimpleWorkflowService.RespondDecisionTaskCompleted" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
@@ -851,6 +1052,13 @@ module SignalWorkflowExecution = struct
     let input = Json_serializers.signal_workflow_execution_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.SignalWorkflowExecution"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : signal_workflow_execution_input) =
+    let input = Json_serializers.signal_workflow_execution_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.SignalWorkflowExecution" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -892,6 +1100,12 @@ module StartWorkflowExecution = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.StartWorkflowExecution"
       ~service ~context ~input ~output_deserializer:Json_deserializers.run_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_workflow_execution_input) =
+    let input = Json_serializers.start_workflow_execution_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.StartWorkflowExecution" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.run_of_yojson ~error_deserializer
 end
 
 module TagResource = struct
@@ -923,6 +1137,13 @@ module TagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.TagResource" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_input) =
+    let input = Json_serializers.tag_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.TagResource" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module TerminateWorkflowExecution = struct
@@ -946,6 +1167,13 @@ module TerminateWorkflowExecution = struct
   let request context (request : terminate_workflow_execution_input) =
     let input = Json_serializers.terminate_workflow_execution_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"SimpleWorkflowService.TerminateWorkflowExecution" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : terminate_workflow_execution_input) =
+    let input = Json_serializers.terminate_workflow_execution_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"SimpleWorkflowService.TerminateWorkflowExecution" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
@@ -978,6 +1206,13 @@ module UndeprecateActivityType = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : undeprecate_activity_type_input) =
+    let input = Json_serializers.undeprecate_activity_type_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.UndeprecateActivityType" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module UndeprecateDomain = struct
@@ -1006,6 +1241,13 @@ module UndeprecateDomain = struct
     let input = Json_serializers.undeprecate_domain_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.UndeprecateDomain"
       ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : undeprecate_domain_input) =
+    let input = Json_serializers.undeprecate_domain_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.UndeprecateDomain" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
@@ -1037,6 +1279,13 @@ module UndeprecateWorkflowType = struct
       ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : undeprecate_workflow_type_input) =
+    let input = Json_serializers.undeprecate_workflow_type_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.UndeprecateWorkflowType" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module UntagResource = struct
@@ -1064,5 +1313,12 @@ module UntagResource = struct
     let input = Json_serializers.untag_resource_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"SimpleWorkflowService.UntagResource" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_input) =
+    let input = Json_serializers.untag_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"SimpleWorkflowService.UntagResource" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end

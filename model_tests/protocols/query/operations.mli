@@ -7,6 +7,13 @@ module DatetimeOffsets : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (datetime_offsets_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( datetime_offsets_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc ""]
 
@@ -17,6 +24,13 @@ module EmptyInputAndEmptyOutput : sig
     'http_type Smaws_Lib.Context.t ->
     empty_input_and_empty_output_input ->
     (empty_input_and_empty_output_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    empty_input_and_empty_output_input ->
+    ( empty_input_and_empty_output_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "The example tests how requests and responses are serialized when there's no request or response \
@@ -29,6 +43,13 @@ module EndpointOperation : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc ""]
 
@@ -39,6 +60,13 @@ module EndpointWithHostLabelOperation : sig
     'http_type Smaws_Lib.Context.t ->
     host_label_input ->
     (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    host_label_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc ""]
 
@@ -49,6 +77,13 @@ module FlattenedXmlMap : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (flattened_xml_map_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( flattened_xml_map_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Flattened maps"]
 
@@ -59,6 +94,13 @@ module FlattenedXmlMapWithXmlName : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (flattened_xml_map_with_xml_name_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( flattened_xml_map_with_xml_name_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Flattened maps with \\@xmlName"]
 
@@ -69,6 +111,13 @@ module FlattenedXmlMapWithXmlNamespace : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (flattened_xml_map_with_xml_namespace_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( flattened_xml_map_with_xml_namespace_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Flattened maps with \\@xmlNamespace and \\@xmlName"]
 
@@ -79,6 +128,13 @@ module FractionalSeconds : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (fractional_seconds_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( fractional_seconds_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc ""]
 
@@ -99,6 +155,17 @@ module GreetingWithErrors : sig
       | `CustomCodeError of custom_code_error
       | `InvalidGreeting of invalid_greeting ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( greeting_with_errors_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ComplexError of complex_error
+      | `CustomCodeError of custom_code_error
+      | `InvalidGreeting of invalid_greeting ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "This operation has three possible return values: 1. A successful response in the form of \
@@ -111,6 +178,13 @@ module HostWithPathOperation : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc ""]
 
@@ -121,6 +195,13 @@ module IgnoresWrappingXmlName : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (ignores_wrapping_xml_name_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( ignores_wrapping_xml_name_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "The xmlName trait on the output structure is ignored in AWS Query. The wrapping element is \
@@ -134,6 +215,13 @@ module NestedStructures : sig
     'http_type Smaws_Lib.Context.t ->
     nested_structures_input ->
     (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    nested_structures_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "This test serializes nested and recursive structure members."]
 
@@ -144,6 +232,13 @@ module NoInputAndNoOutput : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "The example tests how requests and responses are serialized when there's no request or response \
@@ -157,6 +252,13 @@ module NoInputAndOutput : sig
     'http_type Smaws_Lib.Context.t ->
     no_input_and_output_input ->
     (no_input_and_output_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    no_input_and_output_input ->
+    ( no_input_and_output_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "The example tests how requests and responses are serialized when there's no request payload or \
@@ -169,6 +271,13 @@ module PutWithContentEncoding : sig
     'http_type Smaws_Lib.Context.t ->
     put_with_content_encoding_input ->
     (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_with_content_encoding_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc ""]
 
@@ -179,6 +288,13 @@ module QueryIdempotencyTokenAutoFill : sig
     'http_type Smaws_Lib.Context.t ->
     query_idempotency_token_auto_fill_input ->
     (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    query_idempotency_token_auto_fill_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Automatically adds idempotency tokens."]
 
@@ -189,6 +305,13 @@ module QueryLists : sig
     'http_type Smaws_Lib.Context.t ->
     query_lists_input ->
     (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    query_lists_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "This test serializes simple and complex lists."]
 
@@ -199,6 +322,13 @@ module QueryMaps : sig
     'http_type Smaws_Lib.Context.t ->
     query_maps_input ->
     (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    query_maps_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "This test serializes simple and complex maps."]
 
@@ -209,6 +339,13 @@ module QueryTimestamps : sig
     'http_type Smaws_Lib.Context.t ->
     query_timestamps_input ->
     (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    query_timestamps_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "This test serializes timestamps. 1. Timestamps are serialized as RFC 3339 date-time values by \
@@ -222,6 +359,13 @@ module RecursiveXmlShapes : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (recursive_xml_shapes_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( recursive_xml_shapes_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Recursive shapes"]
 
@@ -232,6 +376,13 @@ module SimpleInputParams : sig
     'http_type Smaws_Lib.Context.t ->
     simple_input_params_input ->
     (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    simple_input_params_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "This test serializes strings, numbers, and boolean values."]
 
@@ -242,6 +393,13 @@ module SimpleScalarXmlProperties : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (simple_scalar_xml_properties_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( simple_scalar_xml_properties_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc ""]
 
@@ -252,6 +410,13 @@ module XmlBlobs : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (xml_blobs_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( xml_blobs_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Blobs are base64 encoded"]
 
@@ -262,6 +427,13 @@ module XmlEmptyBlobs : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (xml_blobs_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( xml_blobs_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc ""]
 
@@ -272,6 +444,13 @@ module XmlEmptyLists : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (xml_lists_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( xml_lists_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc ""]
 
@@ -282,6 +461,13 @@ module XmlEmptyMaps : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (xml_maps_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( xml_maps_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc ""]
 
@@ -292,6 +478,13 @@ module XmlEnums : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (xml_enums_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( xml_enums_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "This example serializes enums as top level properties, in lists, sets, and maps."]
 
@@ -302,6 +495,13 @@ module XmlIntEnums : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (xml_int_enums_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( xml_int_enums_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "This example serializes enums as top level properties, in lists, sets, and maps."]
 
@@ -312,6 +512,13 @@ module XmlLists : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (xml_lists_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( xml_lists_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "This test case serializes XML lists for the following cases for both input and output: 1. \
@@ -326,6 +533,13 @@ module XmlMaps : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (xml_maps_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( xml_maps_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "The example tests basic map serialization."]
 
@@ -336,6 +550,13 @@ module XmlMapsXmlName : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (xml_maps_xml_name_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( xml_maps_xml_name_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc ""]
 
@@ -346,6 +567,13 @@ module XmlNamespaces : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (xml_namespaces_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( xml_namespaces_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc ""]
 
@@ -356,6 +584,13 @@ module XmlTimestamps : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (xml_timestamps_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( xml_timestamps_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "This tests how timestamps are serialized, including using the default format of date-time and \

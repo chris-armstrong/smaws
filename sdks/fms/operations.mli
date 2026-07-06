@@ -21,6 +21,19 @@ module AssociateAdminAccount : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    associate_admin_account_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Sets a Firewall Manager default administrator account. The Firewall Manager default \
@@ -52,6 +65,18 @@ module AssociateThirdPartyFirewall : sig
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    associate_third_party_firewall_request ->
+    ( associate_third_party_firewall_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Sets the Firewall Manager policy administrator as a tenant administrator of a third-party \
@@ -79,6 +104,19 @@ module BatchAssociateResource : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_associate_resource_request ->
+    ( batch_associate_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Associate resources to a Firewall Manager resource set.\n"]
 
@@ -101,6 +139,18 @@ module BatchDisassociateResource : sig
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_disassociate_resource_request ->
+    ( batch_disassociate_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Disassociates resources from a Firewall Manager resource set.\n"]
 
@@ -121,6 +171,17 @@ module DeleteAppsList : sig
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_apps_list_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Permanently deletes an Firewall Manager applications list.\n"]
 
@@ -140,6 +201,17 @@ module DeleteNotificationChannel : sig
       | `InternalErrorException of internal_error_exception
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_notification_channel_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -167,6 +239,19 @@ module DeletePolicy : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_policy_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Permanently deletes an Firewall Manager policy. \n"]
 
@@ -186,6 +271,17 @@ module DeleteProtocolsList : sig
       | `InternalErrorException of internal_error_exception
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_protocols_list_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Permanently deletes an Firewall Manager protocols list.\n"]
@@ -209,6 +305,18 @@ module DeleteResourceSet : sig
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_resource_set_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Deletes the specified [ResourceSet].\n"]
 
@@ -228,6 +336,17 @@ module DisassociateAdminAccount : sig
       | `InternalErrorException of internal_error_exception
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    disassociate_admin_account_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -258,6 +377,18 @@ module DisassociateThirdPartyFirewall : sig
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    disassociate_third_party_firewall_request ->
+    ( disassociate_third_party_firewall_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Disassociates a Firewall Manager policy administrator from a third-party firewall tenant. When \
@@ -280,6 +411,17 @@ module GetAdminAccount : sig
       | `InternalErrorException of internal_error_exception
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_admin_account_request ->
+    ( get_admin_account_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -307,6 +449,19 @@ module GetAdminScope : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_admin_scope_request ->
+    ( get_admin_scope_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns information about the specified account's administrative scope. The administrative \
@@ -329,6 +484,17 @@ module GetAppsList : sig
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_apps_list_request ->
+    ( get_apps_list_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns information about the specified Firewall Manager applications list.\n"]
 
@@ -350,6 +516,18 @@ module GetComplianceDetail : sig
       | `InvalidInputException of invalid_input_exception
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_compliance_detail_request ->
+    ( get_compliance_detail_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -376,6 +554,17 @@ module GetNotificationChannel : sig
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_notification_channel_request ->
+    ( get_notification_channel_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Information about the Amazon Simple Notification Service (SNS) topic that is used to record \
@@ -400,6 +589,18 @@ module GetPolicy : sig
       | `InvalidTypeException of invalid_type_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_policy_request ->
+    ( get_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `InvalidTypeException of invalid_type_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns information about the specified Firewall Manager policy.\n"]
 
@@ -419,6 +620,17 @@ module GetProtectionStatus : sig
       | `InternalErrorException of internal_error_exception
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_protection_status_request ->
+    ( get_protection_status_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -442,6 +654,17 @@ module GetProtocolsList : sig
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_protocols_list_request ->
+    ( get_protocols_list_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns information about the specified Firewall Manager protocols list.\n"]
 
@@ -463,6 +686,18 @@ module GetResourceSet : sig
       | `InvalidInputException of invalid_input_exception
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_resource_set_request ->
+    ( get_resource_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gets information about a specific resource set.\n"]
@@ -486,6 +721,18 @@ module GetThirdPartyFirewallAssociationStatus : sig
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_third_party_firewall_association_status_request ->
+    ( get_third_party_firewall_association_status_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "The onboarding status of a Firewall Manager admin account to third-party firewall vendor tenant.\n"]
@@ -506,6 +753,17 @@ module GetViolationDetails : sig
       | `InternalErrorException of internal_error_exception
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_violation_details_request ->
+    ( get_violation_details_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -531,6 +789,18 @@ module ListAdminAccountsForOrganization : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_admin_accounts_for_organization_request ->
+    ( list_admin_accounts_for_organization_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns a [AdminAccounts] object that lists the Firewall Manager administrators within the \
@@ -554,6 +824,17 @@ module ListAdminsManagingAccount : sig
       | `InternalErrorException of internal_error_exception
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_admins_managing_account_request ->
+    ( list_admins_managing_account_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -581,6 +862,18 @@ module ListAppsLists : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_apps_lists_request ->
+    ( list_apps_lists_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns an array of [AppsListDataSummary] objects.\n"]
 
@@ -598,6 +891,16 @@ module ListComplianceStatus : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_compliance_status_request ->
+    ( list_compliance_status_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -621,6 +924,17 @@ module ListDiscoveredResources : sig
       | `InvalidInputException of invalid_input_exception
       | `InvalidOperationException of invalid_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_discovered_resources_request ->
+    ( list_discovered_resources_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns an array of resources in the organization's accounts that are available to be \
@@ -640,6 +954,16 @@ module ListMemberAccounts : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_member_accounts_request ->
+    ( list_member_accounts_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -668,6 +992,18 @@ module ListPolicies : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_policies_request ->
+    ( list_policies_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns an array of [PolicySummary] objects.\n"]
 
@@ -687,6 +1023,17 @@ module ListProtocolsLists : sig
       | `InternalErrorException of internal_error_exception
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_protocols_lists_request ->
+    ( list_protocols_lists_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns an array of [ProtocolsListDataSummary] objects.\n"]
@@ -710,6 +1057,18 @@ module ListResourceSetResources : sig
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_resource_set_resources_request ->
+    ( list_resource_set_resources_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns an array of resources that are currently associated to a resource set.\n"]
 
@@ -729,6 +1088,17 @@ module ListResourceSets : sig
       | `InternalErrorException of internal_error_exception
       | `InvalidInputException of invalid_input_exception
       | `InvalidOperationException of invalid_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_resource_sets_request ->
+    ( list_resource_sets_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns an array of [ResourceSetSummary] objects.\n"]
@@ -752,6 +1122,18 @@ module ListTagsForResource : sig
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Retrieves the list of tags for the specified Amazon Web Services resource. \n"]
 
@@ -773,6 +1155,18 @@ module ListThirdPartyFirewallFirewallPolicies : sig
       | `InvalidInputException of invalid_input_exception
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_third_party_firewall_firewall_policies_request ->
+    ( list_third_party_firewall_firewall_policies_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -797,6 +1191,18 @@ module PutAdminAccount : sig
       | `InvalidInputException of invalid_input_exception
       | `InvalidOperationException of invalid_operation_exception
       | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_admin_account_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -831,6 +1237,19 @@ module PutAppsList : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_apps_list_request ->
+    ( put_apps_list_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Creates an Firewall Manager applications list.\n"]
 
@@ -850,6 +1269,17 @@ module PutNotificationChannel : sig
       | `InternalErrorException of internal_error_exception
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_notification_channel_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -886,6 +1316,20 @@ module PutPolicy : sig
       | `InvalidTypeException of invalid_type_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_policy_request ->
+    ( put_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `InvalidTypeException of invalid_type_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -971,6 +1415,19 @@ module PutProtocolsList : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_protocols_list_request ->
+    ( put_protocols_list_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Creates an Firewall Manager protocols list.\n"]
 
@@ -992,6 +1449,18 @@ module PutResourceSet : sig
       | `InvalidInputException of invalid_input_exception
       | `InvalidOperationException of invalid_operation_exception
       | `LimitExceededException of limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_resource_set_request ->
+    ( put_resource_set_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1021,6 +1490,19 @@ module TagResource : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Adds one or more tags to an Amazon Web Services resource.\n"]
 
@@ -1042,6 +1524,18 @@ module UntagResource : sig
       | `InvalidInputException of invalid_input_exception
       | `InvalidOperationException of invalid_operation_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_request ->
+    ( untag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalErrorException of internal_error_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidOperationException of invalid_operation_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes one or more tags from an Amazon Web Services resource.\n"]

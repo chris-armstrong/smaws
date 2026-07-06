@@ -1035,6 +1035,30 @@ module AddTags : sig
       | `TagsLimitExceededException of tags_limit_exceeded_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_request ->
+    ( add_tags_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ChannelARNInvalidException of channel_arn_invalid_exception
+      | `ChannelNotFoundException of channel_not_found_exception
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `ConflictException of conflict_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InvalidTagParameterException of invalid_tag_parameter_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
+      | `TagsLimitExceededException of tags_limit_exceeded_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Adds one or more tags to a trail, event data store, dashboard, or channel, up to a limit of 50. \
@@ -1075,6 +1099,24 @@ module CancelQuery : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `QueryIdNotFoundException of query_id_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_query_request ->
+    ( cancel_query_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InactiveQueryException of inactive_query_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `QueryIdNotFoundException of query_id_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1118,6 +1160,26 @@ module CreateChannel : sig
       | `TagsLimitExceededException of tags_limit_exceeded_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_channel_request ->
+    ( create_channel_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ChannelAlreadyExistsException of channel_already_exists_exception
+      | `ChannelMaxLimitExceededException of channel_max_limit_exceeded_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InvalidEventDataStoreCategoryException of invalid_event_data_store_category_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidSourceException of invalid_source_exception
+      | `InvalidTagParameterException of invalid_tag_parameter_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `TagsLimitExceededException of tags_limit_exceeded_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates a channel for CloudTrail to ingest events from a partner or external source. After you \
@@ -1150,6 +1212,22 @@ module CreateDashboard : sig
       | `InvalidTagParameterException of invalid_tag_parameter_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_dashboard_request ->
+    ( create_dashboard_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InsufficientEncryptionPolicyException of insufficient_encryption_policy_exception
+      | `InvalidQueryStatementException of invalid_query_statement_exception
+      | `InvalidTagParameterException of invalid_tag_parameter_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1238,6 +1316,35 @@ module CreateEventDataStore : sig
       | `ThrottlingException of throttling_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_event_data_store_request ->
+    ( create_event_data_store_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailAccessNotEnabledException of cloud_trail_access_not_enabled_exception
+      | `ConflictException of conflict_exception
+      | `EventDataStoreAlreadyExistsException of event_data_store_already_exists_exception
+      | `EventDataStoreMaxLimitExceededException of event_data_store_max_limit_exceeded_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InsufficientEncryptionPolicyException of insufficient_encryption_policy_exception
+      | `InvalidEventSelectorsException of invalid_event_selectors_exception
+      | `InvalidKmsKeyIdException of invalid_kms_key_id_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidTagParameterException of invalid_tag_parameter_exception
+      | `KmsException of kms_exception
+      | `KmsKeyNotFoundException of kms_key_not_found_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `OrganizationNotInAllFeaturesModeException of
+        organization_not_in_all_features_mode_exception
+      | `OrganizationsNotInUseException of organizations_not_in_use_exception
+      | `ThrottlingException of throttling_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Creates a new event data store.\n"]
 
@@ -1323,6 +1430,51 @@ module CreateTrail : sig
       | `TrailNotProvidedException of trail_not_provided_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_trail_request ->
+    ( create_trail_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailAccessNotEnabledException of cloud_trail_access_not_enabled_exception
+      | `CloudTrailInvalidClientTokenIdException of cloud_trail_invalid_client_token_id_exception
+      | `CloudWatchLogsDeliveryUnavailableException of
+        cloud_watch_logs_delivery_unavailable_exception
+      | `ConflictException of conflict_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InsufficientEncryptionPolicyException of insufficient_encryption_policy_exception
+      | `InsufficientS3BucketPolicyException of insufficient_s3_bucket_policy_exception
+      | `InsufficientSnsTopicPolicyException of insufficient_sns_topic_policy_exception
+      | `InvalidCloudWatchLogsLogGroupArnException of
+        invalid_cloud_watch_logs_log_group_arn_exception
+      | `InvalidCloudWatchLogsRoleArnException of invalid_cloud_watch_logs_role_arn_exception
+      | `InvalidKmsKeyIdException of invalid_kms_key_id_exception
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidS3BucketNameException of invalid_s3_bucket_name_exception
+      | `InvalidS3PrefixException of invalid_s3_prefix_exception
+      | `InvalidSnsTopicNameException of invalid_sns_topic_name_exception
+      | `InvalidTagParameterException of invalid_tag_parameter_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `KmsException of kms_exception
+      | `KmsKeyDisabledException of kms_key_disabled_exception
+      | `KmsKeyNotFoundException of kms_key_not_found_exception
+      | `MaximumNumberOfTrailsExceededException of maximum_number_of_trails_exceeded_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `OrganizationNotInAllFeaturesModeException of
+        organization_not_in_all_features_mode_exception
+      | `OrganizationsNotInUseException of organizations_not_in_use_exception
+      | `S3BucketDoesNotExistException of s3_bucket_does_not_exist_exception
+      | `TagsLimitExceededException of tags_limit_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `TrailAlreadyExistsException of trail_already_exists_exception
+      | `TrailNotProvidedException of trail_not_provided_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates a trail that specifies the settings for delivery of log data to an Amazon S3 bucket. \n"]
@@ -1346,6 +1498,18 @@ module DeleteChannel : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_channel_request ->
+    ( delete_channel_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ChannelARNInvalidException of channel_arn_invalid_exception
+      | `ChannelNotFoundException of channel_not_found_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Deletes a channel.\n"]
 
@@ -1365,6 +1529,17 @@ module DeleteDashboard : sig
       | `ConflictException of conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_dashboard_request ->
+    ( delete_dashboard_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1414,6 +1589,30 @@ module DeleteEventDataStore : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_event_data_store_request ->
+    ( delete_event_data_store_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ChannelExistsForEDSException of channel_exists_for_eds_exception
+      | `ConflictException of conflict_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreFederationEnabledException of event_data_store_federation_enabled_exception
+      | `EventDataStoreHasOngoingImportException of event_data_store_has_ongoing_import_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `EventDataStoreTerminationProtectedException of
+        event_data_store_termination_protected_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Disables the event data store specified by [EventDataStore], which accepts an event data store \
@@ -1452,6 +1651,21 @@ module DeleteResourcePolicy : sig
       | `ResourcePolicyNotFoundException of resource_policy_not_found_exception
       | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_resource_policy_request ->
+    ( delete_resource_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `ResourceARNNotValidException of resource_arn_not_valid_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ResourcePolicyNotFoundException of resource_policy_not_found_exception
+      | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1492,6 +1706,26 @@ module DeleteTrail : sig
       | `ThrottlingException of throttling_exception
       | `TrailNotFoundException of trail_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_trail_request ->
+    ( delete_trail_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `ConflictException of conflict_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InvalidHomeRegionException of invalid_home_region_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `ThrottlingException of throttling_exception
+      | `TrailNotFoundException of trail_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1547,6 +1781,27 @@ module DeregisterOrganizationDelegatedAdmin : sig
       | `OrganizationsNotInUseException of organizations_not_in_use_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    deregister_organization_delegated_admin_request ->
+    ( deregister_organization_delegated_admin_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccountNotFoundException of account_not_found_exception
+      | `AccountNotRegisteredException of account_not_registered_exception
+      | `CloudTrailAccessNotEnabledException of cloud_trail_access_not_enabled_exception
+      | `ConflictException of conflict_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotOrganizationManagementAccountException of not_organization_management_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `OrganizationNotInAllFeaturesModeException of
+        organization_not_in_all_features_mode_exception
+      | `OrganizationsNotInUseException of organizations_not_in_use_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Removes CloudTrail delegated administrator permissions from a member account in an organization.\n"]
@@ -1578,6 +1833,22 @@ module DescribeQuery : sig
       | `QueryIdNotFoundException of query_id_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_query_request ->
+    ( describe_query_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `QueryIdNotFoundException of query_id_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns metadata about a query, including query run time in milliseconds, number of events \
@@ -1608,6 +1879,19 @@ module DescribeTrails : sig
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_trails_request ->
+    ( describe_trails_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1654,6 +1938,30 @@ module DisableFederation : sig
         organization_not_in_all_features_mode_exception
       | `OrganizationsNotInUseException of organizations_not_in_use_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    disable_federation_request ->
+    ( disable_federation_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `CloudTrailAccessNotEnabledException of cloud_trail_access_not_enabled_exception
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `OrganizationNotInAllFeaturesModeException of
+        organization_not_in_all_features_mode_exception
+      | `OrganizationsNotInUseException of organizations_not_in_use_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1708,6 +2016,31 @@ module EnableFederation : sig
       | `OrganizationsNotInUseException of organizations_not_in_use_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    enable_federation_request ->
+    ( enable_federation_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `CloudTrailAccessNotEnabledException of cloud_trail_access_not_enabled_exception
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreFederationEnabledException of event_data_store_federation_enabled_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `OrganizationNotInAllFeaturesModeException of
+        organization_not_in_all_features_mode_exception
+      | `OrganizationsNotInUseException of organizations_not_in_use_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " Enables Lake query federation on the specified event data store. Federating an event data \
@@ -1756,6 +2089,22 @@ module GenerateQuery : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    generate_query_request ->
+    ( generate_query_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `GenerateResponseException of generate_response_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " Generates a query from a natural language prompt. This operation uses generative artificial \
@@ -1796,6 +2145,18 @@ module GetChannel : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_channel_request ->
+    ( get_channel_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ChannelARNInvalidException of channel_arn_invalid_exception
+      | `ChannelNotFoundException of channel_not_found_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc " Returns information about a specific channel. \n"]
 
@@ -1813,6 +2174,16 @@ module GetDashboard : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_dashboard_request ->
+    ( get_dashboard_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Returns the specified dashboard. \n"]
@@ -1852,6 +2223,26 @@ module GetEventConfiguration : sig
       | `TrailNotFoundException of trail_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_event_configuration_request ->
+    ( get_event_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InvalidEventDataStoreCategoryException of invalid_event_data_store_category_exception
+      | `InvalidEventDataStoreStatusException of invalid_event_data_store_status_exception
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `TrailNotFoundException of trail_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Retrieves the current event configuration settings for the specified event data store or trail. \
@@ -1881,6 +2272,20 @@ module GetEventDataStore : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_event_data_store_request ->
+    ( get_event_data_store_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns information about an event data store specified as either an ARN or the ID portion of \
@@ -1908,6 +2313,20 @@ module GetEventSelectors : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `TrailNotFoundException of trail_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_event_selectors_request ->
+    ( get_event_selectors_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `TrailNotFoundException of trail_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1971,6 +2390,18 @@ module GetImport : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_import_request ->
+    ( get_import_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ImportNotFoundException of import_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc " Returns information about a specific import. \n"]
 
@@ -2004,6 +2435,24 @@ module GetInsightSelectors : sig
       | `ThrottlingException of throttling_exception
       | `TrailNotFoundException of trail_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_insight_selectors_request ->
+    ( get_insight_selectors_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `InsightNotEnabledException of insight_not_enabled_exception
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `ThrottlingException of throttling_exception
+      | `TrailNotFoundException of trail_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2054,6 +2503,25 @@ module GetQueryResults : sig
       | `QueryIdNotFoundException of query_id_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_query_results_request ->
+    ( get_query_results_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InsufficientEncryptionPolicyException of insufficient_encryption_policy_exception
+      | `InvalidMaxResultsException of invalid_max_results_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `QueryIdNotFoundException of query_id_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Gets event data results of a query. You must specify the [QueryID] value returned by the \
@@ -2082,6 +2550,20 @@ module GetResourcePolicy : sig
       | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_resource_policy_request ->
+    ( get_resource_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `ResourceARNNotValidException of resource_arn_not_valid_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ResourcePolicyNotFoundException of resource_policy_not_found_exception
+      | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " Retrieves the JSON text of the resource-based policy document attached to the CloudTrail event \
@@ -2108,6 +2590,19 @@ module GetTrail : sig
       | `TrailNotFoundException of trail_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_trail_request ->
+    ( get_trail_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `TrailNotFoundException of trail_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns settings information for a specified trail.\n"]
 
@@ -2131,6 +2626,19 @@ module GetTrailStatus : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `TrailNotFoundException of trail_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_trail_status_request ->
+    ( get_trail_status_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `TrailNotFoundException of trail_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2156,6 +2664,17 @@ module ListChannels : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_channels_request ->
+    ( list_channels_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc " Lists the channels in the current account, and their source names. \n"]
 
@@ -2171,6 +2690,15 @@ module ListDashboards : sig
     ( list_dashboards_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_dashboards_request ->
+    ( list_dashboards_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Returns information about all dashboards in the account, in the current Region. \n"]
@@ -2196,6 +2724,19 @@ module ListEventDataStores : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_event_data_stores_request ->
+    ( list_event_data_stores_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidMaxResultsException of invalid_max_results_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns information about all event data stores in the account, in the current Region.\n"]
@@ -2218,6 +2759,18 @@ module ListImportFailures : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_import_failures_request ->
+    ( list_import_failures_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Returns a list of failures for the specified import. \n"]
@@ -2243,6 +2796,19 @@ module ListImports : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_imports_request ->
+    ( list_imports_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " Returns information on all imports, or a select set of imports by [ImportStatus] or \
@@ -2264,6 +2830,17 @@ module ListInsightsData : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_insights_data_request ->
+    ( list_insights_data_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2307,6 +2884,18 @@ module ListInsightsMetricData : sig
       | `InvalidTrailNameException of invalid_trail_name_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_insights_metric_data_request ->
+    ( list_insights_metric_data_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2366,6 +2955,18 @@ module ListPublicKeys : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_public_keys_request ->
+    ( list_public_keys_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidTimeRangeException of invalid_time_range_exception
+      | `InvalidTokenException of invalid_token_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns all public keys whose private keys were used to sign the digest files within the \
@@ -2410,6 +3011,25 @@ module ListQueries : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_queries_request ->
+    ( list_queries_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InvalidDateRangeException of invalid_date_range_exception
+      | `InvalidMaxResultsException of invalid_max_results_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidQueryStatusException of invalid_query_status_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns a list of queries and query statuses for the past seven days. You must specify an ARN \
@@ -2453,6 +3073,26 @@ module ListTags : sig
       | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_request ->
+    ( list_tags_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ChannelARNInvalidException of channel_arn_invalid_exception
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InvalidTokenException of invalid_token_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Lists the tags for the specified trails, event data stores, dashboards, or channels in the \
@@ -2472,6 +3112,16 @@ module ListTrails : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_trails_request ->
+    ( list_trails_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists trails that are in the current account.\n"]
@@ -2500,6 +3150,21 @@ module LookupEvents : sig
       | `InvalidTimeRangeException of invalid_time_range_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    lookup_events_request ->
+    ( lookup_events_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidEventCategoryException of invalid_event_category_exception
+      | `InvalidLookupAttributesException of invalid_lookup_attributes_exception
+      | `InvalidMaxResultsException of invalid_max_results_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidTimeRangeException of invalid_time_range_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2613,6 +3278,34 @@ module PutEventConfiguration : sig
       | `TrailNotFoundException of trail_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_event_configuration_request ->
+    ( put_event_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `ConflictException of conflict_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InsufficientIAMAccessPermissionException of insufficient_iam_access_permission_exception
+      | `InvalidEventDataStoreCategoryException of invalid_event_data_store_category_exception
+      | `InvalidEventDataStoreStatusException of invalid_event_data_store_status_exception
+      | `InvalidHomeRegionException of invalid_home_region_exception
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `ThrottlingException of throttling_exception
+      | `TrailNotFoundException of trail_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Updates the event configuration settings for the specified event data store or trail. This \
@@ -2655,6 +3348,27 @@ module PutEventSelectors : sig
       | `ThrottlingException of throttling_exception
       | `TrailNotFoundException of trail_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_event_selectors_request ->
+    ( put_event_selectors_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `ConflictException of conflict_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InvalidEventSelectorsException of invalid_event_selectors_exception
+      | `InvalidHomeRegionException of invalid_home_region_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `ThrottlingException of throttling_exception
+      | `TrailNotFoundException of trail_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2778,6 +3492,30 @@ module PutInsightSelectors : sig
       | `TrailNotFoundException of trail_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_insight_selectors_request ->
+    ( put_insight_selectors_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `InsufficientEncryptionPolicyException of insufficient_encryption_policy_exception
+      | `InsufficientS3BucketPolicyException of insufficient_s3_bucket_policy_exception
+      | `InvalidHomeRegionException of invalid_home_region_exception
+      | `InvalidInsightSelectorsException of invalid_insight_selectors_exception
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `KmsException of kms_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `S3BucketDoesNotExistException of s3_bucket_does_not_exist_exception
+      | `ThrottlingException of throttling_exception
+      | `TrailNotFoundException of trail_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Lets you enable Insights event logging on specific event categories by specifying the Insights \
@@ -2847,6 +3585,21 @@ module PutResourcePolicy : sig
       | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_resource_policy_request ->
+    ( put_resource_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `ResourceARNNotValidException of resource_arn_not_valid_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ResourcePolicyNotValidException of resource_policy_not_valid_exception
+      | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " Attaches a resource-based permission policy to a CloudTrail event data store, dashboard, or \
@@ -2898,6 +3651,31 @@ module RegisterOrganizationDelegatedAdmin : sig
       | `OrganizationsNotInUseException of organizations_not_in_use_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    register_organization_delegated_admin_request ->
+    ( register_organization_delegated_admin_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccountNotFoundException of account_not_found_exception
+      | `AccountRegisteredException of account_registered_exception
+      | `CannotDelegateManagementAccountException of cannot_delegate_management_account_exception
+      | `CloudTrailAccessNotEnabledException of cloud_trail_access_not_enabled_exception
+      | `ConflictException of conflict_exception
+      | `DelegatedAdminAccountLimitExceededException of
+        delegated_admin_account_limit_exceeded_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InsufficientIAMAccessPermissionException of insufficient_iam_access_permission_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotOrganizationManagementAccountException of not_organization_management_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `OrganizationNotInAllFeaturesModeException of
+        organization_not_in_all_features_mode_exception
+      | `OrganizationsNotInUseException of organizations_not_in_use_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Registers an organization\226\128\153s member account as the CloudTrail \
@@ -2945,6 +3723,29 @@ module RemoveTags : sig
       | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    remove_tags_request ->
+    ( remove_tags_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ChannelARNInvalidException of channel_arn_invalid_exception
+      | `ChannelNotFoundException of channel_not_found_exception
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `ConflictException of conflict_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InvalidTagParameterException of invalid_tag_parameter_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Removes the specified tags from a trail, event data store, dashboard, or channel.\n"]
 
@@ -2988,6 +3789,29 @@ module RestoreEventDataStore : sig
       | `OrganizationsNotInUseException of organizations_not_in_use_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    restore_event_data_store_request ->
+    ( restore_event_data_store_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailAccessNotEnabledException of cloud_trail_access_not_enabled_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreMaxLimitExceededException of event_data_store_max_limit_exceeded_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InvalidEventDataStoreStatusException of invalid_event_data_store_status_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `OrganizationNotInAllFeaturesModeException of
+        organization_not_in_all_features_mode_exception
+      | `OrganizationsNotInUseException of organizations_not_in_use_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Restores a deleted event data store specified by [EventDataStore], which accepts an event data \
@@ -3011,6 +3835,17 @@ module SearchSampleQueries : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    search_sample_queries_request ->
+    ( search_sample_queries_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3037,6 +3872,19 @@ module StartDashboardRefresh : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_dashboard_refresh_request ->
+    ( start_dashboard_refresh_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3084,6 +3932,26 @@ module StartEventDataStoreIngestion : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_event_data_store_ingestion_request ->
+    ( start_event_data_store_ingestion_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InvalidEventDataStoreCategoryException of invalid_event_data_store_category_exception
+      | `InvalidEventDataStoreStatusException of invalid_event_data_store_status_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Starts the ingestion of live events on an event data store specified as either an ARN or the ID \
@@ -3125,6 +3993,26 @@ module StartImport : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_import_request ->
+    ( start_import_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccountHasOngoingImportException of account_has_ongoing_import_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `ImportNotFoundException of import_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InsufficientEncryptionPolicyException of insufficient_encryption_policy_exception
+      | `InvalidEventDataStoreCategoryException of invalid_event_data_store_category_exception
+      | `InvalidEventDataStoreStatusException of invalid_event_data_store_status_exception
+      | `InvalidImportSourceException of invalid_import_source_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3185,6 +4073,26 @@ module StartLogging : sig
       | `TrailNotFoundException of trail_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_logging_request ->
+    ( start_logging_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `ConflictException of conflict_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InvalidHomeRegionException of invalid_home_region_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `ThrottlingException of throttling_exception
+      | `TrailNotFoundException of trail_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Starts the recording of Amazon Web Services API calls and log file delivery for a trail. For a \
@@ -3231,6 +4139,28 @@ module StartQuery : sig
       | `S3BucketDoesNotExistException of s3_bucket_does_not_exist_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_query_request ->
+    ( start_query_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InsufficientEncryptionPolicyException of insufficient_encryption_policy_exception
+      | `InsufficientS3BucketPolicyException of insufficient_s3_bucket_policy_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidQueryStatementException of invalid_query_statement_exception
+      | `InvalidS3BucketNameException of invalid_s3_bucket_name_exception
+      | `InvalidS3PrefixException of invalid_s3_prefix_exception
+      | `MaxConcurrentQueriesException of max_concurrent_queries_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `S3BucketDoesNotExistException of s3_bucket_does_not_exist_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Starts a CloudTrail Lake query. Use the [QueryStatement] parameter to provide your SQL query, \
@@ -3276,6 +4206,26 @@ module StopEventDataStoreIngestion : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    stop_event_data_store_ingestion_request ->
+    ( stop_event_data_store_ingestion_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InvalidEventDataStoreCategoryException of invalid_event_data_store_category_exception
+      | `InvalidEventDataStoreStatusException of invalid_event_data_store_status_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Stops the ingestion of live events on an event data store specified as either an ARN or the ID \
@@ -3300,6 +4250,18 @@ module StopImport : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    stop_import_request ->
+    ( stop_import_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ImportNotFoundException of import_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Stops a specified import. \n"]
@@ -3338,6 +4300,26 @@ module StopLogging : sig
       | `ThrottlingException of throttling_exception
       | `TrailNotFoundException of trail_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    stop_logging_request ->
+    ( stop_logging_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `ConflictException of conflict_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InvalidHomeRegionException of invalid_home_region_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `ThrottlingException of throttling_exception
+      | `TrailNotFoundException of trail_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3379,6 +4361,24 @@ module UpdateChannel : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_channel_request ->
+    ( update_channel_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ChannelAlreadyExistsException of channel_already_exists_exception
+      | `ChannelARNInvalidException of channel_arn_invalid_exception
+      | `ChannelNotFoundException of channel_not_found_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InvalidEventDataStoreCategoryException of invalid_event_data_store_category_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Updates a channel specified by a required channel ARN or UUID.\n"]
 
@@ -3408,6 +4408,22 @@ module UpdateDashboard : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_dashboard_request ->
+    ( update_dashboard_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InsufficientEncryptionPolicyException of insufficient_encryption_policy_exception
+      | `InvalidQueryStatementException of invalid_query_statement_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3484,6 +4500,38 @@ module UpdateEventDataStore : sig
       | `OrganizationsNotInUseException of organizations_not_in_use_exception
       | `ThrottlingException of throttling_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_event_data_store_request ->
+    ( update_event_data_store_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailAccessNotEnabledException of cloud_trail_access_not_enabled_exception
+      | `ConflictException of conflict_exception
+      | `EventDataStoreAlreadyExistsException of event_data_store_already_exists_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreHasOngoingImportException of event_data_store_has_ongoing_import_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InsufficientEncryptionPolicyException of insufficient_encryption_policy_exception
+      | `InvalidEventSelectorsException of invalid_event_selectors_exception
+      | `InvalidInsightSelectorsException of invalid_insight_selectors_exception
+      | `InvalidKmsKeyIdException of invalid_kms_key_id_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `KmsException of kms_exception
+      | `KmsKeyNotFoundException of kms_key_not_found_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `OrganizationNotInAllFeaturesModeException of
+        organization_not_in_all_features_mode_exception
+      | `OrganizationsNotInUseException of organizations_not_in_use_exception
+      | `ThrottlingException of throttling_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3585,6 +4633,51 @@ module UpdateTrail : sig
       | `TrailNotFoundException of trail_not_found_exception
       | `TrailNotProvidedException of trail_not_provided_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_trail_request ->
+    ( update_trail_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudTrailAccessNotEnabledException of cloud_trail_access_not_enabled_exception
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `CloudTrailInvalidClientTokenIdException of cloud_trail_invalid_client_token_id_exception
+      | `CloudWatchLogsDeliveryUnavailableException of
+        cloud_watch_logs_delivery_unavailable_exception
+      | `ConflictException of conflict_exception
+      | `InsufficientDependencyServiceAccessPermissionException of
+        insufficient_dependency_service_access_permission_exception
+      | `InsufficientEncryptionPolicyException of insufficient_encryption_policy_exception
+      | `InsufficientS3BucketPolicyException of insufficient_s3_bucket_policy_exception
+      | `InsufficientSnsTopicPolicyException of insufficient_sns_topic_policy_exception
+      | `InvalidCloudWatchLogsLogGroupArnException of
+        invalid_cloud_watch_logs_log_group_arn_exception
+      | `InvalidCloudWatchLogsRoleArnException of invalid_cloud_watch_logs_role_arn_exception
+      | `InvalidEventSelectorsException of invalid_event_selectors_exception
+      | `InvalidHomeRegionException of invalid_home_region_exception
+      | `InvalidKmsKeyIdException of invalid_kms_key_id_exception
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidS3BucketNameException of invalid_s3_bucket_name_exception
+      | `InvalidS3PrefixException of invalid_s3_prefix_exception
+      | `InvalidSnsTopicNameException of invalid_sns_topic_name_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `KmsException of kms_exception
+      | `KmsKeyDisabledException of kms_key_disabled_exception
+      | `KmsKeyNotFoundException of kms_key_not_found_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `OrganizationNotInAllFeaturesModeException of
+        organization_not_in_all_features_mode_exception
+      | `OrganizationsNotInUseException of organizations_not_in_use_exception
+      | `S3BucketDoesNotExistException of s3_bucket_does_not_exist_exception
+      | `ThrottlingException of throttling_exception
+      | `TrailNotFoundException of trail_not_found_exception
+      | `TrailNotProvidedException of trail_not_provided_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

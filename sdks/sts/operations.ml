@@ -48,6 +48,12 @@ module AssumeRole = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"AssumeRole"
       ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
       ~output_deserializer:assume_role_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : assume_role_request) =
+    let fields = assume_role_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AssumeRole"
+      ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
+      ~output_deserializer:assume_role_response_of_xml ~error_deserializer
 end
 
 module AssumeRoleWithSAML = struct
@@ -109,6 +115,12 @@ module AssumeRoleWithSAML = struct
   let request context (request : assume_role_with_saml_request) =
     let fields = assume_role_with_saml_request_to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"AssumeRoleWithSAML"
+      ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
+      ~output_deserializer:assume_role_with_saml_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : assume_role_with_saml_request) =
+    let fields = assume_role_with_saml_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AssumeRoleWithSAML"
       ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
       ~output_deserializer:assume_role_with_saml_response_of_xml ~error_deserializer
 end
@@ -182,6 +194,12 @@ module AssumeRoleWithWebIdentity = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"AssumeRoleWithWebIdentity"
       ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
       ~output_deserializer:assume_role_with_web_identity_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : assume_role_with_web_identity_request) =
+    let fields = assume_role_with_web_identity_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AssumeRoleWithWebIdentity"
+      ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
+      ~output_deserializer:assume_role_with_web_identity_response_of_xml ~error_deserializer
 end
 
 module AssumeRoot = struct
@@ -213,6 +231,12 @@ module AssumeRoot = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"AssumeRoot"
       ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
       ~output_deserializer:assume_root_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : assume_root_request) =
+    let fields = assume_root_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AssumeRoot"
+      ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
+      ~output_deserializer:assume_root_response_of_xml ~error_deserializer
 end
 
 module DecodeAuthorizationMessage = struct
@@ -237,6 +261,12 @@ module DecodeAuthorizationMessage = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"DecodeAuthorizationMessage"
       ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
       ~output_deserializer:decode_authorization_message_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : decode_authorization_message_request) =
+    let fields = decode_authorization_message_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DecodeAuthorizationMessage"
+      ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
+      ~output_deserializer:decode_authorization_message_response_of_xml ~error_deserializer
 end
 
 module GetAccessKeyInfo = struct
@@ -250,6 +280,12 @@ module GetAccessKeyInfo = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"GetAccessKeyInfo"
       ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
       ~output_deserializer:get_access_key_info_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : get_access_key_info_request) =
+    let fields = get_access_key_info_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"GetAccessKeyInfo"
+      ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
+      ~output_deserializer:get_access_key_info_response_of_xml ~error_deserializer
 end
 
 module GetCallerIdentity = struct
@@ -261,6 +297,12 @@ module GetCallerIdentity = struct
   let request context (request : get_caller_identity_request) =
     let fields = get_caller_identity_request_to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"GetCallerIdentity"
+      ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
+      ~output_deserializer:get_caller_identity_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : get_caller_identity_request) =
+    let fields = get_caller_identity_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"GetCallerIdentity"
       ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
       ~output_deserializer:get_caller_identity_response_of_xml ~error_deserializer
 end
@@ -302,6 +344,12 @@ module GetDelegatedAccessToken = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"GetDelegatedAccessToken"
       ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
       ~output_deserializer:get_delegated_access_token_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : get_delegated_access_token_request) =
+    let fields = get_delegated_access_token_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"GetDelegatedAccessToken"
+      ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
+      ~output_deserializer:get_delegated_access_token_response_of_xml ~error_deserializer
 end
 
 module GetFederationToken = struct
@@ -341,6 +389,12 @@ module GetFederationToken = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"GetFederationToken"
       ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
       ~output_deserializer:get_federation_token_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : get_federation_token_request) =
+    let fields = get_federation_token_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"GetFederationToken"
+      ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
+      ~output_deserializer:get_federation_token_response_of_xml ~error_deserializer
 end
 
 module GetSessionToken = struct
@@ -362,6 +416,12 @@ module GetSessionToken = struct
   let request context (request : get_session_token_request) =
     let fields = get_session_token_request_to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"GetSessionToken"
+      ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
+      ~output_deserializer:get_session_token_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : get_session_token_request) =
+    let fields = get_session_token_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"GetSessionToken"
       ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
       ~output_deserializer:get_session_token_response_of_xml ~error_deserializer
 end
@@ -403,6 +463,12 @@ module GetWebIdentityToken = struct
   let request context (request : get_web_identity_token_request) =
     let fields = get_web_identity_token_request_to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"GetWebIdentityToken"
+      ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
+      ~output_deserializer:get_web_identity_token_response_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : get_web_identity_token_request) =
+    let fields = get_web_identity_token_request_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"GetWebIdentityToken"
       ~xmlNamespace:"https://sts.amazonaws.com/doc/2011-06-15/" ~service ~context ~fields
       ~output_deserializer:get_web_identity_token_response_of_xml ~error_deserializer
 end

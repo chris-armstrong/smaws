@@ -34,6 +34,12 @@ module AddPermission = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.AddPermission" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : add_permission_request) =
+    let input = Json_serializers.add_permission_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.AddPermission" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module CancelMessageMoveTask = struct
@@ -67,6 +73,13 @@ module CancelMessageMoveTask = struct
     let input = Json_serializers.cancel_message_move_task_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.CancelMessageMoveTask" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.cancel_message_move_task_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : cancel_message_move_task_request) =
+    let input = Json_serializers.cancel_message_move_task_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.CancelMessageMoveTask"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.cancel_message_move_task_result_of_yojson
       ~error_deserializer
 end
@@ -107,6 +120,13 @@ module ChangeMessageVisibility = struct
     let input = Json_serializers.change_message_visibility_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.ChangeMessageVisibility" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : change_message_visibility_request) =
+    let input = Json_serializers.change_message_visibility_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSQS.ChangeMessageVisibility" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -156,6 +176,13 @@ module ChangeMessageVisibilityBatch = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.change_message_visibility_batch_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : change_message_visibility_batch_request) =
+    let input = Json_serializers.change_message_visibility_batch_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSQS.ChangeMessageVisibilityBatch" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.change_message_visibility_batch_result_of_yojson
+      ~error_deserializer
 end
 
 module CreateQueue = struct
@@ -197,6 +224,12 @@ module CreateQueue = struct
     let input = Json_serializers.create_queue_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.CreateQueue" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_queue_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : create_queue_request) =
+    let input = Json_serializers.create_queue_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.CreateQueue" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.create_queue_result_of_yojson
+      ~error_deserializer
 end
 
 module DeleteMessage = struct
@@ -235,6 +268,12 @@ module DeleteMessage = struct
     let input = Json_serializers.delete_message_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.DeleteMessage" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_message_request) =
+    let input = Json_serializers.delete_message_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.DeleteMessage" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -283,6 +322,13 @@ module DeleteMessageBatch = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.DeleteMessageBatch" ~service ~context
       ~input ~output_deserializer:Json_deserializers.delete_message_batch_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : delete_message_batch_request) =
+    let input = Json_serializers.delete_message_batch_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.DeleteMessageBatch"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_message_batch_result_of_yojson
+      ~error_deserializer
 end
 
 module DeleteQueue = struct
@@ -315,6 +361,12 @@ module DeleteQueue = struct
     let input = Json_serializers.delete_queue_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.DeleteQueue" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_queue_request) =
+    let input = Json_serializers.delete_queue_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.DeleteQueue" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -352,6 +404,13 @@ module GetQueueAttributes = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.GetQueueAttributes" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_queue_attributes_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_queue_attributes_request) =
+    let input = Json_serializers.get_queue_attributes_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.GetQueueAttributes"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_queue_attributes_result_of_yojson
+      ~error_deserializer
 end
 
 module GetQueueUrl = struct
@@ -384,6 +443,12 @@ module GetQueueUrl = struct
     let input = Json_serializers.get_queue_url_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.GetQueueUrl" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_queue_url_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_queue_url_request) =
+    let input = Json_serializers.get_queue_url_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.GetQueueUrl" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_queue_url_result_of_yojson
+      ~error_deserializer
 end
 
 module ListDeadLetterSourceQueues = struct
@@ -416,6 +481,13 @@ module ListDeadLetterSourceQueues = struct
     let input = Json_serializers.list_dead_letter_source_queues_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.ListDeadLetterSourceQueues" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.list_dead_letter_source_queues_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_dead_letter_source_queues_request) =
+    let input = Json_serializers.list_dead_letter_source_queues_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonSQS.ListDeadLetterSourceQueues" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_dead_letter_source_queues_result_of_yojson
       ~error_deserializer
 end
@@ -453,6 +525,13 @@ module ListMessageMoveTasks = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.list_message_move_tasks_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_message_move_tasks_request) =
+    let input = Json_serializers.list_message_move_tasks_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.ListMessageMoveTasks"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_message_move_tasks_result_of_yojson
+      ~error_deserializer
 end
 
 module ListQueueTags = struct
@@ -486,6 +565,12 @@ module ListQueueTags = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.ListQueueTags" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_queue_tags_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_queue_tags_request) =
+    let input = Json_serializers.list_queue_tags_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.ListQueueTags" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_queue_tags_result_of_yojson
+      ~error_deserializer
 end
 
 module ListQueues = struct
@@ -515,6 +600,12 @@ module ListQueues = struct
     let input = Json_serializers.list_queues_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.ListQueues" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_queues_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_queues_request) =
+    let input = Json_serializers.list_queues_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.ListQueues" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_queues_result_of_yojson
+      ~error_deserializer
 end
 
 module PurgeQueue = struct
@@ -550,6 +641,12 @@ module PurgeQueue = struct
     let input = Json_serializers.purge_queue_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.PurgeQueue" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : purge_queue_request) =
+    let input = Json_serializers.purge_queue_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.PurgeQueue" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -604,6 +701,12 @@ module ReceiveMessage = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.ReceiveMessage" ~service ~context
       ~input ~output_deserializer:Json_deserializers.receive_message_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : receive_message_request) =
+    let input = Json_serializers.receive_message_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.ReceiveMessage"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.receive_message_result_of_yojson ~error_deserializer
 end
 
 module RemovePermission = struct
@@ -636,6 +739,13 @@ module RemovePermission = struct
     let input = Json_serializers.remove_permission_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.RemovePermission" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : remove_permission_request) =
+    let input = Json_serializers.remove_permission_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.RemovePermission"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -690,6 +800,12 @@ module SendMessage = struct
     let input = Json_serializers.send_message_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.SendMessage" ~service ~context ~input
       ~output_deserializer:Json_deserializers.send_message_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : send_message_request) =
+    let input = Json_serializers.send_message_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.SendMessage" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.send_message_result_of_yojson
+      ~error_deserializer
 end
 
 module SendMessageBatch = struct
@@ -758,6 +874,13 @@ module SendMessageBatch = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.SendMessageBatch" ~service ~context
       ~input ~output_deserializer:Json_deserializers.send_message_batch_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : send_message_batch_request) =
+    let input = Json_serializers.send_message_batch_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.SendMessageBatch"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.send_message_batch_result_of_yojson
+      ~error_deserializer
 end
 
 module SetQueueAttributes = struct
@@ -799,6 +922,13 @@ module SetQueueAttributes = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.SetQueueAttributes" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : set_queue_attributes_request) =
+    let input = Json_serializers.set_queue_attributes_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.SetQueueAttributes"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module StartMessageMoveTask = struct
@@ -834,6 +964,13 @@ module StartMessageMoveTask = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.start_message_move_task_result_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_message_move_task_request) =
+    let input = Json_serializers.start_message_move_task_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.StartMessageMoveTask"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.start_message_move_task_result_of_yojson
+      ~error_deserializer
 end
 
 module TagQueue = struct
@@ -867,6 +1004,12 @@ module TagQueue = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.TagQueue" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : tag_queue_request) =
+    let input = Json_serializers.tag_queue_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.TagQueue" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module UntagQueue = struct
@@ -899,5 +1042,11 @@ module UntagQueue = struct
     let input = Json_serializers.untag_queue_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonSQS.UntagQueue" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : untag_queue_request) =
+    let input = Json_serializers.untag_queue_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonSQS.UntagQueue" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end

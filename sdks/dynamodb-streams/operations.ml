@@ -24,6 +24,12 @@ module DescribeStream = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDBStreams_20120810.DescribeStream"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_stream_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : describe_stream_input) =
+    let input = Json_serializers.describe_stream_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDBStreams_20120810.DescribeStream" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_stream_output_of_yojson ~error_deserializer
 end
 
 module GetRecords = struct
@@ -60,6 +66,12 @@ module GetRecords = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDBStreams_20120810.GetRecords" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_records_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_records_input) =
+    let input = Json_serializers.get_records_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDBStreams_20120810.GetRecords" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_records_output_of_yojson ~error_deserializer
 end
 
 module GetShardIterator = struct
@@ -90,6 +102,13 @@ module GetShardIterator = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_shard_iterator_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_shard_iterator_input) =
+    let input = Json_serializers.get_shard_iterator_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDBStreams_20120810.GetShardIterator" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_shard_iterator_output_of_yojson
+      ~error_deserializer
 end
 
 module ListStreams = struct
@@ -115,4 +134,10 @@ module ListStreams = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DynamoDBStreams_20120810.ListStreams" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_streams_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_streams_input) =
+    let input = Json_serializers.list_streams_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DynamoDBStreams_20120810.ListStreams" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_streams_output_of_yojson ~error_deserializer
 end

@@ -14,6 +14,12 @@ module DatetimeOffsets = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"DatetimeOffsets"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:datetime_offsets_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DatetimeOffsets"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:datetime_offsets_output_of_xml ~error_deserializer
 end
 
 module EmptyInputAndEmptyOutput = struct
@@ -25,6 +31,12 @@ module EmptyInputAndEmptyOutput = struct
   let request context (request : empty_input_and_empty_output_input) =
     let fields = empty_input_and_empty_output_input_to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"EmptyInputAndEmptyOutput"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:empty_input_and_empty_output_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : empty_input_and_empty_output_input) =
+    let fields = empty_input_and_empty_output_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"EmptyInputAndEmptyOutput"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:empty_input_and_empty_output_output_of_xml ~error_deserializer
 end
@@ -40,6 +52,12 @@ module EndpointOperation = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"EndpointOperation"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"EndpointOperation"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end
 
 module EndpointWithHostLabelOperation = struct
@@ -51,6 +69,12 @@ module EndpointWithHostLabelOperation = struct
   let request context (request : host_label_input) =
     let fields = host_label_input_to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"EndpointWithHostLabelOperation"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : host_label_input) =
+    let fields = host_label_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"EndpointWithHostLabelOperation"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end
@@ -66,6 +90,12 @@ module FlattenedXmlMap = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"FlattenedXmlMap"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:flattened_xml_map_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"FlattenedXmlMap"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:flattened_xml_map_output_of_xml ~error_deserializer
 end
 
 module FlattenedXmlMapWithXmlName = struct
@@ -77,6 +107,12 @@ module FlattenedXmlMapWithXmlName = struct
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
     let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"FlattenedXmlMapWithXmlName"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:flattened_xml_map_with_xml_name_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"FlattenedXmlMapWithXmlName"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:flattened_xml_map_with_xml_name_output_of_xml ~error_deserializer
 end
@@ -92,6 +128,12 @@ module FlattenedXmlMapWithXmlNamespace = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"FlattenedXmlMapWithXmlNamespace"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:flattened_xml_map_with_xml_namespace_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"FlattenedXmlMapWithXmlNamespace"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:flattened_xml_map_with_xml_namespace_output_of_xml ~error_deserializer
 end
 
 module FractionalSeconds = struct
@@ -103,6 +145,12 @@ module FractionalSeconds = struct
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
     let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"FractionalSeconds"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:fractional_seconds_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"FractionalSeconds"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:fractional_seconds_output_of_xml ~error_deserializer
 end
@@ -144,6 +192,12 @@ module GreetingWithErrors = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"GreetingWithErrors"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:greeting_with_errors_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"GreetingWithErrors"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:greeting_with_errors_output_of_xml ~error_deserializer
 end
 
 module HostWithPathOperation = struct
@@ -155,6 +209,12 @@ module HostWithPathOperation = struct
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
     let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"HostWithPathOperation"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"HostWithPathOperation"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end
@@ -170,6 +230,12 @@ module IgnoresWrappingXmlName = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"IgnoresWrappingXmlName"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:ignores_wrapping_xml_name_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"IgnoresWrappingXmlName"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:ignores_wrapping_xml_name_output_of_xml ~error_deserializer
 end
 
 module NestedStructures = struct
@@ -181,6 +247,12 @@ module NestedStructures = struct
   let request context (request : nested_structures_input) =
     let fields = nested_structures_input_to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"NestedStructures"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : nested_structures_input) =
+    let fields = nested_structures_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"NestedStructures"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end
@@ -196,6 +268,12 @@ module NoInputAndNoOutput = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"NoInputAndNoOutput"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"NoInputAndNoOutput"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end
 
 module NoInputAndOutput = struct
@@ -207,6 +285,12 @@ module NoInputAndOutput = struct
   let request context (request : no_input_and_output_input) =
     let fields = no_input_and_output_input_to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"NoInputAndOutput"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:no_input_and_output_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : no_input_and_output_input) =
+    let fields = no_input_and_output_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"NoInputAndOutput"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:no_input_and_output_output_of_xml ~error_deserializer
 end
@@ -222,6 +306,12 @@ module PutWithContentEncoding = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"PutWithContentEncoding"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : put_with_content_encoding_input) =
+    let fields = put_with_content_encoding_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"PutWithContentEncoding"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end
 
 module QueryIdempotencyTokenAutoFill = struct
@@ -233,6 +323,12 @@ module QueryIdempotencyTokenAutoFill = struct
   let request context (request : query_idempotency_token_auto_fill_input) =
     let fields = query_idempotency_token_auto_fill_input_to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"QueryIdempotencyTokenAutoFill"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : query_idempotency_token_auto_fill_input) =
+    let fields = query_idempotency_token_auto_fill_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"QueryIdempotencyTokenAutoFill"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end
@@ -248,6 +344,12 @@ module QueryLists = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"QueryLists" ~xmlNamespace:"https://example.com/"
       ~service ~context ~fields
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : query_lists_input) =
+    let fields = query_lists_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"QueryLists"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end
 
 module QueryMaps = struct
@@ -261,6 +363,12 @@ module QueryMaps = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"QueryMaps" ~xmlNamespace:"https://example.com/"
       ~service ~context ~fields
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : query_maps_input) =
+    let fields = query_maps_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"QueryMaps"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end
 
 module QueryTimestamps = struct
@@ -272,6 +380,12 @@ module QueryTimestamps = struct
   let request context (request : query_timestamps_input) =
     let fields = query_timestamps_input_to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"QueryTimestamps"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : query_timestamps_input) =
+    let fields = query_timestamps_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"QueryTimestamps"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end
@@ -287,6 +401,12 @@ module RecursiveXmlShapes = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"RecursiveXmlShapes"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:recursive_xml_shapes_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"RecursiveXmlShapes"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:recursive_xml_shapes_output_of_xml ~error_deserializer
 end
 
 module SimpleInputParams = struct
@@ -298,6 +418,12 @@ module SimpleInputParams = struct
   let request context (request : simple_input_params_input) =
     let fields = simple_input_params_input_to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"SimpleInputParams"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : simple_input_params_input) =
+    let fields = simple_input_params_input_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"SimpleInputParams"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end
@@ -313,6 +439,12 @@ module SimpleScalarXmlProperties = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"SimpleScalarXmlProperties"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:simple_scalar_xml_properties_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"SimpleScalarXmlProperties"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:simple_scalar_xml_properties_output_of_xml ~error_deserializer
 end
 
 module XmlBlobs = struct
@@ -325,6 +457,12 @@ module XmlBlobs = struct
     let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"XmlBlobs" ~xmlNamespace:"https://example.com/"
       ~service ~context ~fields ~output_deserializer:xml_blobs_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"XmlBlobs"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:xml_blobs_output_of_xml ~error_deserializer
 end
 
 module XmlEmptyBlobs = struct
@@ -336,6 +474,12 @@ module XmlEmptyBlobs = struct
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
     let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"XmlEmptyBlobs"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:xml_blobs_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"XmlEmptyBlobs"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:xml_blobs_output_of_xml ~error_deserializer
 end
@@ -351,6 +495,12 @@ module XmlEmptyLists = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"XmlEmptyLists"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:xml_lists_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"XmlEmptyLists"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:xml_lists_output_of_xml ~error_deserializer
 end
 
 module XmlEmptyMaps = struct
@@ -363,6 +513,12 @@ module XmlEmptyMaps = struct
     let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"XmlEmptyMaps" ~xmlNamespace:"https://example.com/"
       ~service ~context ~fields ~output_deserializer:xml_maps_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"XmlEmptyMaps"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:xml_maps_output_of_xml ~error_deserializer
 end
 
 module XmlEnums = struct
@@ -375,6 +531,12 @@ module XmlEnums = struct
     let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"XmlEnums" ~xmlNamespace:"https://example.com/"
       ~service ~context ~fields ~output_deserializer:xml_enums_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"XmlEnums"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:xml_enums_output_of_xml ~error_deserializer
 end
 
 module XmlIntEnums = struct
@@ -387,6 +549,12 @@ module XmlIntEnums = struct
     let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"XmlIntEnums" ~xmlNamespace:"https://example.com/"
       ~service ~context ~fields ~output_deserializer:xml_int_enums_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"XmlIntEnums"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:xml_int_enums_output_of_xml ~error_deserializer
 end
 
 module XmlLists = struct
@@ -399,6 +567,12 @@ module XmlLists = struct
     let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"XmlLists" ~xmlNamespace:"https://example.com/"
       ~service ~context ~fields ~output_deserializer:xml_lists_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"XmlLists"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:xml_lists_output_of_xml ~error_deserializer
 end
 
 module XmlMaps = struct
@@ -411,6 +585,12 @@ module XmlMaps = struct
     let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"XmlMaps" ~xmlNamespace:"https://example.com/"
       ~service ~context ~fields ~output_deserializer:xml_maps_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"XmlMaps"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:xml_maps_output_of_xml ~error_deserializer
 end
 
 module XmlMapsXmlName = struct
@@ -422,6 +602,12 @@ module XmlMapsXmlName = struct
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
     let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"XmlMapsXmlName"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:xml_maps_xml_name_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"XmlMapsXmlName"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:xml_maps_xml_name_output_of_xml ~error_deserializer
 end
@@ -437,6 +623,12 @@ module XmlNamespaces = struct
     Smaws_Lib.Protocols.AwsQuery.request ~action:"XmlNamespaces"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:xml_namespaces_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"XmlNamespaces"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:xml_namespaces_output_of_xml ~error_deserializer
 end
 
 module XmlTimestamps = struct
@@ -448,6 +640,12 @@ module XmlTimestamps = struct
   let request context (request : Smaws_Lib.Smithy_api.Types.unit_) =
     let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
     Smaws_Lib.Protocols.AwsQuery.request ~action:"XmlTimestamps"
+      ~xmlNamespace:"https://example.com/" ~service ~context ~fields
+      ~output_deserializer:xml_timestamps_output_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : Smaws_Lib.Smithy_api.Types.unit_) =
+    let fields = Smaws_Lib.Smithy_api.Query_serializers.unit__to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"XmlTimestamps"
       ~xmlNamespace:"https://example.com/" ~service ~context ~fields
       ~output_deserializer:xml_timestamps_output_of_xml ~error_deserializer
 end

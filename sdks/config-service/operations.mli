@@ -17,6 +17,17 @@ module AssociateResourceTypes : sig
       | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    associate_resource_types_request ->
+    ( associate_resource_types_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Adds all resource types specified in the [ResourceTypes] list to the \
@@ -41,6 +52,16 @@ module BatchGetAggregateResourceConfig : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_aggregate_resource_config_request ->
+    ( batch_get_aggregate_resource_config_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -73,6 +94,16 @@ module BatchGetResourceConfig : sig
       | `NoAvailableConfigurationRecorderException of no_available_configuration_recorder_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_resource_config_request ->
+    ( batch_get_resource_config_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoAvailableConfigurationRecorderException of no_available_configuration_recorder_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns the [BaseConfigurationItem] for one or more requested resources. The operation also \
@@ -102,6 +133,15 @@ module DeleteAggregationAuthorization : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterValueException of invalid_parameter_value_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_aggregation_authorization_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes the authorization granted to the specified configuration aggregator account in a \
@@ -121,6 +161,16 @@ module DeleteConfigRule : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `NoSuchConfigRuleException of no_such_config_rule_exception
       | `ResourceInUseException of resource_in_use_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_config_rule_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchConfigRuleException of no_such_config_rule_exception
+      | `ResourceInUseException of resource_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -162,6 +212,15 @@ module DeleteConfigurationAggregator : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_configuration_aggregator_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes the specified configuration aggregator and the aggregated data associated with the \
@@ -181,6 +240,16 @@ module DeleteConfigurationRecorder : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
       | `UnmodifiableEntityException of unmodifiable_entity_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_configuration_recorder_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
+      | `UnmodifiableEntityException of unmodifiable_entity_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -206,6 +275,16 @@ module DeleteConformancePack : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `NoSuchConformancePackException of no_such_conformance_pack_exception
       | `ResourceInUseException of resource_in_use_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_conformance_pack_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchConformancePackException of no_such_conformance_pack_exception
+      | `ResourceInUseException of resource_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -246,6 +325,16 @@ module DeleteDeliveryChannel : sig
       | `LastDeliveryChannelDeleteFailedException of last_delivery_channel_delete_failed_exception
       | `NoSuchDeliveryChannelException of no_such_delivery_channel_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_delivery_channel_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `LastDeliveryChannelDeleteFailedException of last_delivery_channel_delete_failed_exception
+      | `NoSuchDeliveryChannelException of no_such_delivery_channel_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes the delivery channel.\n\n\
@@ -268,6 +357,16 @@ module DeleteEvaluationResults : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `NoSuchConfigRuleException of no_such_config_rule_exception
       | `ResourceInUseException of resource_in_use_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_evaluation_results_request ->
+    ( delete_evaluation_results_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchConfigRuleException of no_such_config_rule_exception
+      | `ResourceInUseException of resource_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -292,6 +391,17 @@ module DeleteOrganizationConfigRule : sig
       | `NoSuchOrganizationConfigRuleException of no_such_organization_config_rule_exception
       | `OrganizationAccessDeniedException of organization_access_denied_exception
       | `ResourceInUseException of resource_in_use_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_organization_config_rule_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchOrganizationConfigRuleException of no_such_organization_config_rule_exception
+      | `OrganizationAccessDeniedException of organization_access_denied_exception
+      | `ResourceInUseException of resource_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -340,6 +450,18 @@ module DeleteOrganizationConformancePack : sig
       | `OrganizationAccessDeniedException of organization_access_denied_exception
       | `ResourceInUseException of resource_in_use_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_organization_conformance_pack_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchOrganizationConformancePackException of
+        no_such_organization_conformance_pack_exception
+      | `OrganizationAccessDeniedException of organization_access_denied_exception
+      | `ResourceInUseException of resource_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes the specified organization conformance pack and all of the Config rules and remediation \
@@ -382,6 +504,15 @@ module DeletePendingAggregationRequest : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterValueException of invalid_parameter_value_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_pending_aggregation_request_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes pending authorization requests for a specified aggregator account in a specified region.\n"]
@@ -405,6 +536,18 @@ module DeleteRemediationConfiguration : sig
       | `NoSuchRemediationConfigurationException of no_such_remediation_configuration_exception
       | `RemediationInProgressException of remediation_in_progress_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_remediation_configuration_request ->
+    ( delete_remediation_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InsufficientPermissionsException of insufficient_permissions_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NoSuchRemediationConfigurationException of no_such_remediation_configuration_exception
+      | `RemediationInProgressException of remediation_in_progress_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Deletes the remediation configuration.\n"]
 
@@ -420,6 +563,15 @@ module DeleteRemediationExceptions : sig
     ( delete_remediation_exceptions_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `NoSuchRemediationExceptionException of no_such_remediation_exception_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_remediation_exceptions_request ->
+    ( delete_remediation_exceptions_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchRemediationExceptionException of no_such_remediation_exception_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -445,6 +597,16 @@ module DeleteResourceConfig : sig
       | `NoRunningConfigurationRecorderException of no_running_configuration_recorder_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_resource_config_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoRunningConfigurationRecorderException of no_running_configuration_recorder_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Records the configuration state for a custom resource that has been deleted. This API records a \
@@ -466,6 +628,16 @@ module DeleteRetentionConfiguration : sig
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `NoSuchRetentionConfigurationException of no_such_retention_configuration_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_retention_configuration_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NoSuchRetentionConfigurationException of no_such_retention_configuration_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Deletes the retention configuration.\n"]
 
@@ -485,6 +657,17 @@ module DeleteServiceLinkedConfigurationRecorder : sig
       | `ConflictException of conflict_exception
       | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_service_linked_configuration_recorder_request ->
+    ( delete_service_linked_configuration_recorder_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -518,6 +701,16 @@ module DeleteStoredQuery : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_stored_query_request ->
+    ( delete_stored_query_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes the stored query for a single Amazon Web Services account and a single Amazon Web \
@@ -539,6 +732,17 @@ module DeliverConfigSnapshot : sig
       | `NoAvailableConfigurationRecorderException of no_available_configuration_recorder_exception
       | `NoRunningConfigurationRecorderException of no_running_configuration_recorder_exception
       | `NoSuchDeliveryChannelException of no_such_delivery_channel_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    deliver_config_snapshot_request ->
+    ( deliver_config_snapshot_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoAvailableConfigurationRecorderException of no_available_configuration_recorder_exception
+      | `NoRunningConfigurationRecorderException of no_running_configuration_recorder_exception
+      | `NoSuchDeliveryChannelException of no_such_delivery_channel_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -578,6 +782,18 @@ module DescribeAggregateComplianceByConfigRules : sig
       | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_aggregate_compliance_by_config_rules_request ->
+    ( describe_aggregate_compliance_by_config_rules_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns a list of compliant and noncompliant rules with the number of resources for compliant \
@@ -605,6 +821,18 @@ module DescribeAggregateComplianceByConformancePacks : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_aggregate_compliance_by_conformance_packs_request ->
+    ( describe_aggregate_compliance_by_conformance_packs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -634,6 +862,17 @@ module DescribeAggregationAuthorizations : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterValueException of invalid_parameter_value_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_aggregation_authorizations_request ->
+    ( describe_aggregation_authorizations_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns a list of authorizations granted to various aggregator accounts and regions.\n"]
@@ -654,6 +893,17 @@ module DescribeComplianceByConfigRule : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `NoSuchConfigRuleException of no_such_config_rule_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_compliance_by_config_rule_request ->
+    ( describe_compliance_by_config_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NoSuchConfigRuleException of no_such_config_rule_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -699,6 +949,16 @@ module DescribeComplianceByResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterValueException of invalid_parameter_value_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_compliance_by_resource_request ->
+    ( describe_compliance_by_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -748,6 +1008,17 @@ module DescribeConfigRuleEvaluationStatus : sig
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `NoSuchConfigRuleException of no_such_config_rule_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_config_rule_evaluation_status_request ->
+    ( describe_config_rule_evaluation_status_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NoSuchConfigRuleException of no_such_config_rule_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns status information for each of your Config managed rules. The status includes \
@@ -771,6 +1042,17 @@ module DescribeConfigRules : sig
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `NoSuchConfigRuleException of no_such_config_rule_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_config_rules_request ->
+    ( describe_config_rules_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NoSuchConfigRuleException of no_such_config_rule_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns details about your Config rules.\n"]
 
@@ -792,6 +1074,18 @@ module DescribeConfigurationAggregators : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_configuration_aggregators_request ->
+    ( describe_configuration_aggregators_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -818,6 +1112,18 @@ module DescribeConfigurationAggregatorSourcesStatus : sig
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_configuration_aggregator_sources_status_request ->
+    ( describe_configuration_aggregator_sources_status_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns status information for sources within an aggregator. The status includes information \
@@ -838,6 +1144,16 @@ module DescribeConfigurationRecorders : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_configuration_recorders_request ->
+    ( describe_configuration_recorders_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -863,6 +1179,16 @@ module DescribeConfigurationRecorderStatus : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_configuration_recorder_status_request ->
+    ( describe_configuration_recorder_status_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -901,6 +1227,20 @@ module DescribeConformancePackCompliance : sig
         no_such_config_rule_in_conformance_pack_exception
       | `NoSuchConformancePackException of no_such_conformance_pack_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_conformance_pack_compliance_request ->
+    ( describe_conformance_pack_compliance_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NoSuchConfigRuleInConformancePackException of
+        no_such_config_rule_in_conformance_pack_exception
+      | `NoSuchConformancePackException of no_such_conformance_pack_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns compliance details for each rule in that conformance pack.\n\n\
@@ -927,6 +1267,18 @@ module DescribeConformancePacks : sig
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `NoSuchConformancePackException of no_such_conformance_pack_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_conformance_packs_request ->
+    ( describe_conformance_packs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NoSuchConformancePackException of no_such_conformance_pack_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns a list of one or more conformance packs.\n"]
 
@@ -946,6 +1298,17 @@ module DescribeConformancePackStatus : sig
       | `InvalidLimitException of invalid_limit_exception
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterValueException of invalid_parameter_value_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_conformance_pack_status_request ->
+    ( describe_conformance_pack_status_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -967,6 +1330,15 @@ module DescribeDeliveryChannels : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `NoSuchDeliveryChannelException of no_such_delivery_channel_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_delivery_channels_request ->
+    ( describe_delivery_channels_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchDeliveryChannelException of no_such_delivery_channel_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns details about the specified delivery channel. If a delivery channel is not specified, \
@@ -987,6 +1359,15 @@ module DescribeDeliveryChannelStatus : sig
     ( describe_delivery_channel_status_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `NoSuchDeliveryChannelException of no_such_delivery_channel_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_delivery_channel_status_request ->
+    ( describe_delivery_channel_status_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchDeliveryChannelException of no_such_delivery_channel_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1015,6 +1396,18 @@ module DescribeOrganizationConfigRules : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `NoSuchOrganizationConfigRuleException of no_such_organization_config_rule_exception
       | `OrganizationAccessDeniedException of organization_access_denied_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_organization_config_rules_request ->
+    ( describe_organization_config_rules_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoSuchOrganizationConfigRuleException of no_such_organization_config_rule_exception
+      | `OrganizationAccessDeniedException of organization_access_denied_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1057,6 +1450,18 @@ module DescribeOrganizationConfigRuleStatuses : sig
       | `NoSuchOrganizationConfigRuleException of no_such_organization_config_rule_exception
       | `OrganizationAccessDeniedException of organization_access_denied_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_organization_config_rule_statuses_request ->
+    ( describe_organization_config_rule_statuses_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoSuchOrganizationConfigRuleException of no_such_organization_config_rule_exception
+      | `OrganizationAccessDeniedException of organization_access_denied_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Provides organization Config rule deployment status for an organization.\n\n\
@@ -1088,6 +1493,19 @@ module DescribeOrganizationConformancePacks : sig
       | `NoSuchOrganizationConformancePackException of
         no_such_organization_conformance_pack_exception
       | `OrganizationAccessDeniedException of organization_access_denied_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_organization_conformance_packs_request ->
+    ( describe_organization_conformance_packs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoSuchOrganizationConformancePackException of
+        no_such_organization_conformance_pack_exception
+      | `OrganizationAccessDeniedException of organization_access_denied_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1131,6 +1549,19 @@ module DescribeOrganizationConformancePackStatuses : sig
         no_such_organization_conformance_pack_exception
       | `OrganizationAccessDeniedException of organization_access_denied_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_organization_conformance_pack_statuses_request ->
+    ( describe_organization_conformance_pack_statuses_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoSuchOrganizationConformancePackException of
+        no_such_organization_conformance_pack_exception
+      | `OrganizationAccessDeniedException of organization_access_denied_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Provides organization conformance pack deployment status for an organization. \n\n\
@@ -1160,6 +1591,17 @@ module DescribePendingAggregationRequests : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterValueException of invalid_parameter_value_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_pending_aggregation_requests_request ->
+    ( describe_pending_aggregation_requests_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns a list of all pending aggregation requests.\n"]
 
@@ -1170,6 +1612,13 @@ module DescribeRemediationConfigurations : sig
     'http_type Smaws_Lib.Context.t ->
     describe_remediation_configurations_request ->
     (describe_remediation_configurations_response, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_remediation_configurations_request ->
+    ( describe_remediation_configurations_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns the details of one or more remediation configurations.\n"]
 
@@ -1187,6 +1636,16 @@ module DescribeRemediationExceptions : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterValueException of invalid_parameter_value_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_remediation_exceptions_request ->
+    ( describe_remediation_exceptions_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1223,6 +1682,17 @@ module DescribeRemediationExecutionStatus : sig
       | `NoSuchRemediationConfigurationException of no_such_remediation_configuration_exception ]
     )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_remediation_execution_status_request ->
+    ( describe_remediation_execution_status_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NoSuchRemediationConfigurationException of no_such_remediation_configuration_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Provides a detailed view of a Remediation Execution for a set of resources including state, \
@@ -1246,6 +1716,17 @@ module DescribeRetentionConfigurations : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `NoSuchRetentionConfigurationException of no_such_retention_configuration_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_retention_configurations_request ->
+    ( describe_retention_configurations_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NoSuchRetentionConfigurationException of no_such_retention_configuration_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1272,6 +1753,17 @@ module DisassociateResourceTypes : sig
       | `ConflictException of conflict_exception
       | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    disassociate_resource_types_request ->
+    ( disassociate_resource_types_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1302,6 +1794,18 @@ module GetAggregateComplianceDetailsByConfigRule : sig
       | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_aggregate_compliance_details_by_config_rule_request ->
+    ( get_aggregate_compliance_details_by_config_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns the evaluation results for the specified Config rule for a specific resource in a rule. \
@@ -1331,6 +1835,18 @@ module GetAggregateConfigRuleComplianceSummary : sig
       | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_aggregate_config_rule_compliance_summary_request ->
+    ( get_aggregate_config_rule_compliance_summary_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns the number of compliant and noncompliant rules for one or more accounts and regions in \
@@ -1358,6 +1874,18 @@ module GetAggregateConformancePackComplianceSummary : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_aggregate_conformance_pack_compliance_summary_request ->
+    ( get_aggregate_conformance_pack_compliance_summary_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1388,6 +1916,18 @@ module GetAggregateDiscoveredResourceCounts : sig
       | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_aggregate_discovered_resource_counts_request ->
+    ( get_aggregate_discovered_resource_counts_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns the resource counts across accounts and regions that are present in your Config \
@@ -1417,6 +1957,18 @@ module GetAggregateResourceConfig : sig
       | `ResourceNotDiscoveredException of resource_not_discovered_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_aggregate_resource_config_request ->
+    ( get_aggregate_resource_config_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
+      | `OversizedConfigurationItemException of oversized_configuration_item_exception
+      | `ResourceNotDiscoveredException of resource_not_discovered_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns configuration item that is aggregated for your specific resource in a specific source \
@@ -1442,6 +1994,17 @@ module GetComplianceDetailsByConfigRule : sig
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `NoSuchConfigRuleException of no_such_config_rule_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_compliance_details_by_config_rule_request ->
+    ( get_compliance_details_by_config_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NoSuchConfigRuleException of no_such_config_rule_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns the evaluation results for the specified Config rule. The results indicate which Amazon \
@@ -1461,6 +2024,15 @@ module GetComplianceDetailsByResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterValueException of invalid_parameter_value_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_compliance_details_by_resource_request ->
+    ( get_compliance_details_by_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns the evaluation results for the specified Amazon Web Services resource. The results \
@@ -1474,6 +2046,13 @@ module GetComplianceSummaryByConfigRule : sig
     'http_type Smaws_Lib.Context.t ->
     Smaws_Lib.Smithy_api.Types.unit_ ->
     (get_compliance_summary_by_config_rule_response, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    Smaws_Lib.Smithy_api.Types.unit_ ->
+    ( get_compliance_summary_by_config_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns the number of Config rules that are compliant and noncompliant, up to a maximum of 25 \
@@ -1491,6 +2070,15 @@ module GetComplianceSummaryByResourceType : sig
     ( get_compliance_summary_by_resource_type_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterValueException of invalid_parameter_value_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_compliance_summary_by_resource_type_request ->
+    ( get_compliance_summary_by_resource_type_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1521,6 +2109,20 @@ module GetConformancePackComplianceDetails : sig
         no_such_config_rule_in_conformance_pack_exception
       | `NoSuchConformancePackException of no_such_conformance_pack_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_conformance_pack_compliance_details_request ->
+    ( get_conformance_pack_compliance_details_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NoSuchConfigRuleInConformancePackException of
+        no_such_config_rule_in_conformance_pack_exception
+      | `NoSuchConformancePackException of no_such_conformance_pack_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns compliance details of a conformance pack for all Amazon Web Services resources that are \
@@ -1543,6 +2145,17 @@ module GetConformancePackComplianceSummary : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `NoSuchConformancePackException of no_such_conformance_pack_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_conformance_pack_compliance_summary_request ->
+    ( get_conformance_pack_compliance_summary_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoSuchConformancePackException of no_such_conformance_pack_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns compliance details for the conformance pack based on the cumulative compliance results \
@@ -1560,6 +2173,15 @@ module GetCustomRulePolicy : sig
     ( get_custom_rule_policy_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `NoSuchConfigRuleException of no_such_config_rule_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_custom_rule_policy_request ->
+    ( get_custom_rule_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchConfigRuleException of no_such_config_rule_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1581,6 +2203,17 @@ module GetDiscoveredResourceCounts : sig
       | `InvalidLimitException of invalid_limit_exception
       | `InvalidNextTokenException of invalid_next_token_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_discovered_resource_counts_request ->
+    ( get_discovered_resource_counts_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1653,6 +2286,18 @@ module GetOrganizationConfigRuleDetailedStatus : sig
       | `NoSuchOrganizationConfigRuleException of no_such_organization_config_rule_exception
       | `OrganizationAccessDeniedException of organization_access_denied_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_organization_config_rule_detailed_status_request ->
+    ( get_organization_config_rule_detailed_status_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoSuchOrganizationConfigRuleException of no_such_organization_config_rule_exception
+      | `OrganizationAccessDeniedException of organization_access_denied_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns detailed status for each member account within an organization for a given organization \
@@ -1678,6 +2323,19 @@ module GetOrganizationConformancePackDetailedStatus : sig
         no_such_organization_conformance_pack_exception
       | `OrganizationAccessDeniedException of organization_access_denied_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_organization_conformance_pack_detailed_status_request ->
+    ( get_organization_conformance_pack_detailed_status_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoSuchOrganizationConformancePackException of
+        no_such_organization_conformance_pack_exception
+      | `OrganizationAccessDeniedException of organization_access_denied_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns detailed status for each member account within an organization for a given organization \
@@ -1697,6 +2355,16 @@ module GetOrganizationCustomRulePolicy : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `NoSuchOrganizationConfigRuleException of no_such_organization_config_rule_exception
       | `OrganizationAccessDeniedException of organization_access_denied_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_organization_custom_rule_policy_request ->
+    ( get_organization_custom_rule_policy_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchOrganizationConfigRuleException of no_such_organization_config_rule_exception
+      | `OrganizationAccessDeniedException of organization_access_denied_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1725,6 +2393,20 @@ module GetResourceConfigHistory : sig
       | `NoAvailableConfigurationRecorderException of no_available_configuration_recorder_exception
       | `ResourceNotDiscoveredException of resource_not_discovered_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_resource_config_history_request ->
+    ( get_resource_config_history_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidTimeRangeException of invalid_time_range_exception
+      | `NoAvailableConfigurationRecorderException of no_available_configuration_recorder_exception
+      | `ResourceNotDiscoveredException of resource_not_discovered_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1770,6 +2452,15 @@ module GetResourceEvaluationSummary : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_resource_evaluation_summary_request ->
+    ( get_resource_evaluation_summary_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns a summary of resource evaluation for the specified resource evaluation ID from the \
@@ -1800,6 +2491,16 @@ module GetStoredQuery : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_stored_query_request ->
+    ( get_stored_query_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns the details of a specific stored query.\n"]
 
@@ -1821,6 +2522,18 @@ module ListAggregateDiscoveredResources : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_aggregate_discovered_resources_request ->
+    ( list_aggregate_discovered_resources_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1844,6 +2557,14 @@ module ListConfigurationRecorders : sig
     ( list_configuration_recorders_response,
       [> Smaws_Lib.Protocols.AwsJson.error | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_configuration_recorders_request ->
+    ( list_configuration_recorders_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns a list of configuration recorders depending on the filters you specify.\n"]
 
@@ -1863,6 +2584,17 @@ module ListConformancePackComplianceScores : sig
       | `InvalidLimitException of invalid_limit_exception
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterValueException of invalid_parameter_value_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_conformance_pack_compliance_scores_request ->
+    ( list_conformance_pack_compliance_scores_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1894,6 +2626,18 @@ module ListDiscoveredResources : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `NoAvailableConfigurationRecorderException of no_available_configuration_recorder_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_discovered_resources_request ->
+    ( list_discovered_resources_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoAvailableConfigurationRecorderException of no_available_configuration_recorder_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1955,6 +2699,17 @@ module ListResourceEvaluations : sig
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `InvalidTimeRangeException of invalid_time_range_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_resource_evaluations_request ->
+    ( list_resource_evaluations_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `InvalidTimeRangeException of invalid_time_range_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns a list of proactive resource evaluations.\n"]
 
@@ -1972,6 +2727,16 @@ module ListStoredQueries : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidNextTokenException of invalid_next_token_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_stored_queries_request ->
+    ( list_stored_queries_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1997,6 +2762,18 @@ module ListTagsForResource : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "List the tags for Config resource.\n"]
 
@@ -2012,6 +2789,15 @@ module PutAggregationAuthorization : sig
     ( put_aggregation_authorization_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterValueException of invalid_parameter_value_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_aggregation_authorization_request ->
+    ( put_aggregation_authorization_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2051,6 +2837,19 @@ module PutConfigRule : sig
       | `MaxNumberOfConfigRulesExceededException of max_number_of_config_rules_exceeded_exception
       | `NoAvailableConfigurationRecorderException of no_available_configuration_recorder_exception
       | `ResourceInUseException of resource_in_use_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_config_rule_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InsufficientPermissionsException of insufficient_permissions_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MaxNumberOfConfigRulesExceededException of max_number_of_config_rules_exceeded_exception
+      | `NoAvailableConfigurationRecorderException of no_available_configuration_recorder_exception
+      | `ResourceInUseException of resource_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2133,6 +2932,21 @@ module PutConfigurationAggregator : sig
       | `OrganizationAllFeaturesNotEnabledException of
         organization_all_features_not_enabled_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_configuration_aggregator_request ->
+    ( put_configuration_aggregator_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `InvalidRoleException of invalid_role_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NoAvailableOrganizationException of no_available_organization_exception
+      | `OrganizationAccessDeniedException of organization_access_denied_exception
+      | `OrganizationAllFeaturesNotEnabledException of
+        organization_all_features_not_enabled_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates and updates the configuration aggregator with the selected source accounts and regions. \
@@ -2192,6 +3006,21 @@ module PutConfigurationRecorder : sig
         max_number_of_configuration_recorders_exceeded_exception
       | `UnmodifiableEntityException of unmodifiable_entity_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_configuration_recorder_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidConfigurationRecorderNameException of invalid_configuration_recorder_name_exception
+      | `InvalidRecordingGroupException of invalid_recording_group_exception
+      | `InvalidRoleException of invalid_role_exception
+      | `MaxNumberOfConfigurationRecordersExceededException of
+        max_number_of_configuration_recorders_exceeded_exception
+      | `UnmodifiableEntityException of unmodifiable_entity_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2260,6 +3089,21 @@ module PutConformancePack : sig
         max_number_of_conformance_packs_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_conformance_pack_request ->
+    ( put_conformance_pack_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConformancePackTemplateValidationException of
+        conformance_pack_template_validation_exception
+      | `InsufficientPermissionsException of insufficient_permissions_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MaxNumberOfConformancePacksExceededException of
+        max_number_of_conformance_packs_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates or updates a conformance pack. A conformance pack is a collection of Config rules that \
@@ -2325,6 +3169,23 @@ module PutDeliveryChannel : sig
       | `NoAvailableConfigurationRecorderException of no_available_configuration_recorder_exception
       | `NoSuchBucketException of no_such_bucket_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_delivery_channel_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InsufficientDeliveryPolicyException of insufficient_delivery_policy_exception
+      | `InvalidDeliveryChannelNameException of invalid_delivery_channel_name_exception
+      | `InvalidS3KeyPrefixException of invalid_s3_key_prefix_exception
+      | `InvalidS3KmsKeyArnException of invalid_s3_kms_key_arn_exception
+      | `InvalidSNSTopicARNException of invalid_sns_topic_arn_exception
+      | `MaxNumberOfDeliveryChannelsExceededException of
+        max_number_of_delivery_channels_exceeded_exception
+      | `NoAvailableConfigurationRecorderException of no_available_configuration_recorder_exception
+      | `NoSuchBucketException of no_such_bucket_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates or updates a delivery channel to deliver configuration information and other compliance \
@@ -2359,6 +3220,17 @@ module PutEvaluations : sig
       | `InvalidResultTokenException of invalid_result_token_exception
       | `NoSuchConfigRuleException of no_such_config_rule_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_evaluations_request ->
+    ( put_evaluations_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `InvalidResultTokenException of invalid_result_token_exception
+      | `NoSuchConfigRuleException of no_such_config_rule_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Used by an Lambda function to deliver evaluation results to Config. This operation is required \
@@ -2378,6 +3250,16 @@ module PutExternalEvaluation : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `NoSuchConfigRuleException of no_such_config_rule_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_external_evaluation_request ->
+    ( put_external_evaluation_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NoSuchConfigRuleException of no_such_config_rule_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2413,6 +3295,24 @@ module PutOrganizationConfigRule : sig
         organization_all_features_not_enabled_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_organization_config_rule_request ->
+    ( put_organization_config_rule_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InsufficientPermissionsException of insufficient_permissions_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MaxNumberOfOrganizationConfigRulesExceededException of
+        max_number_of_organization_config_rules_exceeded_exception
+      | `NoAvailableOrganizationException of no_available_organization_exception
+      | `OrganizationAccessDeniedException of organization_access_denied_exception
+      | `OrganizationAllFeaturesNotEnabledException of
+        organization_all_features_not_enabled_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2502,6 +3402,25 @@ module PutOrganizationConformancePack : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_organization_conformance_pack_request ->
+    ( put_organization_conformance_pack_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InsufficientPermissionsException of insufficient_permissions_exception
+      | `MaxNumberOfOrganizationConformancePacksExceededException of
+        max_number_of_organization_conformance_packs_exceeded_exception
+      | `NoAvailableOrganizationException of no_available_organization_exception
+      | `OrganizationAccessDeniedException of organization_access_denied_exception
+      | `OrganizationAllFeaturesNotEnabledException of
+        organization_all_features_not_enabled_exception
+      | `OrganizationConformancePackTemplateValidationException of
+        organization_conformance_pack_template_validation_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deploys conformance packs across member accounts in an Amazon Web Services Organization. For \
@@ -2558,6 +3477,16 @@ module PutRemediationConfigurations : sig
       | `InsufficientPermissionsException of insufficient_permissions_exception
       | `InvalidParameterValueException of invalid_parameter_value_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_remediation_configurations_request ->
+    ( put_remediation_configurations_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InsufficientPermissionsException of insufficient_permissions_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Adds or updates the remediation configuration with a specific Config rule with the selected \
@@ -2613,6 +3542,16 @@ module PutRemediationExceptions : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InsufficientPermissionsException of insufficient_permissions_exception
       | `InvalidParameterValueException of invalid_parameter_value_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_remediation_exceptions_request ->
+    ( put_remediation_exceptions_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InsufficientPermissionsException of insufficient_permissions_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2683,6 +3622,18 @@ module PutResourceConfig : sig
       | `NoRunningConfigurationRecorderException of no_running_configuration_recorder_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_resource_config_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InsufficientPermissionsException of insufficient_permissions_exception
+      | `MaxActiveResourcesExceededException of max_active_resources_exceeded_exception
+      | `NoRunningConfigurationRecorderException of no_running_configuration_recorder_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Records the configuration state for the resource provided in the request. The configuration \
@@ -2716,6 +3667,17 @@ module PutRetentionConfiguration : sig
       | `MaxNumberOfRetentionConfigurationsExceededException of
         max_number_of_retention_configurations_exceeded_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_retention_configuration_request ->
+    ( put_retention_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MaxNumberOfRetentionConfigurationsExceededException of
+        max_number_of_retention_configurations_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates and updates the retention configuration with details about retention period (number of \
@@ -2745,6 +3707,18 @@ module PutServiceLinkedConfigurationRecorder : sig
       | `InsufficientPermissionsException of insufficient_permissions_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_service_linked_configuration_recorder_request ->
+    ( put_service_linked_configuration_recorder_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InsufficientPermissionsException of insufficient_permissions_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2792,6 +3766,17 @@ module PutStoredQuery : sig
       | `TooManyTagsException of too_many_tags_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    put_stored_query_request ->
+    ( put_stored_query_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceConcurrentModificationException of resource_concurrent_modification_exception
+      | `TooManyTagsException of too_many_tags_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Saves a new query or updates an existing saved query. The [QueryName] must be unique for a \
@@ -2824,6 +3809,18 @@ module SelectAggregateResourceConfig : sig
       | `InvalidLimitException of invalid_limit_exception
       | `InvalidNextTokenException of invalid_next_token_exception
       | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    select_aggregate_resource_config_request ->
+    ( select_aggregate_resource_config_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidExpressionException of invalid_expression_exception
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `NoSuchConfigurationAggregatorException of no_such_configuration_aggregator_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2863,6 +3860,17 @@ module SelectResourceConfig : sig
       | `InvalidLimitException of invalid_limit_exception
       | `InvalidNextTokenException of invalid_next_token_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    select_resource_config_request ->
+    ( select_resource_config_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidExpressionException of invalid_expression_exception
+      | `InvalidLimitException of invalid_limit_exception
+      | `InvalidNextTokenException of invalid_next_token_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Accepts a structured query language (SQL) [SELECT] command, performs the corresponding search, \
@@ -2890,6 +3898,18 @@ module StartConfigRulesEvaluation : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NoSuchConfigRuleException of no_such_config_rule_exception
       | `ResourceInUseException of resource_in_use_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_config_rules_evaluation_request ->
+    ( start_config_rules_evaluation_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NoSuchConfigRuleException of no_such_config_rule_exception
+      | `ResourceInUseException of resource_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2947,6 +3967,17 @@ module StartConfigurationRecorder : sig
       | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
       | `UnmodifiableEntityException of unmodifiable_entity_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_configuration_recorder_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoAvailableDeliveryChannelException of no_available_delivery_channel_exception
+      | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
+      | `UnmodifiableEntityException of unmodifiable_entity_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Starts the customer managed configuration recorder. The customer managed configuration recorder \
@@ -2975,6 +4006,17 @@ module StartRemediationExecution : sig
       | `NoSuchRemediationConfigurationException of no_such_remediation_configuration_exception ]
     )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_remediation_execution_request ->
+    ( start_remediation_execution_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InsufficientPermissionsException of insufficient_permissions_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NoSuchRemediationConfigurationException of no_such_remediation_configuration_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Runs an on-demand remediation for the specified Config rules against the last known remediation \
@@ -2998,6 +4040,16 @@ module StartResourceEvaluation : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `IdempotentParameterMismatch of idempotent_parameter_mismatch
       | `InvalidParameterValueException of invalid_parameter_value_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_resource_evaluation_request ->
+    ( start_resource_evaluation_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `IdempotentParameterMismatch of idempotent_parameter_mismatch
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3038,6 +4090,16 @@ module StopConfigurationRecorder : sig
       | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
       | `UnmodifiableEntityException of unmodifiable_entity_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    stop_configuration_recorder_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `NoSuchConfigurationRecorderException of no_such_configuration_recorder_exception
+      | `UnmodifiableEntityException of unmodifiable_entity_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Stops the customer managed configuration recorder. The customer managed configuration recorder \
@@ -3060,6 +4122,17 @@ module TagResource : sig
       | `TooManyTagsException of too_many_tags_exception
       | `ValidationException of validation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyTagsException of too_many_tags_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Associates the specified tags to a resource with the specified [ResourceArn]. If existing tags \
@@ -3081,6 +4154,16 @@ module UntagResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception
       | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes specified tags from a resource.\n"]

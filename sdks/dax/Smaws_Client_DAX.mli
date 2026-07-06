@@ -341,6 +341,29 @@ module CreateCluster : sig
       | `SubnetGroupNotFoundFault of subnet_group_not_found_fault
       | `TagQuotaPerResourceExceeded of tag_quota_per_resource_exceeded ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_cluster_request ->
+    ( create_cluster_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClusterAlreadyExistsFault of cluster_already_exists_fault
+      | `ClusterQuotaForCustomerExceededFault of cluster_quota_for_customer_exceeded_fault
+      | `InsufficientClusterCapacityFault of insufficient_cluster_capacity_fault
+      | `InvalidClusterStateFault of invalid_cluster_state_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterGroupStateFault of invalid_parameter_group_state_fault
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `InvalidVPCNetworkStateFault of invalid_vpc_network_state_fault
+      | `NodeQuotaForClusterExceededFault of node_quota_for_cluster_exceeded_fault
+      | `NodeQuotaForCustomerExceededFault of node_quota_for_customer_exceeded_fault
+      | `ParameterGroupNotFoundFault of parameter_group_not_found_fault
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `SubnetGroupNotFoundFault of subnet_group_not_found_fault
+      | `TagQuotaPerResourceExceeded of tag_quota_per_resource_exceeded ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Creates a DAX cluster. All nodes in the cluster run the same DAX caching software.\n"]
 
@@ -366,6 +389,20 @@ module CreateParameterGroup : sig
       | `ParameterGroupAlreadyExistsFault of parameter_group_already_exists_fault
       | `ParameterGroupQuotaExceededFault of parameter_group_quota_exceeded_fault
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_parameter_group_request ->
+    ( create_parameter_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterGroupStateFault of invalid_parameter_group_state_fault
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `ParameterGroupAlreadyExistsFault of parameter_group_already_exists_fault
+      | `ParameterGroupQuotaExceededFault of parameter_group_quota_exceeded_fault
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -395,6 +432,20 @@ module CreateSubnetGroup : sig
       | `SubnetNotAllowedFault of subnet_not_allowed_fault
       | `SubnetQuotaExceededFault of subnet_quota_exceeded_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_subnet_group_request ->
+    ( create_subnet_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidSubnet of invalid_subnet
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault
+      | `SubnetGroupAlreadyExistsFault of subnet_group_already_exists_fault
+      | `SubnetGroupQuotaExceededFault of subnet_group_quota_exceeded_fault
+      | `SubnetNotAllowedFault of subnet_not_allowed_fault
+      | `SubnetQuotaExceededFault of subnet_quota_exceeded_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Creates a new subnet group.\n"]
 
@@ -420,6 +471,20 @@ module DecreaseReplicationFactor : sig
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `NodeNotFoundFault of node_not_found_fault
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    decrease_replication_factor_request ->
+    ( decrease_replication_factor_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClusterNotFoundFault of cluster_not_found_fault
+      | `InvalidClusterStateFault of invalid_cluster_state_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NodeNotFoundFault of node_not_found_fault
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -450,6 +515,19 @@ module DeleteCluster : sig
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_cluster_request ->
+    ( delete_cluster_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClusterNotFoundFault of cluster_not_found_fault
+      | `InvalidClusterStateFault of invalid_cluster_state_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes a previously provisioned DAX cluster. {i DeleteCluster} deletes all associated nodes, \
@@ -477,6 +555,19 @@ module DeleteParameterGroup : sig
       | `ParameterGroupNotFoundFault of parameter_group_not_found_fault
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_parameter_group_request ->
+    ( delete_parameter_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterGroupStateFault of invalid_parameter_group_state_fault
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `ParameterGroupNotFoundFault of parameter_group_not_found_fault
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Deletes the specified parameter group. You cannot delete a parameter group if it is associated \
@@ -498,6 +589,17 @@ module DeleteSubnetGroup : sig
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault
       | `SubnetGroupInUseFault of subnet_group_in_use_fault
       | `SubnetGroupNotFoundFault of subnet_group_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_subnet_group_request ->
+    ( delete_subnet_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault
+      | `SubnetGroupInUseFault of subnet_group_in_use_fault
+      | `SubnetGroupNotFoundFault of subnet_group_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -524,6 +626,18 @@ module DescribeClusters : sig
       | `InvalidParameterCombinationException of invalid_parameter_combination_exception
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_clusters_request ->
+    ( describe_clusters_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClusterNotFoundFault of cluster_not_found_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -559,6 +673,17 @@ module DescribeDefaultParameters : sig
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_default_parameters_request ->
+    ( describe_default_parameters_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns the default system parameter information for the DAX caching software.\n"]
 
@@ -578,6 +703,17 @@ module DescribeEvents : sig
       | `InvalidParameterCombinationException of invalid_parameter_combination_exception
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_events_request ->
+    ( describe_events_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -606,6 +742,18 @@ module DescribeParameterGroups : sig
       | `ParameterGroupNotFoundFault of parameter_group_not_found_fault
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_parameter_groups_request ->
+    ( describe_parameter_groups_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `ParameterGroupNotFoundFault of parameter_group_not_found_fault
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns a list of parameter group descriptions. If a parameter group name is specified, the \
@@ -630,6 +778,18 @@ module DescribeParameters : sig
       | `ParameterGroupNotFoundFault of parameter_group_not_found_fault
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_parameters_request ->
+    ( describe_parameters_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `ParameterGroupNotFoundFault of parameter_group_not_found_fault
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Returns the detailed parameter list for a particular parameter group.\n"]
 
@@ -647,6 +807,16 @@ module DescribeSubnetGroups : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault
       | `SubnetGroupNotFoundFault of subnet_group_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_subnet_groups_request ->
+    ( describe_subnet_groups_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault
+      | `SubnetGroupNotFoundFault of subnet_group_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -682,6 +852,23 @@ module IncreaseReplicationFactor : sig
       | `NodeQuotaForCustomerExceededFault of node_quota_for_customer_exceeded_fault
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    increase_replication_factor_request ->
+    ( increase_replication_factor_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClusterNotFoundFault of cluster_not_found_fault
+      | `InsufficientClusterCapacityFault of insufficient_cluster_capacity_fault
+      | `InvalidClusterStateFault of invalid_cluster_state_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `InvalidVPCNetworkStateFault of invalid_vpc_network_state_fault
+      | `NodeQuotaForClusterExceededFault of node_quota_for_cluster_exceeded_fault
+      | `NodeQuotaForCustomerExceededFault of node_quota_for_customer_exceeded_fault
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Adds one or more nodes to a DAX cluster.\n"]
 
@@ -707,6 +894,20 @@ module ListTags : sig
       | `InvalidParameterCombinationException of invalid_parameter_combination_exception
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_request ->
+    ( list_tags_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClusterNotFoundFault of cluster_not_found_fault
+      | `InvalidARNFault of invalid_arn_fault
+      | `InvalidClusterStateFault of invalid_cluster_state_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -735,6 +936,20 @@ module RebootNode : sig
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `NodeNotFoundFault of node_not_found_fault
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    reboot_node_request ->
+    ( reboot_node_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClusterNotFoundFault of cluster_not_found_fault
+      | `InvalidClusterStateFault of invalid_cluster_state_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `NodeNotFoundFault of node_not_found_fault
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -769,6 +984,21 @@ module TagResource : sig
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault
       | `TagQuotaPerResourceExceeded of tag_quota_per_resource_exceeded ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClusterNotFoundFault of cluster_not_found_fault
+      | `InvalidARNFault of invalid_arn_fault
+      | `InvalidClusterStateFault of invalid_cluster_state_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault
+      | `TagQuotaPerResourceExceeded of tag_quota_per_resource_exceeded ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Associates a set of tags with a DAX resource. You can call [TagResource] up to 5 times per \
@@ -798,6 +1028,21 @@ module UntagResource : sig
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault
       | `TagNotFoundFault of tag_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_request ->
+    ( untag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClusterNotFoundFault of cluster_not_found_fault
+      | `InvalidARNFault of invalid_arn_fault
+      | `InvalidClusterStateFault of invalid_cluster_state_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault
+      | `TagNotFoundFault of tag_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -829,6 +1074,21 @@ module UpdateCluster : sig
       | `ParameterGroupNotFoundFault of parameter_group_not_found_fault
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_cluster_request ->
+    ( update_cluster_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClusterNotFoundFault of cluster_not_found_fault
+      | `InvalidClusterStateFault of invalid_cluster_state_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterGroupStateFault of invalid_parameter_group_state_fault
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `ParameterGroupNotFoundFault of parameter_group_not_found_fault
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Modifies the settings for a DAX cluster. You can use this action to change one or more cluster \
@@ -854,6 +1114,19 @@ module UpdateParameterGroup : sig
       | `InvalidParameterValueException of invalid_parameter_value_exception
       | `ParameterGroupNotFoundFault of parameter_group_not_found_fault
       | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_parameter_group_request ->
+    ( update_parameter_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterGroupStateFault of invalid_parameter_group_state_fault
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `ParameterGroupNotFoundFault of parameter_group_not_found_fault
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -883,6 +1156,20 @@ module UpdateSubnetGroup : sig
       | `SubnetInUse of subnet_in_use
       | `SubnetNotAllowedFault of subnet_not_allowed_fault
       | `SubnetQuotaExceededFault of subnet_quota_exceeded_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_subnet_group_request ->
+    ( update_subnet_group_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidSubnet of invalid_subnet
+      | `ServiceLinkedRoleNotFoundFault of service_linked_role_not_found_fault
+      | `SubnetGroupNotFoundFault of subnet_group_not_found_fault
+      | `SubnetInUse of subnet_in_use
+      | `SubnetNotAllowedFault of subnet_not_allowed_fault
+      | `SubnetQuotaExceededFault of subnet_quota_exceeded_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Modifies an existing subnet group.\n"]

@@ -319,6 +319,17 @@ module CreatePerformanceAnalysisReport : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `NotAuthorizedException of not_authorized_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_performance_analysis_report_request ->
+    ( create_performance_analysis_report_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates a new performance analysis report for a specific time period for the DB instance.\n"]
@@ -340,6 +351,17 @@ module DeletePerformanceAnalysisReport : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `NotAuthorizedException of not_authorized_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_performance_analysis_report_request ->
+    ( delete_performance_analysis_report_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Deletes a performance analysis report.\n"]
 
@@ -359,6 +381,17 @@ module DescribeDimensionKeys : sig
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
       | `NotAuthorizedException of not_authorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_dimension_keys_request ->
+    ( describe_dimension_keys_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -385,6 +418,17 @@ module GetDimensionKeyDetails : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `NotAuthorizedException of not_authorized_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_dimension_key_details_request ->
+    ( get_dimension_key_details_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Get the attributes of the specified dimension group for a DB instance or data source. For \
@@ -410,6 +454,17 @@ module GetPerformanceAnalysisReport : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `NotAuthorizedException of not_authorized_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_performance_analysis_report_request ->
+    ( get_performance_analysis_report_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Retrieves the report including the report ID, status, time details, and the insights with \
@@ -433,6 +488,17 @@ module GetResourceMetadata : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `NotAuthorizedException of not_authorized_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_resource_metadata_request ->
+    ( get_resource_metadata_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Retrieve the metadata for different features. For example, the metadata might indicate that a \
@@ -454,6 +520,17 @@ module GetResourceMetrics : sig
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
       | `NotAuthorizedException of not_authorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_resource_metrics_request ->
+    ( get_resource_metrics_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -482,6 +559,17 @@ module ListAvailableResourceDimensions : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `NotAuthorizedException of not_authorized_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_available_resource_dimensions_request ->
+    ( list_available_resource_dimensions_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Retrieve the dimensions that can be queried for each specified metric type on a specified DB \
@@ -504,6 +592,17 @@ module ListAvailableResourceMetrics : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `NotAuthorizedException of not_authorized_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_available_resource_metrics_request ->
+    ( list_available_resource_metrics_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Retrieve metrics of the specified types that can be queried for a specified DB instance. \n"]
@@ -525,6 +624,17 @@ module ListPerformanceAnalysisReportRecommendations : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `NotAuthorizedException of not_authorized_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_performance_analysis_report_recommendations_request ->
+    ( list_performance_analysis_report_recommendations_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Retrieves recommendations for a performance analysis report.\n"]
 
@@ -544,6 +654,17 @@ module ListPerformanceAnalysisReports : sig
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
       | `NotAuthorizedException of not_authorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_performance_analysis_reports_request ->
+    ( list_performance_analysis_reports_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -567,6 +688,17 @@ module ListTagsForResource : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `NotAuthorizedException of not_authorized_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Retrieves all the metadata tags associated with Amazon RDS Performance Insights resource.\n"]
@@ -588,6 +720,17 @@ module TagResource : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `NotAuthorizedException of not_authorized_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Adds metadata tags to the Amazon RDS Performance Insights resource.\n"]
 
@@ -608,6 +751,17 @@ module UntagResource : sig
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
       | `NotAuthorizedException of not_authorized_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_request ->
+    ( untag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes the metadata tags from the Amazon RDS Performance Insights resource.\n"]

@@ -21,6 +21,13 @@ module AssociateGatewayToServer = struct
       ~shape_name:"BackupOnPremises_v20210101.AssociateGatewayToServer" ~service ~context ~input
       ~output_deserializer:Json_deserializers.associate_gateway_to_server_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : associate_gateway_to_server_input) =
+    let input = Json_serializers.associate_gateway_to_server_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.AssociateGatewayToServer" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.associate_gateway_to_server_output_of_yojson
+      ~error_deserializer
 end
 
 module CreateGateway = struct
@@ -35,6 +42,12 @@ module CreateGateway = struct
     let input = Json_serializers.create_gateway_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"BackupOnPremises_v20210101.CreateGateway"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_gateway_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : create_gateway_input) =
+    let input = Json_serializers.create_gateway_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.CreateGateway" ~service ~context ~input
       ~output_deserializer:Json_deserializers.create_gateway_output_of_yojson ~error_deserializer
 end
 
@@ -57,6 +70,12 @@ module DeleteGateway = struct
     let input = Json_serializers.delete_gateway_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"BackupOnPremises_v20210101.DeleteGateway"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_gateway_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : delete_gateway_input) =
+    let input = Json_serializers.delete_gateway_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.DeleteGateway" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_gateway_output_of_yojson ~error_deserializer
 end
 
@@ -86,6 +105,12 @@ module DeleteHypervisor = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"BackupOnPremises_v20210101.DeleteHypervisor"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_hypervisor_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : delete_hypervisor_input) =
+    let input = Json_serializers.delete_hypervisor_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.DeleteHypervisor" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_hypervisor_output_of_yojson ~error_deserializer
 end
 
 module DisassociateGatewayFromServer = struct
@@ -109,6 +134,14 @@ module DisassociateGatewayFromServer = struct
   let request context (request : disassociate_gateway_from_server_input) =
     let input = Json_serializers.disassociate_gateway_from_server_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"BackupOnPremises_v20210101.DisassociateGatewayFromServer" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.disassociate_gateway_from_server_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : disassociate_gateway_from_server_input) =
+    let input = Json_serializers.disassociate_gateway_from_server_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"BackupOnPremises_v20210101.DisassociateGatewayFromServer" ~service ~context
       ~input
       ~output_deserializer:Json_deserializers.disassociate_gateway_from_server_output_of_yojson
@@ -137,6 +170,14 @@ module GetBandwidthRateLimitSchedule = struct
       ~input
       ~output_deserializer:Json_deserializers.get_bandwidth_rate_limit_schedule_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_bandwidth_rate_limit_schedule_input) =
+    let input = Json_serializers.get_bandwidth_rate_limit_schedule_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.GetBandwidthRateLimitSchedule" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.get_bandwidth_rate_limit_schedule_output_of_yojson
+      ~error_deserializer
 end
 
 module GetGateway = struct
@@ -159,6 +200,12 @@ module GetGateway = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"BackupOnPremises_v20210101.GetGateway" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_gateway_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_gateway_input) =
+    let input = Json_serializers.get_gateway_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.GetGateway" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_gateway_output_of_yojson ~error_deserializer
 end
 
 module GetHypervisor = struct
@@ -180,6 +227,12 @@ module GetHypervisor = struct
     let input = Json_serializers.get_hypervisor_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"BackupOnPremises_v20210101.GetHypervisor"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_hypervisor_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_hypervisor_input) =
+    let input = Json_serializers.get_hypervisor_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.GetHypervisor" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_hypervisor_output_of_yojson ~error_deserializer
 end
 
@@ -205,6 +258,14 @@ module GetHypervisorPropertyMappings = struct
       ~input
       ~output_deserializer:Json_deserializers.get_hypervisor_property_mappings_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_hypervisor_property_mappings_input) =
+    let input = Json_serializers.get_hypervisor_property_mappings_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.GetHypervisorPropertyMappings" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.get_hypervisor_property_mappings_output_of_yojson
+      ~error_deserializer
 end
 
 module GetVirtualMachine = struct
@@ -226,6 +287,13 @@ module GetVirtualMachine = struct
     let input = Json_serializers.get_virtual_machine_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"BackupOnPremises_v20210101.GetVirtualMachine"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_virtual_machine_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_virtual_machine_input) =
+    let input = Json_serializers.get_virtual_machine_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.GetVirtualMachine" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_virtual_machine_output_of_yojson
       ~error_deserializer
 end
@@ -254,6 +322,14 @@ module ImportHypervisorConfiguration = struct
       ~input
       ~output_deserializer:Json_deserializers.import_hypervisor_configuration_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : import_hypervisor_configuration_input) =
+    let input = Json_serializers.import_hypervisor_configuration_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.ImportHypervisorConfiguration" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.import_hypervisor_configuration_output_of_yojson
+      ~error_deserializer
 end
 
 module ListGateways = struct
@@ -269,6 +345,12 @@ module ListGateways = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"BackupOnPremises_v20210101.ListGateways"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_gateways_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_gateways_input) =
+    let input = Json_serializers.list_gateways_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.ListGateways" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_gateways_output_of_yojson ~error_deserializer
 end
 
 module ListHypervisors = struct
@@ -283,6 +365,12 @@ module ListHypervisors = struct
     let input = Json_serializers.list_hypervisors_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"BackupOnPremises_v20210101.ListHypervisors"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_hypervisors_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_hypervisors_input) =
+    let input = Json_serializers.list_hypervisors_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.ListHypervisors" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_hypervisors_output_of_yojson ~error_deserializer
 end
 
@@ -307,6 +395,13 @@ module ListTagsForResource = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_tags_for_resource_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_tags_for_resource_input) =
+    let input = Json_serializers.list_tags_for_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.ListTagsForResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_tags_for_resource_output_of_yojson
+      ~error_deserializer
 end
 
 module ListVirtualMachines = struct
@@ -321,6 +416,13 @@ module ListVirtualMachines = struct
     let input = Json_serializers.list_virtual_machines_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"BackupOnPremises_v20210101.ListVirtualMachines"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_virtual_machines_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_virtual_machines_input) =
+    let input = Json_serializers.list_virtual_machines_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.ListVirtualMachines" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_virtual_machines_output_of_yojson
       ~error_deserializer
 end
@@ -343,6 +445,14 @@ module PutBandwidthRateLimitSchedule = struct
   let request context (request : put_bandwidth_rate_limit_schedule_input) =
     let input = Json_serializers.put_bandwidth_rate_limit_schedule_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"BackupOnPremises_v20210101.PutBandwidthRateLimitSchedule" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.put_bandwidth_rate_limit_schedule_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_bandwidth_rate_limit_schedule_input) =
+    let input = Json_serializers.put_bandwidth_rate_limit_schedule_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"BackupOnPremises_v20210101.PutBandwidthRateLimitSchedule" ~service ~context
       ~input
       ~output_deserializer:Json_deserializers.put_bandwidth_rate_limit_schedule_output_of_yojson
@@ -377,6 +487,14 @@ module PutHypervisorPropertyMappings = struct
       ~input
       ~output_deserializer:Json_deserializers.put_hypervisor_property_mappings_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : put_hypervisor_property_mappings_input) =
+    let input = Json_serializers.put_hypervisor_property_mappings_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.PutHypervisorPropertyMappings" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.put_hypervisor_property_mappings_output_of_yojson
+      ~error_deserializer
 end
 
 module PutMaintenanceStartTime = struct
@@ -400,6 +518,13 @@ module PutMaintenanceStartTime = struct
   let request context (request : put_maintenance_start_time_input) =
     let input = Json_serializers.put_maintenance_start_time_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"BackupOnPremises_v20210101.PutMaintenanceStartTime" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.put_maintenance_start_time_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_maintenance_start_time_input) =
+    let input = Json_serializers.put_maintenance_start_time_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"BackupOnPremises_v20210101.PutMaintenanceStartTime" ~service ~context ~input
       ~output_deserializer:Json_deserializers.put_maintenance_start_time_output_of_yojson
       ~error_deserializer
@@ -430,6 +555,14 @@ module StartVirtualMachinesMetadataSync = struct
       ~input
       ~output_deserializer:Json_deserializers.start_virtual_machines_metadata_sync_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : start_virtual_machines_metadata_sync_input) =
+    let input = Json_serializers.start_virtual_machines_metadata_sync_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.StartVirtualMachinesMetadataSync" ~service ~context
+      ~input
+      ~output_deserializer:Json_deserializers.start_virtual_machines_metadata_sync_output_of_yojson
+      ~error_deserializer
 end
 
 module TagResource = struct
@@ -452,6 +585,12 @@ module TagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"BackupOnPremises_v20210101.TagResource"
       ~service ~context ~input ~output_deserializer:Json_deserializers.tag_resource_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_input) =
+    let input = Json_serializers.tag_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.TagResource" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.tag_resource_output_of_yojson ~error_deserializer
 end
 
 module TestHypervisorConfiguration = struct
@@ -478,6 +617,13 @@ module TestHypervisorConfiguration = struct
       ~shape_name:"BackupOnPremises_v20210101.TestHypervisorConfiguration" ~service ~context ~input
       ~output_deserializer:Json_deserializers.test_hypervisor_configuration_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : test_hypervisor_configuration_input) =
+    let input = Json_serializers.test_hypervisor_configuration_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.TestHypervisorConfiguration" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.test_hypervisor_configuration_output_of_yojson
+      ~error_deserializer
 end
 
 module UntagResource = struct
@@ -499,6 +645,12 @@ module UntagResource = struct
     let input = Json_serializers.untag_resource_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"BackupOnPremises_v20210101.UntagResource"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.untag_resource_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_input) =
+    let input = Json_serializers.untag_resource_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.UntagResource" ~service ~context ~input
       ~output_deserializer:Json_deserializers.untag_resource_output_of_yojson ~error_deserializer
 end
 
@@ -526,6 +678,13 @@ module UpdateGatewayInformation = struct
       ~shape_name:"BackupOnPremises_v20210101.UpdateGatewayInformation" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_gateway_information_output_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_gateway_information_input) =
+    let input = Json_serializers.update_gateway_information_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.UpdateGatewayInformation" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_gateway_information_output_of_yojson
+      ~error_deserializer
 end
 
 module UpdateGatewaySoftwareNow = struct
@@ -546,6 +705,13 @@ module UpdateGatewaySoftwareNow = struct
   let request context (request : update_gateway_software_now_input) =
     let input = Json_serializers.update_gateway_software_now_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"BackupOnPremises_v20210101.UpdateGatewaySoftwareNow" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_gateway_software_now_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_gateway_software_now_input) =
+    let input = Json_serializers.update_gateway_software_now_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"BackupOnPremises_v20210101.UpdateGatewaySoftwareNow" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_gateway_software_now_output_of_yojson
       ~error_deserializer
@@ -576,5 +742,11 @@ module UpdateHypervisor = struct
     let input = Json_serializers.update_hypervisor_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"BackupOnPremises_v20210101.UpdateHypervisor"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_hypervisor_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : update_hypervisor_input) =
+    let input = Json_serializers.update_hypervisor_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"BackupOnPremises_v20210101.UpdateHypervisor" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_hypervisor_output_of_yojson ~error_deserializer
 end

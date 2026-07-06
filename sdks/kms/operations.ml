@@ -34,6 +34,13 @@ module CancelKeyDeletion = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.CancelKeyDeletion" ~service
       ~context ~input ~output_deserializer:Json_deserializers.cancel_key_deletion_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : cancel_key_deletion_request) =
+    let input = Json_serializers.cancel_key_deletion_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.CancelKeyDeletion"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.cancel_key_deletion_response_of_yojson
+      ~error_deserializer
 end
 
 module ConnectCustomKeyStore = struct
@@ -73,6 +80,13 @@ module ConnectCustomKeyStore = struct
     let input = Json_serializers.connect_custom_key_store_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.ConnectCustomKeyStore" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.connect_custom_key_store_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : connect_custom_key_store_request) =
+    let input = Json_serializers.connect_custom_key_store_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"TrentService.ConnectCustomKeyStore" ~service ~context ~input
       ~output_deserializer:Json_deserializers.connect_custom_key_store_response_of_yojson
       ~error_deserializer
 end
@@ -116,6 +130,13 @@ module CreateAlias = struct
     let input = Json_serializers.create_alias_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.CreateAlias" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_alias_request) =
+    let input = Json_serializers.create_alias_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.CreateAlias"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -212,6 +233,13 @@ module CreateCustomKeyStore = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.create_custom_key_store_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_custom_key_store_request) =
+    let input = Json_serializers.create_custom_key_store_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"TrentService.CreateCustomKeyStore" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_custom_key_store_response_of_yojson
+      ~error_deserializer
 end
 
 module CreateGrant = struct
@@ -261,6 +289,12 @@ module CreateGrant = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.CreateGrant" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_grant_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_grant_request) =
+    let input = Json_serializers.create_grant_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.CreateGrant"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_grant_response_of_yojson ~error_deserializer
 end
 
 module CreateKey = struct
@@ -330,6 +364,12 @@ module CreateKey = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.CreateKey" ~service ~context
       ~input ~output_deserializer:Json_deserializers.create_key_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : create_key_request) =
+    let input = Json_serializers.create_key_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.CreateKey" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.create_key_response_of_yojson
+      ~error_deserializer
 end
 
 module Decrypt = struct
@@ -387,6 +427,12 @@ module Decrypt = struct
     let input = Json_serializers.decrypt_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.Decrypt" ~service ~context ~input
       ~output_deserializer:Json_deserializers.decrypt_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : decrypt_request) =
+    let input = Json_serializers.decrypt_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.Decrypt" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.decrypt_response_of_yojson
+      ~error_deserializer
 end
 
 module DeleteAlias = struct
@@ -418,6 +464,13 @@ module DeleteAlias = struct
     let input = Json_serializers.delete_alias_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.DeleteAlias" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_alias_request) =
+    let input = Json_serializers.delete_alias_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.DeleteAlias"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -452,6 +505,13 @@ module DeleteCustomKeyStore = struct
     let input = Json_serializers.delete_custom_key_store_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.DeleteCustomKeyStore" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.delete_custom_key_store_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_custom_key_store_request) =
+    let input = Json_serializers.delete_custom_key_store_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"TrentService.DeleteCustomKeyStore" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_custom_key_store_response_of_yojson
       ~error_deserializer
 end
@@ -492,6 +552,13 @@ module DeleteImportedKeyMaterial = struct
     let input = Json_serializers.delete_imported_key_material_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.DeleteImportedKeyMaterial"
       ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_imported_key_material_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_imported_key_material_request) =
+    let input = Json_serializers.delete_imported_key_material_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"TrentService.DeleteImportedKeyMaterial" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_imported_key_material_response_of_yojson
       ~error_deserializer
 end
@@ -546,6 +613,13 @@ module DeriveSharedSecret = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.derive_shared_secret_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : derive_shared_secret_request) =
+    let input = Json_serializers.derive_shared_secret_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.DeriveSharedSecret"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.derive_shared_secret_response_of_yojson
+      ~error_deserializer
 end
 
 module DescribeCustomKeyStores = struct
@@ -573,6 +647,13 @@ module DescribeCustomKeyStores = struct
     let input = Json_serializers.describe_custom_key_stores_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.DescribeCustomKeyStores" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.describe_custom_key_stores_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_custom_key_stores_request) =
+    let input = Json_serializers.describe_custom_key_stores_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"TrentService.DescribeCustomKeyStores" ~service ~context ~input
       ~output_deserializer:Json_deserializers.describe_custom_key_stores_response_of_yojson
       ~error_deserializer
 end
@@ -606,6 +687,12 @@ module DescribeKey = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.DescribeKey" ~service ~context
       ~input ~output_deserializer:Json_deserializers.describe_key_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : describe_key_request) =
+    let input = Json_serializers.describe_key_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.DescribeKey"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_key_response_of_yojson ~error_deserializer
 end
 
 module DisableKey = struct
@@ -640,6 +727,12 @@ module DisableKey = struct
     let input = Json_serializers.disable_key_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.DisableKey" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : disable_key_request) =
+    let input = Json_serializers.disable_key_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.DisableKey" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -683,6 +776,13 @@ module DisableKeyRotation = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.DisableKeyRotation" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : disable_key_rotation_request) =
+    let input = Json_serializers.disable_key_rotation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.DisableKeyRotation"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module DisconnectCustomKeyStore = struct
@@ -712,6 +812,13 @@ module DisconnectCustomKeyStore = struct
     let input = Json_serializers.disconnect_custom_key_store_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.DisconnectCustomKeyStore" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.disconnect_custom_key_store_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : disconnect_custom_key_store_request) =
+    let input = Json_serializers.disconnect_custom_key_store_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"TrentService.DisconnectCustomKeyStore" ~service ~context ~input
       ~output_deserializer:Json_deserializers.disconnect_custom_key_store_response_of_yojson
       ~error_deserializer
 end
@@ -751,6 +858,12 @@ module EnableKey = struct
     let input = Json_serializers.enable_key_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.EnableKey" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : enable_key_request) =
+    let input = Json_serializers.enable_key_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.EnableKey" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -793,6 +906,13 @@ module EnableKeyRotation = struct
     let input = Json_serializers.enable_key_rotation_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.EnableKeyRotation" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : enable_key_rotation_request) =
+    let input = Json_serializers.enable_key_rotation_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.EnableKeyRotation"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -844,6 +964,12 @@ module Encrypt = struct
     let input = Json_serializers.encrypt_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.Encrypt" ~service ~context ~input
       ~output_deserializer:Json_deserializers.encrypt_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : encrypt_request) =
+    let input = Json_serializers.encrypt_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.Encrypt" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.encrypt_response_of_yojson
+      ~error_deserializer
 end
 
 module GenerateDataKey = struct
@@ -894,6 +1020,13 @@ module GenerateDataKey = struct
     let input = Json_serializers.generate_data_key_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.GenerateDataKey" ~service ~context
       ~input ~output_deserializer:Json_deserializers.generate_data_key_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : generate_data_key_request) =
+    let input = Json_serializers.generate_data_key_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.GenerateDataKey"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.generate_data_key_response_of_yojson
       ~error_deserializer
 end
 
@@ -949,6 +1082,13 @@ module GenerateDataKeyPair = struct
     let input = Json_serializers.generate_data_key_pair_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.GenerateDataKeyPair" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.generate_data_key_pair_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : generate_data_key_pair_request) =
+    let input = Json_serializers.generate_data_key_pair_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.GenerateDataKeyPair"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.generate_data_key_pair_response_of_yojson
       ~error_deserializer
 end
@@ -1010,6 +1150,16 @@ module GenerateDataKeyPairWithoutPlaintext = struct
       ~output_deserializer:
         Json_deserializers.generate_data_key_pair_without_plaintext_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : generate_data_key_pair_without_plaintext_request) =
+    let input =
+      Json_serializers.generate_data_key_pair_without_plaintext_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"TrentService.GenerateDataKeyPairWithoutPlaintext" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.generate_data_key_pair_without_plaintext_response_of_yojson
+      ~error_deserializer
 end
 
 module GenerateDataKeyWithoutPlaintext = struct
@@ -1062,6 +1212,13 @@ module GenerateDataKeyWithoutPlaintext = struct
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.generate_data_key_without_plaintext_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : generate_data_key_without_plaintext_request) =
+    let input = Json_serializers.generate_data_key_without_plaintext_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"TrentService.GenerateDataKeyWithoutPlaintext" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.generate_data_key_without_plaintext_response_of_yojson
+      ~error_deserializer
 end
 
 module GenerateMac = struct
@@ -1109,6 +1266,12 @@ module GenerateMac = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.GenerateMac" ~service ~context
       ~input ~output_deserializer:Json_deserializers.generate_mac_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : generate_mac_request) =
+    let input = Json_serializers.generate_mac_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.GenerateMac"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.generate_mac_response_of_yojson ~error_deserializer
 end
 
 module GenerateRandom = struct
@@ -1147,6 +1310,12 @@ module GenerateRandom = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.GenerateRandom" ~service ~context
       ~input ~output_deserializer:Json_deserializers.generate_random_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : generate_random_request) =
+    let input = Json_serializers.generate_random_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.GenerateRandom"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.generate_random_response_of_yojson ~error_deserializer
 end
 
 module GetKeyLastUsage = struct
@@ -1177,6 +1346,13 @@ module GetKeyLastUsage = struct
     let input = Json_serializers.get_key_last_usage_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.GetKeyLastUsage" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_key_last_usage_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_key_last_usage_request) =
+    let input = Json_serializers.get_key_last_usage_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.GetKeyLastUsage"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_key_last_usage_response_of_yojson
       ~error_deserializer
 end
 
@@ -1213,6 +1389,12 @@ module GetKeyPolicy = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.GetKeyPolicy" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_key_policy_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_key_policy_request) =
+    let input = Json_serializers.get_key_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.GetKeyPolicy"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_key_policy_response_of_yojson ~error_deserializer
 end
 
 module GetKeyRotationStatus = struct
@@ -1253,6 +1435,13 @@ module GetKeyRotationStatus = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.get_key_rotation_status_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_key_rotation_status_request) =
+    let input = Json_serializers.get_key_rotation_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"TrentService.GetKeyRotationStatus" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_key_rotation_status_response_of_yojson
+      ~error_deserializer
 end
 
 module GetParametersForImport = struct
@@ -1291,6 +1480,13 @@ module GetParametersForImport = struct
     let input = Json_serializers.get_parameters_for_import_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.GetParametersForImport" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.get_parameters_for_import_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_parameters_for_import_request) =
+    let input = Json_serializers.get_parameters_for_import_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"TrentService.GetParametersForImport" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_parameters_for_import_response_of_yojson
       ~error_deserializer
 end
@@ -1347,6 +1543,12 @@ module GetPublicKey = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.GetPublicKey" ~service ~context
       ~input ~output_deserializer:Json_deserializers.get_public_key_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : get_public_key_request) =
+    let input = Json_serializers.get_public_key_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.GetPublicKey"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_public_key_response_of_yojson ~error_deserializer
 end
 
 module ImportKeyMaterial = struct
@@ -1402,6 +1604,13 @@ module ImportKeyMaterial = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.ImportKeyMaterial" ~service
       ~context ~input ~output_deserializer:Json_deserializers.import_key_material_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : import_key_material_request) =
+    let input = Json_serializers.import_key_material_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.ImportKeyMaterial"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.import_key_material_response_of_yojson
+      ~error_deserializer
 end
 
 module ListAliases = struct
@@ -1436,6 +1645,12 @@ module ListAliases = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.ListAliases" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_aliases_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_aliases_request) =
+    let input = Json_serializers.list_aliases_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.ListAliases"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_aliases_response_of_yojson ~error_deserializer
 end
 
 module ListGrants = struct
@@ -1478,6 +1693,12 @@ module ListGrants = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.ListGrants" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_grants_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_grants_request) =
+    let input = Json_serializers.list_grants_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.ListGrants" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_grants_response_of_yojson
+      ~error_deserializer
 end
 
 module ListKeyPolicies = struct
@@ -1512,6 +1733,13 @@ module ListKeyPolicies = struct
     let input = Json_serializers.list_key_policies_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.ListKeyPolicies" ~service ~context
       ~input ~output_deserializer:Json_deserializers.list_key_policies_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_key_policies_request) =
+    let input = Json_serializers.list_key_policies_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.ListKeyPolicies"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_key_policies_response_of_yojson
       ~error_deserializer
 end
 
@@ -1551,6 +1779,13 @@ module ListKeyRotations = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.ListKeyRotations" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_key_rotations_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_key_rotations_request) =
+    let input = Json_serializers.list_key_rotations_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.ListKeyRotations"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_key_rotations_response_of_yojson
+      ~error_deserializer
 end
 
 module ListKeys = struct
@@ -1578,6 +1813,12 @@ module ListKeys = struct
     let input = Json_serializers.list_keys_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.ListKeys" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_keys_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_keys_request) =
+    let input = Json_serializers.list_keys_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.ListKeys" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_keys_response_of_yojson
+      ~error_deserializer
 end
 
 module ListResourceTags = struct
@@ -1607,6 +1848,13 @@ module ListResourceTags = struct
     let input = Json_serializers.list_resource_tags_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.ListResourceTags" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_resource_tags_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_resource_tags_request) =
+    let input = Json_serializers.list_resource_tags_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.ListResourceTags"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_resource_tags_response_of_yojson
       ~error_deserializer
 end
 
@@ -1642,6 +1890,12 @@ module ListRetirableGrants = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.ListRetirableGrants" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_grants_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : list_retirable_grants_request) =
+    let input = Json_serializers.list_retirable_grants_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.ListRetirableGrants"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_grants_response_of_yojson ~error_deserializer
 end
 
 module PutKeyPolicy = struct
@@ -1687,6 +1941,13 @@ module PutKeyPolicy = struct
     let input = Json_serializers.put_key_policy_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.PutKeyPolicy" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : put_key_policy_request) =
+    let input = Json_serializers.put_key_policy_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.PutKeyPolicy"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -1746,6 +2007,12 @@ module ReEncrypt = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.ReEncrypt" ~service ~context
       ~input ~output_deserializer:Json_deserializers.re_encrypt_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : re_encrypt_request) =
+    let input = Json_serializers.re_encrypt_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.ReEncrypt" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.re_encrypt_response_of_yojson
+      ~error_deserializer
 end
 
 module ReplicateKey = struct
@@ -1796,6 +2063,12 @@ module ReplicateKey = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.ReplicateKey" ~service ~context
       ~input ~output_deserializer:Json_deserializers.replicate_key_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : replicate_key_request) =
+    let input = Json_serializers.replicate_key_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.ReplicateKey"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.replicate_key_response_of_yojson ~error_deserializer
 end
 
 module RetireGrant = struct
@@ -1843,6 +2116,13 @@ module RetireGrant = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.RetireGrant" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : retire_grant_request) =
+    let input = Json_serializers.retire_grant_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.RetireGrant"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module RevokeGrant = struct
@@ -1885,6 +2165,13 @@ module RevokeGrant = struct
     let input = Json_serializers.revoke_grant_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.RevokeGrant" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : revoke_grant_request) =
+    let input = Json_serializers.revoke_grant_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.RevokeGrant"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -1935,6 +2222,13 @@ module RotateKeyOnDemand = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.rotate_key_on_demand_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : rotate_key_on_demand_request) =
+    let input = Json_serializers.rotate_key_on_demand_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.RotateKeyOnDemand"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.rotate_key_on_demand_response_of_yojson
+      ~error_deserializer
 end
 
 module ScheduleKeyDeletion = struct
@@ -1969,6 +2263,13 @@ module ScheduleKeyDeletion = struct
     let input = Json_serializers.schedule_key_deletion_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.ScheduleKeyDeletion" ~service
       ~context ~input
+      ~output_deserializer:Json_deserializers.schedule_key_deletion_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : schedule_key_deletion_request) =
+    let input = Json_serializers.schedule_key_deletion_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.ScheduleKeyDeletion"
+      ~service ~context ~input
       ~output_deserializer:Json_deserializers.schedule_key_deletion_response_of_yojson
       ~error_deserializer
 end
@@ -2021,6 +2322,12 @@ module Sign = struct
     let input = Json_serializers.sign_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.Sign" ~service ~context ~input
       ~output_deserializer:Json_deserializers.sign_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : sign_request) =
+    let input = Json_serializers.sign_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.Sign" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.sign_response_of_yojson
+      ~error_deserializer
 end
 
 module TagResource = struct
@@ -2057,6 +2364,13 @@ module TagResource = struct
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.TagResource" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : tag_resource_request) =
+    let input = Json_serializers.tag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.TagResource"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
 end
 
 module UntagResource = struct
@@ -2089,6 +2403,13 @@ module UntagResource = struct
     let input = Json_serializers.untag_resource_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.UntagResource" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : untag_resource_request) =
+    let input = Json_serializers.untag_resource_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.UntagResource"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -2124,6 +2445,13 @@ module UpdateAlias = struct
     let input = Json_serializers.update_alias_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.UpdateAlias" ~service ~context
       ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_alias_request) =
+    let input = Json_serializers.update_alias_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.UpdateAlias"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -2223,6 +2551,13 @@ module UpdateCustomKeyStore = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.update_custom_key_store_response_of_yojson
       ~error_deserializer
+
+  let request_with_metadata context (request : update_custom_key_store_request) =
+    let input = Json_serializers.update_custom_key_store_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"TrentService.UpdateCustomKeyStore" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_custom_key_store_response_of_yojson
+      ~error_deserializer
 end
 
 module UpdateKeyDescription = struct
@@ -2257,6 +2592,13 @@ module UpdateKeyDescription = struct
     let input = Json_serializers.update_key_description_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.UpdateKeyDescription" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_key_description_request) =
+    let input = Json_serializers.update_key_description_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"TrentService.UpdateKeyDescription" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -2295,6 +2637,13 @@ module UpdatePrimaryRegion = struct
     let input = Json_serializers.update_primary_region_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.UpdatePrimaryRegion" ~service
       ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_primary_region_request) =
+    let input = Json_serializers.update_primary_region_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.UpdatePrimaryRegion"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
       ~error_deserializer
 end
 
@@ -2350,6 +2699,12 @@ module Verify = struct
     let input = Json_serializers.verify_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.Verify" ~service ~context ~input
       ~output_deserializer:Json_deserializers.verify_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : verify_request) =
+    let input = Json_serializers.verify_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.Verify" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.verify_response_of_yojson
+      ~error_deserializer
 end
 
 module VerifyMac = struct
@@ -2399,5 +2754,11 @@ module VerifyMac = struct
     let input = Json_serializers.verify_mac_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request ~shape_name:"TrentService.VerifyMac" ~service ~context
       ~input ~output_deserializer:Json_deserializers.verify_mac_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : verify_mac_request) =
+    let input = Json_serializers.verify_mac_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"TrentService.VerifyMac" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.verify_mac_response_of_yojson
       ~error_deserializer
 end

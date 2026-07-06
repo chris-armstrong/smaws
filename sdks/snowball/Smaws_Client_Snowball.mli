@@ -398,6 +398,17 @@ module CancelCluster : sig
       | `InvalidResourceException of invalid_resource_exception
       | `KMSRequestFailedException of kms_request_failed_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_cluster_request ->
+    ( cancel_cluster_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidJobStateException of invalid_job_state_exception
+      | `InvalidResourceException of invalid_resource_exception
+      | `KMSRequestFailedException of kms_request_failed_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Cancels a cluster job. You can only cancel a cluster job while it's in the [AwaitingQuorum] \
@@ -420,6 +431,17 @@ module CancelJob : sig
       | `InvalidResourceException of invalid_resource_exception
       | `KMSRequestFailedException of kms_request_failed_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_job_request ->
+    ( cancel_job_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidJobStateException of invalid_job_state_exception
+      | `InvalidResourceException of invalid_resource_exception
+      | `KMSRequestFailedException of kms_request_failed_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Cancels the specified job. You can only cancel a job before its [JobState] value changes to \
@@ -440,6 +462,16 @@ module CreateAddress : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidAddressException of invalid_address_exception
       | `UnsupportedAddressException of unsupported_address_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_address_request ->
+    ( create_address_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidAddressException of invalid_address_exception
+      | `UnsupportedAddressException of unsupported_address_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -468,6 +500,18 @@ module CreateCluster : sig
       | `InvalidResourceException of invalid_resource_exception
       | `KMSRequestFailedException of kms_request_failed_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_cluster_request ->
+    ( create_cluster_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `Ec2RequestFailedException of ec2_request_failed_exception
+      | `InvalidInputCombinationException of invalid_input_combination_exception
+      | `InvalidResourceException of invalid_resource_exception
+      | `KMSRequestFailedException of kms_request_failed_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates an empty cluster. Each cluster supports five nodes. You use the [CreateJob] action \
@@ -494,6 +538,19 @@ module CreateJob : sig
       | `InvalidInputCombinationException of invalid_input_combination_exception
       | `InvalidResourceException of invalid_resource_exception
       | `KMSRequestFailedException of kms_request_failed_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_job_request ->
+    ( create_job_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClusterLimitExceededException of cluster_limit_exceeded_exception
+      | `Ec2RequestFailedException of ec2_request_failed_exception
+      | `InvalidInputCombinationException of invalid_input_combination_exception
+      | `InvalidResourceException of invalid_resource_exception
+      | `KMSRequestFailedException of kms_request_failed_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -674,6 +731,15 @@ module CreateLongTermPricing : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidResourceException of invalid_resource_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_long_term_pricing_request ->
+    ( create_long_term_pricing_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates a job with the long-term usage option for a device. The long-term usage is a 1-year or \
@@ -703,6 +769,20 @@ module CreateReturnShippingLabel : sig
       | `ReturnShippingLabelAlreadyExistsException of return_shipping_label_already_exists_exception
       ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_return_shipping_label_request ->
+    ( create_return_shipping_label_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InvalidInputCombinationException of invalid_input_combination_exception
+      | `InvalidJobStateException of invalid_job_state_exception
+      | `InvalidResourceException of invalid_resource_exception
+      | `ReturnShippingLabelAlreadyExistsException of return_shipping_label_already_exists_exception
+      ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Creates a shipping label that will be used to return the Snow device to Amazon Web Services.\n"]
@@ -718,6 +798,15 @@ module DescribeAddress : sig
     ( describe_address_result,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidResourceException of invalid_resource_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_address_request ->
+    ( describe_address_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -739,6 +828,16 @@ module DescribeAddresses : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidResourceException of invalid_resource_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_addresses_request ->
+    ( describe_addresses_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns a specified number of [ADDRESS] objects. Calling this API in one of the US regions will \
@@ -756,6 +855,15 @@ module DescribeCluster : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidResourceException of invalid_resource_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_cluster_request ->
+    ( describe_cluster_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns information about a specific cluster including shipping information, cluster status, \
@@ -772,6 +880,15 @@ module DescribeJob : sig
     ( describe_job_result,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidResourceException of invalid_resource_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_job_request ->
+    ( describe_job_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -795,6 +912,17 @@ module DescribeReturnShippingLabel : sig
       | `InvalidJobStateException of invalid_job_state_exception
       | `InvalidResourceException of invalid_resource_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_return_shipping_label_request ->
+    ( describe_return_shipping_label_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `InvalidJobStateException of invalid_job_state_exception
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Information on the shipping label of a Snow device that is being returned to Amazon Web Services.\n"]
@@ -813,6 +941,16 @@ module GetJobManifest : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidJobStateException of invalid_job_state_exception
       | `InvalidResourceException of invalid_resource_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_job_manifest_request ->
+    ( get_job_manifest_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidJobStateException of invalid_job_state_exception
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -850,6 +988,16 @@ module GetJobUnlockCode : sig
       | `InvalidJobStateException of invalid_job_state_exception
       | `InvalidResourceException of invalid_resource_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_job_unlock_code_request ->
+    ( get_job_unlock_code_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidJobStateException of invalid_job_state_exception
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns the [UnlockCode] code value for the specified job. A particular [UnlockCode] value can \
@@ -872,6 +1020,13 @@ module GetSnowballUsage : sig
     'http_type Smaws_Lib.Context.t ->
     get_snowball_usage_request ->
     (get_snowball_usage_result, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_snowball_usage_request ->
+    ( get_snowball_usage_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns information about the Snow Family service limit for your account, and also the number \
@@ -895,6 +1050,16 @@ module GetSoftwareUpdates : sig
       | `InvalidJobStateException of invalid_job_state_exception
       | `InvalidResourceException of invalid_resource_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_software_updates_request ->
+    ( get_software_updates_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidJobStateException of invalid_job_state_exception
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns an Amazon S3 presigned URL for an update file associated with a specified [JobId].\n"]
@@ -913,6 +1078,16 @@ module ListClusterJobs : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidResourceException of invalid_resource_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_cluster_jobs_request ->
+    ( list_cluster_jobs_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -933,6 +1108,15 @@ module ListClusters : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidNextTokenException of invalid_next_token_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_clusters_request ->
+    ( list_clusters_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns an array of [ClusterListEntry] objects of the specified length. Each [ClusterListEntry] \
@@ -952,6 +1136,16 @@ module ListCompatibleImages : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `Ec2RequestFailedException of ec2_request_failed_exception
       | `InvalidNextTokenException of invalid_next_token_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_compatible_images_request ->
+    ( list_compatible_images_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `Ec2RequestFailedException of ec2_request_failed_exception
+      | `InvalidNextTokenException of invalid_next_token_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -975,6 +1169,15 @@ module ListJobs : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidNextTokenException of invalid_next_token_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_jobs_request ->
+    ( list_jobs_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns an array of [JobListEntry] objects of the specified length. Each [JobListEntry] object \
@@ -997,6 +1200,16 @@ module ListLongTermPricing : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidResourceException of invalid_resource_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_long_term_pricing_request ->
+    ( list_long_term_pricing_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Lists all long-term pricing types.\n"]
 
@@ -1011,6 +1224,15 @@ module ListPickupLocations : sig
     ( list_pickup_locations_result,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidResourceException of invalid_resource_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_pickup_locations_request ->
+    ( list_pickup_locations_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "A list of locations from which the customer can choose to pickup a device.\n"]
@@ -1029,6 +1251,16 @@ module ListServiceVersions : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidResourceException of invalid_resource_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_service_versions_request ->
+    ( list_service_versions_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNextTokenException of invalid_next_token_exception
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1055,6 +1287,19 @@ module UpdateCluster : sig
       | `InvalidJobStateException of invalid_job_state_exception
       | `InvalidResourceException of invalid_resource_exception
       | `KMSRequestFailedException of kms_request_failed_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_cluster_request ->
+    ( update_cluster_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `Ec2RequestFailedException of ec2_request_failed_exception
+      | `InvalidInputCombinationException of invalid_input_combination_exception
+      | `InvalidJobStateException of invalid_job_state_exception
+      | `InvalidResourceException of invalid_resource_exception
+      | `KMSRequestFailedException of kms_request_failed_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1085,6 +1330,20 @@ module UpdateJob : sig
       | `InvalidResourceException of invalid_resource_exception
       | `KMSRequestFailedException of kms_request_failed_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_job_request ->
+    ( update_job_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ClusterLimitExceededException of cluster_limit_exceeded_exception
+      | `Ec2RequestFailedException of ec2_request_failed_exception
+      | `InvalidInputCombinationException of invalid_input_combination_exception
+      | `InvalidJobStateException of invalid_job_state_exception
+      | `InvalidResourceException of invalid_resource_exception
+      | `KMSRequestFailedException of kms_request_failed_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "While a job's [JobState] value is [New], you can update some of the information associated with \
@@ -1106,6 +1365,16 @@ module UpdateJobShipmentState : sig
       | `InvalidJobStateException of invalid_job_state_exception
       | `InvalidResourceException of invalid_resource_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_job_shipment_state_request ->
+    ( update_job_shipment_state_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidJobStateException of invalid_job_state_exception
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Updates the state when a shipment state changes to a different state.\n"]
 
@@ -1121,6 +1390,15 @@ module UpdateLongTermPricing : sig
     ( update_long_term_pricing_result,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidResourceException of invalid_resource_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_long_term_pricing_request ->
+    ( update_long_term_pricing_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates the long-term pricing type.\n"]

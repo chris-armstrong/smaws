@@ -21,6 +21,19 @@ module AddApplicationCloudWatchLoggingOption : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_application_cloud_watch_logging_option_request ->
+    ( add_application_cloud_watch_logging_option_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This documentation is for version 1 of the Amazon Kinesis Data Analytics API, which only \
@@ -56,6 +69,20 @@ module AddApplicationInput : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_application_input_request ->
+    ( add_application_input_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CodeValidationException of code_validation_exception
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -102,6 +129,19 @@ module AddApplicationInputProcessingConfiguration : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_application_input_processing_configuration_request ->
+    ( add_application_input_processing_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This documentation is for version 1 of the Amazon Kinesis Data Analytics API, which only \
@@ -136,6 +176,19 @@ module AddApplicationOutput : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_application_output_request ->
+    ( add_application_output_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -192,6 +245,19 @@ module AddApplicationReferenceDataSource : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_application_reference_data_source_request ->
+    ( add_application_reference_data_source_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This documentation is for version 1 of the Amazon Kinesis Data Analytics API, which only \
@@ -238,6 +304,20 @@ module CreateApplication : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
       | `TooManyTagsException of too_many_tags_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_application_request ->
+    ( create_application_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CodeValidationException of code_validation_exception
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `TooManyTagsException of too_many_tags_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -292,6 +372,18 @@ module DeleteApplication : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_application_request ->
+    ( delete_application_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This documentation is for version 1 of the Amazon Kinesis Data Analytics API, which only \
@@ -328,6 +420,19 @@ module DeleteApplicationCloudWatchLoggingOption : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_application_cloud_watch_logging_option_request ->
+    ( delete_application_cloud_watch_logging_option_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This documentation is for version 1 of the Amazon Kinesis Data Analytics API, which only \
@@ -362,6 +467,19 @@ module DeleteApplicationInputProcessingConfiguration : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_application_input_processing_configuration_request ->
+    ( delete_application_input_processing_configuration_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This documentation is for version 1 of the Amazon Kinesis Data Analytics API, which only \
@@ -394,6 +512,19 @@ module DeleteApplicationOutput : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_application_output_request ->
+    ( delete_application_output_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -431,6 +562,19 @@ module DeleteApplicationReferenceDataSource : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_application_reference_data_source_request ->
+    ( delete_application_reference_data_source_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This documentation is for version 1 of the Amazon Kinesis Data Analytics API, which only \
@@ -463,6 +607,16 @@ module DescribeApplication : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_application_request ->
+    ( describe_application_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -503,6 +657,19 @@ module DiscoverInputSchema : sig
       | `ServiceUnavailableException of service_unavailable_exception
       | `UnableToDetectSchemaException of unable_to_detect_schema_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    discover_input_schema_request ->
+    ( discover_input_schema_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceProvisionedThroughputExceededException of
+        resource_provisioned_throughput_exceeded_exception
+      | `ServiceUnavailableException of service_unavailable_exception
+      | `UnableToDetectSchemaException of unable_to_detect_schema_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This documentation is for version 1 of the Amazon Kinesis Data Analytics API, which only \
@@ -533,6 +700,13 @@ module ListApplications : sig
     'http_type Smaws_Lib.Context.t ->
     list_applications_request ->
     (list_applications_response, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_applications_request ->
+    ( list_applications_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This documentation is for version 1 of the Amazon Kinesis Data Analytics API, which only \
@@ -570,6 +744,17 @@ module ListTagsForResource : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Retrieves the list of key-value tags assigned to the application. For more information, see \
@@ -595,6 +780,19 @@ module StartApplication : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    start_application_request ->
+    ( start_application_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidApplicationConfigurationException of invalid_application_configuration_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -640,6 +838,17 @@ module StopApplication : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    stop_application_request ->
+    ( stop_application_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This documentation is for version 1 of the Amazon Kinesis Data Analytics API, which only \
@@ -678,6 +887,19 @@ module TagResource : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TooManyTagsException of too_many_tags_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyTagsException of too_many_tags_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Adds one or more key-value tags to a Kinesis Analytics application. Note that the maximum \
@@ -706,6 +928,19 @@ module UntagResource : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TooManyTagsException of too_many_tags_exception ] )
     result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_request ->
+    ( untag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyTagsException of too_many_tags_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Removes one or more tags from a Kinesis Analytics application. For more information, see \
@@ -733,6 +968,20 @@ module UpdateApplication : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_application_request ->
+    ( update_application_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CodeValidationException of code_validation_exception
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
