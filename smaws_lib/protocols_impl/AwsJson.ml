@@ -107,7 +107,7 @@ let error_to_string = function
 
 let pp_error fmt e = Fmt.pf fmt "%s" (error_to_string e)
 
-let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
+let request_with_metadata (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
     ~(context : http_t Context.t) ~(input : json_type)
     ~(output_deserializer : json_type -> string list -> 'res)
     ~(error_deserializer : json_type -> string list -> 'error) =
@@ -131,6 +131,17 @@ let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
   let http = Context.http context in
   match Http.request ~method_:`POST ~headers ~body:(`String body) ~uri http with
   | Ok (response, body) -> begin
+      let response_headers = Http.Response.headers response in
+      let request_id =
+        let find ~f headers =
+          List.find_map
+            (fun (k, v) -> if f (String.lowercase_ascii k) then Some v else None)
+            headers
+        in
+        match find ~f:(String.equal "x-amzn-requestid") response_headers with
+        | Some _ as v -> v
+        | None -> find ~f:(String.equal "x-amz-request-id") response_headers
+      in
       let body = body |> Http.Body.to_string in
 
       let body_res =
@@ -145,14 +156,23 @@ let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
       match response |> Http.Response.status with
       | x when x >= 200 && x < 300 ->
           (deserialize_res output_deserializer) body_res
+          |> Result.map (fun result -> { Response.response = result; metadata = { request_id } })
           |> Result.map_error (fun e -> `JsonParseError e)
       | _ -> (
-          let error_body = ensure_error_type ~headers:(Http.Response.headers response) body_res in
+          let error_body = ensure_error_type ~headers:response_headers body_res in
           match (deserialize_res error_deserializer) error_body with
           | Ok error -> Error error
           | Error error -> Error (`JsonParseError error))
     end
   | Error error -> Error (`HttpError error)
+
+let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
+    ~(context : http_t Context.t) ~(input : json_type)
+    ~(output_deserializer : json_type -> string list -> 'res)
+    ~(error_deserializer : json_type -> string list -> 'error) =
+  request_with_metadata ~shape_name ~service ~context ~input ~output_deserializer
+    ~error_deserializer
+  |> Result.map (fun { Response.response; _ } -> response)
 
 let error_deserializer handler tree path =
   let _obj = Json.DeserializeHelpers.assoc_of_yojson tree path in

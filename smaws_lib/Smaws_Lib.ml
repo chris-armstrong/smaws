@@ -9,6 +9,7 @@ module Json = Json
 module Xml = Xml
 module UInt64 = UInt64
 module Uuid = Uuid
+module Response = Response
 module Protocols = Protocols
 module Service = Service
 module Sign = Sign

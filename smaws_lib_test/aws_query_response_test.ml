@@ -52,12 +52,15 @@ module Xml = Smaws_Lib.Xml
 let ok_response_skips_response_metadata () =
   (* Without the skip_to_end fix this raises XmlUnexpectedConstruct on the
      <ResponseMetadata> sibling. *)
-  let result =
+  let result, request_id =
     AwsQuery.Response.parse_xml_ok_response ~action:"GetX" ~xmlNamespace:"https://example.com/"
       ~body:ok_body_with_response_metadata ~resultParser:(fun i ->
         Xml.Parse.Read.element i "Foo" ())
+    |> Result.get_ok
   in
-  Alcotest.(check string) "result parsed from <Result>" "bar" (Result.get_ok result)
+  Alcotest.(check string) "result parsed from <Result>" "bar" result;
+  Alcotest.(check (option string))
+    "request_id parsed from <ResponseMetadata>" (Some "req-1") request_id
 
 let error_response_recovers_message_and_skips_request_id () =
   (* Without the scanSequence + skip_to_end fix this raises Unparseable

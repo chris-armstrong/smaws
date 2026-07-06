@@ -801,7 +801,7 @@ module Operations = struct
   let generate_request_handler ~name ~operation_name
       ~(operation_shape : Ast.Shape.operationShapeDetails) ~alias_context
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
-    let shape_func_body =
+    let shape_func_body ~with_metadata =
       let input =
         operation_shape.input
         |> Option.value_map ~default:[%expr `Assoc ()] ~f:(fun input ->
@@ -817,7 +817,14 @@ module Operations = struct
         |> Option.value ~default:(Longident.Lident "base_unit_of_yojson")
       in
       let request_func_name =
-        B.pexp_ident (Location.mknoloc (make_lident ~names:[ Modules.protocolAwsJson; "request" ]))
+        B.pexp_ident
+          (Location.mknoloc
+             (make_lident
+                ~names:
+                  (let open Modules in
+                   [
+                     protocolAwsJson; (if with_metadata then "request_with_metadata" else "request");
+                   ])))
       in
       [%expr
         let input = [%e input] in
@@ -826,26 +833,30 @@ module Operations = struct
           ~error_deserializer]
     in
 
-    let shape_func =
-      Option.value_map operation_shape.input ~default:shape_func_body ~f:(fun input_name ->
+    let shape_func ~with_metadata =
+      Option.value_map operation_shape.input ~default:(shape_func_body ~with_metadata)
+        ~f:(fun input_name ->
           B.pexp_fun Nolabel None
             (B.ppat_constraint
                (B.ppat_var (Location.mknoloc "request"))
                (Types.resolve alias_context ~name:input_name ~namespace_resolver ()))
-            shape_func_body)
+            (shape_func_body ~with_metadata))
     in
-    [%stri let request = fun context -> [%e shape_func]]
+    [
+      [%stri let request = fun context -> [%e shape_func ~with_metadata:false]];
+      [%stri let request_with_metadata = fun context -> [%e shape_func ~with_metadata:true]];
+    ]
 
   let generate_operation_module ~name ~operation_name ~operation_shape ~dependencies ~alias_context
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
     let module_name = SafeNames.safeConstructorName operation_name in
-    let request_handler =
+    let request_handlers =
       generate_request_handler ~name ~operation_name ~operation_shape ~alias_context
         ~namespace_resolver ()
     in
     let error_handler = generate_error_handler ~operation_shape ~namespace_resolver () in
     let error_to_string = generate_error_to_string ~operation_shape ~namespace_resolver () in
-    let module_items = [ error_to_string; error_handler; request_handler ] in
+    let module_items = error_to_string :: error_handler :: request_handlers in
     let module_expr = B.pmod_structure module_items in
     B.pstr_module (B.module_binding ~name:(Location.mknoloc (Some module_name)) ~expr:module_expr)
 
@@ -913,7 +924,12 @@ module Operations = struct
                 val request :
                   'http_type Smaws_Lib.Context.t ->
                   [%t input_type] ->
-                  ([%t output_type], [%t exception_type]) result]))
+                  ([%t output_type], [%t exception_type]) result
+
+                val request_with_metadata :
+                  'http_type Smaws_Lib.Context.t ->
+                  [%t input_type] ->
+                  ([%t output_type] Smaws_Lib.Response.t, [%t exception_type]) result]))
     |> Docs.attach_doc_to_signature_item ~loc ~doc_string
 
   let generate ~name ~operation_shapes ~alias_context
