@@ -368,7 +368,7 @@ type nonrec application_status =
   | DELETING [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec application_version_id = int [@@ocaml.doc ""]
+type nonrec application_version_id = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec timestamp = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
 
@@ -777,7 +777,7 @@ type nonrec text_content = string [@@ocaml.doc ""]
 
 type nonrec code_m_d5 = string [@@ocaml.doc ""]
 
-type nonrec code_size = int [@@ocaml.doc ""]
+type nonrec code_size = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec s3_application_code_location_description = {
   object_version : object_version option;
@@ -865,9 +865,9 @@ type nonrec run_configuration_description = {
 
 type nonrec configuration_type = CUSTOM [@ocaml.doc ""] | DEFAULT [@ocaml.doc ""] [@@ocaml.doc ""]
 
-type nonrec checkpoint_interval = int [@@ocaml.doc ""]
+type nonrec checkpoint_interval = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
-type nonrec min_pause_between_checkpoints = int [@@ocaml.doc ""]
+type nonrec min_pause_between_checkpoints = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec checkpoint_configuration_description = {
   min_pause_between_checkpoints : min_pause_between_checkpoints option;
@@ -2087,7 +2087,7 @@ type nonrec snapshot_details = {
 
 type nonrec snapshot_summaries = snapshot_details list [@@ocaml.doc ""]
 
-type nonrec session_expiration_duration_in_seconds = int [@@ocaml.doc ""]
+type nonrec session_expiration_duration_in_seconds = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec service_unavailable_exception = { message : error_message option [@ocaml.doc ""] }
 [@@ocaml.doc "The service cannot complete the request.\n"]

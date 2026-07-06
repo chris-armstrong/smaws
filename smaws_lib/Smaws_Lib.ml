@@ -8,6 +8,7 @@ module Http = Http
 module Json = Json
 module Xml = Xml
 module UInt64 = UInt64
+module Uuid = Uuid
 module Protocols = Protocols
 module Service = Service
 module Sign = Sign

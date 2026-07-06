@@ -309,7 +309,7 @@ type nonrec put_bandwidth_rate_limit_schedule_output = {
 }
 [@@ocaml.doc ""]
 
-type nonrec average_upload_rate_limit = int [@@ocaml.doc ""]
+type nonrec average_upload_rate_limit = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec days_of_week = day_of_week list [@@ocaml.doc ""]
 

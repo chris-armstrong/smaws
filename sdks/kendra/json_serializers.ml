@@ -3259,7 +3259,10 @@ let client_token_name_to_yojson = string_to_yojson
 let create_thesaurus_request_to_yojson (x : create_thesaurus_request) =
   assoc_to_yojson
     [
-      ("ClientToken", option_to_yojson client_token_name_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (client_token_name_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("SourceS3Path", Some (s3_path_to_yojson x.source_s3_path));
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);
       ("RoleArn", Some (role_arn_to_yojson x.role_arn));
@@ -3278,7 +3281,10 @@ let create_query_suggestions_block_list_request_to_yojson
     [
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);
       ("RoleArn", Some (role_arn_to_yojson x.role_arn));
-      ("ClientToken", option_to_yojson client_token_name_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (client_token_name_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("SourceS3Path", Some (s3_path_to_yojson x.source_s3_path));
       ("Description", option_to_yojson description_to_yojson x.description);
       ("Name", Some (query_suggestions_block_list_name_to_yojson x.name));
@@ -3298,7 +3304,10 @@ let create_index_request_to_yojson (x : create_index_request) =
       ( "UserTokenConfigurations",
         option_to_yojson user_token_configuration_list_to_yojson x.user_token_configurations );
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);
-      ("ClientToken", option_to_yojson client_token_name_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (client_token_name_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("Description", option_to_yojson description_to_yojson x.description);
       ( "ServerSideEncryptionConfiguration",
         option_to_yojson server_side_encryption_configuration_to_yojson
@@ -3335,7 +3344,10 @@ let create_faq_request_to_yojson (x : create_faq_request) =
   assoc_to_yojson
     [
       ("LanguageCode", option_to_yojson language_code_to_yojson x.language_code);
-      ("ClientToken", option_to_yojson client_token_name_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (client_token_name_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("FileFormat", option_to_yojson faq_file_format_to_yojson x.file_format);
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);
       ("RoleArn", Some (role_arn_to_yojson x.role_arn));
@@ -3351,7 +3363,10 @@ let create_experience_response_to_yojson (x : create_experience_response) =
 let create_experience_request_to_yojson (x : create_experience_request) =
   assoc_to_yojson
     [
-      ("ClientToken", option_to_yojson client_token_name_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (client_token_name_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("Description", option_to_yojson description_to_yojson x.description);
       ("Configuration", option_to_yojson experience_configuration_to_yojson x.configuration);
       ("RoleArn", option_to_yojson role_arn_to_yojson x.role_arn);
@@ -3369,7 +3384,10 @@ let create_data_source_request_to_yojson (x : create_data_source_request) =
         option_to_yojson custom_document_enrichment_configuration_to_yojson
           x.custom_document_enrichment_configuration );
       ("LanguageCode", option_to_yojson language_code_to_yojson x.language_code);
-      ("ClientToken", option_to_yojson client_token_name_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (client_token_name_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);
       ("RoleArn", option_to_yojson role_arn_to_yojson x.role_arn);
       ("Schedule", option_to_yojson scan_schedule_to_yojson x.schedule);
@@ -3390,7 +3408,10 @@ let create_access_control_configuration_request_to_yojson
     (x : create_access_control_configuration_request) =
   assoc_to_yojson
     [
-      ("ClientToken", option_to_yojson client_token_name_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (client_token_name_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ( "HierarchicalAccessControlList",
         option_to_yojson hierarchical_principal_list_to_yojson x.hierarchical_access_control_list );
       ("AccessControlList", option_to_yojson principal_list_to_yojson x.access_control_list);

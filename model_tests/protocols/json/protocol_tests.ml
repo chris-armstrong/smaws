@@ -244,8 +244,354 @@ let endpoint_with_host_label_operation_test_suite : unit Alcotest.test =
 let fractional_seconds_test_suite : unit Alcotest.test =
   ("aws.protocoltests.json#FractionalSeconds", [])
 
+let aws_json11_complex_error () =
+  Eio.Switch.run ~name:"AwsJson11ComplexError" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "{\n\
+         \    \"__type\": \"ComplexError\",\n\
+         \    \"TopLevel\": \"Top level\",\n\
+         \    \"Nested\": {\n\
+         \        \"Foo\": \"bar\"\n\
+         \    }\n\
+          }")
+    ~status:400
+    ~headers:[ ("Content-Type", "application/x-amz-json-1.1") ]
+    ();
+  let response = GreetingWithErrors.request ctx () in
+  match response with
+  | Error (`ComplexError e) ->
+      let expected =
+        ({ nested = Some { foo = Some "bar" }; top_level = Some "Top level" } : Types.complex_error)
+      in
+      check
+        (Alcotest_http.testable_nan_aware Types.pp_complex_error Types.equal_complex_error)
+        "expected error" expected e
+  | Error other -> failwith (GreetingWithErrors.error_to_string other)
+  | Ok _ -> failwith "expected an error response, got Ok"
+
+let aws_json11_empty_complex_error () =
+  Eio.Switch.run ~name:"AwsJson11EmptyComplexError" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response ?body:(Some "{\n    \"__type\": \"ComplexError\"\n}") ~status:400
+    ~headers:[ ("Content-Type", "application/x-amz-json-1.1") ]
+    ();
+  let response = GreetingWithErrors.request ctx () in
+  match response with
+  | Error (`ComplexError e) ->
+      let expected = ({ nested = None; top_level = None } : Types.complex_error) in
+      check
+        (Alcotest_http.testable_nan_aware Types.pp_complex_error Types.equal_complex_error)
+        "expected error" expected e
+  | Error other -> failwith (GreetingWithErrors.error_to_string other)
+  | Ok _ -> failwith "expected an error response, got Ok"
+
+let aws_json11_foo_error_using_x_amzn_error_type () =
+  Eio.Switch.run ~name:"AwsJson11FooErrorUsingXAmznErrorType" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response ?body:None ~status:500 ~headers:[ ("X-Amzn-Errortype", "FooError") ] ();
+  let response = GreetingWithErrors.request ctx () in
+  match response with
+  | Error (`FooError e) ->
+      let expected = (() : Types.foo_error) in
+      check
+        (Alcotest_http.testable_nan_aware Types.pp_foo_error Types.equal_foo_error)
+        "expected error" expected e
+  | Error other -> failwith (GreetingWithErrors.error_to_string other)
+  | Ok _ -> failwith "expected an error response, got Ok"
+
+let aws_json11_foo_error_using_x_amzn_error_type_with_uri () =
+  Eio.Switch.run ~name:"AwsJson11FooErrorUsingXAmznErrorTypeWithUri" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response ?body:None ~status:500
+    ~headers:
+      [
+        ("X-Amzn-Errortype", "FooError:http://internal.amazon.com/coral/com.amazon.coral.validate/");
+      ]
+    ();
+  let response = GreetingWithErrors.request ctx () in
+  match response with
+  | Error (`FooError e) ->
+      let expected = (() : Types.foo_error) in
+      check
+        (Alcotest_http.testable_nan_aware Types.pp_foo_error Types.equal_foo_error)
+        "expected error" expected e
+  | Error other -> failwith (GreetingWithErrors.error_to_string other)
+  | Ok _ -> failwith "expected an error response, got Ok"
+
+let aws_json11_foo_error_using_x_amzn_error_type_with_uri_and_namespace () =
+  Eio.Switch.run ~name:"AwsJson11FooErrorUsingXAmznErrorTypeWithUriAndNamespace" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response ?body:None ~status:500
+    ~headers:
+      [
+        ( "X-Amzn-Errortype",
+          "aws.protocoltests.json#FooError:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+        );
+      ]
+    ();
+  let response = GreetingWithErrors.request ctx () in
+  match response with
+  | Error (`FooError e) ->
+      let expected = (() : Types.foo_error) in
+      check
+        (Alcotest_http.testable_nan_aware Types.pp_foo_error Types.equal_foo_error)
+        "expected error" expected e
+  | Error other -> failwith (GreetingWithErrors.error_to_string other)
+  | Ok _ -> failwith "expected an error response, got Ok"
+
+let aws_json11_foo_error_using_code () =
+  Eio.Switch.run ~name:"AwsJson11FooErrorUsingCode" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response ?body:(Some "{\n    \"code\": \"FooError\"\n}") ~status:500
+    ~headers:[ ("Content-Type", "application/x-amz-json-1.1") ]
+    ();
+  let response = GreetingWithErrors.request ctx () in
+  match response with
+  | Error (`FooError e) ->
+      let expected = (() : Types.foo_error) in
+      check
+        (Alcotest_http.testable_nan_aware Types.pp_foo_error Types.equal_foo_error)
+        "expected error" expected e
+  | Error other -> failwith (GreetingWithErrors.error_to_string other)
+  | Ok _ -> failwith "expected an error response, got Ok"
+
+let aws_json11_foo_error_using_code_and_namespace () =
+  Eio.Switch.run ~name:"AwsJson11FooErrorUsingCodeAndNamespace" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response ?body:(Some "{\n    \"code\": \"aws.protocoltests.json#FooError\"\n}")
+    ~status:500
+    ~headers:[ ("Content-Type", "application/x-amz-json-1.1") ]
+    ();
+  let response = GreetingWithErrors.request ctx () in
+  match response with
+  | Error (`FooError e) ->
+      let expected = (() : Types.foo_error) in
+      check
+        (Alcotest_http.testable_nan_aware Types.pp_foo_error Types.equal_foo_error)
+        "expected error" expected e
+  | Error other -> failwith (GreetingWithErrors.error_to_string other)
+  | Ok _ -> failwith "expected an error response, got Ok"
+
+let aws_json11_foo_error_using_code_uri_and_namespace () =
+  Eio.Switch.run ~name:"AwsJson11FooErrorUsingCodeUriAndNamespace" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "{\n\
+         \    \"code\": \
+          \"aws.protocoltests.json#FooError:http://internal.amazon.com/coral/com.amazon.coral.validate/\"\n\
+          }")
+    ~status:500
+    ~headers:[ ("Content-Type", "application/x-amz-json-1.1") ]
+    ();
+  let response = GreetingWithErrors.request ctx () in
+  match response with
+  | Error (`FooError e) ->
+      let expected = (() : Types.foo_error) in
+      check
+        (Alcotest_http.testable_nan_aware Types.pp_foo_error Types.equal_foo_error)
+        "expected error" expected e
+  | Error other -> failwith (GreetingWithErrors.error_to_string other)
+  | Ok _ -> failwith "expected an error response, got Ok"
+
+let aws_json11_foo_error_with_dunder_type () =
+  Eio.Switch.run ~name:"AwsJson11FooErrorWithDunderType" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response ?body:(Some "{\n    \"__type\": \"FooError\"\n}") ~status:500
+    ~headers:[ ("Content-Type", "application/x-amz-json-1.1") ]
+    ();
+  let response = GreetingWithErrors.request ctx () in
+  match response with
+  | Error (`FooError e) ->
+      let expected = (() : Types.foo_error) in
+      check
+        (Alcotest_http.testable_nan_aware Types.pp_foo_error Types.equal_foo_error)
+        "expected error" expected e
+  | Error other -> failwith (GreetingWithErrors.error_to_string other)
+  | Ok _ -> failwith "expected an error response, got Ok"
+
+let aws_json11_foo_error_with_dunder_type_and_namespace () =
+  Eio.Switch.run ~name:"AwsJson11FooErrorWithDunderTypeAndNamespace" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response ?body:(Some "{\n    \"__type\": \"aws.protocoltests.json#FooError\"\n}")
+    ~status:500
+    ~headers:[ ("Content-Type", "application/x-amz-json-1.1") ]
+    ();
+  let response = GreetingWithErrors.request ctx () in
+  match response with
+  | Error (`FooError e) ->
+      let expected = (() : Types.foo_error) in
+      check
+        (Alcotest_http.testable_nan_aware Types.pp_foo_error Types.equal_foo_error)
+        "expected error" expected e
+  | Error other -> failwith (GreetingWithErrors.error_to_string other)
+  | Ok _ -> failwith "expected an error response, got Ok"
+
+let aws_json11_foo_error_with_dunder_type_and_different_namespace () =
+  Eio.Switch.run ~name:"AwsJson11FooErrorWithDunderTypeAndDifferentNamespace" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response ?body:(Some "{\n    \"__type\": \"aws.different.namespace#FooError\"\n}")
+    ~status:500
+    ~headers:[ ("Content-Type", "application/x-amz-json-1.1") ]
+    ();
+  let response = GreetingWithErrors.request ctx () in
+  match response with
+  | Error (`FooError e) ->
+      let expected = (() : Types.foo_error) in
+      check
+        (Alcotest_http.testable_nan_aware Types.pp_foo_error Types.equal_foo_error)
+        "expected error" expected e
+  | Error other -> failwith (GreetingWithErrors.error_to_string other)
+  | Ok _ -> failwith "expected an error response, got Ok"
+
+let aws_json11_foo_error_with_dunder_type_uri_and_namespace () =
+  Eio.Switch.run ~name:"AwsJson11FooErrorWithDunderTypeUriAndNamespace" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "{\n\
+         \    \"__type\": \
+          \"aws.protocoltests.json#FooError:http://internal.amazon.com/coral/com.amazon.coral.validate/\"\n\
+          }")
+    ~status:500
+    ~headers:[ ("Content-Type", "application/x-amz-json-1.1") ]
+    ();
+  let response = GreetingWithErrors.request ctx () in
+  match response with
+  | Error (`FooError e) ->
+      let expected = (() : Types.foo_error) in
+      check
+        (Alcotest_http.testable_nan_aware Types.pp_foo_error Types.equal_foo_error)
+        "expected error" expected e
+  | Error other -> failwith (GreetingWithErrors.error_to_string other)
+  | Ok _ -> failwith "expected an error response, got Ok"
+
+let aws_json11_foo_error_with_nested_type_property () =
+  Eio.Switch.run ~name:"AwsJson11FooErrorWithNestedTypeProperty" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:
+      (Some
+         "{\n\
+         \    \"__type\": \"aws.protocoltests.json#FooError\",\n\
+         \    \"ErrorDetails\": [\n\
+         \      {\n\
+         \          \"__type\": \"com.amazon.internal#ErrorDetails\",\n\
+         \          \"reason\": \"Some reason\"\n\
+         \      }\n\
+         \    ]\n\
+          }")
+    ~status:500
+    ~headers:[ ("Content-Type", "application/x-amz-json-1.1") ]
+    ();
+  let response = GreetingWithErrors.request ctx () in
+  match response with
+  | Error (`FooError e) ->
+      let expected = (() : Types.foo_error) in
+      check
+        (Alcotest_http.testable_nan_aware Types.pp_foo_error Types.equal_foo_error)
+        "expected error" expected e
+  | Error other -> failwith (GreetingWithErrors.error_to_string other)
+  | Ok _ -> failwith "expected an error response, got Ok"
+
+let aws_json11_invalid_greeting_error () =
+  Eio.Switch.run ~name:"AwsJson11InvalidGreetingError" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  Mock.mock_response
+    ?body:(Some "{\n    \"__type\": \"InvalidGreeting\",\n    \"Message\": \"Hi\"\n}") ~status:400
+    ~headers:[ ("Content-Type", "application/x-amz-json-1.1") ]
+    ();
+  let response = GreetingWithErrors.request ctx () in
+  match response with
+  | Error (`InvalidGreeting e) ->
+      let expected = ({ message = Some "Hi" } : Types.invalid_greeting) in
+      check
+        (Alcotest_http.testable_nan_aware Types.pp_invalid_greeting Types.equal_invalid_greeting)
+        "expected error" expected e
+  | Error other -> failwith (GreetingWithErrors.error_to_string other)
+  | Ok _ -> failwith "expected an error response, got Ok"
+
 let greeting_with_errors_test_suite : unit Alcotest.test =
-  ("aws.protocoltests.json#GreetingWithErrors", [])
+  ( "aws.protocoltests.json#GreetingWithErrors",
+    [
+      ("AwsJson11ComplexError", `Quick, aws_json11_complex_error);
+      ("AwsJson11EmptyComplexError", `Quick, aws_json11_empty_complex_error);
+      ("AwsJson11FooErrorUsingXAmznErrorType", `Quick, aws_json11_foo_error_using_x_amzn_error_type);
+      ( "AwsJson11FooErrorUsingXAmznErrorTypeWithUri",
+        `Quick,
+        aws_json11_foo_error_using_x_amzn_error_type_with_uri );
+      ( "AwsJson11FooErrorUsingXAmznErrorTypeWithUriAndNamespace",
+        `Quick,
+        aws_json11_foo_error_using_x_amzn_error_type_with_uri_and_namespace );
+      ("AwsJson11FooErrorUsingCode", `Quick, aws_json11_foo_error_using_code);
+      ( "AwsJson11FooErrorUsingCodeAndNamespace",
+        `Quick,
+        aws_json11_foo_error_using_code_and_namespace );
+      ( "AwsJson11FooErrorUsingCodeUriAndNamespace",
+        `Quick,
+        aws_json11_foo_error_using_code_uri_and_namespace );
+      ("AwsJson11FooErrorWithDunderType", `Quick, aws_json11_foo_error_with_dunder_type);
+      ( "AwsJson11FooErrorWithDunderTypeAndNamespace",
+        `Quick,
+        aws_json11_foo_error_with_dunder_type_and_namespace );
+      ( "AwsJson11FooErrorWithDunderTypeAndDifferentNamespace",
+        `Quick,
+        aws_json11_foo_error_with_dunder_type_and_different_namespace );
+      ( "AwsJson11FooErrorWithDunderTypeUriAndNamespace",
+        `Quick,
+        aws_json11_foo_error_with_dunder_type_uri_and_namespace );
+      ( "AwsJson11FooErrorWithNestedTypeProperty",
+        `Quick,
+        aws_json11_foo_error_with_nested_type_property );
+      ("AwsJson11InvalidGreetingError", `Quick, aws_json11_invalid_greeting_error);
+    ] )
 
 let aws_json11_host_with_path () =
   Eio.Switch.run ~name:"AwsJson11HostWithPath" @@ fun sw ->
@@ -1537,7 +1883,7 @@ let serializes_long_shapes () =
       map_of_strings = None;
       map_of_maps = None;
       map_of_lists_of_strings = None;
-      long = Some 999999999999;
+      long = Some (Smaws_Lib.CoreTypes.Int64.of_int 999999999999);
       list_of_structs = None;
       list_of_strings = None;
       list_of_maps_of_strings = None;
@@ -3927,7 +4273,7 @@ let parses_long_shapes () =
            map_of_strings = None;
            map_of_maps = None;
            map_of_lists_of_strings = None;
-           long = Some 1234567890123456789;
+           long = Some (Smaws_Lib.CoreTypes.Int64.of_int 1234567890123456789);
            list_of_structs = None;
            list_of_strings = None;
            list_of_maps_of_strings = None;

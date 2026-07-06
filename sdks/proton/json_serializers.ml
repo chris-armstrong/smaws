@@ -426,7 +426,10 @@ let client_token_to_yojson = string_to_yojson
 let update_service_instance_input_to_yojson (x : update_service_instance_input) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ( "templateMinorVersion",
         option_to_yojson template_version_part_to_yojson x.template_minor_version );
       ( "templateMajorVersion",
@@ -710,7 +713,10 @@ let template_file_contents_to_yojson = string_to_yojson
 let update_component_input_to_yojson (x : update_component_input) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("templateFile", option_to_yojson template_file_contents_to_yojson x.template_file);
       ("serviceSpec", option_to_yojson spec_contents_to_yojson x.service_spec);
       ( "serviceInstanceName",
@@ -2128,7 +2134,10 @@ let create_service_template_version_input_to_yojson (x : create_service_template
       ("majorVersion", option_to_yojson template_version_part_to_yojson x.major_version);
       ("description", option_to_yojson description_to_yojson x.description);
       ("templateName", Some (resource_name_to_yojson x.template_name));
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
     ]
 
 let create_service_template_output_to_yojson (x : create_service_template_output) =
@@ -2168,7 +2177,10 @@ let create_service_instance_output_to_yojson (x : create_service_instance_output
 let create_service_instance_input_to_yojson (x : create_service_instance_input) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("tags", option_to_yojson tag_list_to_yojson x.tags);
       ( "templateMinorVersion",
         option_to_yojson template_version_part_to_yojson x.template_minor_version );
@@ -2225,7 +2237,10 @@ let create_environment_template_version_input_to_yojson
       ("majorVersion", option_to_yojson template_version_part_to_yojson x.major_version);
       ("description", option_to_yojson description_to_yojson x.description);
       ("templateName", Some (resource_name_to_yojson x.template_name));
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
     ]
 
 let create_environment_template_output_to_yojson (x : create_environment_template_output) =
@@ -2285,7 +2300,10 @@ let create_environment_account_connection_input_to_yojson
       ("environmentName", Some (resource_name_to_yojson x.environment_name));
       ("roleArn", option_to_yojson role_arn_to_yojson x.role_arn);
       ("managementAccountId", Some (aws_account_id_to_yojson x.management_account_id));
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
     ]
 
 let create_component_output_to_yojson (x : create_component_output) =
@@ -2294,7 +2312,10 @@ let create_component_output_to_yojson (x : create_component_output) =
 let create_component_input_to_yojson (x : create_component_input) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("tags", option_to_yojson tag_list_to_yojson x.tags);
       ("serviceSpec", option_to_yojson spec_contents_to_yojson x.service_spec);
       ("manifest", Some (template_manifest_contents_to_yojson x.manifest));

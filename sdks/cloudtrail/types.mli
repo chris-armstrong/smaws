@@ -1219,7 +1219,7 @@ type nonrec import_status =
   | INITIALIZING [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec long = int [@@ocaml.doc ""]
+type nonrec long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec import_statistics = {
   failed_entries : long option; [@ocaml.doc " The number of failed entries. \n"]

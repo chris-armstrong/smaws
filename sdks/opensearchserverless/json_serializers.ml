@@ -114,7 +114,10 @@ let client_token_to_yojson = string_to_yojson
 let update_vpc_endpoint_request_to_yojson (x : update_vpc_endpoint_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ( "removeSecurityGroupIds",
         option_to_yojson security_group_ids_to_yojson x.remove_security_group_ids );
       ("addSecurityGroupIds", option_to_yojson security_group_ids_to_yojson x.add_security_group_ids);
@@ -169,7 +172,10 @@ let policy_document_to_yojson = string_to_yojson
 let update_security_policy_request_to_yojson (x : update_security_policy_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("policy", option_to_yojson policy_document_to_yojson x.policy);
       ("description", option_to_yojson policy_description_to_yojson x.description);
       ("policyVersion", Some (policy_version_to_yojson x.policy_version));
@@ -297,7 +303,10 @@ let update_iam_identity_center_config_options_to_yojson
 let update_security_config_request_to_yojson (x : update_security_config_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ( "iamFederationOptions",
         option_to_yojson iam_federation_config_options_to_yojson x.iam_federation_options );
       ( "iamIdentityCenterOptionsUpdates",
@@ -337,7 +346,10 @@ let update_lifecycle_policy_response_to_yojson (x : update_lifecycle_policy_resp
 let update_lifecycle_policy_request_to_yojson (x : update_lifecycle_policy_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("policy", option_to_yojson policy_document_to_yojson x.policy);
       ("description", option_to_yojson policy_description_to_yojson x.description);
       ("policyVersion", Some (policy_version_to_yojson x.policy_version));
@@ -407,7 +419,10 @@ let update_collection_response_to_yojson (x : update_collection_response) =
 let update_collection_request_to_yojson (x : update_collection_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("deletionProtection", option_to_yojson deletion_protection_to_yojson x.deletion_protection);
       ("vectorOptions", option_to_yojson vector_options_to_yojson x.vector_options);
       ( "description",
@@ -471,7 +486,10 @@ let update_collection_group_response_to_yojson (x : update_collection_group_resp
 let update_collection_group_request_to_yojson (x : update_collection_group_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ( "capacityLimits",
         option_to_yojson collection_group_capacity_limits_to_yojson x.capacity_limits );
       ( "description",
@@ -532,7 +550,10 @@ let update_access_policy_response_to_yojson (x : update_access_policy_response) 
 let update_access_policy_request_to_yojson (x : update_access_policy_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("policy", option_to_yojson policy_document_to_yojson x.policy);
       ("description", option_to_yojson policy_description_to_yojson x.description);
       ("policyVersion", Some (policy_version_to_yojson x.policy_version));
@@ -680,7 +701,10 @@ let create_security_policy_response_to_yojson (x : create_security_policy_respon
 let create_security_policy_request_to_yojson (x : create_security_policy_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("policy", Some (policy_document_to_yojson x.policy));
       ("description", option_to_yojson policy_description_to_yojson x.description);
       ("name", Some (policy_name_to_yojson x.name));
@@ -697,7 +721,10 @@ let create_lifecycle_policy_response_to_yojson (x : create_lifecycle_policy_resp
 let create_lifecycle_policy_request_to_yojson (x : create_lifecycle_policy_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("policy", Some (policy_document_to_yojson x.policy));
       ("description", option_to_yojson policy_description_to_yojson x.description);
       ("name", Some (policy_name_to_yojson x.name));
@@ -1267,7 +1294,10 @@ let delete_vpc_endpoint_response_to_yojson (x : delete_vpc_endpoint_response) =
 let delete_vpc_endpoint_request_to_yojson (x : delete_vpc_endpoint_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("id", Some (vpc_endpoint_id_to_yojson x.id));
     ]
 
@@ -1276,7 +1306,10 @@ let delete_security_policy_response_to_yojson = unit_to_yojson
 let delete_security_policy_request_to_yojson (x : delete_security_policy_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("name", Some (policy_name_to_yojson x.name));
       ("type", Some (security_policy_type_to_yojson x.type_));
     ]
@@ -1286,7 +1319,10 @@ let delete_security_config_response_to_yojson = unit_to_yojson
 let delete_security_config_request_to_yojson (x : delete_security_config_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("id", Some (security_config_id_to_yojson x.id));
     ]
 
@@ -1295,7 +1331,10 @@ let delete_lifecycle_policy_response_to_yojson = unit_to_yojson
 let delete_lifecycle_policy_request_to_yojson (x : delete_lifecycle_policy_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("name", Some (policy_name_to_yojson x.name));
       ("type", Some (lifecycle_policy_type_to_yojson x.type_));
     ]
@@ -1328,7 +1367,10 @@ let delete_collection_response_to_yojson (x : delete_collection_response) =
 let delete_collection_request_to_yojson (x : delete_collection_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("id", Some (collection_id_to_yojson x.id));
     ]
 
@@ -1337,7 +1379,10 @@ let delete_collection_group_response_to_yojson = unit_to_yojson
 let delete_collection_group_request_to_yojson (x : delete_collection_group_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("id", Some (collection_group_id_to_yojson x.id));
     ]
 
@@ -1346,7 +1391,10 @@ let delete_access_policy_response_to_yojson = unit_to_yojson
 let delete_access_policy_request_to_yojson (x : delete_access_policy_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("name", Some (policy_name_to_yojson x.name));
       ("type", Some (access_policy_type_to_yojson x.type_));
     ]
@@ -1369,7 +1417,10 @@ let create_vpc_endpoint_response_to_yojson (x : create_vpc_endpoint_response) =
 let create_vpc_endpoint_request_to_yojson (x : create_vpc_endpoint_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("securityGroupIds", option_to_yojson security_group_ids_to_yojson x.security_group_ids);
       ("subnetIds", Some (subnet_ids_to_yojson x.subnet_ids));
       ("vpcId", Some (vpc_id_to_yojson x.vpc_id));
@@ -1399,7 +1450,10 @@ let create_iam_identity_center_config_options_to_yojson
 let create_security_config_request_to_yojson (x : create_security_config_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ( "iamFederationOptions",
         option_to_yojson iam_federation_config_options_to_yojson x.iam_federation_options );
       ( "iamIdentityCenterOptions",
@@ -1455,7 +1509,10 @@ let create_collection_response_to_yojson (x : create_collection_response) =
 let create_collection_request_to_yojson (x : create_collection_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("deletionProtection", option_to_yojson deletion_protection_to_yojson x.deletion_protection);
       ("encryptionConfig", option_to_yojson encryption_config_to_yojson x.encryption_config);
       ( "collectionGroupName",
@@ -1497,7 +1554,10 @@ let create_collection_group_response_to_yojson (x : create_collection_group_resp
 let create_collection_group_request_to_yojson (x : create_collection_group_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("generation", option_to_yojson serverless_generation_to_yojson x.generation);
       ( "capacityLimits",
         option_to_yojson collection_group_capacity_limits_to_yojson x.capacity_limits );
@@ -1517,7 +1577,10 @@ let create_access_policy_response_to_yojson (x : create_access_policy_response) 
 let create_access_policy_request_to_yojson (x : create_access_policy_request) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("policy", Some (policy_document_to_yojson x.policy));
       ("description", option_to_yojson policy_description_to_yojson x.description);
       ("name", Some (policy_name_to_yojson x.name));

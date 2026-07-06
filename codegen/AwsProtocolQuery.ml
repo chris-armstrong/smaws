@@ -70,11 +70,12 @@ module Serialiser = struct
       ?(shape_traits : Trait.t list option = None) target_name =
     match target_name with
     | "smithy.api#String" | "smithy.api#Unit" -> Some "string_field"
-    | "smithy.api#Integer" | "smithy.api#Byte" | "smithy.api#Short" | "smithy.api#Long"
-    | "smithy.api#BigInteger" ->
-        Some "int_field"
+    | "smithy.api#Integer" | "smithy.api#Byte" | "smithy.api#Short" -> Some "int_field"
+    | "smithy.api#Long" -> Some "long_field"
+    | "smithy.api#BigInteger" -> Some "big_int_field"
+    | "smithy.api#BigDecimal" -> Some "big_decimal_field"
     | "smithy.api#Boolean" -> Some "bool_field"
-    | "smithy.api#Float" | "smithy.api#Double" | "smithy.api#BigDecimal" -> Some "float_field"
+    | "smithy.api#Float" | "smithy.api#Double" -> Some "float_field"
     | "smithy.api#Blob" -> Some "blob_field"
     | "smithy.api#Timestamp" ->
         let fmt = resolve_timestamp_format ~member_traits ~shape_traits () in
@@ -158,6 +159,7 @@ module Serialiser = struct
   let generate_member_expr ~namespace_resolver ~shape_resolver (mem : Shape.member) =
     let open Trait in
     let is_required = hasTrait mem.traits isRequiredTrait in
+    let is_idempotency_token = hasTrait mem.traits isIdempotencyTokenTrait in
     let xml_key = xml_name mem.traits mem.name in
     let path_expr = path_append path_ident xml_key in
     let field_access =
@@ -173,9 +175,18 @@ module Serialiser = struct
         member_value_expr ~namespace_resolver ~shape_resolver ~member_traits ~shape_traits
           ~path_expr v_expr mem.target
       in
+      let none_rhs =
+        if is_idempotency_token then
+          inner_expr
+            (B.pexp_apply
+               (B.pexp_ident
+                  (Location.mknoloc (make_lident ~names:[ "Smaws_Lib"; "Uuid"; "generate" ])))
+               [ (Nolabel, unit_expr) ])
+        else B.elist []
+      in
       B.pexp_match field_access
         [
-          B.case ~lhs:(B.ppat_construct (lident_noloc "None") None) ~guard:None ~rhs:(B.elist []);
+          B.case ~lhs:(B.ppat_construct (lident_noloc "None") None) ~guard:None ~rhs:none_rhs;
           B.case
             ~lhs:(B.ppat_construct (lident_noloc "Some") (Some (B.ppat_var (Location.mknoloc "v"))))
             ~guard:None
@@ -347,8 +358,10 @@ module Serialiser = struct
                (exp_fun_untyped "v"
                   (serialize_call helper [ (Nolabel, exp_ident "path"); (Nolabel, exp_ident "v") ]))))
         else Some (primitive_field_lambda "string_field")
-    | IntegerShape _ | LongShape _ | ShortShape _ | ByteShape _ ->
-        Some (primitive_field_lambda "int_field")
+    | IntegerShape _ | ShortShape _ | ByteShape _ -> Some (primitive_field_lambda "int_field")
+    | LongShape _ -> Some (primitive_field_lambda "long_field")
+    | BigIntegerShape _ -> Some (primitive_field_lambda "big_int_field")
+    | BigDecimalShape _ -> Some (primitive_field_lambda "big_decimal_field")
     | BooleanShape _ -> Some (primitive_field_lambda "bool_field")
     | FloatShape _ | DoubleShape _ -> Some (primitive_field_lambda "float_field")
     | BlobShape _ -> Some (primitive_field_lambda "blob_field")
@@ -465,12 +478,32 @@ module Deserialiser = struct
   let parse_primitive_from_string target_name str_expr =
     match target_name with
     | "smithy.api#String" -> Some str_expr
-    | "smithy.api#Integer" | "smithy.api#Byte" | "smithy.api#Short" | "smithy.api#Long"
-    | "smithy.api#BigInteger" ->
+    | "smithy.api#Integer" | "smithy.api#Byte" | "smithy.api#Short" ->
         Some (B.pexp_apply (exp_ident "int_of_string") [ (Nolabel, str_expr) ])
+    | "smithy.api#Long" ->
+        Some
+          (B.pexp_apply
+             (B.pexp_ident
+                (Location.mknoloc
+                   (make_lident ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "of_string" ])))
+             [ (Nolabel, str_expr) ])
+    | "smithy.api#BigInteger" ->
+        Some
+          (B.pexp_apply
+             (B.pexp_ident
+                (Location.mknoloc
+                   (make_lident ~names:[ "Smaws_Lib"; "CoreTypes"; "BigInt"; "of_string" ])))
+             [ (Nolabel, str_expr) ])
+    | "smithy.api#BigDecimal" ->
+        Some
+          (B.pexp_apply
+             (B.pexp_ident
+                (Location.mknoloc
+                   (make_lident ~names:[ "Smaws_Lib"; "CoreTypes"; "BigDecimal"; "of_string" ])))
+             [ (Nolabel, str_expr) ])
     | "smithy.api#Boolean" ->
         Some (B.pexp_apply (exp_ident "bool_of_string") [ (Nolabel, str_expr) ])
-    | "smithy.api#Float" | "smithy.api#Double" | "smithy.api#BigDecimal" ->
+    | "smithy.api#Float" | "smithy.api#Double" ->
         Some (B.pexp_apply (exp_ident "float_of_string") [ (Nolabel, str_expr) ])
     | "smithy.api#Blob" ->
         Some
@@ -843,6 +876,8 @@ module Deserialiser = struct
         else Some (read_data_lambda ())
     | IntegerShape _ | LongShape _ | ShortShape _ | ByteShape _ ->
         Some (primitive_of_xml_lambda "int_of_string")
+    | BigIntegerShape _ -> Some (primitive_of_xml_lambda "big_int_of_string")
+    | BigDecimalShape _ -> Some (primitive_of_xml_lambda "big_decimal_of_string")
     | BooleanShape _ -> Some (primitive_of_xml_lambda "bool_of_string")
     | FloatShape _ | DoubleShape _ -> Some (primitive_of_xml_lambda "float_of_string")
     | BlobShape _ -> Some (primitive_of_xml_lambda "blob_of_string")

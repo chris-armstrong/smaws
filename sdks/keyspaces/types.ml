@@ -85,7 +85,7 @@ type nonrec column_definition_list = column_definition list [@@ocaml.doc ""]
 type nonrec throughput_mode = PAY_PER_REQUEST [@ocaml.doc ""] | PROVISIONED [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec capacity_units = int [@@ocaml.doc ""]
+type nonrec capacity_units = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec capacity_specification = {
   write_capacity_units : capacity_units option;

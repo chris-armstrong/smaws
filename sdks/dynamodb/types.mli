@@ -122,7 +122,7 @@ type nonrec witness_status =
   | CREATING [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec long_object = int [@@ocaml.doc ""]
+type nonrec long_object = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec warm_throughput = {
   write_units_per_second : long_object option;
@@ -260,7 +260,7 @@ type nonrec index_status =
   | CREATING [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec positive_long_object = int [@@ocaml.doc ""]
+type nonrec positive_long_object = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec boolean_object = bool [@@ocaml.doc ""]
 
@@ -623,7 +623,7 @@ type nonrec key_schema = key_schema_element list [@@ocaml.doc ""]
 
 type nonrec date = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
 
-type nonrec non_negative_long_object = int [@@ocaml.doc ""]
+type nonrec non_negative_long_object = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec provisioned_throughput_description = {
   write_capacity_units : non_negative_long_object option;
@@ -4304,7 +4304,7 @@ type nonrec source_table_feature_details = {
   "Contains the details of the features enabled on the table when the backup was created. For \
    example, LSIs, GSIs, streams, TTL. \n"]
 
-type nonrec item_count = int [@@ocaml.doc ""]
+type nonrec item_count = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec source_table_details = {
   billing_mode : billing_mode option;
@@ -5656,7 +5656,7 @@ type nonrec put_item_input = {
 }
 [@@ocaml.doc "Represents the input of a [PutItem] operation.\n"]
 
-type nonrec processed_item_count = int [@@ocaml.doc ""]
+type nonrec processed_item_count = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec prepared_statement_parameters = attribute_value list [@@ocaml.doc ""]
 
@@ -5739,7 +5739,7 @@ type nonrec parameterized_statements = parameterized_statement list [@@ocaml.doc
 
 type nonrec next_token_string = string [@@ocaml.doc ""]
 
-type nonrec long = int [@@ocaml.doc ""]
+type nonrec long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec list_tags_of_resource_output = {
   next_token : next_token_string option;
@@ -6015,7 +6015,7 @@ type nonrec backup_type =
   | USER [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec backup_size_bytes = int [@@ocaml.doc ""]
+type nonrec backup_size_bytes = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec backup_summary = {
   backup_size_bytes : backup_size_bytes option; [@ocaml.doc "Size of the backup in bytes.\n"]
@@ -6316,11 +6316,11 @@ type nonrec incremental_export_specification = {
 }
 [@@ocaml.doc "Optional object containing the parameters specific to an incremental export.\n"]
 
-type nonrec imported_item_count = int [@@ocaml.doc ""]
+type nonrec imported_item_count = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec client_token = string [@@ocaml.doc ""]
 
-type nonrec error_count = int [@@ocaml.doc ""]
+type nonrec error_count = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec failure_code = string [@@ocaml.doc ""]
 
@@ -6577,7 +6577,7 @@ type nonrec export_manifest = string [@@ocaml.doc ""]
 
 type nonrec export_format = ION [@ocaml.doc ""] | DYNAMODB_JSON [@ocaml.doc ""] [@@ocaml.doc ""]
 
-type nonrec billed_size_bytes = int [@@ocaml.doc ""]
+type nonrec billed_size_bytes = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec export_description = {
   incremental_export_specification : incremental_export_specification option;

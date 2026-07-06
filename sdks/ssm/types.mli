@@ -2773,7 +2773,7 @@ type nonrec unlabel_parameter_version_result = {
 
 type nonrec ps_parameter_name = string [@@ocaml.doc ""]
 
-type nonrec ps_parameter_version = int [@@ocaml.doc ""]
+type nonrec ps_parameter_version = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec unlabel_parameter_version_request = {
   labels : parameter_label_list;
@@ -2916,7 +2916,7 @@ type nonrec step_preview_map = (impact_type * integer) list [@@ocaml.doc ""]
 
 type nonrec automation_action_name = string [@@ocaml.doc ""]
 
-type nonrec long = int [@@ocaml.doc ""]
+type nonrec long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec automation_execution_status =
   | EXITED [@ocaml.doc ""]
@@ -10223,7 +10223,7 @@ type nonrec get_execution_preview_request = {
 }
 [@@ocaml.doc ""]
 
-type nonrec content_length = int [@@ocaml.doc ""]
+type nonrec content_length = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec attachment_hash = string [@@ocaml.doc ""]
 

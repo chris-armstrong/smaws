@@ -195,7 +195,7 @@ type nonrec unlink_developer_identity_input = {
 }
 [@@ocaml.doc "Input to the [UnlinkDeveloperIdentity] action.\n"]
 
-type nonrec token_duration = int [@@ocaml.doc ""]
+type nonrec token_duration = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec tag_resource_response = unit [@@ocaml.doc ""]
 

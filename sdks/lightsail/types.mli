@@ -125,7 +125,7 @@ type nonrec setup_history = {
 
 type nonrec setup_history_list = setup_history list [@@ocaml.doc ""]
 
-type nonrec long = int [@@ocaml.doc ""]
+type nonrec long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec integer = int [@@ocaml.doc ""]
 

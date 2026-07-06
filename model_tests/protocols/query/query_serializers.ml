@@ -285,7 +285,7 @@ let simple_scalar_xml_properties_output_to_query path (x : simple_scalar_xml_pro
       (match x.long_value with
       | None -> []
       | Some v ->
-          Smaws_Lib.Protocols.AwsQuery.Serialize.int_field (List.append path [ "longValue" ]) v);
+          Smaws_Lib.Protocols.AwsQuery.Serialize.long_field (List.append path [ "longValue" ]) v);
       (match x.integer_value with
       | None -> []
       | Some v ->
@@ -520,7 +520,9 @@ let query_idempotency_token_auto_fill_input_to_query path
   List.concat
     [
       (match x.token with
-      | None -> []
+      | None ->
+          Smaws_Lib.Protocols.AwsQuery.Serialize.string_field (List.append path [ "token" ])
+            (Smaws_Lib.Uuid.generate ())
       | Some v ->
           Smaws_Lib.Protocols.AwsQuery.Serialize.string_field (List.append path [ "token" ]) v);
     ]

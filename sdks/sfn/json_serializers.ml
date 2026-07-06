@@ -756,7 +756,10 @@ let client_token_to_yojson = string_to_yojson
 let redrive_execution_input_to_yojson (x : redrive_execution_input) =
   assoc_to_yojson
     [
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("executionArn", Some (arn_to_yojson x.execution_arn));
     ]
 

@@ -10,13 +10,34 @@ module B = Ppxlib.Ast_builder.Make (struct
 end)
 
 let dummy_expr = B.pexp_constant (Ppxlib.Ast.Pconst_integer ("5", None))
+
+let is_idempotency_autofill_test (request_test : Trait.httpRequestTest) =
+  String.is_suffix request_test.id ~suffix:"IdempotencyTokenAutoFill"
+  && not (String.is_suffix request_test.id ~suffix:"IdempotencyTokenAutoFillIsSet")
+
+let deterministic_idempotency_uuid = "00000000-0000-4000-8000-000000000000"
+
+let wrap_operation_call_for_idempotency request_test operation_call_expr =
+  if not (is_idempotency_autofill_test request_test) then operation_call_expr
+  else
+    B.pexp_apply
+      (B.pexp_ident
+         (Location.mknoloc (make_lident ~names:[ "Smaws_Lib"; "Uuid"; "with_generator" ])))
+      [
+        ( Nolabel,
+          B.pexp_fun Nolabel None
+            (B.ppat_var (Location.mknoloc "_"))
+            (const_str deterministic_idempotency_uuid) );
+        (Nolabel, B.pexp_fun Nolabel None (B.ppat_var (Location.mknoloc "()")) operation_call_expr);
+      ]
+
 let unit_expr = B.pexp_construct (Location.mknoloc Ppxlib.(Lident "()")) None
 
 (* Protocol test ids that are known to fail against the current runtime.
    They are emitted as skipped (the test body calls Alcotest.skip ()) so CI
-   stays green; remove a case once the underlying runtime gap is fixed. *)
-let is_skipped_test id =
-  match id with "QueryNoInputAndNoOutputWithResponseMetadata" -> true | _ -> false
+   stays green; remove a case once the underlying runtime gap is fixed.
+   Currently no tests are skipped. *)
+let is_skipped_test _id = false
 
 (* fun () -> Alcotest.skip (): marks a test case as skipped. Alcotest 1.9.1
    has no Skip speed variant, so skipping is done by calling skip from inside
@@ -84,7 +105,26 @@ and value_mapper ~shape_resolver ~target ~value =
   match (shape, value) with
   | StringShape _, `String str -> B.pexp_constant (Ppxlib.Ast.Pconst_string (str, loc, None))
   | IntegerShape _, `Int i -> B.pexp_constant (Ppxlib.Ast.Pconst_integer (Int.to_string i, None))
-  | LongShape _, `Int i -> B.pexp_constant (Ppxlib.Ast.Pconst_integer (Int.to_string i, None))
+  | LongShape _, `Int i ->
+      B.pexp_apply
+        (builtin_type_expr [ "Int64"; "of_int" ])
+        [ (Nolabel, B.pexp_constant (Ppxlib.Ast.Pconst_integer (Int.to_string i, None))) ]
+  | BigIntegerShape _, `Int i ->
+      B.pexp_apply
+        (builtin_type_expr [ "BigInt"; "of_int" ])
+        [ (Nolabel, B.pexp_constant (Ppxlib.Ast.Pconst_integer (Int.to_string i, None))) ]
+  | BigIntegerShape _, `String s ->
+      B.pexp_apply
+        (builtin_type_expr [ "BigInt"; "of_string" ])
+        [ (Nolabel, B.pexp_constant (Ppxlib.Ast.Pconst_string (s, loc, None))) ]
+  | BigDecimalShape _, `String s ->
+      B.pexp_apply
+        (builtin_type_expr [ "BigDecimal"; "of_string" ])
+        [ (Nolabel, B.pexp_constant (Ppxlib.Ast.Pconst_string (s, loc, None))) ]
+  | BigDecimalShape _, `Float f ->
+      B.pexp_apply
+        (builtin_type_expr [ "BigDecimal"; "of_string" ])
+        [ (Nolabel, B.pexp_constant (Ppxlib.Ast.Pconst_float (Float.to_string f, None))) ]
   | ShortShape _, `Int i -> B.pexp_constant (Ppxlib.Ast.Pconst_integer (Int.to_string i, None))
   | ByteShape _, `Int i -> B.pexp_constant (Ppxlib.Ast.Pconst_integer (Int.to_string i, None))
   | BooleanShape _, `Bool b ->
@@ -382,6 +422,11 @@ let make_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
       let operation_call_expr =
         make_operation_call_expr ~namespace_resolver ~shape_resolver ~operation_name
       in
+      let operation_call_expr =
+        wrap_operation_call_for_idempotency request_test
+          (B.pexp_apply operation_call_expr
+             [ (Nolabel, exp_ident "ctx"); (Nolabel, exp_ident "input") ])
+      in
       let request_body_test = make_request_body_test request_test.body in
       let error_to_string_expr = dummy_expr in
       let request_method_expected_expr = make_request_method_expected_expr request_test.method_ in
@@ -405,7 +450,7 @@ let make_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
           Mock.mock_response ?body:[%e response_body_expr] ~status:200
             ~headers:[ ("Content-Type", "application/json") ]
             ();
-          let response = [%e operation_call_expr] ctx input in
+          let response = [%e operation_call_expr] in
           match response with
           | Ok resp ->
               let request = Mock.last_request () in
@@ -579,6 +624,11 @@ let make_query_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output
       let operation_call_expr =
         make_operation_call_expr ~namespace_resolver ~shape_resolver ~operation_name
       in
+      let operation_call_expr =
+        wrap_operation_call_for_idempotency request_test
+          (B.pexp_apply operation_call_expr
+             [ (Nolabel, exp_ident "ctx"); (Nolabel, exp_ident "input") ])
+      in
       let request_body_test = make_query_request_body_test request_test.body in
       let request_method_expected_expr = make_request_method_expected_expr request_test.method_ in
       let request_uri_expected_expr = make_request_uri_expected_expr request_test.uri in
@@ -596,7 +646,7 @@ let make_query_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output
           let ctx = Smaws_Lib.Context.make ~config ~http_type () in
           let [%p input_pat] = [%e input_expr] in
           Mock.mock_response ~status:200 ~headers:[] ();
-          let _response = [%e operation_call_expr] ctx input in
+          let _response = [%e operation_call_expr] in
           let request = Mock.last_request () in
           let () = [%e request_body_test] in
           let () =
@@ -621,8 +671,6 @@ let bannedTests =
     "SDKAppendsGzipAndIgnoresHttpProvidedEncoding_awsJson1_1";
     "SDKAppliedContentEncoding_awsQuery";
     "SDKAppendsGzipAndIgnoresHttpProvidedEncoding_awsQuery";
-    (* idempotency token auto-fill is not yet implemented *)
-    "QueryProtocolIdempotencyTokenAutoFill";
   ]
 
 let is_query_service (service : Shape.serviceShapeDetails option) =
@@ -728,10 +776,8 @@ let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_conte
            let input_shape = input in
            let output_shape = output in
            let error_response_tests =
-             if query_protocol then
-               error_shape_response_tests ~query_protocol ~query_protocol_id ~shape_resolver
-                 operationShapeDetails
-             else []
+             error_shape_response_tests ~query_protocol ~query_protocol_id ~shape_resolver
+               operationShapeDetails
            in
            let request_test_functions =
              if query_protocol then
@@ -746,10 +792,8 @@ let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_conte
                ~operation_name:name http_response_protocols
            in
            let error_response_test_functions =
-             if query_protocol then
-               make_error_response_test_str ~namespace_resolver ~shape_resolver ~input_shape
-                 ~operation_name:name error_response_tests
-             else []
+             make_error_response_test_str ~namespace_resolver ~shape_resolver ~input_shape
+               ~operation_name:name error_response_tests
            in
            let test_case_functions =
              request_test_functions @ response_test_functions @ error_response_test_functions

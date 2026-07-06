@@ -56,8 +56,8 @@ tests) in `model_tests/protocols/query/`, mirroring what already exists for `aws
 | Phase 6 | ✅ Done | `sdkgen/gen_serialisers.ml`, `gen_deserialisers.ml`, `gen_operations.ml` wiring |
 | Phase 7 | ✅ Done | `sdkgen/gen_protocol_tests.ml` request + response + error-response test generation |
 | Phase 8 | ✅ Done | `smaws_test_support_lib/alcotest_http.ml` `input_body_form_testable` |
-| Phase 9 | ✅ Done | `model_tests/protocols/query/` (73 conformance tests passing) |
-| Xml.ml | ✅ Done | `Xml.Parse.Read.skip_element` / `skip_to_end` |
+| Phase 9 | ✅ Done | `model_tests/protocols/query/` (74 conformance tests passing; `QueryNoInputAndNoOutputWithResponseMetadata` unskipped after adding ResponseMetadata/no-result-wrapper support) |
+| Xml.ml | ✅ Done | `Xml.Parse.Read.skip_element` / `skip_to_end`; lenient namespace matching so responses without the expected xmlns still parse |
 
 ---
 
@@ -561,13 +561,13 @@ tests should also have one (initially empty, add as needed).
 These are acknowledged in `sdkgen/gen_protocol_tests.ml`'s `bannedTests` and
 documented here for visibility:
 
-- **Idempotency-token auto-fill** — `@idempotencyToken` members are not
-  auto-populated (`QueryProtocolIdempotencyTokenAutoFill` is banned).
 - **Request compression** — `@requestCompression` gzip is not implemented
   (`SDKAppliedContentEncoding_awsQuery`, `SDKAppendsGzipAndIgnoresHttpProvidedEncoding_awsQuery`
   are banned).
-- **awsJson error-response tests** — `make_error_response_test_str` is
-  awsQuery-only; awsJson error fixtures would need a JSON error reader.
+
+Note: numeric type handling for `smithy.api#Long`, `BigInteger`, `BigDecimal`, idempotency
+auto-fill, and awsJson error-response tests are tracked in the top-level `TODO.md`; they are
+not AwsQuery-specific and have been addressed separately.
 
 ## What's Out of Scope (for later)
 

@@ -12,7 +12,11 @@ module SerializeHelpers = struct
   let int_to_yojson (x : int) : t = `Int x
   let byte_to_yojson (x : int) : t = `Int x (* TODO: check number range *)
   let short_to_yojson (x : int) : t = `Int x (* TODO: check number range *)
-  let long_to_yojson (x : int) : t = `Int x (* TODO: check number range *)
+
+  let long_to_yojson (x : CoreTypes.Int64.t) : t =
+    if x >= CoreTypes.Int64.of_int min_int && x <= CoreTypes.Int64.of_int max_int then
+      `Int (CoreTypes.Int64.to_int x)
+    else `String (CoreTypes.Int64.to_string x)
 
   let float_to_yojson (x : float) : t =
     match x with
@@ -29,7 +33,7 @@ module SerializeHelpers = struct
     | _ -> `Float x
 
   let list_to_yojson (converter : 'a -> t) (x : 'a list) : t = `List (List.map converter x)
-  let big_int_to_yojson (x : int64) : t = `Int (Int64.to_int x)
+  let big_int_to_yojson (x : CoreTypes.BigInt.t) : t = `String (CoreTypes.BigInt.to_string x)
   let bool_to_yojson (x : bool) : t = `Bool x
   let json_to_yojson (x : t) = x
 
@@ -40,7 +44,9 @@ module SerializeHelpers = struct
          x)
 
   let blob_to_yojson (x : Bytes.t) : t = `String (Base64.encode_exn (Bytes.to_string x))
-  let big_decimal_to_yojson (x : string) : t = `String x
+
+  let big_decimal_to_yojson (x : CoreTypes.BigDecimal.t) : t =
+    `String (CoreTypes.BigDecimal.to_string x)
 
   let map_to_yojson (key_converter : 'k -> t) (value_converter : 'v -> t) (x : ('k * 'v) list) : t =
     `Assoc
@@ -161,7 +167,10 @@ module DeserializeHelpers = struct
     match tree with `Int x -> x | _ -> raise (deserialize_wrong_type_error path "int")
 
   let long_of_yojson (tree : t) path =
-    match tree with `Int x -> x | _ -> raise (deserialize_wrong_type_error path "long")
+    match tree with
+    | `Int x -> CoreTypes.Int64.of_int x
+    | `String s -> CoreTypes.Int64.of_string s
+    | _ -> raise (deserialize_wrong_type_error path "long")
 
   let float_of_yojson (tree : t) path =
     match tree with
@@ -186,7 +195,8 @@ module DeserializeHelpers = struct
 
   let big_int_of_yojson (tree : t) path =
     match tree with
-    | `Int x -> Int64.of_int x
+    | `Int x -> CoreTypes.BigInt.of_int x
+    | `String s -> CoreTypes.BigInt.of_string s
     | _ -> raise (deserialize_wrong_type_error path "bigint")
 
   let bool_of_yojson (tree : t) path =
@@ -212,7 +222,8 @@ module DeserializeHelpers = struct
 
   let big_decimal_of_yojson (tree : t) path =
     match tree with
-    | `String str -> str
+    | `String str -> CoreTypes.BigDecimal.of_string str
+    | `Float f -> CoreTypes.BigDecimal.of_string (Float.to_string f)
     | _ -> raise (deserialize_wrong_type_error path "bigdecimal")
 
   let timestamp_epoch_seconds_of_yojson (tree : t) path =

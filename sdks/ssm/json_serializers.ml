@@ -2282,7 +2282,10 @@ let register_task_with_maintenance_window_request_to_yojson
       ("AlarmConfiguration", option_to_yojson alarm_configuration_to_yojson x.alarm_configuration);
       ( "CutoffBehavior",
         option_to_yojson maintenance_window_task_cutoff_behavior_to_yojson x.cutoff_behavior );
-      ("ClientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("Description", option_to_yojson maintenance_window_description_to_yojson x.description);
       ("Name", option_to_yojson maintenance_window_name_to_yojson x.name);
       ("LoggingInfo", option_to_yojson logging_info_to_yojson x.logging_info);
@@ -2318,7 +2321,10 @@ let register_target_with_maintenance_window_request_to_yojson
     (x : register_target_with_maintenance_window_request) =
   assoc_to_yojson
     [
-      ("ClientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("Description", option_to_yojson maintenance_window_description_to_yojson x.description);
       ("Name", option_to_yojson maintenance_window_name_to_yojson x.name);
       ("OwnerInformation", option_to_yojson owner_information_to_yojson x.owner_information);
@@ -6378,7 +6384,9 @@ let delete_inventory_result_to_yojson (x : delete_inventory_result) =
 let delete_inventory_request_to_yojson (x : delete_inventory_request) =
   assoc_to_yojson
     [
-      ("ClientToken", option_to_yojson uui_d_to_yojson x.client_token);
+      ( "ClientToken",
+        Some (uui_d_to_yojson (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ())))
+      );
       ("DryRun", option_to_yojson dry_run_to_yojson x.dry_run);
       ( "SchemaDeleteOption",
         option_to_yojson inventory_schema_delete_option_to_yojson x.schema_delete_option );
@@ -6431,7 +6439,10 @@ let create_patch_baseline_request_to_yojson (x : create_patch_baseline_request) 
   assoc_to_yojson
     [
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);
-      ("ClientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ( "AvailableSecurityUpdatesComplianceStatus",
         option_to_yojson patch_compliance_status_to_yojson
           x.available_security_updates_compliance_status );
@@ -6497,7 +6508,10 @@ let create_maintenance_window_request_to_yojson (x : create_maintenance_window_r
   assoc_to_yojson
     [
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);
-      ("ClientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ( "AllowUnassociatedTargets",
         Some (maintenance_window_allow_unassociated_targets_to_yojson x.allow_unassociated_targets)
       );

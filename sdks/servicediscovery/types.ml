@@ -20,7 +20,7 @@ type nonrec record_type =
   | SRV [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec record_tt_l = int [@@ocaml.doc ""]
+type nonrec record_tt_l = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec dns_record = {
   tt_l : record_tt_l;
@@ -2128,7 +2128,7 @@ type nonrec request_limit_exceeded = { message : error_message option [@ocaml.do
    {{:https://docs.aws.amazon.com/cloud-map/latest/dg/throttling.html}Cloud Map API request \
    throttling quota} in the {i Cloud Map Developer Guide}.\n"]
 
-type nonrec revision = int [@@ocaml.doc ""]
+type nonrec revision = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec discover_instances_revision_response = {
   instances_revision : revision option;

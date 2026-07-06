@@ -215,7 +215,7 @@ type nonrec update_purchase_orders_output = unit [@@ocaml.doc ""]
 
 type nonrec resource_id = string [@@ocaml.doc ""]
 
-type nonrec charge_revision = int [@@ocaml.doc ""]
+type nonrec charge_revision = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec purchase_order_reference = string [@@ocaml.doc ""]
 

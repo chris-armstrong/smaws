@@ -1129,7 +1129,7 @@ type nonrec comparison_operator =
   | EQ [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec size = int [@@ocaml.doc ""]
+type nonrec size = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec size_constraint_statement = {
   text_transformations : text_transformations;
@@ -1885,9 +1885,9 @@ type nonrec regex_pattern_set_reference_statement = {
    When you update the referenced set, WAF automatically updates all rules that reference it.\n\
   \ "]
 
-type nonrec rate_limit = int [@@ocaml.doc ""]
+type nonrec rate_limit = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
-type nonrec evaluation_window_sec = int [@@ocaml.doc ""]
+type nonrec evaluation_window_sec = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec rate_based_statement_aggregate_key_type =
   | CONSTANT [@ocaml.doc ""]
@@ -3187,7 +3187,7 @@ type nonrec regex_match_statement = {
   "A rule statement used to search web request components for a match against a single regular \
    expression. \n"]
 
-type nonrec as_n = int [@@ocaml.doc ""]
+type nonrec as_n = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec asn_list = as_n list [@@ocaml.doc ""]
 
@@ -3913,7 +3913,7 @@ type nonrec visibility_config = {
 }
 [@@ocaml.doc "Defines and enables Amazon CloudWatch metrics and web request sample collection. \n"]
 
-type nonrec time_window_second = int [@@ocaml.doc ""]
+type nonrec time_window_second = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec immunity_time_property = {
   immunity_time : time_window_second;
@@ -4145,7 +4145,7 @@ type nonrec data_protection_config = {
   \  This is part of the data protection configuration for a web ACL. \n\
   \  "]
 
-type nonrec consumed_capacity = int [@@ocaml.doc ""]
+type nonrec consumed_capacity = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec firewall_manager_statement = {
   rule_group_reference_statement : rule_group_reference_statement option;
@@ -5485,7 +5485,7 @@ type nonrec percentage_value = float [@@ocaml.doc ""]
 
 type nonrec monetization_amount_value = string [@@ocaml.doc ""]
 
-type nonrec request_count = int [@@ocaml.doc ""]
+type nonrec request_count = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec source_statistics = {
   group_by_value : filter_string option;
@@ -5517,7 +5517,7 @@ type nonrec source_statistics_list = source_statistics list [@@ocaml.doc ""]
 
 type nonrec sort_order = DESC [@ocaml.doc ""] | ASC [@ocaml.doc ""] [@@ocaml.doc ""]
 
-type nonrec solve_timestamp = int [@@ocaml.doc ""]
+type nonrec solve_timestamp = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec settlement_status =
   | DUPLICATE [@ocaml.doc ""]
@@ -5675,7 +5675,7 @@ type nonrec http_request = {
    [Request] in the response syntax. [HTTPRequest] contains information about one of the web \
    requests. \n"]
 
-type nonrec sample_weight = int [@@ocaml.doc ""]
+type nonrec sample_weight = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec action = string [@@ocaml.doc ""]
 
@@ -5815,7 +5815,7 @@ type nonrec rule_group_summary = {
 
 type nonrec rule_group_summaries = rule_group_summary list [@@ocaml.doc ""]
 
-type nonrec capacity_unit = int [@@ocaml.doc ""]
+type nonrec capacity_unit = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec label_summary = {
   name : label_name option; [@ocaml.doc "An individual label specification.\n"]
@@ -6449,7 +6449,7 @@ type nonrec product_id = string [@@ocaml.doc ""]
 
 type nonrec product_description = string [@@ocaml.doc ""]
 
-type nonrec population_size = int [@@ocaml.doc ""]
+type nonrec population_size = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec platform = ANDROID [@ocaml.doc ""] | IOS [@ocaml.doc ""] [@@ocaml.doc ""]
 
@@ -7116,7 +7116,7 @@ type nonrec list_mobile_sdk_releases_request = {
 }
 [@@ocaml.doc ""]
 
-type nonrec list_max_items = int [@@ocaml.doc ""]
+type nonrec list_max_items = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec list_managed_rule_sets_response = {
   managed_rule_sets : managed_rule_set_summaries option;

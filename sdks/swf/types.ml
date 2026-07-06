@@ -273,7 +273,7 @@ type nonrec workflow_execution = {
 }
 [@@ocaml.doc "Represents a workflow execution.\n"]
 
-type nonrec event_id = int [@@ocaml.doc ""]
+type nonrec event_id = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec workflow_execution_started_event_attributes = {
   lambda_role : arn option; [@ocaml.doc "The IAM role attached to the workflow execution.\n"]

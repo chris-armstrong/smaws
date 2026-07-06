@@ -348,7 +348,10 @@ let send_agreement_payment_request_input_to_yojson (x : send_agreement_payment_r
       ("name", Some (payment_request_name_to_yojson x.name));
       ("termId", Some (term_id_to_yojson x.term_id));
       ("agreementId", Some (agreement_id_to_yojson x.agreement_id));
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
     ]
 
 let agreement_cancellation_request_id_to_yojson = string_to_yojson
@@ -398,7 +401,10 @@ let send_agreement_cancellation_request_input_to_yojson
     [
       ( "description",
         option_to_yojson agreement_cancellation_request_description_to_yojson x.description );
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("reasonCode", Some (agreement_cancellation_request_reason_code_to_yojson x.reason_code));
       ("agreementId", Some (agreement_id_to_yojson x.agreement_id));
     ]
@@ -1284,7 +1290,10 @@ let create_agreement_request_input_to_yojson (x : create_agreement_request_input
         option_to_yojson resource_id_to_yojson x.source_agreement_identifier );
       ("requestedTerms", Some (requested_term_list_to_yojson x.requested_terms));
       ("intent", Some (intent_to_yojson x.intent));
-      ("clientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "clientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
     ]
 
 let cancel_agreement_payment_request_output_to_yojson (x : cancel_agreement_payment_request_output)

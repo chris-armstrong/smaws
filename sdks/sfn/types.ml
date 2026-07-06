@@ -429,7 +429,7 @@ type nonrec max_concurrency = int [@@ocaml.doc ""]
 
 type nonrec tolerated_failure_percentage = float [@@ocaml.doc ""]
 
-type nonrec tolerated_failure_count = int [@@ocaml.doc ""]
+type nonrec tolerated_failure_count = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec update_map_run_input = {
   tolerated_failure_count : tolerated_failure_count option;
@@ -458,7 +458,7 @@ type nonrec untag_resource_input = {
 }
 [@@ocaml.doc ""]
 
-type nonrec unsigned_long = int [@@ocaml.doc ""]
+type nonrec unsigned_long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec unsigned_integer = int [@@ocaml.doc ""]
 
@@ -475,7 +475,7 @@ type nonrec too_many_tags = {
    {{:https://docs.aws.amazon.com/step-functions/latest/dg/limits.html} Limits Topic} in the Step \
    Functions Developer Guide.\n"]
 
-type nonrec timeout_in_seconds = int [@@ocaml.doc ""]
+type nonrec timeout_in_seconds = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec test_state_state_name = string [@@ocaml.doc ""]
 
@@ -1135,9 +1135,9 @@ type nonrec cloud_watch_events_execution_data_details = {
 }
 [@@ocaml.doc "Provides details about execution input or output.\n"]
 
-type nonrec billed_memory_used = int [@@ocaml.doc ""]
+type nonrec billed_memory_used = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
-type nonrec billed_duration = int [@@ocaml.doc ""]
+type nonrec billed_duration = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec billing_details = {
   billed_duration_in_milliseconds : billed_duration option;
@@ -1522,7 +1522,7 @@ type nonrec map_run_list = map_run_list_item list [@@ocaml.doc ""]
 
 type nonrec map_run_label = string [@@ocaml.doc ""]
 
-type nonrec long_object = int [@@ocaml.doc ""]
+type nonrec long_object = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec map_run_item_counts = {
   pending_redrive : long_object option;
@@ -2145,7 +2145,7 @@ type nonrec history_event_type =
   | ActivityFailed [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec event_id = int [@@ocaml.doc ""]
+type nonrec event_id = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec activity_failed_event_details = {
   cause : sensitive_cause option;

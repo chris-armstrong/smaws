@@ -93,10 +93,14 @@ let nested_string_list_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "member" (fun i _ -> string_list_of_xml i) ()
 
 let long_set_of_xml i =
-  List.map (fun s -> int_of_string s) (Smaws_Lib.Xml.Parse.Read.elements i "member" ())
+  List.map
+    (fun s -> Smaws_Lib.CoreTypes.Int64.of_string s)
+    (Smaws_Lib.Xml.Parse.Read.elements i "member" ())
 
 let long_list_of_xml i =
-  List.map (fun s -> int_of_string s) (Smaws_Lib.Xml.Parse.Read.elements i "member" ())
+  List.map
+    (fun s -> Smaws_Lib.CoreTypes.Int64.of_string s)
+    (Smaws_Lib.Xml.Parse.Read.elements i "member" ())
 
 let list_set_of_xml i =
   Smaws_Lib.Xml.Parse.Read.sequences i "member" (fun i _ -> string_list_of_xml i) ()

@@ -329,7 +329,7 @@ type nonrec record = {
 
 type nonrec record_list = record list [@@ocaml.doc ""]
 
-type nonrec millis_behind_latest = int [@@ocaml.doc ""]
+type nonrec millis_behind_latest = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec shard_id = string [@@ocaml.doc ""]
 

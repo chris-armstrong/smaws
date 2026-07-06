@@ -546,7 +546,10 @@ let simple_scalar_xml_properties_output_of_xml i =
           r_float_value :=
             Some (float_of_string (Smaws_Lib.Xml.Parse.Read.element i "floatValue" ()))
       | "longValue" ->
-          r_long_value := Some (int_of_string (Smaws_Lib.Xml.Parse.Read.element i "longValue" ()))
+          r_long_value :=
+            Some
+              (Smaws_Lib.CoreTypes.Int64.of_string
+                 (Smaws_Lib.Xml.Parse.Read.element i "longValue" ()))
       | "integerValue" ->
           r_integer_value :=
             Some (int_of_string (Smaws_Lib.Xml.Parse.Read.element i "integerValue" ()))

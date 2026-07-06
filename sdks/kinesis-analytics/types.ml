@@ -2,7 +2,7 @@ type nonrec update_application_response = unit [@@ocaml.doc ""]
 
 type nonrec application_name = string [@@ocaml.doc ""]
 
-type nonrec application_version_id = int [@@ocaml.doc ""]
+type nonrec application_version_id = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec id = string [@@ocaml.doc ""]
 

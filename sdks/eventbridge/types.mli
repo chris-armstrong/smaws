@@ -2074,7 +2074,7 @@ type nonrec partner_event_source_account_list = partner_event_source_account lis
 
 type nonrec next_token = string [@@ocaml.doc ""]
 
-type nonrec long = int [@@ocaml.doc ""]
+type nonrec long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec list_targets_by_rule_response = {
   next_token : next_token option;

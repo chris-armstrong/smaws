@@ -1196,7 +1196,7 @@ type nonrec comparison_operator =
   | EQ [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec size = int [@@ocaml.doc ""]
+type nonrec size = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec size_constraint = {
   size : size;
@@ -1821,7 +1821,7 @@ type nonrec update_rate_based_rule_response = {
 }
 [@@ocaml.doc ""]
 
-type nonrec rate_limit = int [@@ocaml.doc ""]
+type nonrec rate_limit = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec update_rate_based_rule_request = {
   rate_limit : rate_limit;
@@ -2946,7 +2946,7 @@ type nonrec http_request = {
    of the web requests that were returned by [GetSampledRequests]. \n\
   \    "]
 
-type nonrec sample_weight = int [@@ocaml.doc ""]
+type nonrec sample_weight = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec action = string [@@ocaml.doc ""]
 
@@ -3427,7 +3427,7 @@ type nonrec put_logging_configuration_request = {
 }
 [@@ocaml.doc ""]
 
-type nonrec population_size = int [@@ocaml.doc ""]
+type nonrec population_size = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec pagination_limit = int [@@ocaml.doc ""]
 
@@ -4150,7 +4150,7 @@ type nonrec get_sampled_requests_response = {
 }
 [@@ocaml.doc ""]
 
-type nonrec get_sampled_requests_max_items = int [@@ocaml.doc ""]
+type nonrec get_sampled_requests_max_items = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec get_sampled_requests_request = {
   max_items : get_sampled_requests_max_items;

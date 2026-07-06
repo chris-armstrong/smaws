@@ -1610,7 +1610,7 @@ type nonrec execution_controls = {
 
 type nonrec auto_remediation_attempts = int [@@ocaml.doc ""]
 
-type nonrec auto_remediation_attempt_seconds = int [@@ocaml.doc ""]
+type nonrec auto_remediation_attempt_seconds = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec remediation_configuration = {
   created_by_service : string_with_char_limit1024 option;
@@ -4458,7 +4458,7 @@ type nonrec get_organization_config_rule_detailed_status_request = {
 }
 [@@ocaml.doc ""]
 
-type nonrec long = int [@@ocaml.doc ""]
+type nonrec long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec resource_count = {
   count : long option; [@ocaml.doc "The number of resources.\n"]
