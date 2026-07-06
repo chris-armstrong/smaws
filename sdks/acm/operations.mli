@@ -40,7 +40,8 @@ module AddTagsToCertificate : sig
       | `TagPolicyException of tag_policy_exception
       | `ThrottlingException of throttling_exception
       | `TooManyTagsException of too_many_tags_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -100,7 +101,8 @@ module CreateAcmeDomainValidation : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -142,7 +144,8 @@ module CreateAcmeEndpoint : sig
       | `InternalServerException of internal_server_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -187,7 +190,8 @@ module CreateAcmeExternalAccountBinding : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -226,7 +230,8 @@ module DeleteAcmeDomainValidation : sig
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -264,7 +269,8 @@ module DeleteAcmeEndpoint : sig
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -300,7 +306,8 @@ module DeleteAcmeExternalAccountBinding : sig
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -344,7 +351,8 @@ module DeleteCertificate : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -402,7 +410,8 @@ module DescribeAcmeAccount : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -440,7 +449,8 @@ module DescribeAcmeDomainValidation : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -478,7 +488,8 @@ module DescribeAcmeEndpoint : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -516,7 +527,8 @@ module DescribeAcmeExternalAccountBinding : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -548,7 +560,8 @@ module DescribeCertificate : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArnException of invalid_arn_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -588,7 +601,8 @@ module ExportCertificate : sig
       | `RequestInProgressException of request_in_progress_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -629,7 +643,8 @@ module GetAccountConfiguration : sig
     ( get_account_configuration_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -666,7 +681,8 @@ module GetAcmeExternalAccountBindingCredentials : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -701,7 +717,8 @@ module GetCertificate : sig
       | `InvalidArnException of invalid_arn_exception
       | `RequestInProgressException of request_in_progress_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -756,7 +773,8 @@ module ImportCertificate : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TagPolicyException of tag_policy_exception
       | `TooManyTagsException of too_many_tags_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -857,7 +875,8 @@ module ListAcmeAccounts : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -895,7 +914,8 @@ module ListAcmeDomainValidations : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves a list of domain validations for the specified ACME endpoint.\n"]
@@ -928,7 +948,8 @@ module ListAcmeEndpoints : sig
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -966,7 +987,8 @@ module ListAcmeExternalAccountBindings : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves a list of external account bindings for the specified ACME endpoint.\n"]
@@ -993,7 +1015,8 @@ module ListCertificates : sig
     ( list_certificates_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArgsException of invalid_args_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1031,7 +1054,8 @@ module ListTagsForCertificate : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArnException of invalid_arn_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1065,7 +1089,8 @@ module ListTagsForResource : sig
     ( list_tags_for_resource_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1105,7 +1130,8 @@ module PutAccountConfiguration : sig
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1153,7 +1179,8 @@ module RemoveTagsFromCertificate : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `TagPolicyException of tag_policy_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1197,7 +1224,8 @@ module RenewCertificate : sig
       | `InvalidArnException of invalid_arn_exception
       | `RequestInProgressException of request_in_progress_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1246,7 +1274,8 @@ module RequestCertificate : sig
       | `InvalidTagException of invalid_tag_exception
       | `LimitExceededException of limit_exceeded_exception
       | `TagPolicyException of tag_policy_exception
-      | `TooManyTagsException of too_many_tags_exception ] )
+      | `TooManyTagsException of too_many_tags_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1300,7 +1329,8 @@ module ResendValidationEmail : sig
       | `InvalidDomainValidationOptionsException of invalid_domain_validation_options_exception
       | `InvalidStateException of invalid_state_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1349,7 +1379,8 @@ module RevokeAcmeAccount : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1390,7 +1421,8 @@ module RevokeAcmeExternalAccountBinding : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1435,7 +1467,8 @@ module RevokeCertificate : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1471,7 +1504,8 @@ module SearchCertificates : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1505,7 +1539,8 @@ module TagResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1541,7 +1576,8 @@ module UntagResource : sig
     ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1587,7 +1623,8 @@ module UpdateAcmeDomainValidation : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates the prevalidation configuration of an existing domain validation.\n"]
@@ -1626,7 +1663,8 @@ module UpdateAcmeEndpoint : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1664,7 +1702,8 @@ module UpdateCertificateOptions : sig
       | `InvalidStateException of invalid_state_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

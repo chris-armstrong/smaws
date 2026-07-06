@@ -40,7 +40,8 @@ module AssociateDRTLogBucket : sig
       | `LimitsExceededException of limits_exceeded_exception
       | `NoAssociatedRoleException of no_associated_role_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -87,7 +88,8 @@ module AssociateDRTRole : sig
       | `InvalidOperationException of invalid_operation_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -159,7 +161,8 @@ module AssociateHealthCheck : sig
       | `InvalidResourceException of invalid_resource_exception
       | `LimitsExceededException of limits_exceeded_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -203,7 +206,8 @@ module AssociateProactiveEngagementDetails : sig
       | `InvalidOperationException of invalid_operation_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -262,7 +266,8 @@ module CreateProtection : sig
       | `LimitsExceededException of limits_exceeded_exception
       | `OptimisticLockException of optimistic_lock_exception
       | `ResourceAlreadyExistsException of resource_already_exists_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -315,7 +320,8 @@ module CreateProtectionGroup : sig
       | `LimitsExceededException of limits_exceeded_exception
       | `OptimisticLockException of optimistic_lock_exception
       | `ResourceAlreadyExistsException of resource_already_exists_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -344,7 +350,8 @@ module CreateSubscription : sig
     ( create_subscription_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
-      | `ResourceAlreadyExistsException of resource_already_exists_exception ] )
+      | `ResourceAlreadyExistsException of resource_already_exists_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -383,7 +390,8 @@ module DeleteProtection : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes an Shield Advanced [Protection].\n"]
@@ -413,7 +421,8 @@ module DeleteProtectionGroup : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes the specified protection group.\n"]
@@ -443,7 +452,8 @@ module DeleteSubscription : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `LockedSubscriptionException of locked_subscription_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -472,7 +482,8 @@ module DescribeAttack : sig
     ( describe_attack_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
-      | `InternalErrorException of internal_error_exception ] )
+      | `InternalErrorException of internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Describes the details of a DDoS attack. \n"]
@@ -495,7 +506,7 @@ module DescribeAttackStatistics : sig
     describe_attack_statistics_request ->
     ( describe_attack_statistics_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `InternalErrorException of internal_error_exception ]
-    )
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -533,7 +544,8 @@ module DescribeDRTAccess : sig
     ( describe_drt_access_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -562,7 +574,8 @@ module DescribeEmergencyContactSettings : sig
     ( describe_emergency_contact_settings_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -595,7 +608,8 @@ module DescribeProtection : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the details of a [Protection] object.\n"]
@@ -622,7 +636,8 @@ module DescribeProtectionGroup : sig
     ( describe_protection_group_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns the specification for the specified protection group.\n"]
@@ -649,7 +664,8 @@ module DescribeSubscription : sig
     ( describe_subscription_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Provides details about the Shield Advanced subscription for an account.\n"]
@@ -685,7 +701,8 @@ module DisableApplicationLayerAutomaticResponse : sig
       | `InvalidOperationException of invalid_operation_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -724,7 +741,8 @@ module DisableProactiveEngagement : sig
       | `InvalidOperationException of invalid_operation_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -765,7 +783,8 @@ module DisassociateDRTLogBucket : sig
       | `InvalidOperationException of invalid_operation_exception
       | `NoAssociatedRoleException of no_associated_role_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -800,7 +819,8 @@ module DisassociateDRTRole : sig
       | `InternalErrorException of internal_error_exception
       | `InvalidOperationException of invalid_operation_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -837,7 +857,8 @@ module DisassociateHealthCheck : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `InvalidResourceException of invalid_resource_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -884,7 +905,8 @@ module EnableApplicationLayerAutomaticResponse : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `LimitsExceededException of limits_exceeded_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -946,7 +968,8 @@ module EnableProactiveEngagement : sig
       | `InvalidOperationException of invalid_operation_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -971,7 +994,7 @@ module GetSubscriptionState : sig
     get_subscription_state_request ->
     ( get_subscription_state_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `InternalErrorException of internal_error_exception ]
-    )
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns the [SubscriptionState], either [Active] or [Inactive].\n"]
@@ -1001,7 +1024,8 @@ module ListAttacks : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `InvalidOperationException of invalid_operation_exception
-      | `InvalidParameterException of invalid_parameter_exception ] )
+      | `InvalidParameterException of invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1032,7 +1056,8 @@ module ListProtectionGroups : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `InvalidPaginationTokenException of invalid_pagination_token_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1065,7 +1090,8 @@ module ListProtections : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `InvalidPaginationTokenException of invalid_pagination_token_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1097,7 +1123,8 @@ module ListResourcesInProtectionGroup : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `InvalidPaginationTokenException of invalid_pagination_token_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves the resources that are included in the protection group. \n"]
@@ -1127,7 +1154,8 @@ module ListTagsForResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `InvalidResourceException of invalid_resource_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1162,7 +1190,8 @@ module TagResource : sig
       | `InternalErrorException of internal_error_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `InvalidResourceException of invalid_resource_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Adds or updates tags for a resource in Shield.\n"]
@@ -1195,7 +1224,8 @@ module UntagResource : sig
       | `InternalErrorException of internal_error_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `InvalidResourceException of invalid_resource_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes tags from a resource in Shield.\n"]
@@ -1231,7 +1261,8 @@ module UpdateApplicationLayerAutomaticResponse : sig
       | `InvalidOperationException of invalid_operation_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1266,7 +1297,8 @@ module UpdateEmergencyContactSettings : sig
       | `InternalErrorException of internal_error_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1302,7 +1334,8 @@ module UpdateProtectionGroup : sig
       | `InternalErrorException of internal_error_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1341,7 +1374,8 @@ module UpdateSubscription : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `LockedSubscriptionException of locked_subscription_exception
       | `OptimisticLockException of optimistic_lock_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

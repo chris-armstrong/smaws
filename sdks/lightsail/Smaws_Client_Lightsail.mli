@@ -1954,7 +1954,8 @@ module AllocateStaticIp : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Allocates a static IP address.\n"]
@@ -1993,7 +1994,8 @@ module AttachCertificateToDistribution : sig
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2052,7 +2054,8 @@ module AttachDisk : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2104,7 +2107,8 @@ module AttachInstancesToLoadBalancer : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2159,7 +2163,8 @@ module AttachLoadBalancerTlsCertificate : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2217,7 +2222,8 @@ module AttachStaticIp : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Attaches a static IP address to a specific Amazon Lightsail instance.\n"]
@@ -2262,7 +2268,8 @@ module CloseInstancePublicPorts : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2313,7 +2320,8 @@ module CopySnapshot : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2361,7 +2369,8 @@ module CreateBucket : sig
       | `InvalidInputException of invalid_input_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2407,7 +2416,8 @@ module CreateBucketAccessKey : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2462,7 +2472,8 @@ module CreateCertificate : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2519,7 +2530,8 @@ module CreateCloudFormationStack : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2569,7 +2581,8 @@ module CreateContactMethod : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2622,7 +2635,8 @@ module CreateContainerService : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2667,7 +2681,8 @@ module CreateContainerServiceDeployment : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2719,7 +2734,8 @@ module CreateContainerServiceRegistryLogin : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2785,7 +2801,8 @@ module CreateDisk : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2837,7 +2854,8 @@ module CreateDiskFromSnapshot : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2890,7 +2908,8 @@ module CreateDiskSnapshot : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2953,7 +2972,8 @@ module CreateDistribution : sig
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3005,7 +3025,8 @@ module CreateDomain : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3056,7 +3077,8 @@ module CreateDomainEntry : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3103,7 +3125,8 @@ module CreateGUISessionAccessDetails : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3154,7 +3177,8 @@ module CreateInstances : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3205,7 +3229,8 @@ module CreateInstancesFromSnapshot : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3257,7 +3282,8 @@ module CreateInstanceSnapshot : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3309,7 +3335,8 @@ module CreateKeyPair : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3365,7 +3392,8 @@ module CreateLoadBalancer : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3423,7 +3451,8 @@ module CreateLoadBalancerTlsCertificate : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3477,7 +3506,8 @@ module CreateRelationalDatabase : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3528,7 +3558,8 @@ module CreateRelationalDatabaseFromSnapshot : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3583,7 +3614,8 @@ module CreateRelationalDatabaseSnapshot : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3632,7 +3664,8 @@ module DeleteAlarm : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3681,7 +3714,8 @@ module DeleteAutoSnapshot : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3723,7 +3757,8 @@ module DeleteBucket : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3767,7 +3802,8 @@ module DeleteBucketAccessKey : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3813,7 +3849,8 @@ module DeleteCertificate : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3860,7 +3897,8 @@ module DeleteContactMethod : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3908,7 +3946,8 @@ module DeleteContainerImage : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3948,7 +3987,8 @@ module DeleteContainerService : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes your Amazon Lightsail container service.\n"]
@@ -3993,7 +4033,8 @@ module DeleteDisk : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4047,7 +4088,8 @@ module DeleteDiskSnapshot : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4098,7 +4140,8 @@ module DeleteDistribution : sig
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes your Amazon Lightsail content delivery network (CDN) distribution.\n"]
@@ -4143,7 +4186,8 @@ module DeleteDomain : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4194,7 +4238,8 @@ module DeleteDomainEntry : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4245,7 +4290,8 @@ module DeleteInstance : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4296,7 +4342,8 @@ module DeleteInstanceSnapshot : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4347,7 +4394,8 @@ module DeleteKeyPair : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4407,7 +4455,8 @@ module DeleteKnownHostKeys : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4462,7 +4511,8 @@ module DeleteLoadBalancer : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4515,7 +4565,8 @@ module DeleteLoadBalancerTlsCertificate : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4567,7 +4618,8 @@ module DeleteRelationalDatabase : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4618,7 +4670,8 @@ module DeleteRelationalDatabaseSnapshot : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4664,7 +4717,8 @@ module DetachCertificateFromDistribution : sig
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4714,7 +4768,8 @@ module DetachDisk : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4767,7 +4822,8 @@ module DetachInstancesFromLoadBalancer : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4822,7 +4878,8 @@ module DetachStaticIp : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Detaches a static IP from the Amazon Lightsail instance to which it is attached.\n"]
@@ -4864,7 +4921,8 @@ module DisableAddOn : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4912,7 +4970,8 @@ module DownloadDefaultKeyPair : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4958,7 +5017,8 @@ module EnableAddOn : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5006,7 +5066,8 @@ module ExportSnapshot : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5071,7 +5132,8 @@ module GetActiveNames : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns the names of all active (not deleted) resources.\n"]
@@ -5113,7 +5175,8 @@ module GetAlarms : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5164,7 +5227,8 @@ module GetAutoSnapshots : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5213,7 +5277,8 @@ module GetBlueprints : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5262,7 +5327,8 @@ module GetBucketAccessKeys : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5305,7 +5371,8 @@ module GetBucketBundles : sig
       | `InvalidInputException of invalid_input_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5352,7 +5419,8 @@ module GetBucketMetricData : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5396,7 +5464,8 @@ module GetBuckets : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5448,7 +5517,8 @@ module GetBundles : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5494,7 +5564,8 @@ module GetCertificates : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5545,7 +5616,8 @@ module GetCloudFormationStackRecords : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5592,7 +5664,8 @@ module GetContactMethods : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5635,7 +5708,8 @@ module GetContainerAPIMetadata : sig
       | `AccessDeniedException of access_denied_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5676,7 +5750,8 @@ module GetContainerImages : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5721,7 +5796,8 @@ module GetContainerLog : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5770,7 +5846,8 @@ module GetContainerServiceDeployments : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5822,7 +5899,8 @@ module GetContainerServiceMetricData : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5865,7 +5943,8 @@ module GetContainerServicePowers : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5908,7 +5987,8 @@ module GetContainerServices : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about one or more of your Amazon Lightsail container services.\n"]
@@ -5947,7 +6027,8 @@ module GetCostEstimate : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5994,7 +6075,8 @@ module GetDisk : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about a specific block storage disk.\n"]
@@ -6039,7 +6121,8 @@ module GetDisks : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about all block storage disks in your AWS account and region.\n"]
@@ -6084,7 +6167,8 @@ module GetDiskSnapshot : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about a specific block storage disk snapshot.\n"]
@@ -6129,7 +6213,8 @@ module GetDiskSnapshots : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -6169,7 +6254,8 @@ module GetDistributionBundles : sig
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -6213,7 +6299,8 @@ module GetDistributionLatestCacheReset : sig
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -6254,7 +6341,8 @@ module GetDistributionMetricData : sig
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -6299,7 +6387,8 @@ module GetDistributions : sig
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -6346,7 +6435,8 @@ module GetDomain : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about a specific domain recordset.\n"]
@@ -6391,7 +6481,8 @@ module GetDomains : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns a list of all domains in the user's account.\n"]
@@ -6436,7 +6527,8 @@ module GetExportSnapshotRecords : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -6488,7 +6580,8 @@ module GetInstance : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -6535,7 +6628,8 @@ module GetInstanceAccessDetails : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -6587,7 +6681,8 @@ module GetInstanceMetricData : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -6638,7 +6733,8 @@ module GetInstancePortStates : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -6685,7 +6781,8 @@ module GetInstances : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -6731,7 +6828,8 @@ module GetInstanceSnapshot : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about a specific instance snapshot.\n"]
@@ -6776,7 +6874,8 @@ module GetInstanceSnapshots : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns all instance snapshots for the user's account.\n"]
@@ -6821,7 +6920,8 @@ module GetInstanceState : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns the state of a specific instance. Works on one instance at a time.\n"]
@@ -6866,7 +6966,8 @@ module GetKeyPair : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about a specific key pair.\n"]
@@ -6911,7 +7012,8 @@ module GetKeyPairs : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about all key pairs in the user's account.\n"]
@@ -6956,7 +7058,8 @@ module GetLoadBalancer : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about the specified Lightsail load balancer.\n"]
@@ -7001,7 +7104,8 @@ module GetLoadBalancerMetricData : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -7051,7 +7155,8 @@ module GetLoadBalancers : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about all load balancers in an account.\n"]
@@ -7096,7 +7201,8 @@ module GetLoadBalancerTlsCertificates : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -7142,7 +7248,8 @@ module GetLoadBalancerTlsPolicies : sig
       | `InvalidInputException of invalid_input_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -7193,7 +7300,8 @@ module GetOperation : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -7240,7 +7348,8 @@ module GetOperations : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -7290,7 +7399,8 @@ module GetOperationsForResource : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gets operations for a specific resource (an instance or a static IP).\n"]
@@ -7335,7 +7445,8 @@ module GetRegions : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -7382,7 +7493,8 @@ module GetRelationalDatabase : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about a specific database in Amazon Lightsail.\n"]
@@ -7427,7 +7539,8 @@ module GetRelationalDatabaseBlueprints : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -7476,7 +7589,8 @@ module GetRelationalDatabaseBundles : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -7525,7 +7639,8 @@ module GetRelationalDatabaseEvents : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns a list of events for a specific database in Amazon Lightsail.\n"]
@@ -7570,7 +7685,8 @@ module GetRelationalDatabaseLogEvents : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns a list of log events for a database in Amazon Lightsail.\n"]
@@ -7615,7 +7731,8 @@ module GetRelationalDatabaseLogStreams : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -7661,7 +7778,8 @@ module GetRelationalDatabaseMasterUserPassword : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -7711,7 +7829,8 @@ module GetRelationalDatabaseMetricData : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -7761,7 +7880,8 @@ module GetRelationalDatabaseParameters : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -7812,7 +7932,8 @@ module GetRelationalDatabases : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about all of your databases in Amazon Lightsail.\n"]
@@ -7857,7 +7978,8 @@ module GetRelationalDatabaseSnapshot : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about a specific database snapshot in Amazon Lightsail.\n"]
@@ -7902,7 +8024,8 @@ module GetRelationalDatabaseSnapshots : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about all of your database snapshots in Amazon Lightsail.\n"]
@@ -7941,7 +8064,8 @@ module GetSetupHistory : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -7988,7 +8112,8 @@ module GetStaticIp : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about an Amazon Lightsail static IP.\n"]
@@ -8033,7 +8158,8 @@ module GetStaticIps : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about all static IPs in the user's account.\n"]
@@ -8078,7 +8204,8 @@ module ImportKeyPair : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Imports a public SSH key from a specific key pair.\n"]
@@ -8123,7 +8250,8 @@ module IsVpcPeered : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns a Boolean value indicating whether your Lightsail VPC is peered.\n"]
@@ -8168,7 +8296,8 @@ module OpenInstancePublicPorts : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -8220,7 +8349,8 @@ module PeerVpc : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Peers the Lightsail VPC with the user's default VPC.\n"]
@@ -8262,7 +8392,8 @@ module PutAlarm : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -8327,7 +8458,8 @@ module PutInstancePublicPorts : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -8382,7 +8514,8 @@ module RebootInstance : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -8433,7 +8566,8 @@ module RebootRelationalDatabase : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -8478,7 +8612,8 @@ module RegisterContainerImage : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -8531,7 +8666,8 @@ module ReleaseStaticIp : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes a specific static IP from your account.\n"]
@@ -8570,7 +8706,8 @@ module ResetDistributionCache : sig
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -8617,7 +8754,8 @@ module SendContactMethodVerification : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -8680,7 +8818,8 @@ module SetIpAddressType : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -8724,7 +8863,8 @@ module SetResourceAccessForBucket : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -8767,7 +8907,8 @@ module SetupInstanceHttps : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -8811,7 +8952,8 @@ module StartGUISession : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -8859,7 +9001,8 @@ module StartInstance : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -8917,7 +9060,8 @@ module StartRelationalDatabase : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -8963,7 +9107,8 @@ module StopGUISession : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -9011,7 +9156,8 @@ module StopInstance : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -9068,7 +9214,8 @@ module StopRelationalDatabase : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -9124,7 +9271,8 @@ module TagResource : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -9176,7 +9324,8 @@ module TestAlarm : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -9230,7 +9379,8 @@ module UnpeerVpc : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Unpeers the Lightsail VPC from the user's default VPC.\n"]
@@ -9275,7 +9425,8 @@ module UntagResource : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -9321,7 +9472,8 @@ module UpdateBucket : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -9364,7 +9516,8 @@ module UpdateBucketBundle : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -9418,7 +9571,8 @@ module UpdateContainerService : sig
       | `NotFoundException of not_found_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -9459,7 +9613,8 @@ module UpdateDistribution : sig
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -9501,7 +9656,8 @@ module UpdateDistributionBundle : sig
       | `NotFoundException of not_found_exception
       | `OperationFailureException of operation_failure_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -9558,7 +9714,8 @@ module UpdateDomainEntry : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -9609,7 +9766,8 @@ module UpdateInstanceMetadataOptions : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -9661,7 +9819,8 @@ module UpdateLoadBalancerAttribute : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -9714,7 +9873,8 @@ module UpdateRelationalDatabase : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -9770,7 +9930,8 @@ module UpdateRelationalDatabaseParameters : sig
       | `OperationFailureException of operation_failure_exception
       | `RegionSetupInProgressException of region_setup_in_progress_exception
       | `ServiceException of service_exception
-      | `UnauthenticatedException of unauthenticated_exception ] )
+      | `UnauthenticatedException of unauthenticated_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

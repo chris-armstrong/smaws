@@ -518,7 +518,8 @@ module AddApplicationCloudWatchLoggingOption : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -567,7 +568,8 @@ module AddApplicationInput : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -624,7 +626,8 @@ module AddApplicationInputProcessingConfiguration : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -671,7 +674,8 @@ module AddApplicationOutput : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -738,7 +742,8 @@ module AddApplicationReferenceDataSource : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -798,7 +803,8 @@ module CreateApplication : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `TooManyTagsException of too_many_tags_exception ] )
+      | `TooManyTagsException of too_many_tags_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -862,7 +868,8 @@ module DeleteApplication : sig
       | `ConcurrentModificationException of concurrent_modification_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -910,7 +917,8 @@ module DeleteApplicationCloudWatchLoggingOption : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -956,7 +964,8 @@ module DeleteApplicationInputProcessingConfiguration : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1001,7 +1010,8 @@ module DeleteApplicationOutput : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1049,7 +1059,8 @@ module DeleteApplicationReferenceDataSource : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1091,7 +1102,8 @@ module DescribeApplication : sig
     ( describe_application_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1142,7 +1154,8 @@ module DiscoverInputSchema : sig
       | `ResourceProvisionedThroughputExceededException of
         resource_provisioned_throughput_exceeded_exception
       | `ServiceUnavailableException of service_unavailable_exception
-      | `UnableToDetectSchemaException of unable_to_detect_schema_exception ] )
+      | `UnableToDetectSchemaException of unable_to_detect_schema_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1178,7 +1191,9 @@ module ListApplications : sig
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
     list_applications_request ->
-    (list_applications_response Smaws_Lib.Response.t, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+    ( list_applications_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   " This documentation is for version 1 of the Amazon Kinesis Data Analytics API, which only \
@@ -1224,7 +1239,8 @@ module ListTagsForResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InvalidArgumentException of invalid_argument_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1262,7 +1278,8 @@ module StartApplication : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1316,7 +1333,8 @@ module StopApplication : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1366,7 +1384,8 @@ module TagResource : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyTagsException of too_many_tags_exception ] )
+      | `TooManyTagsException of too_many_tags_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1406,7 +1425,8 @@ module UntagResource : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyTagsException of too_many_tags_exception ] )
+      | `TooManyTagsException of too_many_tags_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1448,7 +1468,8 @@ module UpdateApplication : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

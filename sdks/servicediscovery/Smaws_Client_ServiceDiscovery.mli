@@ -492,7 +492,8 @@ module CreateHttpNamespace : sig
       | `InvalidInput of invalid_input
       | `NamespaceAlreadyExists of namespace_already_exists
       | `ResourceLimitExceeded of resource_limit_exceeded
-      | `TooManyTagsException of too_many_tags_exception ] )
+      | `TooManyTagsException of too_many_tags_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -535,7 +536,8 @@ module CreatePrivateDnsNamespace : sig
       | `InvalidInput of invalid_input
       | `NamespaceAlreadyExists of namespace_already_exists
       | `ResourceLimitExceeded of resource_limit_exceeded
-      | `TooManyTagsException of too_many_tags_exception ] )
+      | `TooManyTagsException of too_many_tags_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -579,7 +581,8 @@ module CreatePublicDnsNamespace : sig
       | `InvalidInput of invalid_input
       | `NamespaceAlreadyExists of namespace_already_exists
       | `ResourceLimitExceeded of resource_limit_exceeded
-      | `TooManyTagsException of too_many_tags_exception ] )
+      | `TooManyTagsException of too_many_tags_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -627,7 +630,8 @@ module CreateService : sig
       | `NamespaceNotFound of namespace_not_found
       | `ResourceLimitExceeded of resource_limit_exceeded
       | `ServiceAlreadyExists of service_already_exists
-      | `TooManyTagsException of too_many_tags_exception ] )
+      | `TooManyTagsException of too_many_tags_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -697,7 +701,8 @@ module DeleteNamespace : sig
       | `DuplicateRequest of duplicate_request
       | `InvalidInput of invalid_input
       | `NamespaceNotFound of namespace_not_found
-      | `ResourceInUse of resource_in_use ] )
+      | `ResourceInUse of resource_in_use ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -729,7 +734,8 @@ module DeleteService : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
       | `ResourceInUse of resource_in_use
-      | `ServiceNotFound of service_not_found ] )
+      | `ServiceNotFound of service_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -758,7 +764,8 @@ module DeleteServiceAttributes : sig
     ( delete_service_attributes_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
-      | `ServiceNotFound of service_not_found ] )
+      | `ServiceNotFound of service_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes specific attributes associated with a service.\n"]
@@ -794,7 +801,8 @@ module DeregisterInstance : sig
       | `InstanceNotFound of instance_not_found
       | `InvalidInput of invalid_input
       | `ResourceInUse of resource_in_use
-      | `ServiceNotFound of service_not_found ] )
+      | `ServiceNotFound of service_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -829,7 +837,8 @@ module DiscoverInstances : sig
       | `InvalidInput of invalid_input
       | `NamespaceNotFound of namespace_not_found
       | `RequestLimitExceeded of request_limit_exceeded
-      | `ServiceNotFound of service_not_found ] )
+      | `ServiceNotFound of service_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -867,7 +876,8 @@ module DiscoverInstancesRevision : sig
       | `InvalidInput of invalid_input
       | `NamespaceNotFound of namespace_not_found
       | `RequestLimitExceeded of request_limit_exceeded
-      | `ServiceNotFound of service_not_found ] )
+      | `ServiceNotFound of service_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Discovers the increasing revision associated with an instance.\n"]
@@ -897,7 +907,8 @@ module GetInstance : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InstanceNotFound of instance_not_found
       | `InvalidInput of invalid_input
-      | `ServiceNotFound of service_not_found ] )
+      | `ServiceNotFound of service_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gets information about a specified instance.\n"]
@@ -927,7 +938,8 @@ module GetInstancesHealthStatus : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InstanceNotFound of instance_not_found
       | `InvalidInput of invalid_input
-      | `ServiceNotFound of service_not_found ] )
+      | `ServiceNotFound of service_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -960,7 +972,8 @@ module GetNamespace : sig
     ( get_namespace_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
-      | `NamespaceNotFound of namespace_not_found ] )
+      | `NamespaceNotFound of namespace_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gets information about a namespace.\n"]
@@ -987,7 +1000,8 @@ module GetOperation : sig
     ( get_operation_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
-      | `OperationNotFound of operation_not_found ] )
+      | `OperationNotFound of operation_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1020,7 +1034,8 @@ module GetService : sig
     ( get_service_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
-      | `ServiceNotFound of service_not_found ] )
+      | `ServiceNotFound of service_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gets the settings for a specified service.\n"]
@@ -1047,7 +1062,8 @@ module GetServiceAttributes : sig
     ( get_service_attributes_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
-      | `ServiceNotFound of service_not_found ] )
+      | `ServiceNotFound of service_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns the attributes associated with a specified service.\n"]
@@ -1074,7 +1090,8 @@ module ListInstances : sig
     ( list_instances_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
-      | `ServiceNotFound of service_not_found ] )
+      | `ServiceNotFound of service_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1095,7 +1112,8 @@ module ListNamespaces : sig
     'http_type Smaws_Lib.Context.t ->
     list_namespaces_request ->
     ( list_namespaces_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInput of invalid_input ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInput of invalid_input ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1117,7 +1135,8 @@ module ListOperations : sig
     'http_type Smaws_Lib.Context.t ->
     list_operations_request ->
     ( list_operations_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInput of invalid_input ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInput of invalid_input ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists operations that match the criteria that you specify.\n"]
@@ -1137,7 +1156,8 @@ module ListServices : sig
     'http_type Smaws_Lib.Context.t ->
     list_services_request ->
     ( list_services_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInput of invalid_input ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInput of invalid_input ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1165,7 +1185,8 @@ module ListTagsForResource : sig
     ( list_tags_for_resource_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists tags for the specified resource.\n"]
@@ -1201,7 +1222,8 @@ module RegisterInstance : sig
       | `InvalidInput of invalid_input
       | `ResourceInUse of resource_in_use
       | `ResourceLimitExceeded of resource_limit_exceeded
-      | `ServiceNotFound of service_not_found ] )
+      | `ServiceNotFound of service_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1275,7 +1297,8 @@ module TagResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyTagsException of too_many_tags_exception ] )
+      | `TooManyTagsException of too_many_tags_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Adds one or more tags to the specified resource.\n"]
@@ -1302,7 +1325,8 @@ module UntagResource : sig
     ( untag_resource_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes one or more tags from the specified resource.\n"]
@@ -1335,7 +1359,8 @@ module UpdateHttpNamespace : sig
       | `DuplicateRequest of duplicate_request
       | `InvalidInput of invalid_input
       | `NamespaceNotFound of namespace_not_found
-      | `ResourceInUse of resource_in_use ] )
+      | `ResourceInUse of resource_in_use ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates an HTTP namespace.\n"]
@@ -1368,7 +1393,8 @@ module UpdateInstanceCustomHealthStatus : sig
       | `CustomHealthNotFound of custom_health_not_found
       | `InstanceNotFound of instance_not_found
       | `InvalidInput of invalid_input
-      | `ServiceNotFound of service_not_found ] )
+      | `ServiceNotFound of service_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1410,7 +1436,8 @@ module UpdatePrivateDnsNamespace : sig
       | `DuplicateRequest of duplicate_request
       | `InvalidInput of invalid_input
       | `NamespaceNotFound of namespace_not_found
-      | `ResourceInUse of resource_in_use ] )
+      | `ResourceInUse of resource_in_use ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates a private DNS namespace.\n"]
@@ -1443,7 +1470,8 @@ module UpdatePublicDnsNamespace : sig
       | `DuplicateRequest of duplicate_request
       | `InvalidInput of invalid_input
       | `NamespaceNotFound of namespace_not_found
-      | `ResourceInUse of resource_in_use ] )
+      | `ResourceInUse of resource_in_use ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates a public DNS namespace.\n"]
@@ -1473,7 +1501,8 @@ module UpdateService : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DuplicateRequest of duplicate_request
       | `InvalidInput of invalid_input
-      | `ServiceNotFound of service_not_found ] )
+      | `ServiceNotFound of service_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1542,7 +1571,8 @@ module UpdateServiceAttributes : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidInput of invalid_input
       | `ServiceAttributesLimitExceededException of service_attributes_limit_exceeded_exception
-      | `ServiceNotFound of service_not_found ] )
+      | `ServiceNotFound of service_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Submits a request to update a specified service to add service-level attributes.\n"]

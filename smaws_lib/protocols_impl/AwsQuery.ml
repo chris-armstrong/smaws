@@ -246,7 +246,8 @@ module Response = struct
             (result, request_id))
           ())
 
-  let parse_xml_error_response ~(body : string) : (Error.t, Xml.Parse.error) result =
+  let parse_xml_error_response ~(body : string) : (Error.t * string option, Xml.Parse.error) result
+      =
     let open Xml.Parse in
     run (fun () ->
         let xmlSource = source_with_encoding ~src:body ~encoding:None in
@@ -277,9 +278,15 @@ module Response = struct
                   Error.{ errorType; code; message = !r_message })
                 ()
             in
-            (* Skip trailing siblings (e.g. <RequestId>) before </ErrorResponse>. *)
+            (* Read trailing siblings (e.g. <RequestId>) before </ErrorResponse>. *)
+            let request_id =
+              match Xmlm.peek xmlSource with
+              | `El_start el when tag_equal "RequestId" None el ->
+                  Some (Read.element xmlSource "RequestId" ())
+              | _ -> None
+            in
             Read.skip_to_end xmlSource;
-            error)
+            (error, request_id))
           ())
 
   (* Re-parse an awsQuery error response body and run [structParser] positioned
@@ -327,13 +334,17 @@ let request_with_metadata (type http_t) ~(action : string) ~(xmlNamespace : stri
             ~resultParser:output_deserializer
           |> Result.map (fun (result, request_id) ->
               { Response_record.response = result; metadata = { request_id } })
-          |> Result.map_error (fun (Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+          |> Result.map_error (fun (Xml.Parse.XmlParseError msg) ->
+              (`XmlParseError msg, { Response_record.request_id = None }))
       | _ -> (
           match Response.parse_xml_error_response ~body with
-          | Ok error -> Error (error_deserializer error ~body)
-          | Error (Xml.Parse.XmlParseError msg) -> Error (`XmlParseError msg))
+          | Ok (error, request_id) ->
+              let metadata = { Response_record.request_id } in
+              Error (error_deserializer error ~body, metadata)
+          | Error (Xml.Parse.XmlParseError msg) ->
+              Error (`XmlParseError msg, { Response_record.request_id = None }))
     end
-  | Error http_failure -> Error (`HttpError http_failure)
+  | Error http_failure -> Error (`HttpError http_failure, { Response_record.request_id = None })
 
 let request (type http_t) ~(action : string) ~(xmlNamespace : string)
     ~(service : Service.descriptor) ~(context : http_t Context.t)
@@ -342,3 +353,4 @@ let request (type http_t) ~(action : string) ~(xmlNamespace : string)
   request_with_metadata ~action ~xmlNamespace ~service ~context ~fields ~output_deserializer
     ~error_deserializer
   |> Result.map (fun { Response_record.response; _ } -> response)
+  |> Result.map_error (fun (error, _) -> error)

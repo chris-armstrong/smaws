@@ -168,7 +168,8 @@ module DescribeReportCreation : sig
       | `ConstraintViolationException of constraint_violation_exception
       | `InternalServiceException of internal_service_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ThrottledException of throttled_exception ] )
+      | `ThrottledException of throttled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -205,7 +206,8 @@ module GetComplianceSummary : sig
       | `ConstraintViolationException of constraint_violation_exception
       | `InternalServiceException of internal_service_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ThrottledException of throttled_exception ] )
+      | `ThrottledException of throttled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -252,7 +254,8 @@ module GetResources : sig
       | `InternalServiceException of internal_service_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `PaginationTokenExpiredException of pagination_token_expired_exception
-      | `ThrottledException of throttled_exception ] )
+      | `ThrottledException of throttled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -315,7 +318,8 @@ module GetTagKeys : sig
       | `InternalServiceException of internal_service_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `PaginationTokenExpiredException of pagination_token_expired_exception
-      | `ThrottledException of throttled_exception ] )
+      | `ThrottledException of throttled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -356,7 +360,8 @@ module GetTagValues : sig
       | `InternalServiceException of internal_service_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `PaginationTokenExpiredException of pagination_token_expired_exception
-      | `ThrottledException of throttled_exception ] )
+      | `ThrottledException of throttled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -397,7 +402,8 @@ module ListRequiredTags : sig
       | `InternalServiceException of internal_service_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `PaginationTokenExpiredException of pagination_token_expired_exception
-      | `ThrottledException of throttled_exception ] )
+      | `ThrottledException of throttled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -434,7 +440,8 @@ module StartReportCreation : sig
       | `ConstraintViolationException of constraint_violation_exception
       | `InternalServiceException of internal_service_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ThrottledException of throttled_exception ] )
+      | `ThrottledException of throttled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -487,7 +494,8 @@ module TagResources : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceException of internal_service_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ThrottledException of throttled_exception ] )
+      | `ThrottledException of throttled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -579,7 +587,8 @@ module UntagResources : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceException of internal_service_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ThrottledException of throttled_exception ] )
+      | `ThrottledException of throttled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

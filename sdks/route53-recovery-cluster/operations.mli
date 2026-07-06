@@ -34,7 +34,8 @@ module GetRoutingControlState : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -107,7 +108,8 @@ module ListRoutingControls : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -183,7 +185,8 @@ module UpdateRoutingControlState : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -266,7 +269,8 @@ module UpdateRoutingControlStates : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceLimitExceededException of service_limit_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

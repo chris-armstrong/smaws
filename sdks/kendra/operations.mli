@@ -34,7 +34,8 @@ module AssociateEntitiesToExperience : sig
       | `ResourceAlreadyExistException of resource_already_exist_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -78,7 +79,8 @@ module AssociatePersonasToEntities : sig
       | `ResourceAlreadyExistException of resource_already_exist_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -122,7 +124,8 @@ module BatchDeleteDocument : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -168,7 +171,8 @@ module BatchDeleteFeaturedResultsSet : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -210,7 +214,8 @@ module BatchGetDocumentStatus : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -264,7 +269,8 @@ module BatchPutDocument : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -318,7 +324,8 @@ module ClearQuerySuggestions : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -369,7 +376,8 @@ module CreateAccessControlConfiguration : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -441,7 +449,8 @@ module CreateDataSource : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -495,7 +504,8 @@ module CreateExperience : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -541,7 +551,8 @@ module CreateFaq : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -591,7 +602,8 @@ module CreateFeaturedResultsSet : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -640,7 +652,8 @@ module CreateIndex : sig
       | `ResourceAlreadyExistException of resource_already_exist_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -694,7 +707,8 @@ module CreateQuerySuggestionsBlockList : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -753,7 +767,8 @@ module CreateThesaurus : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -797,7 +812,8 @@ module DeleteAccessControlConfiguration : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -840,7 +856,8 @@ module DeleteDataSource : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -888,7 +905,8 @@ module DeleteExperience : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -931,7 +949,8 @@ module DeleteFaq : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes a FAQ from an index.\n"]
@@ -970,7 +989,8 @@ module DeleteIndex : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1012,7 +1032,8 @@ module DeletePrincipalMapping : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1066,7 +1087,8 @@ module DeleteQuerySuggestionsBlockList : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1112,7 +1134,8 @@ module DeleteThesaurus : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes an Amazon Kendra thesaurus. \n"]
@@ -1148,7 +1171,8 @@ module DescribeAccessControlConfiguration : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1188,7 +1212,8 @@ module DescribeDataSource : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gets information about an Amazon Kendra data source connector.\n"]
@@ -1224,7 +1249,8 @@ module DescribeExperience : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1264,7 +1290,8 @@ module DescribeFaq : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gets information about a FAQ.\n"]
@@ -1300,7 +1327,8 @@ module DescribeFeaturedResultsSet : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1339,7 +1367,8 @@ module DescribeIndex : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gets information about an Amazon Kendra index.\n"]
@@ -1375,7 +1404,8 @@ module DescribePrincipalMapping : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1419,7 +1449,8 @@ module DescribeQuerySuggestionsBlockList : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1461,7 +1492,8 @@ module DescribeQuerySuggestionsConfig : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1503,7 +1535,8 @@ module DescribeThesaurus : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gets information about an Amazon Kendra thesaurus.\n"]
@@ -1539,7 +1572,8 @@ module DisassociateEntitiesFromExperience : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1580,7 +1614,8 @@ module DisassociatePersonasFromEntities : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1627,7 +1662,8 @@ module GetQuerySuggestions : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1664,7 +1700,8 @@ module GetSnapshots : sig
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1702,7 +1739,8 @@ module ListAccessControlConfigurations : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1744,7 +1782,8 @@ module ListDataSourceSyncJobs : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gets statistics about synchronizing a data source connector.\n"]
@@ -1780,7 +1819,8 @@ module ListDataSources : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the data source connectors that you have created.\n"]
@@ -1816,7 +1856,8 @@ module ListEntityPersonas : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1853,7 +1894,8 @@ module ListExperienceEntities : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1894,7 +1936,8 @@ module ListExperiences : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1934,7 +1977,8 @@ module ListFaqs : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gets a list of FAQs associated with an index.\n"]
@@ -1970,7 +2014,8 @@ module ListFeaturedResultsSets : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2012,7 +2057,8 @@ module ListGroupsOlderThanOrderingId : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2050,7 +2096,8 @@ module ListIndices : sig
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the Amazon Kendra indexes that you created.\n"]
@@ -2086,7 +2133,8 @@ module ListQuerySuggestionsBlockLists : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2129,7 +2177,8 @@ module ListTagsForResource : sig
       | `InternalServerException of internal_server_exception
       | `ResourceUnavailableException of resource_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2167,7 +2216,8 @@ module ListThesauri : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the thesauri for an index.\n"]
@@ -2209,7 +2259,8 @@ module PutPrincipalMapping : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2267,7 +2318,8 @@ module Query : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2347,7 +2399,8 @@ module Retrieve : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2435,7 +2488,8 @@ module StartDataSourceSyncJob : sig
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2477,7 +2531,8 @@ module StopDataSourceSyncJob : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2518,7 +2573,8 @@ module SubmitFeedback : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ResourceUnavailableException of resource_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2558,7 +2614,8 @@ module TagResource : sig
       | `InternalServerException of internal_server_exception
       | `ResourceUnavailableException of resource_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2596,7 +2653,8 @@ module UntagResource : sig
       | `InternalServerException of internal_server_exception
       | `ResourceUnavailableException of resource_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes a tag from an index, FAQ, data source, or other resource.\n"]
@@ -2638,7 +2696,8 @@ module UpdateAccessControlConfiguration : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2702,7 +2761,8 @@ module UpdateDataSource : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates an Amazon Kendra data source connector.\n"]
@@ -2741,7 +2801,8 @@ module UpdateExperience : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2784,7 +2845,8 @@ module UpdateFeaturedResultsSet : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2830,7 +2892,8 @@ module UpdateIndex : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates an Amazon Kendra index.\n"]
@@ -2869,7 +2932,8 @@ module UpdateQuerySuggestionsBlockList : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2922,7 +2986,8 @@ module UpdateQuerySuggestionsConfig : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2977,7 +3042,8 @@ module UpdateThesaurus : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates a thesaurus for an index.\n"]

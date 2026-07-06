@@ -327,7 +327,8 @@ module CreatePerformanceAnalysisReport : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
-      | `NotAuthorizedException of not_authorized_exception ] )
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -358,7 +359,8 @@ module DeletePerformanceAnalysisReport : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
-      | `NotAuthorizedException of not_authorized_exception ] )
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes a performance analysis report.\n"]
@@ -388,7 +390,8 @@ module DescribeDimensionKeys : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
-      | `NotAuthorizedException of not_authorized_exception ] )
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -423,7 +426,8 @@ module GetDimensionKeyDetails : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
-      | `NotAuthorizedException of not_authorized_exception ] )
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -458,7 +462,8 @@ module GetPerformanceAnalysisReport : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
-      | `NotAuthorizedException of not_authorized_exception ] )
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -491,7 +496,8 @@ module GetResourceMetadata : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
-      | `NotAuthorizedException of not_authorized_exception ] )
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -523,7 +529,8 @@ module GetResourceMetrics : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
-      | `NotAuthorizedException of not_authorized_exception ] )
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -560,7 +567,8 @@ module ListAvailableResourceDimensions : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
-      | `NotAuthorizedException of not_authorized_exception ] )
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -592,7 +600,8 @@ module ListAvailableResourceMetrics : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
-      | `NotAuthorizedException of not_authorized_exception ] )
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -623,7 +632,8 @@ module ListPerformanceAnalysisReportRecommendations : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
-      | `NotAuthorizedException of not_authorized_exception ] )
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves recommendations for a performance analysis report.\n"]
@@ -653,7 +663,8 @@ module ListPerformanceAnalysisReports : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
-      | `NotAuthorizedException of not_authorized_exception ] )
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -685,7 +696,8 @@ module ListTagsForResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
-      | `NotAuthorizedException of not_authorized_exception ] )
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -716,7 +728,8 @@ module TagResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
-      | `NotAuthorizedException of not_authorized_exception ] )
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Adds metadata tags to the Amazon RDS Performance Insights resource.\n"]
@@ -747,7 +760,8 @@ module UntagResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceError of internal_service_error
       | `InvalidArgumentException of invalid_argument_exception
-      | `NotAuthorizedException of not_authorized_exception ] )
+      | `NotAuthorizedException of not_authorized_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes the metadata tags from the Amazon RDS Performance Insights resource.\n"]

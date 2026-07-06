@@ -28,20 +28,24 @@ let _ =
           match
             begin
               let open Smaws_Clients.STS in
-              let+ result : Types.get_caller_identity_response =
-                GetCallerIdentity.request context (make_get_caller_identity_request ())
+              let+ { Response.response = result; metadata } =
+                GetCallerIdentity.request_with_metadata context
+                  (make_get_caller_identity_request ())
               in
               Logs.info (fun m ->
-                  m "SUCCESS:@.  UserId:  %s@.  Account: %s@.  Arn:     %s"
+                  m "SUCCESS:@.  RequestId: %s@.  UserId:  %s@.  Account: %s@.  Arn:     %s"
+                    (metadata.request_id |> Option.value ~default:"<>")
                     (result.user_id |> Option.value ~default:"<>")
                     (result.account |> Option.value ~default:"<>")
                     (result.arn |> Option.value ~default:"<>"))
             end
           with
           | Ok _ -> ()
-          | Error (`HttpError e) -> Logs.err (fun m -> m "HTTP Error %a" Http.pp_http_failure e)
-          | Error (`XmlParseError msg) -> Logs.err (fun m -> m "XML Parse Error: %s" msg)
-          | Error (`AWSServiceError { _type = { namespace; name }; message }) ->
+          | Error (`HttpError e, _) -> Logs.err (fun m -> m "HTTP Error %a" Http.pp_http_failure e)
+          | Error (`XmlParseError msg, _) -> Logs.err (fun m -> m "XML Parse Error: %s" msg)
+          | Error (`AWSServiceError { _type = { namespace; name }; message }, metadata) ->
               Logs.err (fun m ->
-                  m "AWS Service Error %s:%s - %s" namespace name (Option.value ~default:"" message))
+                  m "AWS Service Error %s:%s - %s (RequestId: %s)" namespace name
+                    (Option.value ~default:"" message)
+                    (Option.value ~default:"" metadata.request_id))
           | Error _ -> Logs.err (fun m -> m "Unknown error")))

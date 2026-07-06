@@ -34,7 +34,8 @@ module CreateIdentityPool : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceConflictException of resource_conflict_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -91,7 +92,8 @@ module DeleteIdentities : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalErrorException of internal_error_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -131,7 +133,8 @@ module DeleteIdentityPool : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -171,7 +174,8 @@ module DescribeIdentity : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -211,7 +215,8 @@ module DescribeIdentityPool : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -260,7 +265,8 @@ module GetCredentialsForIdentity : sig
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceConflictException of resource_conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -310,7 +316,8 @@ module GetId : sig
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceConflictException of resource_conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -353,7 +360,8 @@ module GetIdentityPoolRoles : sig
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceConflictException of resource_conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -398,7 +406,8 @@ module GetOpenIdToken : sig
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceConflictException of resource_conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -447,7 +456,8 @@ module GetOpenIdTokenForDeveloperIdentity : sig
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceConflictException of resource_conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -497,7 +507,8 @@ module GetPrincipalTagAttributeMap : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -535,7 +546,8 @@ module ListIdentities : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -574,7 +586,8 @@ module ListIdentityPools : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -613,7 +626,8 @@ module ListTagsForResource : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -658,7 +672,8 @@ module LookupDeveloperIdentity : sig
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceConflictException of resource_conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -712,7 +727,8 @@ module MergeDeveloperIdentities : sig
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceConflictException of resource_conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -767,7 +783,8 @@ module SetIdentityPoolRoles : sig
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceConflictException of resource_conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -807,7 +824,8 @@ module SetPrincipalTagAttributeMap : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -845,7 +863,8 @@ module TagResource : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -901,7 +920,8 @@ module UnlinkDeveloperIdentity : sig
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceConflictException of resource_conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -949,7 +969,8 @@ module UnlinkIdentity : sig
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceConflictException of resource_conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -990,7 +1011,8 @@ module UntagResource : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1037,7 +1059,8 @@ module UpdateIdentityPool : sig
       | `NotAuthorizedException of not_authorized_exception
       | `ResourceConflictException of resource_conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

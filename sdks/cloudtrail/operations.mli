@@ -64,7 +64,8 @@ module AddTags : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
       | `TagsLimitExceededException of tags_limit_exceeded_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -122,7 +123,8 @@ module CancelQuery : sig
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `QueryIdNotFoundException of query_id_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -183,7 +185,8 @@ module CreateChannel : sig
       | `InvalidTagParameterException of invalid_tag_parameter_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `TagsLimitExceededException of tags_limit_exceeded_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -231,7 +234,8 @@ module CreateDashboard : sig
       | `InvalidQueryStatementException of invalid_query_statement_exception
       | `InvalidTagParameterException of invalid_tag_parameter_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -346,7 +350,8 @@ module CreateEventDataStore : sig
         organization_not_in_all_features_mode_exception
       | `OrganizationsNotInUseException of organizations_not_in_use_exception
       | `ThrottlingException of throttling_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Creates a new event data store.\n"]
@@ -475,7 +480,8 @@ module CreateTrail : sig
       | `ThrottlingException of throttling_exception
       | `TrailAlreadyExistsException of trail_already_exists_exception
       | `TrailNotProvidedException of trail_not_provided_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -509,7 +515,8 @@ module DeleteChannel : sig
       | `ChannelARNInvalidException of channel_arn_invalid_exception
       | `ChannelNotFoundException of channel_not_found_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes a channel.\n"]
@@ -539,7 +546,8 @@ module DeleteDashboard : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConflictException of conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -610,7 +618,8 @@ module DeleteEventDataStore : sig
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `NotOrganizationMasterAccountException of not_organization_master_account_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -663,7 +672,8 @@ module DeleteResourcePolicy : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ResourcePolicyNotFoundException of resource_policy_not_found_exception
       | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -722,7 +732,8 @@ module DeleteTrail : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `ThrottlingException of throttling_exception
       | `TrailNotFoundException of trail_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -796,7 +807,8 @@ module DeregisterOrganizationDelegatedAdmin : sig
       | `OrganizationNotInAllFeaturesModeException of
         organization_not_in_all_features_mode_exception
       | `OrganizationsNotInUseException of organizations_not_in_use_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -842,7 +854,8 @@ module DescribeQuery : sig
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `QueryIdNotFoundException of query_id_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -885,7 +898,8 @@ module DescribeTrails : sig
       | `InvalidTrailNameException of invalid_trail_name_exception
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -954,7 +968,8 @@ module DisableFederation : sig
       | `OrganizationNotInAllFeaturesModeException of
         organization_not_in_all_features_mode_exception
       | `OrganizationsNotInUseException of organizations_not_in_use_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1031,7 +1046,8 @@ module EnableFederation : sig
       | `OrganizationNotInAllFeaturesModeException of
         organization_not_in_all_features_mode_exception
       | `OrganizationsNotInUseException of organizations_not_in_use_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1094,7 +1110,8 @@ module GenerateQuery : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1145,7 +1162,8 @@ module GetChannel : sig
       | `ChannelARNInvalidException of channel_arn_invalid_exception
       | `ChannelNotFoundException of channel_not_found_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Returns information about a specific channel. \n"]
@@ -1172,7 +1190,8 @@ module GetDashboard : sig
     ( get_dashboard_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Returns the specified dashboard. \n"]
@@ -1229,7 +1248,8 @@ module GetEventConfiguration : sig
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `TrailNotFoundException of trail_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1271,7 +1291,8 @@ module GetEventDataStore : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1312,7 +1333,8 @@ module GetEventSelectors : sig
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `TrailNotFoundException of trail_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1385,7 +1407,8 @@ module GetImport : sig
       | `ImportNotFoundException of import_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Returns information about a specific import. \n"]
@@ -1436,7 +1459,8 @@ module GetInsightSelectors : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `ThrottlingException of throttling_exception
       | `TrailNotFoundException of trail_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1503,7 +1527,8 @@ module GetQueryResults : sig
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `QueryIdNotFoundException of query_id_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1544,7 +1569,8 @@ module GetResourcePolicy : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ResourcePolicyNotFoundException of resource_policy_not_found_exception
       | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1582,7 +1608,8 @@ module GetTrail : sig
       | `InvalidTrailNameException of invalid_trail_name_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `TrailNotFoundException of trail_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns settings information for a specified trail.\n"]
@@ -1618,7 +1645,8 @@ module GetTrailStatus : sig
       | `InvalidTrailNameException of invalid_trail_name_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `TrailNotFoundException of trail_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1652,7 +1680,8 @@ module ListChannels : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidNextTokenException of invalid_next_token_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Lists the channels in the current account, and their source names. \n"]
@@ -1676,7 +1705,8 @@ module ListDashboards : sig
     list_dashboards_request ->
     ( list_dashboards_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Returns information about all dashboards in the account, in the current Region. \n"]
@@ -1712,7 +1742,8 @@ module ListEventDataStores : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1746,7 +1777,8 @@ module ListImportFailures : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Returns a list of failures for the specified import. \n"]
@@ -1782,7 +1814,8 @@ module ListImports : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1814,7 +1847,8 @@ module ListInsightsData : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1868,7 +1902,8 @@ module ListInsightsMetricData : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `InvalidTrailNameException of invalid_trail_name_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1937,7 +1972,8 @@ module ListPublicKeys : sig
       | `InvalidTimeRangeException of invalid_time_range_exception
       | `InvalidTokenException of invalid_token_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1999,7 +2035,8 @@ module ListQueries : sig
       | `InvalidQueryStatusException of invalid_query_status_exception
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2061,7 +2098,8 @@ module ListTags : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2090,7 +2128,8 @@ module ListTrails : sig
     ( list_trails_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists trails that are in the current account.\n"]
@@ -2132,7 +2171,8 @@ module LookupEvents : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidTimeRangeException of invalid_time_range_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2271,7 +2311,8 @@ module PutEventConfiguration : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `ThrottlingException of throttling_exception
       | `TrailNotFoundException of trail_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2334,7 +2375,8 @@ module PutEventSelectors : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `ThrottlingException of throttling_exception
       | `TrailNotFoundException of trail_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2479,7 +2521,8 @@ module PutInsightSelectors : sig
       | `S3BucketDoesNotExistException of s3_bucket_does_not_exist_exception
       | `ThrottlingException of throttling_exception
       | `TrailNotFoundException of trail_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2562,7 +2605,8 @@ module PutResourcePolicy : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ResourcePolicyNotValidException of resource_policy_not_valid_exception
       | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2637,7 +2681,8 @@ module RegisterOrganizationDelegatedAdmin : sig
       | `OrganizationNotInAllFeaturesModeException of
         organization_not_in_all_features_mode_exception
       | `OrganizationsNotInUseException of organizations_not_in_use_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2706,7 +2751,8 @@ module RemoveTags : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes the specified tags from a trail, event data store, dashboard, or channel.\n"]
@@ -2771,7 +2817,8 @@ module RestoreEventDataStore : sig
       | `OrganizationNotInAllFeaturesModeException of
         organization_not_in_all_features_mode_exception
       | `OrganizationsNotInUseException of organizations_not_in_use_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2805,7 +2852,8 @@ module SearchSampleQueries : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2843,7 +2891,8 @@ module StartDashboardRefresh : sig
       | `InactiveEventDataStoreException of inactive_event_data_store_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2908,7 +2957,8 @@ module StartEventDataStoreIngestion : sig
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `NotOrganizationMasterAccountException of not_organization_master_account_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2969,7 +3019,8 @@ module StartImport : sig
       | `InvalidImportSourceException of invalid_import_source_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3047,7 +3098,8 @@ module StartLogging : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `ThrottlingException of throttling_exception
       | `TrailNotFoundException of trail_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3114,7 +3166,8 @@ module StartQuery : sig
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `S3BucketDoesNotExistException of s3_bucket_does_not_exist_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3178,7 +3231,8 @@ module StopEventDataStoreIngestion : sig
       | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
       | `NotOrganizationMasterAccountException of not_organization_master_account_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3214,7 +3268,8 @@ module StopImport : sig
       | `ImportNotFoundException of import_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Stops a specified import. \n"]
@@ -3271,7 +3326,8 @@ module StopLogging : sig
       | `OperationNotPermittedException of operation_not_permitted_exception
       | `ThrottlingException of throttling_exception
       | `TrailNotFoundException of trail_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3328,7 +3384,8 @@ module UpdateChannel : sig
       | `InvalidEventDataStoreCategoryException of invalid_event_data_store_category_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OperationNotPermittedException of operation_not_permitted_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates a channel specified by a required channel ARN or UUID.\n"]
@@ -3373,7 +3430,8 @@ module UpdateDashboard : sig
       | `InvalidQueryStatementException of invalid_query_statement_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3480,7 +3538,8 @@ module UpdateEventDataStore : sig
         organization_not_in_all_features_mode_exception
       | `OrganizationsNotInUseException of organizations_not_in_use_exception
       | `ThrottlingException of throttling_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3624,7 +3683,8 @@ module UpdateTrail : sig
       | `ThrottlingException of throttling_exception
       | `TrailNotFoundException of trail_not_found_exception
       | `TrailNotProvidedException of trail_not_provided_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

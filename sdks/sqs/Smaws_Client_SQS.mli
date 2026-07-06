@@ -245,7 +245,8 @@ module AddPermission : sig
       | `OverLimit of over_limit
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -317,7 +318,8 @@ module CancelMessageMoveTask : sig
       | `InvalidSecurity of invalid_security
       | `RequestThrottled of request_throttled
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -375,7 +377,8 @@ module ChangeMessageVisibility : sig
       | `QueueDoesNotExist of queue_does_not_exist
       | `ReceiptHandleIsInvalid of receipt_handle_is_invalid
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -481,7 +484,8 @@ module ChangeMessageVisibilityBatch : sig
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
       | `TooManyEntriesInBatchRequest of too_many_entries_in_batch_request
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -540,7 +544,8 @@ module CreateQueue : sig
       | `QueueDeletedRecently of queue_deleted_recently
       | `QueueNameExists of queue_name_exists
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -637,7 +642,8 @@ module DeleteMessage : sig
       | `QueueDoesNotExist of queue_does_not_exist
       | `ReceiptHandleIsInvalid of receipt_handle_is_invalid
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -704,7 +710,8 @@ module DeleteMessageBatch : sig
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
       | `TooManyEntriesInBatchRequest of too_many_entries_in_batch_request
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -749,7 +756,8 @@ module DeleteQueue : sig
       | `InvalidSecurity of invalid_security
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -810,7 +818,8 @@ module GetQueueAttributes : sig
       | `InvalidSecurity of invalid_security
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -852,7 +861,8 @@ module GetQueueUrl : sig
       | `InvalidSecurity of invalid_security
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -901,7 +911,8 @@ module ListDeadLetterSourceQueues : sig
       | `InvalidSecurity of invalid_security
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -950,7 +961,8 @@ module ListMessageMoveTasks : sig
       | `InvalidSecurity of invalid_security
       | `RequestThrottled of request_throttled
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1000,7 +1012,8 @@ module ListQueueTags : sig
       | `InvalidSecurity of invalid_security
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1041,7 +1054,8 @@ module ListQueues : sig
       | `InvalidAddress of invalid_address
       | `InvalidSecurity of invalid_security
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1095,7 +1109,8 @@ module PurgeQueue : sig
       | `PurgeQueueInProgress of purge_queue_in_progress
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1168,7 +1183,8 @@ module ReceiveMessage : sig
       | `OverLimit of over_limit
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1252,7 +1268,8 @@ module RemovePermission : sig
       | `InvalidSecurity of invalid_security
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1328,7 +1345,8 @@ module SendMessage : sig
       | `KmsThrottled of kms_throttled
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1412,7 +1430,8 @@ module SendMessageBatch : sig
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
       | `TooManyEntriesInBatchRequest of too_many_entries_in_batch_request
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1486,7 +1505,8 @@ module SetQueueAttributes : sig
       | `OverLimit of over_limit
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1545,7 +1565,8 @@ module StartMessageMoveTask : sig
       | `InvalidSecurity of invalid_security
       | `RequestThrottled of request_throttled
       | `ResourceNotFoundException of resource_not_found_exception
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1601,7 +1622,8 @@ module TagQueue : sig
       | `InvalidSecurity of invalid_security
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1668,7 +1690,8 @@ module UntagQueue : sig
       | `InvalidSecurity of invalid_security
       | `QueueDoesNotExist of queue_does_not_exist
       | `RequestThrottled of request_throttled
-      | `UnsupportedOperation of unsupported_operation ] )
+      | `UnsupportedOperation of unsupported_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

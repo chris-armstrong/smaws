@@ -656,7 +656,8 @@ module AssociateCustomDomain : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `InvalidStateException of invalid_state_exception ] )
+      | `InvalidStateException of invalid_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -695,7 +696,8 @@ module CreateAutoScalingConfiguration : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception ] )
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -740,7 +742,8 @@ module CreateConnection : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception ] )
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -777,7 +780,8 @@ module CreateObservabilityConfiguration : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception ] )
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -822,7 +826,8 @@ module CreateService : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception ] )
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -859,7 +864,8 @@ module CreateVpcConnector : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception ] )
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -894,7 +900,8 @@ module CreateVpcIngressConnection : sig
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
       | `InvalidStateException of invalid_state_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception ] )
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -926,7 +933,8 @@ module DeleteAutoScalingConfiguration : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -960,7 +968,8 @@ module DeleteConnection : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -992,7 +1001,8 @@ module DeleteObservabilityConfiguration : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1028,7 +1038,8 @@ module DeleteService : sig
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
       | `InvalidStateException of invalid_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1066,7 +1077,8 @@ module DeleteVpcConnector : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1101,7 +1113,8 @@ module DeleteVpcIngressConnection : sig
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
       | `InvalidStateException of invalid_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1148,7 +1161,8 @@ module DescribeAutoScalingConfiguration : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1179,7 +1193,8 @@ module DescribeCustomDomains : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1210,7 +1225,8 @@ module DescribeObservabilityConfiguration : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Return a full description of an App Runner observability configuration resource.\n"]
@@ -1240,7 +1256,8 @@ module DescribeService : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Return a full description of an App Runner service.\n"]
@@ -1270,7 +1287,8 @@ module DescribeVpcConnector : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Return a description of an App Runner VPC connector resource.\n"]
@@ -1300,7 +1318,8 @@ module DescribeVpcIngressConnection : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Return a full description of an App Runner VPC Ingress Connection resource.\n"]
@@ -1333,7 +1352,8 @@ module DisassociateCustomDomain : sig
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
       | `InvalidStateException of invalid_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1366,7 +1386,8 @@ module ListAutoScalingConfigurations : sig
     ( list_auto_scaling_configurations_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
-      | `InvalidRequestException of invalid_request_exception ] )
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1400,7 +1421,8 @@ module ListConnections : sig
     ( list_connections_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
-      | `InvalidRequestException of invalid_request_exception ] )
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1429,7 +1451,8 @@ module ListObservabilityConfigurations : sig
     ( list_observability_configurations_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
-      | `InvalidRequestException of invalid_request_exception ] )
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1466,7 +1489,8 @@ module ListOperations : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1497,7 +1521,8 @@ module ListServices : sig
     ( list_services_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
-      | `InvalidRequestException of invalid_request_exception ] )
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns a list of running App Runner services in your Amazon Web Services account.\n"]
@@ -1527,7 +1552,8 @@ module ListServicesForAutoScalingConfiguration : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1561,7 +1587,8 @@ module ListTagsForResource : sig
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
       | `InvalidStateException of invalid_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1590,7 +1617,8 @@ module ListVpcConnectors : sig
     ( list_vpc_connectors_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
-      | `InvalidRequestException of invalid_request_exception ] )
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns a list of App Runner VPC connectors in your Amazon Web Services account.\n"]
@@ -1617,7 +1645,8 @@ module ListVpcIngressConnections : sig
     ( list_vpc_ingress_connections_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
-      | `InvalidRequestException of invalid_request_exception ] )
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1651,7 +1680,8 @@ module PauseService : sig
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
       | `InvalidStateException of invalid_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1689,7 +1719,8 @@ module ResumeService : sig
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
       | `InvalidStateException of invalid_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1723,7 +1754,8 @@ module StartDeployment : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1765,7 +1797,8 @@ module TagResource : sig
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
       | `InvalidStateException of invalid_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1799,7 +1832,8 @@ module UntagResource : sig
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
       | `InvalidStateException of invalid_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Remove tags from an App Runner resource.\n"]
@@ -1829,7 +1863,8 @@ module UpdateDefaultAutoScalingConfiguration : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1864,7 +1899,8 @@ module UpdateService : sig
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
       | `InvalidStateException of invalid_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1908,7 +1944,8 @@ module UpdateVpcIngressConnection : sig
       | `InternalServiceErrorException of internal_service_error_exception
       | `InvalidRequestException of invalid_request_exception
       | `InvalidStateException of invalid_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

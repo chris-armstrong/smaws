@@ -407,7 +407,8 @@ module CreateConnection : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ResourceUnavailableException of resource_unavailable_exception ] )
+      | `ResourceUnavailableException of resource_unavailable_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -433,7 +434,7 @@ module CreateHost : sig
     create_host_input ->
     ( create_host_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
-    )
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -483,7 +484,8 @@ module CreateRepositoryLink : sig
       | `InvalidInputException of invalid_input_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceAlreadyExistsException of resource_already_exists_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -527,7 +529,8 @@ module CreateSyncConfiguration : sig
       | `InvalidInputException of invalid_input_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceAlreadyExistsException of resource_already_exists_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -554,7 +557,8 @@ module DeleteConnection : sig
     delete_connection_input ->
     ( delete_connection_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "The connection to be deleted.\n"]
@@ -581,7 +585,8 @@ module DeleteHost : sig
     ( delete_host_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ResourceUnavailableException of resource_unavailable_exception ] )
+      | `ResourceUnavailableException of resource_unavailable_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -631,7 +636,8 @@ module DeleteRepositoryLink : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `SyncConfigurationStillExistsException of sync_configuration_still_exists_exception
       | `ThrottlingException of throttling_exception
-      | `UnsupportedProviderTypeException of unsupported_provider_type_exception ] )
+      | `UnsupportedProviderTypeException of unsupported_provider_type_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -671,7 +677,8 @@ module DeleteSyncConfiguration : sig
       | `InternalServerException of internal_server_exception
       | `InvalidInputException of invalid_input_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes the sync configuration for a specified repository and connection.\n"]
@@ -698,7 +705,8 @@ module GetConnection : sig
     ( get_connection_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ResourceUnavailableException of resource_unavailable_exception ] )
+      | `ResourceUnavailableException of resource_unavailable_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns the connection ARN and details such as status, owner, and provider type.\n"]
@@ -725,7 +733,8 @@ module GetHost : sig
     ( get_host_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ResourceUnavailableException of resource_unavailable_exception ] )
+      | `ResourceUnavailableException of resource_unavailable_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -766,7 +775,8 @@ module GetRepositoryLink : sig
       | `InternalServerException of internal_server_exception
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -804,7 +814,8 @@ module GetRepositorySyncStatus : sig
       | `InternalServerException of internal_server_exception
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -842,7 +853,8 @@ module GetResourceSyncStatus : sig
       | `InternalServerException of internal_server_exception
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -880,7 +892,8 @@ module GetSyncBlockerSummary : sig
       | `InternalServerException of internal_server_exception
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns a list of the most recent sync blockers.\n"]
@@ -916,7 +929,8 @@ module GetSyncConfiguration : sig
       | `InternalServerException of internal_server_exception
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -943,7 +957,8 @@ module ListConnections : sig
     list_connections_input ->
     ( list_connections_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the connections associated with your account.\n"]
@@ -959,7 +974,9 @@ module ListHosts : sig
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
     list_hosts_input ->
-    (list_hosts_output Smaws_Lib.Response.t, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+    ( list_hosts_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc "Lists the hosts associated with your account.\n"]
 
@@ -997,7 +1014,8 @@ module ListRepositoryLinks : sig
       | `InternalServerException of internal_server_exception
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the repository links created for connections in your account.\n"]
@@ -1033,7 +1051,8 @@ module ListRepositorySyncDefinitions : sig
       | `InternalServerException of internal_server_exception
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the repository sync definitions for repository links in your account.\n"]
@@ -1069,7 +1088,8 @@ module ListSyncConfigurations : sig
       | `InternalServerException of internal_server_exception
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns a list of sync configurations for a specified repository.\n"]
@@ -1093,7 +1113,8 @@ module ListTagsForResource : sig
     list_tags_for_resource_input ->
     ( list_tags_for_resource_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gets the set of key-value pairs (metadata) that are used to manage the resource.\n"]
@@ -1120,7 +1141,8 @@ module TagResource : sig
     ( tag_resource_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1146,7 +1168,8 @@ module UntagResource : sig
     untag_resource_input ->
     ( untag_resource_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes tags from an Amazon Web Services resource.\n"]
@@ -1179,7 +1202,8 @@ module UpdateHost : sig
       | `ConflictException of conflict_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ResourceUnavailableException of resource_unavailable_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates a specified host with the provided configurations.\n"]
@@ -1221,7 +1245,8 @@ module UpdateRepositoryLink : sig
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `UpdateOutOfSyncException of update_out_of_sync_exception ] )
+      | `UpdateOutOfSyncException of update_out_of_sync_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1266,7 +1291,8 @@ module UpdateSyncBlocker : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `RetryLatestCommitFailedException of retry_latest_commit_failed_exception
       | `SyncBlockerDoesNotExistException of sync_blocker_does_not_exist_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1311,7 +1337,8 @@ module UpdateSyncConfiguration : sig
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `UpdateOutOfSyncException of update_out_of_sync_exception ] )
+      | `UpdateOutOfSyncException of update_out_of_sync_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

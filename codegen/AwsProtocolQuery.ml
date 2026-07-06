@@ -1197,7 +1197,9 @@ module Operations = struct
                 val request_with_metadata :
                   'http_type Smaws_Lib.Context.t ->
                   [%t input_type] ->
-                  ([%t output_type] Smaws_Lib.Response.t, [%t exception_type]) result]))
+                  ( [%t output_type] Smaws_Lib.Response.t,
+                    [%t exception_type] * Smaws_Lib.Response.metadata )
+                  result]))
     |> Docs.attach_doc_to_signature_item ~loc ~doc_string
 
   let extract_xml_namespace (service : Shape.serviceShapeDetails) =

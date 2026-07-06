@@ -206,7 +206,8 @@ module AssumeRole : sig
       | `ExpiredTokenException of expired_token_exception
       | `MalformedPolicyDocumentException of malformed_policy_document_exception
       | `PackedPolicyTooLargeException of packed_policy_too_large_exception
-      | `RegionDisabledException of region_disabled_exception ] )
+      | `RegionDisabledException of region_disabled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -344,7 +345,8 @@ module AssumeRoleWithSAML : sig
       | `InvalidIdentityTokenException of invalid_identity_token_exception
       | `MalformedPolicyDocumentException of malformed_policy_document_exception
       | `PackedPolicyTooLargeException of packed_policy_too_large_exception
-      | `RegionDisabledException of region_disabled_exception ] )
+      | `RegionDisabledException of region_disabled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -525,7 +527,8 @@ module AssumeRoleWithWebIdentity : sig
       | `InvalidIdentityTokenException of invalid_identity_token_exception
       | `MalformedPolicyDocumentException of malformed_policy_document_exception
       | `PackedPolicyTooLargeException of packed_policy_too_large_exception
-      | `RegionDisabledException of region_disabled_exception ] )
+      | `RegionDisabledException of region_disabled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -690,7 +693,8 @@ module AssumeRoot : sig
     ( assume_root_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsQuery.error
       | `ExpiredTokenException of expired_token_exception
-      | `RegionDisabledException of region_disabled_exception ] )
+      | `RegionDisabledException of region_disabled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -741,7 +745,8 @@ module DecodeAuthorizationMessage : sig
     decode_authorization_message_request ->
     ( decode_authorization_message_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidAuthorizationMessageException of invalid_authorization_message_exception ] )
+      | `InvalidAuthorizationMessageException of invalid_authorization_message_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -798,7 +803,7 @@ module GetAccessKeyInfo : sig
     'http_type Smaws_Lib.Context.t ->
     get_access_key_info_request ->
     ( get_access_key_info_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error ] )
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -838,7 +843,7 @@ module GetCallerIdentity : sig
     'http_type Smaws_Lib.Context.t ->
     get_caller_identity_request ->
     ( get_caller_identity_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error ] )
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -877,7 +882,8 @@ module GetDelegatedAccessToken : sig
       [> Smaws_Lib.Protocols.AwsQuery.error
       | `ExpiredTradeInTokenException of expired_trade_in_token_exception
       | `PackedPolicyTooLargeException of packed_policy_too_large_exception
-      | `RegionDisabledException of region_disabled_exception ] )
+      | `RegionDisabledException of region_disabled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -911,7 +917,8 @@ module GetFederationToken : sig
       [> Smaws_Lib.Protocols.AwsQuery.error
       | `MalformedPolicyDocumentException of malformed_policy_document_exception
       | `PackedPolicyTooLargeException of packed_policy_too_large_exception
-      | `RegionDisabledException of region_disabled_exception ] )
+      | `RegionDisabledException of region_disabled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1035,7 +1042,7 @@ module GetSessionToken : sig
     get_session_token_request ->
     ( get_session_token_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsQuery.error | `RegionDisabledException of region_disabled_exception ]
-    )
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1127,7 +1134,8 @@ module GetWebIdentityToken : sig
       | `JWTPayloadSizeExceededException of jwt_payload_size_exceeded_exception
       | `OutboundWebIdentityFederationDisabledException of
         outbound_web_identity_federation_disabled_exception
-      | `SessionDurationEscalationException of session_duration_escalation_exception ] )
+      | `SessionDurationEscalationException of session_duration_escalation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

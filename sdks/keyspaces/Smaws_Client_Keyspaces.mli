@@ -395,7 +395,8 @@ module CreateKeyspace : sig
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -443,7 +444,8 @@ module CreateTable : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -493,7 +495,8 @@ module CreateType : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -541,7 +544,8 @@ module DeleteKeyspace : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "The [DeleteKeyspace] operation deletes a keyspace and all of its tables. \n"]
@@ -580,7 +584,8 @@ module DeleteTable : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -625,7 +630,8 @@ module DeleteType : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -667,7 +673,8 @@ module GetKeyspace : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -706,7 +713,8 @@ module GetTable : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -747,7 +755,8 @@ module GetTableAutoScalingSettings : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -807,7 +816,8 @@ module GetType : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -851,7 +861,8 @@ module ListKeyspaces : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "The [ListKeyspaces] operation returns a list of keyspaces.\n"]
@@ -887,7 +898,8 @@ module ListTables : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -927,7 +939,8 @@ module ListTagsForResource : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -967,7 +980,8 @@ module ListTypes : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1012,7 +1026,8 @@ module RestoreTable : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1104,7 +1119,8 @@ module TagResource : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1153,7 +1169,8 @@ module UntagResource : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes the association of tags from a Amazon Keyspaces resource.\n"]
@@ -1192,7 +1209,8 @@ module UpdateKeyspace : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1311,7 +1329,8 @@ module UpdateTable : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

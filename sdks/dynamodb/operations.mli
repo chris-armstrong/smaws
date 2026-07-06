@@ -25,7 +25,8 @@ module BatchExecuteStatement : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `RequestLimitExceeded of request_limit_exceeded
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -79,7 +80,8 @@ module BatchGetItem : sig
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -177,7 +179,8 @@ module BatchWriteItem : sig
       | `ReplicatedWriteConflictException of replicated_write_conflict_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -308,7 +311,8 @@ module CreateBackup : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `LimitExceededException of limit_exceeded_exception
       | `TableInUseException of table_in_use_exception
-      | `TableNotFoundException of table_not_found_exception ] )
+      | `TableNotFoundException of table_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -379,7 +383,8 @@ module CreateGlobalTable : sig
       | `InternalServerError of internal_server_error
       | `InvalidEndpointException of invalid_endpoint_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `TableNotFoundException of table_not_found_exception ] )
+      | `TableNotFoundException of table_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -477,7 +482,8 @@ module CreateTable : sig
       | `InternalServerError of internal_server_error
       | `InvalidEndpointException of invalid_endpoint_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception ] )
+      | `ResourceInUseException of resource_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -528,7 +534,8 @@ module DeleteBackup : sig
       | `BackupNotFoundException of backup_not_found_exception
       | `InternalServerError of internal_server_error
       | `InvalidEndpointException of invalid_endpoint_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -582,7 +589,8 @@ module DeleteItem : sig
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `TransactionConflictException of transaction_conflict_exception ] )
+      | `TransactionConflictException of transaction_conflict_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -632,7 +640,8 @@ module DeleteResourcePolicy : sig
       | `LimitExceededException of limit_exceeded_exception
       | `PolicyNotFoundException of policy_not_found_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -683,7 +692,8 @@ module DeleteTable : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -731,7 +741,8 @@ module DescribeBackup : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `BackupNotFoundException of backup_not_found_exception
       | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ] )
+      | `InvalidEndpointException of invalid_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -764,7 +775,8 @@ module DescribeContinuousBackups : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidEndpointException of invalid_endpoint_exception
-      | `TableNotFoundException of table_not_found_exception ] )
+      | `TableNotFoundException of table_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -803,7 +815,8 @@ module DescribeContributorInsights : sig
     ( describe_contributor_insights_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -821,7 +834,7 @@ module DescribeEndpoints : sig
     'http_type Smaws_Lib.Context.t ->
     describe_endpoints_request ->
     ( describe_endpoints_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error ] )
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -855,7 +868,8 @@ module DescribeExport : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ExportNotFoundException of export_not_found_exception
       | `InternalServerError of internal_server_error
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Describes an existing table export.\n"]
@@ -885,7 +899,8 @@ module DescribeGlobalTable : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `GlobalTableNotFoundException of global_table_not_found_exception
       | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ] )
+      | `InvalidEndpointException of invalid_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -930,7 +945,8 @@ module DescribeGlobalTableSettings : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `GlobalTableNotFoundException of global_table_not_found_exception
       | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ] )
+      | `InvalidEndpointException of invalid_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -968,7 +984,7 @@ module DescribeImport : sig
     describe_import_input ->
     ( describe_import_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `ImportNotFoundException of import_not_found_exception ]
-    )
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Represents the properties of the import. \n"]
@@ -998,7 +1014,8 @@ module DescribeKinesisStreamingDestination : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns information about the status of Kinesis streaming.\n"]
@@ -1025,7 +1042,8 @@ module DescribeLimits : sig
     ( describe_limits_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ] )
+      | `InvalidEndpointException of invalid_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1120,7 +1138,8 @@ module DescribeTable : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1155,7 +1174,8 @@ module DescribeTableReplicaAutoScaling : sig
     ( describe_table_replica_auto_scaling_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Describes auto scaling settings across replicas of the global table at once.\n"]
@@ -1185,7 +1205,8 @@ module DescribeTimeToLive : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gives a description of the Time to Live (TTL) status on the specified table. \n"]
@@ -1221,7 +1242,8 @@ module DisableKinesisStreamingDestination : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1259,7 +1281,8 @@ module EnableKinesisStreamingDestination : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1310,7 +1333,8 @@ module ExecuteStatement : sig
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `TransactionConflictException of transaction_conflict_exception ] )
+      | `TransactionConflictException of transaction_conflict_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1368,7 +1392,8 @@ module ExecuteTransaction : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `TransactionCanceledException of transaction_canceled_exception
-      | `TransactionInProgressException of transaction_in_progress_exception ] )
+      | `TransactionInProgressException of transaction_in_progress_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1416,7 +1441,8 @@ module ExportTableToPointInTime : sig
       | `InvalidExportTimeException of invalid_export_time_exception
       | `LimitExceededException of limit_exceeded_exception
       | `PointInTimeRecoveryUnavailableException of point_in_time_recovery_unavailable_exception
-      | `TableNotFoundException of table_not_found_exception ] )
+      | `TableNotFoundException of table_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1457,7 +1483,8 @@ module GetItem : sig
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1498,7 +1525,8 @@ module GetResourcePolicy : sig
       | `InternalServerError of internal_server_error
       | `InvalidEndpointException of invalid_endpoint_exception
       | `PolicyNotFoundException of policy_not_found_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1561,7 +1589,8 @@ module ImportTable : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ImportConflictException of import_conflict_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception ] )
+      | `ResourceInUseException of resource_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Imports table data from an S3 bucket. \n"]
@@ -1588,7 +1617,8 @@ module ListBackups : sig
     ( list_backups_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ] )
+      | `InvalidEndpointException of invalid_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1629,7 +1659,8 @@ module ListContributorInsights : sig
     ( list_contributor_insights_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1657,7 +1688,8 @@ module ListExports : sig
     ( list_exports_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1685,7 +1717,8 @@ module ListGlobalTables : sig
     ( list_global_tables_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ] )
+      | `InvalidEndpointException of invalid_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1723,7 +1756,7 @@ module ListImports : sig
     list_imports_input ->
     ( list_imports_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
-    )
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Lists completed imports within the past 90 days. \n"]
@@ -1750,7 +1783,8 @@ module ListTables : sig
     ( list_tables_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `InvalidEndpointException of invalid_endpoint_exception ] )
+      | `InvalidEndpointException of invalid_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1782,7 +1816,8 @@ module ListTagsOfResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidEndpointException of invalid_endpoint_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1839,7 +1874,8 @@ module PutItem : sig
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `TransactionConflictException of transaction_conflict_exception ] )
+      | `TransactionConflictException of transaction_conflict_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1904,7 +1940,8 @@ module PutResourcePolicy : sig
       | `LimitExceededException of limit_exceeded_exception
       | `PolicyNotFoundException of policy_not_found_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1960,7 +1997,8 @@ module Query : sig
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2047,7 +2085,8 @@ module RestoreTableFromBackup : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `LimitExceededException of limit_exceeded_exception
       | `TableAlreadyExistsException of table_already_exists_exception
-      | `TableInUseException of table_in_use_exception ] )
+      | `TableInUseException of table_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2119,7 +2158,8 @@ module RestoreTableToPointInTime : sig
       | `PointInTimeRecoveryUnavailableException of point_in_time_recovery_unavailable_exception
       | `TableAlreadyExistsException of table_already_exists_exception
       | `TableInUseException of table_in_use_exception
-      | `TableNotFoundException of table_not_found_exception ] )
+      | `TableNotFoundException of table_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2211,7 +2251,8 @@ module Scan : sig
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2288,7 +2329,8 @@ module TagResource : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2351,7 +2393,8 @@ module TransactGetItems : sig
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `TransactionCanceledException of transaction_canceled_exception ] )
+      | `TransactionCanceledException of transaction_canceled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2422,7 +2465,8 @@ module TransactWriteItems : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
       | `TransactionCanceledException of transaction_canceled_exception
-      | `TransactionInProgressException of transaction_in_progress_exception ] )
+      | `TransactionInProgressException of transaction_in_progress_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2521,7 +2565,8 @@ module UntagResource : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2574,7 +2619,8 @@ module UpdateContinuousBackups : sig
       | `ContinuousBackupsUnavailableException of continuous_backups_unavailable_exception
       | `InternalServerError of internal_server_error
       | `InvalidEndpointException of invalid_endpoint_exception
-      | `TableNotFoundException of table_not_found_exception ] )
+      | `TableNotFoundException of table_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2612,7 +2658,8 @@ module UpdateContributorInsights : sig
     ( update_contributor_insights_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2657,7 +2704,8 @@ module UpdateGlobalTable : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `ReplicaAlreadyExistsException of replica_already_exists_exception
       | `ReplicaNotFoundException of replica_not_found_exception
-      | `TableNotFoundException of table_not_found_exception ] )
+      | `TableNotFoundException of table_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2743,7 +2791,8 @@ module UpdateGlobalTableSettings : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ReplicaNotFoundException of replica_not_found_exception
-      | `ResourceInUseException of resource_in_use_exception ] )
+      | `ResourceInUseException of resource_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2809,7 +2858,8 @@ module UpdateItem : sig
       | `RequestLimitExceeded of request_limit_exceeded
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `TransactionConflictException of transaction_conflict_exception ] )
+      | `TransactionConflictException of transaction_conflict_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2852,7 +2902,8 @@ module UpdateKinesisStreamingDestination : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "The command to update the Kinesis stream destination.\n"]
@@ -2888,7 +2939,8 @@ module UpdateTable : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2941,7 +2993,8 @@ module UpdateTableReplicaAutoScaling : sig
       | `InternalServerError of internal_server_error
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates auto scaling settings on your global tables at once.\n"]
@@ -2977,7 +3030,8 @@ module UpdateTimeToLive : sig
       | `InvalidEndpointException of invalid_endpoint_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

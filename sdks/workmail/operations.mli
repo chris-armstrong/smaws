@@ -34,7 +34,8 @@ module AssociateDelegateToResource : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Adds a member (user or group) to the resource's set of delegates.\n"]
@@ -82,7 +83,8 @@ module AssociateMemberToGroup : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Adds a member (user or group) to the group's set.\n"]
@@ -115,7 +117,8 @@ module AssumeImpersonationRole : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -150,7 +153,8 @@ module CancelMailboxExportJob : sig
       | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -202,7 +206,8 @@ module CreateAlias : sig
       | `MailDomainNotFoundException of mail_domain_not_found_exception
       | `MailDomainStateException of mail_domain_state_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Adds an alias to the set of a given member (user or group) of WorkMail.\n"]
@@ -238,7 +243,8 @@ module CreateAvailabilityConfiguration : sig
       | `LimitExceededException of limit_exceeded_exception
       | `NameAvailabilityException of name_availability_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -287,7 +293,8 @@ module CreateGroup : sig
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
       | `ReservedNameException of reserved_name_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -311,7 +318,8 @@ module CreateIdentityCenterApplication : sig
     create_identity_center_application_request ->
     ( create_identity_center_application_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception ] )
+      | `InvalidParameterException of invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -353,7 +361,8 @@ module CreateImpersonationRole : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `LimitExceededException of limit_exceeded_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -391,7 +400,8 @@ module CreateMobileDeviceAccessRule : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `LimitExceededException of limit_exceeded_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Creates a new mobile device access rule for the specified WorkMail organization.\n"]
@@ -427,7 +437,8 @@ module CreateOrganization : sig
       | `DirectoryUnavailableException of directory_unavailable_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NameAvailabilityException of name_availability_exception ] )
+      | `NameAvailabilityException of name_availability_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -493,7 +504,8 @@ module CreateResource : sig
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
       | `ReservedNameException of reserved_name_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Creates a new WorkMail resource.\n"]
@@ -544,7 +556,8 @@ module CreateUser : sig
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
       | `ReservedNameException of reserved_name_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -572,7 +585,8 @@ module DeleteAccessControlRule : sig
     ( delete_access_control_rule_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -613,7 +627,8 @@ module DeleteAlias : sig
       | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Remove one or more specified aliases from a set of aliases for a given user.\n"]
@@ -640,7 +655,8 @@ module DeleteAvailabilityConfiguration : sig
     ( delete_availability_configuration_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -671,7 +687,8 @@ module DeleteEmailMonitoringConfiguration : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes the email monitoring configuration for a specified organization.\n"]
@@ -716,7 +733,8 @@ module DeleteGroup : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes a group from WorkMail.\n"]
@@ -743,7 +761,8 @@ module DeleteIdentityCenterApplication : sig
     ( delete_identity_center_application_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -775,7 +794,8 @@ module DeleteIdentityProviderConfiguration : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -808,7 +828,8 @@ module DeleteImpersonationRole : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes an impersonation role for the given WorkMail organization.\n"]
@@ -844,7 +865,8 @@ module DeleteMailboxPermissions : sig
       | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes permissions granted to a member (user or group).\n"]
@@ -877,7 +899,8 @@ module DeleteMobileDeviceAccessOverride : sig
       | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -913,7 +936,8 @@ module DeleteMobileDeviceAccessRule : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -948,7 +972,8 @@ module DeleteOrganization : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -983,7 +1008,8 @@ module DeletePersonalAccessToken : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Deletes the Personal Access Token from the provided WorkMail Organization. \n"]
@@ -1019,7 +1045,8 @@ module DeleteResource : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes the specified resource.\n"]
@@ -1049,7 +1076,8 @@ module DeleteRetentionPolicy : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes the specified retention policy from the specified organization.\n"]
@@ -1094,7 +1122,8 @@ module DeleteUser : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1135,7 +1164,8 @@ module DeregisterFromWorkMail : sig
       | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1174,7 +1204,8 @@ module DeregisterMailDomain : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `MailDomainInUseException of mail_domain_in_use_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1210,7 +1241,8 @@ module DescribeEmailMonitoringConfiguration : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Describes the current email monitoring configuration for a specified organization.\n"]
@@ -1243,7 +1275,8 @@ module DescribeEntity : sig
       | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns basic details about an entity in WorkMail. \n"]
@@ -1276,7 +1309,8 @@ module DescribeGroup : sig
       | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns the data available for the group.\n"]
@@ -1309,7 +1343,8 @@ module DescribeIdentityProviderConfiguration : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1337,7 +1372,8 @@ module DescribeInboundDmarcSettings : sig
     ( describe_inbound_dmarc_settings_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the settings in a DMARC policy for a specified organization.\n"]
@@ -1370,7 +1406,8 @@ module DescribeMailboxExportJob : sig
       | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Describes the current status of a mailbox export job.\n"]
@@ -1397,7 +1434,8 @@ module DescribeOrganization : sig
     ( describe_organization_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
-      | `OrganizationNotFoundException of organization_not_found_exception ] )
+      | `OrganizationNotFoundException of organization_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Provides more information regarding a given organization based on its identifier.\n"]
@@ -1433,7 +1471,8 @@ module DescribeResource : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns the data available for the resource.\n"]
@@ -1475,7 +1514,8 @@ module DescribeUser : sig
       | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Provides information regarding the user.\n"]
@@ -1514,7 +1554,8 @@ module DisassociateDelegateFromResource : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes a member from the resource's set of delegates.\n"]
@@ -1562,7 +1603,8 @@ module DisassociateMemberFromGroup : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes a member from a group.\n"]
@@ -1598,7 +1640,8 @@ module GetAccessControlEffect : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1634,7 +1677,8 @@ module GetDefaultRetentionPolicy : sig
       | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gets the default retention policy details for the specified organization.\n"]
@@ -1667,7 +1711,8 @@ module GetImpersonationRole : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gets the impersonation role details for the given WorkMail organization.\n"]
@@ -1706,7 +1751,8 @@ module GetImpersonationRoleEffect : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Tests whether the given impersonation role can impersonate a target user.\n"]
@@ -1739,7 +1785,8 @@ module GetMailboxDetails : sig
       | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Requests a user's mailbox details for a specified organization and user.\n"]
@@ -1772,7 +1819,8 @@ module GetMailDomain : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `MailDomainNotFoundException of mail_domain_not_found_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1804,7 +1852,8 @@ module GetMobileDeviceAccessEffect : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1843,7 +1892,8 @@ module GetMobileDeviceAccessOverride : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1877,7 +1927,8 @@ module GetPersonalAccessTokenMetadata : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1905,7 +1956,8 @@ module ListAccessControlRules : sig
     ( list_access_control_rules_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the access control rules for the specified organization.\n"]
@@ -1941,7 +1993,8 @@ module ListAliases : sig
       | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Creates a paginated call to list the aliases associated with a given entity.\n"]
@@ -1971,7 +2024,8 @@ module ListAvailabilityConfigurations : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "List all the [AvailabilityConfiguration]'s for the given WorkMail organization.\n"]
@@ -2007,7 +2061,8 @@ module ListGroupMembers : sig
       | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2041,7 +2096,8 @@ module ListGroups : sig
       | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns summaries of the organization's groups.\n"]
@@ -2077,7 +2133,8 @@ module ListGroupsForEntity : sig
       | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns all the groups to which an entity belongs.\n"]
@@ -2107,7 +2164,8 @@ module ListImpersonationRoles : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists all the impersonation roles for the given WorkMail organization.\n"]
@@ -2137,7 +2195,8 @@ module ListMailboxExportJobs : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2171,7 +2230,8 @@ module ListMailboxPermissions : sig
       | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the mailbox permissions associated with a user, group, or resource mailbox.\n"]
@@ -2201,7 +2261,8 @@ module ListMailDomains : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the mail domains in a given WorkMail organization.\n"]
@@ -2234,7 +2295,8 @@ module ListMobileDeviceAccessOverrides : sig
       | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2266,7 +2328,8 @@ module ListMobileDeviceAccessRules : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the mobile device access rules for the specified WorkMail organization.\n"]
@@ -2289,7 +2352,8 @@ module ListOrganizations : sig
     list_organizations_request ->
     ( list_organizations_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidParameterException of invalid_parameter_exception ] )
+      | `InvalidParameterException of invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns summaries of the customer's organizations.\n"]
@@ -2325,7 +2389,8 @@ module ListPersonalAccessTokens : sig
       | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Returns a summary of your Personal Access Tokens. \n"]
@@ -2364,7 +2429,8 @@ module ListResourceDelegates : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2399,7 +2465,8 @@ module ListResources : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns summaries of the organization's resources.\n"]
@@ -2423,7 +2490,8 @@ module ListTagsForResource : sig
     list_tags_for_resource_request ->
     ( list_tags_for_resource_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the tags applied to an WorkMail organization resource.\n"]
@@ -2453,7 +2521,8 @@ module ListUsers : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns summaries of the organization's users.\n"]
@@ -2492,7 +2561,8 @@ module PutAccessControlRule : sig
       | `LimitExceededException of limit_exceeded_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2529,7 +2599,8 @@ module PutEmailMonitoringConfiguration : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2563,7 +2634,8 @@ module PutIdentityProviderConfiguration : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2594,7 +2666,8 @@ module PutInboundDmarcSettings : sig
     ( put_inbound_dmarc_settings_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Enables or disables a DMARC policy for a given organization.\n"]
@@ -2630,7 +2703,8 @@ module PutMailboxPermissions : sig
       | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2667,7 +2741,8 @@ module PutMobileDeviceAccessOverride : sig
       | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2702,7 +2777,8 @@ module PutRetentionPolicy : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `LimitExceededException of limit_exceeded_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Puts a retention policy to the specified organization.\n"]
@@ -2738,7 +2814,8 @@ module RegisterMailDomain : sig
       | `LimitExceededException of limit_exceeded_exception
       | `MailDomainInUseException of mail_domain_in_use_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2801,7 +2878,8 @@ module RegisterToWorkMail : sig
       | `MailDomainStateException of mail_domain_state_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2861,7 +2939,8 @@ module ResetPassword : sig
       | `InvalidPasswordException of invalid_password_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Allows the administrator to reset the password for a user.\n"]
@@ -2897,7 +2976,8 @@ module StartMailboxExportJob : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `LimitExceededException of limit_exceeded_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2935,7 +3015,8 @@ module TagResource : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationStateException of organization_state_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyTagsException of too_many_tags_exception ] )
+      | `TooManyTagsException of too_many_tags_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Applies the specified tags to the specified WorkMailorganization resource.\n"]
@@ -2968,7 +3049,8 @@ module TestAvailabilityConfiguration : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3002,7 +3084,8 @@ module UntagResource : sig
     untag_resource_request ->
     ( untag_resource_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Untags the specified tags from the specified WorkMail organization resource.\n"]
@@ -3035,7 +3118,8 @@ module UpdateAvailabilityConfiguration : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3072,7 +3156,8 @@ module UpdateDefaultMailDomain : sig
       | `MailDomainNotFoundException of mail_domain_not_found_exception
       | `MailDomainStateException of mail_domain_state_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3114,7 +3199,8 @@ module UpdateGroup : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates attributes in a group.\n"]
@@ -3156,7 +3242,8 @@ module UpdateImpersonationRole : sig
       | `LimitExceededException of limit_exceeded_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates an impersonation role for the given WorkMail organization.\n"]
@@ -3192,7 +3279,8 @@ module UpdateMailboxQuota : sig
       | `EntityStateException of entity_state_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates a user's current mailbox quota for a specified organization and user.\n"]
@@ -3225,7 +3313,8 @@ module UpdateMobileDeviceAccessRule : sig
       | `EntityNotFoundException of entity_not_found_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
-      | `OrganizationStateException of organization_state_exception ] )
+      | `OrganizationStateException of organization_state_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates a mobile device access rule for the specified WorkMail organization.\n"]
@@ -3282,7 +3371,8 @@ module UpdatePrimaryEmailAddress : sig
       | `MailDomainStateException of mail_domain_state_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3342,7 +3432,8 @@ module UpdateResource : sig
       | `NameAvailabilityException of name_availability_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3393,7 +3484,8 @@ module UpdateUser : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `OrganizationNotFoundException of organization_not_found_exception
       | `OrganizationStateException of organization_state_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

@@ -782,7 +782,8 @@ module AcceptAgreementCancellationRequest : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -828,7 +829,8 @@ module AcceptAgreementPaymentRequest : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -875,7 +877,8 @@ module AcceptAgreementRequest : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -913,7 +916,8 @@ module BatchCreateBillingAdjustmentRequest : sig
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -959,7 +963,8 @@ module CancelAgreement : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1000,7 +1005,8 @@ module CancelAgreementCancellationRequest : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1046,7 +1052,8 @@ module CancelAgreementPaymentRequest : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1095,7 +1102,8 @@ module CreateAgreementRequest : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1134,7 +1142,8 @@ module DescribeAgreement : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1171,7 +1180,8 @@ module GetAgreementCancellationRequest : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1210,7 +1220,8 @@ module GetAgreementEntitlements : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Obtains details about the entitlements of an agreement.\n"]
@@ -1246,7 +1257,8 @@ module GetAgreementPaymentRequest : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1290,7 +1302,8 @@ module GetAgreementTerms : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1353,7 +1366,8 @@ module GetBillingAdjustmentRequest : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1389,7 +1403,8 @@ module ListAgreementCancellationRequests : sig
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1429,7 +1444,8 @@ module ListAgreementCharges : sig
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1468,7 +1484,8 @@ module ListAgreementInvoiceLineItems : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1508,7 +1525,8 @@ module ListAgreementPaymentRequests : sig
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1549,7 +1567,8 @@ module ListBillingAdjustmentRequests : sig
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1590,7 +1609,8 @@ module RejectAgreementCancellationRequest : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1636,7 +1656,8 @@ module RejectAgreementPaymentRequest : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1676,7 +1697,8 @@ module SearchAgreements : sig
       | `AccessDeniedException of access_denied_exception
       | `InternalServerException of internal_server_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1891,7 +1913,8 @@ module SendAgreementCancellationRequest : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1933,7 +1956,8 @@ module SendAgreementPaymentRequest : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1981,7 +2005,8 @@ module UpdatePurchaseOrders : sig
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

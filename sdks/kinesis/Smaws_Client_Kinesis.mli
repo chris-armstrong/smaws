@@ -585,7 +585,8 @@ module AddTagsToStream : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -628,7 +629,8 @@ module CreateStream : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -724,7 +726,8 @@ module DecreaseStreamRetentionPeriod : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -770,7 +773,8 @@ module DeleteResourcePolicy : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -818,7 +822,8 @@ module DeleteStream : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -870,7 +875,8 @@ module DeregisterStreamConsumer : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -901,7 +907,7 @@ module DescribeAccountSettings : sig
     describe_account_settings_input ->
     ( describe_account_settings_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
-    )
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -930,7 +936,7 @@ module DescribeLimits : sig
     describe_limits_input ->
     ( describe_limits_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
-    )
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -968,7 +974,8 @@ module DescribeStream : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1024,7 +1031,8 @@ module DescribeStreamConsumer : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1069,7 +1077,8 @@ module DescribeStreamSummary : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1115,7 +1124,8 @@ module DisableEnhancedMonitoring : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1156,7 +1166,8 @@ module EnableEnhancedMonitoring : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1218,7 +1229,8 @@ module GetRecords : sig
       | `KMSOptInRequired of kms_opt_in_required
       | `KMSThrottlingException of kms_throttling_exception
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1311,7 +1323,8 @@ module GetResourcePolicy : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1359,7 +1372,8 @@ module GetShardIterator : sig
       | `InternalFailureException of internal_failure_exception
       | `InvalidArgumentException of invalid_argument_exception
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1434,7 +1448,8 @@ module IncreaseStreamRetentionPeriod : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1486,7 +1501,8 @@ module ListShards : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1538,7 +1554,8 @@ module ListStreamConsumers : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1572,7 +1589,8 @@ module ListStreams : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ExpiredNextTokenException of expired_next_token_exception
       | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1622,7 +1640,8 @@ module ListTagsForResource : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1662,7 +1681,8 @@ module ListTagsForStream : sig
       | `AccessDeniedException of access_denied_exception
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1707,7 +1727,8 @@ module MergeShards : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1799,7 +1820,8 @@ module PutRecord : sig
       | `KMSOptInRequired of kms_opt_in_required
       | `KMSThrottlingException of kms_throttling_exception
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1899,7 +1921,8 @@ module PutRecords : sig
       | `KMSOptInRequired of kms_opt_in_required
       | `KMSThrottlingException of kms_throttling_exception
       | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2001,7 +2024,8 @@ module PutResourcePolicy : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2056,7 +2080,8 @@ module RegisterStreamConsumer : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2116,7 +2141,8 @@ module RemoveTagsFromStream : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2164,7 +2190,8 @@ module SplitShard : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2266,7 +2293,8 @@ module StartStreamEncryption : sig
       | `KMSThrottlingException of kms_throttling_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2321,7 +2349,8 @@ module StopStreamEncryption : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2377,7 +2406,8 @@ module SubscribeToShard : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2437,7 +2467,8 @@ module TagResource : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2476,7 +2507,8 @@ module UntagResource : sig
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2508,7 +2540,8 @@ module UpdateAccountSettings : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArgumentException of invalid_argument_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2565,7 +2598,8 @@ module UpdateMaxRecordSize : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2606,7 +2640,8 @@ module UpdateShardCount : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2695,7 +2730,8 @@ module UpdateStreamMode : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2744,7 +2780,8 @@ module UpdateStreamWarmThroughput : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceInUseException of resource_in_use_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

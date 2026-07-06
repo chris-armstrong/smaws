@@ -31,7 +31,8 @@ module AcceptSharedDirectory : sig
       | `DirectoryAlreadySharedException of directory_already_shared_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -74,7 +75,8 @@ module AddIpRoutes : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `IpRouteLimitExceededException of ip_route_limit_exceeded_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -136,7 +138,8 @@ module AddRegion : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `RegionLimitExceededException of region_limit_exceeded_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Adds two domain controllers in the specified Region for the specified directory.\n"]
@@ -172,7 +175,8 @@ module AddTagsToResource : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `TagLimitExceededException of tag_limit_exceeded_exception ] )
+      | `TagLimitExceededException of tag_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -205,7 +209,8 @@ module CancelSchemaExtension : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -242,7 +247,8 @@ module ConnectDirectory : sig
       | `ClientException of client_exception
       | `DirectoryLimitExceededException of directory_limit_exceeded_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -285,7 +291,8 @@ module CreateAlias : sig
       | `EntityAlreadyExistsException of entity_already_exists_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -340,7 +347,8 @@ module CreateComputer : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Creates an Active Directory computer object in the specified directory.\n"]
@@ -382,7 +390,8 @@ module CreateConditionalForwarder : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -418,7 +427,8 @@ module CreateDirectory : sig
       | `ClientException of client_exception
       | `DirectoryLimitExceededException of directory_limit_exceeded_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -469,7 +479,8 @@ module CreateHybridAD : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -516,7 +527,8 @@ module CreateLogSubscription : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InsufficientPermissionsException of insufficient_permissions_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -554,7 +566,8 @@ module CreateMicrosoftAD : sig
       | `DirectoryLimitExceededException of directory_limit_exceeded_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -599,7 +612,8 @@ module CreateSnapshot : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `SnapshotLimitExceededException of snapshot_limit_exceeded_exception ] )
+      | `SnapshotLimitExceededException of snapshot_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -642,7 +656,8 @@ module CreateTrust : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -686,7 +701,8 @@ module DeleteADAssessment : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -730,7 +746,8 @@ module DeleteConditionalForwarder : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -761,7 +778,8 @@ module DeleteDirectory : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -801,7 +819,8 @@ module DeleteLogSubscription : sig
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes the specified log subscription.\n"]
@@ -834,7 +853,8 @@ module DeleteSnapshot : sig
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes a directory snapshot.\n"]
@@ -870,7 +890,8 @@ module DeleteTrust : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -917,7 +938,8 @@ module DeregisterCertificate : sig
       | `DirectoryUnavailableException of directory_unavailable_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -952,7 +974,8 @@ module DeregisterEventTopic : sig
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes the specified directory as a publisher to the specified Amazon SNS topic.\n"]
@@ -988,7 +1011,8 @@ module DescribeADAssessment : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1024,7 +1048,8 @@ module DescribeCAEnrollmentPolicy : sig
       | `ClientException of client_exception
       | `DirectoryDoesNotExistException of directory_does_not_exist_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1066,7 +1091,8 @@ module DescribeCertificate : sig
       | `DirectoryDoesNotExistException of directory_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1107,7 +1133,8 @@ module DescribeClientAuthenticationSettings : sig
       | `DirectoryDoesNotExistException of directory_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1150,7 +1177,8 @@ module DescribeConditionalForwarders : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1190,7 +1218,8 @@ module DescribeDirectories : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1238,7 +1267,8 @@ module DescribeDirectoryDataAccess : sig
       | `ClientException of client_exception
       | `DirectoryDoesNotExistException of directory_does_not_exist_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1279,7 +1309,8 @@ module DescribeDomainControllers : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Provides information about any domain controllers in your directory.\n"]
@@ -1312,7 +1343,8 @@ module DescribeEventTopics : sig
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1356,7 +1388,8 @@ module DescribeHybridADUpdate : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1398,7 +1431,8 @@ module DescribeLDAPSSettings : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Describes the status of LDAP security for the specified directory.\n"]
@@ -1440,7 +1474,8 @@ module DescribeRegions : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1480,7 +1515,8 @@ module DescribeSettings : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves information about the configurable settings for the specified directory.\n"]
@@ -1519,7 +1555,8 @@ module DescribeSharedDirectories : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns the shared directories in your account. \n"]
@@ -1555,7 +1592,8 @@ module DescribeSnapshots : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1601,7 +1639,8 @@ module DescribeTrusts : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1644,7 +1683,8 @@ module DescribeUpdateDirectory : sig
       | `DirectoryDoesNotExistException of directory_does_not_exist_exception
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc " Describes the updates of a directory for a particular update type. \n"]
@@ -1689,7 +1729,8 @@ module DisableCAEnrollmentPolicy : sig
       | `DisableAlreadyInProgressException of disable_already_in_progress_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1735,7 +1776,8 @@ module DisableClientAuthentication : sig
       | `DirectoryDoesNotExistException of directory_does_not_exist_exception
       | `InvalidClientAuthStatusException of invalid_client_auth_status_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Disables alternative client authentication methods for the specified directory. \n"]
@@ -1777,7 +1819,8 @@ module DisableDirectoryDataAccess : sig
       | `DirectoryInDesiredStateException of directory_in_desired_state_exception
       | `DirectoryUnavailableException of directory_unavailable_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1823,7 +1866,8 @@ module DisableLDAPS : sig
       | `InvalidLDAPSStatusException of invalid_ldaps_status_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deactivates LDAP secure calls for the specified directory.\n"]
@@ -1853,7 +1897,8 @@ module DisableRadius : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1891,7 +1936,8 @@ module DisableSso : sig
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InsufficientPermissionsException of insufficient_permissions_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Disables single-sign on for a directory.\n"]
@@ -1939,7 +1985,8 @@ module EnableCAEnrollmentPolicy : sig
       | `EntityAlreadyExistsException of entity_already_exists_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1989,7 +2036,8 @@ module EnableClientAuthentication : sig
       | `InvalidClientAuthStatusException of invalid_client_auth_status_exception
       | `NoAvailableCertificateException of no_available_certificate_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Enables alternative client authentication methods for the specified directory.\n"]
@@ -2031,7 +2079,8 @@ module EnableDirectoryDataAccess : sig
       | `DirectoryInDesiredStateException of directory_in_desired_state_exception
       | `DirectoryUnavailableException of directory_unavailable_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2080,7 +2129,8 @@ module EnableLDAPS : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `NoAvailableCertificateException of no_available_certificate_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Activates the switch for the specific directory to always use LDAP secure calls.\n"]
@@ -2116,7 +2166,8 @@ module EnableRadius : sig
       | `EntityAlreadyExistsException of entity_already_exists_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2154,7 +2205,8 @@ module EnableSso : sig
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InsufficientPermissionsException of insufficient_permissions_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2187,7 +2239,8 @@ module GetDirectoryLimits : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Obtains directory limit information for the current Region.\n"]
@@ -2217,7 +2270,8 @@ module GetSnapshotLimits : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Obtains the manual snapshot limits for a directory.\n"]
@@ -2253,7 +2307,8 @@ module ListADAssessments : sig
       | `DirectoryDoesNotExistException of directory_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2294,7 +2349,8 @@ module ListCertificates : sig
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2332,7 +2388,8 @@ module ListIpRoutes : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the address blocks that you have added to a directory.\n"]
@@ -2365,7 +2422,8 @@ module ListLogSubscriptions : sig
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidNextTokenException of invalid_next_token_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the active log subscriptions for the Amazon Web Services account.\n"]
@@ -2398,7 +2456,8 @@ module ListSchemaExtensions : sig
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidNextTokenException of invalid_next_token_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists all schema extensions applied to a Microsoft AD Directory.\n"]
@@ -2434,7 +2493,8 @@ module ListTagsForResource : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidNextTokenException of invalid_next_token_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists all tags on a directory.\n"]
@@ -2482,7 +2542,8 @@ module RegisterCertificate : sig
       | `InvalidCertificateException of invalid_certificate_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Registers a certificate for a secure LDAP or client certificate authentication.\n"]
@@ -2515,7 +2576,8 @@ module RegisterEventTopic : sig
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2556,7 +2618,8 @@ module RejectSharedDirectory : sig
       | `DirectoryAlreadySharedException of directory_already_shared_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2593,7 +2656,8 @@ module RemoveIpRoutes : sig
       | `DirectoryUnavailableException of directory_unavailable_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes IP address blocks from a directory.\n"]
@@ -2632,7 +2696,8 @@ module RemoveRegion : sig
       | `DirectoryDoesNotExistException of directory_does_not_exist_exception
       | `DirectoryUnavailableException of directory_unavailable_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2667,7 +2732,8 @@ module RemoveTagsFromResource : sig
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes tags from a directory.\n"]
@@ -2709,7 +2775,8 @@ module ResetUserPassword : sig
       | `InvalidPasswordException of invalid_password_exception
       | `ServiceException of service_exception
       | `UnsupportedOperationException of unsupported_operation_exception
-      | `UserDoesNotExistException of user_does_not_exist_exception ] )
+      | `UserDoesNotExistException of user_does_not_exist_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2761,7 +2828,8 @@ module RestoreFromSnapshot : sig
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2821,7 +2889,8 @@ module ShareDirectory : sig
       | `OrganizationsException of organizations_exception
       | `ServiceException of service_exception
       | `ShareLimitExceededException of share_limit_exceeded_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2877,7 +2946,8 @@ module StartADAssessment : sig
       | `DirectoryDoesNotExistException of directory_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2933,7 +3003,8 @@ module StartSchemaExtension : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `SnapshotLimitExceededException of snapshot_limit_exceeded_exception ] )
+      | `SnapshotLimitExceededException of snapshot_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Applies a schema extension to a Microsoft AD directory.\n"]
@@ -2969,7 +3040,8 @@ module UnshareDirectory : sig
       | `DirectoryNotSharedException of directory_not_shared_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidTargetException of invalid_target_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Stops the directory sharing between the directory owner and consumer accounts. \n"]
@@ -3008,7 +3080,8 @@ module UpdateConditionalForwarder : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3057,7 +3130,8 @@ module UpdateDirectorySetup : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
       | `SnapshotLimitExceededException of snapshot_limit_exceeded_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates directory configuration for the specified update type.\n"]
@@ -3096,7 +3170,8 @@ module UpdateHybridAD : sig
       | `DirectoryDoesNotExistException of directory_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3154,7 +3229,8 @@ module UpdateNumberOfDomainControllers : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3192,7 +3268,8 @@ module UpdateRadius : sig
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3239,7 +3316,8 @@ module UpdateSettings : sig
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
       | `UnsupportedOperationException of unsupported_operation_exception
-      | `UnsupportedSettingsException of unsupported_settings_exception ] )
+      | `UnsupportedSettingsException of unsupported_settings_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates the configurable settings for the specified directory.\n"]
@@ -3272,7 +3350,8 @@ module UpdateTrust : sig
       | `ClientException of client_exception
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
-      | `ServiceException of service_exception ] )
+      | `ServiceException of service_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3310,7 +3389,8 @@ module VerifyTrust : sig
       | `EntityDoesNotExistException of entity_does_not_exist_exception
       | `InvalidParameterException of invalid_parameter_exception
       | `ServiceException of service_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

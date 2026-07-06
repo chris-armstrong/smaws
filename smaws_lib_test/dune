@@ -1,5 +1,18 @@
 (test
+ (name aws_json_error_metadata_test)
+ (modules aws_json_error_metadata_test)
+ (preprocess
+  (pps ppx_deriving.show ppx_deriving.eq))
+ (libraries
+  model_tests_protocols
+  Smaws_Lib
+  eio_main
+  alcotest
+  Smaws_Test_Support_Lib))
+
+(test
  (name request_test_example)
+ (modules request_test_example)
  (preprocess
   (pps ppx_deriving.show ppx_deriving.eq))
  (libraries
@@ -11,12 +24,15 @@
 
 (test
  (name aws_query_response_test)
+ (modules aws_query_response_test)
  (libraries Smaws_Lib alcotest))
 
 (test
  (name aws_query_serialize_test)
+ (modules aws_query_serialize_test)
  (libraries Smaws_Lib alcotest))
 
 (test
  (name uint64_test)
+ (modules uint64_test)
  (libraries Smaws_Lib alcotest))

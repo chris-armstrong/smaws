@@ -37,7 +37,8 @@ module CreateActivity : sig
       | `InvalidName of invalid_name
       | `KmsAccessDeniedException of kms_access_denied_exception
       | `KmsThrottlingException of kms_throttling_exception
-      | `TooManyTags of too_many_tags ] )
+      | `TooManyTags of too_many_tags ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -118,7 +119,8 @@ module CreateStateMachine : sig
       | `StateMachineLimitExceeded of state_machine_limit_exceeded
       | `StateMachineTypeNotSupported of state_machine_type_not_supported
       | `TooManyTags of too_many_tags
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -187,7 +189,8 @@ module CreateStateMachineAlias : sig
       | `ResourceNotFound of resource_not_found
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `StateMachineDeleting of state_machine_deleting
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -246,7 +249,8 @@ module DeleteActivity : sig
     'http_type Smaws_Lib.Context.t ->
     delete_activity_input ->
     ( delete_activity_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidArn of invalid_arn ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes an activity.\n"]
@@ -273,7 +277,8 @@ module DeleteStateMachine : sig
     ( delete_state_machine_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArn of invalid_arn
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -343,7 +348,8 @@ module DeleteStateMachineAlias : sig
       | `ConflictException of conflict_exception
       | `InvalidArn of invalid_arn
       | `ResourceNotFound of resource_not_found
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -396,7 +402,8 @@ module DeleteStateMachineVersion : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConflictException of conflict_exception
       | `InvalidArn of invalid_arn
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -445,7 +452,8 @@ module DescribeActivity : sig
     ( describe_activity_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ActivityDoesNotExist of activity_does_not_exist
-      | `InvalidArn of invalid_arn ] )
+      | `InvalidArn of invalid_arn ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -486,7 +494,8 @@ module DescribeExecution : sig
       | `InvalidArn of invalid_arn
       | `KmsAccessDeniedException of kms_access_denied_exception
       | `KmsInvalidStateException of kms_invalid_state_exception
-      | `KmsThrottlingException of kms_throttling_exception ] )
+      | `KmsThrottlingException of kms_throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -528,7 +537,8 @@ module DescribeMapRun : sig
     ( describe_map_run_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArn of invalid_arn
-      | `ResourceNotFound of resource_not_found ] )
+      | `ResourceNotFound of resource_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -570,7 +580,8 @@ module DescribeStateMachine : sig
       | `KmsAccessDeniedException of kms_access_denied_exception
       | `KmsInvalidStateException of kms_invalid_state_exception
       | `KmsThrottlingException of kms_throttling_exception
-      | `StateMachineDoesNotExist of state_machine_does_not_exist ] )
+      | `StateMachineDoesNotExist of state_machine_does_not_exist ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -648,7 +659,8 @@ module DescribeStateMachineAlias : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArn of invalid_arn
       | `ResourceNotFound of resource_not_found
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -703,7 +715,8 @@ module DescribeStateMachineForExecution : sig
       | `InvalidArn of invalid_arn
       | `KmsAccessDeniedException of kms_access_denied_exception
       | `KmsInvalidStateException of kms_invalid_state_exception
-      | `KmsThrottlingException of kms_throttling_exception ] )
+      | `KmsThrottlingException of kms_throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -751,7 +764,8 @@ module GetActivityTask : sig
       | `InvalidArn of invalid_arn
       | `KmsAccessDeniedException of kms_access_denied_exception
       | `KmsInvalidStateException of kms_invalid_state_exception
-      | `KmsThrottlingException of kms_throttling_exception ] )
+      | `KmsThrottlingException of kms_throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -806,7 +820,8 @@ module GetExecutionHistory : sig
       | `InvalidToken of invalid_token
       | `KmsAccessDeniedException of kms_access_denied_exception
       | `KmsInvalidStateException of kms_invalid_state_exception
-      | `KmsThrottlingException of kms_throttling_exception ] )
+      | `KmsThrottlingException of kms_throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -836,7 +851,8 @@ module ListActivities : sig
     'http_type Smaws_Lib.Context.t ->
     list_activities_input ->
     ( list_activities_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidToken of invalid_token ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidToken of invalid_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -885,7 +901,8 @@ module ListExecutions : sig
       | `ResourceNotFound of resource_not_found
       | `StateMachineDoesNotExist of state_machine_does_not_exist
       | `StateMachineTypeNotSupported of state_machine_type_not_supported
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -938,7 +955,8 @@ module ListMapRuns : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ExecutionDoesNotExist of execution_does_not_exist
       | `InvalidArn of invalid_arn
-      | `InvalidToken of invalid_token ] )
+      | `InvalidToken of invalid_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -976,7 +994,8 @@ module ListStateMachineAliases : sig
       | `InvalidToken of invalid_token
       | `ResourceNotFound of resource_not_found
       | `StateMachineDeleting of state_machine_deleting
-      | `StateMachineDoesNotExist of state_machine_does_not_exist ] )
+      | `StateMachineDoesNotExist of state_machine_does_not_exist ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1036,7 +1055,8 @@ module ListStateMachineVersions : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArn of invalid_arn
       | `InvalidToken of invalid_token
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1077,7 +1097,8 @@ module ListStateMachines : sig
     'http_type Smaws_Lib.Context.t ->
     list_state_machines_input ->
     ( list_state_machines_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidToken of invalid_token ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidToken of invalid_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1114,7 +1135,8 @@ module ListTagsForResource : sig
     ( list_tags_for_resource_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArn of invalid_arn
-      | `ResourceNotFound of resource_not_found ] )
+      | `ResourceNotFound of resource_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1156,7 +1178,8 @@ module PublishStateMachineVersion : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `StateMachineDeleting of state_machine_deleting
       | `StateMachineDoesNotExist of state_machine_does_not_exist
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1218,7 +1241,8 @@ module RedriveExecution : sig
       | `ExecutionLimitExceeded of execution_limit_exceeded
       | `ExecutionNotRedrivable of execution_not_redrivable
       | `InvalidArn of invalid_arn
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1311,7 +1335,8 @@ module SendTaskFailure : sig
       | `KmsInvalidStateException of kms_invalid_state_exception
       | `KmsThrottlingException of kms_throttling_exception
       | `TaskDoesNotExist of task_does_not_exist
-      | `TaskTimedOut of task_timed_out ] )
+      | `TaskTimedOut of task_timed_out ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1353,7 +1378,8 @@ module SendTaskHeartbeat : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidToken of invalid_token
       | `TaskDoesNotExist of task_does_not_exist
-      | `TaskTimedOut of task_timed_out ] )
+      | `TaskTimedOut of task_timed_out ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1414,7 +1440,8 @@ module SendTaskSuccess : sig
       | `KmsInvalidStateException of kms_invalid_state_exception
       | `KmsThrottlingException of kms_throttling_exception
       | `TaskDoesNotExist of task_does_not_exist
-      | `TaskTimedOut of task_timed_out ] )
+      | `TaskTimedOut of task_timed_out ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1473,7 +1500,8 @@ module StartExecution : sig
       | `KmsThrottlingException of kms_throttling_exception
       | `StateMachineDeleting of state_machine_deleting
       | `StateMachineDoesNotExist of state_machine_does_not_exist
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1579,7 +1607,8 @@ module StartSyncExecution : sig
       | `KmsThrottlingException of kms_throttling_exception
       | `StateMachineDeleting of state_machine_deleting
       | `StateMachineDoesNotExist of state_machine_does_not_exist
-      | `StateMachineTypeNotSupported of state_machine_type_not_supported ] )
+      | `StateMachineTypeNotSupported of state_machine_type_not_supported ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1628,7 +1657,8 @@ module StopExecution : sig
       | `KmsAccessDeniedException of kms_access_denied_exception
       | `KmsInvalidStateException of kms_invalid_state_exception
       | `KmsThrottlingException of kms_throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1668,7 +1698,8 @@ module TagResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArn of invalid_arn
       | `ResourceNotFound of resource_not_found
-      | `TooManyTags of too_many_tags ] )
+      | `TooManyTags of too_many_tags ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1711,7 +1742,8 @@ module TestState : sig
       | `InvalidArn of invalid_arn
       | `InvalidDefinition of invalid_definition
       | `InvalidExecutionInput of invalid_execution_input
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1807,7 +1839,8 @@ module UntagResource : sig
     ( untag_resource_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArn of invalid_arn
-      | `ResourceNotFound of resource_not_found ] )
+      | `ResourceNotFound of resource_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Remove a tag from a Step Functions resource\n"]
@@ -1837,7 +1870,8 @@ module UpdateMapRun : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidArn of invalid_arn
       | `ResourceNotFound of resource_not_found
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1899,7 +1933,8 @@ module UpdateStateMachine : sig
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `StateMachineDeleting of state_machine_deleting
       | `StateMachineDoesNotExist of state_machine_does_not_exist
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1997,7 +2032,8 @@ module UpdateStateMachineAlias : sig
       | `InvalidArn of invalid_arn
       | `ResourceNotFound of resource_not_found
       | `StateMachineDeleting of state_machine_deleting
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2048,7 +2084,8 @@ module ValidateStateMachineDefinition : sig
     'http_type Smaws_Lib.Context.t ->
     validate_state_machine_definition_input ->
     ( validate_state_machine_definition_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `ValidationException of validation_exception ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

@@ -1082,7 +1082,8 @@ module CountClosedWorkflowExecutions : sig
     ( workflow_execution_count Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1152,7 +1153,8 @@ module CountOpenWorkflowExecutions : sig
     ( workflow_execution_count Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1222,7 +1224,8 @@ module CountPendingActivityTasks : sig
     ( pending_task_count Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1276,7 +1279,8 @@ module CountPendingDecisionTasks : sig
     ( pending_task_count Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1333,7 +1337,8 @@ module DeleteActivityType : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TypeNotDeprecatedFault of type_not_deprecated_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1404,7 +1409,8 @@ module DeleteWorkflowType : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TypeNotDeprecatedFault of type_not_deprecated_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1475,7 +1481,8 @@ module DeprecateActivityType : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TypeDeprecatedFault of type_deprecated_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1543,7 +1550,8 @@ module DeprecateDomain : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DomainDeprecatedFault of domain_deprecated_fault
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1603,7 +1611,8 @@ module DeprecateWorkflowType : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TypeDeprecatedFault of type_deprecated_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1672,7 +1681,8 @@ module DescribeActivityType : sig
     ( activity_type_detail Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1736,7 +1746,8 @@ module DescribeDomain : sig
     ( domain_detail Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1787,7 +1798,8 @@ module DescribeWorkflowExecution : sig
     ( workflow_execution_detail Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1842,7 +1854,8 @@ module DescribeWorkflowType : sig
     ( workflow_type_detail Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1907,7 +1920,8 @@ module GetWorkflowExecutionHistory : sig
     ( history Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1963,7 +1977,8 @@ module ListActivityTypes : sig
     ( activity_type_infos Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2017,7 +2032,8 @@ module ListClosedWorkflowExecutions : sig
     ( workflow_execution_infos Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2085,7 +2101,8 @@ module ListDomains : sig
     list_domains_input ->
     ( domain_infos Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `OperationNotPermittedFault of operation_not_permitted_fault ] )
+      | `OperationNotPermittedFault of operation_not_permitted_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2142,7 +2159,8 @@ module ListOpenWorkflowExecutions : sig
     ( workflow_execution_infos Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2216,7 +2234,8 @@ module ListTagsForResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `LimitExceededFault of limit_exceeded_fault
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "List tags for a given domain.\n"]
@@ -2243,7 +2262,8 @@ module ListWorkflowTypes : sig
     ( workflow_type_infos Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2298,7 +2318,8 @@ module PollForActivityTask : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `LimitExceededFault of limit_exceeded_fault
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2362,7 +2383,8 @@ module PollForDecisionTask : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `LimitExceededFault of limit_exceeded_fault
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2433,7 +2455,8 @@ module RecordActivityTaskHeartbeat : sig
     ( activity_task_status Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2514,7 +2537,8 @@ module RegisterActivityType : sig
       | `LimitExceededFault of limit_exceeded_fault
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TypeAlreadyExistsFault of type_already_exists_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2590,7 +2614,8 @@ module RegisterDomain : sig
       | `DomainAlreadyExistsFault of domain_already_exists_fault
       | `LimitExceededFault of limit_exceeded_fault
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `TooManyTagsFault of too_many_tags_fault ] )
+      | `TooManyTagsFault of too_many_tags_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2647,7 +2672,8 @@ module RegisterWorkflowType : sig
       | `LimitExceededFault of limit_exceeded_fault
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TypeAlreadyExistsFault of type_already_exists_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2719,7 +2745,8 @@ module RequestCancelWorkflowExecution : sig
     ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2780,7 +2807,8 @@ module RespondActivityTaskCanceled : sig
     ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2846,7 +2874,8 @@ module RespondActivityTaskCompleted : sig
     ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2912,7 +2941,8 @@ module RespondActivityTaskFailed : sig
     ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2972,7 +3002,8 @@ module RespondDecisionTaskCompleted : sig
     ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3015,7 +3046,8 @@ module SignalWorkflowExecution : sig
     ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3086,7 +3118,8 @@ module StartWorkflowExecution : sig
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TypeDeprecatedFault of type_deprecated_fault
       | `UnknownResourceFault of unknown_resource_fault
-      | `WorkflowExecutionAlreadyStartedFault of workflow_execution_already_started_fault ] )
+      | `WorkflowExecutionAlreadyStartedFault of workflow_execution_already_started_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3176,7 +3209,8 @@ module TagResource : sig
       | `LimitExceededFault of limit_exceeded_fault
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TooManyTagsFault of too_many_tags_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3207,7 +3241,8 @@ module TerminateWorkflowExecution : sig
     ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3273,7 +3308,8 @@ module UndeprecateActivityType : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TypeAlreadyExistsFault of type_already_exists_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3343,7 +3379,8 @@ module UndeprecateDomain : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DomainAlreadyExistsFault of domain_already_exists_fault
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3401,7 +3438,8 @@ module UndeprecateWorkflowType : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `OperationNotPermittedFault of operation_not_permitted_fault
       | `TypeAlreadyExistsFault of type_already_exists_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3472,7 +3510,8 @@ module UntagResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `LimitExceededFault of limit_exceeded_fault
       | `OperationNotPermittedFault of operation_not_permitted_fault
-      | `UnknownResourceFault of unknown_resource_fault ] )
+      | `UnknownResourceFault of unknown_resource_fault ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Remove a tag from a Amazon SWF domain.\n"]

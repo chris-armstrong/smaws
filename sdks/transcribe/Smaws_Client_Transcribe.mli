@@ -878,7 +878,8 @@ module CreateCallAnalyticsCategory : sig
       | `BadRequestException of bad_request_exception
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -933,7 +934,8 @@ module CreateLanguageModel : sig
       | `BadRequestException of bad_request_exception
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -985,7 +987,8 @@ module CreateMedicalVocabulary : sig
       | `BadRequestException of bad_request_exception
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1033,7 +1036,8 @@ module CreateVocabulary : sig
       | `BadRequestException of bad_request_exception
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1079,7 +1083,8 @@ module CreateVocabularyFilter : sig
       | `BadRequestException of bad_request_exception
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1125,7 +1130,8 @@ module DeleteCallAnalyticsCategory : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1157,7 +1163,8 @@ module DeleteCallAnalyticsJob : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1189,7 +1196,8 @@ module DeleteLanguageModel : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1221,7 +1229,8 @@ module DeleteMedicalScribeJob : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1253,7 +1262,8 @@ module DeleteMedicalTranscriptionJob : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1288,7 +1298,8 @@ module DeleteMedicalVocabulary : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1321,7 +1332,8 @@ module DeleteTranscriptionJob : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1356,7 +1368,8 @@ module DeleteVocabulary : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1391,7 +1404,8 @@ module DeleteVocabularyFilter : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1427,7 +1441,8 @@ module DescribeLanguageModel : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1468,7 +1483,8 @@ module GetCallAnalyticsCategory : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1504,7 +1520,8 @@ module GetCallAnalyticsJob : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1551,7 +1568,8 @@ module GetMedicalScribeJob : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1592,7 +1610,8 @@ module GetMedicalTranscriptionJob : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1633,7 +1652,8 @@ module GetMedicalVocabulary : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1673,7 +1693,8 @@ module GetTranscriptionJob : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1717,7 +1738,8 @@ module GetVocabulary : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1757,7 +1779,8 @@ module GetVocabularyFilter : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1790,7 +1813,8 @@ module ListCallAnalyticsCategories : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1823,7 +1847,8 @@ module ListCallAnalyticsJobs : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1857,7 +1882,8 @@ module ListLanguageModels : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1891,7 +1917,8 @@ module ListMedicalScribeJobs : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1925,7 +1952,8 @@ module ListMedicalTranscriptionJobs : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1959,7 +1987,8 @@ module ListMedicalVocabularies : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1996,7 +2025,8 @@ module ListTagsForResource : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2030,7 +2060,8 @@ module ListTranscriptionJobs : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2064,7 +2095,8 @@ module ListVocabularies : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2098,7 +2130,8 @@ module ListVocabularyFilters : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2135,7 +2168,8 @@ module StartCallAnalyticsJob : sig
       | `BadRequestException of bad_request_exception
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2217,7 +2251,8 @@ module StartMedicalScribeJob : sig
       | `BadRequestException of bad_request_exception
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2292,7 +2327,8 @@ module StartMedicalTranscriptionJob : sig
       | `BadRequestException of bad_request_exception
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2369,7 +2405,8 @@ module StartTranscriptionJob : sig
       | `BadRequestException of bad_request_exception
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
-      | `LimitExceededException of limit_exceeded_exception ] )
+      | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2438,7 +2475,8 @@ module TagResource : sig
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2478,7 +2516,8 @@ module UntagResource : sig
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2518,7 +2557,8 @@ module UpdateCallAnalyticsCategory : sig
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2559,7 +2599,8 @@ module UpdateMedicalVocabulary : sig
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2598,7 +2639,8 @@ module UpdateVocabulary : sig
       | `ConflictException of conflict_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2635,7 +2677,8 @@ module UpdateVocabularyFilter : sig
       | `BadRequestException of bad_request_exception
       | `InternalFailureException of internal_failure_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

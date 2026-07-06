@@ -25,7 +25,8 @@ module CancelCluster : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidJobStateException of invalid_job_state_exception
       | `InvalidResourceException of invalid_resource_exception
-      | `KMSRequestFailedException of kms_request_failed_exception ] )
+      | `KMSRequestFailedException of kms_request_failed_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -57,7 +58,8 @@ module CancelJob : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidJobStateException of invalid_job_state_exception
       | `InvalidResourceException of invalid_resource_exception
-      | `KMSRequestFailedException of kms_request_failed_exception ] )
+      | `KMSRequestFailedException of kms_request_failed_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -87,7 +89,8 @@ module CreateAddress : sig
     ( create_address_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidAddressException of invalid_address_exception
-      | `UnsupportedAddressException of unsupported_address_exception ] )
+      | `UnsupportedAddressException of unsupported_address_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -125,7 +128,8 @@ module CreateCluster : sig
       | `Ec2RequestFailedException of ec2_request_failed_exception
       | `InvalidInputCombinationException of invalid_input_combination_exception
       | `InvalidResourceException of invalid_resource_exception
-      | `KMSRequestFailedException of kms_request_failed_exception ] )
+      | `KMSRequestFailedException of kms_request_failed_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -164,7 +168,8 @@ module CreateJob : sig
       | `Ec2RequestFailedException of ec2_request_failed_exception
       | `InvalidInputCombinationException of invalid_input_combination_exception
       | `InvalidResourceException of invalid_resource_exception
-      | `KMSRequestFailedException of kms_request_failed_exception ] )
+      | `KMSRequestFailedException of kms_request_failed_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -351,7 +356,8 @@ module CreateLongTermPricing : sig
     create_long_term_pricing_request ->
     ( create_long_term_pricing_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidResourceException of invalid_resource_exception ] )
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -393,7 +399,8 @@ module CreateReturnShippingLabel : sig
       | `InvalidJobStateException of invalid_job_state_exception
       | `InvalidResourceException of invalid_resource_exception
       | `ReturnShippingLabelAlreadyExistsException of return_shipping_label_already_exists_exception
-      ] )
+      ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -417,7 +424,8 @@ module DescribeAddress : sig
     describe_address_request ->
     ( describe_address_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidResourceException of invalid_resource_exception ] )
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -446,7 +454,8 @@ module DescribeAddresses : sig
     ( describe_addresses_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidNextTokenException of invalid_next_token_exception
-      | `InvalidResourceException of invalid_resource_exception ] )
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -471,7 +480,8 @@ module DescribeCluster : sig
     describe_cluster_request ->
     ( describe_cluster_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidResourceException of invalid_resource_exception ] )
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -496,7 +506,8 @@ module DescribeJob : sig
     describe_job_request ->
     ( describe_job_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidResourceException of invalid_resource_exception ] )
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -528,7 +539,8 @@ module DescribeReturnShippingLabel : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConflictException of conflict_exception
       | `InvalidJobStateException of invalid_job_state_exception
-      | `InvalidResourceException of invalid_resource_exception ] )
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -556,7 +568,8 @@ module GetJobManifest : sig
     ( get_job_manifest_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidJobStateException of invalid_job_state_exception
-      | `InvalidResourceException of invalid_resource_exception ] )
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -601,7 +614,8 @@ module GetJobUnlockCode : sig
     ( get_job_unlock_code_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidJobStateException of invalid_job_state_exception
-      | `InvalidResourceException of invalid_resource_exception ] )
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -629,7 +643,9 @@ module GetSnowballUsage : sig
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
     get_snowball_usage_request ->
-    (get_snowball_usage_result Smaws_Lib.Response.t, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+    ( get_snowball_usage_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
 end
 [@@ocaml.doc
   "Returns information about the Snow Family service limit for your account, and also the number \
@@ -660,7 +676,8 @@ module GetSoftwareUpdates : sig
     ( get_software_updates_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidJobStateException of invalid_job_state_exception
-      | `InvalidResourceException of invalid_resource_exception ] )
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -688,7 +705,8 @@ module ListClusterJobs : sig
     ( list_cluster_jobs_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidNextTokenException of invalid_next_token_exception
-      | `InvalidResourceException of invalid_resource_exception ] )
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -715,7 +733,8 @@ module ListClusters : sig
     list_clusters_request ->
     ( list_clusters_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidNextTokenException of invalid_next_token_exception ] )
+      | `InvalidNextTokenException of invalid_next_token_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -744,7 +763,8 @@ module ListCompatibleImages : sig
     ( list_compatible_images_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `Ec2RequestFailedException of ec2_request_failed_exception
-      | `InvalidNextTokenException of invalid_next_token_exception ] )
+      | `InvalidNextTokenException of invalid_next_token_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -774,7 +794,8 @@ module ListJobs : sig
     list_jobs_request ->
     ( list_jobs_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidNextTokenException of invalid_next_token_exception ] )
+      | `InvalidNextTokenException of invalid_next_token_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -805,7 +826,8 @@ module ListLongTermPricing : sig
     ( list_long_term_pricing_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidNextTokenException of invalid_next_token_exception
-      | `InvalidResourceException of invalid_resource_exception ] )
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists all long-term pricing types.\n"]
@@ -828,7 +850,8 @@ module ListPickupLocations : sig
     list_pickup_locations_request ->
     ( list_pickup_locations_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidResourceException of invalid_resource_exception ] )
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "A list of locations from which the customer can choose to pickup a device.\n"]
@@ -855,7 +878,8 @@ module ListServiceVersions : sig
     ( list_service_versions_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidNextTokenException of invalid_next_token_exception
-      | `InvalidResourceException of invalid_resource_exception ] )
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -893,7 +917,8 @@ module UpdateCluster : sig
       | `InvalidInputCombinationException of invalid_input_combination_exception
       | `InvalidJobStateException of invalid_job_state_exception
       | `InvalidResourceException of invalid_resource_exception
-      | `KMSRequestFailedException of kms_request_failed_exception ] )
+      | `KMSRequestFailedException of kms_request_failed_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -935,7 +960,8 @@ module UpdateJob : sig
       | `InvalidInputCombinationException of invalid_input_combination_exception
       | `InvalidJobStateException of invalid_job_state_exception
       | `InvalidResourceException of invalid_resource_exception
-      | `KMSRequestFailedException of kms_request_failed_exception ] )
+      | `KMSRequestFailedException of kms_request_failed_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -965,7 +991,8 @@ module UpdateJobShipmentState : sig
     ( update_job_shipment_state_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InvalidJobStateException of invalid_job_state_exception
-      | `InvalidResourceException of invalid_resource_exception ] )
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates the state when a shipment state changes to a different state.\n"]
@@ -988,7 +1015,8 @@ module UpdateLongTermPricing : sig
     update_long_term_pricing_request ->
     ( update_long_term_pricing_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidResourceException of invalid_resource_exception ] )
+      | `InvalidResourceException of invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates the long-term pricing type.\n"]

@@ -126,7 +126,8 @@ module DescribeStream : sig
     ( describe_stream_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -172,7 +173,8 @@ module GetRecords : sig
       | `InternalServerError of internal_server_error
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TrimmedDataAccessException of trimmed_data_access_exception ] )
+      | `TrimmedDataAccessException of trimmed_data_access_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -213,7 +215,8 @@ module GetShardIterator : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `ResourceNotFoundException of resource_not_found_exception
-      | `TrimmedDataAccessException of trimmed_data_access_exception ] )
+      | `TrimmedDataAccessException of trimmed_data_access_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -247,7 +250,8 @@ module ListStreams : sig
     ( list_streams_output Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

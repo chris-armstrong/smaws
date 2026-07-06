@@ -40,7 +40,8 @@ module AssociateWebACL : sig
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
-      | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] )
+      | `WAFUnavailableEntityException of waf_unavailable_entity_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -133,7 +134,8 @@ module CheckCapacity : sig
       | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFSubscriptionNotFoundException of waf_subscription_not_found_exception
-      | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] )
+      | `WAFUnavailableEntityException of waf_unavailable_entity_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -178,7 +180,8 @@ module CreateAPIKey : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFLimitsExceededException of waf_limits_exceeded_exception ] )
+      | `WAFLimitsExceededException of waf_limits_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -233,7 +236,8 @@ module CreateIPSet : sig
       | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFOptimisticLockException of waf_optimistic_lock_exception
       | `WAFTagOperationException of waf_tag_operation_exception
-      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -282,7 +286,8 @@ module CreateRegexPatternSet : sig
       | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFOptimisticLockException of waf_optimistic_lock_exception
       | `WAFTagOperationException of waf_tag_operation_exception
-      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -338,7 +343,8 @@ module CreateRuleGroup : sig
       | `WAFSubscriptionNotFoundException of waf_subscription_not_found_exception
       | `WAFTagOperationException of waf_tag_operation_exception
       | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception
-      | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] )
+      | `WAFUnavailableEntityException of waf_unavailable_entity_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -410,7 +416,8 @@ module CreateWebACL : sig
       | `WAFSubscriptionNotFoundException of waf_subscription_not_found_exception
       | `WAFTagOperationException of waf_tag_operation_exception
       | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception
-      | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] )
+      | `WAFUnavailableEntityException of waf_unavailable_entity_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -457,7 +464,8 @@ module DeleteAPIKey : sig
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
-      | `WAFOptimisticLockException of waf_optimistic_lock_exception ] )
+      | `WAFOptimisticLockException of waf_optimistic_lock_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -497,7 +505,8 @@ module DeleteFirewallManagerRuleGroups : sig
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
-      | `WAFOptimisticLockException of waf_optimistic_lock_exception ] )
+      | `WAFOptimisticLockException of waf_optimistic_lock_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -546,7 +555,8 @@ module DeleteIPSet : sig
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFOptimisticLockException of waf_optimistic_lock_exception
       | `WAFTagOperationException of waf_tag_operation_exception
-      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes the specified [IPSet]. \n"]
@@ -582,7 +592,8 @@ module DeleteLoggingConfiguration : sig
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
-      | `WAFOptimisticLockException of waf_optimistic_lock_exception ] )
+      | `WAFOptimisticLockException of waf_optimistic_lock_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes the [LoggingConfiguration] from the specified web ACL.\n"]
@@ -612,7 +623,8 @@ module DeletePermissionPolicy : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -660,7 +672,8 @@ module DeleteRegexPatternSet : sig
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFOptimisticLockException of waf_optimistic_lock_exception
       | `WAFTagOperationException of waf_tag_operation_exception
-      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes the specified [RegexPatternSet].\n"]
@@ -705,7 +718,8 @@ module DeleteRuleGroup : sig
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFOptimisticLockException of waf_optimistic_lock_exception
       | `WAFTagOperationException of waf_tag_operation_exception
-      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes the specified [RuleGroup].\n"]
@@ -750,7 +764,8 @@ module DeleteWebACL : sig
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFOptimisticLockException of waf_optimistic_lock_exception
       | `WAFTagOperationException of waf_tag_operation_exception
-      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -819,7 +834,8 @@ module DescribeAllManagedProducts : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
-      | `WAFInvalidParameterException of waf_invalid_parameter_exception ] )
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -851,7 +867,8 @@ module DescribeManagedProductsByVendor : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
-      | `WAFInvalidParameterException of waf_invalid_parameter_exception ] )
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -894,7 +911,8 @@ module DescribeManagedRuleGroup : sig
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFInvalidResourceException of waf_invalid_resource_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -928,7 +946,8 @@ module DisassociateWebACL : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -975,7 +994,8 @@ module GenerateMobileSdkReleaseUrl : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1018,7 +1038,8 @@ module GetDecryptedAPIKey : sig
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFInvalidResourceException of waf_invalid_resource_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1059,7 +1080,8 @@ module GetIPSet : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves the specified [IPSet].\n"]
@@ -1092,7 +1114,8 @@ module GetLoggingConfiguration : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns the [LoggingConfiguration] for the specified web ACL.\n"]
@@ -1125,7 +1148,8 @@ module GetManagedRuleSet : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1167,7 +1191,8 @@ module GetMobileSdkRelease : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1204,7 +1229,8 @@ module GetPermissionPolicy : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1245,7 +1271,7 @@ module GetRateBasedStatementManagedKeys : sig
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFUnsupportedAggregateKeyTypeException of waf_unsupported_aggregate_key_type_exception ]
-    )
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1296,7 +1322,8 @@ module GetRegexPatternSet : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves the specified [RegexPatternSet].\n"]
@@ -1329,7 +1356,8 @@ module GetRevenueStatistics : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1367,7 +1395,8 @@ module GetRevenueStatisticsSummary : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1405,7 +1434,8 @@ module GetRevenueStatisticsTimeSeries : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1443,7 +1473,8 @@ module GetRuleGroup : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves the specified [RuleGroup].\n"]
@@ -1473,7 +1504,8 @@ module GetSampledRequests : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1522,7 +1554,8 @@ module GetTopPathStatisticsByTraffic : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1560,7 +1593,8 @@ module GetWebACL : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves the specified [WebACL].\n"]
@@ -1596,7 +1630,8 @@ module GetWebACLForResource : sig
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
-      | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] )
+      | `WAFUnavailableEntityException of waf_unavailable_entity_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1647,7 +1682,8 @@ module ListAPIKeys : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFInvalidResourceException of waf_invalid_resource_exception ] )
+      | `WAFInvalidResourceException of waf_invalid_resource_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1687,7 +1723,8 @@ module ListAvailableManagedRuleGroupVersions : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns a list of the available versions for the specified managed rule group. \n"]
@@ -1717,7 +1754,8 @@ module ListAvailableManagedRuleGroups : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
-      | `WAFInvalidParameterException of waf_invalid_parameter_exception ] )
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1750,7 +1788,8 @@ module ListIPSets : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
-      | `WAFInvalidParameterException of waf_invalid_parameter_exception ] )
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves an array of [IPSetSummary] objects for the IP sets that you manage.\n"]
@@ -1780,7 +1819,8 @@ module ListLoggingConfigurations : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
-      | `WAFInvalidParameterException of waf_invalid_parameter_exception ] )
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves an array of your [LoggingConfiguration] objects.\n"]
@@ -1810,7 +1850,8 @@ module ListManagedRuleSets : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
-      | `WAFInvalidParameterException of waf_invalid_parameter_exception ] )
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1849,7 +1890,8 @@ module ListMobileSdkReleases : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
-      | `WAFInvalidParameterException of waf_invalid_parameter_exception ] )
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1887,7 +1929,8 @@ module ListRegexPatternSets : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
-      | `WAFInvalidParameterException of waf_invalid_parameter_exception ] )
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1922,7 +1965,8 @@ module ListResourcesForWebACL : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1966,7 +2010,8 @@ module ListRuleGroups : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
-      | `WAFInvalidParameterException of waf_invalid_parameter_exception ] )
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2000,7 +2045,8 @@ module ListSettlementRecords : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2044,7 +2090,8 @@ module ListTagsForResource : sig
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFTagOperationException of waf_tag_operation_exception
-      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2082,7 +2129,8 @@ module ListWebACLs : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidOperationException of waf_invalid_operation_exception
-      | `WAFInvalidParameterException of waf_invalid_parameter_exception ] )
+      | `WAFInvalidParameterException of waf_invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves an array of [WebACLSummary] objects for the web ACLs that you manage.\n"]
@@ -2133,7 +2181,8 @@ module PutLoggingConfiguration : sig
       | `WAFLogDestinationPermissionIssueException of waf_log_destination_permission_issue_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFOptimisticLockException of waf_optimistic_lock_exception
-      | `WAFServiceLinkedRoleErrorException of waf_service_linked_role_error_exception ] )
+      | `WAFServiceLinkedRoleErrorException of waf_service_linked_role_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2222,7 +2271,8 @@ module PutManagedRuleSetVersions : sig
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
-      | `WAFOptimisticLockException of waf_optimistic_lock_exception ] )
+      | `WAFOptimisticLockException of waf_optimistic_lock_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2274,7 +2324,8 @@ module PutPermissionPolicy : sig
       | `WAFInternalErrorException of waf_internal_error_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFInvalidPermissionPolicyException of waf_invalid_permission_policy_exception
-      | `WAFNonexistentItemException of waf_nonexistent_item_exception ] )
+      | `WAFNonexistentItemException of waf_nonexistent_item_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2338,7 +2389,8 @@ module TagResource : sig
       | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFTagOperationException of waf_tag_operation_exception
-      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2385,7 +2437,8 @@ module UntagResource : sig
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFTagOperationException of waf_tag_operation_exception
-      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ] )
+      | `WAFTagOperationInternalErrorException of waf_tag_operation_internal_error_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2431,7 +2484,8 @@ module UpdateIPSet : sig
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
-      | `WAFOptimisticLockException of waf_optimistic_lock_exception ] )
+      | `WAFOptimisticLockException of waf_optimistic_lock_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2512,7 +2566,8 @@ module UpdateManagedRuleSetVersionExpiryDate : sig
       | `WAFInvalidOperationException of waf_invalid_operation_exception
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
-      | `WAFOptimisticLockException of waf_optimistic_lock_exception ] )
+      | `WAFOptimisticLockException of waf_optimistic_lock_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2566,7 +2621,8 @@ module UpdateRegexPatternSet : sig
       | `WAFInvalidParameterException of waf_invalid_parameter_exception
       | `WAFLimitsExceededException of waf_limits_exceeded_exception
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
-      | `WAFOptimisticLockException of waf_optimistic_lock_exception ] )
+      | `WAFOptimisticLockException of waf_optimistic_lock_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2662,7 +2718,8 @@ module UpdateRuleGroup : sig
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFOptimisticLockException of waf_optimistic_lock_exception
       | `WAFSubscriptionNotFoundException of waf_subscription_not_found_exception
-      | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] )
+      | `WAFUnavailableEntityException of waf_unavailable_entity_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2778,7 +2835,8 @@ module UpdateWebACL : sig
       | `WAFNonexistentItemException of waf_nonexistent_item_exception
       | `WAFOptimisticLockException of waf_optimistic_lock_exception
       | `WAFSubscriptionNotFoundException of waf_subscription_not_found_exception
-      | `WAFUnavailableEntityException of waf_unavailable_entity_exception ] )
+      | `WAFUnavailableEntityException of waf_unavailable_entity_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

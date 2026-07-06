@@ -31,7 +31,8 @@ module CancelKeyDeletion : sig
       | `InvalidArnException of invalid_arn_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -94,7 +95,8 @@ module ConnectCustomKeyStore : sig
       | `CloudHsmClusterNotActiveException of cloud_hsm_cluster_not_active_exception
       | `CustomKeyStoreInvalidStateException of custom_key_store_invalid_state_exception
       | `CustomKeyStoreNotFoundException of custom_key_store_not_found_exception
-      | `KMSInternalException of kms_internal_exception ] )
+      | `KMSInternalException of kms_internal_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -235,7 +237,8 @@ module CreateAlias : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -386,7 +389,8 @@ module CreateCustomKeyStore : sig
       | `XksProxyVpcEndpointServiceInvalidConfigurationException of
         xks_proxy_vpc_endpoint_service_invalid_configuration_exception
       | `XksProxyVpcEndpointServiceNotFoundException of
-        xks_proxy_vpc_endpoint_service_not_found_exception ] )
+        xks_proxy_vpc_endpoint_service_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -528,7 +532,8 @@ module CreateGrant : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -663,7 +668,8 @@ module CreateKey : sig
       | `UnsupportedOperationException of unsupported_operation_exception
       | `XksKeyAlreadyInUseException of xks_key_already_in_use_exception
       | `XksKeyInvalidConfigurationException of xks_key_invalid_configuration_exception
-      | `XksKeyNotFoundException of xks_key_not_found_exception ] )
+      | `XksKeyNotFoundException of xks_key_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -902,7 +908,8 @@ module Decrypt : sig
       | `KeyUnavailableException of key_unavailable_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1039,7 +1046,8 @@ module DeleteAlias : sig
       | `DependencyTimeoutException of dependency_timeout_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1124,7 +1132,8 @@ module DeleteCustomKeyStore : sig
       | `CustomKeyStoreHasCMKsException of custom_key_store_has_cm_ks_exception
       | `CustomKeyStoreInvalidStateException of custom_key_store_invalid_state_exception
       | `CustomKeyStoreNotFoundException of custom_key_store_not_found_exception
-      | `KMSInternalException of kms_internal_exception ] )
+      | `KMSInternalException of kms_internal_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1228,7 +1237,8 @@ module DeleteImportedKeyMaterial : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `NotFoundException of not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1326,7 +1336,8 @@ module DeriveSharedSecret : sig
       | `KeyUnavailableException of key_unavailable_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1446,7 +1457,8 @@ module DescribeCustomKeyStores : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `CustomKeyStoreNotFoundException of custom_key_store_not_found_exception
       | `InvalidMarkerException of invalid_marker_exception
-      | `KMSInternalException of kms_internal_exception ] )
+      | `KMSInternalException of kms_internal_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1542,7 +1554,8 @@ module DescribeKey : sig
       | `DependencyTimeoutException of dependency_timeout_exception
       | `InvalidArnException of invalid_arn_exception
       | `KMSInternalException of kms_internal_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1661,7 +1674,8 @@ module DisableKey : sig
       | `InvalidArnException of invalid_arn_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1726,7 +1740,8 @@ module DisableKeyRotation : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `NotFoundException of not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1815,7 +1830,8 @@ module DisconnectCustomKeyStore : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `CustomKeyStoreInvalidStateException of custom_key_store_invalid_state_exception
       | `CustomKeyStoreNotFoundException of custom_key_store_not_found_exception
-      | `KMSInternalException of kms_internal_exception ] )
+      | `KMSInternalException of kms_internal_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1909,7 +1925,8 @@ module EnableKey : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1972,7 +1989,8 @@ module EnableKeyRotation : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `NotFoundException of not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2101,7 +2119,8 @@ module Encrypt : sig
       | `KeyUnavailableException of key_unavailable_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2259,7 +2278,8 @@ module GenerateDataKey : sig
       | `KeyUnavailableException of key_unavailable_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2426,7 +2446,8 @@ module GenerateDataKeyPair : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `NotFoundException of not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2568,7 +2589,8 @@ module GenerateDataKeyPairWithoutPlaintext : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `NotFoundException of not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2683,7 +2705,8 @@ module GenerateDataKeyWithoutPlaintext : sig
       | `KeyUnavailableException of key_unavailable_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2808,7 +2831,8 @@ module GenerateMac : sig
       | `KeyUnavailableException of key_unavailable_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2881,7 +2905,8 @@ module GenerateRandom : sig
       | `CustomKeyStoreNotFoundException of custom_key_store_not_found_exception
       | `DependencyTimeoutException of dependency_timeout_exception
       | `KMSInternalException of kms_internal_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2950,7 +2975,8 @@ module GetKeyLastUsage : sig
       | `DependencyTimeoutException of dependency_timeout_exception
       | `InvalidArnException of invalid_arn_exception
       | `KMSInternalException of kms_internal_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3051,7 +3077,8 @@ module GetKeyPolicy : sig
       | `InvalidArnException of invalid_arn_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3106,7 +3133,8 @@ module GetKeyRotationStatus : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `NotFoundException of not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3224,7 +3252,8 @@ module GetParametersForImport : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `NotFoundException of not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3357,7 +3386,8 @@ module GetPublicKey : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `NotFoundException of not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3476,7 +3506,8 @@ module ImportKeyMaterial : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `NotFoundException of not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3660,7 +3691,8 @@ module ListAliases : sig
       | `InvalidArnException of invalid_arn_exception
       | `InvalidMarkerException of invalid_marker_exception
       | `KMSInternalException of kms_internal_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3752,7 +3784,8 @@ module ListGrants : sig
       | `InvalidMarkerException of invalid_marker_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3841,7 +3874,8 @@ module ListKeyPolicies : sig
       | `InvalidArnException of invalid_arn_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3906,7 +3940,8 @@ module ListKeyRotations : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `NotFoundException of not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3980,7 +4015,8 @@ module ListKeys : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DependencyTimeoutException of dependency_timeout_exception
       | `InvalidMarkerException of invalid_marker_exception
-      | `KMSInternalException of kms_internal_exception ] )
+      | `KMSInternalException of kms_internal_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4042,7 +4078,8 @@ module ListResourceTags : sig
       | `InvalidArnException of invalid_arn_exception
       | `InvalidMarkerException of invalid_marker_exception
       | `KMSInternalException of kms_internal_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4113,7 +4150,8 @@ module ListRetirableGrants : sig
       | `InvalidArnException of invalid_arn_exception
       | `InvalidMarkerException of invalid_marker_exception
       | `KMSInternalException of kms_internal_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4212,7 +4250,8 @@ module PutKeyPolicy : sig
       | `LimitExceededException of limit_exceeded_exception
       | `MalformedPolicyDocumentException of malformed_policy_document_exception
       | `NotFoundException of not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4292,7 +4331,8 @@ module ReEncrypt : sig
       | `KeyUnavailableException of key_unavailable_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4457,7 +4497,8 @@ module ReplicateKey : sig
       | `MalformedPolicyDocumentException of malformed_policy_document_exception
       | `NotFoundException of not_found_exception
       | `TagException of tag_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4590,7 +4631,8 @@ module RetireGrant : sig
       | `InvalidGrantTokenException of invalid_grant_token_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4678,7 +4720,8 @@ module RevokeGrant : sig
       | `InvalidGrantIdException of invalid_grant_id_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4771,7 +4814,8 @@ module RotateKeyOnDemand : sig
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4885,7 +4929,8 @@ module ScheduleKeyDeletion : sig
       | `InvalidArnException of invalid_arn_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5000,7 +5045,8 @@ module Sign : sig
       | `KeyUnavailableException of key_unavailable_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5102,7 +5148,8 @@ module TagResource : sig
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `LimitExceededException of limit_exceeded_exception
       | `NotFoundException of not_found_exception
-      | `TagException of tag_exception ] )
+      | `TagException of tag_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5200,7 +5247,8 @@ module UntagResource : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `NotFoundException of not_found_exception
-      | `TagException of tag_exception ] )
+      | `TagException of tag_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5285,7 +5333,8 @@ module UpdateAlias : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5437,7 +5486,8 @@ module UpdateCustomKeyStore : sig
       | `XksProxyVpcEndpointServiceInvalidConfigurationException of
         xks_proxy_vpc_endpoint_service_invalid_configuration_exception
       | `XksProxyVpcEndpointServiceNotFoundException of
-        xks_proxy_vpc_endpoint_service_not_found_exception ] )
+        xks_proxy_vpc_endpoint_service_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5566,7 +5616,8 @@ module UpdateKeyDescription : sig
       | `InvalidArnException of invalid_arn_exception
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5632,7 +5683,8 @@ module UpdatePrimaryRegion : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
       | `NotFoundException of not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5765,7 +5817,8 @@ module Verify : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidSignatureException of kms_invalid_signature_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5866,7 +5919,8 @@ module VerifyMac : sig
       | `KMSInternalException of kms_internal_exception
       | `KMSInvalidMacException of kms_invalid_mac_exception
       | `KMSInvalidStateException of kms_invalid_state_exception
-      | `NotFoundException of not_found_exception ] )
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

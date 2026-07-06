@@ -157,14 +157,15 @@ let request_with_metadata (type http_t) ~(shape_name : string) ~(service : Servi
       | x when x >= 200 && x < 300 ->
           (deserialize_res output_deserializer) body_res
           |> Result.map (fun result -> { Response.response = result; metadata = { request_id } })
-          |> Result.map_error (fun e -> `JsonParseError e)
+          |> Result.map_error (fun e -> (`JsonParseError e, { Response.request_id }))
       | _ -> (
           let error_body = ensure_error_type ~headers:response_headers body_res in
+          let metadata = { Response.request_id } in
           match (deserialize_res error_deserializer) error_body with
-          | Ok error -> Error error
-          | Error error -> Error (`JsonParseError error))
+          | Ok error -> Error (error, metadata)
+          | Error error -> Error (`JsonParseError error, metadata))
     end
-  | Error error -> Error (`HttpError error)
+  | Error error -> Error (`HttpError error, { Response.request_id = None })
 
 let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
     ~(context : http_t Context.t) ~(input : json_type)
@@ -173,6 +174,7 @@ let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
   request_with_metadata ~shape_name ~service ~context ~input ~output_deserializer
     ~error_deserializer
   |> Result.map (fun { Response.response; _ } -> response)
+  |> Result.map_error (fun (error, _) -> error)
 
 let error_deserializer handler tree path =
   let _obj = Json.DeserializeHelpers.assoc_of_yojson tree path in

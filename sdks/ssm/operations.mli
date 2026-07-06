@@ -31,7 +31,8 @@ module AddTagsToResource : sig
       | `InvalidResourceId of invalid_resource_id
       | `InvalidResourceType of invalid_resource_type
       | `TooManyTagsError of too_many_tags_error
-      | `TooManyUpdates of too_many_updates ] )
+      | `TooManyUpdates of too_many_updates ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -110,7 +111,8 @@ module AssociateOpsItemRelatedItem : sig
       | `OpsItemLimitExceededException of ops_item_limit_exceeded_exception
       | `OpsItemNotFoundException of ops_item_not_found_exception
       | `OpsItemRelatedItemAlreadyExistsException of ops_item_related_item_already_exists_exception
-      ] )
+      ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -146,7 +148,8 @@ module CancelCommand : sig
       | `DuplicateInstanceId of duplicate_instance_id
       | `InternalServerError of internal_server_error
       | `InvalidCommandId of invalid_command_id
-      | `InvalidInstanceId of invalid_instance_id ] )
+      | `InvalidInstanceId of invalid_instance_id ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -175,7 +178,8 @@ module CancelMaintenanceWindowExecution : sig
     ( cancel_maintenance_window_execution_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -205,7 +209,8 @@ module CreateActivation : sig
     ( create_activation_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `InvalidParameters of invalid_parameters ] )
+      | `InvalidParameters of invalid_parameters ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -278,7 +283,8 @@ module CreateAssociation : sig
       | `InvalidTag of invalid_tag
       | `InvalidTarget of invalid_target
       | `InvalidTargetMaps of invalid_target_maps
-      | `UnsupportedPlatformType of unsupported_platform_type ] )
+      | `UnsupportedPlatformType of unsupported_platform_type ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -346,7 +352,8 @@ module CreateAssociationBatch : sig
       | `InvalidSchedule of invalid_schedule
       | `InvalidTarget of invalid_target
       | `InvalidTargetMaps of invalid_target_maps
-      | `UnsupportedPlatformType of unsupported_platform_type ] )
+      | `UnsupportedPlatformType of unsupported_platform_type ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -400,7 +407,8 @@ module CreateDocument : sig
       | `InvalidDocumentSchemaVersion of invalid_document_schema_version
       | `MaxDocumentSizeExceeded of max_document_size_exceeded
       | `NoLongerSupportedException of no_longer_supported_exception
-      | `TooManyUpdates of too_many_updates ] )
+      | `TooManyUpdates of too_many_updates ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -435,7 +443,8 @@ module CreateMaintenanceWindow : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `IdempotentParameterMismatch of idempotent_parameter_mismatch
       | `InternalServerError of internal_server_error
-      | `ResourceLimitExceededException of resource_limit_exceeded_exception ] )
+      | `ResourceLimitExceededException of resource_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -479,7 +488,8 @@ module CreateOpsItem : sig
       | `OpsItemAccessDeniedException of ops_item_access_denied_exception
       | `OpsItemAlreadyExistsException of ops_item_already_exists_exception
       | `OpsItemInvalidParameterException of ops_item_invalid_parameter_exception
-      | `OpsItemLimitExceededException of ops_item_limit_exceeded_exception ] )
+      | `OpsItemLimitExceededException of ops_item_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -525,7 +535,8 @@ module CreateOpsMetadata : sig
       | `OpsMetadataAlreadyExistsException of ops_metadata_already_exists_exception
       | `OpsMetadataInvalidArgumentException of ops_metadata_invalid_argument_exception
       | `OpsMetadataLimitExceededException of ops_metadata_limit_exceeded_exception
-      | `OpsMetadataTooManyUpdatesException of ops_metadata_too_many_updates_exception ] )
+      | `OpsMetadataTooManyUpdatesException of ops_metadata_too_many_updates_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -558,7 +569,8 @@ module CreatePatchBaseline : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `IdempotentParameterMismatch of idempotent_parameter_mismatch
       | `InternalServerError of internal_server_error
-      | `ResourceLimitExceededException of resource_limit_exceeded_exception ] )
+      | `ResourceLimitExceededException of resource_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -599,7 +611,8 @@ module CreateResourceDataSync : sig
       | `ResourceDataSyncAlreadyExistsException of resource_data_sync_already_exists_exception
       | `ResourceDataSyncCountExceededException of resource_data_sync_count_exceeded_exception
       | `ResourceDataSyncInvalidConfigurationException of
-        resource_data_sync_invalid_configuration_exception ] )
+        resource_data_sync_invalid_configuration_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -659,7 +672,8 @@ module DeleteActivation : sig
       | `InternalServerError of internal_server_error
       | `InvalidActivation of invalid_activation
       | `InvalidActivationId of invalid_activation_id
-      | `TooManyUpdates of too_many_updates ] )
+      | `TooManyUpdates of too_many_updates ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -698,7 +712,8 @@ module DeleteAssociation : sig
       | `InternalServerError of internal_server_error
       | `InvalidDocument of invalid_document
       | `InvalidInstanceId of invalid_instance_id
-      | `TooManyUpdates of too_many_updates ] )
+      | `TooManyUpdates of too_many_updates ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -742,7 +757,8 @@ module DeleteDocument : sig
       | `InternalServerError of internal_server_error
       | `InvalidDocument of invalid_document
       | `InvalidDocumentOperation of invalid_document_operation
-      | `TooManyUpdates of too_many_updates ] )
+      | `TooManyUpdates of too_many_updates ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -783,7 +799,8 @@ module DeleteInventory : sig
       | `InvalidDeleteInventoryParametersException of invalid_delete_inventory_parameters_exception
       | `InvalidInventoryRequestException of invalid_inventory_request_exception
       | `InvalidOptionException of invalid_option_exception
-      | `InvalidTypeNameException of invalid_type_name_exception ] )
+      | `InvalidTypeNameException of invalid_type_name_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -805,7 +822,8 @@ module DeleteMaintenanceWindow : sig
     'http_type Smaws_Lib.Context.t ->
     delete_maintenance_window_request ->
     ( delete_maintenance_window_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes a maintenance window.\n"]
@@ -832,7 +850,8 @@ module DeleteOpsItem : sig
     ( delete_ops_item_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `OpsItemInvalidParameterException of ops_item_invalid_parameter_exception ] )
+      | `OpsItemInvalidParameterException of ops_item_invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -890,7 +909,8 @@ module DeleteOpsMetadata : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `OpsMetadataInvalidArgumentException of ops_metadata_invalid_argument_exception
-      | `OpsMetadataNotFoundException of ops_metadata_not_found_exception ] )
+      | `OpsMetadataNotFoundException of ops_metadata_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Delete OpsMetadata related to an application.\n"]
@@ -917,7 +937,8 @@ module DeleteParameter : sig
     ( delete_parameter_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `ParameterNotFound of parameter_not_found ] )
+      | `ParameterNotFound of parameter_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -939,7 +960,8 @@ module DeleteParameters : sig
     'http_type Smaws_Lib.Context.t ->
     delete_parameters_request ->
     ( delete_parameters_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -968,7 +990,8 @@ module DeletePatchBaseline : sig
     ( delete_patch_baseline_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `ResourceInUseException of resource_in_use_exception ] )
+      | `ResourceInUseException of resource_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes a patch baseline.\n"]
@@ -1001,7 +1024,8 @@ module DeleteResourceDataSync : sig
       | `InternalServerError of internal_server_error
       | `ResourceDataSyncInvalidConfigurationException of
         resource_data_sync_invalid_configuration_exception
-      | `ResourceDataSyncNotFoundException of resource_data_sync_not_found_exception ] )
+      | `ResourceDataSyncNotFoundException of resource_data_sync_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1043,7 +1067,8 @@ module DeleteResourcePolicy : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ResourcePolicyConflictException of resource_policy_conflict_exception
       | `ResourcePolicyInvalidParameterException of resource_policy_invalid_parameter_exception
-      | `ResourcePolicyNotFoundException of resource_policy_not_found_exception ] )
+      | `ResourcePolicyNotFoundException of resource_policy_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1087,7 +1112,8 @@ module DeregisterManagedInstance : sig
     ( deregister_managed_instance_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `InvalidInstanceId of invalid_instance_id ] )
+      | `InvalidInstanceId of invalid_instance_id ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1123,7 +1149,8 @@ module DeregisterPatchBaselineForPatchGroup : sig
     ( deregister_patch_baseline_for_patch_group_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `InvalidResourceId of invalid_resource_id ] )
+      | `InvalidResourceId of invalid_resource_id ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes a patch group from a patch baseline.\n"]
@@ -1153,7 +1180,8 @@ module DeregisterTargetFromMaintenanceWindow : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
       | `InternalServerError of internal_server_error
-      | `TargetInUseException of target_in_use_exception ] )
+      | `TargetInUseException of target_in_use_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes a target from a maintenance window.\n"]
@@ -1180,7 +1208,8 @@ module DeregisterTaskFromMaintenanceWindow : sig
     ( deregister_task_from_maintenance_window_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes a task from a maintenance window.\n"]
@@ -1210,7 +1239,8 @@ module DescribeActivations : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidFilter of invalid_filter
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1249,7 +1279,8 @@ module DescribeAssociation : sig
       | `InternalServerError of internal_server_error
       | `InvalidAssociationVersion of invalid_association_version
       | `InvalidDocument of invalid_document
-      | `InvalidInstanceId of invalid_instance_id ] )
+      | `InvalidInstanceId of invalid_instance_id ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1285,7 +1316,8 @@ module DescribeAssociationExecutionTargets : sig
       | `AssociationDoesNotExist of association_does_not_exist
       | `AssociationExecutionDoesNotExist of association_execution_does_not_exist
       | `InternalServerError of internal_server_error
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Views information about a specific execution of a specific association.\n"]
@@ -1315,7 +1347,8 @@ module DescribeAssociationExecutions : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AssociationDoesNotExist of association_does_not_exist
       | `InternalServerError of internal_server_error
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Views all executions for a specific association ID. \n"]
@@ -1348,7 +1381,8 @@ module DescribeAutomationExecutions : sig
       | `InternalServerError of internal_server_error
       | `InvalidFilterKey of invalid_filter_key
       | `InvalidFilterValue of invalid_filter_value
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Provides details about all active and terminated Automation executions.\n"]
@@ -1384,7 +1418,8 @@ module DescribeAutomationStepExecutions : sig
       | `InternalServerError of internal_server_error
       | `InvalidFilterKey of invalid_filter_key
       | `InvalidFilterValue of invalid_filter_value
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1405,7 +1440,8 @@ module DescribeAvailablePatches : sig
     'http_type Smaws_Lib.Context.t ->
     describe_available_patches_request ->
     ( describe_available_patches_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1440,7 +1476,8 @@ module DescribeDocument : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidDocument of invalid_document
-      | `InvalidDocumentVersion of invalid_document_version ] )
+      | `InvalidDocumentVersion of invalid_document_version ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1477,7 +1514,8 @@ module DescribeDocumentPermission : sig
       | `InvalidDocument of invalid_document
       | `InvalidDocumentOperation of invalid_document_operation
       | `InvalidNextToken of invalid_next_token
-      | `InvalidPermissionType of invalid_permission_type ] )
+      | `InvalidPermissionType of invalid_permission_type ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1510,7 +1548,8 @@ module DescribeEffectiveInstanceAssociations : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidInstanceId of invalid_instance_id
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "All associations for the managed nodes.\n"]
@@ -1543,7 +1582,8 @@ module DescribeEffectivePatchesForPatchBaseline : sig
       | `DoesNotExistException of does_not_exist_exception
       | `InternalServerError of internal_server_error
       | `InvalidResourceId of invalid_resource_id
-      | `UnsupportedOperatingSystem of unsupported_operating_system ] )
+      | `UnsupportedOperatingSystem of unsupported_operating_system ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1575,7 +1615,8 @@ module DescribeInstanceAssociationsStatus : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidInstanceId of invalid_instance_id
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "The status of the associations for the managed nodes.\n"]
@@ -1611,7 +1652,8 @@ module DescribeInstanceInformation : sig
       | `InvalidFilterKey of invalid_filter_key
       | `InvalidInstanceId of invalid_instance_id
       | `InvalidInstanceInformationFilterValue of invalid_instance_information_filter_value
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1650,7 +1692,8 @@ module DescribeInstancePatchStates : sig
     ( describe_instance_patch_states_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves the high-level patch state of one or more managed nodes.\n"]
@@ -1680,7 +1723,8 @@ module DescribeInstancePatchStatesForPatchGroup : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidFilter of invalid_filter
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1714,7 +1758,8 @@ module DescribeInstancePatches : sig
       | `InternalServerError of internal_server_error
       | `InvalidFilter of invalid_filter
       | `InvalidInstanceId of invalid_instance_id
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1758,7 +1803,8 @@ module DescribeInstanceProperties : sig
       | `InvalidFilterKey of invalid_filter_key
       | `InvalidInstanceId of invalid_instance_id
       | `InvalidInstancePropertyFilterValue of invalid_instance_property_filter_value
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1790,7 +1836,8 @@ module DescribeInventoryDeletions : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidDeletionIdException of invalid_deletion_id_exception
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Describes a specific delete inventory operation.\n"]
@@ -1817,7 +1864,8 @@ module DescribeMaintenanceWindowExecutionTaskInvocations : sig
     ( describe_maintenance_window_execution_task_invocations_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1846,7 +1894,8 @@ module DescribeMaintenanceWindowExecutionTasks : sig
     ( describe_maintenance_window_execution_tasks_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "For a given maintenance window execution, lists the tasks that were run.\n"]
@@ -1866,7 +1915,8 @@ module DescribeMaintenanceWindowExecutions : sig
     'http_type Smaws_Lib.Context.t ->
     describe_maintenance_window_executions_request ->
     ( describe_maintenance_window_executions_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1896,7 +1946,8 @@ module DescribeMaintenanceWindowSchedule : sig
     ( describe_maintenance_window_schedule_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves information about upcoming executions of a maintenance window.\n"]
@@ -1923,7 +1974,8 @@ module DescribeMaintenanceWindowTargets : sig
     ( describe_maintenance_window_targets_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the targets registered with the maintenance window.\n"]
@@ -1950,7 +2002,8 @@ module DescribeMaintenanceWindowTasks : sig
     ( describe_maintenance_window_tasks_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1977,7 +2030,8 @@ module DescribeMaintenanceWindows : sig
     'http_type Smaws_Lib.Context.t ->
     describe_maintenance_windows_request ->
     ( describe_maintenance_windows_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves the maintenance windows in an Amazon Web Services account.\n"]
@@ -1997,7 +2051,8 @@ module DescribeMaintenanceWindowsForTarget : sig
     'http_type Smaws_Lib.Context.t ->
     describe_maintenance_windows_for_target_request ->
     ( describe_maintenance_windows_for_target_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2019,7 +2074,8 @@ module DescribeOpsItems : sig
     'http_type Smaws_Lib.Context.t ->
     describe_ops_items_request ->
     ( describe_ops_items_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2065,7 +2121,8 @@ module DescribeParameters : sig
       | `InvalidFilterKey of invalid_filter_key
       | `InvalidFilterOption of invalid_filter_option
       | `InvalidFilterValue of invalid_filter_value
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2105,7 +2162,8 @@ module DescribePatchBaselines : sig
     'http_type Smaws_Lib.Context.t ->
     describe_patch_baselines_request ->
     ( describe_patch_baselines_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the patch baselines in your Amazon Web Services account.\n"]
@@ -2132,7 +2190,8 @@ module DescribePatchGroupState : sig
     ( describe_patch_group_state_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2153,7 +2212,8 @@ module DescribePatchGroups : sig
     'http_type Smaws_Lib.Context.t ->
     describe_patch_groups_request ->
     ( describe_patch_groups_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists all patch groups that have been registered with patch baselines.\n"]
@@ -2173,7 +2233,8 @@ module DescribePatchProperties : sig
     'http_type Smaws_Lib.Context.t ->
     describe_patch_properties_request ->
     ( describe_patch_properties_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2240,7 +2301,8 @@ module DescribeSessions : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidFilterKey of invalid_filter_key
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2281,7 +2343,8 @@ module DisassociateOpsItemRelatedItem : sig
       | `OpsItemInvalidParameterException of ops_item_invalid_parameter_exception
       | `OpsItemNotFoundException of ops_item_not_found_exception
       | `OpsItemRelatedItemAssociationNotFoundException of
-        ops_item_related_item_association_not_found_exception ] )
+        ops_item_related_item_association_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2320,7 +2383,8 @@ module GetAccessToken : sig
       | `InternalServerError of internal_server_error
       | `ResourceNotFoundException of resource_not_found_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns a credentials set to be used with just-in-time node access.\n"]
@@ -2347,7 +2411,8 @@ module GetAutomationExecution : sig
     ( get_automation_execution_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AutomationExecutionNotFoundException of automation_execution_not_found_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Get detailed information about a particular Automation execution.\n"]
@@ -2380,7 +2445,8 @@ module GetCalendarState : sig
       | `InternalServerError of internal_server_error
       | `InvalidDocument of invalid_document
       | `InvalidDocumentType of invalid_document_type
-      | `UnsupportedCalendarException of unsupported_calendar_exception ] )
+      | `UnsupportedCalendarException of unsupported_calendar_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2431,7 +2497,8 @@ module GetCommandInvocation : sig
       | `InvalidCommandId of invalid_command_id
       | `InvalidInstanceId of invalid_instance_id
       | `InvalidPluginName of invalid_plugin_name
-      | `InvocationDoesNotExist of invocation_does_not_exist ] )
+      | `InvocationDoesNotExist of invocation_does_not_exist ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2461,7 +2528,8 @@ module GetConnectionStatus : sig
     'http_type Smaws_Lib.Context.t ->
     get_connection_status_request ->
     ( get_connection_status_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2483,7 +2551,8 @@ module GetDefaultPatchBaseline : sig
     'http_type Smaws_Lib.Context.t ->
     get_default_patch_baseline_request ->
     ( get_default_patch_baseline_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2519,7 +2588,8 @@ module GetDeployablePatchSnapshotForInstance : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `UnsupportedFeatureRequiredException of unsupported_feature_required_exception
-      | `UnsupportedOperatingSystem of unsupported_operating_system ] )
+      | `UnsupportedOperatingSystem of unsupported_operating_system ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2559,7 +2629,8 @@ module GetDocument : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidDocument of invalid_document
-      | `InvalidDocumentVersion of invalid_document_version ] )
+      | `InvalidDocumentVersion of invalid_document_version ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2587,7 +2658,8 @@ module GetExecutionPreview : sig
     ( get_execution_preview_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2631,7 +2703,8 @@ module GetInventory : sig
       | `InvalidInventoryGroupException of invalid_inventory_group_exception
       | `InvalidNextToken of invalid_next_token
       | `InvalidResultAttributeException of invalid_result_attribute_exception
-      | `InvalidTypeNameException of invalid_type_name_exception ] )
+      | `InvalidTypeNameException of invalid_type_name_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2663,7 +2736,8 @@ module GetInventorySchema : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidNextToken of invalid_next_token
-      | `InvalidTypeNameException of invalid_type_name_exception ] )
+      | `InvalidTypeNameException of invalid_type_name_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2692,7 +2766,8 @@ module GetMaintenanceWindow : sig
     ( get_maintenance_window_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves a maintenance window.\n"]
@@ -2719,7 +2794,8 @@ module GetMaintenanceWindowExecution : sig
     ( get_maintenance_window_execution_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves details about a specific a maintenance window execution.\n"]
@@ -2746,7 +2822,8 @@ module GetMaintenanceWindowExecutionTask : sig
     ( get_maintenance_window_execution_task_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2774,7 +2851,8 @@ module GetMaintenanceWindowExecutionTaskInvocation : sig
     ( get_maintenance_window_execution_task_invocation_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves information about a specific task running on a specific target.\n"]
@@ -2801,7 +2879,8 @@ module GetMaintenanceWindowTask : sig
     ( get_maintenance_window_task_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2840,7 +2919,8 @@ module GetOpsItem : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `OpsItemAccessDeniedException of ops_item_access_denied_exception
-      | `OpsItemNotFoundException of ops_item_not_found_exception ] )
+      | `OpsItemNotFoundException of ops_item_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2880,7 +2960,8 @@ module GetOpsMetadata : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `OpsMetadataInvalidArgumentException of ops_metadata_invalid_argument_exception
-      | `OpsMetadataNotFoundException of ops_metadata_not_found_exception ] )
+      | `OpsMetadataNotFoundException of ops_metadata_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "View operational metadata related to an application in Application Manager.\n"]
@@ -2919,7 +3000,8 @@ module GetOpsSummary : sig
       | `InvalidFilter of invalid_filter
       | `InvalidNextToken of invalid_next_token
       | `InvalidTypeNameException of invalid_type_name_exception
-      | `ResourceDataSyncNotFoundException of resource_data_sync_not_found_exception ] )
+      | `ResourceDataSyncNotFoundException of resource_data_sync_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2956,7 +3038,8 @@ module GetParameter : sig
       | `InternalServerError of internal_server_error
       | `InvalidKeyId of invalid_key_id
       | `ParameterNotFound of parameter_not_found
-      | `ParameterVersionNotFound of parameter_version_not_found ] )
+      | `ParameterVersionNotFound of parameter_version_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2997,7 +3080,8 @@ module GetParameterHistory : sig
       | `InternalServerError of internal_server_error
       | `InvalidKeyId of invalid_key_id
       | `InvalidNextToken of invalid_next_token
-      | `ParameterNotFound of parameter_not_found ] )
+      | `ParameterNotFound of parameter_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3034,7 +3118,8 @@ module GetParameters : sig
     ( get_parameters_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `InvalidKeyId of invalid_key_id ] )
+      | `InvalidKeyId of invalid_key_id ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3080,7 +3165,8 @@ module GetParametersByPath : sig
       | `InvalidFilterOption of invalid_filter_option
       | `InvalidFilterValue of invalid_filter_value
       | `InvalidKeyId of invalid_key_id
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3122,7 +3208,8 @@ module GetPatchBaseline : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
       | `InternalServerError of internal_server_error
-      | `InvalidResourceId of invalid_resource_id ] )
+      | `InvalidResourceId of invalid_resource_id ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves information about a patch baseline.\n"]
@@ -3142,7 +3229,8 @@ module GetPatchBaselineForPatchGroup : sig
     'http_type Smaws_Lib.Context.t ->
     get_patch_baseline_for_patch_group_request ->
     ( get_patch_baseline_for_patch_group_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves the patch baseline that should be used for the specified patch group.\n"]
@@ -3174,7 +3262,7 @@ module GetResourcePolicies : sig
       | `InternalServerError of internal_server_error
       | `ResourceNotFoundException of resource_not_found_exception
       | `ResourcePolicyInvalidParameterException of resource_policy_invalid_parameter_exception ]
-    )
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Returns an array of the [Policy] object.\n"]
@@ -3201,7 +3289,8 @@ module GetServiceSetting : sig
     ( get_service_setting_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `ServiceSettingNotFound of service_setting_not_found ] )
+      | `ServiceSettingNotFound of service_setting_not_found ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3252,7 +3341,8 @@ module LabelParameterVersion : sig
       | `ParameterNotFound of parameter_not_found
       | `ParameterVersionLabelLimitExceeded of parameter_version_label_limit_exceeded
       | `ParameterVersionNotFound of parameter_version_not_found
-      | `TooManyUpdates of too_many_updates ] )
+      | `TooManyUpdates of too_many_updates ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3326,7 +3416,8 @@ module ListAssociationVersions : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AssociationDoesNotExist of association_does_not_exist
       | `InternalServerError of internal_server_error
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves all versions of an association for a specific association ID.\n"]
@@ -3353,7 +3444,8 @@ module ListAssociations : sig
     ( list_associations_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3393,7 +3485,8 @@ module ListCommandInvocations : sig
       | `InvalidCommandId of invalid_command_id
       | `InvalidFilterKey of invalid_filter_key
       | `InvalidInstanceId of invalid_instance_id
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3433,7 +3526,8 @@ module ListCommands : sig
       | `InvalidCommandId of invalid_command_id
       | `InvalidFilterKey of invalid_filter_key
       | `InvalidInstanceId of invalid_instance_id
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists the commands requested by users of the Amazon Web Services account.\n"]
@@ -3469,7 +3563,8 @@ module ListComplianceItems : sig
       | `InvalidFilter of invalid_filter
       | `InvalidNextToken of invalid_next_token
       | `InvalidResourceId of invalid_resource_id
-      | `InvalidResourceType of invalid_resource_type ] )
+      | `InvalidResourceType of invalid_resource_type ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3502,7 +3597,8 @@ module ListComplianceSummaries : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidFilter of invalid_filter
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3538,7 +3634,8 @@ module ListDocumentMetadataHistory : sig
       | `InternalServerError of internal_server_error
       | `InvalidDocument of invalid_document
       | `InvalidDocumentVersion of invalid_document_version
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3575,7 +3672,8 @@ module ListDocumentVersions : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidDocument of invalid_document
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "List all versions for a document.\n"]
@@ -3605,7 +3703,8 @@ module ListDocuments : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidFilterKey of invalid_filter_key
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3643,7 +3742,8 @@ module ListInventoryEntries : sig
       | `InvalidFilter of invalid_filter
       | `InvalidInstanceId of invalid_instance_id
       | `InvalidNextToken of invalid_next_token
-      | `InvalidTypeNameException of invalid_type_name_exception ] )
+      | `InvalidTypeNameException of invalid_type_name_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "A list of inventory items returned by the request.\n"]
@@ -3679,7 +3779,8 @@ module ListNodes : sig
       | `InvalidFilter of invalid_filter
       | `InvalidNextToken of invalid_next_token
       | `ResourceDataSyncNotFoundException of resource_data_sync_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Takes in filters and returns a list of managed nodes matching the filter criteria.\n"]
@@ -3718,7 +3819,8 @@ module ListNodesSummary : sig
       | `InvalidFilter of invalid_filter
       | `InvalidNextToken of invalid_next_token
       | `ResourceDataSyncNotFoundException of resource_data_sync_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3753,7 +3855,8 @@ module ListOpsItemEvents : sig
       | `InternalServerError of internal_server_error
       | `OpsItemInvalidParameterException of ops_item_invalid_parameter_exception
       | `OpsItemLimitExceededException of ops_item_limit_exceeded_exception
-      | `OpsItemNotFoundException of ops_item_not_found_exception ] )
+      | `OpsItemNotFoundException of ops_item_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3783,7 +3886,8 @@ module ListOpsItemRelatedItems : sig
     ( list_ops_item_related_items_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `OpsItemInvalidParameterException of ops_item_invalid_parameter_exception ] )
+      | `OpsItemInvalidParameterException of ops_item_invalid_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3812,7 +3916,8 @@ module ListOpsMetadata : sig
     ( list_ops_metadata_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `OpsMetadataInvalidArgumentException of ops_metadata_invalid_argument_exception ] )
+      | `OpsMetadataInvalidArgumentException of ops_metadata_invalid_argument_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3844,7 +3949,8 @@ module ListResourceComplianceSummaries : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidFilter of invalid_filter
-      | `InvalidNextToken of invalid_next_token ] )
+      | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3880,7 +3986,8 @@ module ListResourceDataSync : sig
       | `InternalServerError of internal_server_error
       | `InvalidNextToken of invalid_next_token
       | `ResourceDataSyncInvalidConfigurationException of
-        resource_data_sync_invalid_configuration_exception ] )
+        resource_data_sync_invalid_configuration_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3919,7 +4026,8 @@ module ListTagsForResource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidResourceId of invalid_resource_id
-      | `InvalidResourceType of invalid_resource_type ] )
+      | `InvalidResourceType of invalid_resource_type ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -3958,7 +4066,8 @@ module ModifyDocumentPermission : sig
       | `DocumentPermissionLimit of document_permission_limit
       | `InternalServerError of internal_server_error
       | `InvalidDocument of invalid_document
-      | `InvalidPermissionType of invalid_permission_type ] )
+      | `InvalidPermissionType of invalid_permission_type ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4004,7 +4113,8 @@ module PutComplianceItems : sig
       | `InvalidResourceId of invalid_resource_id
       | `InvalidResourceType of invalid_resource_type
       | `ItemSizeLimitExceededException of item_size_limit_exceeded_exception
-      | `TotalSizeLimitExceededException of total_size_limit_exceeded_exception ] )
+      | `TotalSizeLimitExceededException of total_size_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4129,7 +4239,8 @@ module PutInventory : sig
       | `TotalSizeLimitExceededException of total_size_limit_exceeded_exception
       | `UnsupportedInventoryItemContextException of unsupported_inventory_item_context_exception
       | `UnsupportedInventorySchemaVersionException of
-        unsupported_inventory_schema_version_exception ] )
+        unsupported_inventory_schema_version_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4197,7 +4308,8 @@ module PutParameter : sig
       | `ParameterPatternMismatchException of parameter_pattern_mismatch_exception
       | `PoliciesLimitExceededException of policies_limit_exceeded_exception
       | `TooManyUpdates of too_many_updates
-      | `UnsupportedParameterType of unsupported_parameter_type ] )
+      | `UnsupportedParameterType of unsupported_parameter_type ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Create or update a parameter in Parameter Store.\n"]
@@ -4239,7 +4351,8 @@ module PutResourcePolicy : sig
       | `ResourcePolicyConflictException of resource_policy_conflict_exception
       | `ResourcePolicyInvalidParameterException of resource_policy_invalid_parameter_exception
       | `ResourcePolicyLimitExceededException of resource_policy_limit_exceeded_exception
-      | `ResourcePolicyNotFoundException of resource_policy_not_found_exception ] )
+      | `ResourcePolicyNotFoundException of resource_policy_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4311,7 +4424,8 @@ module RegisterDefaultPatchBaseline : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
       | `InternalServerError of internal_server_error
-      | `InvalidResourceId of invalid_resource_id ] )
+      | `InvalidResourceId of invalid_resource_id ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4353,7 +4467,8 @@ module RegisterPatchBaselineForPatchGroup : sig
       | `DoesNotExistException of does_not_exist_exception
       | `InternalServerError of internal_server_error
       | `InvalidResourceId of invalid_resource_id
-      | `ResourceLimitExceededException of resource_limit_exceeded_exception ] )
+      | `ResourceLimitExceededException of resource_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Registers a patch baseline for a patch group.\n"]
@@ -4386,7 +4501,8 @@ module RegisterTargetWithMaintenanceWindow : sig
       | `DoesNotExistException of does_not_exist_exception
       | `IdempotentParameterMismatch of idempotent_parameter_mismatch
       | `InternalServerError of internal_server_error
-      | `ResourceLimitExceededException of resource_limit_exceeded_exception ] )
+      | `ResourceLimitExceededException of resource_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Registers a target with a maintenance window.\n"]
@@ -4422,7 +4538,8 @@ module RegisterTaskWithMaintenanceWindow : sig
       | `FeatureNotAvailableException of feature_not_available_exception
       | `IdempotentParameterMismatch of idempotent_parameter_mismatch
       | `InternalServerError of internal_server_error
-      | `ResourceLimitExceededException of resource_limit_exceeded_exception ] )
+      | `ResourceLimitExceededException of resource_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Adds a new task to a maintenance window.\n"]
@@ -4455,7 +4572,8 @@ module RemoveTagsFromResource : sig
       | `InternalServerError of internal_server_error
       | `InvalidResourceId of invalid_resource_id
       | `InvalidResourceType of invalid_resource_type
-      | `TooManyUpdates of too_many_updates ] )
+      | `TooManyUpdates of too_many_updates ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes tag keys from the specified resource.\n"]
@@ -4485,7 +4603,8 @@ module ResetServiceSetting : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `ServiceSettingNotFound of service_setting_not_found
-      | `TooManyUpdates of too_many_updates ] )
+      | `TooManyUpdates of too_many_updates ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4527,7 +4646,8 @@ module ResumeSession : sig
     ( resume_session_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4566,7 +4686,8 @@ module SendAutomationSignal : sig
       | `AutomationExecutionNotFoundException of automation_execution_not_found_exception
       | `AutomationStepNotFoundException of automation_step_not_found_exception
       | `InternalServerError of internal_server_error
-      | `InvalidAutomationSignalException of invalid_automation_signal_exception ] )
+      | `InvalidAutomationSignalException of invalid_automation_signal_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4622,7 +4743,8 @@ module SendCommand : sig
       | `InvalidParameters of invalid_parameters
       | `InvalidRole of invalid_role
       | `MaxDocumentSizeExceeded of max_document_size_exceeded
-      | `UnsupportedPlatformType of unsupported_platform_type ] )
+      | `UnsupportedPlatformType of unsupported_platform_type ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Runs commands on one or more managed nodes.\n"]
@@ -4661,7 +4783,8 @@ module StartAccessRequest : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Starts the workflow for just-in-time node access sessions.\n"]
@@ -4688,7 +4811,8 @@ module StartAssociationsOnce : sig
     ( start_associations_once_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AssociationDoesNotExist of association_does_not_exist
-      | `InvalidAssociation of invalid_association ] )
+      | `InvalidAssociation of invalid_association ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4738,7 +4862,8 @@ module StartAutomationExecution : sig
       | `InternalServerError of internal_server_error
       | `InvalidAutomationExecutionParametersException of
         invalid_automation_execution_parameters_exception
-      | `InvalidTarget of invalid_target ] )
+      | `InvalidTarget of invalid_target ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Initiates execution of an Automation runbook.\n"]
@@ -4789,7 +4914,8 @@ module StartChangeRequestExecution : sig
       | `InternalServerError of internal_server_error
       | `InvalidAutomationExecutionParametersException of
         invalid_automation_execution_parameters_exception
-      | `NoLongerSupportedException of no_longer_supported_exception ] )
+      | `NoLongerSupportedException of no_longer_supported_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4824,7 +4950,8 @@ module StartExecutionPreview : sig
     ( start_execution_preview_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `ValidationException of validation_exception ] )
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4856,7 +4983,8 @@ module StartSession : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `InvalidDocument of invalid_document
-      | `TargetNotConnected of target_not_connected ] )
+      | `TargetNotConnected of target_not_connected ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4900,7 +5028,8 @@ module StopAutomationExecution : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AutomationExecutionNotFoundException of automation_execution_not_found_exception
       | `InternalServerError of internal_server_error
-      | `InvalidAutomationStatusUpdateException of invalid_automation_status_update_exception ] )
+      | `InvalidAutomationStatusUpdateException of invalid_automation_status_update_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Stop an Automation that is currently running.\n"]
@@ -4920,7 +5049,8 @@ module TerminateSession : sig
     'http_type Smaws_Lib.Context.t ->
     terminate_session_request ->
     ( terminate_session_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -4955,7 +5085,8 @@ module UnlabelParameterVersion : sig
       | `InternalServerError of internal_server_error
       | `ParameterNotFound of parameter_not_found
       | `ParameterVersionNotFound of parameter_version_not_found
-      | `TooManyUpdates of too_many_updates ] )
+      | `TooManyUpdates of too_many_updates ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5020,7 +5151,8 @@ module UpdateAssociation : sig
       | `InvalidTarget of invalid_target
       | `InvalidTargetMaps of invalid_target_maps
       | `InvalidUpdate of invalid_update
-      | `TooManyUpdates of too_many_updates ] )
+      | `TooManyUpdates of too_many_updates ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5081,7 +5213,8 @@ module UpdateAssociationStatus : sig
       | `InvalidDocument of invalid_document
       | `InvalidInstanceId of invalid_instance_id
       | `StatusUnchanged of status_unchanged
-      | `TooManyUpdates of too_many_updates ] )
+      | `TooManyUpdates of too_many_updates ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5138,7 +5271,8 @@ module UpdateDocument : sig
       | `InvalidDocumentOperation of invalid_document_operation
       | `InvalidDocumentSchemaVersion of invalid_document_schema_version
       | `InvalidDocumentVersion of invalid_document_version
-      | `MaxDocumentSizeExceeded of max_document_size_exceeded ] )
+      | `MaxDocumentSizeExceeded of max_document_size_exceeded ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates one or more values for an SSM document.\n"]
@@ -5171,7 +5305,8 @@ module UpdateDocumentDefaultVersion : sig
       | `InternalServerError of internal_server_error
       | `InvalidDocument of invalid_document
       | `InvalidDocumentSchemaVersion of invalid_document_schema_version
-      | `InvalidDocumentVersion of invalid_document_version ] )
+      | `InvalidDocumentVersion of invalid_document_version ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5212,7 +5347,8 @@ module UpdateDocumentMetadata : sig
       | `InvalidDocument of invalid_document
       | `InvalidDocumentOperation of invalid_document_operation
       | `InvalidDocumentVersion of invalid_document_version
-      | `TooManyUpdates of too_many_updates ] )
+      | `TooManyUpdates of too_many_updates ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5247,7 +5383,8 @@ module UpdateMaintenanceWindow : sig
     ( update_maintenance_window_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5282,7 +5419,8 @@ module UpdateMaintenanceWindowTarget : sig
     ( update_maintenance_window_target_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5334,7 +5472,8 @@ module UpdateMaintenanceWindowTask : sig
     ( update_maintenance_window_task_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5406,7 +5545,8 @@ module UpdateManagedInstanceRole : sig
     ( update_managed_instance_role_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
-      | `InvalidInstanceId of invalid_instance_id ] )
+      | `InvalidInstanceId of invalid_instance_id ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5451,7 +5591,8 @@ module UpdateOpsItem : sig
       | `OpsItemConflictException of ops_item_conflict_exception
       | `OpsItemInvalidParameterException of ops_item_invalid_parameter_exception
       | `OpsItemLimitExceededException of ops_item_limit_exceeded_exception
-      | `OpsItemNotFoundException of ops_item_not_found_exception ] )
+      | `OpsItemNotFoundException of ops_item_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5497,7 +5638,8 @@ module UpdateOpsMetadata : sig
       | `OpsMetadataInvalidArgumentException of ops_metadata_invalid_argument_exception
       | `OpsMetadataKeyLimitExceededException of ops_metadata_key_limit_exceeded_exception
       | `OpsMetadataNotFoundException of ops_metadata_not_found_exception
-      | `OpsMetadataTooManyUpdatesException of ops_metadata_too_many_updates_exception ] )
+      | `OpsMetadataTooManyUpdatesException of ops_metadata_too_many_updates_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5526,7 +5668,8 @@ module UpdatePatchBaseline : sig
     ( update_patch_baseline_result Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `DoesNotExistException of does_not_exist_exception
-      | `InternalServerError of internal_server_error ] )
+      | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5567,7 +5710,8 @@ module UpdateResourceDataSync : sig
       | `ResourceDataSyncConflictException of resource_data_sync_conflict_exception
       | `ResourceDataSyncInvalidConfigurationException of
         resource_data_sync_invalid_configuration_exception
-      | `ResourceDataSyncNotFoundException of resource_data_sync_not_found_exception ] )
+      | `ResourceDataSyncNotFoundException of resource_data_sync_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -5607,7 +5751,8 @@ module UpdateServiceSetting : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalServerError of internal_server_error
       | `ServiceSettingNotFound of service_setting_not_found
-      | `TooManyUpdates of too_many_updates ] )
+      | `TooManyUpdates of too_many_updates ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc

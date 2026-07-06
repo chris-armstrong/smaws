@@ -31,7 +31,8 @@ module ActivateEventSource : sig
       | `InternalException of internal_exception
       | `InvalidStateException of invalid_state_exception
       | `OperationDisabledException of operation_disabled_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -66,7 +67,8 @@ module CancelReplay : sig
       | `ConcurrentModificationException of concurrent_modification_exception
       | `IllegalStatusException of illegal_status_exception
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Cancels the specified replay.\n"]
@@ -99,7 +101,8 @@ module CreateApiDestination : sig
       | `InternalException of internal_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceAlreadyExistsException of resource_already_exists_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -146,7 +149,8 @@ module CreateArchive : sig
       | `InvalidEventPatternException of invalid_event_pattern_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceAlreadyExistsException of resource_already_exists_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -199,7 +203,8 @@ module CreateConnection : sig
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceAlreadyExistsException of resource_already_exists_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -235,7 +240,8 @@ module CreateEndpoint : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `ResourceAlreadyExistsException of resource_already_exists_exception ] )
+      | `ResourceAlreadyExistsException of resource_already_exists_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -283,7 +289,8 @@ module CreateEventBus : sig
       | `LimitExceededException of limit_exceeded_exception
       | `OperationDisabledException of operation_disabled_exception
       | `ResourceAlreadyExistsException of resource_already_exists_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -322,7 +329,8 @@ module CreatePartnerEventSource : sig
       | `InternalException of internal_exception
       | `LimitExceededException of limit_exceeded_exception
       | `OperationDisabledException of operation_disabled_exception
-      | `ResourceAlreadyExistsException of resource_already_exists_exception ] )
+      | `ResourceAlreadyExistsException of resource_already_exists_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -400,7 +408,8 @@ module DeactivateEventSource : sig
       | `InternalException of internal_exception
       | `InvalidStateException of invalid_state_exception
       | `OperationDisabledException of operation_disabled_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -438,7 +447,8 @@ module DeauthorizeConnection : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -470,7 +480,8 @@ module DeleteApiDestination : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes the specified API destination.\n"]
@@ -500,7 +511,8 @@ module DeleteArchive : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes the specified archive.\n"]
@@ -530,7 +542,8 @@ module DeleteConnection : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Deletes a connection.\n"]
@@ -560,7 +573,8 @@ module DeleteEndpoint : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -591,7 +605,8 @@ module DeleteEventBus : sig
     ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
-      | `InternalException of internal_exception ] )
+      | `InternalException of internal_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -623,7 +638,8 @@ module DeletePartnerEventSource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
-      | `OperationDisabledException of operation_disabled_exception ] )
+      | `OperationDisabledException of operation_disabled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -663,7 +679,8 @@ module DeleteRule : sig
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
       | `ManagedRuleException of managed_rule_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -705,7 +722,8 @@ module DescribeApiDestination : sig
     ( describe_api_destination_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves details about an API destination.\n"]
@@ -735,7 +753,8 @@ module DescribeArchive : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
       | `ResourceAlreadyExistsException of resource_already_exists_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves details about an archive.\n"]
@@ -762,7 +781,8 @@ module DescribeConnection : sig
     ( describe_connection_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves details about a connection.\n"]
@@ -789,7 +809,8 @@ module DescribeEndpoint : sig
     ( describe_endpoint_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -821,7 +842,8 @@ module DescribeEventBus : sig
     ( describe_event_bus_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -861,7 +883,8 @@ module DescribeEventSource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
       | `OperationDisabledException of operation_disabled_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -892,7 +915,8 @@ module DescribePartnerEventSource : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
       | `OperationDisabledException of operation_disabled_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -924,7 +948,8 @@ module DescribeReplay : sig
     ( describe_replay_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -959,7 +984,8 @@ module DescribeRule : sig
     ( describe_rule_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -997,7 +1023,8 @@ module DisableRule : sig
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
       | `ManagedRuleException of managed_rule_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1035,7 +1062,8 @@ module EnableRule : sig
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
       | `ManagedRuleException of managed_rule_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1059,7 +1087,8 @@ module ListApiDestinations : sig
     'http_type Smaws_Lib.Context.t ->
     list_api_destinations_request ->
     ( list_api_destinations_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves a list of API destination in the account in the current Region.\n"]
@@ -1086,7 +1115,8 @@ module ListArchives : sig
     ( list_archives_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1108,7 +1138,8 @@ module ListConnections : sig
     'http_type Smaws_Lib.Context.t ->
     list_connections_request ->
     ( list_connections_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves a list of connections from the account.\n"]
@@ -1128,7 +1159,8 @@ module ListEndpoints : sig
     'http_type Smaws_Lib.Context.t ->
     list_endpoints_request ->
     ( list_endpoints_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1153,7 +1185,8 @@ module ListEventBuses : sig
     'http_type Smaws_Lib.Context.t ->
     list_event_buses_request ->
     ( list_event_buses_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1182,7 +1215,8 @@ module ListEventSources : sig
     ( list_event_sources_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
-      | `OperationDisabledException of operation_disabled_exception ] )
+      | `OperationDisabledException of operation_disabled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1215,7 +1249,8 @@ module ListPartnerEventSourceAccounts : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
       | `OperationDisabledException of operation_disabled_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1245,7 +1280,8 @@ module ListPartnerEventSources : sig
     ( list_partner_event_sources_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
-      | `OperationDisabledException of operation_disabled_exception ] )
+      | `OperationDisabledException of operation_disabled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1267,7 +1303,8 @@ module ListReplays : sig
     'http_type Smaws_Lib.Context.t ->
     list_replays_request ->
     ( list_replays_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1296,7 +1333,8 @@ module ListRuleNamesByTarget : sig
     ( list_rule_names_by_target_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1327,7 +1365,8 @@ module ListRules : sig
     ( list_rules_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1361,7 +1400,8 @@ module ListTagsForResource : sig
     ( list_tags_for_resource_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1390,7 +1430,8 @@ module ListTargetsByRule : sig
     ( list_targets_by_rule_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1413,7 +1454,8 @@ module PutEvents : sig
     'http_type Smaws_Lib.Context.t ->
     put_events_request ->
     ( put_events_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ] )
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalException of internal_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1454,7 +1496,8 @@ module PutPartnerEvents : sig
     ( put_partner_events_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
-      | `OperationDisabledException of operation_disabled_exception ] )
+      | `OperationDisabledException of operation_disabled_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1496,7 +1539,8 @@ module PutPermission : sig
       | `InternalException of internal_exception
       | `OperationDisabledException of operation_disabled_exception
       | `PolicyLengthExceededException of policy_length_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1556,7 +1600,8 @@ module PutRule : sig
       | `InvalidEventPatternException of invalid_event_pattern_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ManagedRuleException of managed_rule_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1652,7 +1697,8 @@ module PutTargets : sig
       | `InternalException of internal_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ManagedRuleException of managed_rule_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1798,7 +1844,8 @@ module RemovePermission : sig
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
       | `OperationDisabledException of operation_disabled_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1836,7 +1883,8 @@ module RemoveTargets : sig
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
       | `ManagedRuleException of managed_rule_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1886,7 +1934,8 @@ module StartReplay : sig
       | `InvalidEventPatternException of invalid_event_pattern_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceAlreadyExistsException of resource_already_exists_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1927,7 +1976,8 @@ module TagResource : sig
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
       | `ManagedRuleException of managed_rule_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1968,7 +2018,8 @@ module TestEventPattern : sig
     ( test_event_pattern_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `InternalException of internal_exception
-      | `InvalidEventPatternException of invalid_event_pattern_exception ] )
+      | `InvalidEventPatternException of invalid_event_pattern_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2007,7 +2058,8 @@ module UntagResource : sig
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
       | `ManagedRuleException of managed_rule_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2042,7 +2094,8 @@ module UpdateApiDestination : sig
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates an API destination.\n"]
@@ -2078,7 +2131,8 @@ module UpdateArchive : sig
       | `InternalException of internal_exception
       | `InvalidEventPatternException of invalid_event_pattern_exception
       | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates the specified archive.\n"]
@@ -2117,7 +2171,8 @@ module UpdateConnection : sig
       | `InternalException of internal_exception
       | `LimitExceededException of limit_exceeded_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates settings for a connection.\n"]
@@ -2147,7 +2202,8 @@ module UpdateEndpoint : sig
       [> Smaws_Lib.Protocols.AwsJson.error
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -2184,7 +2240,8 @@ module UpdateEventBus : sig
       | `ConcurrentModificationException of concurrent_modification_exception
       | `InternalException of internal_exception
       | `OperationDisabledException of operation_disabled_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Updates the specified event bus.\n"]

@@ -43,7 +43,8 @@ module AssociateCreatedArtifact : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `UnauthorizedOperation of unauthorized_operation ] )
+      | `UnauthorizedOperation of unauthorized_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -112,7 +113,8 @@ module AssociateDiscoveredResource : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `UnauthorizedOperation of unauthorized_operation ] )
+      | `UnauthorizedOperation of unauthorized_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -158,7 +160,8 @@ module AssociateSourceResource : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `UnauthorizedOperation of unauthorized_operation ] )
+      | `UnauthorizedOperation of unauthorized_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -205,7 +208,8 @@ module CreateProgressUpdateStream : sig
       | `InvalidInputException of invalid_input_exception
       | `ServiceUnavailableException of service_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `UnauthorizedOperation of unauthorized_operation ] )
+      | `UnauthorizedOperation of unauthorized_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -257,7 +261,8 @@ module DeleteProgressUpdateStream : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `UnauthorizedOperation of unauthorized_operation ] )
+      | `UnauthorizedOperation of unauthorized_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -329,7 +334,8 @@ module DescribeApplicationState : sig
       | `PolicyErrorException of policy_error_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Gets the migration status of an application.\n"]
@@ -371,7 +377,8 @@ module DescribeMigrationTask : sig
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Retrieves a list of all attributes associated with a specific migration task.\n"]
@@ -419,7 +426,8 @@ module DisassociateCreatedArtifact : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `UnauthorizedOperation of unauthorized_operation ] )
+      | `UnauthorizedOperation of unauthorized_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -485,7 +493,8 @@ module DisassociateDiscoveredResource : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `UnauthorizedOperation of unauthorized_operation ] )
+      | `UnauthorizedOperation of unauthorized_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -531,7 +540,8 @@ module DisassociateSourceResource : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `UnauthorizedOperation of unauthorized_operation ] )
+      | `UnauthorizedOperation of unauthorized_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Removes the association between a source resource and a migration task.\n"]
@@ -579,7 +589,8 @@ module ImportMigrationTask : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `UnauthorizedOperation of unauthorized_operation ] )
+      | `UnauthorizedOperation of unauthorized_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -623,7 +634,8 @@ module ListApplicationStates : sig
       | `InternalServerError of internal_server_error
       | `InvalidInputException of invalid_input_exception
       | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -667,7 +679,8 @@ module ListCreatedArtifacts : sig
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -724,7 +737,8 @@ module ListDiscoveredResources : sig
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists discovered resources associated with the given [MigrationTask].\n"]
@@ -763,7 +777,8 @@ module ListMigrationTaskUpdates : sig
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -810,7 +825,8 @@ module ListMigrationTasks : sig
       | `PolicyErrorException of policy_error_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -864,7 +880,8 @@ module ListProgressUpdateStreams : sig
       | `InternalServerError of internal_server_error
       | `InvalidInputException of invalid_input_exception
       | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc "Lists progress update streams associated with the user account making this call.\n"]
@@ -903,7 +920,8 @@ module ListSourceResources : sig
       | `InvalidInputException of invalid_input_exception
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ] )
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -956,7 +974,8 @@ module NotifyApplicationState : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `UnauthorizedOperation of unauthorized_operation ] )
+      | `UnauthorizedOperation of unauthorized_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1008,7 +1027,8 @@ module NotifyMigrationTaskState : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `UnauthorizedOperation of unauthorized_operation ] )
+      | `UnauthorizedOperation of unauthorized_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
@@ -1072,7 +1092,8 @@ module PutResourceAttributes : sig
       | `ResourceNotFoundException of resource_not_found_exception
       | `ServiceUnavailableException of service_unavailable_exception
       | `ThrottlingException of throttling_exception
-      | `UnauthorizedOperation of unauthorized_operation ] )
+      | `UnauthorizedOperation of unauthorized_operation ]
+      * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
