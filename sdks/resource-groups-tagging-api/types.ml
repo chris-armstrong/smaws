@@ -210,7 +210,7 @@ type nonrec region = string [@@ocaml.doc ""]
 
 type nonrec amazon_resource_type = string [@@ocaml.doc ""]
 
-type nonrec non_compliant_resources = int [@@ocaml.doc ""]
+type nonrec non_compliant_resources = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec summary = {
   non_compliant_resources : non_compliant_resources option;

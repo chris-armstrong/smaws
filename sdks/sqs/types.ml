@@ -1392,11 +1392,11 @@ type nonrec purge_queue_in_progress = { message : exception_message option [@oca
   "Indicates that the specified queue previously received a [PurgeQueue] request within the last \
    60 seconds (the time it can take to delete the messages in the queue).\n"]
 
-type nonrec nullable_long = int [@@ocaml.doc ""]
+type nonrec nullable_long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec message_not_inflight = unit [@@ocaml.doc ""]
 
-type nonrec long = int [@@ocaml.doc ""]
+type nonrec long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec list_queues_result = {
   next_token : token option;

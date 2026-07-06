@@ -688,7 +688,9 @@ let no_input_and_no_output_test_suite : unit Alcotest.test =
     [
       ("QueryNoInputAndNoOutput", `Quick, query_no_input_and_no_output);
       ("QueryNoInputAndNoOutput", `Quick, query_no_input_and_no_output);
-      ("QueryNoInputAndNoOutputWithResponseMetadata", `Quick, fun () -> Alcotest.skip ());
+      ( "QueryNoInputAndNoOutputWithResponseMetadata",
+        `Quick,
+        query_no_input_and_no_output_with_response_metadata );
     ] )
 
 let query_no_input_and_output () =
@@ -749,6 +751,42 @@ let no_input_and_output_test_suite : unit Alcotest.test =
 let put_with_content_encoding_test_suite : unit Alcotest.test =
   ("aws.protocoltests.query#PutWithContentEncoding", [])
 
+let query_protocol_idempotency_token_auto_fill () =
+  Eio.Switch.run ~name:"QueryProtocolIdempotencyTokenAutoFill" @@ fun sw ->
+  let module Mock = (val Http_mock.create_http_mock ()) in
+  let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
+  let config = Config.dummy in
+  let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+  let input : Types.query_idempotency_token_auto_fill_input = { token = None } in
+  Mock.mock_response ~status:200 ~headers:[] ();
+  let _response =
+    Smaws_Lib.Uuid.with_generator
+      (fun _ -> "00000000-0000-4000-8000-000000000000")
+      (fun () -> QueryIdempotencyTokenAutoFill.request ctx input)
+  in
+  let request = Mock.last_request () in
+  let () =
+    check Alcotest_http.input_body_form_testable "expected request body value"
+      (Some
+         "Action=QueryIdempotencyTokenAutoFill&Version=2020-01-08&token=00000000-0000-4000-8000-000000000000")
+      (request.body
+      |> Option.map (function
+        | `Form x -> Uri.encoded_of_query x
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `None -> ""))
+  in
+  let () = check Alcotest_http.method_testable "expected request method" `POST request.method_ in
+  let () =
+    check Alcotest_http.uri_testable "expected request uri" (Uri.of_string "/") request.uri
+  in
+  let () =
+    check Alcotest_http.headers_testable "expected request headers"
+      [ ("Content-Type", "application/x-www-form-urlencoded") ]
+      request.headers
+  in
+  ()
+
 let query_protocol_idempotency_token_auto_fill_is_set () =
   Eio.Switch.run ~name:"QueryProtocolIdempotencyTokenAutoFillIsSet" @@ fun sw ->
   let module Mock = (val Http_mock.create_http_mock ()) in
@@ -786,6 +824,7 @@ let query_protocol_idempotency_token_auto_fill_is_set () =
 let query_idempotency_token_auto_fill_test_suite : unit Alcotest.test =
   ( "aws.protocoltests.query#QueryIdempotencyTokenAutoFill",
     [
+      ("QueryProtocolIdempotencyTokenAutoFill", `Quick, query_protocol_idempotency_token_auto_fill);
       ( "QueryProtocolIdempotencyTokenAutoFillIsSet",
         `Quick,
         query_protocol_idempotency_token_auto_fill_is_set );
@@ -2075,7 +2114,7 @@ let query_simple_scalar_properties () =
         ({
            double_value = Some 6.5;
            float_value = Some 5.5;
-           long_value = Some 4;
+           long_value = Some (Smaws_Lib.CoreTypes.Int64.of_int 4);
            integer_value = Some 3;
            short_value = Some 2;
            byte_value = Some 1;

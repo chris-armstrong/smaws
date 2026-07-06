@@ -41,6 +41,44 @@ type json_type = Yojson.Basic.t
 let json_to_string = Yojson.Basic.to_string
 let json_of_string = Yojson.Basic.from_string
 
+let normalize_error_name s =
+  let without_uri = match String.index_opt s ':' with Some i -> String.sub s 0 i | None -> s in
+  match String.split_on_char '#' without_uri with _ :: name :: _ -> name | _ -> without_uri
+
+let find_header ~name headers =
+  List.find_map
+    (fun (k, v) -> if String.equal (String.lowercase_ascii k) name then Some v else None)
+    headers
+
+let error_name_from_headers headers =
+  Option.map normalize_error_name (find_header ~name:"x-amzn-errortype" headers)
+
+let rec assoc_find key = function
+  | [] -> None
+  | (k, v) :: _ when String.equal k key -> Some v
+  | _ :: rest -> assoc_find key rest
+
+let error_name_from_body body_json =
+  match body_json with
+  | `Assoc fields -> (
+      match assoc_find "__type" fields with
+      | Some (`String s) -> Some (normalize_error_name s)
+      | _ ->
+          Option.map normalize_error_name
+            (match assoc_find "code" fields with Some (`String s) -> Some s | _ -> None))
+  | _ -> None
+
+let ensure_error_type ~(headers : Http.headers) (body_json : json_type) : json_type =
+  let name_from_headers = error_name_from_headers headers in
+  let name_from_body = error_name_from_body body_json in
+  let name = match name_from_headers with Some n -> Some n | None -> name_from_body in
+  match name with
+  | Some name -> (
+      match body_json with
+      | `Assoc fields -> `Assoc (("__type", `String name) :: List.remove_assoc "__type" fields)
+      | _ -> `Assoc [ ("__type", `String name) ])
+  | None -> body_json
+
 module Errors = struct
   open AwsErrors
 
@@ -109,7 +147,8 @@ let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
           (deserialize_res output_deserializer) body_res
           |> Result.map_error (fun e -> `JsonParseError e)
       | _ -> (
-          match (deserialize_res error_deserializer) body_res with
+          let error_body = ensure_error_type ~headers:(Http.Response.headers response) body_res in
+          match (deserialize_res error_deserializer) error_body with
           | Ok error -> Error error
           | Error error -> Error (`JsonParseError error))
     end

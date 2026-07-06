@@ -73,15 +73,16 @@ let make_basic_type_manifest ctx descriptor
     ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
   let open Ast.Shape in
   match descriptor with
-  | BigDecimalShape { traits; _ } -> [%type: Bigdecimal.t]
-  | BigIntegerShape { traits; _ } -> [%type: Big_int.big_int]
+  | BigDecimalShape { traits; _ } -> [%type: Smaws_Lib.CoreTypes.BigDecimal.t]
+  | BigIntegerShape { traits; _ } -> [%type: Smaws_Lib.CoreTypes.BigInt.t]
   | ByteShape { traits; _ } -> [%type: int]
   | ShortShape { traits; _ } -> [%type: int]
   | BlobShape { traits; _ } -> [%type: bytes]
   | BooleanShape { traits; _ } -> [%type: bool]
   | DocumentShape -> Builtin_types.document
   | FloatShape { traits; _ } | DoubleShape { traits; _ } -> [%type: float]
-  | LongShape { traits; _ } | IntegerShape { traits; _ } -> [%type: int]
+  | LongShape { traits; _ } -> [%type: Smaws_Lib.CoreTypes.Int64.t]
+  | IntegerShape { traits; _ } -> [%type: int]
   | StringShape { traits; _ } -> [%type: string]
   | SetShape { target; traits } | ListShape { target; traits; _ } ->
       (* List types are considered "dense" by default, which means they do not contain null values. However,

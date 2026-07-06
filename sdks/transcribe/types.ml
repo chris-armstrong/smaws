@@ -417,7 +417,7 @@ type nonrec update_medical_vocabulary_request = {
 
 type nonrec category_name = string [@@ocaml.doc ""]
 
-type nonrec timestamp_milliseconds = int [@@ocaml.doc ""]
+type nonrec timestamp_milliseconds = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec absolute_time_range = {
   last : timestamp_milliseconds option;

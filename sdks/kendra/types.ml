@@ -979,7 +979,7 @@ type nonrec featured_document = {
 
 type nonrec featured_document_list = featured_document list [@@ocaml.doc ""]
 
-type nonrec long = int [@@ocaml.doc ""]
+type nonrec long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec featured_results_set = {
   creation_timestamp : long option;
@@ -3672,7 +3672,7 @@ type nonrec text_with_highlights = {
 
 type nonrec indexed_text_documents_count = int [@@ocaml.doc ""]
 
-type nonrec indexed_text_bytes = int [@@ocaml.doc ""]
+type nonrec indexed_text_bytes = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec text_document_statistics = {
   indexed_text_bytes : indexed_text_bytes;
@@ -4774,7 +4774,7 @@ type nonrec group_members = {
   "A list of users that belong to a group. This is useful for user context filtering, where search \
    results are filtered based on the user or their group access to documents.\n"]
 
-type nonrec principal_ordering_id = int [@@ocaml.doc ""]
+type nonrec principal_ordering_id = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec put_principal_mapping_request = {
   role_arn : role_arn option;

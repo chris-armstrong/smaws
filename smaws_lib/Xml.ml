@@ -46,7 +46,8 @@ module Parse = struct
       let next = input i in
       match next with
       | `El_start ((nns, nname), attributes)
-        when (Option.is_none ns || String.equal nns (Option.value ns ~default:""))
+        when (Option.is_none ns || String.equal nns ""
+             || String.equal nns (Option.value ns ~default:""))
              && String.equal nname tag ->
           (nns, nname, attributes)
       | _ -> raise (XmlUnexpectedConstruct (expected, next, Xmlm.pos i))
@@ -70,7 +71,8 @@ module Parse = struct
   end
 
   let tag_equal name ns ((nns, nname), _) =
-    String.equal name nname && (Option.is_none ns || String.equal nns (Option.value ns ~default:""))
+    String.equal name nname
+    && (Option.is_none ns || String.equal nns "" || String.equal nns (Option.value ns ~default:""))
 
   module Read = struct
     type 'a reader = input -> attribute list -> 'a

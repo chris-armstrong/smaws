@@ -2977,7 +2977,7 @@ type nonrec cancel_mailbox_export_job_request = {
 
 type nonrec impersonation_token = string [@@ocaml.doc ""]
 
-type nonrec expires_in = int [@@ocaml.doc ""]
+type nonrec expires_in = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec assume_impersonation_role_response = {
   expires_in : expires_in option; [@ocaml.doc "The authentication token's validity, in seconds.\n"]

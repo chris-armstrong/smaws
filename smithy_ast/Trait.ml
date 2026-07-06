@@ -188,6 +188,7 @@ let isSparseTrait trait = match trait with SparseTrait -> true | _ -> false
 let isErrorTrait trait = match trait with ErrorTrait _ -> true | _ -> false
 let isAwsApiServiceTrait trait = match trait with ServiceTrait _ -> true | _ -> false
 let isTimestampFormatTrait trait = match trait with TimestampFormatTrait _ -> true | _ -> false
+let isIdempotencyTokenTrait trait = match trait with IdempotencyTokenTrait -> true | _ -> false
 
 let hasTrait traitsOption traitTest =
   Option.value ~default:false

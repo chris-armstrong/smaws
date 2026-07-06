@@ -1497,7 +1497,10 @@ let client_request_token_to_yojson = string_to_yojson
 let transact_write_items_input_to_yojson (x : transact_write_items_input) =
   assoc_to_yojson
     [
-      ("ClientRequestToken", option_to_yojson client_request_token_to_yojson x.client_request_token);
+      ( "ClientRequestToken",
+        Some
+          (client_request_token_to_yojson
+             (Option.value x.client_request_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ( "ReturnItemCollectionMetrics",
         option_to_yojson return_item_collection_metrics_to_yojson x.return_item_collection_metrics
       );
@@ -2386,7 +2389,10 @@ let import_table_input_to_yojson (x : import_table_input) =
       ("InputFormatOptions", option_to_yojson input_format_options_to_yojson x.input_format_options);
       ("InputFormat", Some (input_format_to_yojson x.input_format));
       ("S3BucketSource", Some (s3_bucket_source_to_yojson x.s3_bucket_source));
-      ("ClientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
     ]
 
 let import_conflict_exception_to_yojson (x : import_conflict_exception) =
@@ -2496,7 +2502,10 @@ let export_table_to_point_in_time_input_to_yojson (x : export_table_to_point_in_
       ("S3Prefix", option_to_yojson s3_prefix_to_yojson x.s3_prefix);
       ("S3BucketOwner", option_to_yojson s3_bucket_owner_to_yojson x.s3_bucket_owner);
       ("S3Bucket", Some (s3_bucket_to_yojson x.s3_bucket));
-      ("ClientToken", option_to_yojson client_token_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("ExportTime", option_to_yojson export_time_to_yojson x.export_time);
       ("TableArn", Some (table_arn_to_yojson x.table_arn));
     ]
@@ -2519,7 +2528,10 @@ let execute_transaction_input_to_yojson (x : execute_transaction_input) =
     [
       ( "ReturnConsumedCapacity",
         option_to_yojson return_consumed_capacity_to_yojson x.return_consumed_capacity );
-      ("ClientRequestToken", option_to_yojson client_request_token_to_yojson x.client_request_token);
+      ( "ClientRequestToken",
+        Some
+          (client_request_token_to_yojson
+             (Option.value x.client_request_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("TransactStatements", Some (parameterized_statements_to_yojson x.transact_statements));
     ]
 

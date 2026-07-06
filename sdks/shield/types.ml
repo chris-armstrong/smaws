@@ -243,7 +243,7 @@ type nonrec unit_ =
   | BITS [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec long = int [@@ocaml.doc ""]
+type nonrec long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec contributor = {
   value : long option;
@@ -381,7 +381,7 @@ type nonrec subscription_limits = {
 }
 [@@ocaml.doc "Limits settings for your subscription. \n"]
 
-type nonrec duration_in_seconds = int [@@ocaml.doc ""]
+type nonrec duration_in_seconds = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec proactive_engagement_status =
   | PENDING [@ocaml.doc ""]
@@ -949,7 +949,7 @@ type nonrec list_attacks_request = {
 
 type nonrec limit_type = string [@@ocaml.doc ""]
 
-type nonrec limit_number = int [@@ocaml.doc ""]
+type nonrec limit_number = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec limits_exceeded_exception = {
   limit : limit_number option; [@ocaml.doc "The threshold that would be exceeded.\n"]

@@ -617,7 +617,7 @@ type nonrec long_term_pricing_id_list = long_term_pricing_id list [@@ocaml.doc "
 
 type nonrec long_term_pricing_entry_list = long_term_pricing_list_entry list [@@ocaml.doc ""]
 
-type nonrec long = int [@@ocaml.doc ""]
+type nonrec long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec dependent_service = {
   service_version : service_version option; [@ocaml.doc "The version of the dependent service.\n"]

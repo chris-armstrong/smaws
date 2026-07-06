@@ -129,7 +129,7 @@ type nonrec attribute_map = (attribute_name * attribute_value) list [@@ocaml.doc
 
 type nonrec sequence_number = string [@@ocaml.doc ""]
 
-type nonrec positive_long_object = int [@@ocaml.doc ""]
+type nonrec positive_long_object = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec stream_record = {
   stream_view_type : stream_view_type option;

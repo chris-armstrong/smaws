@@ -93,7 +93,7 @@ type nonrec remediation_action_description = string [@@ocaml.doc ""]
 
 type nonrec cid_r = string [@@ocaml.doc ""]
 
-type nonrec ip_port_number = int [@@ocaml.doc ""]
+type nonrec ip_port_number = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec security_group_rule_description = {
   to_port : ip_port_number option;
@@ -1947,7 +1947,7 @@ type nonrec resource_list = resource list [@@ocaml.doc ""]
 
 type nonrec resource_description = string [@@ocaml.doc ""]
 
-type nonrec resource_count = int [@@ocaml.doc ""]
+type nonrec resource_count = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
 
 type nonrec aws_region = string [@@ocaml.doc ""]
 

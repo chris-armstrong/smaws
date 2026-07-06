@@ -112,7 +112,10 @@ let update_public_dns_namespace_request_to_yojson (x : update_public_dns_namespa
   assoc_to_yojson
     [
       ("Namespace", Some (public_dns_namespace_change_to_yojson x.namespace));
-      ("UpdaterRequestId", option_to_yojson resource_id_to_yojson x.updater_request_id);
+      ( "UpdaterRequestId",
+        Some
+          (resource_id_to_yojson
+             (Option.value x.updater_request_id ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("Id", Some (arn_to_yojson x.id));
     ]
 
@@ -144,7 +147,10 @@ let update_private_dns_namespace_request_to_yojson (x : update_private_dns_names
   assoc_to_yojson
     [
       ("Namespace", Some (private_dns_namespace_change_to_yojson x.namespace));
-      ("UpdaterRequestId", option_to_yojson resource_id_to_yojson x.updater_request_id);
+      ( "UpdaterRequestId",
+        Some
+          (resource_id_to_yojson
+             (Option.value x.updater_request_id ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("Id", Some (arn_to_yojson x.id));
     ]
 
@@ -176,7 +182,10 @@ let update_http_namespace_request_to_yojson (x : update_http_namespace_request) 
   assoc_to_yojson
     [
       ("Namespace", Some (http_namespace_change_to_yojson x.namespace));
-      ("UpdaterRequestId", option_to_yojson resource_id_to_yojson x.updater_request_id);
+      ( "UpdaterRequestId",
+        Some
+          (resource_id_to_yojson
+             (Option.value x.updater_request_id ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("Id", Some (arn_to_yojson x.id));
     ]
 
@@ -342,7 +351,10 @@ let register_instance_request_to_yojson (x : register_instance_request) =
   assoc_to_yojson
     [
       ("Attributes", Some (attributes_to_yojson x.attributes));
-      ("CreatorRequestId", option_to_yojson resource_id_to_yojson x.creator_request_id);
+      ( "CreatorRequestId",
+        Some
+          (resource_id_to_yojson
+             (Option.value x.creator_request_id ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("InstanceId", Some (instance_id_to_yojson x.instance_id));
       ("ServiceId", Some (arn_to_yojson x.service_id));
     ]
@@ -754,7 +766,10 @@ let create_service_request_to_yojson (x : create_service_request) =
       ("HealthCheckConfig", option_to_yojson health_check_config_to_yojson x.health_check_config);
       ("DnsConfig", option_to_yojson dns_config_to_yojson x.dns_config);
       ("Description", option_to_yojson resource_description_to_yojson x.description);
-      ("CreatorRequestId", option_to_yojson resource_id_to_yojson x.creator_request_id);
+      ( "CreatorRequestId",
+        Some
+          (resource_id_to_yojson
+             (Option.value x.creator_request_id ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("NamespaceId", option_to_yojson arn_to_yojson x.namespace_id);
       ("Name", Some (service_name_to_yojson x.name));
     ]
@@ -785,7 +800,10 @@ let create_public_dns_namespace_request_to_yojson (x : create_public_dns_namespa
       ("Properties", option_to_yojson public_dns_namespace_properties_to_yojson x.properties);
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);
       ("Description", option_to_yojson resource_description_to_yojson x.description);
-      ("CreatorRequestId", option_to_yojson resource_id_to_yojson x.creator_request_id);
+      ( "CreatorRequestId",
+        Some
+          (resource_id_to_yojson
+             (Option.value x.creator_request_id ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("Name", Some (namespace_name_public_to_yojson x.name));
     ]
 
@@ -808,7 +826,10 @@ let create_private_dns_namespace_request_to_yojson (x : create_private_dns_names
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);
       ("Vpc", Some (resource_id_to_yojson x.vpc));
       ("Description", option_to_yojson resource_description_to_yojson x.description);
-      ("CreatorRequestId", option_to_yojson resource_id_to_yojson x.creator_request_id);
+      ( "CreatorRequestId",
+        Some
+          (resource_id_to_yojson
+             (Option.value x.creator_request_id ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("Name", Some (namespace_name_private_to_yojson x.name));
     ]
 
@@ -820,6 +841,9 @@ let create_http_namespace_request_to_yojson (x : create_http_namespace_request) 
     [
       ("Tags", option_to_yojson tag_list_to_yojson x.tags);
       ("Description", option_to_yojson resource_description_to_yojson x.description);
-      ("CreatorRequestId", option_to_yojson resource_id_to_yojson x.creator_request_id);
+      ( "CreatorRequestId",
+        Some
+          (resource_id_to_yojson
+             (Option.value x.creator_request_id ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("Name", Some (namespace_name_http_to_yojson x.name));
     ]

@@ -22,6 +22,9 @@ module Serialize = struct
   let join_path path = String.concat "." path
   let string_field path v = [ (join_path path, [ v ]) ]
   let int_field path v = string_field path (string_of_int v)
+  let long_field path v = string_field path (CoreTypes.Int64.to_string v)
+  let big_int_field path v = string_field path (CoreTypes.BigInt.to_string v)
+  let big_decimal_field path v = string_field path (CoreTypes.BigDecimal.to_string v)
   let bool_field path v = string_field path (string_of_bool v)
 
   (* Shortest round-trip-safe decimal representation of a float. Starts at the
@@ -177,6 +180,9 @@ module Deserialize = struct
         | None -> failwith ("invalid http-date: " ^ s))
 
   let int_of_string s = Stdlib.int_of_string s
+  let long_of_string s = CoreTypes.Int64.of_string s
+  let big_int_of_string s = CoreTypes.BigInt.of_string s
+  let big_decimal_of_string s = CoreTypes.BigDecimal.of_string s
   let bool_of_string s = Stdlib.bool_of_string s
   let float_of_string s = Stdlib.float_of_string s
   let blob_of_string s = Bytes.of_string (Base64.decode_exn s)
@@ -203,11 +209,17 @@ module Response = struct
         Read.dtd xmlSource;
         Read.sequence xmlSource (action ^ "Response") ~ns:xmlNamespace
           (fun _ _ ->
+            (* AWS Query responses for operations with no output members may omit the
+               <ActionResult> wrapper and include only <ResponseMetadata>. Try to read the
+               result element if present; otherwise run the deserializer at the current
+               position (which works for unit outputs that ignore the input) and skip any
+               trailing siblings. *)
             let result =
-              Read.sequence xmlSource (action ^ "Result") (fun i _ -> resultParser i) ()
+              match Xmlm.peek xmlSource with
+              | `El_start el when tag_equal (action ^ "Result") (Some xmlNamespace) el ->
+                  Read.sequence xmlSource (action ^ "Result") (fun i _ -> resultParser i) ()
+              | _ -> resultParser xmlSource
             in
-            (* Skip trailing siblings such as <ResponseMetadata> mandated by the
-               awsQuery protocol before the response end tag. *)
             Read.skip_to_end xmlSource;
             result)
           ())

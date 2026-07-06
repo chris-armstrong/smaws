@@ -1346,8 +1346,9 @@ let create_acme_external_account_binding_request_to_yojson
       ("RoleArn", Some (role_arn_to_yojson x.role_arn));
       ("AcmeEndpointArn", Some (acme_endpoint_arn_to_yojson x.acme_endpoint_arn));
       ( "IdempotencyToken",
-        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.idempotency_token
-      );
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson
+             (Option.value x.idempotency_token ~default:(Smaws_Lib.Uuid.generate ()))) );
     ]
 
 let create_acme_endpoint_response_to_yojson (x : create_acme_endpoint_response) =
@@ -1364,8 +1365,9 @@ let create_acme_endpoint_request_to_yojson (x : create_acme_endpoint_request) =
       ( "AuthorizationBehavior",
         Some (acme_authorization_behavior_to_yojson x.authorization_behavior) );
       ( "IdempotencyToken",
-        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.idempotency_token
-      );
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson
+             (Option.value x.idempotency_token ~default:(Smaws_Lib.Uuid.generate ()))) );
     ]
 
 let create_acme_domain_validation_response_to_yojson (x : create_acme_domain_validation_response) =
@@ -1383,8 +1385,9 @@ let create_acme_domain_validation_request_to_yojson (x : create_acme_domain_vali
       ("DomainName", Some (domain_name_to_yojson x.domain_name));
       ("AcmeEndpointArn", Some (acme_endpoint_arn_to_yojson x.acme_endpoint_arn));
       ( "IdempotencyToken",
-        option_to_yojson Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson x.idempotency_token
-      );
+        Some
+          (Smaws_Lib.Smithy_api.Json_serializers.string__to_yojson
+             (Option.value x.idempotency_token ~default:(Smaws_Lib.Uuid.generate ()))) );
     ]
 
 let add_tags_to_certificate_request_to_yojson (x : add_tags_to_certificate_request) =

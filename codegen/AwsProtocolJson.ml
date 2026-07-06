@@ -164,12 +164,32 @@ module Serialiser = struct
               (Location.mknoloc
                  (func_name ~member_traits:mem.traits ~namespace_resolver mem.target))
           in
+          let is_idempotency_token = Trait.hasTrait mem.traits Trait.isIdempotencyTokenTrait in
           let value =
-            match is_required with
-            | true ->
+            match (is_required, is_idempotency_token) with
+            | true, _ ->
                 B.pexp_construct (lident_noloc "Some")
                   (Some (B.pexp_apply basic_value_exp [ (Nolabel, field_lookup) ]))
-            | false ->
+            | false, true ->
+                (* Auto-fill idempotency tokens when the caller does not supply one. *)
+                let filled =
+                  B.pexp_apply
+                    (B.pexp_ident (Location.mknoloc (make_lident ~names:[ "Option"; "value" ])))
+                    [
+                      (Nolabel, field_lookup);
+                      ( Labelled "default",
+                        B.pexp_apply
+                          (B.pexp_ident
+                             (Location.mknoloc
+                                (make_lident ~names:[ "Smaws_Lib"; "Uuid"; "generate" ])))
+                          [
+                            (Nolabel, B.pexp_construct (Location.mknoloc Ppxlib.(Lident "()")) None);
+                          ] );
+                    ]
+                in
+                B.pexp_construct (lident_noloc "Some")
+                  (Some (B.pexp_apply basic_value_exp [ (Nolabel, filled) ]))
+            | false, false ->
                 B.pexp_apply
                   (B.pexp_ident (lident_noloc "option_to_yojson"))
                   [ (Nolabel, basic_value_exp); (Nolabel, field_lookup) ]

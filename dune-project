@@ -74,6 +74,8 @@
    (>= "3.4.0"))
   (digestif
    (>= "1.1.4"))
+  zarith
+  uuidm
   (eio-ssl
    (>= "0.3.0"))
   (uri

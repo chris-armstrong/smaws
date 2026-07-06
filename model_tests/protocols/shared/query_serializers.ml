@@ -84,12 +84,12 @@ let nested_string_list_to_query path xs =
 
 let long_set_to_query path xs =
   Smaws_Lib.Protocols.AwsQuery.Serialize.list_to_query "member"
-    (fun p v -> Smaws_Lib.Protocols.AwsQuery.Serialize.int_field p v)
+    (fun p v -> Smaws_Lib.Protocols.AwsQuery.Serialize.long_field p v)
     path xs
 
 let long_list_to_query path xs =
   Smaws_Lib.Protocols.AwsQuery.Serialize.list_to_query "member"
-    (fun p v -> Smaws_Lib.Protocols.AwsQuery.Serialize.int_field p v)
+    (fun p v -> Smaws_Lib.Protocols.AwsQuery.Serialize.long_field p v)
     path xs
 
 let list_set_to_query path xs =

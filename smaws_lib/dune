@@ -12,7 +12,9 @@
   digestif
   xmlm
   ptime
-  yojson)
+  yojson
+  zarith
+  uuidm)
  (preprocess
   (pps ppx_deriving.show ppx_deriving.eq)))
 

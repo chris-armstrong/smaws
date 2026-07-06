@@ -389,7 +389,10 @@ let register_mail_domain_request_to_yojson (x : register_mail_domain_request) =
     [
       ("DomainName", Some (work_mail_domain_name_to_yojson x.domain_name));
       ("OrganizationId", Some (organization_id_to_yojson x.organization_id));
-      ("ClientToken", option_to_yojson idempotency_client_token_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (idempotency_client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
     ]
 
 let put_retention_policy_response_to_yojson = unit_to_yojson
@@ -1629,7 +1632,10 @@ let delete_organization_request_to_yojson (x : delete_organization_request) =
       ("ForceDelete", option_to_yojson boolean__to_yojson x.force_delete);
       ("DeleteDirectory", Some (boolean__to_yojson x.delete_directory));
       ("OrganizationId", Some (organization_id_to_yojson x.organization_id));
-      ("ClientToken", option_to_yojson idempotency_client_token_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (idempotency_client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
     ]
 
 let delete_mobile_device_access_rule_response_to_yojson = unit_to_yojson
@@ -1790,7 +1796,10 @@ let create_organization_request_to_yojson (x : create_organization_request) =
       ("EnableInteroperability", option_to_yojson boolean__to_yojson x.enable_interoperability);
       ("KmsKeyArn", option_to_yojson kms_key_arn_to_yojson x.kms_key_arn);
       ("Domains", option_to_yojson domains_to_yojson x.domains);
-      ("ClientToken", option_to_yojson idempotency_client_token_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (idempotency_client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("Alias", Some (organization_name_to_yojson x.alias));
       ("DirectoryId", option_to_yojson directory_id_to_yojson x.directory_id);
     ]
@@ -1821,7 +1830,10 @@ let create_mobile_device_access_rule_request_to_yojson
       ("Effect", Some (mobile_device_access_rule_effect_to_yojson x.effect_));
       ("Description", option_to_yojson mobile_device_access_rule_description_to_yojson x.description);
       ("Name", Some (mobile_device_access_rule_name_to_yojson x.name));
-      ("ClientToken", option_to_yojson idempotency_client_token_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (idempotency_client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("OrganizationId", Some (organization_id_to_yojson x.organization_id));
     ]
 
@@ -1840,7 +1852,10 @@ let create_impersonation_role_request_to_yojson (x : create_impersonation_role_r
       ("Type", Some (impersonation_role_type_to_yojson x.type_));
       ("Name", Some (impersonation_role_name_to_yojson x.name));
       ("OrganizationId", Some (organization_id_to_yojson x.organization_id));
-      ("ClientToken", option_to_yojson idempotency_client_token_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (idempotency_client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
     ]
 
 let create_identity_center_application_response_to_yojson
@@ -1854,7 +1869,10 @@ let create_identity_center_application_request_to_yojson
     (x : create_identity_center_application_request) =
   assoc_to_yojson
     [
-      ("ClientToken", option_to_yojson idempotency_client_token_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (idempotency_client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
       ("InstanceArn", Some (instance_arn_to_yojson x.instance_arn));
       ("Name", Some (identity_center_application_name_to_yojson x.name));
     ]
@@ -1881,7 +1899,10 @@ let create_availability_configuration_request_to_yojson
       ("EwsProvider", option_to_yojson ews_availability_provider_to_yojson x.ews_provider);
       ("DomainName", Some (domain_name_to_yojson x.domain_name));
       ("OrganizationId", Some (organization_id_to_yojson x.organization_id));
-      ("ClientToken", option_to_yojson idempotency_client_token_to_yojson x.client_token);
+      ( "ClientToken",
+        Some
+          (idempotency_client_token_to_yojson
+             (Option.value x.client_token ~default:(Smaws_Lib.Uuid.generate ()))) );
     ]
 
 let create_alias_response_to_yojson = unit_to_yojson
