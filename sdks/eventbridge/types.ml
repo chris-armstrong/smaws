@@ -641,7 +641,7 @@ type nonrec transformer_input = string [@@ocaml.doc ""]
 type nonrec trace_header = string [@@ocaml.doc ""]
 
 type nonrec test_event_pattern_response = {
-  result : boolean_ option; [@ocaml.doc "Indicates whether the event matches the event pattern.\n"]
+  result_ : boolean_ option; [@ocaml.doc "Indicates whether the event matches the event pattern.\n"]
 }
 [@@ocaml.doc ""]
 

@@ -2,7 +2,7 @@
 
 let json_ref s =
   let open Smaws_parse.Json.Decode in
-  Ok { tree = Yojson.Basic.from_string s; path = "$" }
+  Ok { tree = Yojson.Safe.from_string s; path = "$" }
 
 let parse_trait name s = Smaws_parse.Smithy.parseTrait name (json_ref s)
 let show_err = Smaws_parse.Json.Decode.jsonParseErrorToString

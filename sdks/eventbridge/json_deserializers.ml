@@ -627,7 +627,7 @@ let trace_header_of_yojson = string_of_yojson
 
 let test_event_pattern_response_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ result = option_of_yojson (value_for_key boolean__of_yojson "Result") _list path }
+  ({ result_ = option_of_yojson (value_for_key boolean__of_yojson "Result") _list path }
     : test_event_pattern_response)
 
 let test_event_pattern_request_of_yojson tree path =

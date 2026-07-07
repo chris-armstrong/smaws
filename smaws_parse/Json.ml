@@ -2,7 +2,7 @@ open Base
 open Yojson
 
 module Decode = struct
-  type t = Basic.t
+  type t = Safe.t
 
   let flatMap_result = Base.Result.bind
 
@@ -35,7 +35,7 @@ module Decode = struct
 
   let parseJsonString jsonString rootParser =
     (let treeResult =
-       try Ok (Yojson.Basic.from_string jsonString)
+       try Ok (Yojson.Safe.from_string jsonString)
        with Yojson.Json_error err -> Error (SyntaxError err)
      in
      let open Base.Result in
@@ -44,7 +44,7 @@ module Decode = struct
 
   let parseJsonFile jsonFile rootParser =
     (let treeResult =
-       try Ok (Yojson.Basic.from_file jsonFile)
+       try Ok (Yojson.Safe.from_file jsonFile)
        with Yojson.Json_error err -> Error (SyntaxError err)
      in
      let open Base.Result in
@@ -80,6 +80,7 @@ module Decode = struct
         match tree with
         | `Int num -> Ok (Int.to_float num)
         | `Float num -> Ok num
+        | `Intlit s -> Ok (Float.of_string s)
         | _ -> Error (WrongType (path, "number")))
 
   let parseBool x =
@@ -88,7 +89,10 @@ module Decode = struct
 
   let parseInteger x =
     Result.bind x ~f:(fun[@u] { tree; path } ->
-        match tree with `Int i -> Ok i | _ -> Error (WrongType (path, "integer")))
+        match tree with
+        | `Int i -> Ok i
+        | `Intlit s -> Ok (Int.of_string s)
+        | _ -> Error (WrongType (path, "integer")))
 
   let parseArray itemParser arrayRef =
     let open Result in

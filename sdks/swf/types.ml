@@ -650,7 +650,7 @@ type nonrec workflow_execution_completed_event_attributes = {
          resulted in the [CompleteWorkflowExecution] decision to complete this execution. This \
          information can be useful for diagnosing problems by tracing back the chain of events \
          leading up to this event.\n"]
-  result : data option;
+  result_ : data option;
       [@ocaml.doc "The result produced by the workflow execution upon successful completion.\n"]
 }
 [@@ocaml.doc "Provides the details of the [WorkflowExecutionCompleted] event.\n"]
@@ -1624,7 +1624,7 @@ type nonrec request_cancel_activity_task_decision_attributes = {
   \   "]
 
 type nonrec complete_workflow_execution_decision_attributes = {
-  result : data option;
+  result_ : data option;
       [@ocaml.doc
         "The result of the workflow execution. The form of the result is implementation defined.\n"]
 }
@@ -2370,7 +2370,7 @@ type nonrec respond_activity_task_failed_input = {
 [@@ocaml.doc ""]
 
 type nonrec respond_activity_task_completed_input = {
-  result : data option;
+  result_ : data option;
       [@ocaml.doc
         "The result of the activity task. It is a free form string that is implementation specific.\n"]
   task_token : task_token;
@@ -2942,7 +2942,7 @@ type nonrec activity_task_completed_event_attributes = {
         "The ID of the [ActivityTaskScheduled] event that was recorded when this activity task was \
          scheduled. This information can be useful for diagnosing problems by tracing back the \
          chain of events leading up to this event.\n"]
-  result : data option; [@ocaml.doc "The results of the activity task.\n"]
+  result_ : data option; [@ocaml.doc "The results of the activity task.\n"]
 }
 [@@ocaml.doc "Provides the details of the [ActivityTaskCompleted] event.\n"]
 
@@ -3080,7 +3080,7 @@ type nonrec child_workflow_execution_completed_event_attributes = {
          [StartChildWorkflowExecution] [Decision] to start this child workflow execution. This \
          information can be useful for diagnosing problems by tracing back the chain of events \
          leading up to this event.\n"]
-  result : data option; [@ocaml.doc "The result of the child workflow execution.\n"]
+  result_ : data option; [@ocaml.doc "The result of the child workflow execution.\n"]
   workflow_type : workflow_type; [@ocaml.doc "The type of the child workflow execution.\n"]
   workflow_execution : workflow_execution;
       [@ocaml.doc "The child workflow execution that was completed.\n"]
@@ -3430,7 +3430,7 @@ type nonrec lambda_function_started_event_attributes = {
   "Provides the details of the [LambdaFunctionStarted] event. It isn't set for other event types.\n"]
 
 type nonrec lambda_function_completed_event_attributes = {
-  result : data option; [@ocaml.doc "The results of the Lambda task.\n"]
+  result_ : data option; [@ocaml.doc "The results of the Lambda task.\n"]
   started_event_id : event_id;
       [@ocaml.doc
         "The ID of the [LambdaFunctionStarted] event recorded when this activity task started. To \

@@ -37,6 +37,12 @@ let reservedWords =
       "Some";
       "None";
       "Result";
+      "result";
+      "list";
+      "array";
+      "ref";
+      "exn";
+      "char";
       "Ok";
       "Error";
       "constraint";
@@ -120,7 +126,7 @@ let camelCase name =
   String.uppercase (String.sub name ~pos:0 ~len:1)
   ^ String.sub name ~pos:1 ~len:(String.length name - 1)
 
-let safeConstructorName name = name |> symbolName |> camelCase
+let safeConstructorName name = name |> symbolName |> camelCase |> translateReserved
 let variantReplaceRe = Str.regexp "-|#|:|\\.|/| |\\(|\\)|\\\\`"
 
 let safeVariantName name =

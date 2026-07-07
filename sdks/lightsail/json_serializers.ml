@@ -467,7 +467,7 @@ let cache_behavior_to_yojson (x : cache_behavior) =
   assoc_to_yojson [ ("behavior", option_to_yojson behavior_enum_to_yojson x.behavior) ]
 
 let forward_values_to_yojson (x : forward_values) =
-  match x with All -> `String "all" | AllowList -> `String "allow-list" | None -> `String "none"
+  match x with All -> `String "all" | AllowList -> `String "allow-list" | None_ -> `String "none"
 
 let string_list_to_yojson tree = list_to_yojson string__to_yojson tree
 
@@ -1589,7 +1589,7 @@ let port_list_to_yojson tree = list_to_yojson port_to_yojson tree
 let port_info_source_type_to_yojson (x : port_info_source_type) =
   match x with
   | Closed -> `String "CLOSED"
-  | None -> `String "NONE"
+  | None_ -> `String "NONE"
   | Instance -> `String "INSTANCE"
   | Default -> `String "DEFAULT"
 
@@ -1643,7 +1643,7 @@ let monitored_resource_info_to_yojson (x : monitored_resource_info) =
 
 let metric_unit_to_yojson (x : metric_unit) =
   match x with
-  | None -> `String "None"
+  | None_ -> `String "None"
   | CountSecond -> `String "Count/Second"
   | TerabitsSecond -> `String "Terabits/Second"
   | GigabitsSecond -> `String "Gigabits/Second"
@@ -2344,7 +2344,7 @@ let get_instance_state_request_to_yojson (x : get_instance_state_request) =
 let instance_snapshot_state_to_yojson (x : instance_snapshot_state) =
   match x with
   | Available -> `String "available"
-  | Error -> `String "error"
+  | Error_ -> `String "error"
   | Pending -> `String "pending"
 
 let add_on_to_yojson (x : add_on) =
@@ -2365,7 +2365,7 @@ let disk_state_to_yojson (x : disk_state) =
   | Unknown -> `String "unknown"
   | InUse -> `String "in-use"
   | Available -> `String "available"
-  | Error -> `String "error"
+  | Error_ -> `String "error"
   | Pending -> `String "pending"
 
 let auto_mount_status_to_yojson (x : auto_mount_status) =
@@ -2848,7 +2848,7 @@ let get_distribution_bundles_request_to_yojson = unit_to_yojson
 let disk_snapshot_state_to_yojson (x : disk_snapshot_state) =
   match x with
   | Unknown -> `String "unknown"
-  | Error -> `String "error"
+  | Error_ -> `String "error"
   | Completed -> `String "completed"
   | Pending -> `String "pending"
 

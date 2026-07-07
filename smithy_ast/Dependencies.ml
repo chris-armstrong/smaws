@@ -26,6 +26,12 @@ let smithyImplicitShapes =
       recursWith = None;
     };
     {
+      name = "smithy.api#PrimitiveBoolean";
+      descriptor = BooleanShape { traits = None };
+      targets = [];
+      recursWith = None;
+    };
+    {
       name = "smithy.api#Integer";
       descriptor = IntegerShape { traits = None };
       targets = [];
@@ -39,6 +45,12 @@ let smithyImplicitShapes =
     };
     {
       name = "smithy.api#Long";
+      descriptor = LongShape { traits = None };
+      targets = [];
+      recursWith = None;
+    };
+    {
+      name = "smithy.api#PrimitiveLong";
       descriptor = LongShape { traits = None };
       targets = [];
       recursWith = None;

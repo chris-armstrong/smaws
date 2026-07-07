@@ -11,8 +11,8 @@ let make_validate_state_machine_definition_diagnostic
 let make_validate_state_machine_definition_output
     ?truncated:(truncated_ : validate_state_machine_definition_truncated option)
     ~diagnostics:(diagnostics_ : validate_state_machine_definition_diagnostic_list)
-    ~result:(result_ : validate_state_machine_definition_result_code) () =
-  ({ truncated = truncated_; diagnostics = diagnostics_; result = result_ }
+    ~result_:(result__ : validate_state_machine_definition_result_code) () =
+  ({ truncated = truncated_; diagnostics = diagnostics_; result_ = result__ }
     : validate_state_machine_definition_output)
 
 let make_validate_state_machine_definition_input
@@ -171,7 +171,7 @@ let make_inspection_data ?max_concurrency:(max_concurrency_ : inspection_max_con
     ?request:(request_ : inspection_data_request option)
     ?after_result_path:(after_result_path_ : sensitive_data option)
     ?after_result_selector:(after_result_selector_ : sensitive_data option)
-    ?result:(result_ : sensitive_data option)
+    ?result_:(result__ : sensitive_data option)
     ?after_parameters:(after_parameters_ : sensitive_data option)
     ?after_input_path:(after_input_path_ : sensitive_data option)
     ?after_arguments:(after_arguments_ : sensitive_data option)
@@ -190,7 +190,7 @@ let make_inspection_data ?max_concurrency:(max_concurrency_ : inspection_max_con
      request = request_;
      after_result_path = after_result_path_;
      after_result_selector = after_result_selector_;
-     result = result_;
+     result_ = result__;
      after_parameters = after_parameters_;
      after_input_path = after_input_path_;
      after_arguments = after_arguments_;
@@ -220,11 +220,11 @@ let make_mock_error_output ?cause:(cause_ : sensitive_cause option)
 let make_mock_input
     ?field_validation_mode:(field_validation_mode_ : mock_response_validation_mode option)
     ?error_output:(error_output_ : mock_error_output option)
-    ?result:(result_ : sensitive_data option) () =
+    ?result_:(result__ : sensitive_data option) () =
   ({
      field_validation_mode = field_validation_mode_;
      error_output = error_output_;
-     result = result_;
+     result_ = result__;
    }
     : mock_input)
 

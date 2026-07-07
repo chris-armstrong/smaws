@@ -19,7 +19,7 @@ val make_validate_state_machine_definition_diagnostic :
 val make_validate_state_machine_definition_output :
   ?truncated:validate_state_machine_definition_truncated ->
   diagnostics:validate_state_machine_definition_diagnostic_list ->
-  result:validate_state_machine_definition_result_code ->
+  result_:validate_state_machine_definition_result_code ->
   unit ->
   validate_state_machine_definition_output
 
@@ -138,7 +138,7 @@ val make_inspection_data :
   ?request:inspection_data_request ->
   ?after_result_path:sensitive_data ->
   ?after_result_selector:sensitive_data ->
-  ?result:sensitive_data ->
+  ?result_:sensitive_data ->
   ?after_parameters:sensitive_data ->
   ?after_input_path:sensitive_data ->
   ?after_arguments:sensitive_data ->
@@ -162,7 +162,7 @@ val make_mock_error_output :
 val make_mock_input :
   ?field_validation_mode:mock_response_validation_mode ->
   ?error_output:mock_error_output ->
-  ?result:sensitive_data ->
+  ?result_:sensitive_data ->
   unit ->
   mock_input
 

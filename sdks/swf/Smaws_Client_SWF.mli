@@ -159,7 +159,7 @@ val make_workflow_execution_continued_as_new_event_attributes :
   workflow_execution_continued_as_new_event_attributes
 
 val make_workflow_execution_completed_event_attributes :
-  ?result:data ->
+  ?result_:data ->
   decision_task_completed_event_id:event_id ->
   unit ->
   workflow_execution_completed_event_attributes
@@ -330,7 +330,7 @@ val make_request_cancel_activity_task_decision_attributes :
   activity_id:activity_id -> unit -> request_cancel_activity_task_decision_attributes
 
 val make_complete_workflow_execution_decision_attributes :
-  ?result:data -> unit -> complete_workflow_execution_decision_attributes
+  ?result_:data -> unit -> complete_workflow_execution_decision_attributes
 
 val make_fail_workflow_execution_decision_attributes :
   ?details:data -> ?reason:failure_reason -> unit -> fail_workflow_execution_decision_attributes
@@ -421,7 +421,7 @@ val make_respond_activity_task_failed_input :
   respond_activity_task_failed_input
 
 val make_respond_activity_task_completed_input :
-  ?result:data -> task_token:task_token -> unit -> respond_activity_task_completed_input
+  ?result_:data -> task_token:task_token -> unit -> respond_activity_task_completed_input
 
 val make_respond_activity_task_canceled_input :
   ?details:data -> task_token:task_token -> unit -> respond_activity_task_canceled_input
@@ -550,7 +550,7 @@ val make_activity_task_started_event_attributes :
   activity_task_started_event_attributes
 
 val make_activity_task_completed_event_attributes :
-  ?result:data ->
+  ?result_:data ->
   started_event_id:event_id ->
   scheduled_event_id:event_id ->
   unit ->
@@ -608,7 +608,7 @@ val make_child_workflow_execution_started_event_attributes :
   child_workflow_execution_started_event_attributes
 
 val make_child_workflow_execution_completed_event_attributes :
-  ?result:data ->
+  ?result_:data ->
   started_event_id:event_id ->
   initiated_event_id:event_id ->
   workflow_type:workflow_type ->
@@ -738,7 +738,7 @@ val make_lambda_function_started_event_attributes :
   scheduled_event_id:event_id -> unit -> lambda_function_started_event_attributes
 
 val make_lambda_function_completed_event_attributes :
-  ?result:data ->
+  ?result_:data ->
   started_event_id:event_id ->
   scheduled_event_id:event_id ->
   unit ->

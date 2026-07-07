@@ -93,7 +93,7 @@ let validate_state_machine_definition_output_of_yojson tree path =
      diagnostics =
        value_for_key validate_state_machine_definition_diagnostic_list_of_yojson "diagnostics" _list
          path;
-     result =
+     result_ =
        value_for_key validate_state_machine_definition_result_code_of_yojson "result" _list path;
    }
     : validate_state_machine_definition_output)
@@ -487,7 +487,7 @@ let inspection_data_of_yojson tree path =
        option_of_yojson (value_for_key sensitive_data_of_yojson "afterResultPath") _list path;
      after_result_selector =
        option_of_yojson (value_for_key sensitive_data_of_yojson "afterResultSelector") _list path;
-     result = option_of_yojson (value_for_key sensitive_data_of_yojson "result") _list path;
+     result_ = option_of_yojson (value_for_key sensitive_data_of_yojson "result") _list path;
      after_parameters =
        option_of_yojson (value_for_key sensitive_data_of_yojson "afterParameters") _list path;
      after_input_path =
@@ -562,7 +562,7 @@ let mock_input_of_yojson tree path =
          _list path;
      error_output =
        option_of_yojson (value_for_key mock_error_output_of_yojson "errorOutput") _list path;
-     result = option_of_yojson (value_for_key sensitive_data_of_yojson "result") _list path;
+     result_ = option_of_yojson (value_for_key sensitive_data_of_yojson "result") _list path;
    }
     : mock_input)
 

@@ -439,7 +439,7 @@ let transformer_input_to_yojson = string_to_yojson
 let trace_header_to_yojson = string_to_yojson
 
 let test_event_pattern_response_to_yojson (x : test_event_pattern_response) =
-  assoc_to_yojson [ ("Result", option_to_yojson boolean__to_yojson x.result) ]
+  assoc_to_yojson [ ("Result", option_to_yojson boolean__to_yojson x.result_) ]
 
 let test_event_pattern_request_to_yojson (x : test_event_pattern_request) =
   assoc_to_yojson
