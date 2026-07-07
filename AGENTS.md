@@ -70,9 +70,9 @@ There is no separate lint step — `dune build` catches type errors and `dune fm
 
 | Protocol | Generation | Runtime impl | Covers |
 |----------|-----------|--------------|--------|
-| AwsJson 1.0 | Done | `smaws_lib/protocols_impl/AwsJson.ml` | ~32 services (SQS, DynamoDB, …) |
-| AwsJson 1.1 | Done | same | ~138 services total with 1.0 |
-| AwsQuery | Done (core) | `smaws_lib/protocols_impl/AwsQuery.ml` | STS generated; CloudFormation, IAM, SNS, … pending. Passes smithy `aws.protocoltests.query` suite. Pending: idempotency-token auto-fill, request compression |
+| AwsJson 1.0 | Done | `smaws_lib/protocols_impl/AwsJson.ml` | All modelled services using this protocol are generated |
+| AwsJson 1.1 | Done | same | All modelled services using AwsJson 1.0/1.1 are generated (168 total) |
+| AwsQuery | Done (core) | `smaws_lib/protocols_impl/AwsQuery.ml` | All modelled services using this protocol are generated (CloudFormation, IAM, SNS, …). Passes smithy `aws.protocoltests.query` suite. Pending: idempotency-token auto-fill, request compression |
 | restJson 1 | Not started | — | ~224 services |
 | restXml | Not started | — | S3, CloudFront |
 | EC2 Query | Not started | — | EC2 |

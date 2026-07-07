@@ -1,0 +1,64 @@
+(rule
+ (deps
+  (:gen ../../bin/AwsGenerator.exe)
+  (:input
+   ../../api-models-aws/models/ses/service/2010-12-01/ses-2010-12-01.json)
+  (:ocf %{bin:ocamlformat}))
+ (targets
+  builders.ml
+  builders.mli
+  query_serializers.ml
+  query_deserializers.ml
+  service_metadata.ml
+  service_metadata.mli
+  types.ml
+  types.mli
+  operations.ml
+  operations.mli
+  Smaws_Client_SES.ml
+  Smaws_Client_SES.mli)
+ (mode promote)
+ (action
+  (progn
+   (run
+    %{gen}
+    -input
+    %{input}
+    -output
+    .
+    -targets
+    builders
+    types
+    service_metadata
+    serializers
+    deserializers
+    operations
+    module)
+   (run
+    %{ocf}
+    -i
+    builders.ml
+    builders.mli
+    query_serializers.ml
+    query_deserializers.ml
+    service_metadata.ml
+    service_metadata.mli
+    types.ml
+    types.mli
+    operations.ml
+    operations.mli
+    Smaws_Client_SES.ml
+    Smaws_Client_SES.mli))))
+
+(library
+ (name Smaws_Client_SES)
+ (public_name smaws-clients.ses)
+ (modules
+  Smaws_Client_SES
+  types
+  service_metadata
+  query_serializers
+  query_deserializers
+  operations
+  builders)
+ (libraries smaws-lib))

@@ -1,0 +1,64 @@
+(rule
+ (deps
+  (:gen ../../bin/AwsGenerator.exe)
+  (:input
+   ../../api-models-aws/models/elasticache/service/2015-02-02/elasticache-2015-02-02.json)
+  (:ocf %{bin:ocamlformat}))
+ (targets
+  builders.ml
+  builders.mli
+  query_serializers.ml
+  query_deserializers.ml
+  service_metadata.ml
+  service_metadata.mli
+  types.ml
+  types.mli
+  operations.ml
+  operations.mli
+  Smaws_Client_ElastiCache.ml
+  Smaws_Client_ElastiCache.mli)
+ (mode promote)
+ (action
+  (progn
+   (run
+    %{gen}
+    -input
+    %{input}
+    -output
+    .
+    -targets
+    builders
+    types
+    service_metadata
+    serializers
+    deserializers
+    operations
+    module)
+   (run
+    %{ocf}
+    -i
+    builders.ml
+    builders.mli
+    query_serializers.ml
+    query_deserializers.ml
+    service_metadata.ml
+    service_metadata.mli
+    types.ml
+    types.mli
+    operations.ml
+    operations.mli
+    Smaws_Client_ElastiCache.ml
+    Smaws_Client_ElastiCache.mli))))
+
+(library
+ (name Smaws_Client_ElastiCache)
+ (public_name smaws-clients.elasticache)
+ (modules
+  Smaws_Client_ElastiCache
+  types
+  service_metadata
+  query_serializers
+  query_deserializers
+  operations
+  builders)
+ (libraries smaws-lib))

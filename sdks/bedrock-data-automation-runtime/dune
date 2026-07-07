@@ -1,0 +1,64 @@
+(rule
+ (deps
+  (:gen ../../bin/AwsGenerator.exe)
+  (:input
+   ../../api-models-aws/models/bedrock-data-automation-runtime/service/2024-06-13/bedrock-data-automation-runtime-2024-06-13.json)
+  (:ocf %{bin:ocamlformat}))
+ (targets
+  builders.ml
+  builders.mli
+  json_serializers.ml
+  json_deserializers.ml
+  service_metadata.ml
+  service_metadata.mli
+  types.ml
+  types.mli
+  operations.ml
+  operations.mli
+  Smaws_Client_BedrockDataAutomationRuntime.ml
+  Smaws_Client_BedrockDataAutomationRuntime.mli)
+ (mode promote)
+ (action
+  (progn
+   (run
+    %{gen}
+    -input
+    %{input}
+    -output
+    .
+    -targets
+    builders
+    types
+    service_metadata
+    serializers
+    deserializers
+    operations
+    module)
+   (run
+    %{ocf}
+    -i
+    builders.ml
+    builders.mli
+    json_serializers.ml
+    json_deserializers.ml
+    service_metadata.ml
+    service_metadata.mli
+    types.ml
+    types.mli
+    operations.ml
+    operations.mli
+    Smaws_Client_BedrockDataAutomationRuntime.ml
+    Smaws_Client_BedrockDataAutomationRuntime.mli))))
+
+(library
+ (name Smaws_Client_BedrockDataAutomationRuntime)
+ (public_name smaws-clients.bedrock-data-automation-runtime)
+ (modules
+  Smaws_Client_BedrockDataAutomationRuntime
+  types
+  service_metadata
+  json_serializers
+  json_deserializers
+  operations
+  builders)
+ (libraries smaws-lib))

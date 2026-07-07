@@ -1,0 +1,960 @@
+open Types
+
+val make_config_parameter :
+  ?parameter_value:parameter_value -> ?parameter_key:parameter_key -> unit -> config_parameter
+
+val make_network_interface :
+  ?ipv6_address:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?availability_zone:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?private_ip_address:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?subnet_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?network_interface_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  network_interface
+
+val make_vpc_endpoint :
+  ?network_interfaces:network_interface_list ->
+  ?vpc_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?vpc_endpoint_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  vpc_endpoint
+
+val make_endpoint :
+  ?vpc_endpoints:vpc_endpoint_list ->
+  ?port:Smaws_Lib.Smithy_api.Types.integer ->
+  ?address:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  endpoint
+
+val make_performance_target :
+  ?level:Smaws_Lib.Smithy_api.Types.integer ->
+  ?status:performance_target_status ->
+  unit ->
+  performance_target
+
+val make_workgroup :
+  ?extra_compute_for_automatic_optimization:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?pending_track_name:track_name ->
+  ?track_name:track_name ->
+  ?price_performance_target:performance_target ->
+  ?ip_address_type:ip_address_type ->
+  ?cross_account_vpcs:vpc_ids ->
+  ?max_capacity:Smaws_Lib.Smithy_api.Types.integer ->
+  ?patch_version:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?workgroup_version:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?custom_domain_certificate_expiry_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?custom_domain_certificate_arn:custom_domain_certificate_arn_string ->
+  ?custom_domain_name:custom_domain_name ->
+  ?port:Smaws_Lib.Smithy_api.Types.integer ->
+  ?creation_date:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?publicly_accessible:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?endpoint:endpoint ->
+  ?status:workgroup_status ->
+  ?subnet_ids:subnet_id_list ->
+  ?security_group_ids:security_group_id_list ->
+  ?config_parameters:config_parameter_list ->
+  ?enhanced_vpc_routing:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?base_capacity:Smaws_Lib.Smithy_api.Types.integer ->
+  ?namespace_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?workgroup_name:workgroup_name ->
+  ?workgroup_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?workgroup_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  workgroup
+
+val make_vpc_security_group_membership :
+  ?status:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?vpc_security_group_id:vpc_security_group_id ->
+  unit ->
+  vpc_security_group_membership
+
+val make_usage_limit :
+  ?breach_action:usage_limit_breach_action ->
+  ?period:usage_limit_period ->
+  ?amount:Smaws_Lib.Smithy_api.Types.long ->
+  ?usage_type:usage_limit_usage_type ->
+  ?resource_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?usage_limit_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?usage_limit_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  usage_limit
+
+val make_update_workgroup_response : workgroup:workgroup -> unit -> update_workgroup_response
+
+val make_update_workgroup_request :
+  ?extra_compute_for_automatic_optimization:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?track_name:track_name ->
+  ?price_performance_target:performance_target ->
+  ?ip_address_type:ip_address_type ->
+  ?max_capacity:Smaws_Lib.Smithy_api.Types.integer ->
+  ?port:Smaws_Lib.Smithy_api.Types.integer ->
+  ?security_group_ids:security_group_id_list ->
+  ?subnet_ids:subnet_id_list ->
+  ?publicly_accessible:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?config_parameters:config_parameter_list ->
+  ?enhanced_vpc_routing:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?base_capacity:Smaws_Lib.Smithy_api.Types.integer ->
+  workgroup_name:workgroup_name ->
+  unit ->
+  update_workgroup_request
+
+val make_update_usage_limit_response :
+  ?usage_limit:usage_limit -> unit -> update_usage_limit_response
+
+val make_update_usage_limit_request :
+  ?breach_action:usage_limit_breach_action ->
+  ?amount:Smaws_Lib.Smithy_api.Types.long ->
+  usage_limit_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  update_usage_limit_request
+
+val make_update_target :
+  ?workgroup_version:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?track_name:track_name ->
+  unit ->
+  update_target
+
+val make_snapshot :
+  ?admin_password_secret_kms_key_id:kms_key_id ->
+  ?admin_password_secret_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?accounts_with_provisioned_restore_access:account_id_list ->
+  ?accounts_with_restore_access:account_id_list ->
+  ?snapshot_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?snapshot_retention_start_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?snapshot_remaining_days:Smaws_Lib.Smithy_api.Types.integer ->
+  ?snapshot_retention_period:Smaws_Lib.Smithy_api.Types.integer ->
+  ?elapsed_time_in_seconds:Smaws_Lib.Smithy_api.Types.long ->
+  ?estimated_seconds_to_completion:Smaws_Lib.Smithy_api.Types.long ->
+  ?current_backup_rate_in_mega_bytes_per_second:Smaws_Lib.Smithy_api.Types.double ->
+  ?backup_progress_in_mega_bytes:Smaws_Lib.Smithy_api.Types.double ->
+  ?actual_incremental_backup_size_in_mega_bytes:Smaws_Lib.Smithy_api.Types.double ->
+  ?total_backup_size_in_mega_bytes:Smaws_Lib.Smithy_api.Types.double ->
+  ?owner_account:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?kms_key_id:kms_key_id ->
+  ?status:snapshot_status ->
+  ?admin_username:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?snapshot_create_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?snapshot_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?namespace_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?namespace_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  snapshot
+
+val make_update_snapshot_response : ?snapshot:snapshot -> unit -> update_snapshot_response
+
+val make_update_snapshot_request :
+  ?retention_period:Smaws_Lib.Smithy_api.Types.integer ->
+  snapshot_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  update_snapshot_request
+
+val make_snapshot_copy_configuration :
+  ?destination_kms_key_id:kms_key_id ->
+  ?snapshot_retention_period:Smaws_Lib.Smithy_api.Types.integer ->
+  ?destination_region:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?namespace_name:namespace_name ->
+  ?snapshot_copy_configuration_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?snapshot_copy_configuration_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  snapshot_copy_configuration
+
+val make_update_snapshot_copy_configuration_response :
+  snapshot_copy_configuration:snapshot_copy_configuration ->
+  unit ->
+  update_snapshot_copy_configuration_response
+
+val make_update_snapshot_copy_configuration_request :
+  ?snapshot_retention_period:Smaws_Lib.Smithy_api.Types.integer ->
+  snapshot_copy_configuration_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  update_snapshot_copy_configuration_request
+
+val make_tag : value:tag_value -> key:tag_key -> unit -> tag
+
+val make_create_snapshot_schedule_action_parameters :
+  ?tags:tag_list ->
+  ?retention_period:Smaws_Lib.Smithy_api.Types.integer ->
+  snapshot_name_prefix:snapshot_name_prefix ->
+  namespace_name:namespace_name ->
+  unit ->
+  create_snapshot_schedule_action_parameters
+
+val make_scheduled_action_response :
+  ?scheduled_action_uuid:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?namespace_name:namespace_name ->
+  ?target_action:target_action ->
+  ?end_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?start_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?state:state ->
+  ?role_arn:iam_role_arn ->
+  ?next_invocations:next_invocations_list ->
+  ?scheduled_action_description:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?schedule:schedule ->
+  ?scheduled_action_name:scheduled_action_name ->
+  unit ->
+  scheduled_action_response
+
+val make_update_scheduled_action_response :
+  ?scheduled_action:scheduled_action_response -> unit -> update_scheduled_action_response
+
+val make_update_scheduled_action_request :
+  ?end_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?start_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?scheduled_action_description:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?enabled:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?role_arn:iam_role_arn ->
+  ?schedule:schedule ->
+  ?target_action:target_action ->
+  scheduled_action_name:scheduled_action_name ->
+  unit ->
+  update_scheduled_action_request
+
+val make_namespace :
+  ?catalog_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?lakehouse_registration_status:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?admin_password_secret_kms_key_id:kms_key_id ->
+  ?admin_password_secret_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?creation_date:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?status:namespace_status ->
+  ?log_exports:log_export_list ->
+  ?iam_roles:iam_role_arn_list ->
+  ?default_iam_role_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?kms_key_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?db_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?admin_username:db_user ->
+  ?namespace_name:namespace_name ->
+  ?namespace_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?namespace_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  namespace
+
+val make_update_namespace_response : namespace:namespace -> unit -> update_namespace_response
+
+val make_update_namespace_request :
+  ?admin_password_secret_kms_key_id:kms_key_id ->
+  ?manage_admin_password:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?log_exports:log_export_list ->
+  ?iam_roles:iam_role_arn_list ->
+  ?default_iam_role_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?kms_key_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?admin_username:db_user ->
+  ?admin_user_password:db_password ->
+  namespace_name:namespace_name ->
+  unit ->
+  update_namespace_request
+
+val make_update_lakehouse_configuration_response :
+  ?catalog_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?lakehouse_registration_status:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?lakehouse_idc_application_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?namespace_name:namespace_name ->
+  unit ->
+  update_lakehouse_configuration_response
+
+val make_update_lakehouse_configuration_request :
+  ?dry_run:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?lakehouse_idc_application_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?lakehouse_idc_registration:lakehouse_idc_registration ->
+  ?catalog_name:catalog_name_string ->
+  ?lakehouse_registration:lakehouse_registration ->
+  namespace_name:namespace_name ->
+  unit ->
+  update_lakehouse_configuration_request
+
+val make_endpoint_access :
+  ?endpoint_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?vpc_endpoint:vpc_endpoint ->
+  ?vpc_security_groups:vpc_security_group_membership_list ->
+  ?subnet_ids:subnet_id_list ->
+  ?address:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?port:Smaws_Lib.Smithy_api.Types.integer ->
+  ?endpoint_create_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?workgroup_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?endpoint_status:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?endpoint_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  endpoint_access
+
+val make_update_endpoint_access_response :
+  ?endpoint:endpoint_access -> unit -> update_endpoint_access_response
+
+val make_update_endpoint_access_request :
+  ?vpc_security_group_ids:vpc_security_group_id_list ->
+  endpoint_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  update_endpoint_access_request
+
+val make_update_custom_domain_association_response :
+  ?custom_domain_certificate_expiry_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?custom_domain_certificate_arn:custom_domain_certificate_arn_string ->
+  ?workgroup_name:workgroup_name ->
+  ?custom_domain_name:custom_domain_name ->
+  unit ->
+  update_custom_domain_association_response
+
+val make_update_custom_domain_association_request :
+  custom_domain_certificate_arn:custom_domain_certificate_arn_string ->
+  custom_domain_name:custom_domain_name ->
+  workgroup_name:workgroup_name ->
+  unit ->
+  update_custom_domain_association_request
+
+val make_untag_resource_response : unit -> unit
+
+val make_untag_resource_request :
+  tag_keys:tag_key_list -> resource_arn:amazon_resource_name -> unit -> untag_resource_request
+
+val make_serverless_track :
+  ?update_targets:update_targets_list ->
+  ?workgroup_version:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?track_name:track_name ->
+  unit ->
+  serverless_track
+
+val make_tag_resource_response : unit -> unit
+
+val make_tag_resource_request :
+  tags:tag_list -> resource_arn:amazon_resource_name -> unit -> tag_resource_request
+
+val make_table_restore_status :
+  ?recovery_point_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?new_table_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?target_schema_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?target_database_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?source_table_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?source_schema_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?source_database_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?total_data_in_mega_bytes:Smaws_Lib.Smithy_api.Types.long ->
+  ?progress_in_mega_bytes:Smaws_Lib.Smithy_api.Types.long ->
+  ?snapshot_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?workgroup_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?namespace_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?request_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?message:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?status:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?table_restore_request_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  table_restore_status
+
+val make_scheduled_action_association :
+  ?scheduled_action_name:scheduled_action_name ->
+  ?namespace_name:namespace_name ->
+  unit ->
+  scheduled_action_association
+
+val make_restore_table_from_snapshot_response :
+  ?table_restore_status:table_restore_status -> unit -> restore_table_from_snapshot_response
+
+val make_restore_table_from_snapshot_request :
+  ?activate_case_sensitive_identifier:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?target_schema_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?target_database_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?source_schema_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  new_table_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  source_table_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  source_database_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  snapshot_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  workgroup_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  namespace_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  restore_table_from_snapshot_request
+
+val make_restore_table_from_recovery_point_response :
+  ?table_restore_status:table_restore_status -> unit -> restore_table_from_recovery_point_response
+
+val make_restore_table_from_recovery_point_request :
+  ?activate_case_sensitive_identifier:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?target_schema_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?target_database_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?source_schema_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  new_table_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  source_table_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  source_database_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  recovery_point_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  workgroup_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  namespace_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  restore_table_from_recovery_point_request
+
+val make_restore_from_snapshot_response :
+  ?namespace:namespace ->
+  ?owner_account:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?snapshot_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  restore_from_snapshot_response
+
+val make_restore_from_snapshot_request :
+  ?admin_password_secret_kms_key_id:kms_key_id ->
+  ?manage_admin_password:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?owner_account:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?snapshot_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?snapshot_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  workgroup_name:workgroup_name ->
+  namespace_name:namespace_name ->
+  unit ->
+  restore_from_snapshot_request
+
+val make_restore_from_recovery_point_response :
+  ?namespace:namespace ->
+  ?recovery_point_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  restore_from_recovery_point_response
+
+val make_restore_from_recovery_point_request :
+  workgroup_name:workgroup_name ->
+  namespace_name:namespace_name ->
+  recovery_point_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  restore_from_recovery_point_request
+
+val make_resource_policy :
+  ?policy:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?resource_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  resource_policy
+
+val make_reservation_offering :
+  ?offering_type:offering_type ->
+  ?currency_code:currency_code ->
+  ?hourly_charge:charge ->
+  ?upfront_charge:charge ->
+  ?duration:duration ->
+  ?offering_id:offering_id ->
+  unit ->
+  reservation_offering
+
+val make_reservation :
+  ?status:status ->
+  ?offering:reservation_offering ->
+  ?capacity:capacity ->
+  ?end_date:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?start_date:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?reservation_arn:reservation_arn ->
+  ?reservation_id:reservation_id ->
+  unit ->
+  reservation
+
+val make_put_resource_policy_response :
+  ?resource_policy:resource_policy -> unit -> put_resource_policy_response
+
+val make_put_resource_policy_request :
+  policy:Smaws_Lib.Smithy_api.Types.string_ ->
+  resource_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  put_resource_policy_request
+
+val make_list_tracks_response :
+  ?next_token:pagination_token -> ?tracks:track_list -> unit -> list_tracks_response
+
+val make_list_tracks_request :
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+  ?next_token:pagination_token ->
+  unit ->
+  list_tracks_request
+
+val make_list_tags_for_resource_response : ?tags:tag_list -> unit -> list_tags_for_resource_response
+
+val make_list_tags_for_resource_request :
+  resource_arn:amazon_resource_name -> unit -> list_tags_for_resource_request
+
+val make_association :
+  ?workgroup_name:workgroup_name ->
+  ?custom_domain_name:custom_domain_name ->
+  ?custom_domain_certificate_expiry_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?custom_domain_certificate_arn:custom_domain_certificate_arn_string ->
+  unit ->
+  association
+
+val make_list_custom_domain_associations_response :
+  ?associations:association_list ->
+  ?next_token:pagination_token ->
+  unit ->
+  list_custom_domain_associations_response
+
+val make_list_custom_domain_associations_request :
+  ?custom_domain_certificate_arn:custom_domain_certificate_arn_string ->
+  ?custom_domain_name:custom_domain_name ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+  ?next_token:pagination_token ->
+  unit ->
+  list_custom_domain_associations_request
+
+val make_get_track_response : ?track:serverless_track -> unit -> get_track_response
+val make_get_track_request : track_name:track_name -> unit -> get_track_request
+
+val make_get_resource_policy_response :
+  ?resource_policy:resource_policy -> unit -> get_resource_policy_response
+
+val make_get_resource_policy_request :
+  resource_arn:Smaws_Lib.Smithy_api.Types.string_ -> unit -> get_resource_policy_request
+
+val make_get_identity_center_auth_token_response :
+  ?expiration_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?token:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  get_identity_center_auth_token_response
+
+val make_get_identity_center_auth_token_request :
+  workgroup_names:workgroup_name_list -> unit -> get_identity_center_auth_token_request
+
+val make_get_custom_domain_association_response :
+  ?custom_domain_certificate_expiry_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?custom_domain_certificate_arn:custom_domain_certificate_arn_string ->
+  ?workgroup_name:workgroup_name ->
+  ?custom_domain_name:custom_domain_name ->
+  unit ->
+  get_custom_domain_association_response
+
+val make_get_custom_domain_association_request :
+  workgroup_name:workgroup_name ->
+  custom_domain_name:custom_domain_name ->
+  unit ->
+  get_custom_domain_association_request
+
+val make_get_credentials_response :
+  ?next_refresh_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?expiration:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?db_password:db_password ->
+  ?db_user:db_user ->
+  unit ->
+  get_credentials_response
+
+val make_get_credentials_request :
+  ?custom_domain_name:custom_domain_name ->
+  ?workgroup_name:workgroup_name ->
+  ?duration_seconds:Smaws_Lib.Smithy_api.Types.integer ->
+  ?db_name:db_name ->
+  unit ->
+  get_credentials_request
+
+val make_delete_resource_policy_response : unit -> unit
+
+val make_delete_resource_policy_request :
+  resource_arn:Smaws_Lib.Smithy_api.Types.string_ -> unit -> delete_resource_policy_request
+
+val make_delete_custom_domain_association_response : unit -> unit
+
+val make_delete_custom_domain_association_request :
+  custom_domain_name:custom_domain_name ->
+  workgroup_name:workgroup_name ->
+  unit ->
+  delete_custom_domain_association_request
+
+val make_create_custom_domain_association_response :
+  ?custom_domain_certificate_expiry_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?custom_domain_certificate_arn:custom_domain_certificate_arn_string ->
+  ?workgroup_name:workgroup_name ->
+  ?custom_domain_name:custom_domain_name ->
+  unit ->
+  create_custom_domain_association_response
+
+val make_create_custom_domain_association_request :
+  custom_domain_certificate_arn:custom_domain_certificate_arn_string ->
+  custom_domain_name:custom_domain_name ->
+  workgroup_name:workgroup_name ->
+  unit ->
+  create_custom_domain_association_request
+
+val make_recovery_point :
+  ?namespace_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?workgroup_name:workgroup_name ->
+  ?namespace_name:namespace_name ->
+  ?total_size_in_mega_bytes:Smaws_Lib.Smithy_api.Types.double ->
+  ?recovery_point_create_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?recovery_point_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  recovery_point
+
+val make_managed_workgroup_list_item :
+  ?creation_date:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?status:managed_workgroup_status ->
+  ?source_arn:source_arn ->
+  ?managed_workgroup_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?managed_workgroup_name:managed_workgroup_name ->
+  unit ->
+  managed_workgroup_list_item
+
+val make_list_workgroups_response :
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  workgroups:workgroup_list ->
+  unit ->
+  list_workgroups_response
+
+val make_list_workgroups_request :
+  ?owner_account:owner_account ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  list_workgroups_request
+
+val make_list_usage_limits_response :
+  ?next_token:pagination_token -> ?usage_limits:usage_limits -> unit -> list_usage_limits_response
+
+val make_list_usage_limits_request :
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+  ?next_token:pagination_token ->
+  ?usage_type:usage_limit_usage_type ->
+  ?resource_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  list_usage_limits_request
+
+val make_list_table_restore_status_response :
+  ?table_restore_statuses:table_restore_status_list ->
+  ?next_token:pagination_token ->
+  unit ->
+  list_table_restore_status_response
+
+val make_list_table_restore_status_request :
+  ?workgroup_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?namespace_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+  ?next_token:pagination_token ->
+  unit ->
+  list_table_restore_status_request
+
+val make_list_snapshots_response :
+  ?snapshots:snapshot_list ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  list_snapshots_response
+
+val make_list_snapshots_request :
+  ?end_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?start_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?owner_account:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?namespace_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?namespace_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  list_snapshots_request
+
+val make_list_snapshot_copy_configurations_response :
+  ?next_token:pagination_token ->
+  snapshot_copy_configurations:snapshot_copy_configurations ->
+  unit ->
+  list_snapshot_copy_configurations_response
+
+val make_list_snapshot_copy_configurations_request :
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+  ?next_token:pagination_token ->
+  ?namespace_name:namespace_name ->
+  unit ->
+  list_snapshot_copy_configurations_request
+
+val make_list_scheduled_actions_response :
+  ?scheduled_actions:scheduled_actions_list ->
+  ?next_token:pagination_token ->
+  unit ->
+  list_scheduled_actions_response
+
+val make_list_scheduled_actions_request :
+  ?namespace_name:namespace_name ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+  ?next_token:pagination_token ->
+  unit ->
+  list_scheduled_actions_request
+
+val make_list_reservations_response :
+  ?next_token:pagination_token ->
+  reservations_list:reservations_list ->
+  unit ->
+  list_reservations_response
+
+val make_list_reservations_request :
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+  ?next_token:pagination_token ->
+  unit ->
+  list_reservations_request
+
+val make_list_reservation_offerings_response :
+  ?next_token:pagination_token ->
+  reservation_offerings_list:reservation_offerings_list ->
+  unit ->
+  list_reservation_offerings_response
+
+val make_list_reservation_offerings_request :
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+  ?next_token:pagination_token ->
+  unit ->
+  list_reservation_offerings_request
+
+val make_list_recovery_points_response :
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?recovery_points:recovery_point_list ->
+  unit ->
+  list_recovery_points_response
+
+val make_list_recovery_points_request :
+  ?namespace_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?namespace_name:namespace_name ->
+  ?end_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?start_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  list_recovery_points_request
+
+val make_list_namespaces_response :
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  namespaces:namespace_list ->
+  unit ->
+  list_namespaces_response
+
+val make_list_namespaces_request :
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  list_namespaces_request
+
+val make_list_managed_workgroups_response :
+  ?managed_workgroups:managed_workgroups ->
+  ?next_token:pagination_token ->
+  unit ->
+  list_managed_workgroups_response
+
+val make_list_managed_workgroups_request :
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+  ?next_token:pagination_token ->
+  ?source_arn:source_arn ->
+  unit ->
+  list_managed_workgroups_request
+
+val make_list_endpoint_access_response :
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  endpoints:endpoint_access_list ->
+  unit ->
+  list_endpoint_access_response
+
+val make_list_endpoint_access_request :
+  ?owner_account:owner_account ->
+  ?vpc_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?workgroup_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?max_results:Smaws_Lib.Smithy_api.Types.integer ->
+  ?next_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  list_endpoint_access_request
+
+val make_get_workgroup_response : workgroup:workgroup -> unit -> get_workgroup_response
+val make_get_workgroup_request : workgroup_name:workgroup_name -> unit -> get_workgroup_request
+val make_get_usage_limit_response : ?usage_limit:usage_limit -> unit -> get_usage_limit_response
+
+val make_get_usage_limit_request :
+  usage_limit_id:Smaws_Lib.Smithy_api.Types.string_ -> unit -> get_usage_limit_request
+
+val make_get_table_restore_status_response :
+  ?table_restore_status:table_restore_status -> unit -> get_table_restore_status_response
+
+val make_get_table_restore_status_request :
+  table_restore_request_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  get_table_restore_status_request
+
+val make_get_snapshot_response : ?snapshot:snapshot -> unit -> get_snapshot_response
+
+val make_get_snapshot_request :
+  ?snapshot_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?owner_account:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?snapshot_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  get_snapshot_request
+
+val make_get_scheduled_action_response :
+  ?scheduled_action:scheduled_action_response -> unit -> get_scheduled_action_response
+
+val make_get_scheduled_action_request :
+  scheduled_action_name:scheduled_action_name -> unit -> get_scheduled_action_request
+
+val make_get_reservation_response : reservation:reservation -> unit -> get_reservation_response
+val make_get_reservation_request : reservation_id:reservation_id -> unit -> get_reservation_request
+
+val make_get_reservation_offering_response :
+  reservation_offering:reservation_offering -> unit -> get_reservation_offering_response
+
+val make_get_reservation_offering_request :
+  offering_id:offering_id -> unit -> get_reservation_offering_request
+
+val make_get_recovery_point_response :
+  ?recovery_point:recovery_point -> unit -> get_recovery_point_response
+
+val make_get_recovery_point_request :
+  recovery_point_id:Smaws_Lib.Smithy_api.Types.string_ -> unit -> get_recovery_point_request
+
+val make_get_namespace_response : namespace:namespace -> unit -> get_namespace_response
+val make_get_namespace_request : namespace_name:namespace_name -> unit -> get_namespace_request
+
+val make_get_endpoint_access_response :
+  ?endpoint:endpoint_access -> unit -> get_endpoint_access_response
+
+val make_get_endpoint_access_request :
+  endpoint_name:Smaws_Lib.Smithy_api.Types.string_ -> unit -> get_endpoint_access_request
+
+val make_delete_workgroup_response : workgroup:workgroup -> unit -> delete_workgroup_response
+
+val make_delete_workgroup_request :
+  workgroup_name:workgroup_name -> unit -> delete_workgroup_request
+
+val make_delete_usage_limit_response :
+  ?usage_limit:usage_limit -> unit -> delete_usage_limit_response
+
+val make_delete_usage_limit_request :
+  usage_limit_id:Smaws_Lib.Smithy_api.Types.string_ -> unit -> delete_usage_limit_request
+
+val make_delete_snapshot_response : ?snapshot:snapshot -> unit -> delete_snapshot_response
+
+val make_delete_snapshot_request :
+  snapshot_name:Smaws_Lib.Smithy_api.Types.string_ -> unit -> delete_snapshot_request
+
+val make_delete_snapshot_copy_configuration_response :
+  snapshot_copy_configuration:snapshot_copy_configuration ->
+  unit ->
+  delete_snapshot_copy_configuration_response
+
+val make_delete_snapshot_copy_configuration_request :
+  snapshot_copy_configuration_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  delete_snapshot_copy_configuration_request
+
+val make_delete_scheduled_action_response :
+  ?scheduled_action:scheduled_action_response -> unit -> delete_scheduled_action_response
+
+val make_delete_scheduled_action_request :
+  scheduled_action_name:scheduled_action_name -> unit -> delete_scheduled_action_request
+
+val make_delete_namespace_response : namespace:namespace -> unit -> delete_namespace_response
+
+val make_delete_namespace_request :
+  ?final_snapshot_retention_period:Smaws_Lib.Smithy_api.Types.integer ->
+  ?final_snapshot_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  namespace_name:namespace_name ->
+  unit ->
+  delete_namespace_request
+
+val make_delete_endpoint_access_response :
+  ?endpoint:endpoint_access -> unit -> delete_endpoint_access_response
+
+val make_delete_endpoint_access_request :
+  endpoint_name:Smaws_Lib.Smithy_api.Types.string_ -> unit -> delete_endpoint_access_request
+
+val make_create_workgroup_response : ?workgroup:workgroup -> unit -> create_workgroup_response
+
+val make_create_workgroup_request :
+  ?extra_compute_for_automatic_optimization:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?track_name:track_name ->
+  ?ip_address_type:ip_address_type ->
+  ?price_performance_target:performance_target ->
+  ?max_capacity:Smaws_Lib.Smithy_api.Types.integer ->
+  ?port:Smaws_Lib.Smithy_api.Types.integer ->
+  ?tags:tag_list ->
+  ?publicly_accessible:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?subnet_ids:subnet_id_list ->
+  ?security_group_ids:security_group_id_list ->
+  ?config_parameters:config_parameter_list ->
+  ?enhanced_vpc_routing:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?base_capacity:Smaws_Lib.Smithy_api.Types.integer ->
+  namespace_name:namespace_name ->
+  workgroup_name:workgroup_name ->
+  unit ->
+  create_workgroup_request
+
+val make_create_usage_limit_response :
+  ?usage_limit:usage_limit -> unit -> create_usage_limit_response
+
+val make_create_usage_limit_request :
+  ?breach_action:usage_limit_breach_action ->
+  ?period:usage_limit_period ->
+  amount:Smaws_Lib.Smithy_api.Types.long ->
+  usage_type:usage_limit_usage_type ->
+  resource_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  create_usage_limit_request
+
+val make_create_snapshot_response : ?snapshot:snapshot -> unit -> create_snapshot_response
+
+val make_create_snapshot_request :
+  ?tags:tag_list ->
+  ?retention_period:Smaws_Lib.Smithy_api.Types.integer ->
+  snapshot_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  namespace_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  create_snapshot_request
+
+val make_create_snapshot_copy_configuration_response :
+  snapshot_copy_configuration:snapshot_copy_configuration ->
+  unit ->
+  create_snapshot_copy_configuration_response
+
+val make_create_snapshot_copy_configuration_request :
+  ?destination_kms_key_id:kms_key_id ->
+  ?snapshot_retention_period:Smaws_Lib.Smithy_api.Types.integer ->
+  destination_region:Smaws_Lib.Smithy_api.Types.string_ ->
+  namespace_name:namespace_name ->
+  unit ->
+  create_snapshot_copy_configuration_request
+
+val make_create_scheduled_action_response :
+  ?scheduled_action:scheduled_action_response -> unit -> create_scheduled_action_response
+
+val make_create_scheduled_action_request :
+  ?end_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?start_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?scheduled_action_description:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?enabled:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  namespace_name:namespace_name ->
+  role_arn:iam_role_arn ->
+  schedule:schedule ->
+  target_action:target_action ->
+  scheduled_action_name:scheduled_action_name ->
+  unit ->
+  create_scheduled_action_request
+
+val make_create_reservation_response :
+  ?reservation:reservation -> unit -> create_reservation_response
+
+val make_create_reservation_request :
+  ?client_token:Smaws_Lib.Smithy_api.Types.string_ ->
+  offering_id:offering_id ->
+  capacity:capacity ->
+  unit ->
+  create_reservation_request
+
+val make_create_namespace_response : ?namespace:namespace -> unit -> create_namespace_response
+
+val make_create_namespace_request :
+  ?redshift_idc_application_arn:redshift_idc_application_arn ->
+  ?admin_password_secret_kms_key_id:kms_key_id ->
+  ?manage_admin_password:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?tags:tag_list ->
+  ?log_exports:log_export_list ->
+  ?iam_roles:iam_role_arn_list ->
+  ?default_iam_role_arn:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?kms_key_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?db_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?admin_user_password:db_password ->
+  ?admin_username:db_user ->
+  namespace_name:namespace_name ->
+  unit ->
+  create_namespace_request
+
+val make_create_endpoint_access_response :
+  ?endpoint:endpoint_access -> unit -> create_endpoint_access_response
+
+val make_create_endpoint_access_request :
+  ?owner_account:owner_account ->
+  ?vpc_security_group_ids:vpc_security_group_id_list ->
+  workgroup_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  subnet_ids:subnet_id_list ->
+  endpoint_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  create_endpoint_access_request
+
+val make_convert_recovery_point_to_snapshot_response :
+  ?snapshot:snapshot -> unit -> convert_recovery_point_to_snapshot_response
+
+val make_convert_recovery_point_to_snapshot_request :
+  ?tags:tag_list ->
+  ?retention_period:Smaws_Lib.Smithy_api.Types.integer ->
+  snapshot_name:Smaws_Lib.Smithy_api.Types.string_ ->
+  recovery_point_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  convert_recovery_point_to_snapshot_request
