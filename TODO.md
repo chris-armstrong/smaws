@@ -54,4 +54,17 @@
   * [ ] `@requestCompression` gzip (`SDKAppliedContentEncoding_awsQuery` / `SDKAppendsGzipAndIgnoresHttpProvidedEncoding_awsQuery` are banned)
   * [x] awsJson error-response test generation (`make_error_response_test_str` now works for awsJson too, with header/body error-type extraction)
 * [ ] REST
+* [ ] restXml (core: HTTP binding traits, XML serialise/deserialise, noErrorWrapping; see `refactorings/restxml_s3_interfaces.md`)
+  * [ ] `@httpPayload` scalar/structure/union payloads + Content-Type negotiation
+  * [ ] aws-chunked request body + trailer checksums for streaming uploads (deferred — see S3 below; streaming I/O itself ships first)
 * [ ] S3
+  * [ ] restXml protocol + S3 bucket addressing (virtual-host/path/dualstack/accelerate)
+  * [ ] `@s3UnwrappedXmlOutput` (GetBucketLocation)
+  * [ ] Streaming output (`GetObject` etc.) via `Eio.Flow.source_read`
+  * [ ] Streaming input (`PutObject`/`UploadPart` etc.): `Content-Length` per §8.4 of restXml design doc
+  * [ ] Flexible checksums: `@httpChecksum` header checksums (CRC32/CRC32C/SHA*/MD5); vendored CRC32, hand-rolled CRC64NVME, decide `checkseum`/`xxhash` vs vendor when this lands
+  * [ ] aws-chunked trailer checksums for streaming uploads (deferred — streaming uploads work without a client checksum until then)
+  * [ ] `aws.auth#unsignedPayload` (WriteGetObjectResponse) — codegen-driven signer selection
+  * [ ] Endpoint rules engine / `contextParam` (regional/S3-Express/Outposts endpoints) — currently hard-coded
+  * [ ] `@paginated` paginators (ListObjectsV2, ListBuckets, ListParts, ...)
+  * [ ] `SelectObjectContent` event stream — **deprioritised: S3 Select is no longer available to new customers**
