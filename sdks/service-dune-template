@@ -6,8 +6,8 @@
  (targets
   builders.ml
   builders.mli
-  json_serializers.ml
-  json_deserializers.ml
+  %%serializer-module%%.ml
+  %%deserializer-module%%.ml
   service_metadata.ml
   service_metadata.mli
   types.ml
@@ -38,8 +38,8 @@
     -i
     builders.ml
     builders.mli
-    json_serializers.ml
-    json_deserializers.ml
+    %%serializer-module%%.ml
+    %%deserializer-module%%.ml
     service_metadata.ml
     service_metadata.mli
     types.ml
@@ -56,8 +56,8 @@
   Smaws_Client_%%service-full-name%%
   types
   service_metadata
-  json_serializers
-  json_deserializers
+  %%serializer-module%%
+  %%deserializer-module%%
   operations
   builders)
  (libraries smaws-lib))
