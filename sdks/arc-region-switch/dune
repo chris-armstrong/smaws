@@ -1,0 +1,64 @@
+(rule
+ (deps
+  (:gen ../../bin/AwsGenerator.exe)
+  (:input
+   ../../api-models-aws/models/arc-region-switch/service/2022-07-26/arc-region-switch-2022-07-26.json)
+  (:ocf %{bin:ocamlformat}))
+ (targets
+  builders.ml
+  builders.mli
+  json_serializers.ml
+  json_deserializers.ml
+  service_metadata.ml
+  service_metadata.mli
+  types.ml
+  types.mli
+  operations.ml
+  operations.mli
+  Smaws_Client_ARCRegionswitch.ml
+  Smaws_Client_ARCRegionswitch.mli)
+ (mode promote)
+ (action
+  (progn
+   (run
+    %{gen}
+    -input
+    %{input}
+    -output
+    .
+    -targets
+    builders
+    types
+    service_metadata
+    serializers
+    deserializers
+    operations
+    module)
+   (run
+    %{ocf}
+    -i
+    builders.ml
+    builders.mli
+    json_serializers.ml
+    json_deserializers.ml
+    service_metadata.ml
+    service_metadata.mli
+    types.ml
+    types.mli
+    operations.ml
+    operations.mli
+    Smaws_Client_ARCRegionswitch.ml
+    Smaws_Client_ARCRegionswitch.mli))))
+
+(library
+ (name Smaws_Client_ARCRegionswitch)
+ (public_name smaws-clients.arc-region-switch)
+ (modules
+  Smaws_Client_ARCRegionswitch
+  types
+  service_metadata
+  json_serializers
+  json_deserializers
+  operations
+  builders)
+ (libraries smaws-lib))

@@ -1,0 +1,64 @@
+(rule
+ (deps
+  (:gen ../../bin/AwsGenerator.exe)
+  (:input
+   ../../api-models-aws/models/secrets-manager/service/2017-10-17/secrets-manager-2017-10-17.json)
+  (:ocf %{bin:ocamlformat}))
+ (targets
+  builders.ml
+  builders.mli
+  json_serializers.ml
+  json_deserializers.ml
+  service_metadata.ml
+  service_metadata.mli
+  types.ml
+  types.mli
+  operations.ml
+  operations.mli
+  Smaws_Client_SecretsManager.ml
+  Smaws_Client_SecretsManager.mli)
+ (mode promote)
+ (action
+  (progn
+   (run
+    %{gen}
+    -input
+    %{input}
+    -output
+    .
+    -targets
+    builders
+    types
+    service_metadata
+    serializers
+    deserializers
+    operations
+    module)
+   (run
+    %{ocf}
+    -i
+    builders.ml
+    builders.mli
+    json_serializers.ml
+    json_deserializers.ml
+    service_metadata.ml
+    service_metadata.mli
+    types.ml
+    types.mli
+    operations.ml
+    operations.mli
+    Smaws_Client_SecretsManager.ml
+    Smaws_Client_SecretsManager.mli))))
+
+(library
+ (name Smaws_Client_SecretsManager)
+ (public_name smaws-clients.secrets-manager)
+ (modules
+  Smaws_Client_SecretsManager
+  types
+  service_metadata
+  json_serializers
+  json_deserializers
+  operations
+  builders)
+ (libraries smaws-lib))

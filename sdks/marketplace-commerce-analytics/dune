@@ -1,0 +1,64 @@
+(rule
+ (deps
+  (:gen ../../bin/AwsGenerator.exe)
+  (:input
+   ../../api-models-aws/models/marketplace-commerce-analytics/service/2015-07-01/marketplace-commerce-analytics-2015-07-01.json)
+  (:ocf %{bin:ocamlformat}))
+ (targets
+  builders.ml
+  builders.mli
+  json_serializers.ml
+  json_deserializers.ml
+  service_metadata.ml
+  service_metadata.mli
+  types.ml
+  types.mli
+  operations.ml
+  operations.mli
+  Smaws_Client_MarketplaceCommerceAnalytics.ml
+  Smaws_Client_MarketplaceCommerceAnalytics.mli)
+ (mode promote)
+ (action
+  (progn
+   (run
+    %{gen}
+    -input
+    %{input}
+    -output
+    .
+    -targets
+    builders
+    types
+    service_metadata
+    serializers
+    deserializers
+    operations
+    module)
+   (run
+    %{ocf}
+    -i
+    builders.ml
+    builders.mli
+    json_serializers.ml
+    json_deserializers.ml
+    service_metadata.ml
+    service_metadata.mli
+    types.ml
+    types.mli
+    operations.ml
+    operations.mli
+    Smaws_Client_MarketplaceCommerceAnalytics.ml
+    Smaws_Client_MarketplaceCommerceAnalytics.mli))))
+
+(library
+ (name Smaws_Client_MarketplaceCommerceAnalytics)
+ (public_name smaws-clients.marketplace-commerce-analytics)
+ (modules
+  Smaws_Client_MarketplaceCommerceAnalytics
+  types
+  service_metadata
+  json_serializers
+  json_deserializers
+  operations
+  builders)
+ (libraries smaws-lib))

@@ -1,0 +1,64 @@
+(rule
+ (deps
+  (:gen ../../bin/AwsGenerator.exe)
+  (:input
+   ../../api-models-aws/models/identitystore/service/2020-06-15/identitystore-2020-06-15.json)
+  (:ocf %{bin:ocamlformat}))
+ (targets
+  builders.ml
+  builders.mli
+  json_serializers.ml
+  json_deserializers.ml
+  service_metadata.ml
+  service_metadata.mli
+  types.ml
+  types.mli
+  operations.ml
+  operations.mli
+  Smaws_Client_Identitystore.ml
+  Smaws_Client_Identitystore.mli)
+ (mode promote)
+ (action
+  (progn
+   (run
+    %{gen}
+    -input
+    %{input}
+    -output
+    .
+    -targets
+    builders
+    types
+    service_metadata
+    serializers
+    deserializers
+    operations
+    module)
+   (run
+    %{ocf}
+    -i
+    builders.ml
+    builders.mli
+    json_serializers.ml
+    json_deserializers.ml
+    service_metadata.ml
+    service_metadata.mli
+    types.ml
+    types.mli
+    operations.ml
+    operations.mli
+    Smaws_Client_Identitystore.ml
+    Smaws_Client_Identitystore.mli))))
+
+(library
+ (name Smaws_Client_Identitystore)
+ (public_name smaws-clients.identitystore)
+ (modules
+  Smaws_Client_Identitystore
+  types
+  service_metadata
+  json_serializers
+  json_deserializers
+  operations
+  builders)
+ (libraries smaws-lib))

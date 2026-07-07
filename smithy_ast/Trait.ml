@@ -27,8 +27,7 @@ type clientEndpointDiscoveryDetails = { operation : string; error : string }
 type awsQueryErrorDetails = { code : string; httpResponseCode : int option }
 [@@deriving show, equal]
 
-type externalDocumentationType = DocumentationLink of string | SpecificationLink of string
-[@@deriving show, equal]
+type externalDocumentationType = (string * string) list [@@deriving show, equal]
 
 type staticContextParamValue =
   | StaticContextStringValue of string
@@ -60,8 +59,8 @@ type httpRequestTest = {
   forbidHeaders : string list option;
   body : string option;
   bodyMediaType : string option;
-  params : Yojson.Basic.t option;
-  vendorParams : Yojson.Basic.t option;
+  params : Yojson.Safe.t option;
+  vendorParams : Yojson.Safe.t option;
   vendorParamsShape : string option;
   documentation : string option;
   tags : string list option;
@@ -77,8 +76,8 @@ type httpResponseTest = {
   forbidHeaders : string list option;
   body : string option;
   bodyMediaType : string option;
-  params : Yojson.Basic.t option;
-  vendorParams : Yojson.Basic.t option;
+  params : Yojson.Safe.t option;
+  vendorParams : Yojson.Safe.t option;
   vendorParamsShape : string option;
   documentation : string option;
   tags : string list option;
@@ -179,7 +178,7 @@ type t =
       selector : string option;
       errorMessage : string option;
     }
-  | UnspecifiedTrait of string * Yojson.Basic.t
+  | UnspecifiedTrait of string * Yojson.Safe.t
 [@@deriving show, equal]
 
 let isEnumTrait trait = match trait with EnumTrait _ -> true | _ -> false

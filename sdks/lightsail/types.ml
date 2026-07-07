@@ -782,7 +782,7 @@ type nonrec cache_behavior = {
 type nonrec forward_values =
   | All [@ocaml.doc ""]
   | AllowList [@ocaml.doc ""]
-  | None [@ocaml.doc ""]
+  | None_ [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
 type nonrec string_list = string_ list [@@ocaml.doc ""]
@@ -3436,7 +3436,7 @@ type nonrec port_list = port list [@@ocaml.doc ""]
 
 type nonrec port_info_source_type =
   | Closed [@ocaml.doc ""]
-  | None [@ocaml.doc ""]
+  | None_ [@ocaml.doc ""]
   | Instance [@ocaml.doc ""]
   | Default [@ocaml.doc ""]
 [@@ocaml.doc ""]
@@ -3551,7 +3551,7 @@ type nonrec monitored_resource_info = {
   \ "]
 
 type nonrec metric_unit =
-  | None [@ocaml.doc ""]
+  | None_ [@ocaml.doc ""]
   | CountSecond [@ocaml.doc ""]
   | TerabitsSecond [@ocaml.doc ""]
   | GigabitsSecond [@ocaml.doc ""]
@@ -5163,7 +5163,7 @@ type nonrec get_instance_state_request = {
 
 type nonrec instance_snapshot_state =
   | Available [@ocaml.doc ""]
-  | Error [@ocaml.doc ""]
+  | Error_ [@ocaml.doc ""]
   | Pending [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
@@ -5206,7 +5206,7 @@ type nonrec disk_state =
   | Unknown [@ocaml.doc ""]
   | InUse [@ocaml.doc ""]
   | Available [@ocaml.doc ""]
-  | Error [@ocaml.doc ""]
+  | Error_ [@ocaml.doc ""]
   | Pending [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
@@ -6606,7 +6606,7 @@ type nonrec get_distribution_bundles_request = unit [@@ocaml.doc ""]
 
 type nonrec disk_snapshot_state =
   | Unknown [@ocaml.doc ""]
-  | Error [@ocaml.doc ""]
+  | Error_ [@ocaml.doc ""]
   | Completed [@ocaml.doc ""]
   | Pending [@ocaml.doc ""]
 [@@ocaml.doc ""]

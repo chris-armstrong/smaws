@@ -1,0 +1,64 @@
+(rule
+ (deps
+  (:gen ../../bin/AwsGenerator.exe)
+  (:input
+   ../../api-models-aws/models/database-migration-service/service/2016-01-01/database-migration-service-2016-01-01.json)
+  (:ocf %{bin:ocamlformat}))
+ (targets
+  builders.ml
+  builders.mli
+  json_serializers.ml
+  json_deserializers.ml
+  service_metadata.ml
+  service_metadata.mli
+  types.ml
+  types.mli
+  operations.ml
+  operations.mli
+  Smaws_Client_DatabaseMigrationService.ml
+  Smaws_Client_DatabaseMigrationService.mli)
+ (mode promote)
+ (action
+  (progn
+   (run
+    %{gen}
+    -input
+    %{input}
+    -output
+    .
+    -targets
+    builders
+    types
+    service_metadata
+    serializers
+    deserializers
+    operations
+    module)
+   (run
+    %{ocf}
+    -i
+    builders.ml
+    builders.mli
+    json_serializers.ml
+    json_deserializers.ml
+    service_metadata.ml
+    service_metadata.mli
+    types.ml
+    types.mli
+    operations.ml
+    operations.mli
+    Smaws_Client_DatabaseMigrationService.ml
+    Smaws_Client_DatabaseMigrationService.mli))))
+
+(library
+ (name Smaws_Client_DatabaseMigrationService)
+ (public_name smaws-clients.database-migration-service)
+ (modules
+  Smaws_Client_DatabaseMigrationService
+  types
+  service_metadata
+  json_serializers
+  json_deserializers
+  operations
+  builders)
+ (libraries smaws-lib))

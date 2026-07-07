@@ -150,7 +150,7 @@ type nonrec validate_state_machine_definition_output = {
         "An array of diagnostic errors and warnings found during validation of the state machine \
          definition. Since {b warnings} do not prevent deploying your workflow definition, the {b \
          result} value could be [OK] even when warning diagnostics are present in the response.\n"]
-  result : validate_state_machine_definition_result_code;
+  result_ : validate_state_machine_definition_result_code;
       [@ocaml.doc
         "The result value will be [OK] when no syntax errors are found, or [FAIL] if the workflow \
          definition does not pass verification.\n"]
@@ -588,7 +588,7 @@ type nonrec inspection_data = {
         "The effective result after Step Functions applies the \
          {{:https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-resultselector}ResultSelector} \
          filter. Not populated when QueryLanguage is JSONata.\n"]
-  result : sensitive_data option; [@ocaml.doc "The state's raw result.\n"]
+  result_ : sensitive_data option; [@ocaml.doc "The state's raw result.\n"]
   after_parameters : sensitive_data option;
       [@ocaml.doc
         "The effective input after Step Functions applies the \
@@ -690,7 +690,7 @@ type nonrec mock_input = {
       [@ocaml.doc
         "The mocked error output when calling TestState. When specified, the mocked response is \
          returned as a JSON object that contains an [error] and [cause] field.\n"]
-  result : sensitive_data option;
+  result_ : sensitive_data option;
       [@ocaml.doc "A JSON string containing the mocked result of the state invocation.\n"]
 }
 [@@ocaml.doc "A JSON object that contains a mocked [result] or [errorOutput].\n"]

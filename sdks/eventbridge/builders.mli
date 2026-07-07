@@ -184,7 +184,7 @@ val make_untag_resource_response : unit -> unit
 val make_untag_resource_request :
   tag_keys:tag_key_list -> resource_ar_n:arn -> unit -> untag_resource_request
 
-val make_test_event_pattern_response : ?result:boolean_ -> unit -> test_event_pattern_response
+val make_test_event_pattern_response : ?result_:boolean_ -> unit -> test_event_pattern_response
 
 val make_test_event_pattern_request :
   event:string_ -> event_pattern:event_pattern -> unit -> test_event_pattern_request

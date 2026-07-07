@@ -318,17 +318,16 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
         value |> parseString >>| fun httpPrefixHeader ->
         Trait.HttpPrefixHeadersTrait httpPrefixHeader
     | "smithy.api#xmlAttribute" -> Ok Trait.XmlAttributeTrait
-    | "smithy.api#externalDocumentation" -> (
-        let documentation = value |> parseObject |> field "Documentation" in
-        let specification = value |> parseObject |> field "Specification" in
-        match (documentation, specification) with
-        | Ok link, _ ->
-            Ok link |> parseString >>| fun link ->
-            Trait.ExternalDocumentationTrait (Trait.DocumentationLink link)
-        | _, Ok link ->
-            Ok link |> parseString >>| fun link ->
-            Trait.ExternalDocumentationTrait (Trait.SpecificationLink link)
-        | Error x, Error _ -> Error x)
+    | "smithy.api#externalDocumentation" ->
+        value |> parseObject
+        |> Result.bind ~f:(fun { object_; path } ->
+            object_
+            |> List.fold ~init:(Ok []) ~f:(fun acc (key, v) ->
+                acc
+                |> Result.bind ~f:(fun entries ->
+                    parseString (Ok { path; tree = v })
+                    |> Result.map ~f:(fun s -> (key, s) :: entries))))
+        |> Result.map ~f:(fun x -> Trait.ExternalDocumentationTrait x)
     | "smithy.api#eventPayload" -> Ok Trait.EventPayloadTrait
     | "smithy.api#http" -> Ok Trait.HttpTrait
     | "smithy.api#idempotent" -> Ok Trait.IdempotentTrait

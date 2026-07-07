@@ -264,8 +264,8 @@ let make_untag_resource_request ~tag_keys:(tag_keys_ : tag_key_list)
     ~resource_ar_n:(resource_ar_n_ : arn) () =
   ({ tag_keys = tag_keys_; resource_ar_n = resource_ar_n_ } : untag_resource_request)
 
-let make_test_event_pattern_response ?result:(result_ : boolean_ option) () =
-  ({ result = result_ } : test_event_pattern_response)
+let make_test_event_pattern_response ?result_:(result__ : boolean_ option) () =
+  ({ result_ = result__ } : test_event_pattern_response)
 
 let make_test_event_pattern_request ~event:(event_ : string_)
     ~event_pattern:(event_pattern_ : event_pattern) () =

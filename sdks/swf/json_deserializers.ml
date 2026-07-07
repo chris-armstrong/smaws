@@ -378,7 +378,7 @@ let workflow_execution_completed_event_attributes_of_yojson tree path =
   ({
      decision_task_completed_event_id =
        value_for_key event_id_of_yojson "decisionTaskCompletedEventId" _list path;
-     result = option_of_yojson (value_for_key data_of_yojson "result") _list path;
+     result_ = option_of_yojson (value_for_key data_of_yojson "result") _list path;
    }
     : workflow_execution_completed_event_attributes)
 
@@ -819,7 +819,7 @@ let request_cancel_activity_task_decision_attributes_of_yojson tree path =
 
 let complete_workflow_execution_decision_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
-  ({ result = option_of_yojson (value_for_key data_of_yojson "result") _list path }
+  ({ result_ = option_of_yojson (value_for_key data_of_yojson "result") _list path }
     : complete_workflow_execution_decision_attributes)
 
 let fail_workflow_execution_decision_attributes_of_yojson tree path =
@@ -1009,7 +1009,7 @@ let respond_activity_task_failed_input_of_yojson tree path =
 let respond_activity_task_completed_input_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     result = option_of_yojson (value_for_key data_of_yojson "result") _list path;
+     result_ = option_of_yojson (value_for_key data_of_yojson "result") _list path;
      task_token = value_for_key task_token_of_yojson "taskToken" _list path;
    }
     : respond_activity_task_completed_input)
@@ -1373,7 +1373,7 @@ let activity_task_completed_event_attributes_of_yojson tree path =
   ({
      started_event_id = value_for_key event_id_of_yojson "startedEventId" _list path;
      scheduled_event_id = value_for_key event_id_of_yojson "scheduledEventId" _list path;
-     result = option_of_yojson (value_for_key data_of_yojson "result") _list path;
+     result_ = option_of_yojson (value_for_key data_of_yojson "result") _list path;
    }
     : activity_task_completed_event_attributes)
 
@@ -1472,7 +1472,7 @@ let child_workflow_execution_completed_event_attributes_of_yojson tree path =
   ({
      started_event_id = value_for_key event_id_of_yojson "startedEventId" _list path;
      initiated_event_id = value_for_key event_id_of_yojson "initiatedEventId" _list path;
-     result = option_of_yojson (value_for_key data_of_yojson "result") _list path;
+     result_ = option_of_yojson (value_for_key data_of_yojson "result") _list path;
      workflow_type = value_for_key workflow_type_of_yojson "workflowType" _list path;
      workflow_execution = value_for_key workflow_execution_of_yojson "workflowExecution" _list path;
    }
@@ -1718,7 +1718,7 @@ let lambda_function_started_event_attributes_of_yojson tree path =
 let lambda_function_completed_event_attributes_of_yojson tree path =
   let _list = assoc_of_yojson tree path in
   ({
-     result = option_of_yojson (value_for_key data_of_yojson "result") _list path;
+     result_ = option_of_yojson (value_for_key data_of_yojson "result") _list path;
      started_event_id = value_for_key event_id_of_yojson "startedEventId" _list path;
      scheduled_event_id = value_for_key event_id_of_yojson "scheduledEventId" _list path;
    }

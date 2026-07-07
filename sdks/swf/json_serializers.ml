@@ -284,7 +284,7 @@ let workflow_execution_completed_event_attributes_to_yojson
   assoc_to_yojson
     [
       ("decisionTaskCompletedEventId", Some (event_id_to_yojson x.decision_task_completed_event_id));
-      ("result", option_to_yojson data_to_yojson x.result);
+      ("result", option_to_yojson data_to_yojson x.result_);
     ]
 
 let workflow_execution_canceled_event_attributes_to_yojson
@@ -618,7 +618,7 @@ let request_cancel_activity_task_decision_attributes_to_yojson
 
 let complete_workflow_execution_decision_attributes_to_yojson
     (x : complete_workflow_execution_decision_attributes) =
-  assoc_to_yojson [ ("result", option_to_yojson data_to_yojson x.result) ]
+  assoc_to_yojson [ ("result", option_to_yojson data_to_yojson x.result_) ]
 
 let fail_workflow_execution_decision_attributes_to_yojson
     (x : fail_workflow_execution_decision_attributes) =
@@ -768,7 +768,7 @@ let respond_activity_task_failed_input_to_yojson (x : respond_activity_task_fail
 let respond_activity_task_completed_input_to_yojson (x : respond_activity_task_completed_input) =
   assoc_to_yojson
     [
-      ("result", option_to_yojson data_to_yojson x.result);
+      ("result", option_to_yojson data_to_yojson x.result_);
       ("taskToken", Some (task_token_to_yojson x.task_token));
     ]
 
@@ -1058,7 +1058,7 @@ let activity_task_completed_event_attributes_to_yojson
     [
       ("startedEventId", Some (event_id_to_yojson x.started_event_id));
       ("scheduledEventId", Some (event_id_to_yojson x.scheduled_event_id));
-      ("result", option_to_yojson data_to_yojson x.result);
+      ("result", option_to_yojson data_to_yojson x.result_);
     ]
 
 let activity_task_failed_event_attributes_to_yojson (x : activity_task_failed_event_attributes) =
@@ -1140,7 +1140,7 @@ let child_workflow_execution_completed_event_attributes_to_yojson
     [
       ("startedEventId", Some (event_id_to_yojson x.started_event_id));
       ("initiatedEventId", Some (event_id_to_yojson x.initiated_event_id));
-      ("result", option_to_yojson data_to_yojson x.result);
+      ("result", option_to_yojson data_to_yojson x.result_);
       ("workflowType", Some (workflow_type_to_yojson x.workflow_type));
       ("workflowExecution", Some (workflow_execution_to_yojson x.workflow_execution));
     ]
@@ -1342,7 +1342,7 @@ let lambda_function_completed_event_attributes_to_yojson
     (x : lambda_function_completed_event_attributes) =
   assoc_to_yojson
     [
-      ("result", option_to_yojson data_to_yojson x.result);
+      ("result", option_to_yojson data_to_yojson x.result_);
       ("startedEventId", Some (event_id_to_yojson x.started_event_id));
       ("scheduledEventId", Some (event_id_to_yojson x.scheduled_event_id));
     ]

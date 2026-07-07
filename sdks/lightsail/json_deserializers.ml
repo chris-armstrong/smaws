@@ -625,7 +625,7 @@ let forward_values_of_yojson (tree : t) path =
   ((match tree with
     | `String "all" -> All
     | `String "allow-list" -> AllowList
-    | `String "none" -> None
+    | `String "none" -> None_
     | `String value -> raise (deserialize_unknown_enum_value_error path "ForwardValues" value)
     | _ -> raise (deserialize_wrong_type_error path "ForwardValues")
      : forward_values)
@@ -2261,7 +2261,7 @@ let port_list_of_yojson tree path = list_of_yojson port_of_yojson tree path
 let port_info_source_type_of_yojson (tree : t) path =
   ((match tree with
     | `String "CLOSED" -> Closed
-    | `String "NONE" -> None
+    | `String "NONE" -> None_
     | `String "INSTANCE" -> Instance
     | `String "DEFAULT" -> Default
     | `String value -> raise (deserialize_unknown_enum_value_error path "PortInfoSourceType" value)
@@ -2349,7 +2349,7 @@ let monitored_resource_info_of_yojson tree path =
 
 let metric_unit_of_yojson (tree : t) path =
   ((match tree with
-    | `String "None" -> None
+    | `String "None" -> None_
     | `String "Count/Second" -> CountSecond
     | `String "Terabits/Second" -> TerabitsSecond
     | `String "Gigabits/Second" -> GigabitsSecond
@@ -3294,7 +3294,7 @@ let get_instance_state_request_of_yojson tree path =
 let instance_snapshot_state_of_yojson (tree : t) path =
   ((match tree with
     | `String "available" -> Available
-    | `String "error" -> Error
+    | `String "error" -> Error_
     | `String "pending" -> Pending
     | `String value ->
         raise (deserialize_unknown_enum_value_error path "InstanceSnapshotState" value)
@@ -3323,7 +3323,7 @@ let disk_state_of_yojson (tree : t) path =
     | `String "unknown" -> Unknown
     | `String "in-use" -> InUse
     | `String "available" -> Available
-    | `String "error" -> Error
+    | `String "error" -> Error_
     | `String "pending" -> Pending
     | `String value -> raise (deserialize_unknown_enum_value_error path "DiskState" value)
     | _ -> raise (deserialize_wrong_type_error path "DiskState")
@@ -4007,7 +4007,7 @@ let get_distribution_bundles_request_of_yojson tree path =
 let disk_snapshot_state_of_yojson (tree : t) path =
   ((match tree with
     | `String "unknown" -> Unknown
-    | `String "error" -> Error
+    | `String "error" -> Error_
     | `String "completed" -> Completed
     | `String "pending" -> Pending
     | `String value -> raise (deserialize_unknown_enum_value_error path "DiskSnapshotState" value)

@@ -541,7 +541,11 @@ module Deserialiser = struct
     let key_expr =
       match parse_primitive_from_string ms.mapKey.target (read_element key_tag) with
       | Some e -> e
-      | None -> read_element key_tag
+      | None ->
+          let kf =
+            B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver ms.mapKey.target))
+          in
+          read_sequence key_tag (B.pexp_apply kf [ (Nolabel, exp_ident "i") ])
     in
     let val_expr =
       match parse_primitive_from_string ms.mapValue.target (read_element val_tag) with
@@ -874,8 +878,8 @@ module Deserialiser = struct
                   (B.pexp_ident (Location.mknoloc (make_lident ~names:(deser_mod @ [ helper ]))))
                   [ (Nolabel, s_expr) ])))
         else Some (read_data_lambda ())
-    | IntegerShape _ | LongShape _ | ShortShape _ | ByteShape _ ->
-        Some (primitive_of_xml_lambda "int_of_string")
+    | LongShape _ -> Some (primitive_of_xml_lambda "long_of_string")
+    | IntegerShape _ | ShortShape _ | ByteShape _ -> Some (primitive_of_xml_lambda "int_of_string")
     | BigIntegerShape _ -> Some (primitive_of_xml_lambda "big_int_of_string")
     | BigDecimalShape _ -> Some (primitive_of_xml_lambda "big_decimal_of_string")
     | BooleanShape _ -> Some (primitive_of_xml_lambda "bool_of_string")

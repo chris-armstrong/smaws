@@ -214,9 +214,9 @@ let make_workflow_execution_continued_as_new_event_attributes
    }
     : workflow_execution_continued_as_new_event_attributes)
 
-let make_workflow_execution_completed_event_attributes ?result:(result_ : data option)
+let make_workflow_execution_completed_event_attributes ?result_:(result__ : data option)
     ~decision_task_completed_event_id:(decision_task_completed_event_id_ : event_id) () =
-  ({ decision_task_completed_event_id = decision_task_completed_event_id_; result = result_ }
+  ({ decision_task_completed_event_id = decision_task_completed_event_id_; result_ = result__ }
     : workflow_execution_completed_event_attributes)
 
 let make_workflow_execution_canceled_event_attributes ?details:(details_ : data option)
@@ -459,8 +459,8 @@ let make_request_cancel_activity_task_decision_attributes ~activity_id:(activity
     () =
   ({ activity_id = activity_id_ } : request_cancel_activity_task_decision_attributes)
 
-let make_complete_workflow_execution_decision_attributes ?result:(result_ : data option) () =
-  ({ result = result_ } : complete_workflow_execution_decision_attributes)
+let make_complete_workflow_execution_decision_attributes ?result_:(result__ : data option) () =
+  ({ result_ = result__ } : complete_workflow_execution_decision_attributes)
 
 let make_fail_workflow_execution_decision_attributes ?details:(details_ : data option)
     ?reason:(reason_ : failure_reason option) () =
@@ -612,9 +612,9 @@ let make_respond_activity_task_failed_input ?details:(details_ : data option)
   ({ details = details_; reason = reason_; task_token = task_token_ }
     : respond_activity_task_failed_input)
 
-let make_respond_activity_task_completed_input ?result:(result_ : data option)
+let make_respond_activity_task_completed_input ?result_:(result__ : data option)
     ~task_token:(task_token_ : task_token) () =
-  ({ result = result_; task_token = task_token_ } : respond_activity_task_completed_input)
+  ({ result_ = result__; task_token = task_token_ } : respond_activity_task_completed_input)
 
 let make_respond_activity_task_canceled_input ?details:(details_ : data option)
     ~task_token:(task_token_ : task_token) () =
@@ -792,13 +792,13 @@ let make_activity_task_started_event_attributes ?identity:(identity_ : identity 
   ({ scheduled_event_id = scheduled_event_id_; identity = identity_ }
     : activity_task_started_event_attributes)
 
-let make_activity_task_completed_event_attributes ?result:(result_ : data option)
+let make_activity_task_completed_event_attributes ?result_:(result__ : data option)
     ~started_event_id:(started_event_id_ : event_id)
     ~scheduled_event_id:(scheduled_event_id_ : event_id) () =
   ({
      started_event_id = started_event_id_;
      scheduled_event_id = scheduled_event_id_;
-     result = result_;
+     result_ = result__;
    }
     : activity_task_completed_event_attributes)
 
@@ -876,7 +876,7 @@ let make_child_workflow_execution_started_event_attributes
    }
     : child_workflow_execution_started_event_attributes)
 
-let make_child_workflow_execution_completed_event_attributes ?result:(result_ : data option)
+let make_child_workflow_execution_completed_event_attributes ?result_:(result__ : data option)
     ~started_event_id:(started_event_id_ : event_id)
     ~initiated_event_id:(initiated_event_id_ : event_id)
     ~workflow_type:(workflow_type_ : workflow_type)
@@ -884,7 +884,7 @@ let make_child_workflow_execution_completed_event_attributes ?result:(result_ : 
   ({
      started_event_id = started_event_id_;
      initiated_event_id = initiated_event_id_;
-     result = result_;
+     result_ = result__;
      workflow_type = workflow_type_;
      workflow_execution = workflow_execution_;
    }
@@ -1070,11 +1070,11 @@ let make_lambda_function_started_event_attributes
     ~scheduled_event_id:(scheduled_event_id_ : event_id) () =
   ({ scheduled_event_id = scheduled_event_id_ } : lambda_function_started_event_attributes)
 
-let make_lambda_function_completed_event_attributes ?result:(result_ : data option)
+let make_lambda_function_completed_event_attributes ?result_:(result__ : data option)
     ~started_event_id:(started_event_id_ : event_id)
     ~scheduled_event_id:(scheduled_event_id_ : event_id) () =
   ({
-     result = result_;
+     result_ = result__;
      started_event_id = started_event_id_;
      scheduled_event_id = scheduled_event_id_;
    }

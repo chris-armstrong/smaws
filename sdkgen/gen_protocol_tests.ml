@@ -279,12 +279,11 @@ and value_mapper ~shape_resolver ~target ~value =
         [
           ( Ppxlib.Nolabel,
             B.pexp_constant
-              Ppxlib.(Pconst_string (value |> Yojson.Basic.pretty_to_string, Location.none, None))
-          );
+              Ppxlib.(Pconst_string (value |> Yojson.Safe.pretty_to_string, Location.none, None)) );
         ]
   | _ ->
       failwith
-        ("Unsupported shape type: " ^ target ^ " for value " ^ Yojson.Basic.pretty_to_string value)
+        ("Unsupported shape type: " ^ target ^ " for value " ^ Yojson.Safe.pretty_to_string value)
 
 let make_input_expr ~shape_resolver input_shape_name params =
   let params = Option.value ~default:(`Assoc []) params in

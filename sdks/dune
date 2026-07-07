@@ -5,41 +5,170 @@
  (libraries
   smaws-lib
   Smaws_Client_ACM
+  Smaws_Client_ACMPCA
+  Smaws_Client_ApplicationAutoScaling
+  Smaws_Client_ApplicationDiscoveryService
+  Smaws_Client_ApplicationInsights
   Smaws_Client_AppRunner
+  Smaws_Client_AppStream
+  Smaws_Client_ARCRegionswitch
+  Smaws_Client_Athena
+  Smaws_Client_AutoScaling
+  Smaws_Client_AutoScalingPlans
+  Smaws_Client_B2bi
   Smaws_Client_BackupGateway
+  Smaws_Client_BCMDashboards
+  Smaws_Client_BCMDataExports
+  Smaws_Client_BCMPricingCalculator
+  Smaws_Client_BCMRecommendedActions
+  Smaws_Client_BedrockDataAutomationRuntime
+  Smaws_Client_Billing
+  Smaws_Client_Budgets
+  Smaws_Client_Cloud9
+  Smaws_Client_CloudControl
+  Smaws_Client_CloudFormation
+  Smaws_Client_CloudHSM
+  Smaws_Client_CloudHSMV2
+  Smaws_Client_CloudSearch
   Smaws_Client_CloudTrail
+  Smaws_Client_CloudWatch
+  Smaws_Client_CloudWatchEvents
+  Smaws_Client_CloudWatchLogs
+  Smaws_Client_CodeBuild
+  Smaws_Client_CodeCommit
   Smaws_Client_CodeConnections
+  Smaws_Client_CodeDeploy
+  Smaws_Client_CodePipeline
+  Smaws_Client_CodeStarconnections
   Smaws_Client_CognitoIdentity
+  Smaws_Client_CognitoIdentityProvider
+  Smaws_Client_Comprehend
+  Smaws_Client_ComprehendMedical
+  Smaws_Client_ComputeOptimizer
+  Smaws_Client_ComputeOptimizerAutomation
   Smaws_Client_ConfigService
+  Smaws_Client_CostandUsageReportService
+  Smaws_Client_CostExplorer
+  Smaws_Client_CostOptimizationHub
+  Smaws_Client_DataPipeline
+  Smaws_Client_DatabaseMigrationService
+  Smaws_Client_DataSync
   Smaws_Client_DAX
+  Smaws_Client_DeviceFarm
+  Smaws_Client_DirectConnect
   Smaws_Client_DirectoryService
+  Smaws_Client_DocDB
   Smaws_Client_DynamoDB
   Smaws_Client_DynamoDBStreams
+  Smaws_Client_EC2InstanceConnect
+  Smaws_Client_ECR
+  Smaws_Client_ECRPUBLIC
+  Smaws_Client_ECS
+  Smaws_Client_ElasticBeanstalk
+  Smaws_Client_ElasticLoadBalancing
+  Smaws_Client_ElasticLoadBalancingv2
+  Smaws_Client_ElastiCache
+  Smaws_Client_EMR
   Smaws_Client_EventBridge
+  Smaws_Client_Evs
+  Smaws_Client_Firehose
   Smaws_Client_FMS
+  Smaws_Client_Forecast
+  Smaws_Client_Forecastquery
+  Smaws_Client_FraudDetector
+  Smaws_Client_FreeTier
+  Smaws_Client_FSx
+  Smaws_Client_GameLift
+  Smaws_Client_GlobalAccelerator
+  Smaws_Client_Glue
+  Smaws_Client_Health
+  Smaws_Client_HealthLake
+  Smaws_Client_IAM
+  Smaws_Client_Identitystore
+  Smaws_Client_Inspector
+  Smaws_Client_Interconnect
+  Smaws_Client_Invoicing
+  Smaws_Client_IoTFleetWise
+  Smaws_Client_IoTSecureTunneling
+  Smaws_Client_IoTThingsGraph
   Smaws_Client_Kendra
+  Smaws_Client_KendraRanking
   Smaws_Client_Keyspaces
+  Smaws_Client_KeyspacesStreams
+  Smaws_Client_Kinesis
   Smaws_Client_KinesisAnalytics
   Smaws_Client_KinesisAnalyticsV2
-  Smaws_Client_Kinesis
   Smaws_Client_KMS
+  Smaws_Client_LicenseManager
   Smaws_Client_Lightsail
+  Smaws_Client_LookoutEquipment
+  Smaws_Client_MachineLearning
+  Smaws_Client_MailManager
   Smaws_Client_MarketplaceAgreement
+  Smaws_Client_MarketplaceCommerceAnalytics
+  Smaws_Client_MarketplaceEntitlementService
+  Smaws_Client_MarketplaceMetering
+  Smaws_Client_MediaStore
+  Smaws_Client_MemoryDB
   Smaws_Client_MigrationHub
+  Smaws_Client_MigrationHubConfig
+  Smaws_Client_MTurk
+  Smaws_Client_MWAAServerless
+  Smaws_Client_Neptune
+  Smaws_Client_NetworkFirewall
+  Smaws_Client_Odb
   Smaws_Client_OpenSearchServerless
+  Smaws_Client_Organizations
+  Smaws_Client_PartnerCentralAccount
+  Smaws_Client_PartnerCentralBenefits
+  Smaws_Client_PartnerCentralChannel
+  Smaws_Client_PartnerCentralSelling
+  Smaws_Client_PaymentCryptography
+  Smaws_Client_PCS
+  Smaws_Client_Personalize
   Smaws_Client_PI
+  Smaws_Client_PinpointSMSVoiceV2
+  Smaws_Client_Pricing
   Smaws_Client_Proton
+  Smaws_Client_RDS
+  Smaws_Client_Redshift
+  Smaws_Client_RedshiftData
+  Smaws_Client_RedshiftServerless
+  Smaws_Client_Rekognition
   Smaws_Client_ResourceGroupsTaggingAPI
+  Smaws_Client_Route53Domains
   Smaws_Client_Route53RecoveryCluster
+  Smaws_Client_Route53Resolver
+  Smaws_Client_SageMaker
+  Smaws_Client_SecretsManager
+  Smaws_Client_ServiceCatalog
+  Smaws_Client_ServiceQuotas
   Smaws_Client_ServiceDiscovery
+  Smaws_Client_SES
   Smaws_Client_SFN
   Smaws_Client_Shield
   Smaws_Client_Snowball
+  Smaws_Client_SNS
   Smaws_Client_SQS
   Smaws_Client_SSM
+  Smaws_Client_SSMContacts
+  Smaws_Client_SSOAdmin
+  Smaws_Client_StorageGateway
   Smaws_Client_STS
+  Smaws_Client_Support
   Smaws_Client_SWF
+  Smaws_Client_Textract
+  Smaws_Client_TimestreamInfluxDB
+  Smaws_Client_TimestreamQuery
+  Smaws_Client_TimestreamWrite
   Smaws_Client_Transcribe
+  Smaws_Client_Transfer
+  Smaws_Client_Translate
+  Smaws_Client_VerifiedPermissions
+  Smaws_Client_VoiceID
   Smaws_Client_WAF
+  Smaws_Client_WAFRegional
   Smaws_Client_WAFV2
-  Smaws_Client_WorkMail))
+  Smaws_Client_WorkMail
+  Smaws_Client_WorkSpaces
+  Smaws_Client_WorkspacesInstances))

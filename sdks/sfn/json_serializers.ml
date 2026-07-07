@@ -64,7 +64,7 @@ let validate_state_machine_definition_output_to_yojson
         option_to_yojson validate_state_machine_definition_truncated_to_yojson x.truncated );
       ( "diagnostics",
         Some (validate_state_machine_definition_diagnostic_list_to_yojson x.diagnostics) );
-      ("result", Some (validate_state_machine_definition_result_code_to_yojson x.result));
+      ("result", Some (validate_state_machine_definition_result_code_to_yojson x.result_));
     ]
 
 let validate_state_machine_definition_max_result_to_yojson = int_to_yojson
@@ -342,7 +342,7 @@ let inspection_data_to_yojson (x : inspection_data) =
       ("request", option_to_yojson inspection_data_request_to_yojson x.request);
       ("afterResultPath", option_to_yojson sensitive_data_to_yojson x.after_result_path);
       ("afterResultSelector", option_to_yojson sensitive_data_to_yojson x.after_result_selector);
-      ("result", option_to_yojson sensitive_data_to_yojson x.result);
+      ("result", option_to_yojson sensitive_data_to_yojson x.result_);
       ("afterParameters", option_to_yojson sensitive_data_to_yojson x.after_parameters);
       ("afterInputPath", option_to_yojson sensitive_data_to_yojson x.after_input_path);
       ("afterArguments", option_to_yojson sensitive_data_to_yojson x.after_arguments);
@@ -388,7 +388,7 @@ let mock_input_to_yojson (x : mock_input) =
       ( "fieldValidationMode",
         option_to_yojson mock_response_validation_mode_to_yojson x.field_validation_mode );
       ("errorOutput", option_to_yojson mock_error_output_to_yojson x.error_output);
-      ("result", option_to_yojson sensitive_data_to_yojson x.result);
+      ("result", option_to_yojson sensitive_data_to_yojson x.result_);
     ]
 
 let retrier_retry_count_to_yojson = int_to_yojson
