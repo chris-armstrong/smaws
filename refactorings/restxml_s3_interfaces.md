@@ -24,9 +24,11 @@ In the S3 model that is:
 - `PutObject`, `UploadPart`, `WriteGetObjectResponse` — streaming **input**
   (`Body : StreamingBlob`, `@streaming` blob).
 - `GetObject` — streaming **output** (`Body : StreamingBlob`).
-- `SelectObjectContent` — streaming **output** event stream
-  (`Payload : SelectObjectContentEventStream`, `@streaming` union with
-  `@eventPayload` members).
+
+`SelectObjectContent` also has a streaming payload (`Payload` is a
+`@streaming` union), but because S3 Select has been deprecated by AWS we
+**do not support event-stream decoding**. The operation still appears in
+the generated SDK, but calling it will fail at runtime. See §3.7 and §8.9.
 
 Non-streaming operations (everything in DynamoDB; the four S3 conformance ops
 `ListObjectsV2`, `GetBucketLocation`, `DeleteObjectTagging`, and the test
@@ -58,7 +60,7 @@ materialised types (`string`, `Smaws_Lib.CoreTypes.Blob.t`, …).
 
 The `request` function keeps the same shape; the **input record's streaming
 payload field** changes type from `Smaws_Lib.CoreTypes.Blob.t` to
-`Eio.Flow.source_read`. The builder follows.
+`Eio.Flow.source`. The builder follows.
 
 ```ocaml
 module PutObject : sig
@@ -80,7 +82,7 @@ end
 ```ocaml
 (* Types.ml *)
 type put_object_input = {
-  body : Eio.Flow.source_read;       (* was: Smaws_Lib.CoreTypes.Blob.t *)
+  body : Eio.Flow.source;       (* was: Smaws_Lib.CoreTypes.Blob.t *)
   bucket : bucket_name;              (* @httpLabel *)
   key : object_key;                  (* @httpLabel *)
   content_length : content_length option;   (* @httpHeader Content-Length *)
@@ -92,7 +94,7 @@ type put_object_input = {
 ```ocaml
 (* Builders.ml *)
 val make_put_object_input :
-  body:Eio.Flow.source_read ->
+  body:Eio.Flow.source ->
   bucket:bucket_name ->
   key:object_key ->
   ?content_length:content_length ->
@@ -111,14 +113,13 @@ type input_body =
   | `String of string
   | `Compressed of string * body_encoding
   | `Form of (string * string list) list
-  | `Flow of Eio.Flow.source_read * int64 option ]   (* NEW: length = Some → Content-Length,
-                                                                 None     → chunked transfer *)
+  | `Stream of (unit -> string option) ]   (* NEW: producer returns None at EOF *)
 ```
 
 ### After — streaming output (`GetObject`)
 
 The output record's streaming payload field becomes
-`Eio.Flow.source_read option`. It is `option` because a 304 / 404 / empty-body
+`Eio.Flow.source option`. It is `option` because a 304 / 404 / empty-body
 response still parses headers but has no body flow. The caller consumes the
 flow within the switch; the connection is returned to the pool when the flow
 is drained (or the switch is torn down — the existing pool already returns on
@@ -142,7 +143,7 @@ end
 ```ocaml
 (* Types.ml *)
 type get_object_output = {
-  body : Eio.Flow.source_read option;    (* was: Smaws_Lib.CoreTypes.Blob.t option *)
+  body : Eio.Flow.source option;    (* was: Smaws_Lib.CoreTypes.Blob.t option *)
   delete_marker : delete_marker option;  (* @httpHeader x-amz-delete-marker *)
   etag : etag option;                    (* @httpHeader ETag *)
   metadata : metadata option;            (* @httpPrefixHeaders x-amz-meta- *)
@@ -150,44 +151,91 @@ type get_object_output = {
 }
 ```
 
-The HTTP response body is exposed as a flow. `Http.Body` gains:
+The HTTP response body is exposed as a stream. To keep `smaws_lib` HTTP
+implementations pluggable, the **client signature exposes a small abstract
+streaming API**, not Eio directly.
 
 ```ocaml
 (* smaws_lib/http/http.mli — Body sub-module of Client_intf *)
 module Body : sig
   type t
-  val to_string : t -> string option         (* unchanged *)
-  val drain : t -> unit                      (* unchanged *)
-  val to_flow : t -> Eio.Flow.source_read    (* NEW *)
+  val to_string : t -> string option
+  val drain : t -> unit
+
+  (* Streaming read interface, independent of any specific IO library. *)
+  module Stream : sig
+    type chunk = { data : string; final : bool }
+    val read : t -> (chunk option, [ `Closed | `Streaming_not_supported ]) result
+  end
 end
 ```
 
-`request_with_metadata` still returns `output Smaws_Lib.Response.t` — metadata
-(headers / request id) is separate from the body flow, so wrapping is fine.
+`Body.Stream.read` returns the next chunk of the response body. A returned
+chunk with `final = true` signals end-of-stream. `None` means the body is
+already drained. The Eio-based implementation maps `Httpun.Body.Reader` onto
+this interface; a synchronous mock can return the whole mock string as one
+final chunk. This keeps the protocol runtime and generated SDK types free of
+Eio in the HTTP client signature, while still allowing zero-copy streaming
+for real HTTP clients.
 
-### After — event-stream output (`SelectObjectContent`) — deprioritised
+For **streaming request bodies**, `Http.input_body` gains a similar abstract
+variant:
 
-{e S3 Select is no longer available to new customers; this sketch is
-   retained for completeness but the event-stream codec is out of scope.}
+```ocaml
+type input_body =
+  [ `None
+  | `String of string
+  | `Compressed of string * body_encoding
+  | `Form of (string * string list) list
+  | `Stream of (unit -> string option) ]   (* NEW: producer returns None at EOF *)
+```
+
+The producer is called repeatedly by the HTTP implementation when it needs
+more bytes. It may block if the implementation is effect-based, or return
+immediately for a synchronous/mock client. The producer receives no arguments
+and must be stateful. The optional `int64` length carried by the old `` `Flow ``
+sketch is dropped because a generic producer cannot always know its length;
+instead the restXml runtime decides `Content-Length` vs chunked from the
+modeled header / length metadata independently (see §8.4).
+
+**Why this design?**
+
+- The current `Http.Client_intf.S` is already functorised (`Http_eio_client.Make`)
+  and used by a string-based mock. A streaming extension should fit the same
+  pattern: the protocol runtime talks to an abstract `Http.Body.t`, not to Eio.
+- Exposing `Eio.Flow.source` in `Http.Client_intf` would force every alternative
+  HTTP backend (test mock, future lwt/async backend, etc.) to depend on Eio and
+  implement an Eio flow, defeating the point of the pluggable client type.
+- The generated S3 types can still expose `Eio.Flow.source` to callers if desired
+  (see §1), but the bridge from the generic `Body.Stream.read` to an Eio flow
+  lives in a small SDK-side helper, not in the core HTTP signature.
+- `request_with_metadata` still returns `output Smaws_Lib.Response.t` because
+  metadata (headers / request id) is separate from the body stream, so wrapping
+  is fine.
+
+### After — event-stream output (`SelectObjectContent`) — dropped
+
+{e S3 Select has been deprecated by AWS and is no longer available to new
+   customers. We therefore do not implement the Amazon Event Stream codec or
+   the `decode_events` helper for this operation.}
 
 `SelectObjectContentEventStream` is a `@streaming` union with `@eventPayload`
 members — an Amazon Event Stream (binary framed messages) over the streaming
-HTTP body. Same field-type approach: the output field is a flow of decoded
-events. Concrete type to be nailed down with the event-stream implementation
-(Tier 1 item in `restxml_s3_support.md`); sketch:
+HTTP body. The first S3 cut will **not support this operation at runtime**:
 
 ```ocaml
-type select_object_content_event =
-  [ `Records of records_event
-  | `Stats of stats_event
-  | `Progress of progress_event
-  | `Cont
-  | `End ]
-
 type select_object_content_output = {
-  payload : select_object_content_event Eio.Stream.recv
+  payload : Eio.Flow.source option   (* @httpPayload @streaming union *)
 }
 ```
+
+The generated operation will expose the same streaming field type as other
+streaming outputs (raw `Eio.Flow.source option`), so the SDK compiles and the
+API surface stays uniform, but `SelectObjectContent.request` will raise
+`Not_implemented` (or return an `Error`) until/unless event-stream support is
+added for a non-deprecated service. No `decode_events` helper is generated.
+
+See §3.7 and §8.9 for the rationale and scope decision.
 
 ### Why a single `request` (not `request_streaming`)
 
@@ -203,13 +251,29 @@ Rejected alternative: keep `request` materialised and add a second
   different for those with the @streaming tag" — the function name is the
   same; the input/output types differ.
 
+### Generated SDK streaming helper
+
+The S3 SDK may expose a small convenience helper for callers who want an Eio
+flow directly. It is generated only for S3 streaming operations and is not
+part of the core `smaws_lib` HTTP signature:
+
+```ocaml
+(* sdks/s3/operations.ml — generated helper, if desired *)
+val body_to_flow : Smaws_Lib.Http.Body.t -> Eio.Flow.source
+```
+
+This helper repeatedly calls `Http.Body.Stream.read` and yields each chunk
+through an Eio flow, resolving when `final = true`. It lives in the generated
+SDK, not in `smaws_lib/http`, so non-Eio clients are not forced to link Eio.
+
 ### Impact on existing protocols
 
 None. AwsJson / AwsQuery have no `@httpPayload @streaming` members, so their
 generated `Types`/`Builders`/`Operations` are unchanged. `Http.input_body`
-gains a variant and `Http.Body` gains `to_flow`; both are additive. The mock
-HTTP client used by the conformance suite (`Http_mock`) is extended to accept
-`` `Flow `` inputs and to expose response bodies as `Eio.Flow.source_read`.
+gains a `` `Stream `` variant and `Body` gains a `Stream` sub-module; both are
+additive. The mock HTTP client used by the conformance suite (`Http_mock`) is
+extended to accept `` `Stream `` inputs and to expose response bodies through
+`Body.Stream.read`.
 
 ---
 
@@ -218,12 +282,15 @@ HTTP client used by the conformance suite (`Http_mock`) is extended to accept
 ### Detection (annotation-driven)
 
 Codegen treats a service as S3 iff it has `aws.protocols#restXml` **and**
-`aws.api#service.endpointPrefix = "s3"` (equivalently
+`aws.api#service.endpointPrefix = Some "s3"` (equivalently
 `cloudTrailEventSource = "s3.amazonaws.com"`). When detected, the generated
 SDK gains:
 
 - an `Options` submodule (the S3 client-config record),
 - a `make_context` constructor that injects the options into the `Context`.
+
+If `endpointPrefix` is `None`, the service is treated as generic restXml and
+no S3-specific options or addressing logic is emitted.
 
 Per-operation annotations (`aws.customizations#s3UnwrappedXmlOutput`,
 service-level `restXml noErrorWrapping: true`) are handled in the restXml
@@ -345,7 +412,7 @@ module S3 = struct
   let default = { ... }
 end
 
-type t = [ `S3 of S3.t ]   (* extensible: Glacier / API Gateway / ML later *)
+type t = S3 of S3.t
 ```
 
 The generated `Smaws_Client_S3.make_context` is a one-line wrapper:
@@ -355,7 +422,7 @@ let make_context ?config ?s3_options ~sw net =
   Smaws_Lib.Context.make_with_eio_http
     ?config
     ~service_customization:
-      (`S3 (Option.value s3_options ~default:Options.default))
+      (S3 (Option.value s3_options ~default:Options.default))
     ~sw net
 ```
 
@@ -365,7 +432,7 @@ The restXml runtime reads `Context.service_customization`:
 (* smaws_lib/protocols_impl/AwsRestXml.ml — sketch *)
 let resolve_host ~ctx ~bucket ~region =
   match Context.service_customization ctx with
-  | Some (`S3 opts) -> S3_addressing.resolve_host ~opts ~bucket ~region
+  | Some (S3 opts) -> S3_addressing.resolve_host ~opts ~bucket ~region
   | None ->              (* generic restXml: use modeled HTTP bindings verbatim *)
     Fmt.str "%s.%s.amazonaws.com" service_prefix region
 ```
@@ -373,7 +440,7 @@ let resolve_host ~ctx ~bucket ~region =
 This is what keeps the generic `aws.protocoltests.restxml` suite passing: it
 has `service_customization = None`, so the runtime uses the modeled bindings
 and does no bucket-to-host rewriting. The four `com.amazonaws.s3` conformance
-ops run with `Some (`S3 _)` and exercise the addressing matrix
+ops run with `Some (S3 _)` and exercise the addressing matrix
 (`S3DefaultAddressing`, `S3VirtualHostAddressing`, `S3PathAddressing`,
 `S3VirtualHostDualstackAddressing`, `S3VirtualHostAccelerateAddressing`,
 `S3VirtualHostDualstackAccelerateAddressing`, `S3OperationAddressingPreferred`).
@@ -387,6 +454,21 @@ carry a `smithy.rules#staticContextParams` / operation config. For the first
 cut we expose only the client-level `Options.t`; the operation-level override
 is a Tier-3 extension that adds an optional `?s3_options` to the individual
 operation's `request` (passed to the same `S3_addressing.resolve_host`).
+
+Only **client-level (level 2)** and **operation-level (level 3)** options
+matter for smaws. Environment/file configuration is intentionally outside
+the scope of this library. Precedence is:
+
+```
+operation-level ?s3_options  → wins
+client-level Options.t in Context.service_customization
+```
+
+If the operation-level override is present, it replaces the whole `Options.t`
+for that call. The operation's own `S3OperationAddressingPreferred` preference
+is treated as an operation-level override generated by codegen, so it takes
+precedence over both. `Config.t` is unchanged: it continues to carry only
+credentials, region, and endpoint; it does not carry S3 addressing options.
 
 ### Alternative considered (rejected)
 
@@ -402,15 +484,21 @@ cost, stays clean, and is extensible.
 
 | Area | File | Change |
 |------|------|--------|
-| runtime | `smaws_lib/http/http.mli` / `.ml` | `input_body` += `` `Flow ``; `Body.to_flow` |
-| runtime | `smaws_lib/Context.mli` / `.ml` | `?service_customization` optional param + field |
+| runtime | `smaws_lib/http/http.mli` / `.ml` | `input_body` += `` `Stream ``; `Body.Stream` sub-module |
+| runtime | `smaws_lib/http/http_eio_http1_1_protocol_impl.ml` | map `Httpun.Body.Reader` to `Body.Stream.read` |
+| runtime | `smaws_lib/http/http_eio_client.ml` | pass `` `Stream `` producer to HTTP/1.1 writer |
+| runtime | `smaws_lib/http/http_types.ml` | `pp_input_body` / `equal_input_body` handle `` `Stream `` |
+| runtime | `smaws_lib/Sign.ml` | add `sign_request_v4_unsigned_payload` |
+| runtime | `smaws_lib/Context.mli` / `.ml` | `?service_customization` optional param + field; `?http_options` optional param + field |
+| runtime | `smaws_lib/http/http.mli` / `.ml` | `Http.options` type (`{ follow_redirects : bool; max_redirects : int }`) |
 | runtime | `smaws_lib/Service_customization.ml` | NEW — `S3.t` + closed sum |
 | runtime | `smaws_lib/protocols_impl/AwsRestXml.ml` | NEW — restXml + S3 addressing |
 | codegen | `codegen/AwsProtocolRestXml.ml` | NEW — emit HTTP bindings, streaming field types |
-| codegen | `sdkgen/gen_types.ml`, `gen_builders.ml` | streaming member → `Eio.Flow.source_read` |
+| codegen | `sdkgen/gen_types.ml`, `gen_builders.ml` | streaming member → `Eio.Flow.source` |
 | codegen | `sdkgen/gen_module.ml` | emit `Options` + `make_context` when S3 detected |
 | codegen | `smithy_ast/Trait.ml` | promote `AwsProtocolRestXmlTrait` to carry `noErrorWrapping` |
-| tests | `smaws_test_support_lib/Http_mock.*` | accept `` `Flow ``; expose response flow |
+| tests | `smaws_test_support_lib/Http_mock.*` | accept `` `Stream ``; expose response bodies via `Body.Stream.read` |
+| tests | `smaws_lib_test/` | add namespace-aware XML parser unit tests |
 | tests | `model_tests/gen.ml` + `protocols/restxml/` | restXml + restxml.xmlns conformance targets |
 
 No change to any existing `sdks/<svc>/` for AwsJson / AwsQuery services.
@@ -423,7 +511,15 @@ Beyond streaming (§1) and S3 options (§2), these generated-type / builder /
 operation-signature decisions need to be fixed before restXml codegen is
 written. Each is annotation-driven. Items are tagged by when they're needed:
 **T0** = required to pass the generic `aws.protocoltests.restxml` suite,
-**T1** = required for real S3, **T3** = production hardening.
+**T1** = required for real S3, **T2** = required for S3-specific conformance
+and client construction, **T3** = production hardening.
+
+| Tier | Meaning |
+|------|---------|
+| **T0** | Generic restXml protocol conformance (`aws.protocoltests.restxml` suite). No S3-specific runtime. |
+| **T1** | Real S3 functionality (`GetObject`/`PutObject`/`UploadPart`/etc.). Builds on T0. |
+| **T2** | S3-specific customizations and client construction (`com.amazonaws.s3` conformance ops, `Options.t`, `make_context`). |
+| **T3** | Production hardening and advanced features; not needed for the first working S3 client. |
 
 Already handled (no change needed — confirmed against DynamoDB output):
 `smithy.api#timestamp` → `Smaws_Lib.CoreTypes.Timestamp.t` (= `Ptime.t`);
@@ -546,7 +642,7 @@ non-streaming) / `Some <empty_flow>` (for streaming) rather than `None`.
 val make_write_get_object_response_request :
   request_route:request_route ->
   request_token:request_token ->
-  ?body:Eio.Flow.source_read ->      (* omitted → builder substitutes the empty flow *)
+  ?body:Eio.Flow.source ->      (* omitted → builder substitutes the empty flow *)
   unit -> write_get_object_response_request
 ```
 
@@ -562,36 +658,29 @@ because it interacts with the 3.4 Content-Type negotiation — the serialiser
 must check `@mediaType` on the payload target shape before falling back to
 the shape-derived default.
 
-### 3.7 Event-stream output field type  — **T1**
+### 3.7 Event-stream output field type  — **dropped**
 
-Refining the sketch in §1. `SelectObjectContent` output `Payload` is a
-`@streaming` union with `@eventPayload` members, delivered as Amazon Event
-Stream binary frames over the chunked HTTP body. Decision: the field is an
-`Eio.Flow.source_read` of **raw bytes** plus a provided `Event_stream.decode`
-that turns the flow into decoded events. Exposing the raw byte flow keeps the
-type uniform with §1 (every streaming `@httpPayload` is
-`Eio.Flow.source_read option`) and pushes event-frame decoding to a helper
-the caller invokes, rather than inventing a second streaming field type.
+`SelectObjectContent` output `Payload` is a `@streaming` union with
+`@eventPayload` members, delivered as Amazon Event Stream binary frames over
+the chunked HTTP body. Because S3 Select has been deprecated by AWS and is no
+longer available to new customers, the first S3 cut **does not implement
+`decode_events` or the Amazon Event Stream codec**.
+
+For consistency with §1, the generated output field is still
+`Eio.Flow.source option`:
 
 ```ocaml
 type select_object_content_output = {
-  payload : Eio.Flow.source_read option   (* @httpPayload @streaming union *)
+  payload : Eio.Flow.source option   (* @httpPayload @streaming union *)
 }
-
-(* helper in the S3 SDK, generated alongside the union *)
-val decode_events : Eio.Flow.source_read ->
-  [ `Records of records_event
-  | `Stats of stats_event
-  | `Progress of progress_event
-  | `Cont
-  | `End ] Eio.Stream.recv
 ```
 
-Alternative (rejected for the first cut): expose the field directly as
-`… Eio.Stream.recv` and have the runtime decode eagerly. That entangles
-event-stream decoding into the HTTP body lifetime and forces a second
-streaming field type; the raw-flow + helper split keeps §1 uniform and lets
-us ship restXml + S3 addressing before implementing the event-stream codec.
+The SDK compiles and the API surface stays uniform with other streaming
+payloads, but calling `SelectObjectContent.request` at runtime raises
+`Not_implemented` (or returns an `Error`). No `decode_events` helper is
+generated. If a non-deprecated service needs event-stream support in the
+future, the codec can be added then without changing the field type — only
+the helper and runtime decoding logic need to be introduced.
 
 ### 3.8 `@paginated` paginator interface  — **T3**
 
@@ -673,8 +762,8 @@ operation-level addressing config.
 
 | # | Change | Where | When |
 |---|--------|-------|------|
-| 1 | streaming `@httpPayload` → `Eio.Flow.source_read` field | Types/Builders | T1 |
-| 1 | `Http.input_body` += `` `Flow ``; `Body.to_flow` | http.mli | T1 |
+| 1 | streaming `@httpPayload` → `Eio.Flow.source` field | Types/Builders | T1 |
+| 1 | `Http.input_body` += `` `Stream ``; `Body.Stream` sub-module | http.mli | T1 |
 | 2 | `?s3_options` at client construction; `Service_customization.t` | Context + SDK module | T2 |
 | 3.1 | `@httpPrefixHeaders` → `(string * string) list`, full-key | Types/Builders | T0 |
 | 3.2 | `@httpQueryParams` → `(string * string) list` | Types/Builders | T0 |
@@ -682,10 +771,12 @@ operation-level addressing config.
 | 3.4 | `@httpPayload` scalar/structured → `t option`, Content-Type table | runtime | T0 |
 | 3.5 | `@default` → builder auto-fills; record stays `t option` | Builders + serialiser | T1 |
 | 3.6 | `@mediaType` overrides Content-Type | runtime | T0 |
-| 3.7 | event-stream `@httpPayload` → raw `Eio.Flow.source_read` + `decode_events` | Types + helper | T1 |
+| 3.7 | event-stream `@httpPayload` — `SelectObjectContent` unsupported, same field type for compile | Types | T3 (dropped) |
 | 3.8 | `@paginated` → `paginate : … -> output Eio.Stream.recv` | Operations | T3 |
 | 3.9 | `@sensitive` → `<redacted>` in derived `show` | Types (show) | T3 |
 | 3.10 | per-call `?s3_options` on S3 ops only | Operations | T3 |
+| — | `?http_options` redirect policy in `Context.make` | Context | T2 |
+| — | unmodeled errors carry `request_id` | `AwsErrors` | T0 |
 
 No change to any existing `sdks/<svc>/` for AwsJson / AwsQuery services.
 
@@ -901,9 +992,9 @@ S3-specific runtime; **new-runtime** = `smaws_lib` change; **T3** = deferred.
 
 | Annotation | Resolution | Status |
 |---|---|---|
-| `smithy.api#streaming` (on blob/union) | **new**. `@httpPayload @streaming` member → `Eio.Flow.source_read` field (§1). Request: `Http.input_body` += `` `Flow ``; response: `Http.Body.to_flow`. | new, T1 |
-| `smithy.api#eventPayload` (union member) | **new**. Event-stream member carried in the event payload. The `@streaming` union's `@httpPayload` field is a raw `Eio.Flow.source_read`; a generated `decode_events` helper turns it into a `[ `Records of … | `Stats of … | … ] Eio.Stream.recv`. | new, T1 (`SelectObjectContent`) |
-| `smithy.api#eventHeader` (union member) | **new**. Event-stream member carried in the event header (decoded by the same helper). | new, T1 (none in S3's `SelectObjectContentEventStream`, but spec-complete) |
+| `smithy.api#streaming` (on blob/union) | **new**. `@httpPayload @streaming` member → `Eio.Flow.source` field (§1). Request: `Http.input_body` += `` `Stream ``; response: `Http.Body.Stream.read`. `SelectObjectContent` is dropped — see §3.7 / §8.9. | new, T1 |
+| `smithy.api#eventPayload` (union member) | **new**. Event-stream member carried in the event payload. {e Not implemented for S3 Select because the operation is deprecated.} If a non-deprecated service needs it later, the codec is added without changing the streaming field type. | new, T3 (dropped for S3) |
+| `smithy.api#eventHeader` (union member) | **new**. Event-stream member carried in the event header. {e Not implemented for S3 Select because the operation is deprecated.} | new, T3 (dropped for S3) |
 
 ### 6.F S3-specific traits and customizations (S3 runtime + serialiser)
 
@@ -968,10 +1059,13 @@ Things called out earlier that are not yet pinned to a concrete resolution:
 
 4. **`Content-Length` resolution order for streaming input.** When the
    user provides `@httpHeader Content-Length` (modeled on `PutObject`), use
-   it. Else if the flow length is known (`Http.input_body` `Flow` variant
-   carries `int64 option`), use it. Else chunked. Confirm this order and
-   whether a user-provided `Content-Length` that disagrees with the flow is
-   an error or trusted.
+   it. Else if the runtime knows the producer length (e.g. from a file size
+   or an explicit wrapper), use it. Else chunked. Confirm this order and
+   whether a user-provided `Content-Length` that disagrees with the actual
+   bytes is an error or trusted. Note that the old `` `Flow `` sketch carried
+   an `int64 option` length; the new `` `Stream `` producer does not, so the
+   length is tracked by the restXml runtime as a separate piece of metadata
+   when it is available.
 
 5. **Namespace handling in the existing `Xml.ml` parser.** `Read.sequence`
    already matches tag names ignoring namespace when `ns` is `None`. Need
@@ -1003,11 +1097,11 @@ Things called out earlier that are not yet pinned to a concrete resolution:
    requires the user to set `Path` explicitly. Proposal: do the fallback
    (matches every other AWS SDK and avoids request failures).
 
-9. **Event-stream codec source.** `decode_events` (§3.7) needs an Amazon
-   Event Stream decoder. `smaws_lib` has no such codec; `xmlm`/`yojson`
-   don't help. Need to decide: hand-roll the binary frame parser (it's
-   small — fixed header + payload + CRC) or take a dependency. AGENTS.md
-   says no new deps without asking, so hand-roll is the default.
+9. **Event-stream codec source.** `SelectObjectContent` is deprecated, so
+    we do not need an Amazon Event Stream decoder for the S3 work. If a
+    non-deprecated service needs event streams in the future, the codec can
+    be hand-rolled at that point. This question is therefore {e dropped} for
+    the current plan.
 
 10. **`@auth` scheme selection at runtime.** `WriteGetObjectResponse`
     lists `aws.auth#unsignedPayload` via `@auth`. The runtime must pick the
@@ -1032,8 +1126,25 @@ variant when the restXml error body's `Code` does not match any modeled
 error shape in the operation's `errors` list. The error polymorphic
 variant for an op becomes `[> …modeled errors… |
 `AWSServiceError of AwsErrors.aws_service_error ]`, identical to how
-AwsJson/AwsQuery surface unmodeled service errors today. `Code`,
-`Message`, `RequestId`, and `Type` are carried by the existing record.
+AwsJson/AwsQuery surface unmodeled service errors today. The record carries
+`message`, `request_id` and `_type` (with `namespace` and `name`):
+
+```ocaml
+(* smaws_lib/AwsErrors.ml *)
+type namespaced_error = { namespace : string; name : string }
+
+type aws_service_error = {
+  message : string option;
+  request_id : string option;
+  _type : namespaced_error;
+}
+```
+
+`Code` maps to `_type.name`, `Message` maps to `message`, and `RequestId`
+is captured from the `<RequestId>` element (wrapped errors) or the
+`x-amz-request-id` / `x-amzn-requestid` header when present. `Type`
+(sender/receiver) is ignored for the generic carrier; it remains available
+in the raw XML if a future deserializer needs it.
 
 ### 8.2 Redirects / 3xx — HTTP-client concern, with operation override
 
@@ -1063,7 +1174,9 @@ So redirects are the HTTP client's job, not the protocol's. Resolution:
    `http_options : Http.options` field carrying `{ follow_redirects :
    bool; max_redirects : int }` (default `{ true; 5 }`). The generated
    S3 `make_context` and the generic `Context.make` both accept
-   `?http_options`. Per-call override is not needed initially.
+   `?http_options`. Per-call override is not needed initially. The
+   field is additive and has no effect on existing AwsJson / AwsQuery
+   SDKs because they never construct `Context` with `http_options`.
 3. **304 `Not Modified` is a success for conditional GETs** —
    `GetObject` legitimately returns 304 when `If-Modified-Since`/
    `If-None-Match` matches. The restXml runtime treats `304` as success
@@ -1116,7 +1229,7 @@ Event-stream {e output} (`@streaming` union, `@httpPayload`):
    the basis of partial/resumable downloads) are especially absurd to
    buffer. The response checksum comes back in {e headers}
    (`x-amz-checksum-*`), never as a body trailer, so this is purely the
-   §1 `Eio.Flow.source_read` work — zero aws-chunked involvement. {e Must
+   §1 `Eio.Flow.source` work — zero aws-chunked involvement. {e Must
    ship early; simplest of the three.}
 
 2. **Streaming input for `PutObject`/`UploadPart` — essential, no trailer
@@ -1140,11 +1253,11 @@ Event-stream {e output} (`@streaming` union, `@httpPayload`):
    verification for large streaming uploads} — valuable, but the upload
    itself works without them. {e Deferrable.}
 
-4. **Event stream for `SelectObjectContent` — deprioritised.** S3 Select
+4. **Event stream for `SelectObjectContent` — dropped.** S3 Select
    is no longer available to new customers, so the Amazon Event Stream
-   codec is out of scope. The operation should still generate a stub
-   (compile) that raises `Not_implemented` at runtime; do not build the
-   codec unless explicitly requested. {e Not on the critical path.}
+   codec is {e not implemented}. The operation still generates (so the
+   SDK compiles) but its `request` raises `Not_implemented` at runtime.
+   {e Not on the critical path.}
 
 #### What the trailer mechanism is, plainly (for when we do it)
 
@@ -1195,7 +1308,7 @@ the outer body; `x-amz-decoded-content-length` is mandatory).
 #### Resolution (revised)
 
 - **Tier 1a — streaming output (`GetObject` etc.)**: ship with the §1
-  `Eio.Flow.source_read` interface. No trailers, no codec. Essential.
+  `Eio.Flow.source` interface. No trailers, no codec. Essential.
 - **Tier 1b — streaming input (`PutObject`/`UploadPart` etc.)**: ship
   with `Content-Length` (modeled header or known flow length) or plain
   `Transfer-Encoding: chunked`. No aws-chunked, no trailer. Essential.
@@ -1211,22 +1324,22 @@ the outer body; `x-amz-decoded-content-length` is mandatory).
   workstream. Only needed to lift the Tier 1b streaming+checksum
   limitation. Not blocking GetObject/PutObject/UploadPart working
   against a real bucket.
-- **Tier 1d — event stream (`SelectObjectContent`) — deprioritised.**
+- **Tier 1d — event stream (`SelectObjectContent`) — dropped.**
   S3 Select is no longer available to new customers, so the Amazon
-  Event Stream codec (§8.9) is out of scope for the S3 work. Do not
-  implement unless explicitly requested; the operation should still
-  {e generate} a stub (so the SDK compiles) but its `request` should
-  raise `Not_implemented` (or return an `Error`) until/unless the codec
-  is added. Note this in TODO.md.
+  Event Stream codec is {e not implemented} for the S3 work. The
+  operation still generates (so the SDK compiles) but its `request`
+  raises `Not_implemented` at runtime. Do not build the codec unless
+  another non-deprecated event-stream service is added.
 
 So the "defer" stands but is now precise: we defer the {e aws-chunked
 trailer} sub-feature (1c) and the {e event-stream codec} (1d —
-deprioritised, S3 Select no longer available to new customers), {e not}
+dropped, S3 Select is no longer available to new customers), {e not}
 streaming I/O (1a/1b). Streaming I/O is essential and on the critical
 path. The 4 S3 conformance ops don't exercise any of 1a–1d (their
 `GetObjectOutput` is empty), so none of this blocks the conformance
 suite — but 1a/1b block real-bucket usability, so they ship with the
-first S3 cut, ahead of 1c/1d.
+first S3 cut, ahead of 1c. Event-stream support (1d) is dropped
+entirely unless another event-stream service is added later.
 
 ### 8.4 `Content-Length` resolution order for streaming input
 
@@ -1252,11 +1365,14 @@ Options:
   spec, but breaks the S3 convention where callers set `Content-Length`
   to avoid buffering.
 - **B. S3-pragmatic (recommended)** — honor the modeled `@httpHeader
-  Content-Length` if the user set it; else if the flow length is known
-  (`Http.input_body` `Flow` variant carries `int64 option`), use it;
-  else `Transfer-Encoding: chunked`. A user-provided `Content-Length`
-  that disagrees with the actual flow is {e trusted} (the user asserts
-  the size; mismatches fail server-side). This matches what AWS SDKs do.
+  Content-Length` if the user set it; else if the runtime knows the
+  producer length (file size, explicit wrapper, etc.), use it; else
+  `Transfer-Encoding: chunked`. A user-provided `Content-Length` that
+  disagrees with the actual bytes is {e trusted} (the user asserts the
+  size; mismatches fail server-side). This matches what AWS SDKs do.
+  Because the new `` `Stream `` producer does not carry its own length,
+  the restXml runtime tracks length as a separate piece of metadata when
+  it is available.
 - **C. Hybrid** — B, but for `@requiresLength` streaming blobs, treat a
   missing `Content-Length` as a client-side error (don't fall back to
   chunked), because the trait mandates a known length.
@@ -1267,12 +1383,15 @@ the serialiser order for a streaming input body is:
 ```
 if user set modeled @httpHeader Content-Length → use it (trust)
 else if @requiresLength on the streaming blob → error if no length known
-else if flow length known                            → Content-Length = that
-else                                                 → Transfer-Encoding: chunked
+else if runtime knows the producer length                  → Content-Length = that
+else                                                       → Transfer-Encoding: chunked
 ```
 
 A wrong user-provided `Content-Length` is not a client error; it surfaces
-as a server `BadDigest`/`IncompleteBody`. Document this.
+as a server `BadDigest`/`IncompleteBody`. Document this. Note: the earlier
+`` `Flow `` sketch carried an `int64 option` length directly in
+`Http.input_body`; the new `` `Stream `` producer does not, so length
+metadata travels with the request context instead.
 
 ### 8.5 Namespace handling in `Xml.ml` — yes, write tests first
 
@@ -1330,10 +1449,16 @@ we must {e not} call it on the request path. Resolution:
 1. Build the request-target path as a raw string from the `@http uri`
    template + label substitution, never round-tripping it through
    `Uri.normalize` / `Uri.path`-mutation.
-2. Audit `Uri.of_string` → `Uri.to_string` and the httpun-eio client:
+2. The restXml runtime should hand the resulting raw path to `Sign` as a
+   pre-computed canonical URI string, rather than letting `Sign` extract it
+   from `Uri.t`. This avoids both dot-segment normalisation and the current
+   `Sign.sign_request_v4` path-splitting logic (`Uri.path`, split on `/`,
+   `Uri.pct_encode`, re-join), which is correct for AwsJson/AwsQuery where
+   paths are always `/` but is unsafe for S3 object keys.
+3. Audit `Uri.of_string` → `Uri.to_string` and the httpun-eio client:
    if any layer normalises the path, bypass `Uri` for the path and
    hand-assemble the origin-form string (`method`, raw path, `?query`).
-3. Add a unit test that asserts `/../key.txt` and `/foo/../key.txt`
+4. Add a unit test that asserts `/../key.txt` and `/foo/../key.txt`
    survive a round-trip through whatever path-construction helper the
    restXml runtime uses. (The S3 conformance ops `S3Preserves…`
    already assert this end-to-end.)
@@ -1347,13 +1472,13 @@ runtime automatically falls back to path-style for that request and
 warns. The user-set `Path` style is always honored as-is. Matches every
 AWS SDK; avoids request failures on valid-but-non-DNS bucket names.
 
-### 8.9 Event-stream codec — dependency options (deprioritised)
+### 8.9 Event-stream codec — dropped for S3
 
-{e Note: `SelectObjectContent` (S3 Select) is no longer available to new
-   customers, so this codec is out of scope for the S3 work. The options
-   below are retained for reference in case the codec is ever needed
-   (e.g. another AWS event-stream service). The CRC32 primitive discussion
-   is also relevant to the flexible-checksum work, which {e is} in scope.}
+{e `SelectObjectContent` (S3 Select) is no longer available to new
+   customers. We therefore do not implement the Amazon Event Stream codec for
+   the S3 work. The notes below are retained only as background for a future
+   non-deprecated event-stream service, and the CRC32/CRC32C discussion is
+   relevant to the flexible-checksum work, which {e is} in scope.}
 
 Research findings:
 
@@ -1379,39 +1504,29 @@ opam packages relevant to the primitives:
 | `xxhash` + `conf-xxhash` | XXHASH64, XXHASH3, XXHASH128 (C bindings) | needed for S3 flexible checksums |
 | `digestif` (have) | SHA1/SHA256/SHA512/MD5 | covers most S3 checksums |
 
-Options for the event-stream codec:
+If a non-deprecated event-stream service is added later, the codec can be
+hand-rolled (~200 lines) in `smaws_lib/event_stream.ml` on top of a CRC32
+primitive. Options for that future work:
 
-- **A. Hand-roll the codec (~200 lines) on top of a CRC32 primitive.**
-  Matches AGENTS.md "no new deps without asking." The CRC32 primitive
-  itself is either a tiny vendored table-based impl (~50 lines) or the
-  `checkseum` package. The codec is self-contained and lives in
-  `smaws_lib/event_stream.ml`.
-- **B. New dep on `ocaml-wire`** to describe the format and generate a
-  parser. Overkill for a ~200-line format; very new package, github pin
-  only. Not recommended.
-- **C. New dep on a hypothetical full AWS-event-stream library.** None
-  exists for OCaml. Not an option.
-
-For CRC32 specifically, the choice is:
-
-- **A1. Vendor a ~50-line CRC32** (no new dep at all). Fine for event
+- **A. Vendor a ~50-line CRC32** (no new dep at all). Fine for event
   stream; but S3 flexible checksums also need CRC32C/CRC64NVME/XXHASH*
   which are {e not} trivially vendored.
-- **A2. Add `checkseum`** for CRC32 + CRC32C (covers event-stream CRC32
+- **B. Add `checkseum`** for CRC32 + CRC32C (covers event-stream CRC32
   and the two most common S3 checksums), and `xxhash` for XXHASH64/3/128.
   CRC64NVME either hand-rolled (~30 lines, fixed polynomial
   0x9A6C9329AC4BC9B5 reflected) or via `pcrc`.
 
-Recommendation: **A (hand-roll the event-stream codec) + A2 (`checkseum`
-for CRC32/CRC32C, `xxhash` for the XXHASH family, hand-rolled CRC64NVME)**.
-The event-stream codec itself stays vendored (no new dep for the codec,
+Recommendation for the S3/flexible-checksum path: **B (`checkseum` for
+CRC32/CRC32C, `xxhash` for the XXHASH family, hand-rolled CRC64NVME)**.
+The event-stream codec itself would stay vendored (no new dep for the codec,
 only for the CRC/hash primitives it and the S3 checksums share). For the
-{e first cut} (event-stream is Tier 1, not needed for the 4 conformance
-ops), we can ship with only `checkseum` added (for the codec's CRC32);
-`xxhash` and CRC64NVME come in when flexible checksums land.
+current S3 work, the event-stream codec is **not implemented** and
+`SelectObjectContent.request` raises `Not_implemented` at runtime; the
+operation still generates so the SDK compiles.
 
-{e Your call}: add `checkseum` (and later `xxhash`), or vendor the CRC32
-for the event-stream codec and defer all flexible-checksum primitives?
+{e Your call} (for flexible checksums only): add `checkseum` (and later
+`xxhash`), or vendor CRC32 and hand-roll CRC64NVME? This decision can wait
+until flexible-checksum work begins; it is not blocking the first S3 cut.
 
 ### 8.10 `@auth` scheme selection — codegen-driven, not runtime-driven
 
@@ -1468,13 +1583,14 @@ Final picks for the §7 questions, agreed 2026-07-07:
 |---|---|---|
 | 1 | Unmodeled S3 errors | Reuse `AwsErrors.aws_service_error` carrier (§8.1) |
 | 2 | Redirects / 3xx | HTTP-client redirect-following + `?http_options` override; 304 = success for GET (§8.2) |
-| 3 | Streaming + trailer | Streaming I/O is essential, ships Tier 1a/1b; aws-chunked trailers (1c) and event-stream codec (1d) deferred (§8.3) |
+| 2b | `?http_options` in `Context.make` / `make_with_eio_http` | Add optional `Http.options` field; default `{ follow_redirects = true; max_redirects = 5 }`; 304 handled as GET success in restXml runtime |
+| 3 | Streaming + trailer | Streaming I/O is essential, ships Tier 1a/1b; aws-chunked trailers (1c) and event-stream codec (1d) dropped for S3 (§8.3) |
 | 4 | `Content-Length` order | **B** — honor modeled `Content-Length` → known flow length → chunked; `@requiresLength` errors if unknowable (§8.4) |
 | 5 | Namespace parser | Write pure-parser unit tests first (§8.5) |
 | 6 | Payload root + service `@xmlNamespace` | Inherit service namespace by default (§8.6) |
 | 7 | Dot-segment preservation | Build raw path string, bypass `Uri.normalize`; correctness + authorization-flavoured (§8.7) |
 | 8 | Bucket DNS fallback | Auto-fall-back to path-style on non-DNS bucket names (§8.8) |
-| 9 | Event-stream codec | **A** — hand-roll `smaws_lib/event_stream.ml` (~200 lines); CRC32 vendored (~50 lines, no new dep). {e Deprioritised} (S3 Select no longer available to new customers); revisit only if another event-stream service is needed. The CRC32/`checkseum`/`xxhash` question is deferred to when flexible checksums land (§8.9) |
+| 9 | Event-stream codec | **Dropped for S3** — `SelectObjectContent` is deprecated; the codec is not implemented and the operation raises `Not_implemented` at runtime. CRC32/hash primitive choice deferred to flexible-checksum work (§8.9) |
 | 10 | `@auth` scheme selection | **A** — codegen-driven; each op's generated `request` calls the modeled `Sign.*` (§8.10) |
 
 {e Open follow-up (non-blocking):} when flexible checksums are
