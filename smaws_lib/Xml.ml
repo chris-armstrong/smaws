@@ -81,6 +81,19 @@ module Parse = struct
   exception XmlUnexpectedConstruct of expected * signal * pos
   exception XmlMissingElement of string * pos
 
+  (* Raised by the [Primitive] leaf parsers when a value cannot be parsed. [path]
+     is the chain of enclosing element names, outermost first; it starts empty
+     and is prepended by [Read.sequence]/[Read.sequences]/[Read.element_value]/
+     [Read.elements_value] as the exception unwinds, so the [run] boundary can
+     report the full element chain. This is the allocation-free analogue of
+     [Json.DeserializeHelpers] threading a [path] list: no per-descent consing
+     on the happy path, the path is reconstructed only on failure. *)
+  type deserialize_error = { path : string list; kind : string; value : string }
+
+  exception XmlDeserializeError of deserialize_error
+
+  let path_to_string p = String.concat "/" p
+
   (* Unified error for the public, result-returning interface. The internal
      [Read]/[Structure] functions raise [XmlParse]/[XmlUnexpectedConstruct]/
      [XmlMissingElement] (and primitive parsers raise [Failure]/
@@ -136,7 +149,13 @@ module Parse = struct
 
     let sequence i tag (reader : 'a reader) ?ns () =
       let _, _, attributes = Accept.startTag i tag ~ns ~expected:(XmlStartSequence (tag, ns)) in
-      let res = reader i attributes in
+      (* Decorate any [XmlDeserializeError] raised by the reader with this
+         element's tag as it unwinds. Other exceptions (which already carry a
+         position) propagate unchanged. *)
+      let res =
+        try reader i attributes
+        with XmlDeserializeError e -> raise (XmlDeserializeError { e with path = tag :: e.path })
+      in
       let _ = Accept.endTag i ~expected:(XmlEndSequence (tag, ns)) in
       res
 
@@ -152,6 +171,14 @@ module Parse = struct
       let _ = Accept.endTag i ~expected:(XmlEndElement (tag, ns)) in
       data
 
+    (** [element_value i tag conv] reads the text of [<tag>] and runs [conv] on it, decorating a
+        parse failure with [tag]. [conv] is a function value (e.g. [Primitive.float_of_string]), so
+        no closure is allocated per call. *)
+    let element_value i tag conv ?ns () =
+      let s = element i tag ?ns () in
+      try conv s
+      with XmlDeserializeError e -> raise (XmlDeserializeError { e with path = tag :: e.path })
+
     let elements i tag ?ns () =
       let rec readList ~items =
         match Xmlm.peek i with
@@ -161,6 +188,18 @@ module Parse = struct
         | _ -> items
       in
       readList ~items:[] |> List.rev
+
+    (** [elements_value i tag conv] reads every [<tag>] child's text and maps [conv] across them,
+        decorating each parse failure with [tag]. The per-element closure is allocated once for the
+        whole list, not per item. *)
+    let elements_value i tag conv ?ns () =
+      let xs = elements i tag ?ns () in
+      List.map
+        (fun s ->
+          try conv s
+          with XmlDeserializeError e ->
+            raise (XmlDeserializeError { e with path = tag :: e.path }))
+        xs
 
     let sequences i tag reader ?ns () =
       let rec readList ~items =
@@ -389,6 +428,78 @@ module Parse = struct
   let required tag value i =
     match value with Some value -> value | None -> raise (XmlMissingElement (tag, Xmlm.pos i))
 
+  (** Leaf-value parsers used by generated restXml deserialisers. Each parses a primitive from its
+      XML text and raises [XmlDeserializeError] (with an empty path) on failure; the enclosing
+      [Read.sequence]/[Read.element_value] /etc. prepend their element tags as the exception
+      unwinds, so [run] can report the full element chain. These replace bare
+      [Stdlib.int_of_string]/ [float_of_string]/etc., which raised [Failure] with no element
+      context. *)
+  module Primitive = struct
+    let fail ~kind ~value = raise (XmlDeserializeError { path = []; kind; value })
+
+    let int_of_string s =
+      try Stdlib.int_of_string s with Failure _ -> fail ~kind:"integer" ~value:s
+
+    let long_of_string s = try CoreTypes.Int64.of_string s with _ -> fail ~kind:"long" ~value:s
+
+    let big_int_of_string s =
+      try CoreTypes.BigInt.of_string s with _ -> fail ~kind:"bigint" ~value:s
+
+    let big_decimal_of_string s =
+      try CoreTypes.BigDecimal.of_string s with _ -> fail ~kind:"bigdecimal" ~value:s
+
+    let bool_of_string s =
+      try Stdlib.bool_of_string s with Failure _ -> fail ~kind:"boolean" ~value:s
+
+    let float_of_string s =
+      try Stdlib.float_of_string s with Failure _ -> fail ~kind:"float" ~value:s
+
+    let double_of_string s =
+      try Stdlib.float_of_string s with Failure _ -> fail ~kind:"double" ~value:s
+
+    let blob_of_string s =
+      try Bytes.of_string (Base64.decode_exn s) with _ -> fail ~kind:"blob" ~value:s
+
+    let timestamp_iso_of_string s =
+      match Ptime.of_rfc3339 s with
+      | Ok (ts, _, _) -> ts
+      | Error _ -> fail ~kind:"timestamp(rfc3339)" ~value:s
+
+    let timestamp_epoch_of_string s =
+      let f =
+        try Stdlib.float_of_string s
+        with Failure _ -> fail ~kind:"timestamp(epoch-seconds)" ~value:s
+      in
+      match Ptime.of_float_s f with
+      | Some t -> t
+      | None -> fail ~kind:"timestamp(epoch-seconds)" ~value:s
+
+    let timestamp_httpdate_of_string s =
+      let parse () =
+        Scanf.sscanf s "%s@, %d %s %d %d:%d:%d GMT"
+          (fun _weekday day month_str year hour minute second ->
+            let month =
+              match month_str with
+              | "Jan" -> 1
+              | "Feb" -> 2
+              | "Mar" -> 3
+              | "Apr" -> 4
+              | "May" -> 5
+              | "Jun" -> 6
+              | "Jul" -> 7
+              | "Aug" -> 8
+              | "Sep" -> 9
+              | "Oct" -> 10
+              | "Nov" -> 11
+              | _ -> 12
+            in
+            match Ptime.of_date_time ((year, month, day), ((hour, minute, second), 0)) with
+            | Some t -> t
+            | None -> fail ~kind:"timestamp(http-date)" ~value:s)
+      in
+      try parse () with _ -> fail ~kind:"timestamp(http-date)" ~value:s
+  end
+
   (* Run a direct-style parser [f] (which may raise any of the internal XML
      exceptions or a primitive-parser [Failure]/[Invalid_argument]) and catch
      every failure into [error]. This is the result-returning boundary that
@@ -406,6 +517,9 @@ module Parse = struct
     | Structure.MissingElement (tag, pos) ->
         Error (XmlParseError (Fmt.str "missing element %S at %s" tag (pos_to_string pos)))
     | Structure.InputUnordered msg -> Error (XmlParseError msg)
+    | XmlDeserializeError e ->
+        Error
+          (XmlParseError (Fmt.str "invalid %s at %s: %S" e.kind (path_to_string e.path) e.value))
     | Failure msg | Invalid_argument msg -> Error (XmlParseError msg)
     | exn -> Error (XmlParseError (Printexc.to_string exn))
 end

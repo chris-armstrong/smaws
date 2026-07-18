@@ -688,55 +688,52 @@ module Deserialiser = struct
       target_name
     |> Longident.unflatten |> Option.value_exn
 
-  let parse_primitive_from_string target_name str_expr =
+  let xml_primitive_mod = [ "Smaws_Lib"; "Xml"; "Parse"; "Primitive" ]
+
+  (* The [Xml.Parse.Primitive.<kind>_of_string] converter for a smithy primitive
+     target, or [None] for non-primitives. [String] maps to [Fun.id] (no parse,
+     no failure); [Timestamp] defaults to the iso (rfc3339) format, matching the
+     previous [Ptime.of_rfc3339] behaviour for list/map items — member
+     timestamps take a format-specific path in [member_reader_expr]. *)
+  let primitive_conv target_name =
     match target_name with
-    | "smithy.api#String" -> Some str_expr
+    | "smithy.api#String" -> Some (exp_ident "Fun.id")
     | "smithy.api#Integer" | "smithy.api#Byte" | "smithy.api#Short" ->
-        Some (B.pexp_apply (exp_ident "int_of_string") [ (Nolabel, str_expr) ])
-    | "smithy.api#Long" ->
-        Some
-          (qualified_apply
-             ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "of_string" ]
-             [ (Nolabel, str_expr) ])
+        Some (qualified_ident ~names:(xml_primitive_mod @ [ "int_of_string" ]))
+    | "smithy.api#Long" -> Some (qualified_ident ~names:(xml_primitive_mod @ [ "long_of_string" ]))
     | "smithy.api#BigInteger" ->
-        Some
-          (qualified_apply
-             ~names:[ "Smaws_Lib"; "CoreTypes"; "BigInt"; "of_string" ]
-             [ (Nolabel, str_expr) ])
+        Some (qualified_ident ~names:(xml_primitive_mod @ [ "big_int_of_string" ]))
     | "smithy.api#BigDecimal" ->
-        Some
-          (qualified_apply
-             ~names:[ "Smaws_Lib"; "CoreTypes"; "BigDecimal"; "of_string" ]
-             [ (Nolabel, str_expr) ])
+        Some (qualified_ident ~names:(xml_primitive_mod @ [ "big_decimal_of_string" ]))
     | "smithy.api#Boolean" ->
-        Some (B.pexp_apply (exp_ident "bool_of_string") [ (Nolabel, str_expr) ])
-    | "smithy.api#Float" | "smithy.api#Double" ->
-        Some (B.pexp_apply (exp_ident "float_of_string") [ (Nolabel, str_expr) ])
-    | "smithy.api#Blob" ->
-        Some
-          (B.pexp_apply (exp_ident "Bytes.of_string")
-             [
-               (Nolabel, qualified_apply ~names:[ "Base64"; "decode_exn" ] [ (Nolabel, str_expr) ]);
-             ])
+        Some (qualified_ident ~names:(xml_primitive_mod @ [ "bool_of_string" ]))
+    | "smithy.api#Float" ->
+        Some (qualified_ident ~names:(xml_primitive_mod @ [ "float_of_string" ]))
+    | "smithy.api#Double" ->
+        Some (qualified_ident ~names:(xml_primitive_mod @ [ "double_of_string" ]))
+    | "smithy.api#Blob" -> Some (qualified_ident ~names:(xml_primitive_mod @ [ "blob_of_string" ]))
     | "smithy.api#Timestamp" ->
-        Some
-          ( qualified_apply ~names:[ "Ptime"; "of_rfc3339" ] [ (Nolabel, str_expr) ] |> fun e ->
-            B.pexp_apply (exp_ident "Result.get_ok") [ (Nolabel, e) ] |> fun e ->
-            B.pexp_let Nonrecursive
-              [
-                B.value_binding
-                  ~pat:(B.ppat_tuple [ B.ppat_var (Location.mknoloc "ts"); B.ppat_any; B.ppat_any ])
-                  ~expr:e;
-              ]
-              (exp_ident "ts") )
+        Some (qualified_ident ~names:(xml_primitive_mod @ [ "timestamp_iso_of_string" ]))
     | _ -> None
+
+  (* Read [<tag>]'s text and run [conv] on it, decorating a parse failure
+     with [tag] (see [Xml.Parse.Read.element_value]). *)
+  let read_element_value tag conv =
+    xml_call xml_read_mod "element_value"
+      [ (Nolabel, exp_ident "i"); (Nolabel, const_str tag); (Nolabel, conv); (Nolabel, unit_expr) ]
+
+  (* Read every [<tag>] child's text and map [conv] across them, decorating a
+     parse failure with [tag] (see [Xml.Parse.Read.elements_value]). *)
+  let read_elements_value tag conv =
+    xml_call xml_read_mod "elements_value"
+      [ (Nolabel, exp_ident "i"); (Nolabel, const_str tag); (Nolabel, conv); (Nolabel, unit_expr) ]
 
   let map_entry_body ~namespace_resolver (ms : Shape.mapShapeDetails) =
     let key_tag = xml_name ms.mapKey.traits "key" in
     let val_tag = xml_name ms.mapValue.traits "value" in
     let key_expr =
-      match parse_primitive_from_string ms.mapKey.target (read_element key_tag) with
-      | Some e -> e
+      match primitive_conv ms.mapKey.target with
+      | Some conv -> read_element_value key_tag conv
       | None ->
           let kf =
             B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver ms.mapKey.target))
@@ -744,8 +741,8 @@ module Deserialiser = struct
           read_sequence key_tag (B.pexp_apply kf [ (Nolabel, exp_ident "i") ])
     in
     let val_expr =
-      match parse_primitive_from_string ms.mapValue.target (read_element val_tag) with
-      | Some e -> e
+      match primitive_conv ms.mapValue.target with
+      | Some conv -> read_element_value val_tag conv
       | None ->
           let vf =
             B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver ms.mapValue.target))
@@ -759,20 +756,8 @@ module Deserialiser = struct
          (B.pexp_tuple [ exp_ident "k"; exp_ident "v" ]))
 
   let list_items_body ~namespace_resolver target item_tag =
-    match parse_primitive_from_string target (read_element item_tag) with
-    | Some _ -> (
-        let elements = read_elements item_tag in
-        match target with
-        | "smithy.api#String" -> elements
-        | _ ->
-            qualified_apply ~names:[ "List"; "map" ]
-              [
-                ( Nolabel,
-                  B.pexp_fun Nolabel None
-                    (B.ppat_var (Location.mknoloc "s"))
-                    (Option.value_exn (parse_primitive_from_string target (exp_ident "s"))) );
-                (Nolabel, elements);
-              ])
+    match primitive_conv target with
+    | Some conv -> read_elements_value item_tag conv
     | None ->
         let item_func =
           B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver target))
@@ -789,7 +774,6 @@ module Deserialiser = struct
           (Nolabel, B.pexp_construct (lident_noloc "Some") (Some v_expr));
         ]
     in
-    let raw_str_expr = read_element xml_tag in
     match target_name with
     | "smithy.api#Timestamp" ->
         let fmt = resolve_timestamp_format ~member_traits ~shape_traits:None () in
@@ -799,11 +783,11 @@ module Deserialiser = struct
           | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_of_string"
           | Trait.TimestampFormatHttpDate -> "timestamp_httpdate_of_string"
         in
-        let deser_mod = [ "Smaws_Lib"; "Protocols"; "AwsQuery"; "Deserialize" ] in
-        assign (qualified_apply ~names:(deser_mod @ [ helper ]) [ (Nolabel, raw_str_expr) ])
+        let conv = qualified_ident ~names:(xml_primitive_mod @ [ helper ]) in
+        assign (read_element_value xml_tag conv)
     | _ -> (
-        match parse_primitive_from_string target_name raw_str_expr with
-        | Some parsed_expr -> assign parsed_expr
+        match primitive_conv target_name with
+        | Some conv -> assign (read_element_value xml_tag conv)
         | None -> (
             let shape = Shape_resolver.find_shape_by_name ~name:target_name shape_resolver in
             match shape with
@@ -972,7 +956,7 @@ module Deserialiser = struct
          ]
          (B.pexp_constraint match_exp type_name))
 
-  let deser_mod = [ "Smaws_Lib"; "Protocols"; "AwsQuery"; "Deserialize" ]
+  let deser_mod = xml_primitive_mod
 
   let read_data_lambda () =
     exp_fun_untyped "i" (xml_call xml_read_mod "data" [ (Nolabel, exp_ident "i") ])

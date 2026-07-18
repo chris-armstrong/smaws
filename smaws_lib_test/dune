@@ -51,3 +51,8 @@
  (name restxml_response_test)
  (modules restxml_response_test)
  (libraries Smaws_Lib alcotest))
+
+(test
+ (name xml_parse_error_test)
+ (modules xml_parse_error_test)
+ (libraries Smaws_Lib alcotest))
