@@ -485,6 +485,44 @@ RequestId }`; `noErrorWrapping` collapses to `<Error>` root with members +
 The `code` string is matched by the generated `error_deserializer` against the
 operation's error shape names (§7.3); unknown codes go to a default handler.
 
+### 6.4 Request-id recovery (follow-up, added 2026-07-18)
+
+Real AWS restXml responses carry the request id in **two** places: a response
+header (`x-amzn-requestid` for most services; `x-amz-request-id` /
+historically `x-amz-requestid` for S3) **and** the body (`<RequestId>` sibling
+of `<Error>` in the wrapped envelope, or a direct child of root `<Error>` with
+`noErrorWrapping`). Success (2xx) responses have **no** body `<RequestId>` —
+there the id lives only in the header.
+
+The Phase 3 runtime parses the body `<RequestId>` (to drive skip-siblings) but
+`request` discarded it, and never read response headers at all. This small
+follow-up surfaces the id by mirroring `AwsQuery`:
+
+- Reuse the shared `Smaws_Lib.Response` module (`type metadata = {
+  request_id : string option }`, `'a t = { response; metadata }`, `map`).
+- Add `request_id_of_headers : Http.headers -> string option` —
+  case-insensitive lookup over `["x-amzn-requestid"; "x-amz-request-id";
+  "x-amz-requestid"]`, first non-empty value wins.
+- Add `request_id_prefer_header ~header ~body` — header wins, fall back to the
+  body `<RequestId>` (parsed by `parse_error_envelope` /
+  `parse_error_envelope_nowrapping`).
+- Add `request_with_metadata` returning `('out Response.t, 'err *
+  Response.metadata) result` (Ok = `{ response; metadata }` record, Error =
+  `('err * metadata)` tuple — exactly `AwsQuery.request_with_metadata`'s shape).
+  Success metadata = `{ request_id = header }`; error metadata =
+  `{ request_id = request_id_prefer_header ~header ~body }`.
+- `request` keeps its existing `('out, 'err) result` signature (the Phase 4
+  generated stubs call it) and becomes a metadata-stripping wrapper over
+  `request_with_metadata` (`Result.map (fun { Response.response; _ } ->
+  response) |> Result.map_error (fun (e, _) -> e)`). No codegen change needed;
+  Phase 7 may switch the generated `request` to call `request_with_metadata` to
+  surface the id to callers.
+- Pure helpers (`request_id_of_headers`, `request_id_prefer_header`) are
+  unit-tested in `smaws_lib_test/restxml_response_test.ml`; body recovery stays
+  covered by the existing `parse_error_envelope` test. `request_with_metadata`
+  itself needs an HTTP context and is not runtime-mocked (same stance as
+  `AwsQuery.request_with_metadata`).
+
 ---
 
 ## 7. Design: codegen `RestXml` module (`codegen/AwsProtocolRestXml.ml`)
@@ -641,6 +679,11 @@ phase until the developer reviews — per `AGENTS.md` "Stop after each phase".
   **`Failure` catch**); signing; separate `RestXml.Error` (not in `AwsErrors`).
 - Mock smoke test: one success + one error path. **The error mock MUST include
   a trailing `<RequestId>` sibling of `<Error>`** to exercise skip-siblings.
+- **Follow-up (§6.4):** request-id recovery — `request_id_of_headers`
+  (case-insensitive `x-amzn-requestid`/`x-amz-request-id`/`x-amz-requestid`),
+  `request_id_prefer_header` (header over body), `request_with_metadata`
+  returning `('out Response.t, 'err * Response.metadata) result`; `request`
+  keeps its signature and strips metadata. Unit-test the pure helpers.
 - **Checkpoint:** `dune build` + `dune runtest`.
 
 ### Phase 4 — Codegen dispatch (GC2)

@@ -179,11 +179,37 @@ let parse_response ~(body : string) ~(output_deserializer : Xmlm.input -> 'out) 
       Read.dtd xmlSource;
       output_deserializer xmlSource)
 
-let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
+(** AWS REST XML services put the request id in a response header. The header name varies: most
+    services use [x-amzn-requestid], S3 uses [x-amz-request-id] (and historically
+    [x-amz-requestid]). HTTP header names are case-insensitive, so compare lowercased; the first
+    non-empty value wins. *)
+let request_id_header_names = [ "x-amzn-requestid"; "x-amz-request-id"; "x-amz-requestid" ]
+
+let request_id_of_headers (headers : Http.headers) : string option =
+  let normalized = List.map (fun (k, v) -> (String.lowercase_ascii k, v)) headers in
+  List.find_map
+    (fun name ->
+      List.find_map
+        (fun (k, v) -> if String.equal k name && v <> "" then Some v else None)
+        normalized)
+    request_id_header_names
+
+(** For error responses the id is in both the response header and the body [<RequestId>]. Prefer the
+    header (always present, even with [noErrorWrapping]); fall back to the body when the header is
+    absent. *)
+let request_id_prefer_header ~header ~body = match header with Some _ -> header | None -> body
+
+(** Like [request] but also returns response metadata (the request id). Mirrors
+    [AwsQuery.request_with_metadata]: Ok is an ['out Response.t] record, Error is an
+    ['err * Response.metadata] tuple. On success the id comes from the response header only (restXml
+    success bodies have no [<RequestId>]); on error it comes from the header with the body
+    [<RequestId>] (parsed by [parse_error_envelope]) as a fallback. *)
+let request_with_metadata (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
     ~(context : http_t Context.t) ~(method_ : Http.method_) ~(uri : Uri.t)
     ~(query : (string * string list) list) ~(headers : (string * string) list)
     ~(body : (string * string) option) ~(output_deserializer : Xmlm.input -> 'out)
-    ~(error_deserializer : Error.t -> body:string -> 'err) =
+    ~(error_deserializer : Error.t -> body:string -> 'err) :
+    ('out Response.t, 'err * Response.metadata) result =
   let config = Context.config context in
   (* Build the full URI with query parameters *)
   let uri =
@@ -210,16 +236,36 @@ let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
   match Http.request ~method_ ~headers:all_headers ~body:input_body ~uri http with
   | Ok (response, response_body) -> begin
       let status = Http.Response.status response in
+      let header_request_id = request_id_of_headers (Http.Response.headers response) in
       let body_str = match Http.Body.to_string response_body with Some b -> b | None -> "" in
       match status with
       | x when x >= 200 && x < 300 -> (
           match parse_response ~body:body_str ~output_deserializer with
-          | Ok r -> Ok r
-          | Error (Xml.Parse.XmlParseError msg) -> Error (`XmlParseError msg))
+          | Ok r -> Ok Response.{ response = r; metadata = { request_id = header_request_id } }
+          | Error (Xml.Parse.XmlParseError msg) ->
+              Error (`XmlParseError msg, Response.{ request_id = header_request_id }))
       | _ ->
           begin match parse_error_envelope ~body:body_str with
-          | Ok (error, _request_id) -> Error (error_deserializer error ~body:body_str)
-          | Error (Xml.Parse.XmlParseError msg) -> Error (`XmlParseError msg)
+          | Ok (error, body_request_id) ->
+              let request_id =
+                request_id_prefer_header ~header:header_request_id ~body:body_request_id
+              in
+              Error (error_deserializer error ~body:body_str, Response.{ request_id })
+          | Error (Xml.Parse.XmlParseError msg) ->
+              Error (`XmlParseError msg, Response.{ request_id = header_request_id })
           end
     end
-  | Error http_failure -> Error (`HttpError http_failure)
+  | Error http_failure -> Error (`HttpError http_failure, Response.{ request_id = None })
+
+(** The metadata-stripping wrapper used by the generated stubs (Phase 4 emits calls to [request],
+    whose [('out, 'err) result] signature is unchanged). Phase 7 may switch the generated [request]
+    to call [request_with_metadata] to surface the request id to callers. *)
+let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
+    ~(context : http_t Context.t) ~(method_ : Http.method_) ~(uri : Uri.t)
+    ~(query : (string * string list) list) ~(headers : (string * string) list)
+    ~(body : (string * string) option) ~(output_deserializer : Xmlm.input -> 'out)
+    ~(error_deserializer : Error.t -> body:string -> 'err) : ('out, 'err) result =
+  request_with_metadata ~shape_name ~service ~context ~method_ ~uri ~query ~headers ~body
+    ~output_deserializer ~error_deserializer
+  |> Result.map (fun { Response.response; _ } -> response)
+  |> Result.map_error (fun (error, _) -> error)

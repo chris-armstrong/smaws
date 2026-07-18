@@ -144,6 +144,46 @@ let parse_error_struct_recovers_members_and_skips_request_id () =
   Alcotest.(check (option string)) "TopLevel recovered" (Some "Top level") top;
   Alcotest.(check (option string)) "Nested/Foo recovered" (Some "bar") foo
 
+let request_id_of_headers_finds_x_amzn_requestid () =
+  (* AWS restXml services put the request id in a response header. The name
+     varies and is case-insensitive; the first non-empty value wins. *)
+  let open RestXml in
+  Alcotest.(check (option string))
+    "x-amzn-requestid recovered" (Some "req-from-header")
+    (request_id_of_headers [ ("x-amzn-requestid", "req-from-header") ]);
+  Alcotest.(check (option string))
+    "lookup is case-insensitive" (Some "req-camel")
+    (request_id_of_headers [ ("X-Amzn-RequestId", "req-camel") ]);
+  Alcotest.(check (option string))
+    "S3-style x-amz-request-id recovered" (Some "s3-req")
+    (request_id_of_headers [ ("x-amz-request-id", "s3-req") ]);
+  Alcotest.(check (option string))
+    "empty value is skipped" None
+    (request_id_of_headers [ ("x-amzn-requestid", "") ]);
+  Alcotest.(check (option string))
+    "absent header returns None" None
+    (request_id_of_headers [ ("content-type", "application/xml") ]);
+  Alcotest.(check (option string))
+    "x-amzn-requestid wins over a later x-amz-request-id" (Some "first")
+    (request_id_of_headers [ ("x-amz-request-id", "second"); ("x-amzn-requestid", "first") ])
+
+let request_id_prefer_header_over_body () =
+  (* On error the id is in both the header and the body <RequestId>; the header
+     wins, with the body as a fallback when the header is absent. *)
+  let open RestXml in
+  Alcotest.(check (option string))
+    "header wins when both present" (Some "hdr")
+    (request_id_prefer_header ~header:(Some "hdr") ~body:(Some "body"));
+  Alcotest.(check (option string))
+    "body used when header absent" (Some "body")
+    (request_id_prefer_header ~header:None ~body:(Some "body"));
+  Alcotest.(check (option string))
+    "None when both absent" None
+    (request_id_prefer_header ~header:None ~body:None);
+  Alcotest.(check (option string))
+    "header wins even when body is None" (Some "hdr")
+    (request_id_prefer_header ~header:(Some "hdr") ~body:None)
+
 let () =
   Alcotest.run "RestXml response parsing"
     [
@@ -164,5 +204,14 @@ let () =
           ( "parse_error_struct recovers members and skips metadata",
             `Quick,
             parse_error_struct_recovers_members_and_skips_request_id );
+        ] );
+      ( "request_id",
+        [
+          ( "request_id_of_headers finds/case-insensitive/empty/absent",
+            `Quick,
+            request_id_of_headers_finds_x_amzn_requestid );
+          ( "request_id_prefer_header prefers header over body",
+            `Quick,
+            request_id_prefer_header_over_body );
         ] );
     ]

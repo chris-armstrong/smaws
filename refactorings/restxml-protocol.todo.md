@@ -50,6 +50,12 @@ noted. Stop and wait for developer review between phases (per AGENTS.md).
 - [ ] Separate `RestXml.Error` (NOT folded into `AwsErrors`).
 - [ ] Mock smoke test (success + error); error mock MUST include a trailing
       `<RequestId>` sibling of `<Error>`. `dune build` + `dune runtest`.
+- [ ] Follow-up (§6.4): request-id recovery — `request_id_of_headers`
+      (case-insensitive `x-amzn-requestid`/`x-amz-request-id`/
+      `x-amz-requestid`), `request_id_prefer_header` (header over body),
+      `request_with_metadata` returning `('out Response.t, 'err *
+      Response.metadata) result`; `request` keeps its signature and strips
+      metadata. Unit-test the pure helpers.
 
 ## Phase 4 — Codegen dispatch (GC2)
 - [ ] Add `RestXml` to `Protocol.t`; `of_service` mapping (no `failwith`).
