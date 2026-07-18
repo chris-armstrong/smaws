@@ -50,7 +50,12 @@ let generate ?protocol_override ~(service : Shape.serviceShapeDetails) ~operatio
         Fmt.pf Fmt.stderr "Unable to generate deserialisers: %s" (Printexc.to_string a);
         raise (Generate_failure ("", a)))
   | RestXml -> (
-      let opens = [ Codegen.Ppx_util.stri_open [ "Types" ] ] in
+      let opens =
+        [
+          Codegen.Ppx_util.stri_open [ "Smaws_Lib"; "Xml"; "Parse" ];
+          Codegen.Ppx_util.stri_open [ "Types" ];
+        ]
+      in
       let unit_of_xml_stri =
         let module B = Ppxlib.Ast_builder.Make (struct
           let loc = Location.none

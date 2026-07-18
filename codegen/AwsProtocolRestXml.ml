@@ -647,8 +647,8 @@ end
 
 module Deserialiser = struct
   let deserialiser_func_str name = (name |> SafeNames.safeFunctionName) ^ "_of_xml"
-  let xml_read_mod = [ "Smaws_Lib"; "Xml"; "Parse"; "Read" ]
-  let xml_struct_mod = [ "Smaws_Lib"; "Xml"; "Parse"; "Structure" ]
+  let xml_read_mod = [ "Read" ]
+  let xml_struct_mod = [ "Structure" ]
   let xml_call module_path func args = qualified_apply ~names:(module_path @ [ func ]) args
 
   let read_element tag =
@@ -688,7 +688,7 @@ module Deserialiser = struct
       target_name
     |> Longident.unflatten |> Option.value_exn
 
-  let xml_primitive_mod = [ "Smaws_Lib"; "Xml"; "Parse"; "Primitive" ]
+  let xml_primitive_mod = [ "Primitive" ]
 
   (* The [Xml.Parse.Primitive.<kind>_of_string] converter for a smithy primitive
      target, or [None] for non-primitives. [String] maps to [Fun.id] (no parse,
@@ -853,7 +853,7 @@ module Deserialiser = struct
         in
         let field_val =
           if is_req then
-            xml_call [ "Smaws_Lib"; "Xml"; "Parse" ] "required"
+            xml_call [] "required"
               [
                 (Nolabel, const_str (xml_name mem.traits mem.name));
                 (Nolabel, deref);
