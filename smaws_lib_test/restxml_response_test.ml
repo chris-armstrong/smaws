@@ -1,18 +1,13 @@
 (** Smoke tests for the restXml runtime protocol module.
 
-    These lock in the two paths the plan's Phase 3 checkpoint requires (restxml-protocol.md §9),
-    independently of the smithy compliance fixtures:
+    These lock in the two core response paths independently of the smithy compliance fixtures:
 
     - [parse_response] (the 2xx success path) must hand the [Xmlm.input] to the generated output
-      deserializer and return its value. Previously the 2xx branch called [Read.skip_to_end] *after*
-      the deserializer consumed the document's single root element; [Xmlm.peek] then hit
-      end-of-input and raised [Xmlm.Error], which [Xml.Parse.run]'s catch-all turned into a spurious
-      [XmlParseError] — every valid success response was reported as a parse error. The success
-      fixture below has a trailing newline (as real HTTP bodies do) to exercise that boundary.
+      deserializer and return its value. The success fixture below has a trailing newline (as real
+      HTTP bodies do) to exercise the boundary at the end of the document's single root element.
     - [parse_error_envelope] (the error path) must recover <Type>/<Code>/ <Message> from inside
-      <Error> **and skip the trailing <RequestId> sibling of <Error>** before </ErrorResponse> — the
-      exact AwsQuery-class trailing-sibling bug this guard protects against. The error fixture keeps
-      that trailing <RequestId>.
+      <Error> **and skip the trailing <RequestId> sibling of <Error>** before </ErrorResponse>. The
+      error fixture keeps that trailing <RequestId>.
 
     Two additional cases cover the restXml-specific [noErrorWrapping] envelope (S3 style, root
     <Error> directly) and [parse_error_struct] (positions a generated error-shape deserializer
@@ -28,9 +23,9 @@ let success_body_with_trailing_newline =
 </GetXResponse>
 |}
 
-(** The trailing <RequestId> sibling of <Error> is what the skip-siblings fix guards against:
-    without [Read.skip_to_end] before </ErrorResponse>, the outer [Read.sequence]'s endTag sees
-    <RequestId> and raises [XmlUnexpectedConstruct]. *)
+(** Error envelope fixture with a trailing <RequestId> sibling of <Error>: [parse_error_envelope]
+    must skip it before </ErrorResponse>, otherwise the outer [Read.sequence]'s endTag would see
+    <RequestId> and raise [XmlUnexpectedConstruct]. *)
 let error_body_with_message_and_trailing_request_id =
   {|<ErrorResponse>
     <Error>
@@ -70,9 +65,9 @@ module RestXml = Smaws_Lib.Protocols.RestXml
 module Xml = Smaws_Lib.Xml
 
 let success_path_parses_root_and_returns_value () =
-  (* Without the skip_to_end-at-top-level fix this returns
-     Error (XmlParseError ...) because [Xmlm.peek] raises [Xmlm.Error] once the
-     deserializer has consumed the single root and the runtime peeks past it. *)
+  (* The deserializer consumes the single root element; the runtime must not
+     peek past it once consumed, or [Xmlm.peek] raises [Xmlm.Error] at
+     end-of-input. *)
   let deserializer i =
     let open Xml.Parse in
     Read.sequence i "GetXResponse" ~ns:"https://example.com/"
@@ -96,9 +91,9 @@ let success_path_parses_root_and_returns_value () =
   Alcotest.(check (option string)) "Baz recovered" (Some "qux") (snd result)
 
 let error_path_recovers_message_and_skips_trailing_request_id () =
-  (* Without the skip-siblings fix the outer [Read.sequence "ErrorResponse"]
-     endTag sees the trailing <RequestId> and raises [XmlUnexpectedConstruct];
-     <Message> recovery also relied on scanSequence tolerating it. *)
+  (* The outer [Read.sequence "ErrorResponse"] must skip the trailing
+     <RequestId> sibling of <Error>; scanSequence tolerates it while
+     <Message> is recovered. *)
   let error, request_id =
     Result.get_ok
       (RestXml.parse_error_envelope ~body:error_body_with_message_and_trailing_request_id)

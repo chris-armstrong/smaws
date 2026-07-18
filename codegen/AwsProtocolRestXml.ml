@@ -64,12 +64,10 @@ let unit_expr = B.pexp_construct (lident_noloc "()") None
 
 module Serialiser = struct
   let serialiser_func_str name = (name |> SafeNames.safeFunctionName) ^ "_to_xml"
-  let xml_write_mod = [ "Smaws_Lib"; "Xml"; "Write" ]
 
-  let xml_write_call func args =
-    B.pexp_apply
-      (B.pexp_ident (Location.mknoloc (make_lident ~names:(xml_write_mod @ [ func ]))))
-      args
+  (* Generated xml_serializers.ml opens [Smaws_Lib.Xml.Write], so the writer
+     functions are referenced unqualified. *)
+  let xml_write_call func args = B.pexp_apply (exp_ident func) args
 
   (* fun w v -> Write.text w (string_of v) *)
   let primitive_field_lambda to_string =
@@ -99,10 +97,8 @@ module Serialiser = struct
               [
                 (Nolabel, w);
                 ( Nolabel,
-                  B.pexp_apply
-                    (B.pexp_ident
-                       (Location.mknoloc
-                          (make_lident ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "to_string" ])))
+                  qualified_apply
+                    ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "to_string" ]
                     [ (Nolabel, v) ] );
               ])
     | "smithy.api#Boolean" ->
@@ -119,18 +115,8 @@ module Serialiser = struct
               [
                 (Nolabel, w);
                 ( Nolabel,
-                  B.pexp_apply
-                    (B.pexp_ident
-                       (Location.mknoloc
-                          (make_lident
-                             ~names:
-                               [
-                                 "Smaws_Lib";
-                                 "Protocols";
-                                 "AwsQuery";
-                                 "Serialize";
-                                 "float_to_string";
-                               ])))
+                  qualified_apply
+                    ~names:[ "Smaws_Lib"; "Protocols"; "AwsQuery"; "Serialize"; "float_to_string" ]
                     [ (Nolabel, v) ] );
               ])
     | "smithy.api#Blob" ->
@@ -140,9 +126,7 @@ module Serialiser = struct
               [
                 (Nolabel, w);
                 ( Nolabel,
-                  B.pexp_apply
-                    (B.pexp_ident
-                       (Location.mknoloc (make_lident ~names:[ "Base64"; "encode_exn" ])))
+                  qualified_apply ~names:[ "Base64"; "encode_exn" ]
                     [ (Nolabel, B.pexp_apply (exp_ident "Bytes.to_string") [ (Nolabel, v) ]) ] );
               ])
     | "smithy.api#Timestamp" ->
@@ -156,12 +140,7 @@ module Serialiser = struct
         let helper_mod = [ "Smaws_Lib"; "Protocols"; "RestXml"; "Serialize" ] in
         Some
           (fun w v ->
-            let s =
-              B.pexp_apply
-                (B.pexp_ident
-                   (Location.mknoloc (make_lident ~names:(helper_mod @ [ helper_name ]))))
-                [ (Nolabel, v) ]
-            in
+            let s = qualified_apply ~names:(helper_mod @ [ helper_name ]) [ (Nolabel, v) ] in
             xml_write_call "text" [ (Nolabel, w); (Nolabel, s) ])
     | _ -> None
 
@@ -323,10 +302,7 @@ module Serialiser = struct
       let none_rhs =
         if is_idemp then
           inner_expr
-            (B.pexp_apply
-               (B.pexp_ident
-                  (Location.mknoloc (make_lident ~names:[ "Smaws_Lib"; "Uuid"; "generate" ])))
-               [ (Nolabel, unit_expr) ])
+            (qualified_apply ~names:[ "Smaws_Lib"; "Uuid"; "generate" ] [ (Nolabel, unit_expr) ])
         else xml_write_call "null" [ (Nolabel, exp_ident "w") ]
       in
       B.pexp_match field_access
@@ -528,9 +504,7 @@ module Serialiser = struct
                    [
                      (Nolabel, exp_ident "w");
                      ( Nolabel,
-                       B.pexp_apply
-                         (B.pexp_ident
-                            (Location.mknoloc (make_lident ~names:(helper_mod @ [ helper_name ]))))
+                       qualified_apply ~names:(helper_mod @ [ helper_name ])
                          [ (Nolabel, exp_ident "v") ] );
                    ])))
     | StringShape { traits } ->
@@ -556,9 +530,7 @@ module Serialiser = struct
                      [
                        (Nolabel, exp_ident "w");
                        ( Nolabel,
-                         B.pexp_apply
-                           (B.pexp_ident
-                              (Location.mknoloc (make_lident ~names:(helper_mod @ [ helper_name ]))))
+                         qualified_apply ~names:(helper_mod @ [ helper_name ])
                            [ (Nolabel, exp_ident "v") ] );
                      ]))))
         else
@@ -583,11 +555,8 @@ module Serialiser = struct
                    [
                      (Nolabel, exp_ident "w");
                      ( Nolabel,
-                       B.pexp_apply
-                         (B.pexp_ident
-                            (Location.mknoloc
-                               (make_lident
-                                  ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "to_string" ])))
+                       qualified_apply
+                         ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "to_string" ]
                          [ (Nolabel, exp_ident "v") ] );
                    ])))
     | BooleanShape _ ->
@@ -608,18 +577,9 @@ module Serialiser = struct
                    [
                      (Nolabel, exp_ident "w");
                      ( Nolabel,
-                       B.pexp_apply
-                         (B.pexp_ident
-                            (Location.mknoloc
-                               (make_lident
-                                  ~names:
-                                    [
-                                      "Smaws_Lib";
-                                      "Protocols";
-                                      "AwsQuery";
-                                      "Serialize";
-                                      "float_to_string";
-                                    ])))
+                       qualified_apply
+                         ~names:
+                           [ "Smaws_Lib"; "Protocols"; "AwsQuery"; "Serialize"; "float_to_string" ]
                          [ (Nolabel, exp_ident "v") ] );
                    ])))
     | BlobShape _ ->
@@ -630,9 +590,7 @@ module Serialiser = struct
                    [
                      (Nolabel, exp_ident "w");
                      ( Nolabel,
-                       B.pexp_apply
-                         (B.pexp_ident
-                            (Location.mknoloc (make_lident ~names:[ "Base64"; "encode_exn" ])))
+                       qualified_apply ~names:[ "Base64"; "encode_exn" ]
                          [
                            ( Nolabel,
                              B.pexp_apply (exp_ident "Bytes.to_string") [ (Nolabel, exp_ident "v") ]
@@ -691,11 +649,7 @@ module Deserialiser = struct
   let deserialiser_func_str name = (name |> SafeNames.safeFunctionName) ^ "_of_xml"
   let xml_read_mod = [ "Smaws_Lib"; "Xml"; "Parse"; "Read" ]
   let xml_struct_mod = [ "Smaws_Lib"; "Xml"; "Parse"; "Structure" ]
-
-  let xml_call module_path func args =
-    B.pexp_apply
-      (B.pexp_ident (Location.mknoloc (make_lident ~names:(module_path @ [ func ]))))
-      args
+  let xml_call module_path func args = qualified_apply ~names:(module_path @ [ func ]) args
 
   let read_element tag =
     xml_call xml_read_mod "element"
@@ -710,10 +664,7 @@ module Deserialiser = struct
       [
         (Nolabel, exp_ident "i");
         (Nolabel, const_str tag);
-        ( Nolabel,
-          B.pexp_fun Nolabel None
-            (B.ppat_var (Location.mknoloc "i"))
-            (B.pexp_fun Nolabel None B.ppat_any body) );
+        (Nolabel, exp_fun_ident_any "i" body);
         (Nolabel, unit_expr);
       ]
 
@@ -722,10 +673,7 @@ module Deserialiser = struct
       [
         (Nolabel, exp_ident "i");
         (Nolabel, const_str tag);
-        ( Nolabel,
-          B.pexp_fun Nolabel None
-            (B.ppat_var (Location.mknoloc "i"))
-            (B.pexp_fun Nolabel None B.ppat_any body) );
+        (Nolabel, exp_fun_ident_any "i" body);
         (Nolabel, unit_expr);
       ]
 
@@ -747,24 +695,18 @@ module Deserialiser = struct
         Some (B.pexp_apply (exp_ident "int_of_string") [ (Nolabel, str_expr) ])
     | "smithy.api#Long" ->
         Some
-          (B.pexp_apply
-             (B.pexp_ident
-                (Location.mknoloc
-                   (make_lident ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "of_string" ])))
+          (qualified_apply
+             ~names:[ "Smaws_Lib"; "CoreTypes"; "Int64"; "of_string" ]
              [ (Nolabel, str_expr) ])
     | "smithy.api#BigInteger" ->
         Some
-          (B.pexp_apply
-             (B.pexp_ident
-                (Location.mknoloc
-                   (make_lident ~names:[ "Smaws_Lib"; "CoreTypes"; "BigInt"; "of_string" ])))
+          (qualified_apply
+             ~names:[ "Smaws_Lib"; "CoreTypes"; "BigInt"; "of_string" ]
              [ (Nolabel, str_expr) ])
     | "smithy.api#BigDecimal" ->
         Some
-          (B.pexp_apply
-             (B.pexp_ident
-                (Location.mknoloc
-                   (make_lident ~names:[ "Smaws_Lib"; "CoreTypes"; "BigDecimal"; "of_string" ])))
+          (qualified_apply
+             ~names:[ "Smaws_Lib"; "CoreTypes"; "BigDecimal"; "of_string" ]
              [ (Nolabel, str_expr) ])
     | "smithy.api#Boolean" ->
         Some (B.pexp_apply (exp_ident "bool_of_string") [ (Nolabel, str_expr) ])
@@ -774,17 +716,11 @@ module Deserialiser = struct
         Some
           (B.pexp_apply (exp_ident "Bytes.of_string")
              [
-               ( Nolabel,
-                 B.pexp_apply
-                   (B.pexp_ident (Location.mknoloc (make_lident ~names:[ "Base64"; "decode_exn" ])))
-                   [ (Nolabel, str_expr) ] );
+               (Nolabel, qualified_apply ~names:[ "Base64"; "decode_exn" ] [ (Nolabel, str_expr) ]);
              ])
     | "smithy.api#Timestamp" ->
         Some
-          ( B.pexp_apply
-              (B.pexp_ident (Location.mknoloc (make_lident ~names:[ "Ptime"; "of_rfc3339" ])))
-              [ (Nolabel, str_expr) ]
-          |> fun e ->
+          ( qualified_apply ~names:[ "Ptime"; "of_rfc3339" ] [ (Nolabel, str_expr) ] |> fun e ->
             B.pexp_apply (exp_ident "Result.get_ok") [ (Nolabel, e) ] |> fun e ->
             B.pexp_let Nonrecursive
               [
@@ -829,8 +765,7 @@ module Deserialiser = struct
         match target with
         | "smithy.api#String" -> elements
         | _ ->
-            B.pexp_apply
-              (B.pexp_ident (Location.mknoloc (make_lident ~names:[ "List"; "map" ])))
+            qualified_apply ~names:[ "List"; "map" ]
               [
                 ( Nolabel,
                   B.pexp_fun Nolabel None
@@ -865,10 +800,7 @@ module Deserialiser = struct
           | Trait.TimestampFormatHttpDate -> "timestamp_httpdate_of_string"
         in
         let deser_mod = [ "Smaws_Lib"; "Protocols"; "AwsQuery"; "Deserialize" ] in
-        assign
-          (B.pexp_apply
-             (B.pexp_ident (Location.mknoloc (make_lident ~names:(deser_mod @ [ helper ]))))
-             [ (Nolabel, raw_str_expr) ])
+        assign (qualified_apply ~names:(deser_mod @ [ helper ]) [ (Nolabel, raw_str_expr) ])
     | _ -> (
         match parse_primitive_from_string target_name raw_str_expr with
         | Some parsed_expr -> assign parsed_expr
@@ -925,10 +857,7 @@ module Deserialiser = struct
         (Nolabel, exp_ident "i");
         (Nolabel, B.elist (List.map xml_tags ~f:const_str));
         ( Nolabel,
-          B.pexp_fun Nolabel None
-            (B.ppat_var (Location.mknoloc "tag"))
-            (B.pexp_fun Nolabel None B.ppat_any
-               (B.pexp_match (exp_ident "tag") (cases @ [ wildcard_case ]))) );
+          exp_fun_ident_any "tag" (B.pexp_match (exp_ident "tag") (cases @ [ wildcard_case ])) );
       ]
 
   let structure_record_fields (members : Shape.member list) =
@@ -1050,10 +979,7 @@ module Deserialiser = struct
 
   let primitive_of_xml_lambda helper =
     let s_expr = xml_call xml_read_mod "data" [ (Nolabel, exp_ident "i") ] in
-    exp_fun_untyped "i"
-      (B.pexp_apply
-         (B.pexp_ident (Location.mknoloc (make_lident ~names:(deser_mod @ [ helper ]))))
-         [ (Nolabel, s_expr) ])
+    exp_fun_untyped "i" (qualified_apply ~names:(deser_mod @ [ helper ]) [ (Nolabel, s_expr) ])
 
   let generate_func_body (shapeWithTarget : Dependencies.shapeWithTarget)
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
@@ -1079,9 +1005,7 @@ module Deserialiser = struct
         let s_expr = xml_call xml_read_mod "data" [ (Nolabel, exp_ident "i") ] in
         Some
           (exp_fun_untyped "i"
-             (B.pexp_apply
-                (B.pexp_ident (Location.mknoloc (make_lident ~names:(deser_mod @ [ helper ]))))
-                [ (Nolabel, s_expr) ]))
+             (qualified_apply ~names:(deser_mod @ [ helper ]) [ (Nolabel, s_expr) ]))
     | StringShape { traits } ->
         let has_timestamp_fmt =
           Option.value ~default:[] traits
@@ -1100,9 +1024,7 @@ module Deserialiser = struct
           let s_expr = xml_call xml_read_mod "data" [ (Nolabel, exp_ident "i") ] in
           Some
             (exp_fun_untyped "i"
-               (B.pexp_apply
-                  (B.pexp_ident (Location.mknoloc (make_lident ~names:(deser_mod @ [ helper ]))))
-                  [ (Nolabel, s_expr) ])))
+               (qualified_apply ~names:(deser_mod @ [ helper ]) [ (Nolabel, s_expr) ])))
         else Some (read_data_lambda ())
     | LongShape _ -> Some (primitive_of_xml_lambda "long_of_string")
     | IntegerShape _ | ShortShape _ | ByteShape _ -> Some (primitive_of_xml_lambda "int_of_string")
@@ -1168,9 +1090,7 @@ module Operations = struct
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t) () =
     let errors = operation_shape.errors |> Option.value ~default:[] in
     let handler_body =
-      let default_handler =
-        B.pexp_ident (Location.mknoloc (make_lident ~names:(restxml_mod @ [ "error_to_string" ])))
-      in
+      let default_handler = qualified_ident ~names:(restxml_mod @ [ "error_to_string" ]) in
       match errors with
       | [] -> default_handler
       | errors ->
@@ -1200,13 +1120,8 @@ module Operations = struct
       ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
       ~(shape_resolver : Shape_resolver.t) () =
     let errors = operation_shape.errors |> Option.value ~default:[] in
-    let default_handler =
-      B.pexp_ident
-        (Location.mknoloc (make_lident ~names:(restxml_mod @ [ "Errors"; "default_handler" ])))
-    in
-    let parse_error_struct =
-      B.pexp_ident (Location.mknoloc (make_lident ~names:(restxml_mod @ [ "parse_error_struct" ])))
-    in
+    let default_handler = qualified_ident ~names:(restxml_mod @ [ "Errors"; "default_handler" ]) in
+    let parse_error_struct = qualified_ident ~names:(restxml_mod @ [ "parse_error_struct" ]) in
     let body =
       if List.is_empty errors then
         [%expr
@@ -1289,13 +1204,10 @@ module Operations = struct
     let output_deserializer =
       operation_shape.output
       |> Option.value_map
-           ~default:
-             (B.pexp_ident
-                (Location.mknoloc (make_lident ~names:[ "Xml_deserializers"; "unit_of_xml" ])))
+           ~default:(qualified_ident ~names:[ "Xml_deserializers"; "unit_of_xml" ])
            ~f:(fun output_name ->
              if String.equal output_name "smithy.api#Unit" then
-               B.pexp_ident
-                 (Location.mknoloc (make_lident ~names:[ "Xml_deserializers"; "unit_of_xml" ]))
+               qualified_ident ~names:[ "Xml_deserializers"; "unit_of_xml" ]
              else (
                let sym_transformer ~local x =
                  if local then [ Deserialiser.deserialiser_func_str x ]
@@ -1308,9 +1220,7 @@ module Operations = struct
                in
                B.pexp_ident (Location.mknoloc func_ident)))
     in
-    let request_func =
-      B.pexp_ident (Location.mknoloc (make_lident ~names:(restxml_mod @ [ "request" ])))
-    in
+    let request_func = qualified_ident ~names:(restxml_mod @ [ "request" ]) in
     let shape_func_body =
       [%expr
         let w = Smaws_Lib.Xml.Write.make () in

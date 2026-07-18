@@ -46,5 +46,18 @@ let exp_fun_with_return_type return_type arg_name arg_type exp =
 let exp_fun_untyped arg_name exp =
   B.pexp_fun Nolabel None (B.ppat_var (Location.mknoloc arg_name)) exp
 
+(** [fun arg _ -> exp]: a two-parameter lambda whose second parameter is ignored. Used by XML
+    [Read.sequence]/[Read.sequences] callbacks. *)
+let exp_fun_ident_any arg_name exp =
+  B.pexp_fun Nolabel None
+    (B.ppat_var (Location.mknoloc arg_name))
+    (B.pexp_fun Nolabel None B.ppat_any exp)
+
+(** A fully-qualified identifier expression, e.g. [Smaws_Lib.Xml.Write.text]. *)
+let qualified_ident ~names = B.pexp_ident (Location.mknoloc (make_lident ~names))
+
+(** Application of a fully-qualified identifier to [args]. *)
+let qualified_apply ~names args = B.pexp_apply (qualified_ident ~names) args
+
 let const_str s = B.pexp_constant (Pconst_string (s, loc, None))
 let pat_const_str s = B.ppat_constant (Pconst_string (s, loc, None))

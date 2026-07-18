@@ -257,9 +257,9 @@ let request_with_metadata (type http_t) ~(shape_name : string) ~(service : Servi
     end
   | Error http_failure -> Error (`HttpError http_failure, Response.{ request_id = None })
 
-(** The metadata-stripping wrapper used by the generated stubs (Phase 4 emits calls to [request],
-    whose [('out, 'err) result] signature is unchanged). Phase 7 may switch the generated [request]
-    to call [request_with_metadata] to surface the request id to callers. *)
+(** The metadata-stripping wrapper used by the generated stubs: delegates to [request_with_metadata]
+    and discards the response metadata, preserving the [('out, 'err) result] signature expected by
+    generated operation code. *)
 let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
     ~(context : http_t Context.t) ~(method_ : Http.method_) ~(uri : Uri.t)
     ~(query : (string * string list) list) ~(headers : (string * string) list)

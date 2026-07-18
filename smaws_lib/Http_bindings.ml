@@ -10,21 +10,37 @@ let percent_encode_path_segment ~greedy s = if greedy then s else Uri.pct_encode
 (** Percent-encode a query parameter value. *)
 let percent_encode_query_value s = Uri.pct_encode ~component:`Query s
 
-(** Check if string contains substring *)
-let contains_substring s sub =
-  try
-    let _ = String.index s (String.get sub 0) in
-    let _ = Str.search_forward (Str.regexp_string sub) s 0 in
-    true
-  with Not_found -> false
+(** Index of the first occurrence of [sub] in [s] at or after [from], or [None] if absent. A plain
+    stdlib substring search — no [Str] global state, so it is safe to call concurrently with other
+    code that still uses [Str] (e.g. [Ini]). *)
+let index_of_substring ~from ~sub s =
+  let n = String.length s and m = String.length sub in
+  if m = 0 then Some (min from n)
+  else if m > n || from > n - m then None
+  else (
+    let last = n - m in
+    let rec loop i =
+      if i > last then None
+      else (
+        let rec check j =
+          if j >= m then true
+          else if String.get s (i + j) <> String.get sub j then false
+          else check (j + 1)
+        in
+        if check 0 then Some i else loop (i + 1))
+    in
+    loop from)
 
-(** Replace first occurrence of pattern in string *)
+(** Check if [s] contains [sub]. *)
+let contains_substring s sub = Option.is_some (index_of_substring ~from:0 ~sub s)
+
+(** Replace the first occurrence of [pattern] in [s] with [with_], or return [s] unchanged. *)
 let replace_first ~pattern ~with_ s =
-  try
-    let pos = Str.search_forward (Str.regexp_string pattern) s 0 in
-    let len = String.length pattern in
-    String.sub s 0 pos ^ with_ ^ String.sub s (pos + len) (String.length s - pos - len)
-  with Not_found -> s
+  match index_of_substring ~from:0 ~sub:pattern s with
+  | None -> s
+  | Some pos ->
+      let len = String.length pattern in
+      String.sub s 0 pos ^ with_ ^ String.sub s (pos + len) (String.length s - pos - len)
 
 (** Substitute {label} and {label+} placeholders in a URI template.
     [labels] is a list of (name, value, is_greedy) tuples.
