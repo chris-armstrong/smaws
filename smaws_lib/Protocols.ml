@@ -9,3 +9,6 @@ module AwsJson = Protocols_impl.AwsJson
 
 module AwsQuery = Protocols_impl.AwsQuery
 (** AwsQuery protocol support (over eio-based httpun client) *)
+
+module RestXml = Protocols_impl.RestXml
+(** RestXml protocol support (over eio-based httpun client) *)

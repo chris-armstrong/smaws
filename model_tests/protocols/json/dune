@@ -17,28 +17,9 @@
   types.mli)
  (deps
   (:gen ../../gen.exe)
-  (:input ../../../smithy-aws-protocol-tests_model.json)
-  (:ocf %{bin:ocamlformat}))
+  (:input ../../../smithy-aws-protocol-tests_model.json))
  (action
-  (progn
-   (run %{gen} %{input} . aws.protocoltests.json)
-   (run
-    %{ocf}
-    -i
-    builders.ml
-    builders.mli
-    json.ml
-    json.mli
-    json_deserializers.ml
-    json_serializers.ml
-    operations.ml
-    operations.mli
-    protocol_tests.ml
-    service.ml
-    service_metadata.ml
-    service_metadata.mli
-    types.ml
-    types.mli))))
+  (run %{gen} %{input} . aws.protocoltests.json)))
 
 (library
  (name json)

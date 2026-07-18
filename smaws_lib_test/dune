@@ -33,6 +33,16 @@
  (libraries Smaws_Lib alcotest))
 
 (test
+ (name xml_roundtrip_test)
+ (modules xml_roundtrip_test)
+ (libraries Smaws_Lib alcotest))
+
+(test
  (name uint64_test)
  (modules uint64_test)
+ (libraries Smaws_Lib alcotest))
+
+(test
+ (name http_bindings_test)
+ (modules http_bindings_test)
  (libraries Smaws_Lib alcotest))

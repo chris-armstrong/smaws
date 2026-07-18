@@ -20,6 +20,12 @@ type arnReferenceDetails = {
 [@@deriving show, equal]
 
 type reference = { resource : string; service : string option } [@@deriving show, equal]
+type httpTrait = { method_ : string; uri : string; code : int option } [@@deriving show, equal]
+type endpointTrait = { hostPrefix : string } [@@deriving show, equal]
+type xmlNamespaceConfig = { uri : string; prefix : string option } [@@deriving show, equal]
+
+type restXmlConfig = { http : string list; eventStreamHttp : string list; noErrorWrapping : bool }
+[@@deriving show, equal]
 
 type clientEndpointDiscoveryDetails = { operation : string; error : string }
 [@@deriving show, equal]
@@ -87,7 +93,7 @@ type httpResponseTest = {
 
 type t =
   | ApiTitleTrait of string
-  | ApiXmlNamespaceTrait of string
+  | ApiXmlNamespaceTrait of xmlNamespaceConfig
   | AuthTrait
   | AwsApiArnReferenceTrait of arnReferenceDetails
   | AwsApiClientDiscoveredEndpointTrait
@@ -111,14 +117,14 @@ type t =
   | AwsProtocolEc2QueryNameTrait of string
   | AwsProtocolEc2QueryTrait
   | AwsProtocolRestJson1Trait
-  | AwsProtocolRestXmlTrait
+  | AwsProtocolRestXmlTrait of restXmlConfig
   | AwsProtocolsHttpChecksumTrait
   | BoxTrait
   | CorsTrait
   | DefaultTrait
   | DeprecatedTrait
   | DocumentationTrait of string
-  | EndpointTrait
+  | EndpointTrait of endpointTrait
   | EnumTrait of enumPair list
   | EnumValueTrait of [ `String of string | `Int of int ]
   | ErrorTrait of errorTraitType
@@ -128,17 +134,18 @@ type t =
   | HostLabelTrait
   | HttpChecksumRequiredTrait
   | HttpErrorTrait of int
-  | HttpHeaderTrait
+  | HttpHeaderTrait of string
   | HttpLabelTrait
   | HttpPayloadTrait
   | HttpPrefixHeadersTrait of string
   | HttpQueryParams
-  | HttpQueryTrait
+  | HttpQueryTrait of string
   | HttpResponseCodeTrait
-  | HttpTrait
+  | HttpTrait of httpTrait
   | IdempotencyTokenTrait
   | IdempotentTrait
   | InputTrait
+  | InternalTrait
   | JsonNameTrait of string
   | LengthTrait of int option * int option
   | MediaTypeTrait of string

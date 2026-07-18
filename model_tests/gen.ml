@@ -19,6 +19,7 @@ let main () =
       [
         ("aws.protocoltests.shared", "Shared");
         ("aws.protocoltests.restxml.xmlns", "Restxml_xmlns");
+        ("aws.protocoltests.restxml", "Restxml");
         ("aws.protocoltests.restjson.nested", "Restjson_nested");
         ("aws.protocoltests.restjson.validation", "Restjson_validation");
         ("aws.protocoltests.restjson", "Restjson");
@@ -44,6 +45,8 @@ let main () =
       let _ = Sdkgen.write_serialisers ~output_dir model in
       let _ = Sdkgen.write_query_serialisers ~output_dir model in
       let _ = Sdkgen.write_query_deserialisers ~output_dir model in
+      let _ = Sdkgen.write_xml_serialisers ~output_dir model in
+      let _ = Sdkgen.write_xml_deserialisers ~output_dir model in
       let _ = Sdkgen.write_deserialisers ~output_dir model in
       let _ = Sdkgen.write_builders ~output_dir model in
       let _ = Sdkgen.write_module ~filename:module_dir_name ~output_dir model in

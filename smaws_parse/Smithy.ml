@@ -253,8 +253,10 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
     | "smithy.api#httpError" -> value |> parseInteger >>| fun error -> Trait.HttpErrorTrait error
     | "smithy.api#title" -> value |> parseString >>| fun title -> Trait.ApiTitleTrait title
     | "smithy.api#xmlNamespace" ->
-        value |> parseObject |> field "uri" |> parseString >>| fun uri ->
-        Trait.ApiXmlNamespaceTrait uri
+        let obj = value |> parseObject in
+        let uri = obj |> field "uri" |> parseString in
+        let prefix = optional (obj |> field "prefix") |> mapOptional parseString in
+        map2 uri prefix (fun uri prefix -> Trait.ApiXmlNamespaceTrait { uri; prefix })
     | "smithy.api#enum" ->
         value |> parseArray parseEnumNameValue >>| fun enumPairs -> Trait.EnumTrait enumPairs
     | "aws.auth#sigv4" ->
@@ -267,8 +269,10 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
     | "aws.protocols#restJson1" -> Ok Trait.AwsProtocolRestJson1Trait
     | "smithy.api#idempotencyToken" -> Ok Trait.IdempotencyTokenTrait
     | "smithy.api#httpLabel" -> Ok Trait.HttpLabelTrait
-    | "smithy.api#httpQuery" -> Ok Trait.HttpQueryTrait
-    | "smithy.api#httpHeader" -> Ok Trait.HttpHeaderTrait
+    | "smithy.api#httpQuery" ->
+        value |> parseString >>| fun queryName -> Trait.HttpQueryTrait queryName
+    | "smithy.api#httpHeader" ->
+        value |> parseString >>| fun headerName -> Trait.HttpHeaderTrait headerName
     | "smithy.api#retryable" -> Ok Trait.RetryableTrait
     | "smithy.api#timestampFormat" -> (
         value |> parseString >>| function
@@ -301,7 +305,25 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
     | "smithy.api#deprecated" -> Ok Trait.DeprecatedTrait
     | "smithy.api#mediaType" ->
         parseString value >>| fun mediaType -> Trait.MediaTypeTrait mediaType
-    | "aws.protocols#restXml" -> Ok Trait.AwsProtocolRestXmlTrait
+    | "aws.protocols#restXml" ->
+        let obj = value |> parseObject in
+        let http =
+          optional (obj |> field "http")
+          |> mapOptional (parseArray parseString)
+          |> Result.map ~f:(Option.value ~default:[])
+        in
+        let eventStreamHttp =
+          optional (obj |> field "eventStreamHttp")
+          |> mapOptional (parseArray parseString)
+          |> Result.map ~f:(Option.value ~default:[])
+        in
+        let noErrorWrapping =
+          optional (obj |> field "noErrorWrapping")
+          |> mapOptional parseBool
+          |> Result.map ~f:(Option.value ~default:false)
+        in
+        map3 http eventStreamHttp noErrorWrapping (fun http eventStreamHttp noErrorWrapping ->
+            Trait.AwsProtocolRestXmlTrait { http; eventStreamHttp; noErrorWrapping })
     | "aws.api#clientEndpointDiscovery" ->
         let obj = parseObject value in
         let operation = obj |> field "operation" |> parseString in
@@ -311,6 +333,7 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
     | "aws.protocols#ec2QueryName" ->
         value |> parseString >>| fun queryName -> Trait.AwsProtocolEc2QueryNameTrait queryName
     | "aws.protocols#ec2Query" -> Ok Trait.AwsProtocolEc2QueryTrait
+    | "smithy.api#internal" -> Ok Trait.InternalTrait
     | "smithy.api#httpResponseCode" -> Ok Trait.HttpResponseCodeTrait
     | "smithy.api#streaming" -> Ok Trait.StreamingTrait
     | "smithy.api#hostLabel" -> Ok Trait.HostLabelTrait
@@ -329,11 +352,18 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
                     |> Result.map ~f:(fun s -> (key, s) :: entries))))
         |> Result.map ~f:(fun x -> Trait.ExternalDocumentationTrait x)
     | "smithy.api#eventPayload" -> Ok Trait.EventPayloadTrait
-    | "smithy.api#http" -> Ok Trait.HttpTrait
+    | "smithy.api#http" ->
+        let obj = value |> parseObject in
+        let method_ = obj |> field "method" |> parseString in
+        let uri = obj |> field "uri" |> parseString in
+        let code = optional (obj |> field "code") |> mapOptional parseInteger in
+        map3 method_ uri code (fun method_ uri code -> Trait.HttpTrait { method_; uri; code })
     | "smithy.api#idempotent" -> Ok Trait.IdempotentTrait
     | "smithy.api#readonly" -> Ok Trait.ReadonlyTrait
     | "smithy.waiters#waitable" -> Ok Trait.WaitableTrait
-    | "smithy.api#endpoint" -> Ok Trait.EndpointTrait
+    | "smithy.api#endpoint" ->
+        value |> parseObject |> field "hostPrefix" |> parseString >>| fun hostPrefix ->
+        Trait.EndpointTrait { hostPrefix }
     | "smithy.api#auth" -> Ok Trait.AuthTrait
     | "smithy.api#optionalAuth" -> Ok Trait.OptionalAuthTrait
     | "smithy.api#suppress" -> Ok Trait.SuppressTrait

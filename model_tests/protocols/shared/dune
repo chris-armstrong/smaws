@@ -11,28 +11,14 @@
   json_serializers.ml
   json_deserializers.ml
   query_serializers.ml
-  query_deserializers.ml)
+  query_deserializers.ml
+  xml_serializers.ml
+  xml_deserializers.ml)
  (deps
   (:gen ../../gen.exe)
-  (:input ../../../smithy-aws-protocol-tests_model.json)
-  (:ocf %{bin:ocamlformat}))
+  (:input ../../../smithy-aws-protocol-tests_model.json))
  (action
-  (progn
-   (run %{gen} %{input} . aws.protocoltests.shared)
-   (run
-    %{ocf}
-    -i
-    builders.ml
-    builders.mli
-    types.ml
-    types.mli
-    shared.ml
-    shared.mli
-    protocol_tests.ml
-    json_serializers.ml
-    json_deserializers.ml
-    query_serializers.ml
-    query_deserializers.ml))))
+  (run %{gen} %{input} . aws.protocoltests.shared)))
 
 (library
  (name shared)
@@ -43,7 +29,9 @@
   json_serializers
   json_deserializers
   query_serializers
-  query_deserializers)
+  query_deserializers
+  xml_serializers
+  xml_deserializers)
  (preprocess
   (pps ppx_deriving.show ppx_deriving.eq))
  (libraries Smaws_Lib Smaws_Test_Support_Lib alcotest eio_main))

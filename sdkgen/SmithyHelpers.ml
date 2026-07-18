@@ -4,7 +4,7 @@ open Smithy_ast
 (** The wire protocols the code generator knows how to emit code for. restJson1, restXml and
     ec2Query are recognised traits but generation for them is not implemented yet, so
     [protocol_of_traits] fails loudly on them rather than silently falling back to JSON. *)
-type protocol = Query | Json
+type protocol = Query | Json | RestXml
 
 let protocol_of_traits (traits : Trait.t list option) : protocol =
   traits |> Option.value ~default:[]
@@ -13,8 +13,7 @@ let protocol_of_traits (traits : Trait.t list option) : protocol =
     | Trait.AwsProtocolAwsJson1_0Trait | Trait.AwsProtocolAwsJson1_1Trait -> Some Json
     | Trait.AwsProtocolRestJson1Trait ->
         failwith "code generation for the restJson1 protocol is not yet supported"
-    | Trait.AwsProtocolRestXmlTrait ->
-        failwith "code generation for the restXml protocol is not yet supported"
+    | Trait.AwsProtocolRestXmlTrait _ -> Some RestXml
     | Trait.AwsProtocolEc2QueryTrait ->
         failwith "code generation for the ec2Query protocol is not yet supported"
     | _ -> None)
@@ -26,7 +25,7 @@ let printProtocol (traits : Trait.t list option) =
     | Trait.AwsProtocolAwsJson1_0Trait -> Some "AWS JSON 1.0"
     | Trait.AwsProtocolAwsJson1_1Trait -> Some "AWS JSON 1.1"
     | Trait.AwsProtocolRestJson1Trait -> Some "AWS REST JSON 1"
-    | Trait.AwsProtocolRestXmlTrait -> Some "AWS REST XML"
+    | Trait.AwsProtocolRestXmlTrait _ -> Some "AWS REST XML"
     | Trait.AwsProtocolAwsQueryTrait -> Some "AWS Query"
     | Trait.AwsProtocolEc2QueryTrait -> Some "EC2 Query"
     | _ -> None)

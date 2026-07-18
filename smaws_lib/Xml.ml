@@ -1,5 +1,62 @@
 open Xmlm
 
+module Write = struct
+  type t = { output : output; buf : Buffer.t; mutable started : bool }
+
+  let make ?(decl = false) ?(indent = None) ?ns_prefix () =
+    let buf = Buffer.create 1024 in
+    let ns_prefix = match ns_prefix with Some f -> f | None -> fun _ -> None in
+    let output = make_output ~decl ~indent ~nl:false ~ns_prefix (`Buffer buf) in
+    { output; buf; started = false }
+
+  let to_string t = Buffer.contents t.buf
+  let emit t signal = Xmlm.output t.output signal
+
+  let ensure_started t =
+    if not t.started then (
+      emit t (`Dtd None);
+      t.started <- true)
+
+  let element ?(ns = "") ?(attrs : (string * string * string option) list = []) t name body =
+    ensure_started t;
+    let xml_attrs =
+      List.filter_map
+        (fun (local, value, prefix_opt) ->
+          match prefix_opt with
+          | Some prefix -> Some (("", prefix ^ ":" ^ local), value)
+          | None -> Some (("", local), value))
+        attrs
+    in
+    let xml_ns_attrs = if ns <> "" then [ (("", "xmlns"), ns) ] else [] in
+    emit t (`El_start ((ns, name), xml_ns_attrs @ xml_attrs));
+    body t;
+    emit t `El_end
+
+  let element_with_ns ?(attrs : (string * string * string option) list = []) t ns_uri prefix name
+      body =
+    ensure_started t;
+    let xml_attrs =
+      List.filter_map
+        (fun (local, value, prefix_opt) ->
+          match prefix_opt with
+          | Some p -> Some (("", p ^ ":" ^ local), value)
+          | None -> Some (("", local), value))
+        attrs
+    in
+    let ns_decl =
+      match prefix with
+      | Some p -> [ (("", "xmlns:" ^ p), ns_uri) ]
+      | None -> [ (("", "xmlns"), ns_uri) ]
+    in
+    let xml_name = match prefix with Some _ -> (ns_uri, name) | None -> (ns_uri, name) in
+    emit t (`El_start (xml_name, ns_decl @ xml_attrs));
+    body t;
+    emit t `El_end
+
+  let text t s = emit t (`Data s)
+  let null t = ()
+end
+
 module Parse = struct
   let source_with_encoding ~src ~encoding =
     let enc =

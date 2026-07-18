@@ -18,7 +18,7 @@ let stri_service_metadata (service : Ast.Shape.serviceShapeDetails) =
     List.find_map traits ~f:(function
       | Ast.Trait.AwsProtocolAwsJson1_0Trait -> Some [%expr Smaws_Lib.Service.AwsJson_1_0]
       | Ast.Trait.AwsProtocolAwsJson1_1Trait -> Some [%expr Smaws_Lib.Service.AwsJson_1_1]
-      | Ast.Trait.AwsProtocolRestXmlTrait -> Some [%expr Smaws_Lib.Service.RestXml]
+      | Ast.Trait.AwsProtocolRestXmlTrait _ -> Some [%expr Smaws_Lib.Service.RestXml]
       | Ast.Trait.AwsProtocolEc2QueryTrait -> Some [%expr Smaws_Lib.Service.Ec2Query]
       | Ast.Trait.AwsProtocolRestJson1Trait -> Some [%expr Smaws_Lib.Service.RestJson]
       | Ast.Trait.AwsProtocolAwsQueryTrait -> Some [%expr Smaws_Lib.Service.AwsQuery]

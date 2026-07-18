@@ -36,3 +36,14 @@ let generate ?protocol_override ~(service : Shape.serviceShapeDetails) ~operatio
       with _ as a ->
         Fmt.pf Fmt.stderr "Unable to generate serialisers: %s" (Printexc.to_string a);
         raise (Generate_failure ("", a)))
+  | RestXml -> (
+      let opens = [ Codegen.Ppx_util.stri_open [ "Types" ] ] in
+      try
+        let serialisers =
+          Codegen.AwsProtocolRestXml.Serialiser.generate ~structure_shapes ~namespace_resolver
+            ~shape_resolver ()
+        in
+        Ppxlib.Pprintast.structure oc (opens @ serialisers)
+      with _ as a ->
+        Fmt.pf Fmt.stderr "Unable to generate serialisers: %s" (Printexc.to_string a);
+        raise (Generate_failure ("", a)))
