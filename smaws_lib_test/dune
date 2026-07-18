@@ -46,3 +46,8 @@
  (name http_bindings_test)
  (modules http_bindings_test)
  (libraries Smaws_Lib alcotest))
+
+(test
+ (name restxml_response_test)
+ (modules restxml_response_test)
+ (libraries Smaws_Lib alcotest))

@@ -165,6 +165,20 @@ let parse_error_struct ~body ~structParser =
           result)
         ())
 
+(** Parse a restXml success (2xx) response body. The [output_deserializer] consumes the response's
+    root element directly from the [Xmlm.input] (it is the generated [<output>_of_xml], which calls
+    its own [Read.sequence] on the root). Trailing whitespace/comments after the root are not read —
+    calling [Read.skip_to_end] here would peek past the document's single root and hit end-of-input,
+    which [Xmlm.peek] reports as [Xmlm.Error] (caught by [run]'s catch-all as a spurious
+    [XmlParseError]). The deserializer owns consumption of the root and any siblings inside it. *)
+let parse_response ~(body : string) ~(output_deserializer : Xmlm.input -> 'out) :
+    ('out, Xml.Parse.error) result =
+  let open Xml.Parse in
+  run (fun () ->
+      let xmlSource = source_with_encoding ~src:body ~encoding:None in
+      Read.dtd xmlSource;
+      output_deserializer xmlSource)
+
 let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
     ~(context : http_t Context.t) ~(method_ : Http.method_) ~(uri : Uri.t)
     ~(query : (string * string list) list) ~(headers : (string * string) list)
@@ -199,17 +213,9 @@ let request (type http_t) ~(shape_name : string) ~(service : Service.descriptor)
       let body_str = match Http.Body.to_string response_body with Some b -> b | None -> "" in
       match status with
       | x when x >= 200 && x < 300 -> (
-          let open Xml.Parse in
-          match
-            run (fun () ->
-                let xmlSource = source_with_encoding ~src:body_str ~encoding:None in
-                Read.dtd xmlSource;
-                let result = output_deserializer xmlSource in
-                Read.skip_to_end xmlSource;
-                result)
-          with
+          match parse_response ~body:body_str ~output_deserializer with
           | Ok r -> Ok r
-          | Error (XmlParseError msg) -> Error (`XmlParseError msg))
+          | Error (Xml.Parse.XmlParseError msg) -> Error (`XmlParseError msg))
       | _ ->
           begin match parse_error_envelope ~body:body_str with
           | Ok (error, _request_id) -> Error (error_deserializer error ~body:body_str)
