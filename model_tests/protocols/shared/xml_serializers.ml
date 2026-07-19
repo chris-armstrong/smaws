@@ -160,7 +160,7 @@ let float_list_to_xml w xs =
   List.iter
     (fun item ->
       element w "member" (fun w ->
-          (fun w v -> text w (Smaws_Lib.Protocols.AwsQuery.Serialize.float_to_string v)) w item))
+          (fun w v -> text w (Smaws_Lib.Protocols.RestXml.Serialize.float_field_to_string v)) w item))
     xs
 
 let epoch_seconds_to_xml w v =
@@ -170,7 +170,7 @@ let double_list_to_xml w xs =
   List.iter
     (fun item ->
       element w "member" (fun w ->
-          (fun w v -> text w (Smaws_Lib.Protocols.AwsQuery.Serialize.float_to_string v)) w item))
+          (fun w v -> text w (Smaws_Lib.Protocols.RestXml.Serialize.float_field_to_string v)) w item))
     xs
 
 let date_time_to_xml w v = text w (Smaws_Lib.Protocols.RestXml.Serialize.timestamp_iso_to_string v)

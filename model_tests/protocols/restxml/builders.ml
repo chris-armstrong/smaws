@@ -27,8 +27,43 @@ let make_xml_unions_response ?union_value:(union_value_ : xml_union_shape option
 let make_xml_unions_request ?union_value:(union_value_ : xml_union_shape option) () =
   ({ union_value = union_value_ } : xml_unions_request)
 
-let make_xml_timestamps_response () = (() : unit)
-let make_xml_timestamps_request () = (() : unit)
+let make_xml_timestamps_response
+    ?http_date_on_target:(http_date_on_target_ : Shared.Types.http_date option)
+    ?http_date:(http_date_ : Smaws_Lib.Smithy_api.Types.timestamp option)
+    ?epoch_seconds_on_target:(epoch_seconds_on_target_ : Shared.Types.epoch_seconds option)
+    ?epoch_seconds:(epoch_seconds_ : Smaws_Lib.Smithy_api.Types.timestamp option)
+    ?date_time_on_target:(date_time_on_target_ : Shared.Types.date_time option)
+    ?date_time:(date_time_ : Smaws_Lib.Smithy_api.Types.timestamp option)
+    ?normal:(normal_ : Smaws_Lib.Smithy_api.Types.timestamp option) () =
+  ({
+     http_date_on_target = http_date_on_target_;
+     http_date = http_date_;
+     epoch_seconds_on_target = epoch_seconds_on_target_;
+     epoch_seconds = epoch_seconds_;
+     date_time_on_target = date_time_on_target_;
+     date_time = date_time_;
+     normal = normal_;
+   }
+    : xml_timestamps_response)
+
+let make_xml_timestamps_request
+    ?http_date_on_target:(http_date_on_target_ : Shared.Types.http_date option)
+    ?http_date:(http_date_ : Smaws_Lib.Smithy_api.Types.timestamp option)
+    ?epoch_seconds_on_target:(epoch_seconds_on_target_ : Shared.Types.epoch_seconds option)
+    ?epoch_seconds:(epoch_seconds_ : Smaws_Lib.Smithy_api.Types.timestamp option)
+    ?date_time_on_target:(date_time_on_target_ : Shared.Types.date_time option)
+    ?date_time:(date_time_ : Smaws_Lib.Smithy_api.Types.timestamp option)
+    ?normal:(normal_ : Smaws_Lib.Smithy_api.Types.timestamp option) () =
+  ({
+     http_date_on_target = http_date_on_target_;
+     http_date = http_date_;
+     epoch_seconds_on_target = epoch_seconds_on_target_;
+     epoch_seconds = epoch_seconds_;
+     date_time_on_target = date_time_on_target_;
+     date_time = date_time_;
+     normal = normal_;
+   }
+    : xml_timestamps_request)
 
 let make_xml_timestamps_input_output
     ?http_date_on_target:(http_date_on_target_ : Shared.Types.http_date option)
@@ -49,12 +84,15 @@ let make_xml_timestamps_input_output
    }
     : xml_timestamps_input_output)
 
-let make_xml_namespaces_response () = (() : unit)
-let make_xml_namespaces_request () = (() : unit)
-
 let make_xml_namespace_nested ?values:(values_ : xml_namespaced_list option)
     ?foo:(foo_ : Smaws_Lib.Smithy_api.Types.string_ option) () =
   ({ values = values_; foo = foo_ } : xml_namespace_nested)
+
+let make_xml_namespaces_response ?nested:(nested_ : xml_namespace_nested option) () =
+  ({ nested = nested_ } : xml_namespaces_response)
+
+let make_xml_namespaces_request ?nested:(nested_ : xml_namespace_nested option) () =
+  ({ nested = nested_ } : xml_namespaces_request)
 
 let make_xml_namespaces_input_output ?nested:(nested_ : xml_namespace_nested option) () =
   ({ nested = nested_ } : xml_namespaces_input_output)
@@ -73,19 +111,93 @@ let make_xml_maps_response ?my_map:(my_map_ : xml_maps_input_output_map option) 
 let make_xml_maps_request ?my_map:(my_map_ : xml_maps_input_output_map option) () =
   ({ my_map = my_map_ } : xml_maps_request)
 
-let make_xml_map_with_xml_namespace_response () = (() : unit)
-let make_xml_map_with_xml_namespace_request () = (() : unit)
+let make_xml_map_with_xml_namespace_response
+    ?my_map:(my_map_ : xml_map_with_xml_namespace_input_output_map option) () =
+  ({ my_map = my_map_ } : xml_map_with_xml_namespace_response)
+
+let make_xml_map_with_xml_namespace_request
+    ?my_map:(my_map_ : xml_map_with_xml_namespace_input_output_map option) () =
+  ({ my_map = my_map_ } : xml_map_with_xml_namespace_request)
 
 let make_xml_map_with_xml_namespace_input_output
     ?my_map:(my_map_ : xml_map_with_xml_namespace_input_output_map option) () =
   ({ my_map = my_map_ } : xml_map_with_xml_namespace_input_output)
 
-let make_xml_lists_response () = (() : unit)
-let make_xml_lists_request () = (() : unit)
-
 let make_structure_list_member ?b:(b_ : Smaws_Lib.Smithy_api.Types.string_ option)
     ?a:(a_ : Smaws_Lib.Smithy_api.Types.string_ option) () =
   ({ b = b_; a = a_ } : structure_list_member)
+
+let make_xml_lists_response
+    ?flattened_structure_list:(flattened_structure_list_ : structure_list option)
+    ?structure_list:(structure_list_ : structure_list option)
+    ?flattened_list_with_namespace:(flattened_list_with_namespace_ : list_with_namespace option)
+    ?flattened_list_with_member_namespace:
+      (flattened_list_with_member_namespace_ : list_with_member_namespace option)
+    ?flattened_list2:(flattened_list2_ : renamed_list_members option)
+    ?flattened_list:(flattened_list_ : renamed_list_members option)
+    ?renamed_list_members:(renamed_list_members_ : renamed_list_members option)
+    ?nested_string_list:(nested_string_list_ : Shared.Types.nested_string_list option)
+    ?int_enum_list:(int_enum_list_ : Shared.Types.integer_enum_list option)
+    ?enum_list:(enum_list_ : Shared.Types.foo_enum_list option)
+    ?timestamp_list:(timestamp_list_ : Shared.Types.timestamp_list option)
+    ?boolean_list:(boolean_list_ : Shared.Types.boolean_list option)
+    ?integer_list:(integer_list_ : Shared.Types.integer_list option)
+    ?string_set:(string_set_ : Shared.Types.string_set option)
+    ?string_list:(string_list_ : Shared.Types.string_list option) () =
+  ({
+     flattened_structure_list = flattened_structure_list_;
+     structure_list = structure_list_;
+     flattened_list_with_namespace = flattened_list_with_namespace_;
+     flattened_list_with_member_namespace = flattened_list_with_member_namespace_;
+     flattened_list2 = flattened_list2_;
+     flattened_list = flattened_list_;
+     renamed_list_members = renamed_list_members_;
+     nested_string_list = nested_string_list_;
+     int_enum_list = int_enum_list_;
+     enum_list = enum_list_;
+     timestamp_list = timestamp_list_;
+     boolean_list = boolean_list_;
+     integer_list = integer_list_;
+     string_set = string_set_;
+     string_list = string_list_;
+   }
+    : xml_lists_response)
+
+let make_xml_lists_request
+    ?flattened_structure_list:(flattened_structure_list_ : structure_list option)
+    ?structure_list:(structure_list_ : structure_list option)
+    ?flattened_list_with_namespace:(flattened_list_with_namespace_ : list_with_namespace option)
+    ?flattened_list_with_member_namespace:
+      (flattened_list_with_member_namespace_ : list_with_member_namespace option)
+    ?flattened_list2:(flattened_list2_ : renamed_list_members option)
+    ?flattened_list:(flattened_list_ : renamed_list_members option)
+    ?renamed_list_members:(renamed_list_members_ : renamed_list_members option)
+    ?nested_string_list:(nested_string_list_ : Shared.Types.nested_string_list option)
+    ?int_enum_list:(int_enum_list_ : Shared.Types.integer_enum_list option)
+    ?enum_list:(enum_list_ : Shared.Types.foo_enum_list option)
+    ?timestamp_list:(timestamp_list_ : Shared.Types.timestamp_list option)
+    ?boolean_list:(boolean_list_ : Shared.Types.boolean_list option)
+    ?integer_list:(integer_list_ : Shared.Types.integer_list option)
+    ?string_set:(string_set_ : Shared.Types.string_set option)
+    ?string_list:(string_list_ : Shared.Types.string_list option) () =
+  ({
+     flattened_structure_list = flattened_structure_list_;
+     structure_list = structure_list_;
+     flattened_list_with_namespace = flattened_list_with_namespace_;
+     flattened_list_with_member_namespace = flattened_list_with_member_namespace_;
+     flattened_list2 = flattened_list2_;
+     flattened_list = flattened_list_;
+     renamed_list_members = renamed_list_members_;
+     nested_string_list = nested_string_list_;
+     int_enum_list = int_enum_list_;
+     enum_list = enum_list_;
+     timestamp_list = timestamp_list_;
+     boolean_list = boolean_list_;
+     integer_list = integer_list_;
+     string_set = string_set_;
+     string_list = string_list_;
+   }
+    : xml_lists_request)
 
 let make_xml_lists_input_output
     ?flattened_structure_list:(flattened_structure_list_ : structure_list option)
@@ -123,8 +235,37 @@ let make_xml_lists_input_output
    }
     : xml_lists_input_output)
 
-let make_xml_int_enums_response () = (() : unit)
-let make_xml_int_enums_request () = (() : unit)
+let make_xml_int_enums_response ?int_enum_map:(int_enum_map_ : Shared.Types.integer_enum_map option)
+    ?int_enum_set:(int_enum_set_ : Shared.Types.integer_enum_set option)
+    ?int_enum_list:(int_enum_list_ : Shared.Types.integer_enum_list option)
+    ?int_enum3:(int_enum3_ : Shared.Types.integer_enum option)
+    ?int_enum2:(int_enum2_ : Shared.Types.integer_enum option)
+    ?int_enum1:(int_enum1_ : Shared.Types.integer_enum option) () =
+  ({
+     int_enum_map = int_enum_map_;
+     int_enum_set = int_enum_set_;
+     int_enum_list = int_enum_list_;
+     int_enum3 = int_enum3_;
+     int_enum2 = int_enum2_;
+     int_enum1 = int_enum1_;
+   }
+    : xml_int_enums_response)
+
+let make_xml_int_enums_request ?int_enum_map:(int_enum_map_ : Shared.Types.integer_enum_map option)
+    ?int_enum_set:(int_enum_set_ : Shared.Types.integer_enum_set option)
+    ?int_enum_list:(int_enum_list_ : Shared.Types.integer_enum_list option)
+    ?int_enum3:(int_enum3_ : Shared.Types.integer_enum option)
+    ?int_enum2:(int_enum2_ : Shared.Types.integer_enum option)
+    ?int_enum1:(int_enum1_ : Shared.Types.integer_enum option) () =
+  ({
+     int_enum_map = int_enum_map_;
+     int_enum_set = int_enum_set_;
+     int_enum_list = int_enum_list_;
+     int_enum3 = int_enum3_;
+     int_enum2 = int_enum2_;
+     int_enum1 = int_enum1_;
+   }
+    : xml_int_enums_request)
 
 let make_xml_int_enums_input_output
     ?int_enum_map:(int_enum_map_ : Shared.Types.integer_enum_map option)
@@ -143,8 +284,37 @@ let make_xml_int_enums_input_output
    }
     : xml_int_enums_input_output)
 
-let make_xml_enums_response () = (() : unit)
-let make_xml_enums_request () = (() : unit)
+let make_xml_enums_response ?foo_enum_map:(foo_enum_map_ : Shared.Types.foo_enum_map option)
+    ?foo_enum_set:(foo_enum_set_ : Shared.Types.foo_enum_set option)
+    ?foo_enum_list:(foo_enum_list_ : Shared.Types.foo_enum_list option)
+    ?foo_enum3:(foo_enum3_ : Shared.Types.foo_enum option)
+    ?foo_enum2:(foo_enum2_ : Shared.Types.foo_enum option)
+    ?foo_enum1:(foo_enum1_ : Shared.Types.foo_enum option) () =
+  ({
+     foo_enum_map = foo_enum_map_;
+     foo_enum_set = foo_enum_set_;
+     foo_enum_list = foo_enum_list_;
+     foo_enum3 = foo_enum3_;
+     foo_enum2 = foo_enum2_;
+     foo_enum1 = foo_enum1_;
+   }
+    : xml_enums_response)
+
+let make_xml_enums_request ?foo_enum_map:(foo_enum_map_ : Shared.Types.foo_enum_map option)
+    ?foo_enum_set:(foo_enum_set_ : Shared.Types.foo_enum_set option)
+    ?foo_enum_list:(foo_enum_list_ : Shared.Types.foo_enum_list option)
+    ?foo_enum3:(foo_enum3_ : Shared.Types.foo_enum option)
+    ?foo_enum2:(foo_enum2_ : Shared.Types.foo_enum option)
+    ?foo_enum1:(foo_enum1_ : Shared.Types.foo_enum option) () =
+  ({
+     foo_enum_map = foo_enum_map_;
+     foo_enum_set = foo_enum_set_;
+     foo_enum_list = foo_enum_list_;
+     foo_enum3 = foo_enum3_;
+     foo_enum2 = foo_enum2_;
+     foo_enum1 = foo_enum1_;
+   }
+    : xml_enums_request)
 
 let make_xml_enums_input_output ?foo_enum_map:(foo_enum_map_ : Shared.Types.foo_enum_map option)
     ?foo_enum_set:(foo_enum_set_ : Shared.Types.foo_enum_set option)
@@ -176,8 +346,77 @@ let make_xml_empty_maps_response ?my_map:(my_map_ : xml_maps_input_output_map op
 let make_xml_empty_maps_request ?my_map:(my_map_ : xml_maps_input_output_map option) () =
   ({ my_map = my_map_ } : xml_empty_maps_request)
 
-let make_xml_empty_lists_response () = (() : unit)
-let make_xml_empty_lists_request () = (() : unit)
+let make_xml_empty_lists_response
+    ?flattened_structure_list:(flattened_structure_list_ : structure_list option)
+    ?structure_list:(structure_list_ : structure_list option)
+    ?flattened_list_with_namespace:(flattened_list_with_namespace_ : list_with_namespace option)
+    ?flattened_list_with_member_namespace:
+      (flattened_list_with_member_namespace_ : list_with_member_namespace option)
+    ?flattened_list2:(flattened_list2_ : renamed_list_members option)
+    ?flattened_list:(flattened_list_ : renamed_list_members option)
+    ?renamed_list_members:(renamed_list_members_ : renamed_list_members option)
+    ?nested_string_list:(nested_string_list_ : Shared.Types.nested_string_list option)
+    ?int_enum_list:(int_enum_list_ : Shared.Types.integer_enum_list option)
+    ?enum_list:(enum_list_ : Shared.Types.foo_enum_list option)
+    ?timestamp_list:(timestamp_list_ : Shared.Types.timestamp_list option)
+    ?boolean_list:(boolean_list_ : Shared.Types.boolean_list option)
+    ?integer_list:(integer_list_ : Shared.Types.integer_list option)
+    ?string_set:(string_set_ : Shared.Types.string_set option)
+    ?string_list:(string_list_ : Shared.Types.string_list option) () =
+  ({
+     flattened_structure_list = flattened_structure_list_;
+     structure_list = structure_list_;
+     flattened_list_with_namespace = flattened_list_with_namespace_;
+     flattened_list_with_member_namespace = flattened_list_with_member_namespace_;
+     flattened_list2 = flattened_list2_;
+     flattened_list = flattened_list_;
+     renamed_list_members = renamed_list_members_;
+     nested_string_list = nested_string_list_;
+     int_enum_list = int_enum_list_;
+     enum_list = enum_list_;
+     timestamp_list = timestamp_list_;
+     boolean_list = boolean_list_;
+     integer_list = integer_list_;
+     string_set = string_set_;
+     string_list = string_list_;
+   }
+    : xml_empty_lists_response)
+
+let make_xml_empty_lists_request
+    ?flattened_structure_list:(flattened_structure_list_ : structure_list option)
+    ?structure_list:(structure_list_ : structure_list option)
+    ?flattened_list_with_namespace:(flattened_list_with_namespace_ : list_with_namespace option)
+    ?flattened_list_with_member_namespace:
+      (flattened_list_with_member_namespace_ : list_with_member_namespace option)
+    ?flattened_list2:(flattened_list2_ : renamed_list_members option)
+    ?flattened_list:(flattened_list_ : renamed_list_members option)
+    ?renamed_list_members:(renamed_list_members_ : renamed_list_members option)
+    ?nested_string_list:(nested_string_list_ : Shared.Types.nested_string_list option)
+    ?int_enum_list:(int_enum_list_ : Shared.Types.integer_enum_list option)
+    ?enum_list:(enum_list_ : Shared.Types.foo_enum_list option)
+    ?timestamp_list:(timestamp_list_ : Shared.Types.timestamp_list option)
+    ?boolean_list:(boolean_list_ : Shared.Types.boolean_list option)
+    ?integer_list:(integer_list_ : Shared.Types.integer_list option)
+    ?string_set:(string_set_ : Shared.Types.string_set option)
+    ?string_list:(string_list_ : Shared.Types.string_list option) () =
+  ({
+     flattened_structure_list = flattened_structure_list_;
+     structure_list = structure_list_;
+     flattened_list_with_namespace = flattened_list_with_namespace_;
+     flattened_list_with_member_namespace = flattened_list_with_member_namespace_;
+     flattened_list2 = flattened_list2_;
+     flattened_list = flattened_list_;
+     renamed_list_members = renamed_list_members_;
+     nested_string_list = nested_string_list_;
+     int_enum_list = int_enum_list_;
+     enum_list = enum_list_;
+     timestamp_list = timestamp_list_;
+     boolean_list = boolean_list_;
+     integer_list = integer_list_;
+     string_set = string_set_;
+     string_list = string_list_;
+   }
+    : xml_empty_lists_request)
 
 let make_xml_empty_blobs_response ?data:(data_ : Smaws_Lib.Smithy_api.Types.blob option) () =
   ({ data = data_ } : xml_empty_blobs_response)
@@ -191,10 +430,21 @@ let make_xml_blobs_response ?data:(data_ : Smaws_Lib.Smithy_api.Types.blob optio
 let make_xml_blobs_request ?data:(data_ : Smaws_Lib.Smithy_api.Types.blob option) () =
   ({ data = data_ } : xml_blobs_request)
 
-let make_xml_attributes_response () = (() : unit)
-let make_xml_attributes_request () = (() : unit)
-let make_xml_attributes_payload_response () = (() : unit)
-let make_xml_attributes_payload_request () = (() : unit)
+let make_xml_attributes_response ?attr:(attr_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?foo:(foo_ : Smaws_Lib.Smithy_api.Types.string_ option) () =
+  ({ attr = attr_; foo = foo_ } : xml_attributes_response)
+
+let make_xml_attributes_request ?attr:(attr_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?foo:(foo_ : Smaws_Lib.Smithy_api.Types.string_ option) () =
+  ({ attr = attr_; foo = foo_ } : xml_attributes_request)
+
+let make_xml_attributes_payload_response ?attr:(attr_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?foo:(foo_ : Smaws_Lib.Smithy_api.Types.string_ option) () =
+  ({ attr = attr_; foo = foo_ } : xml_attributes_payload_response)
+
+let make_xml_attributes_payload_request ?attr:(attr_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?foo:(foo_ : Smaws_Lib.Smithy_api.Types.string_ option) () =
+  ({ attr = attr_; foo = foo_ } : xml_attributes_payload_request)
 
 let make_xml_attributes_on_payload_response
     ?payload:(payload_ : xml_attributes_payload_response option) () =
@@ -214,13 +464,21 @@ let make_xml_attributes_input_output ?attr:(attr_ : Smaws_Lib.Smithy_api.Types.s
     ?foo:(foo_ : Smaws_Lib.Smithy_api.Types.string_ option) () =
   ({ attr = attr_; foo = foo_ } : xml_attributes_input_output)
 
-let make_xml_attributes_in_middle_payload_response () = (() : unit)
+let make_xml_attributes_in_middle_payload_response
+    ?baz:(baz_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?attr:(attr_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?foo:(foo_ : Smaws_Lib.Smithy_api.Types.string_ option) () =
+  ({ baz = baz_; attr = attr_; foo = foo_ } : xml_attributes_in_middle_payload_response)
 
 let make_xml_attributes_in_middle_response
     ?payload:(payload_ : xml_attributes_in_middle_payload_response option) () =
   ({ payload = payload_ } : xml_attributes_in_middle_response)
 
-let make_xml_attributes_in_middle_payload_request () = (() : unit)
+let make_xml_attributes_in_middle_payload_request
+    ?baz:(baz_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?attr:(attr_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?foo:(foo_ : Smaws_Lib.Smithy_api.Types.string_ option) () =
+  ({ baz = baz_; attr = attr_; foo = foo_ } : xml_attributes_in_middle_payload_request)
 
 let make_xml_attributes_in_middle_request
     ?payload:(payload_ : xml_attributes_in_middle_payload_request option) () =
@@ -248,8 +506,55 @@ let make_timestamp_format_headers_i_o
 let make_string_payload_input ?payload:(payload_ : Smaws_Lib.Smithy_api.Types.string_ option) () =
   ({ payload = payload_ } : string_payload_input)
 
-let make_simple_scalar_properties_response () = (() : unit)
-let make_simple_scalar_properties_request () = (() : unit)
+let make_simple_scalar_properties_response
+    ?double_value:(double_value_ : Smaws_Lib.Smithy_api.Types.double option)
+    ?float_value:(float_value_ : Smaws_Lib.Smithy_api.Types.float_ option)
+    ?long_value:(long_value_ : Smaws_Lib.Smithy_api.Types.long option)
+    ?integer_value:(integer_value_ : Smaws_Lib.Smithy_api.Types.integer option)
+    ?short_value:(short_value_ : Smaws_Lib.Smithy_api.Types.short option)
+    ?byte_value:(byte_value_ : Smaws_Lib.Smithy_api.Types.byte option)
+    ?false_boolean_value:(false_boolean_value_ : Smaws_Lib.Smithy_api.Types.boolean_ option)
+    ?true_boolean_value:(true_boolean_value_ : Smaws_Lib.Smithy_api.Types.boolean_ option)
+    ?string_value:(string_value_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?foo:(foo_ : Smaws_Lib.Smithy_api.Types.string_ option) () =
+  ({
+     double_value = double_value_;
+     float_value = float_value_;
+     long_value = long_value_;
+     integer_value = integer_value_;
+     short_value = short_value_;
+     byte_value = byte_value_;
+     false_boolean_value = false_boolean_value_;
+     true_boolean_value = true_boolean_value_;
+     string_value = string_value_;
+     foo = foo_;
+   }
+    : simple_scalar_properties_response)
+
+let make_simple_scalar_properties_request
+    ?double_value:(double_value_ : Smaws_Lib.Smithy_api.Types.double option)
+    ?float_value:(float_value_ : Smaws_Lib.Smithy_api.Types.float_ option)
+    ?long_value:(long_value_ : Smaws_Lib.Smithy_api.Types.long option)
+    ?integer_value:(integer_value_ : Smaws_Lib.Smithy_api.Types.integer option)
+    ?short_value:(short_value_ : Smaws_Lib.Smithy_api.Types.short option)
+    ?byte_value:(byte_value_ : Smaws_Lib.Smithy_api.Types.byte option)
+    ?false_boolean_value:(false_boolean_value_ : Smaws_Lib.Smithy_api.Types.boolean_ option)
+    ?true_boolean_value:(true_boolean_value_ : Smaws_Lib.Smithy_api.Types.boolean_ option)
+    ?string_value:(string_value_ : Smaws_Lib.Smithy_api.Types.string_ option)
+    ?foo:(foo_ : Smaws_Lib.Smithy_api.Types.string_ option) () =
+  ({
+     double_value = double_value_;
+     float_value = float_value_;
+     long_value = long_value_;
+     integer_value = integer_value_;
+     short_value = short_value_;
+     byte_value = byte_value_;
+     false_boolean_value = false_boolean_value_;
+     true_boolean_value = true_boolean_value_;
+     string_value = string_value_;
+     foo = foo_;
+   }
+    : simple_scalar_properties_request)
 
 let make_simple_scalar_properties_input_output
     ?double_value:(double_value_ : Smaws_Lib.Smithy_api.Types.double option)
@@ -322,10 +627,26 @@ let make_null_and_empty_headers_i_o ?c:(c_ : Shared.Types.string_list option)
   ({ c = c_; b = b_; a = a_ } : null_and_empty_headers_i_o)
 
 let make_no_input_and_output_output () = (() : unit)
-let make_nested_xml_map_with_xml_name_response () = (() : unit)
-let make_nested_xml_map_with_xml_name_request () = (() : unit)
-let make_nested_xml_maps_response () = (() : unit)
-let make_nested_xml_maps_request () = (() : unit)
+
+let make_nested_xml_map_with_xml_name_response
+    ?nested_xml_map_with_xml_name_map:
+      (nested_xml_map_with_xml_name_map_ : nested_xml_map_with_xml_name_map option) () =
+  ({ nested_xml_map_with_xml_name_map = nested_xml_map_with_xml_name_map_ }
+    : nested_xml_map_with_xml_name_response)
+
+let make_nested_xml_map_with_xml_name_request
+    ?nested_xml_map_with_xml_name_map:
+      (nested_xml_map_with_xml_name_map_ : nested_xml_map_with_xml_name_map option) () =
+  ({ nested_xml_map_with_xml_name_map = nested_xml_map_with_xml_name_map_ }
+    : nested_xml_map_with_xml_name_request)
+
+let make_nested_xml_maps_response ?flat_nested_map:(flat_nested_map_ : nested_map option)
+    ?nested_map:(nested_map_ : nested_map option) () =
+  ({ flat_nested_map = flat_nested_map_; nested_map = nested_map_ } : nested_xml_maps_response)
+
+let make_nested_xml_maps_request ?flat_nested_map:(flat_nested_map_ : nested_map option)
+    ?nested_map:(nested_map_ : nested_map option) () =
+  ({ flat_nested_map = flat_nested_map_; nested_map = nested_map_ } : nested_xml_maps_request)
 
 let make_input_and_output_with_headers_i_o
     ?header_enum_list:(header_enum_list_ : Shared.Types.foo_enum_list option)

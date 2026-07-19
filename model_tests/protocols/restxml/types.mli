@@ -29,9 +29,27 @@ type xml_unions_response = { union_value : xml_union_shape option [@ocaml.doc ""
 type xml_unions_request = { union_value : xml_union_shape option [@ocaml.doc ""] }
 [@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_timestamps_response = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type xml_timestamps_response = {
+  http_date_on_target : Shared.Types.http_date option; [@ocaml.doc ""]
+  http_date : Smaws_Lib.Smithy_api.Types.timestamp option; [@ocaml.doc ""]
+  epoch_seconds_on_target : Shared.Types.epoch_seconds option; [@ocaml.doc ""]
+  epoch_seconds : Smaws_Lib.Smithy_api.Types.timestamp option; [@ocaml.doc ""]
+  date_time_on_target : Shared.Types.date_time option; [@ocaml.doc ""]
+  date_time : Smaws_Lib.Smithy_api.Types.timestamp option; [@ocaml.doc ""]
+  normal : Smaws_Lib.Smithy_api.Types.timestamp option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_timestamps_request = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type xml_timestamps_request = {
+  http_date_on_target : Shared.Types.http_date option; [@ocaml.doc ""]
+  http_date : Smaws_Lib.Smithy_api.Types.timestamp option; [@ocaml.doc ""]
+  epoch_seconds_on_target : Shared.Types.epoch_seconds option; [@ocaml.doc ""]
+  epoch_seconds : Smaws_Lib.Smithy_api.Types.timestamp option; [@ocaml.doc ""]
+  date_time_on_target : Shared.Types.date_time option; [@ocaml.doc ""]
+  date_time : Smaws_Lib.Smithy_api.Types.timestamp option; [@ocaml.doc ""]
+  normal : Smaws_Lib.Smithy_api.Types.timestamp option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
 type xml_timestamps_input_output = {
   http_date_on_target : Shared.Types.http_date option; [@ocaml.doc ""]
@@ -44,10 +62,6 @@ type xml_timestamps_input_output = {
 }
 [@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_namespaces_response = unit [@@ocaml.doc ""] [@@deriving show, eq]
-
-type xml_namespaces_request = unit [@@ocaml.doc ""] [@@deriving show, eq]
-
 type xml_namespaced_list = Smaws_Lib.Smithy_api.Types.string_ list
 [@@ocaml.doc ""] [@@deriving show, eq]
 
@@ -55,6 +69,12 @@ type xml_namespace_nested = {
   values : xml_namespaced_list option; [@ocaml.doc ""]
   foo : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
 }
+[@@ocaml.doc ""] [@@deriving show, eq]
+
+type xml_namespaces_response = { nested : xml_namespace_nested option [@ocaml.doc ""] }
+[@@ocaml.doc ""] [@@deriving show, eq]
+
+type xml_namespaces_request = { nested : xml_namespace_nested option [@ocaml.doc ""] }
 [@@ocaml.doc ""] [@@deriving show, eq]
 
 type xml_namespaces_input_output = { nested : xml_namespace_nested option [@ocaml.doc ""] }
@@ -84,22 +104,24 @@ type xml_maps_response = { my_map : xml_maps_input_output_map option [@ocaml.doc
 type xml_maps_request = { my_map : xml_maps_input_output_map option [@ocaml.doc ""] }
 [@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_map_with_xml_namespace_response = unit [@@ocaml.doc ""] [@@deriving show, eq]
-
-type xml_map_with_xml_namespace_request = unit [@@ocaml.doc ""] [@@deriving show, eq]
-
 type xml_map_with_xml_namespace_input_output_map =
   (Smaws_Lib.Smithy_api.Types.string_ * Smaws_Lib.Smithy_api.Types.string_) list
+[@@ocaml.doc ""] [@@deriving show, eq]
+
+type xml_map_with_xml_namespace_response = {
+  my_map : xml_map_with_xml_namespace_input_output_map option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
+
+type xml_map_with_xml_namespace_request = {
+  my_map : xml_map_with_xml_namespace_input_output_map option; [@ocaml.doc ""]
+}
 [@@ocaml.doc ""] [@@deriving show, eq]
 
 type xml_map_with_xml_namespace_input_output = {
   my_map : xml_map_with_xml_namespace_input_output_map option; [@ocaml.doc ""]
 }
 [@@ocaml.doc ""] [@@deriving show, eq]
-
-type xml_lists_response = unit [@@ocaml.doc ""] [@@deriving show, eq]
-
-type xml_lists_request = unit [@@ocaml.doc ""] [@@deriving show, eq]
 
 type renamed_list_members = Smaws_Lib.Smithy_api.Types.string_ list
 [@@ocaml.doc ""] [@@deriving show, eq]
@@ -117,6 +139,44 @@ type structure_list_member = {
 [@@ocaml.doc ""] [@@deriving show, eq]
 
 type structure_list = structure_list_member list [@@ocaml.doc ""] [@@deriving show, eq]
+
+type xml_lists_response = {
+  flattened_structure_list : structure_list option; [@ocaml.doc ""]
+  structure_list : structure_list option; [@ocaml.doc ""]
+  flattened_list_with_namespace : list_with_namespace option; [@ocaml.doc ""]
+  flattened_list_with_member_namespace : list_with_member_namespace option; [@ocaml.doc ""]
+  flattened_list2 : renamed_list_members option; [@ocaml.doc ""]
+  flattened_list : renamed_list_members option; [@ocaml.doc ""]
+  renamed_list_members : renamed_list_members option; [@ocaml.doc ""]
+  nested_string_list : Shared.Types.nested_string_list option; [@ocaml.doc ""]
+  int_enum_list : Shared.Types.integer_enum_list option; [@ocaml.doc ""]
+  enum_list : Shared.Types.foo_enum_list option; [@ocaml.doc ""]
+  timestamp_list : Shared.Types.timestamp_list option; [@ocaml.doc ""]
+  boolean_list : Shared.Types.boolean_list option; [@ocaml.doc ""]
+  integer_list : Shared.Types.integer_list option; [@ocaml.doc ""]
+  string_set : Shared.Types.string_set option; [@ocaml.doc ""]
+  string_list : Shared.Types.string_list option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
+
+type xml_lists_request = {
+  flattened_structure_list : structure_list option; [@ocaml.doc ""]
+  structure_list : structure_list option; [@ocaml.doc ""]
+  flattened_list_with_namespace : list_with_namespace option; [@ocaml.doc ""]
+  flattened_list_with_member_namespace : list_with_member_namespace option; [@ocaml.doc ""]
+  flattened_list2 : renamed_list_members option; [@ocaml.doc ""]
+  flattened_list : renamed_list_members option; [@ocaml.doc ""]
+  renamed_list_members : renamed_list_members option; [@ocaml.doc ""]
+  nested_string_list : Shared.Types.nested_string_list option; [@ocaml.doc ""]
+  int_enum_list : Shared.Types.integer_enum_list option; [@ocaml.doc ""]
+  enum_list : Shared.Types.foo_enum_list option; [@ocaml.doc ""]
+  timestamp_list : Shared.Types.timestamp_list option; [@ocaml.doc ""]
+  boolean_list : Shared.Types.boolean_list option; [@ocaml.doc ""]
+  integer_list : Shared.Types.integer_list option; [@ocaml.doc ""]
+  string_set : Shared.Types.string_set option; [@ocaml.doc ""]
+  string_list : Shared.Types.string_list option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
 type xml_lists_input_output = {
   flattened_structure_list : structure_list option; [@ocaml.doc ""]
@@ -137,9 +197,25 @@ type xml_lists_input_output = {
 }
 [@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_int_enums_response = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type xml_int_enums_response = {
+  int_enum_map : Shared.Types.integer_enum_map option; [@ocaml.doc ""]
+  int_enum_set : Shared.Types.integer_enum_set option; [@ocaml.doc ""]
+  int_enum_list : Shared.Types.integer_enum_list option; [@ocaml.doc ""]
+  int_enum3 : Shared.Types.integer_enum option; [@ocaml.doc ""]
+  int_enum2 : Shared.Types.integer_enum option; [@ocaml.doc ""]
+  int_enum1 : Shared.Types.integer_enum option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_int_enums_request = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type xml_int_enums_request = {
+  int_enum_map : Shared.Types.integer_enum_map option; [@ocaml.doc ""]
+  int_enum_set : Shared.Types.integer_enum_set option; [@ocaml.doc ""]
+  int_enum_list : Shared.Types.integer_enum_list option; [@ocaml.doc ""]
+  int_enum3 : Shared.Types.integer_enum option; [@ocaml.doc ""]
+  int_enum2 : Shared.Types.integer_enum option; [@ocaml.doc ""]
+  int_enum1 : Shared.Types.integer_enum option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
 type xml_int_enums_input_output = {
   int_enum_map : Shared.Types.integer_enum_map option; [@ocaml.doc ""]
@@ -151,9 +227,25 @@ type xml_int_enums_input_output = {
 }
 [@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_enums_response = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type xml_enums_response = {
+  foo_enum_map : Shared.Types.foo_enum_map option; [@ocaml.doc ""]
+  foo_enum_set : Shared.Types.foo_enum_set option; [@ocaml.doc ""]
+  foo_enum_list : Shared.Types.foo_enum_list option; [@ocaml.doc ""]
+  foo_enum3 : Shared.Types.foo_enum option; [@ocaml.doc ""]
+  foo_enum2 : Shared.Types.foo_enum option; [@ocaml.doc ""]
+  foo_enum1 : Shared.Types.foo_enum option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_enums_request = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type xml_enums_request = {
+  foo_enum_map : Shared.Types.foo_enum_map option; [@ocaml.doc ""]
+  foo_enum_set : Shared.Types.foo_enum_set option; [@ocaml.doc ""]
+  foo_enum_list : Shared.Types.foo_enum_list option; [@ocaml.doc ""]
+  foo_enum3 : Shared.Types.foo_enum option; [@ocaml.doc ""]
+  foo_enum2 : Shared.Types.foo_enum option; [@ocaml.doc ""]
+  foo_enum1 : Shared.Types.foo_enum option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
 type xml_enums_input_output = {
   foo_enum_map : Shared.Types.foo_enum_map option; [@ocaml.doc ""]
@@ -181,9 +273,43 @@ type xml_empty_maps_response = { my_map : xml_maps_input_output_map option [@oca
 type xml_empty_maps_request = { my_map : xml_maps_input_output_map option [@ocaml.doc ""] }
 [@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_empty_lists_response = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type xml_empty_lists_response = {
+  flattened_structure_list : structure_list option; [@ocaml.doc ""]
+  structure_list : structure_list option; [@ocaml.doc ""]
+  flattened_list_with_namespace : list_with_namespace option; [@ocaml.doc ""]
+  flattened_list_with_member_namespace : list_with_member_namespace option; [@ocaml.doc ""]
+  flattened_list2 : renamed_list_members option; [@ocaml.doc ""]
+  flattened_list : renamed_list_members option; [@ocaml.doc ""]
+  renamed_list_members : renamed_list_members option; [@ocaml.doc ""]
+  nested_string_list : Shared.Types.nested_string_list option; [@ocaml.doc ""]
+  int_enum_list : Shared.Types.integer_enum_list option; [@ocaml.doc ""]
+  enum_list : Shared.Types.foo_enum_list option; [@ocaml.doc ""]
+  timestamp_list : Shared.Types.timestamp_list option; [@ocaml.doc ""]
+  boolean_list : Shared.Types.boolean_list option; [@ocaml.doc ""]
+  integer_list : Shared.Types.integer_list option; [@ocaml.doc ""]
+  string_set : Shared.Types.string_set option; [@ocaml.doc ""]
+  string_list : Shared.Types.string_list option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_empty_lists_request = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type xml_empty_lists_request = {
+  flattened_structure_list : structure_list option; [@ocaml.doc ""]
+  structure_list : structure_list option; [@ocaml.doc ""]
+  flattened_list_with_namespace : list_with_namespace option; [@ocaml.doc ""]
+  flattened_list_with_member_namespace : list_with_member_namespace option; [@ocaml.doc ""]
+  flattened_list2 : renamed_list_members option; [@ocaml.doc ""]
+  flattened_list : renamed_list_members option; [@ocaml.doc ""]
+  renamed_list_members : renamed_list_members option; [@ocaml.doc ""]
+  nested_string_list : Shared.Types.nested_string_list option; [@ocaml.doc ""]
+  int_enum_list : Shared.Types.integer_enum_list option; [@ocaml.doc ""]
+  enum_list : Shared.Types.foo_enum_list option; [@ocaml.doc ""]
+  timestamp_list : Shared.Types.timestamp_list option; [@ocaml.doc ""]
+  boolean_list : Shared.Types.boolean_list option; [@ocaml.doc ""]
+  integer_list : Shared.Types.integer_list option; [@ocaml.doc ""]
+  string_set : Shared.Types.string_set option; [@ocaml.doc ""]
+  string_list : Shared.Types.string_list option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
 type xml_empty_blobs_response = { data : Smaws_Lib.Smithy_api.Types.blob option [@ocaml.doc ""] }
 [@@ocaml.doc ""] [@@deriving show, eq]
@@ -197,13 +323,29 @@ type xml_blobs_response = { data : Smaws_Lib.Smithy_api.Types.blob option [@ocam
 type xml_blobs_request = { data : Smaws_Lib.Smithy_api.Types.blob option [@ocaml.doc ""] }
 [@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_attributes_response = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type xml_attributes_response = {
+  attr : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+  foo : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_attributes_request = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type xml_attributes_request = {
+  attr : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+  foo : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_attributes_payload_response = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type xml_attributes_payload_response = {
+  attr : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+  foo : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_attributes_payload_request = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type xml_attributes_payload_request = {
+  attr : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+  foo : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
 type xml_attributes_on_payload_response = {
   payload : xml_attributes_payload_response option; [@ocaml.doc ""]
@@ -228,14 +370,24 @@ type xml_attributes_input_output = {
 }
 [@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_attributes_in_middle_payload_response = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type xml_attributes_in_middle_payload_response = {
+  baz : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+  attr : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+  foo : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
 type xml_attributes_in_middle_response = {
   payload : xml_attributes_in_middle_payload_response option; [@ocaml.doc ""]
 }
 [@@ocaml.doc ""] [@@deriving show, eq]
 
-type xml_attributes_in_middle_payload_request = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type xml_attributes_in_middle_payload_request = {
+  baz : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+  attr : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+  foo : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
 type xml_attributes_in_middle_request = {
   payload : xml_attributes_in_middle_payload_request option; [@ocaml.doc ""]
@@ -261,9 +413,33 @@ type string_payload_input = { payload : Smaws_Lib.Smithy_api.Types.string_ optio
 
 type string_enum = V [@ocaml.doc ""] [@@ocaml.doc ""] [@@deriving show, eq]
 
-type simple_scalar_properties_response = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type simple_scalar_properties_response = {
+  double_value : Smaws_Lib.Smithy_api.Types.double option; [@ocaml.doc ""]
+  float_value : Smaws_Lib.Smithy_api.Types.float_ option; [@ocaml.doc ""]
+  long_value : Smaws_Lib.Smithy_api.Types.long option; [@ocaml.doc ""]
+  integer_value : Smaws_Lib.Smithy_api.Types.integer option; [@ocaml.doc ""]
+  short_value : Smaws_Lib.Smithy_api.Types.short option; [@ocaml.doc ""]
+  byte_value : Smaws_Lib.Smithy_api.Types.byte option; [@ocaml.doc ""]
+  false_boolean_value : Smaws_Lib.Smithy_api.Types.boolean_ option; [@ocaml.doc ""]
+  true_boolean_value : Smaws_Lib.Smithy_api.Types.boolean_ option; [@ocaml.doc ""]
+  string_value : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+  foo : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
-type simple_scalar_properties_request = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type simple_scalar_properties_request = {
+  double_value : Smaws_Lib.Smithy_api.Types.double option; [@ocaml.doc ""]
+  float_value : Smaws_Lib.Smithy_api.Types.float_ option; [@ocaml.doc ""]
+  long_value : Smaws_Lib.Smithy_api.Types.long option; [@ocaml.doc ""]
+  integer_value : Smaws_Lib.Smithy_api.Types.integer option; [@ocaml.doc ""]
+  short_value : Smaws_Lib.Smithy_api.Types.short option; [@ocaml.doc ""]
+  byte_value : Smaws_Lib.Smithy_api.Types.byte option; [@ocaml.doc ""]
+  false_boolean_value : Smaws_Lib.Smithy_api.Types.boolean_ option; [@ocaml.doc ""]
+  true_boolean_value : Smaws_Lib.Smithy_api.Types.boolean_ option; [@ocaml.doc ""]
+  string_value : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+  foo : Smaws_Lib.Smithy_api.Types.string_ option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
 type simple_scalar_properties_input_output = {
   double_value : Smaws_Lib.Smithy_api.Types.double option; [@ocaml.doc ""]
@@ -339,13 +515,38 @@ type null_and_empty_headers_i_o = {
 
 type no_input_and_output_output = unit [@@ocaml.doc ""] [@@deriving show, eq]
 
-type nested_xml_map_with_xml_name_response = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type nested_xml_map_with_xml_name_inner_map =
+  (Smaws_Lib.Smithy_api.Types.string_ * Smaws_Lib.Smithy_api.Types.string_) list
+[@@ocaml.doc ""] [@@deriving show, eq]
 
-type nested_xml_map_with_xml_name_request = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type nested_xml_map_with_xml_name_map =
+  (Smaws_Lib.Smithy_api.Types.string_ * nested_xml_map_with_xml_name_inner_map) list
+[@@ocaml.doc ""] [@@deriving show, eq]
 
-type nested_xml_maps_response = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type nested_xml_map_with_xml_name_response = {
+  nested_xml_map_with_xml_name_map : nested_xml_map_with_xml_name_map option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
-type nested_xml_maps_request = unit [@@ocaml.doc ""] [@@deriving show, eq]
+type nested_xml_map_with_xml_name_request = {
+  nested_xml_map_with_xml_name_map : nested_xml_map_with_xml_name_map option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
+
+type nested_map = (Smaws_Lib.Smithy_api.Types.string_ * Shared.Types.foo_enum_map) list
+[@@ocaml.doc ""] [@@deriving show, eq]
+
+type nested_xml_maps_response = {
+  flat_nested_map : nested_map option; [@ocaml.doc ""]
+  nested_map : nested_map option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
+
+type nested_xml_maps_request = {
+  flat_nested_map : nested_map option; [@ocaml.doc ""]
+  nested_map : nested_map option; [@ocaml.doc ""]
+}
+[@@ocaml.doc ""] [@@deriving show, eq]
 
 type input_and_output_with_headers_i_o = {
   header_enum_list : Shared.Types.foo_enum_list option; [@ocaml.doc ""]
@@ -607,21 +808,10 @@ type all_query_string_types_input = {
 }
 [@@ocaml.doc ""] [@@deriving show, eq]
 
-type nested_map = (Smaws_Lib.Smithy_api.Types.string_ * Shared.Types.foo_enum_map) list
-[@@ocaml.doc ""] [@@deriving show, eq]
-
 type nested_xml_maps_input_output = {
   flat_nested_map : nested_map option; [@ocaml.doc ""]
   nested_map : nested_map option; [@ocaml.doc ""]
 }
-[@@ocaml.doc ""] [@@deriving show, eq]
-
-type nested_xml_map_with_xml_name_inner_map =
-  (Smaws_Lib.Smithy_api.Types.string_ * Smaws_Lib.Smithy_api.Types.string_) list
-[@@ocaml.doc ""] [@@deriving show, eq]
-
-type nested_xml_map_with_xml_name_map =
-  (Smaws_Lib.Smithy_api.Types.string_ * nested_xml_map_with_xml_name_inner_map) list
 [@@ocaml.doc ""] [@@deriving show, eq]
 
 type nested_xml_map_with_xml_name_input_output = {

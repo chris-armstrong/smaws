@@ -152,8 +152,123 @@ let xml_unions_request_of_xml i =
       | _ -> Read.skip_element i);
   ({ union_value = ( ! ) r_union_value } : xml_unions_request)
 
-let xml_timestamps_response_of_xml i = ()
-let xml_timestamps_request_of_xml i = ()
+let xml_timestamps_response_of_xml i =
+  let r_http_date_on_target = ref None in
+  let r_http_date = ref None in
+  let r_epoch_seconds_on_target = ref None in
+  let r_epoch_seconds = ref None in
+  let r_date_time_on_target = ref None in
+  let r_date_time = ref None in
+  let r_normal = ref None in
+  Structure.scanSequence i
+    [
+      "httpDateOnTarget";
+      "httpDate";
+      "epochSecondsOnTarget";
+      "epochSeconds";
+      "dateTimeOnTarget";
+      "dateTime";
+      "normal";
+    ] (fun tag _ ->
+      match tag with
+      | "httpDateOnTarget" ->
+          r_http_date_on_target :=
+            Some
+              (Read.sequence i "httpDateOnTarget"
+                 (fun i _ -> Shared.Xml_deserializers.http_date_of_xml i)
+                 ())
+      | "httpDate" ->
+          r_http_date :=
+            Some (Read.element_value i "httpDate" Primitive.timestamp_httpdate_of_string ())
+      | "epochSecondsOnTarget" ->
+          r_epoch_seconds_on_target :=
+            Some
+              (Read.sequence i "epochSecondsOnTarget"
+                 (fun i _ -> Shared.Xml_deserializers.epoch_seconds_of_xml i)
+                 ())
+      | "epochSeconds" ->
+          r_epoch_seconds :=
+            Some (Read.element_value i "epochSeconds" Primitive.timestamp_epoch_of_string ())
+      | "dateTimeOnTarget" ->
+          r_date_time_on_target :=
+            Some
+              (Read.sequence i "dateTimeOnTarget"
+                 (fun i _ -> Shared.Xml_deserializers.date_time_of_xml i)
+                 ())
+      | "dateTime" ->
+          r_date_time := Some (Read.element_value i "dateTime" Primitive.timestamp_iso_of_string ())
+      | "normal" ->
+          r_normal := Some (Read.element_value i "normal" Primitive.timestamp_iso_of_string ())
+      | _ -> Read.skip_element i);
+  ({
+     http_date_on_target = ( ! ) r_http_date_on_target;
+     http_date = ( ! ) r_http_date;
+     epoch_seconds_on_target = ( ! ) r_epoch_seconds_on_target;
+     epoch_seconds = ( ! ) r_epoch_seconds;
+     date_time_on_target = ( ! ) r_date_time_on_target;
+     date_time = ( ! ) r_date_time;
+     normal = ( ! ) r_normal;
+   }
+    : xml_timestamps_response)
+
+let xml_timestamps_request_of_xml i =
+  let r_http_date_on_target = ref None in
+  let r_http_date = ref None in
+  let r_epoch_seconds_on_target = ref None in
+  let r_epoch_seconds = ref None in
+  let r_date_time_on_target = ref None in
+  let r_date_time = ref None in
+  let r_normal = ref None in
+  Structure.scanSequence i
+    [
+      "httpDateOnTarget";
+      "httpDate";
+      "epochSecondsOnTarget";
+      "epochSeconds";
+      "dateTimeOnTarget";
+      "dateTime";
+      "normal";
+    ] (fun tag _ ->
+      match tag with
+      | "httpDateOnTarget" ->
+          r_http_date_on_target :=
+            Some
+              (Read.sequence i "httpDateOnTarget"
+                 (fun i _ -> Shared.Xml_deserializers.http_date_of_xml i)
+                 ())
+      | "httpDate" ->
+          r_http_date :=
+            Some (Read.element_value i "httpDate" Primitive.timestamp_httpdate_of_string ())
+      | "epochSecondsOnTarget" ->
+          r_epoch_seconds_on_target :=
+            Some
+              (Read.sequence i "epochSecondsOnTarget"
+                 (fun i _ -> Shared.Xml_deserializers.epoch_seconds_of_xml i)
+                 ())
+      | "epochSeconds" ->
+          r_epoch_seconds :=
+            Some (Read.element_value i "epochSeconds" Primitive.timestamp_epoch_of_string ())
+      | "dateTimeOnTarget" ->
+          r_date_time_on_target :=
+            Some
+              (Read.sequence i "dateTimeOnTarget"
+                 (fun i _ -> Shared.Xml_deserializers.date_time_of_xml i)
+                 ())
+      | "dateTime" ->
+          r_date_time := Some (Read.element_value i "dateTime" Primitive.timestamp_iso_of_string ())
+      | "normal" ->
+          r_normal := Some (Read.element_value i "normal" Primitive.timestamp_iso_of_string ())
+      | _ -> Read.skip_element i);
+  ({
+     http_date_on_target = ( ! ) r_http_date_on_target;
+     http_date = ( ! ) r_http_date;
+     epoch_seconds_on_target = ( ! ) r_epoch_seconds_on_target;
+     epoch_seconds = ( ! ) r_epoch_seconds;
+     date_time_on_target = ( ! ) r_date_time_on_target;
+     date_time = ( ! ) r_date_time;
+     normal = ( ! ) r_normal;
+   }
+    : xml_timestamps_request)
 
 let xml_timestamps_input_output_of_xml i =
   let r_http_date_on_target = ref None in
@@ -214,8 +329,6 @@ let xml_timestamps_input_output_of_xml i =
    }
     : xml_timestamps_input_output)
 
-let xml_namespaces_response_of_xml i = ()
-let xml_namespaces_request_of_xml i = ()
 let xml_namespaced_list_of_xml i = Read.elements_value i "member" Fun.id ()
 
 let xml_namespace_nested_of_xml i =
@@ -229,6 +342,24 @@ let xml_namespace_nested_of_xml i =
       | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
       | _ -> Read.skip_element i);
   ({ values = ( ! ) r_values; foo = ( ! ) r_foo } : xml_namespace_nested)
+
+let xml_namespaces_response_of_xml i =
+  let r_nested = ref None in
+  Structure.scanSequence i [ "nested" ] (fun tag _ ->
+      match tag with
+      | "nested" ->
+          r_nested := Some (Read.sequence i "nested" (fun i _ -> xml_namespace_nested_of_xml i) ())
+      | _ -> Read.skip_element i);
+  ({ nested = ( ! ) r_nested } : xml_namespaces_response)
+
+let xml_namespaces_request_of_xml i =
+  let r_nested = ref None in
+  Structure.scanSequence i [ "nested" ] (fun tag _ ->
+      match tag with
+      | "nested" ->
+          r_nested := Some (Read.sequence i "nested" (fun i _ -> xml_namespace_nested_of_xml i) ())
+      | _ -> Read.skip_element i);
+  ({ nested = ( ! ) r_nested } : xml_namespaces_request)
 
 let xml_namespaces_input_output_of_xml i =
   let r_nested = ref None in
@@ -351,9 +482,6 @@ let xml_maps_request_of_xml i =
       | _ -> Read.skip_element i);
   ({ my_map = ( ! ) r_my_map } : xml_maps_request)
 
-let xml_map_with_xml_namespace_response_of_xml i = ()
-let xml_map_with_xml_namespace_request_of_xml i = ()
-
 let xml_map_with_xml_namespace_input_output_map_of_xml i =
   Read.sequences i "entry"
     (fun i _ ->
@@ -361,6 +489,44 @@ let xml_map_with_xml_namespace_input_output_map_of_xml i =
       let v = Read.element_value i "V" Fun.id () in
       (k, v))
     ()
+
+let xml_map_with_xml_namespace_response_of_xml i =
+  let r_my_map = ref None in
+  Structure.scanSequence i [ "KVP" ] (fun tag _ ->
+      match tag with
+      | "KVP" ->
+          r_my_map :=
+            Some
+              (Read.sequence i "KVP"
+                 (fun i _ ->
+                   Read.sequences i "entry"
+                     (fun i _ ->
+                       let k = Read.element_value i "K" Fun.id () in
+                       let v = Read.element_value i "V" Fun.id () in
+                       (k, v))
+                     ())
+                 ())
+      | _ -> Read.skip_element i);
+  ({ my_map = ( ! ) r_my_map } : xml_map_with_xml_namespace_response)
+
+let xml_map_with_xml_namespace_request_of_xml i =
+  let r_my_map = ref None in
+  Structure.scanSequence i [ "KVP" ] (fun tag _ ->
+      match tag with
+      | "KVP" ->
+          r_my_map :=
+            Some
+              (Read.sequence i "KVP"
+                 (fun i _ ->
+                   Read.sequences i "entry"
+                     (fun i _ ->
+                       let k = Read.element_value i "K" Fun.id () in
+                       let v = Read.element_value i "V" Fun.id () in
+                       (k, v))
+                     ())
+                 ())
+      | _ -> Read.skip_element i);
+  ({ my_map = ( ! ) r_my_map } : xml_map_with_xml_namespace_request)
 
 let xml_map_with_xml_namespace_input_output_of_xml i =
   let r_my_map = ref None in
@@ -381,8 +547,6 @@ let xml_map_with_xml_namespace_input_output_of_xml i =
       | _ -> Read.skip_element i);
   ({ my_map = ( ! ) r_my_map } : xml_map_with_xml_namespace_input_output)
 
-let xml_lists_response_of_xml i = ()
-let xml_lists_request_of_xml i = ()
 let renamed_list_members_of_xml i = Read.elements_value i "item" Fun.id ()
 let list_with_member_namespace_of_xml i = Read.elements_value i "member" Fun.id ()
 let list_with_namespace_of_xml i = Read.elements_value i "member" Fun.id ()
@@ -398,6 +562,274 @@ let structure_list_member_of_xml i =
   ({ b = ( ! ) r_b; a = ( ! ) r_a } : structure_list_member)
 
 let structure_list_of_xml i = Read.sequences i "item" (fun i _ -> structure_list_member_of_xml i) ()
+
+let xml_lists_response_of_xml i =
+  let r_flattened_structure_list = ref None in
+  let r_structure_list = ref None in
+  let r_flattened_list_with_namespace = ref None in
+  let r_flattened_list_with_member_namespace = ref None in
+  let r_flattened_list2 = ref None in
+  let r_flattened_list = ref None in
+  let r_renamed_list_members = ref None in
+  let r_nested_string_list = ref None in
+  let r_int_enum_list = ref None in
+  let r_enum_list = ref None in
+  let r_timestamp_list = ref None in
+  let r_boolean_list = ref None in
+  let r_integer_list = ref None in
+  let r_string_set = ref None in
+  let r_string_list = ref None in
+  Structure.scanSequence i
+    [
+      "flattenedStructureList";
+      "myStructureList";
+      "flattenedListWithNamespace";
+      "flattenedListWithMemberNamespace";
+      "customName";
+      "flattenedList";
+      "renamed";
+      "nestedStringList";
+      "intEnumList";
+      "enumList";
+      "timestampList";
+      "booleanList";
+      "integerList";
+      "stringSet";
+      "stringList";
+    ] (fun tag _ ->
+      match tag with
+      | "flattenedStructureList" ->
+          r_flattened_structure_list :=
+            Some
+              (Read.sequences i "flattenedStructureList"
+                 (fun i _ -> structure_list_member_of_xml i)
+                 ())
+      | "myStructureList" ->
+          r_structure_list :=
+            Some
+              (Read.sequence i "myStructureList"
+                 (fun i _ -> Read.sequences i "item" (fun i _ -> structure_list_member_of_xml i) ())
+                 ())
+      | "flattenedListWithNamespace" ->
+          r_flattened_list_with_namespace :=
+            Some (Read.elements_value i "flattenedListWithNamespace" Fun.id ())
+      | "flattenedListWithMemberNamespace" ->
+          r_flattened_list_with_member_namespace :=
+            Some (Read.elements_value i "flattenedListWithMemberNamespace" Fun.id ())
+      | "customName" -> r_flattened_list2 := Some (Read.elements_value i "customName" Fun.id ())
+      | "flattenedList" ->
+          r_flattened_list := Some (Read.elements_value i "flattenedList" Fun.id ())
+      | "renamed" ->
+          r_renamed_list_members :=
+            Some (Read.sequence i "renamed" (fun i _ -> Read.elements_value i "item" Fun.id ()) ())
+      | "nestedStringList" ->
+          r_nested_string_list :=
+            Some
+              (Read.sequence i "nestedStringList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.string_list_of_xml i)
+                     ())
+                 ())
+      | "intEnumList" ->
+          r_int_enum_list :=
+            Some
+              (Read.sequence i "intEnumList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                     ())
+                 ())
+      | "enumList" ->
+          r_enum_list :=
+            Some
+              (Read.sequence i "enumList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                     ())
+                 ())
+      | "timestampList" ->
+          r_timestamp_list :=
+            Some
+              (Read.sequence i "timestampList"
+                 (fun i _ -> Read.elements_value i "member" Primitive.timestamp_iso_of_string ())
+                 ())
+      | "booleanList" ->
+          r_boolean_list :=
+            Some
+              (Read.sequence i "booleanList"
+                 (fun i _ -> Read.elements_value i "member" Primitive.bool_of_string ())
+                 ())
+      | "integerList" ->
+          r_integer_list :=
+            Some
+              (Read.sequence i "integerList"
+                 (fun i _ -> Read.elements_value i "member" Primitive.int_of_string ())
+                 ())
+      | "stringSet" ->
+          r_string_set :=
+            Some
+              (Read.sequence i "stringSet" (fun i _ -> Read.elements_value i "member" Fun.id ()) ())
+      | "stringList" ->
+          r_string_list :=
+            Some
+              (Read.sequence i "stringList"
+                 (fun i _ -> Read.elements_value i "member" Fun.id ())
+                 ())
+      | _ -> Read.skip_element i);
+  ({
+     flattened_structure_list = ( ! ) r_flattened_structure_list;
+     structure_list = ( ! ) r_structure_list;
+     flattened_list_with_namespace = ( ! ) r_flattened_list_with_namespace;
+     flattened_list_with_member_namespace = ( ! ) r_flattened_list_with_member_namespace;
+     flattened_list2 = ( ! ) r_flattened_list2;
+     flattened_list = ( ! ) r_flattened_list;
+     renamed_list_members = ( ! ) r_renamed_list_members;
+     nested_string_list = ( ! ) r_nested_string_list;
+     int_enum_list = ( ! ) r_int_enum_list;
+     enum_list = ( ! ) r_enum_list;
+     timestamp_list = ( ! ) r_timestamp_list;
+     boolean_list = ( ! ) r_boolean_list;
+     integer_list = ( ! ) r_integer_list;
+     string_set = ( ! ) r_string_set;
+     string_list = ( ! ) r_string_list;
+   }
+    : xml_lists_response)
+
+let xml_lists_request_of_xml i =
+  let r_flattened_structure_list = ref None in
+  let r_structure_list = ref None in
+  let r_flattened_list_with_namespace = ref None in
+  let r_flattened_list_with_member_namespace = ref None in
+  let r_flattened_list2 = ref None in
+  let r_flattened_list = ref None in
+  let r_renamed_list_members = ref None in
+  let r_nested_string_list = ref None in
+  let r_int_enum_list = ref None in
+  let r_enum_list = ref None in
+  let r_timestamp_list = ref None in
+  let r_boolean_list = ref None in
+  let r_integer_list = ref None in
+  let r_string_set = ref None in
+  let r_string_list = ref None in
+  Structure.scanSequence i
+    [
+      "flattenedStructureList";
+      "myStructureList";
+      "flattenedListWithNamespace";
+      "flattenedListWithMemberNamespace";
+      "customName";
+      "flattenedList";
+      "renamed";
+      "nestedStringList";
+      "intEnumList";
+      "enumList";
+      "timestampList";
+      "booleanList";
+      "integerList";
+      "stringSet";
+      "stringList";
+    ] (fun tag _ ->
+      match tag with
+      | "flattenedStructureList" ->
+          r_flattened_structure_list :=
+            Some
+              (Read.sequences i "flattenedStructureList"
+                 (fun i _ -> structure_list_member_of_xml i)
+                 ())
+      | "myStructureList" ->
+          r_structure_list :=
+            Some
+              (Read.sequence i "myStructureList"
+                 (fun i _ -> Read.sequences i "item" (fun i _ -> structure_list_member_of_xml i) ())
+                 ())
+      | "flattenedListWithNamespace" ->
+          r_flattened_list_with_namespace :=
+            Some (Read.elements_value i "flattenedListWithNamespace" Fun.id ())
+      | "flattenedListWithMemberNamespace" ->
+          r_flattened_list_with_member_namespace :=
+            Some (Read.elements_value i "flattenedListWithMemberNamespace" Fun.id ())
+      | "customName" -> r_flattened_list2 := Some (Read.elements_value i "customName" Fun.id ())
+      | "flattenedList" ->
+          r_flattened_list := Some (Read.elements_value i "flattenedList" Fun.id ())
+      | "renamed" ->
+          r_renamed_list_members :=
+            Some (Read.sequence i "renamed" (fun i _ -> Read.elements_value i "item" Fun.id ()) ())
+      | "nestedStringList" ->
+          r_nested_string_list :=
+            Some
+              (Read.sequence i "nestedStringList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.string_list_of_xml i)
+                     ())
+                 ())
+      | "intEnumList" ->
+          r_int_enum_list :=
+            Some
+              (Read.sequence i "intEnumList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                     ())
+                 ())
+      | "enumList" ->
+          r_enum_list :=
+            Some
+              (Read.sequence i "enumList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                     ())
+                 ())
+      | "timestampList" ->
+          r_timestamp_list :=
+            Some
+              (Read.sequence i "timestampList"
+                 (fun i _ -> Read.elements_value i "member" Primitive.timestamp_iso_of_string ())
+                 ())
+      | "booleanList" ->
+          r_boolean_list :=
+            Some
+              (Read.sequence i "booleanList"
+                 (fun i _ -> Read.elements_value i "member" Primitive.bool_of_string ())
+                 ())
+      | "integerList" ->
+          r_integer_list :=
+            Some
+              (Read.sequence i "integerList"
+                 (fun i _ -> Read.elements_value i "member" Primitive.int_of_string ())
+                 ())
+      | "stringSet" ->
+          r_string_set :=
+            Some
+              (Read.sequence i "stringSet" (fun i _ -> Read.elements_value i "member" Fun.id ()) ())
+      | "stringList" ->
+          r_string_list :=
+            Some
+              (Read.sequence i "stringList"
+                 (fun i _ -> Read.elements_value i "member" Fun.id ())
+                 ())
+      | _ -> Read.skip_element i);
+  ({
+     flattened_structure_list = ( ! ) r_flattened_structure_list;
+     structure_list = ( ! ) r_structure_list;
+     flattened_list_with_namespace = ( ! ) r_flattened_list_with_namespace;
+     flattened_list_with_member_namespace = ( ! ) r_flattened_list_with_member_namespace;
+     flattened_list2 = ( ! ) r_flattened_list2;
+     flattened_list = ( ! ) r_flattened_list;
+     renamed_list_members = ( ! ) r_renamed_list_members;
+     nested_string_list = ( ! ) r_nested_string_list;
+     int_enum_list = ( ! ) r_int_enum_list;
+     enum_list = ( ! ) r_enum_list;
+     timestamp_list = ( ! ) r_timestamp_list;
+     boolean_list = ( ! ) r_boolean_list;
+     integer_list = ( ! ) r_integer_list;
+     string_set = ( ! ) r_string_set;
+     string_list = ( ! ) r_string_list;
+   }
+    : xml_lists_request)
 
 let xml_lists_input_output_of_xml i =
   let r_flattened_structure_list = ref None in
@@ -533,8 +965,151 @@ let xml_lists_input_output_of_xml i =
    }
     : xml_lists_input_output)
 
-let xml_int_enums_response_of_xml i = ()
-let xml_int_enums_request_of_xml i = ()
+let xml_int_enums_response_of_xml i =
+  let r_int_enum_map = ref None in
+  let r_int_enum_set = ref None in
+  let r_int_enum_list = ref None in
+  let r_int_enum3 = ref None in
+  let r_int_enum2 = ref None in
+  let r_int_enum1 = ref None in
+  Structure.scanSequence i
+    [ "intEnumMap"; "intEnumSet"; "intEnumList"; "intEnum3"; "intEnum2"; "intEnum1" ] (fun tag _ ->
+      match tag with
+      | "intEnumMap" ->
+          r_int_enum_map :=
+            Some
+              (Read.sequence i "intEnumMap"
+                 (fun i _ ->
+                   Read.sequences i "entry"
+                     (fun i _ ->
+                       let k = Read.element_value i "key" Fun.id () in
+                       let v =
+                         Read.sequence i "value"
+                           (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                           ()
+                       in
+                       (k, v))
+                     ())
+                 ())
+      | "intEnumSet" ->
+          r_int_enum_set :=
+            Some
+              (Read.sequence i "intEnumSet"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                     ())
+                 ())
+      | "intEnumList" ->
+          r_int_enum_list :=
+            Some
+              (Read.sequence i "intEnumList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                     ())
+                 ())
+      | "intEnum3" ->
+          r_int_enum3 :=
+            Some
+              (Read.sequence i "intEnum3"
+                 (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                 ())
+      | "intEnum2" ->
+          r_int_enum2 :=
+            Some
+              (Read.sequence i "intEnum2"
+                 (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                 ())
+      | "intEnum1" ->
+          r_int_enum1 :=
+            Some
+              (Read.sequence i "intEnum1"
+                 (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                 ())
+      | _ -> Read.skip_element i);
+  ({
+     int_enum_map = ( ! ) r_int_enum_map;
+     int_enum_set = ( ! ) r_int_enum_set;
+     int_enum_list = ( ! ) r_int_enum_list;
+     int_enum3 = ( ! ) r_int_enum3;
+     int_enum2 = ( ! ) r_int_enum2;
+     int_enum1 = ( ! ) r_int_enum1;
+   }
+    : xml_int_enums_response)
+
+let xml_int_enums_request_of_xml i =
+  let r_int_enum_map = ref None in
+  let r_int_enum_set = ref None in
+  let r_int_enum_list = ref None in
+  let r_int_enum3 = ref None in
+  let r_int_enum2 = ref None in
+  let r_int_enum1 = ref None in
+  Structure.scanSequence i
+    [ "intEnumMap"; "intEnumSet"; "intEnumList"; "intEnum3"; "intEnum2"; "intEnum1" ] (fun tag _ ->
+      match tag with
+      | "intEnumMap" ->
+          r_int_enum_map :=
+            Some
+              (Read.sequence i "intEnumMap"
+                 (fun i _ ->
+                   Read.sequences i "entry"
+                     (fun i _ ->
+                       let k = Read.element_value i "key" Fun.id () in
+                       let v =
+                         Read.sequence i "value"
+                           (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                           ()
+                       in
+                       (k, v))
+                     ())
+                 ())
+      | "intEnumSet" ->
+          r_int_enum_set :=
+            Some
+              (Read.sequence i "intEnumSet"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                     ())
+                 ())
+      | "intEnumList" ->
+          r_int_enum_list :=
+            Some
+              (Read.sequence i "intEnumList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                     ())
+                 ())
+      | "intEnum3" ->
+          r_int_enum3 :=
+            Some
+              (Read.sequence i "intEnum3"
+                 (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                 ())
+      | "intEnum2" ->
+          r_int_enum2 :=
+            Some
+              (Read.sequence i "intEnum2"
+                 (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                 ())
+      | "intEnum1" ->
+          r_int_enum1 :=
+            Some
+              (Read.sequence i "intEnum1"
+                 (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                 ())
+      | _ -> Read.skip_element i);
+  ({
+     int_enum_map = ( ! ) r_int_enum_map;
+     int_enum_set = ( ! ) r_int_enum_set;
+     int_enum_list = ( ! ) r_int_enum_list;
+     int_enum3 = ( ! ) r_int_enum3;
+     int_enum2 = ( ! ) r_int_enum2;
+     int_enum1 = ( ! ) r_int_enum1;
+   }
+    : xml_int_enums_request)
 
 let xml_int_enums_input_output_of_xml i =
   let r_int_enum_map = ref None in
@@ -609,8 +1184,151 @@ let xml_int_enums_input_output_of_xml i =
    }
     : xml_int_enums_input_output)
 
-let xml_enums_response_of_xml i = ()
-let xml_enums_request_of_xml i = ()
+let xml_enums_response_of_xml i =
+  let r_foo_enum_map = ref None in
+  let r_foo_enum_set = ref None in
+  let r_foo_enum_list = ref None in
+  let r_foo_enum3 = ref None in
+  let r_foo_enum2 = ref None in
+  let r_foo_enum1 = ref None in
+  Structure.scanSequence i
+    [ "fooEnumMap"; "fooEnumSet"; "fooEnumList"; "fooEnum3"; "fooEnum2"; "fooEnum1" ] (fun tag _ ->
+      match tag with
+      | "fooEnumMap" ->
+          r_foo_enum_map :=
+            Some
+              (Read.sequence i "fooEnumMap"
+                 (fun i _ ->
+                   Read.sequences i "entry"
+                     (fun i _ ->
+                       let k = Read.element_value i "key" Fun.id () in
+                       let v =
+                         Read.sequence i "value"
+                           (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                           ()
+                       in
+                       (k, v))
+                     ())
+                 ())
+      | "fooEnumSet" ->
+          r_foo_enum_set :=
+            Some
+              (Read.sequence i "fooEnumSet"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                     ())
+                 ())
+      | "fooEnumList" ->
+          r_foo_enum_list :=
+            Some
+              (Read.sequence i "fooEnumList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                     ())
+                 ())
+      | "fooEnum3" ->
+          r_foo_enum3 :=
+            Some
+              (Read.sequence i "fooEnum3"
+                 (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                 ())
+      | "fooEnum2" ->
+          r_foo_enum2 :=
+            Some
+              (Read.sequence i "fooEnum2"
+                 (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                 ())
+      | "fooEnum1" ->
+          r_foo_enum1 :=
+            Some
+              (Read.sequence i "fooEnum1"
+                 (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                 ())
+      | _ -> Read.skip_element i);
+  ({
+     foo_enum_map = ( ! ) r_foo_enum_map;
+     foo_enum_set = ( ! ) r_foo_enum_set;
+     foo_enum_list = ( ! ) r_foo_enum_list;
+     foo_enum3 = ( ! ) r_foo_enum3;
+     foo_enum2 = ( ! ) r_foo_enum2;
+     foo_enum1 = ( ! ) r_foo_enum1;
+   }
+    : xml_enums_response)
+
+let xml_enums_request_of_xml i =
+  let r_foo_enum_map = ref None in
+  let r_foo_enum_set = ref None in
+  let r_foo_enum_list = ref None in
+  let r_foo_enum3 = ref None in
+  let r_foo_enum2 = ref None in
+  let r_foo_enum1 = ref None in
+  Structure.scanSequence i
+    [ "fooEnumMap"; "fooEnumSet"; "fooEnumList"; "fooEnum3"; "fooEnum2"; "fooEnum1" ] (fun tag _ ->
+      match tag with
+      | "fooEnumMap" ->
+          r_foo_enum_map :=
+            Some
+              (Read.sequence i "fooEnumMap"
+                 (fun i _ ->
+                   Read.sequences i "entry"
+                     (fun i _ ->
+                       let k = Read.element_value i "key" Fun.id () in
+                       let v =
+                         Read.sequence i "value"
+                           (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                           ()
+                       in
+                       (k, v))
+                     ())
+                 ())
+      | "fooEnumSet" ->
+          r_foo_enum_set :=
+            Some
+              (Read.sequence i "fooEnumSet"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                     ())
+                 ())
+      | "fooEnumList" ->
+          r_foo_enum_list :=
+            Some
+              (Read.sequence i "fooEnumList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                     ())
+                 ())
+      | "fooEnum3" ->
+          r_foo_enum3 :=
+            Some
+              (Read.sequence i "fooEnum3"
+                 (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                 ())
+      | "fooEnum2" ->
+          r_foo_enum2 :=
+            Some
+              (Read.sequence i "fooEnum2"
+                 (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                 ())
+      | "fooEnum1" ->
+          r_foo_enum1 :=
+            Some
+              (Read.sequence i "fooEnum1"
+                 (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                 ())
+      | _ -> Read.skip_element i);
+  ({
+     foo_enum_map = ( ! ) r_foo_enum_map;
+     foo_enum_set = ( ! ) r_foo_enum_set;
+     foo_enum_list = ( ! ) r_foo_enum_list;
+     foo_enum3 = ( ! ) r_foo_enum3;
+     foo_enum2 = ( ! ) r_foo_enum2;
+     foo_enum1 = ( ! ) r_foo_enum1;
+   }
+    : xml_enums_request)
 
 let xml_enums_input_output_of_xml i =
   let r_foo_enum_map = ref None in
@@ -747,8 +1465,273 @@ let xml_empty_maps_request_of_xml i =
       | _ -> Read.skip_element i);
   ({ my_map = ( ! ) r_my_map } : xml_empty_maps_request)
 
-let xml_empty_lists_response_of_xml i = ()
-let xml_empty_lists_request_of_xml i = ()
+let xml_empty_lists_response_of_xml i =
+  let r_flattened_structure_list = ref None in
+  let r_structure_list = ref None in
+  let r_flattened_list_with_namespace = ref None in
+  let r_flattened_list_with_member_namespace = ref None in
+  let r_flattened_list2 = ref None in
+  let r_flattened_list = ref None in
+  let r_renamed_list_members = ref None in
+  let r_nested_string_list = ref None in
+  let r_int_enum_list = ref None in
+  let r_enum_list = ref None in
+  let r_timestamp_list = ref None in
+  let r_boolean_list = ref None in
+  let r_integer_list = ref None in
+  let r_string_set = ref None in
+  let r_string_list = ref None in
+  Structure.scanSequence i
+    [
+      "flattenedStructureList";
+      "myStructureList";
+      "flattenedListWithNamespace";
+      "flattenedListWithMemberNamespace";
+      "customName";
+      "flattenedList";
+      "renamed";
+      "nestedStringList";
+      "intEnumList";
+      "enumList";
+      "timestampList";
+      "booleanList";
+      "integerList";
+      "stringSet";
+      "stringList";
+    ] (fun tag _ ->
+      match tag with
+      | "flattenedStructureList" ->
+          r_flattened_structure_list :=
+            Some
+              (Read.sequences i "flattenedStructureList"
+                 (fun i _ -> structure_list_member_of_xml i)
+                 ())
+      | "myStructureList" ->
+          r_structure_list :=
+            Some
+              (Read.sequence i "myStructureList"
+                 (fun i _ -> Read.sequences i "item" (fun i _ -> structure_list_member_of_xml i) ())
+                 ())
+      | "flattenedListWithNamespace" ->
+          r_flattened_list_with_namespace :=
+            Some (Read.elements_value i "flattenedListWithNamespace" Fun.id ())
+      | "flattenedListWithMemberNamespace" ->
+          r_flattened_list_with_member_namespace :=
+            Some (Read.elements_value i "flattenedListWithMemberNamespace" Fun.id ())
+      | "customName" -> r_flattened_list2 := Some (Read.elements_value i "customName" Fun.id ())
+      | "flattenedList" ->
+          r_flattened_list := Some (Read.elements_value i "flattenedList" Fun.id ())
+      | "renamed" ->
+          r_renamed_list_members :=
+            Some (Read.sequence i "renamed" (fun i _ -> Read.elements_value i "item" Fun.id ()) ())
+      | "nestedStringList" ->
+          r_nested_string_list :=
+            Some
+              (Read.sequence i "nestedStringList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.string_list_of_xml i)
+                     ())
+                 ())
+      | "intEnumList" ->
+          r_int_enum_list :=
+            Some
+              (Read.sequence i "intEnumList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                     ())
+                 ())
+      | "enumList" ->
+          r_enum_list :=
+            Some
+              (Read.sequence i "enumList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                     ())
+                 ())
+      | "timestampList" ->
+          r_timestamp_list :=
+            Some
+              (Read.sequence i "timestampList"
+                 (fun i _ -> Read.elements_value i "member" Primitive.timestamp_iso_of_string ())
+                 ())
+      | "booleanList" ->
+          r_boolean_list :=
+            Some
+              (Read.sequence i "booleanList"
+                 (fun i _ -> Read.elements_value i "member" Primitive.bool_of_string ())
+                 ())
+      | "integerList" ->
+          r_integer_list :=
+            Some
+              (Read.sequence i "integerList"
+                 (fun i _ -> Read.elements_value i "member" Primitive.int_of_string ())
+                 ())
+      | "stringSet" ->
+          r_string_set :=
+            Some
+              (Read.sequence i "stringSet" (fun i _ -> Read.elements_value i "member" Fun.id ()) ())
+      | "stringList" ->
+          r_string_list :=
+            Some
+              (Read.sequence i "stringList"
+                 (fun i _ -> Read.elements_value i "member" Fun.id ())
+                 ())
+      | _ -> Read.skip_element i);
+  ({
+     flattened_structure_list = ( ! ) r_flattened_structure_list;
+     structure_list = ( ! ) r_structure_list;
+     flattened_list_with_namespace = ( ! ) r_flattened_list_with_namespace;
+     flattened_list_with_member_namespace = ( ! ) r_flattened_list_with_member_namespace;
+     flattened_list2 = ( ! ) r_flattened_list2;
+     flattened_list = ( ! ) r_flattened_list;
+     renamed_list_members = ( ! ) r_renamed_list_members;
+     nested_string_list = ( ! ) r_nested_string_list;
+     int_enum_list = ( ! ) r_int_enum_list;
+     enum_list = ( ! ) r_enum_list;
+     timestamp_list = ( ! ) r_timestamp_list;
+     boolean_list = ( ! ) r_boolean_list;
+     integer_list = ( ! ) r_integer_list;
+     string_set = ( ! ) r_string_set;
+     string_list = ( ! ) r_string_list;
+   }
+    : xml_empty_lists_response)
+
+let xml_empty_lists_request_of_xml i =
+  let r_flattened_structure_list = ref None in
+  let r_structure_list = ref None in
+  let r_flattened_list_with_namespace = ref None in
+  let r_flattened_list_with_member_namespace = ref None in
+  let r_flattened_list2 = ref None in
+  let r_flattened_list = ref None in
+  let r_renamed_list_members = ref None in
+  let r_nested_string_list = ref None in
+  let r_int_enum_list = ref None in
+  let r_enum_list = ref None in
+  let r_timestamp_list = ref None in
+  let r_boolean_list = ref None in
+  let r_integer_list = ref None in
+  let r_string_set = ref None in
+  let r_string_list = ref None in
+  Structure.scanSequence i
+    [
+      "flattenedStructureList";
+      "myStructureList";
+      "flattenedListWithNamespace";
+      "flattenedListWithMemberNamespace";
+      "customName";
+      "flattenedList";
+      "renamed";
+      "nestedStringList";
+      "intEnumList";
+      "enumList";
+      "timestampList";
+      "booleanList";
+      "integerList";
+      "stringSet";
+      "stringList";
+    ] (fun tag _ ->
+      match tag with
+      | "flattenedStructureList" ->
+          r_flattened_structure_list :=
+            Some
+              (Read.sequences i "flattenedStructureList"
+                 (fun i _ -> structure_list_member_of_xml i)
+                 ())
+      | "myStructureList" ->
+          r_structure_list :=
+            Some
+              (Read.sequence i "myStructureList"
+                 (fun i _ -> Read.sequences i "item" (fun i _ -> structure_list_member_of_xml i) ())
+                 ())
+      | "flattenedListWithNamespace" ->
+          r_flattened_list_with_namespace :=
+            Some (Read.elements_value i "flattenedListWithNamespace" Fun.id ())
+      | "flattenedListWithMemberNamespace" ->
+          r_flattened_list_with_member_namespace :=
+            Some (Read.elements_value i "flattenedListWithMemberNamespace" Fun.id ())
+      | "customName" -> r_flattened_list2 := Some (Read.elements_value i "customName" Fun.id ())
+      | "flattenedList" ->
+          r_flattened_list := Some (Read.elements_value i "flattenedList" Fun.id ())
+      | "renamed" ->
+          r_renamed_list_members :=
+            Some (Read.sequence i "renamed" (fun i _ -> Read.elements_value i "item" Fun.id ()) ())
+      | "nestedStringList" ->
+          r_nested_string_list :=
+            Some
+              (Read.sequence i "nestedStringList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.string_list_of_xml i)
+                     ())
+                 ())
+      | "intEnumList" ->
+          r_int_enum_list :=
+            Some
+              (Read.sequence i "intEnumList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.integer_enum_of_xml i)
+                     ())
+                 ())
+      | "enumList" ->
+          r_enum_list :=
+            Some
+              (Read.sequence i "enumList"
+                 (fun i _ ->
+                   Read.sequences i "member"
+                     (fun i _ -> Shared.Xml_deserializers.foo_enum_of_xml i)
+                     ())
+                 ())
+      | "timestampList" ->
+          r_timestamp_list :=
+            Some
+              (Read.sequence i "timestampList"
+                 (fun i _ -> Read.elements_value i "member" Primitive.timestamp_iso_of_string ())
+                 ())
+      | "booleanList" ->
+          r_boolean_list :=
+            Some
+              (Read.sequence i "booleanList"
+                 (fun i _ -> Read.elements_value i "member" Primitive.bool_of_string ())
+                 ())
+      | "integerList" ->
+          r_integer_list :=
+            Some
+              (Read.sequence i "integerList"
+                 (fun i _ -> Read.elements_value i "member" Primitive.int_of_string ())
+                 ())
+      | "stringSet" ->
+          r_string_set :=
+            Some
+              (Read.sequence i "stringSet" (fun i _ -> Read.elements_value i "member" Fun.id ()) ())
+      | "stringList" ->
+          r_string_list :=
+            Some
+              (Read.sequence i "stringList"
+                 (fun i _ -> Read.elements_value i "member" Fun.id ())
+                 ())
+      | _ -> Read.skip_element i);
+  ({
+     flattened_structure_list = ( ! ) r_flattened_structure_list;
+     structure_list = ( ! ) r_structure_list;
+     flattened_list_with_namespace = ( ! ) r_flattened_list_with_namespace;
+     flattened_list_with_member_namespace = ( ! ) r_flattened_list_with_member_namespace;
+     flattened_list2 = ( ! ) r_flattened_list2;
+     flattened_list = ( ! ) r_flattened_list;
+     renamed_list_members = ( ! ) r_renamed_list_members;
+     nested_string_list = ( ! ) r_nested_string_list;
+     int_enum_list = ( ! ) r_int_enum_list;
+     enum_list = ( ! ) r_enum_list;
+     timestamp_list = ( ! ) r_timestamp_list;
+     boolean_list = ( ! ) r_boolean_list;
+     integer_list = ( ! ) r_integer_list;
+     string_set = ( ! ) r_string_set;
+     string_list = ( ! ) r_string_list;
+   }
+    : xml_empty_lists_request)
 
 let xml_empty_blobs_response_of_xml i =
   let r_data = ref None in
@@ -782,10 +1765,45 @@ let xml_blobs_request_of_xml i =
       | _ -> Read.skip_element i);
   ({ data = ( ! ) r_data } : xml_blobs_request)
 
-let xml_attributes_response_of_xml i = ()
-let xml_attributes_request_of_xml i = ()
-let xml_attributes_payload_response_of_xml i = ()
-let xml_attributes_payload_request_of_xml i = ()
+let xml_attributes_response_of_xml i =
+  let r_attr = ref None in
+  let r_foo = ref None in
+  Structure.scanSequence i [ "test"; "foo" ] (fun tag _ ->
+      match tag with
+      | "test" -> r_attr := Some (Read.element_value i "test" Fun.id ())
+      | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
+      | _ -> Read.skip_element i);
+  ({ attr = ( ! ) r_attr; foo = ( ! ) r_foo } : xml_attributes_response)
+
+let xml_attributes_request_of_xml i =
+  let r_attr = ref None in
+  let r_foo = ref None in
+  Structure.scanSequence i [ "test"; "foo" ] (fun tag _ ->
+      match tag with
+      | "test" -> r_attr := Some (Read.element_value i "test" Fun.id ())
+      | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
+      | _ -> Read.skip_element i);
+  ({ attr = ( ! ) r_attr; foo = ( ! ) r_foo } : xml_attributes_request)
+
+let xml_attributes_payload_response_of_xml i =
+  let r_attr = ref None in
+  let r_foo = ref None in
+  Structure.scanSequence i [ "test"; "foo" ] (fun tag _ ->
+      match tag with
+      | "test" -> r_attr := Some (Read.element_value i "test" Fun.id ())
+      | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
+      | _ -> Read.skip_element i);
+  ({ attr = ( ! ) r_attr; foo = ( ! ) r_foo } : xml_attributes_payload_response)
+
+let xml_attributes_payload_request_of_xml i =
+  let r_attr = ref None in
+  let r_foo = ref None in
+  Structure.scanSequence i [ "test"; "foo" ] (fun tag _ ->
+      match tag with
+      | "test" -> r_attr := Some (Read.element_value i "test" Fun.id ())
+      | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
+      | _ -> Read.skip_element i);
+  ({ attr = ( ! ) r_attr; foo = ( ! ) r_foo } : xml_attributes_payload_request)
 
 let xml_attributes_on_payload_response_of_xml i =
   let r_payload = ref None in
@@ -831,7 +1849,18 @@ let xml_attributes_input_output_of_xml i =
       | _ -> Read.skip_element i);
   ({ attr = ( ! ) r_attr; foo = ( ! ) r_foo } : xml_attributes_input_output)
 
-let xml_attributes_in_middle_payload_response_of_xml i = ()
+let xml_attributes_in_middle_payload_response_of_xml i =
+  let r_baz = ref None in
+  let r_attr = ref None in
+  let r_foo = ref None in
+  Structure.scanSequence i [ "baz"; "test"; "foo" ] (fun tag _ ->
+      match tag with
+      | "baz" -> r_baz := Some (Read.element_value i "baz" Fun.id ())
+      | "test" -> r_attr := Some (Read.element_value i "test" Fun.id ())
+      | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
+      | _ -> Read.skip_element i);
+  ({ baz = ( ! ) r_baz; attr = ( ! ) r_attr; foo = ( ! ) r_foo }
+    : xml_attributes_in_middle_payload_response)
 
 let xml_attributes_in_middle_response_of_xml i =
   let r_payload = ref None in
@@ -846,7 +1875,18 @@ let xml_attributes_in_middle_response_of_xml i =
       | _ -> Read.skip_element i);
   ({ payload = ( ! ) r_payload } : xml_attributes_in_middle_response)
 
-let xml_attributes_in_middle_payload_request_of_xml i = ()
+let xml_attributes_in_middle_payload_request_of_xml i =
+  let r_baz = ref None in
+  let r_attr = ref None in
+  let r_foo = ref None in
+  Structure.scanSequence i [ "baz"; "test"; "foo" ] (fun tag _ ->
+      match tag with
+      | "baz" -> r_baz := Some (Read.element_value i "baz" Fun.id ())
+      | "test" -> r_attr := Some (Read.element_value i "test" Fun.id ())
+      | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
+      | _ -> Read.skip_element i);
+  ({ baz = ( ! ) r_baz; attr = ( ! ) r_attr; foo = ( ! ) r_foo }
+    : xml_attributes_in_middle_payload_request)
 
 let xml_attributes_in_middle_request_of_xml i =
   let r_payload = ref None in
@@ -945,8 +1985,127 @@ let string_enum_of_xml i =
   let s = Read.data i in
   (match s with "enumvalue" -> V | _ -> failwith "unknown enum value" : string_enum)
 
-let simple_scalar_properties_response_of_xml i = ()
-let simple_scalar_properties_request_of_xml i = ()
+let simple_scalar_properties_response_of_xml i =
+  let r_double_value = ref None in
+  let r_float_value = ref None in
+  let r_long_value = ref None in
+  let r_integer_value = ref None in
+  let r_short_value = ref None in
+  let r_byte_value = ref None in
+  let r_false_boolean_value = ref None in
+  let r_true_boolean_value = ref None in
+  let r_string_value = ref None in
+  let r_foo = ref None in
+  Structure.scanSequence i
+    [
+      "DoubleDribble";
+      "floatValue";
+      "longValue";
+      "integerValue";
+      "shortValue";
+      "byteValue";
+      "falseBooleanValue";
+      "trueBooleanValue";
+      "stringValue";
+      "foo";
+    ] (fun tag _ ->
+      match tag with
+      | "DoubleDribble" ->
+          r_double_value :=
+            Some (Read.element_value i "DoubleDribble" Primitive.double_of_string ())
+      | "floatValue" ->
+          r_float_value := Some (Read.element_value i "floatValue" Primitive.float_of_string ())
+      | "longValue" ->
+          r_long_value := Some (Read.element_value i "longValue" Primitive.long_of_string ())
+      | "integerValue" ->
+          r_integer_value := Some (Read.element_value i "integerValue" Primitive.int_of_string ())
+      | "shortValue" ->
+          r_short_value := Some (Read.element_value i "shortValue" Primitive.int_of_string ())
+      | "byteValue" ->
+          r_byte_value := Some (Read.element_value i "byteValue" Primitive.int_of_string ())
+      | "falseBooleanValue" ->
+          r_false_boolean_value :=
+            Some (Read.element_value i "falseBooleanValue" Primitive.bool_of_string ())
+      | "trueBooleanValue" ->
+          r_true_boolean_value :=
+            Some (Read.element_value i "trueBooleanValue" Primitive.bool_of_string ())
+      | "stringValue" -> r_string_value := Some (Read.element_value i "stringValue" Fun.id ())
+      | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
+      | _ -> Read.skip_element i);
+  ({
+     double_value = ( ! ) r_double_value;
+     float_value = ( ! ) r_float_value;
+     long_value = ( ! ) r_long_value;
+     integer_value = ( ! ) r_integer_value;
+     short_value = ( ! ) r_short_value;
+     byte_value = ( ! ) r_byte_value;
+     false_boolean_value = ( ! ) r_false_boolean_value;
+     true_boolean_value = ( ! ) r_true_boolean_value;
+     string_value = ( ! ) r_string_value;
+     foo = ( ! ) r_foo;
+   }
+    : simple_scalar_properties_response)
+
+let simple_scalar_properties_request_of_xml i =
+  let r_double_value = ref None in
+  let r_float_value = ref None in
+  let r_long_value = ref None in
+  let r_integer_value = ref None in
+  let r_short_value = ref None in
+  let r_byte_value = ref None in
+  let r_false_boolean_value = ref None in
+  let r_true_boolean_value = ref None in
+  let r_string_value = ref None in
+  let r_foo = ref None in
+  Structure.scanSequence i
+    [
+      "DoubleDribble";
+      "floatValue";
+      "longValue";
+      "integerValue";
+      "shortValue";
+      "byteValue";
+      "falseBooleanValue";
+      "trueBooleanValue";
+      "stringValue";
+      "foo";
+    ] (fun tag _ ->
+      match tag with
+      | "DoubleDribble" ->
+          r_double_value :=
+            Some (Read.element_value i "DoubleDribble" Primitive.double_of_string ())
+      | "floatValue" ->
+          r_float_value := Some (Read.element_value i "floatValue" Primitive.float_of_string ())
+      | "longValue" ->
+          r_long_value := Some (Read.element_value i "longValue" Primitive.long_of_string ())
+      | "integerValue" ->
+          r_integer_value := Some (Read.element_value i "integerValue" Primitive.int_of_string ())
+      | "shortValue" ->
+          r_short_value := Some (Read.element_value i "shortValue" Primitive.int_of_string ())
+      | "byteValue" ->
+          r_byte_value := Some (Read.element_value i "byteValue" Primitive.int_of_string ())
+      | "falseBooleanValue" ->
+          r_false_boolean_value :=
+            Some (Read.element_value i "falseBooleanValue" Primitive.bool_of_string ())
+      | "trueBooleanValue" ->
+          r_true_boolean_value :=
+            Some (Read.element_value i "trueBooleanValue" Primitive.bool_of_string ())
+      | "stringValue" -> r_string_value := Some (Read.element_value i "stringValue" Fun.id ())
+      | "foo" -> r_foo := Some (Read.element_value i "foo" Fun.id ())
+      | _ -> Read.skip_element i);
+  ({
+     double_value = ( ! ) r_double_value;
+     float_value = ( ! ) r_float_value;
+     long_value = ( ! ) r_long_value;
+     integer_value = ( ! ) r_integer_value;
+     short_value = ( ! ) r_short_value;
+     byte_value = ( ! ) r_byte_value;
+     false_boolean_value = ( ! ) r_false_boolean_value;
+     true_boolean_value = ( ! ) r_true_boolean_value;
+     string_value = ( ! ) r_string_value;
+     foo = ( ! ) r_foo;
+   }
+    : simple_scalar_properties_request)
 
 let simple_scalar_properties_input_output_of_xml i =
   let r_double_value = ref None in
@@ -1155,10 +2314,158 @@ let null_and_empty_headers_i_o_of_xml i =
   ({ c = ( ! ) r_c; b = ( ! ) r_b; a = ( ! ) r_a } : null_and_empty_headers_i_o)
 
 let no_input_and_output_output_of_xml i = ()
-let nested_xml_map_with_xml_name_response_of_xml i = ()
-let nested_xml_map_with_xml_name_request_of_xml i = ()
-let nested_xml_maps_response_of_xml i = ()
-let nested_xml_maps_request_of_xml i = ()
+
+let nested_xml_map_with_xml_name_inner_map_of_xml i =
+  Read.sequences i "entry"
+    (fun i _ ->
+      let k = Read.element_value i "InnerKey" Fun.id () in
+      let v = Read.element_value i "InnerValue" Fun.id () in
+      (k, v))
+    ()
+
+let nested_xml_map_with_xml_name_map_of_xml i =
+  Read.sequences i "entry"
+    (fun i _ ->
+      let k = Read.element_value i "OuterKey" Fun.id () in
+      let v =
+        Read.sequence i "value" (fun i _ -> nested_xml_map_with_xml_name_inner_map_of_xml i) ()
+      in
+      (k, v))
+    ()
+
+let nested_xml_map_with_xml_name_response_of_xml i =
+  let r_nested_xml_map_with_xml_name_map = ref None in
+  Structure.scanSequence i [ "nestedXmlMapWithXmlNameMap" ] (fun tag _ ->
+      match tag with
+      | "nestedXmlMapWithXmlNameMap" ->
+          r_nested_xml_map_with_xml_name_map :=
+            Some
+              (Read.sequence i "nestedXmlMapWithXmlNameMap"
+                 (fun i _ ->
+                   Read.sequences i "entry"
+                     (fun i _ ->
+                       let k = Read.element_value i "OuterKey" Fun.id () in
+                       let v =
+                         Read.sequence i "value"
+                           (fun i _ -> nested_xml_map_with_xml_name_inner_map_of_xml i)
+                           ()
+                       in
+                       (k, v))
+                     ())
+                 ())
+      | _ -> Read.skip_element i);
+  ({ nested_xml_map_with_xml_name_map = ( ! ) r_nested_xml_map_with_xml_name_map }
+    : nested_xml_map_with_xml_name_response)
+
+let nested_xml_map_with_xml_name_request_of_xml i =
+  let r_nested_xml_map_with_xml_name_map = ref None in
+  Structure.scanSequence i [ "nestedXmlMapWithXmlNameMap" ] (fun tag _ ->
+      match tag with
+      | "nestedXmlMapWithXmlNameMap" ->
+          r_nested_xml_map_with_xml_name_map :=
+            Some
+              (Read.sequence i "nestedXmlMapWithXmlNameMap"
+                 (fun i _ ->
+                   Read.sequences i "entry"
+                     (fun i _ ->
+                       let k = Read.element_value i "OuterKey" Fun.id () in
+                       let v =
+                         Read.sequence i "value"
+                           (fun i _ -> nested_xml_map_with_xml_name_inner_map_of_xml i)
+                           ()
+                       in
+                       (k, v))
+                     ())
+                 ())
+      | _ -> Read.skip_element i);
+  ({ nested_xml_map_with_xml_name_map = ( ! ) r_nested_xml_map_with_xml_name_map }
+    : nested_xml_map_with_xml_name_request)
+
+let nested_map_of_xml i =
+  Read.sequences i "entry"
+    (fun i _ ->
+      let k = Read.element_value i "key" Fun.id () in
+      let v =
+        Read.sequence i "value" (fun i _ -> Shared.Xml_deserializers.foo_enum_map_of_xml i) ()
+      in
+      (k, v))
+    ()
+
+let nested_xml_maps_response_of_xml i =
+  let r_flat_nested_map = ref None in
+  let r_nested_map = ref None in
+  Structure.scanSequence i [ "flatNestedMap"; "nestedMap" ] (fun tag _ ->
+      match tag with
+      | "flatNestedMap" ->
+          r_flat_nested_map :=
+            Some
+              (Read.sequences i "flatNestedMap"
+                 (fun i _ ->
+                   let k = Read.element_value i "key" Fun.id () in
+                   let v =
+                     Read.sequence i "value"
+                       (fun i _ -> Shared.Xml_deserializers.foo_enum_map_of_xml i)
+                       ()
+                   in
+                   (k, v))
+                 ())
+      | "nestedMap" ->
+          r_nested_map :=
+            Some
+              (Read.sequence i "nestedMap"
+                 (fun i _ ->
+                   Read.sequences i "entry"
+                     (fun i _ ->
+                       let k = Read.element_value i "key" Fun.id () in
+                       let v =
+                         Read.sequence i "value"
+                           (fun i _ -> Shared.Xml_deserializers.foo_enum_map_of_xml i)
+                           ()
+                       in
+                       (k, v))
+                     ())
+                 ())
+      | _ -> Read.skip_element i);
+  ({ flat_nested_map = ( ! ) r_flat_nested_map; nested_map = ( ! ) r_nested_map }
+    : nested_xml_maps_response)
+
+let nested_xml_maps_request_of_xml i =
+  let r_flat_nested_map = ref None in
+  let r_nested_map = ref None in
+  Structure.scanSequence i [ "flatNestedMap"; "nestedMap" ] (fun tag _ ->
+      match tag with
+      | "flatNestedMap" ->
+          r_flat_nested_map :=
+            Some
+              (Read.sequences i "flatNestedMap"
+                 (fun i _ ->
+                   let k = Read.element_value i "key" Fun.id () in
+                   let v =
+                     Read.sequence i "value"
+                       (fun i _ -> Shared.Xml_deserializers.foo_enum_map_of_xml i)
+                       ()
+                   in
+                   (k, v))
+                 ())
+      | "nestedMap" ->
+          r_nested_map :=
+            Some
+              (Read.sequence i "nestedMap"
+                 (fun i _ ->
+                   Read.sequences i "entry"
+                     (fun i _ ->
+                       let k = Read.element_value i "key" Fun.id () in
+                       let v =
+                         Read.sequence i "value"
+                           (fun i _ -> Shared.Xml_deserializers.foo_enum_map_of_xml i)
+                           ()
+                       in
+                       (k, v))
+                     ())
+                 ())
+      | _ -> Read.skip_element i);
+  ({ flat_nested_map = ( ! ) r_flat_nested_map; nested_map = ( ! ) r_nested_map }
+    : nested_xml_maps_request)
 
 let input_and_output_with_headers_i_o_of_xml i =
   let r_header_enum_list = ref None in
@@ -2020,16 +3327,6 @@ let all_query_string_types_input_of_xml i =
    }
     : all_query_string_types_input)
 
-let nested_map_of_xml i =
-  Read.sequences i "entry"
-    (fun i _ ->
-      let k = Read.element_value i "key" Fun.id () in
-      let v =
-        Read.sequence i "value" (fun i _ -> Shared.Xml_deserializers.foo_enum_map_of_xml i) ()
-      in
-      (k, v))
-    ()
-
 let nested_xml_maps_input_output_of_xml i =
   let r_flat_nested_map = ref None in
   let r_nested_map = ref None in
@@ -2067,24 +3364,6 @@ let nested_xml_maps_input_output_of_xml i =
       | _ -> Read.skip_element i);
   ({ flat_nested_map = ( ! ) r_flat_nested_map; nested_map = ( ! ) r_nested_map }
     : nested_xml_maps_input_output)
-
-let nested_xml_map_with_xml_name_inner_map_of_xml i =
-  Read.sequences i "entry"
-    (fun i _ ->
-      let k = Read.element_value i "InnerKey" Fun.id () in
-      let v = Read.element_value i "InnerValue" Fun.id () in
-      (k, v))
-    ()
-
-let nested_xml_map_with_xml_name_map_of_xml i =
-  Read.sequences i "entry"
-    (fun i _ ->
-      let k = Read.element_value i "OuterKey" Fun.id () in
-      let v =
-        Read.sequence i "value" (fun i _ -> nested_xml_map_with_xml_name_inner_map_of_xml i) ()
-      in
-      (k, v))
-    ()
 
 let nested_xml_map_with_xml_name_input_output_of_xml i =
   let r_nested_xml_map_with_xml_name_map = ref None in

@@ -27,8 +27,13 @@ module Write = struct
           | None -> Some (("", local), value))
         attrs
     in
+    (* Emit the element name as a literal ["", name] (no xmlm namespace
+       tracking) and declare the namespace via an [xmlns] attribute. This keeps
+       [element] usable without a pre-registered [ns_prefix] (the generated
+       serializers call [Write.make ()] with no [ns_prefix] and still emit
+       correct default-namespace XML like [<values xmlns="http://qux.com">]). *)
     let xml_ns_attrs = if ns <> "" then [ (("", "xmlns"), ns) ] else [] in
-    emit t (`El_start ((ns, name), xml_ns_attrs @ xml_attrs));
+    emit t (`El_start (("", name), xml_ns_attrs @ xml_attrs));
     body t;
     emit t `El_end
 
@@ -43,12 +48,15 @@ module Write = struct
           | None -> Some (("", local), value))
         attrs
     in
+    (* Literal prefixed name ["", "prefix:name"] (no xmlm namespace tracking)
+       plus an [xmlns:prefix] declaration - robust to a missing [ns_prefix] on
+       [make]. Produces e.g. [<baz:foo xmlns:baz="http://baz.com">]. *)
     let ns_decl =
       match prefix with
       | Some p -> [ (("", "xmlns:" ^ p), ns_uri) ]
       | None -> [ (("", "xmlns"), ns_uri) ]
     in
-    let xml_name = match prefix with Some _ -> (ns_uri, name) | None -> (ns_uri, name) in
+    let xml_name = match prefix with Some p -> ("", p ^ ":" ^ name) | None -> ("", name) in
     emit t (`El_start (xml_name, ns_decl @ xml_attrs));
     body t;
     emit t `El_end

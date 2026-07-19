@@ -25,6 +25,30 @@ module Errors = struct
 end
 
 module Serialize = struct
+  (* Shortest round-trip-safe decimal representation of a float, mirroring
+     [Smaws_Lib.Protocols.AwsQuery.Serialize.float_to_string]. Starts at the
+     6-sig-fig default of %g (so common values like 5.5 emit "5.5", matching the
+     smithy fixtures) and increases precision until [Float.of_string] of the
+     output equals the input, capping at %.17g (the round-trip bound for IEEE
+     doubles). %g's lossy 6-sig-fig truncation would silently corrupt
+     high-precision doubles. *)
+  let float_to_string v =
+    let rec loop p =
+      if p > 17 then Printf.sprintf "%.17g" v
+      else (
+        let s = Printf.sprintf "%.*g" p v in
+        if Float.equal (Float.of_string s) v then s else loop (p + 1))
+    in
+    loop 6
+
+  (* restXml serializes NaN / Infinity / -Infinity as those literal strings
+     (SimpleScalarProperties conformance). Mirrors
+     [Smaws_Lib.Protocols.AwsQuery.Serialize.float_field]'s sentinel handling. *)
+  let float_field_to_string v =
+    if Float.is_nan v then "NaN"
+    else if Float.is_infinite v then if v > 0.0 then "Infinity" else "-Infinity"
+    else float_to_string v
+
   let timestamp_iso_to_string (v : Ptime.t) =
     let s = Ptime.to_rfc3339 ~tz_offset_s:0 v in
     let len = String.length s in
@@ -198,6 +222,47 @@ let request_id_of_headers (headers : Http.headers) : string option =
     header (always present, even with [noErrorWrapping]); fall back to the body when the header is
     absent. *)
 let request_id_prefer_header ~header ~body = match header with Some _ -> header | None -> body
+
+(** Response-header readers used by generated restXml deserialisers for [@httpHeader]- and
+    [@httpPrefixHeaders]-bound output/error members (plan §7.2). HTTP header names are
+    case-insensitive, so all matching is on lowercased names; the returned keys preserve the
+    original casing the server sent.
+
+    On the deserialise (client) side the smithy fixtures populate BOTH a specifically-bound
+    [@httpHeader] member AND the matching [@httpPrefixHeaders] entry from the same header — see
+    [aws.protocoltests.restxml#HttpEmptyPrefixHeaders] ([HttpEmptyPrefixHeadersResponseClient]:
+    headers [hello:There] deserialise to [specificHeader = There] AND
+    [prefixHeaders.hello = There]). The [@httpHeader]-over-[@httpPrefixHeaders] precedence is a
+    serialise (server) -side rule, so these readers do NOT exclude specifically-bound names; the
+    generated deserialiser simply reads each binding independently. *)
+
+(** Case-insensitive lookup of a single response header by name. Returns the first matching value or
+    [None]. Used by generated deserialisers for [@httpHeader "name"] members. *)
+let header_value (headers : Http.headers) (name : string) : string option =
+  let target = String.lowercase_ascii name in
+  List.find_map
+    (fun (k, v) -> if String.equal (String.lowercase_ascii k) target then Some v else None)
+    headers
+
+(** Collect response headers whose name starts with [prefix] (case-insensitive), returning
+    [(key, value)] pairs suitable for a deserialised map member:
+    - empty [prefix] matches every header and the key is the full header name (the
+      [HttpEmptyPrefixHeaders] case: [prefixHeaders] is a map of every response header);
+    - non-empty [prefix] matches only headers with that prefix and the key is the suffix (the header
+      name with [prefix] removed) — e.g. prefix ["x-foo-"] on header ["x-foo-abc"] yields key
+      ["abc"] (the [HttpPrefixHeadersArePresent] case). The original header-name casing is preserved
+      in the returned keys. *)
+let prefix_headers ~(prefix : string) (headers : Http.headers) : (string * string) list =
+  let prefix_lc = String.lowercase_ascii prefix in
+  let plen = String.length prefix in
+  List.filter_map
+    (fun (k, v) ->
+      let k_lc = String.lowercase_ascii k in
+      if plen = 0 then Some (k, v)
+      else if String.length k_lc >= plen && String.equal (String.sub k_lc 0 plen) prefix_lc then
+        Some (String.sub k plen (String.length k - plen), v)
+      else None)
+    headers
 
 (** Like [request] but also returns response metadata (the request id). Mirrors
     [AwsQuery.request_with_metadata]: Ok is an ['out Response.t] record, Error is an

@@ -14,8 +14,28 @@ val make_xml_nested_union_struct :
 
 val make_xml_unions_response : ?union_value:xml_union_shape -> unit -> xml_unions_response
 val make_xml_unions_request : ?union_value:xml_union_shape -> unit -> xml_unions_request
-val make_xml_timestamps_response : unit -> unit
-val make_xml_timestamps_request : unit -> unit
+
+val make_xml_timestamps_response :
+  ?http_date_on_target:Shared.Types.http_date ->
+  ?http_date:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?epoch_seconds_on_target:Shared.Types.epoch_seconds ->
+  ?epoch_seconds:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?date_time_on_target:Shared.Types.date_time ->
+  ?date_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?normal:Smaws_Lib.Smithy_api.Types.timestamp ->
+  unit ->
+  xml_timestamps_response
+
+val make_xml_timestamps_request :
+  ?http_date_on_target:Shared.Types.http_date ->
+  ?http_date:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?epoch_seconds_on_target:Shared.Types.epoch_seconds ->
+  ?epoch_seconds:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?date_time_on_target:Shared.Types.date_time ->
+  ?date_time:Smaws_Lib.Smithy_api.Types.timestamp ->
+  ?normal:Smaws_Lib.Smithy_api.Types.timestamp ->
+  unit ->
+  xml_timestamps_request
 
 val make_xml_timestamps_input_output :
   ?http_date_on_target:Shared.Types.http_date ->
@@ -28,14 +48,14 @@ val make_xml_timestamps_input_output :
   unit ->
   xml_timestamps_input_output
 
-val make_xml_namespaces_response : unit -> unit
-val make_xml_namespaces_request : unit -> unit
-
 val make_xml_namespace_nested :
   ?values:xml_namespaced_list ->
   ?foo:Smaws_Lib.Smithy_api.Types.string_ ->
   unit ->
   xml_namespace_nested
+
+val make_xml_namespaces_response : ?nested:xml_namespace_nested -> unit -> xml_namespaces_response
+val make_xml_namespaces_request : ?nested:xml_namespace_nested -> unit -> xml_namespaces_request
 
 val make_xml_namespaces_input_output :
   ?nested:xml_namespace_nested -> unit -> xml_namespaces_input_output
@@ -48,22 +68,61 @@ val make_xml_maps_xml_name_request :
 
 val make_xml_maps_response : ?my_map:xml_maps_input_output_map -> unit -> xml_maps_response
 val make_xml_maps_request : ?my_map:xml_maps_input_output_map -> unit -> xml_maps_request
-val make_xml_map_with_xml_namespace_response : unit -> unit
-val make_xml_map_with_xml_namespace_request : unit -> unit
+
+val make_xml_map_with_xml_namespace_response :
+  ?my_map:xml_map_with_xml_namespace_input_output_map -> unit -> xml_map_with_xml_namespace_response
+
+val make_xml_map_with_xml_namespace_request :
+  ?my_map:xml_map_with_xml_namespace_input_output_map -> unit -> xml_map_with_xml_namespace_request
 
 val make_xml_map_with_xml_namespace_input_output :
   ?my_map:xml_map_with_xml_namespace_input_output_map ->
   unit ->
   xml_map_with_xml_namespace_input_output
 
-val make_xml_lists_response : unit -> unit
-val make_xml_lists_request : unit -> unit
-
 val make_structure_list_member :
   ?b:Smaws_Lib.Smithy_api.Types.string_ ->
   ?a:Smaws_Lib.Smithy_api.Types.string_ ->
   unit ->
   structure_list_member
+
+val make_xml_lists_response :
+  ?flattened_structure_list:structure_list ->
+  ?structure_list:structure_list ->
+  ?flattened_list_with_namespace:list_with_namespace ->
+  ?flattened_list_with_member_namespace:list_with_member_namespace ->
+  ?flattened_list2:renamed_list_members ->
+  ?flattened_list:renamed_list_members ->
+  ?renamed_list_members:renamed_list_members ->
+  ?nested_string_list:Shared.Types.nested_string_list ->
+  ?int_enum_list:Shared.Types.integer_enum_list ->
+  ?enum_list:Shared.Types.foo_enum_list ->
+  ?timestamp_list:Shared.Types.timestamp_list ->
+  ?boolean_list:Shared.Types.boolean_list ->
+  ?integer_list:Shared.Types.integer_list ->
+  ?string_set:Shared.Types.string_set ->
+  ?string_list:Shared.Types.string_list ->
+  unit ->
+  xml_lists_response
+
+val make_xml_lists_request :
+  ?flattened_structure_list:structure_list ->
+  ?structure_list:structure_list ->
+  ?flattened_list_with_namespace:list_with_namespace ->
+  ?flattened_list_with_member_namespace:list_with_member_namespace ->
+  ?flattened_list2:renamed_list_members ->
+  ?flattened_list:renamed_list_members ->
+  ?renamed_list_members:renamed_list_members ->
+  ?nested_string_list:Shared.Types.nested_string_list ->
+  ?int_enum_list:Shared.Types.integer_enum_list ->
+  ?enum_list:Shared.Types.foo_enum_list ->
+  ?timestamp_list:Shared.Types.timestamp_list ->
+  ?boolean_list:Shared.Types.boolean_list ->
+  ?integer_list:Shared.Types.integer_list ->
+  ?string_set:Shared.Types.string_set ->
+  ?string_list:Shared.Types.string_list ->
+  unit ->
+  xml_lists_request
 
 val make_xml_lists_input_output :
   ?flattened_structure_list:structure_list ->
@@ -84,8 +143,25 @@ val make_xml_lists_input_output :
   unit ->
   xml_lists_input_output
 
-val make_xml_int_enums_response : unit -> unit
-val make_xml_int_enums_request : unit -> unit
+val make_xml_int_enums_response :
+  ?int_enum_map:Shared.Types.integer_enum_map ->
+  ?int_enum_set:Shared.Types.integer_enum_set ->
+  ?int_enum_list:Shared.Types.integer_enum_list ->
+  ?int_enum3:Shared.Types.integer_enum ->
+  ?int_enum2:Shared.Types.integer_enum ->
+  ?int_enum1:Shared.Types.integer_enum ->
+  unit ->
+  xml_int_enums_response
+
+val make_xml_int_enums_request :
+  ?int_enum_map:Shared.Types.integer_enum_map ->
+  ?int_enum_set:Shared.Types.integer_enum_set ->
+  ?int_enum_list:Shared.Types.integer_enum_list ->
+  ?int_enum3:Shared.Types.integer_enum ->
+  ?int_enum2:Shared.Types.integer_enum ->
+  ?int_enum1:Shared.Types.integer_enum ->
+  unit ->
+  xml_int_enums_request
 
 val make_xml_int_enums_input_output :
   ?int_enum_map:Shared.Types.integer_enum_map ->
@@ -97,8 +173,25 @@ val make_xml_int_enums_input_output :
   unit ->
   xml_int_enums_input_output
 
-val make_xml_enums_response : unit -> unit
-val make_xml_enums_request : unit -> unit
+val make_xml_enums_response :
+  ?foo_enum_map:Shared.Types.foo_enum_map ->
+  ?foo_enum_set:Shared.Types.foo_enum_set ->
+  ?foo_enum_list:Shared.Types.foo_enum_list ->
+  ?foo_enum3:Shared.Types.foo_enum ->
+  ?foo_enum2:Shared.Types.foo_enum ->
+  ?foo_enum1:Shared.Types.foo_enum ->
+  unit ->
+  xml_enums_response
+
+val make_xml_enums_request :
+  ?foo_enum_map:Shared.Types.foo_enum_map ->
+  ?foo_enum_set:Shared.Types.foo_enum_set ->
+  ?foo_enum_list:Shared.Types.foo_enum_list ->
+  ?foo_enum3:Shared.Types.foo_enum ->
+  ?foo_enum2:Shared.Types.foo_enum ->
+  ?foo_enum1:Shared.Types.foo_enum ->
+  unit ->
+  xml_enums_request
 
 val make_xml_enums_input_output :
   ?foo_enum_map:Shared.Types.foo_enum_map ->
@@ -122,8 +215,43 @@ val make_xml_empty_maps_response :
 val make_xml_empty_maps_request :
   ?my_map:xml_maps_input_output_map -> unit -> xml_empty_maps_request
 
-val make_xml_empty_lists_response : unit -> unit
-val make_xml_empty_lists_request : unit -> unit
+val make_xml_empty_lists_response :
+  ?flattened_structure_list:structure_list ->
+  ?structure_list:structure_list ->
+  ?flattened_list_with_namespace:list_with_namespace ->
+  ?flattened_list_with_member_namespace:list_with_member_namespace ->
+  ?flattened_list2:renamed_list_members ->
+  ?flattened_list:renamed_list_members ->
+  ?renamed_list_members:renamed_list_members ->
+  ?nested_string_list:Shared.Types.nested_string_list ->
+  ?int_enum_list:Shared.Types.integer_enum_list ->
+  ?enum_list:Shared.Types.foo_enum_list ->
+  ?timestamp_list:Shared.Types.timestamp_list ->
+  ?boolean_list:Shared.Types.boolean_list ->
+  ?integer_list:Shared.Types.integer_list ->
+  ?string_set:Shared.Types.string_set ->
+  ?string_list:Shared.Types.string_list ->
+  unit ->
+  xml_empty_lists_response
+
+val make_xml_empty_lists_request :
+  ?flattened_structure_list:structure_list ->
+  ?structure_list:structure_list ->
+  ?flattened_list_with_namespace:list_with_namespace ->
+  ?flattened_list_with_member_namespace:list_with_member_namespace ->
+  ?flattened_list2:renamed_list_members ->
+  ?flattened_list:renamed_list_members ->
+  ?renamed_list_members:renamed_list_members ->
+  ?nested_string_list:Shared.Types.nested_string_list ->
+  ?int_enum_list:Shared.Types.integer_enum_list ->
+  ?enum_list:Shared.Types.foo_enum_list ->
+  ?timestamp_list:Shared.Types.timestamp_list ->
+  ?boolean_list:Shared.Types.boolean_list ->
+  ?integer_list:Shared.Types.integer_list ->
+  ?string_set:Shared.Types.string_set ->
+  ?string_list:Shared.Types.string_list ->
+  unit ->
+  xml_empty_lists_request
 
 val make_xml_empty_blobs_response :
   ?data:Smaws_Lib.Smithy_api.Types.blob -> unit -> xml_empty_blobs_response
@@ -133,10 +261,30 @@ val make_xml_empty_blobs_request :
 
 val make_xml_blobs_response : ?data:Smaws_Lib.Smithy_api.Types.blob -> unit -> xml_blobs_response
 val make_xml_blobs_request : ?data:Smaws_Lib.Smithy_api.Types.blob -> unit -> xml_blobs_request
-val make_xml_attributes_response : unit -> unit
-val make_xml_attributes_request : unit -> unit
-val make_xml_attributes_payload_response : unit -> unit
-val make_xml_attributes_payload_request : unit -> unit
+
+val make_xml_attributes_response :
+  ?attr:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?foo:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  xml_attributes_response
+
+val make_xml_attributes_request :
+  ?attr:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?foo:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  xml_attributes_request
+
+val make_xml_attributes_payload_response :
+  ?attr:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?foo:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  xml_attributes_payload_response
+
+val make_xml_attributes_payload_request :
+  ?attr:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?foo:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  xml_attributes_payload_request
 
 val make_xml_attributes_on_payload_response :
   ?payload:xml_attributes_payload_response -> unit -> xml_attributes_on_payload_response
@@ -157,12 +305,22 @@ val make_xml_attributes_input_output :
   unit ->
   xml_attributes_input_output
 
-val make_xml_attributes_in_middle_payload_response : unit -> unit
+val make_xml_attributes_in_middle_payload_response :
+  ?baz:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?attr:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?foo:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  xml_attributes_in_middle_payload_response
 
 val make_xml_attributes_in_middle_response :
   ?payload:xml_attributes_in_middle_payload_response -> unit -> xml_attributes_in_middle_response
 
-val make_xml_attributes_in_middle_payload_request : unit -> unit
+val make_xml_attributes_in_middle_payload_request :
+  ?baz:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?attr:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?foo:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  xml_attributes_in_middle_payload_request
 
 val make_xml_attributes_in_middle_request :
   ?payload:xml_attributes_in_middle_payload_request -> unit -> xml_attributes_in_middle_request
@@ -181,8 +339,33 @@ val make_timestamp_format_headers_i_o :
 val make_string_payload_input :
   ?payload:Smaws_Lib.Smithy_api.Types.string_ -> unit -> string_payload_input
 
-val make_simple_scalar_properties_response : unit -> unit
-val make_simple_scalar_properties_request : unit -> unit
+val make_simple_scalar_properties_response :
+  ?double_value:Smaws_Lib.Smithy_api.Types.double ->
+  ?float_value:Smaws_Lib.Smithy_api.Types.float_ ->
+  ?long_value:Smaws_Lib.Smithy_api.Types.long ->
+  ?integer_value:Smaws_Lib.Smithy_api.Types.integer ->
+  ?short_value:Smaws_Lib.Smithy_api.Types.short ->
+  ?byte_value:Smaws_Lib.Smithy_api.Types.byte ->
+  ?false_boolean_value:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?true_boolean_value:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?string_value:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?foo:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  simple_scalar_properties_response
+
+val make_simple_scalar_properties_request :
+  ?double_value:Smaws_Lib.Smithy_api.Types.double ->
+  ?float_value:Smaws_Lib.Smithy_api.Types.float_ ->
+  ?long_value:Smaws_Lib.Smithy_api.Types.long ->
+  ?integer_value:Smaws_Lib.Smithy_api.Types.integer ->
+  ?short_value:Smaws_Lib.Smithy_api.Types.short ->
+  ?byte_value:Smaws_Lib.Smithy_api.Types.byte ->
+  ?false_boolean_value:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?true_boolean_value:Smaws_Lib.Smithy_api.Types.boolean_ ->
+  ?string_value:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?foo:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  simple_scalar_properties_request
 
 val make_simple_scalar_properties_input_output :
   ?double_value:Smaws_Lib.Smithy_api.Types.double ->
@@ -251,10 +434,22 @@ val make_null_and_empty_headers_i_o :
   null_and_empty_headers_i_o
 
 val make_no_input_and_output_output : unit -> unit
-val make_nested_xml_map_with_xml_name_response : unit -> unit
-val make_nested_xml_map_with_xml_name_request : unit -> unit
-val make_nested_xml_maps_response : unit -> unit
-val make_nested_xml_maps_request : unit -> unit
+
+val make_nested_xml_map_with_xml_name_response :
+  ?nested_xml_map_with_xml_name_map:nested_xml_map_with_xml_name_map ->
+  unit ->
+  nested_xml_map_with_xml_name_response
+
+val make_nested_xml_map_with_xml_name_request :
+  ?nested_xml_map_with_xml_name_map:nested_xml_map_with_xml_name_map ->
+  unit ->
+  nested_xml_map_with_xml_name_request
+
+val make_nested_xml_maps_response :
+  ?flat_nested_map:nested_map -> ?nested_map:nested_map -> unit -> nested_xml_maps_response
+
+val make_nested_xml_maps_request :
+  ?flat_nested_map:nested_map -> ?nested_map:nested_map -> unit -> nested_xml_maps_request
 
 val make_input_and_output_with_headers_i_o :
   ?header_enum_list:Shared.Types.foo_enum_list ->

@@ -3796,7 +3796,9 @@ let nested_xml_map_request () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.nested_xml_maps_request = () in
+  let input : Types.nested_xml_maps_request =
+    { flat_nested_map = None; nested_map = Some [ ("foo", [ ("bar", BAR) ]) ] }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -3866,7 +3868,9 @@ let flat_nested_xml_map_request () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.nested_xml_maps_request = () in
+  let input : Types.nested_xml_maps_request =
+    { flat_nested_map = Some [ ("foo", [ ("bar", BAR) ]) ]; nested_map = None }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -3951,10 +3955,13 @@ let nested_xml_map_response () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = NestedXmlMaps.request ctx () in
+  let response = NestedXmlMaps.request ctx { flat_nested_map = None; nested_map = None } in
   match response with
   | Ok result ->
-      let expected = (() : Types.nested_xml_maps_response) in
+      let expected =
+        ({ flat_nested_map = None; nested_map = Some [ ("foo", [ ("bar", BAR) ]) ] }
+          : Types.nested_xml_maps_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_nested_xml_maps_response
            Types.equal_nested_xml_maps_response)
@@ -3984,10 +3991,13 @@ let flat_nested_xml_map_response () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = NestedXmlMaps.request ctx () in
+  let response = NestedXmlMaps.request ctx { flat_nested_map = None; nested_map = None } in
   match response with
   | Ok result ->
-      let expected = (() : Types.nested_xml_maps_response) in
+      let expected =
+        ({ flat_nested_map = Some [ ("foo", [ ("bar", BAR) ]) ]; nested_map = None }
+          : Types.nested_xml_maps_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_nested_xml_maps_response
            Types.equal_nested_xml_maps_response)
@@ -4009,7 +4019,16 @@ let nested_xml_map_with_xml_name_serializes () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.nested_xml_map_with_xml_name_request = () in
+  let input : Types.nested_xml_map_with_xml_name_request =
+    {
+      nested_xml_map_with_xml_name_map =
+        Some
+          [
+            ("foo", [ ("bar", "Baz"); ("fizz", "Buzz") ]);
+            ("qux", [ ("foobar", "Bar"); ("fizzbuzz", "Buzz") ]);
+          ];
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -4150,10 +4169,20 @@ let nested_xml_map_with_xml_name_deserializes () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = NestedXmlMapWithXmlName.request ctx () in
+  let response = NestedXmlMapWithXmlName.request ctx { nested_xml_map_with_xml_name_map = None } in
   match response with
   | Ok result ->
-      let expected = (() : Types.nested_xml_map_with_xml_name_response) in
+      let expected =
+        ({
+           nested_xml_map_with_xml_name_map =
+             Some
+               [
+                 ("foo", [ ("bar", "Baz"); ("fizz", "Buzz") ]);
+                 ("qux", [ ("foobar", "Bar"); ("fizzbuzz", "Buzz") ]);
+               ];
+         }
+          : Types.nested_xml_map_with_xml_name_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_nested_xml_map_with_xml_name_response
            Types.equal_nested_xml_map_with_xml_name_response)
@@ -5094,7 +5123,20 @@ let simple_scalar_properties () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.simple_scalar_properties_request = () in
+  let input : Types.simple_scalar_properties_request =
+    {
+      double_value = Some 6.5;
+      float_value = Some 5.5;
+      long_value = Some (Smaws_Lib.CoreTypes.Int64.of_int 4);
+      integer_value = Some 3;
+      short_value = Some 2;
+      byte_value = Some 1;
+      false_boolean_value = Some false;
+      true_boolean_value = Some true;
+      string_value = Some "string";
+      foo = Some "Foo";
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -5159,7 +5201,20 @@ let simple_scalar_properties_with_escaped_character () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.simple_scalar_properties_request = () in
+  let input : Types.simple_scalar_properties_request =
+    {
+      double_value = None;
+      float_value = None;
+      long_value = None;
+      integer_value = None;
+      short_value = None;
+      byte_value = None;
+      false_boolean_value = None;
+      true_boolean_value = None;
+      string_value = Some "<string>";
+      foo = Some "Foo";
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -5208,7 +5263,20 @@ let simple_scalar_properties_with_white_space () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.simple_scalar_properties_request = () in
+  let input : Types.simple_scalar_properties_request =
+    {
+      double_value = None;
+      float_value = None;
+      long_value = None;
+      integer_value = None;
+      short_value = None;
+      byte_value = None;
+      false_boolean_value = None;
+      true_boolean_value = None;
+      string_value = Some "  string with white    space  ";
+      foo = Some "Foo";
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -5257,7 +5325,20 @@ let simple_scalar_properties_pure_white_space () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.simple_scalar_properties_request = () in
+  let input : Types.simple_scalar_properties_request =
+    {
+      double_value = None;
+      float_value = None;
+      long_value = None;
+      integer_value = None;
+      short_value = None;
+      byte_value = None;
+      false_boolean_value = None;
+      true_boolean_value = None;
+      string_value = Some "   ";
+      foo = Some "Foo";
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -5306,7 +5387,20 @@ let rest_xml_supports_na_n_float_inputs () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.simple_scalar_properties_request = () in
+  let input : Types.simple_scalar_properties_request =
+    {
+      double_value = Some Float.nan;
+      float_value = Some Float.nan;
+      long_value = None;
+      integer_value = None;
+      short_value = None;
+      byte_value = None;
+      false_boolean_value = None;
+      true_boolean_value = None;
+      string_value = None;
+      foo = None;
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -5357,7 +5451,20 @@ let rest_xml_supports_infinity_float_inputs () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.simple_scalar_properties_request = () in
+  let input : Types.simple_scalar_properties_request =
+    {
+      double_value = Some Float.infinity;
+      float_value = Some Float.infinity;
+      long_value = None;
+      integer_value = None;
+      short_value = None;
+      byte_value = None;
+      false_boolean_value = None;
+      true_boolean_value = None;
+      string_value = None;
+      foo = None;
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -5408,7 +5515,20 @@ let rest_xml_supports_negative_infinity_float_inputs () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.simple_scalar_properties_request = () in
+  let input : Types.simple_scalar_properties_request =
+    {
+      double_value = Some Float.neg_infinity;
+      float_value = Some Float.neg_infinity;
+      long_value = None;
+      integer_value = None;
+      short_value = None;
+      byte_value = None;
+      false_boolean_value = None;
+      true_boolean_value = None;
+      string_value = None;
+      foo = None;
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -5476,10 +5596,38 @@ let simple_scalar_properties () =
     ~status:200
     ~headers:[ ("X-Foo", "Foo"); ("Content-Type", "application/xml") ]
     ();
-  let response = SimpleScalarProperties.request ctx () in
+  let response =
+    SimpleScalarProperties.request ctx
+      {
+        double_value = None;
+        float_value = None;
+        long_value = None;
+        integer_value = None;
+        short_value = None;
+        byte_value = None;
+        false_boolean_value = None;
+        true_boolean_value = None;
+        string_value = None;
+        foo = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.simple_scalar_properties_response) in
+      let expected =
+        ({
+           double_value = Some 6.5;
+           float_value = Some 5.5;
+           long_value = Some (Smaws_Lib.CoreTypes.Int64.of_int 4);
+           integer_value = Some 3;
+           short_value = Some 2;
+           byte_value = Some 1;
+           false_boolean_value = Some false;
+           true_boolean_value = Some true;
+           string_value = Some "string";
+           foo = Some "Foo";
+         }
+          : Types.simple_scalar_properties_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_simple_scalar_properties_response
            Types.equal_simple_scalar_properties_response)
@@ -5501,10 +5649,38 @@ let simple_scalar_properties_with_escaped_character () =
     ~status:200
     ~headers:[ ("X-Foo", "Foo"); ("Content-Type", "application/xml") ]
     ();
-  let response = SimpleScalarProperties.request ctx () in
+  let response =
+    SimpleScalarProperties.request ctx
+      {
+        double_value = None;
+        float_value = None;
+        long_value = None;
+        integer_value = None;
+        short_value = None;
+        byte_value = None;
+        false_boolean_value = None;
+        true_boolean_value = None;
+        string_value = None;
+        foo = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.simple_scalar_properties_response) in
+      let expected =
+        ({
+           double_value = None;
+           float_value = None;
+           long_value = None;
+           integer_value = None;
+           short_value = None;
+           byte_value = None;
+           false_boolean_value = None;
+           true_boolean_value = None;
+           string_value = Some "<string>";
+           foo = Some "Foo";
+         }
+          : Types.simple_scalar_properties_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_simple_scalar_properties_response
            Types.equal_simple_scalar_properties_response)
@@ -5529,10 +5705,38 @@ let simple_scalar_properties_with_xml_preamble () =
     ~status:200
     ~headers:[ ("X-Foo", "Foo"); ("Content-Type", "application/xml") ]
     ();
-  let response = SimpleScalarProperties.request ctx () in
+  let response =
+    SimpleScalarProperties.request ctx
+      {
+        double_value = None;
+        float_value = None;
+        long_value = None;
+        integer_value = None;
+        short_value = None;
+        byte_value = None;
+        false_boolean_value = None;
+        true_boolean_value = None;
+        string_value = None;
+        foo = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.simple_scalar_properties_response) in
+      let expected =
+        ({
+           double_value = None;
+           float_value = None;
+           long_value = None;
+           integer_value = None;
+           short_value = None;
+           byte_value = None;
+           false_boolean_value = None;
+           true_boolean_value = None;
+           string_value = Some "string";
+           foo = Some "Foo";
+         }
+          : Types.simple_scalar_properties_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_simple_scalar_properties_response
            Types.equal_simple_scalar_properties_response)
@@ -5555,10 +5759,38 @@ let simple_scalar_properties_with_white_space () =
     ~status:200
     ~headers:[ ("X-Foo", "Foo"); ("Content-Type", "application/xml") ]
     ();
-  let response = SimpleScalarProperties.request ctx () in
+  let response =
+    SimpleScalarProperties.request ctx
+      {
+        double_value = None;
+        float_value = None;
+        long_value = None;
+        integer_value = None;
+        short_value = None;
+        byte_value = None;
+        false_boolean_value = None;
+        true_boolean_value = None;
+        string_value = None;
+        foo = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.simple_scalar_properties_response) in
+      let expected =
+        ({
+           double_value = None;
+           float_value = None;
+           long_value = None;
+           integer_value = None;
+           short_value = None;
+           byte_value = None;
+           false_boolean_value = None;
+           true_boolean_value = None;
+           string_value = Some " string with white    space ";
+           foo = Some "Foo";
+         }
+          : Types.simple_scalar_properties_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_simple_scalar_properties_response
            Types.equal_simple_scalar_properties_response)
@@ -5581,10 +5813,38 @@ let simple_scalar_properties_pure_white_space () =
     ~status:200
     ~headers:[ ("X-Foo", "Foo"); ("Content-Type", "application/xml") ]
     ();
-  let response = SimpleScalarProperties.request ctx () in
+  let response =
+    SimpleScalarProperties.request ctx
+      {
+        double_value = None;
+        float_value = None;
+        long_value = None;
+        integer_value = None;
+        short_value = None;
+        byte_value = None;
+        false_boolean_value = None;
+        true_boolean_value = None;
+        string_value = None;
+        foo = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.simple_scalar_properties_response) in
+      let expected =
+        ({
+           double_value = None;
+           float_value = None;
+           long_value = None;
+           integer_value = None;
+           short_value = None;
+           byte_value = None;
+           false_boolean_value = None;
+           true_boolean_value = None;
+           string_value = Some "  ";
+           foo = Some "Foo";
+         }
+          : Types.simple_scalar_properties_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_simple_scalar_properties_response
            Types.equal_simple_scalar_properties_response)
@@ -5607,10 +5867,38 @@ let rest_xml_supports_na_n_float_outputs () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = SimpleScalarProperties.request ctx () in
+  let response =
+    SimpleScalarProperties.request ctx
+      {
+        double_value = None;
+        float_value = None;
+        long_value = None;
+        integer_value = None;
+        short_value = None;
+        byte_value = None;
+        false_boolean_value = None;
+        true_boolean_value = None;
+        string_value = None;
+        foo = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.simple_scalar_properties_response) in
+      let expected =
+        ({
+           double_value = Some Float.nan;
+           float_value = Some Float.nan;
+           long_value = None;
+           integer_value = None;
+           short_value = None;
+           byte_value = None;
+           false_boolean_value = None;
+           true_boolean_value = None;
+           string_value = None;
+           foo = None;
+         }
+          : Types.simple_scalar_properties_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_simple_scalar_properties_response
            Types.equal_simple_scalar_properties_response)
@@ -5633,10 +5921,38 @@ let rest_xml_supports_infinity_float_outputs () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = SimpleScalarProperties.request ctx () in
+  let response =
+    SimpleScalarProperties.request ctx
+      {
+        double_value = None;
+        float_value = None;
+        long_value = None;
+        integer_value = None;
+        short_value = None;
+        byte_value = None;
+        false_boolean_value = None;
+        true_boolean_value = None;
+        string_value = None;
+        foo = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.simple_scalar_properties_response) in
+      let expected =
+        ({
+           double_value = Some Float.infinity;
+           float_value = Some Float.infinity;
+           long_value = None;
+           integer_value = None;
+           short_value = None;
+           byte_value = None;
+           false_boolean_value = None;
+           true_boolean_value = None;
+           string_value = None;
+           foo = None;
+         }
+          : Types.simple_scalar_properties_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_simple_scalar_properties_response
            Types.equal_simple_scalar_properties_response)
@@ -5659,10 +5975,38 @@ let rest_xml_supports_negative_infinity_float_outputs () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = SimpleScalarProperties.request ctx () in
+  let response =
+    SimpleScalarProperties.request ctx
+      {
+        double_value = None;
+        float_value = None;
+        long_value = None;
+        integer_value = None;
+        short_value = None;
+        byte_value = None;
+        false_boolean_value = None;
+        true_boolean_value = None;
+        string_value = None;
+        foo = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.simple_scalar_properties_response) in
+      let expected =
+        ({
+           double_value = Some Float.neg_infinity;
+           float_value = Some Float.neg_infinity;
+           long_value = None;
+           integer_value = None;
+           short_value = None;
+           byte_value = None;
+           false_boolean_value = None;
+           true_boolean_value = None;
+           string_value = None;
+           foo = None;
+         }
+          : Types.simple_scalar_properties_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_simple_scalar_properties_response
            Types.equal_simple_scalar_properties_response)
@@ -5827,7 +6171,7 @@ let xml_attributes () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_attributes_request = () in
+  let input : Types.xml_attributes_request = { attr = Some "test"; foo = Some "hi" } in
   Mock.mock_response
     ?body:
       (Some "<XmlAttributesRequest test=\"test\">\n    <foo>hi</foo>\n</XmlAttributesRequest>\n")
@@ -5870,7 +6214,7 @@ let xml_attributes_with_escaping () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_attributes_request = () in
+  let input : Types.xml_attributes_request = { attr = Some "<test&mock>"; foo = Some "hi" } in
   Mock.mock_response
     ?body:
       (Some
@@ -5924,10 +6268,10 @@ let xml_attributes () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = XmlAttributes.request ctx () in
+  let response = XmlAttributes.request ctx { attr = None; foo = None } in
   match response with
   | Ok result ->
-      let expected = (() : Types.xml_attributes_response) in
+      let expected = ({ attr = Some "test"; foo = Some "hi" } : Types.xml_attributes_response) in
       check
         (Alcotest_http.testable_nan_aware Types.pp_xml_attributes_response
            Types.equal_xml_attributes_response)
@@ -5948,7 +6292,9 @@ let xml_attributes_in_middle () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_attributes_in_middle_request = { payload = Some () } in
+  let input : Types.xml_attributes_in_middle_request =
+    { payload = Some { baz = Some "Baz"; attr = Some "attributeValue"; foo = Some "Foo" } }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -6012,7 +6358,10 @@ let xml_attributes_in_middle () =
   let response = XmlAttributesInMiddle.request ctx { payload = None } in
   match response with
   | Ok result ->
-      let expected = ({ payload = Some () } : Types.xml_attributes_in_middle_response) in
+      let expected =
+        ({ payload = Some { baz = Some "Baz"; attr = Some "attributeValue"; foo = Some "Foo" } }
+          : Types.xml_attributes_in_middle_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_xml_attributes_in_middle_response
            Types.equal_xml_attributes_in_middle_response)
@@ -6032,7 +6381,9 @@ let xml_attributes_on_payload () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_attributes_on_payload_request = { payload = Some () } in
+  let input : Types.xml_attributes_on_payload_request =
+    { payload = Some { attr = Some "test"; foo = Some "hi" } }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -6093,7 +6444,10 @@ let xml_attributes_on_payload () =
   let response = XmlAttributesOnPayload.request ctx { payload = None } in
   match response with
   | Ok result ->
-      let expected = ({ payload = Some () } : Types.xml_attributes_on_payload_response) in
+      let expected =
+        ({ payload = Some { attr = Some "test"; foo = Some "hi" } }
+          : Types.xml_attributes_on_payload_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_xml_attributes_on_payload_response
            Types.equal_xml_attributes_on_payload_response)
@@ -6186,7 +6540,25 @@ let xml_empty_lists () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_empty_lists_request = () in
+  let input : Types.xml_empty_lists_request =
+    {
+      flattened_structure_list = None;
+      structure_list = None;
+      flattened_list_with_namespace = None;
+      flattened_list_with_member_namespace = None;
+      flattened_list2 = None;
+      flattened_list = None;
+      renamed_list_members = None;
+      nested_string_list = None;
+      int_enum_list = None;
+      enum_list = None;
+      timestamp_list = None;
+      boolean_list = None;
+      integer_list = None;
+      string_set = Some [];
+      string_list = Some [];
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -6335,7 +6707,16 @@ let xml_enums () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_enums_request = () in
+  let input : Types.xml_enums_request =
+    {
+      foo_enum_map = Some [ ("hi", FOO); ("zero", ZERO) ];
+      foo_enum_set = Some [ FOO; ZERO ];
+      foo_enum_list = Some [ FOO; ZERO ];
+      foo_enum3 = Some ONE;
+      foo_enum2 = Some ZERO;
+      foo_enum1 = Some FOO;
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -6452,10 +6833,30 @@ let xml_enums () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = XmlEnums.request ctx () in
+  let response =
+    XmlEnums.request ctx
+      {
+        foo_enum_map = None;
+        foo_enum_set = None;
+        foo_enum_list = None;
+        foo_enum3 = None;
+        foo_enum2 = None;
+        foo_enum1 = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.xml_enums_response) in
+      let expected =
+        ({
+           foo_enum_map = Some [ ("hi", FOO); ("zero", ZERO) ];
+           foo_enum_set = Some [ FOO; ZERO ];
+           foo_enum_list = Some [ FOO; ZERO ];
+           foo_enum3 = Some ONE;
+           foo_enum2 = Some ZERO;
+           foo_enum1 = Some FOO;
+         }
+          : Types.xml_enums_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_xml_enums_response Types.equal_xml_enums_response)
         "expected output" expected result
@@ -6471,7 +6872,16 @@ let xml_int_enums () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_int_enums_request = () in
+  let input : Types.xml_int_enums_request =
+    {
+      int_enum_map = Some [ ("a", A); ("b", B) ];
+      int_enum_set = Some [ A; B ];
+      int_enum_list = Some [ A; B ];
+      int_enum3 = Some C;
+      int_enum2 = Some B;
+      int_enum1 = Some A;
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -6588,10 +6998,30 @@ let xml_int_enums () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = XmlIntEnums.request ctx () in
+  let response =
+    XmlIntEnums.request ctx
+      {
+        int_enum_map = None;
+        int_enum_set = None;
+        int_enum_list = None;
+        int_enum3 = None;
+        int_enum2 = None;
+        int_enum1 = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.xml_int_enums_response) in
+      let expected =
+        ({
+           int_enum_map = Some [ ("a", A); ("b", B) ];
+           int_enum_set = Some [ A; B ];
+           int_enum_list = Some [ A; B ];
+           int_enum3 = Some C;
+           int_enum2 = Some B;
+           int_enum1 = Some A;
+         }
+          : Types.xml_int_enums_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_xml_int_enums_response
            Types.equal_xml_int_enums_response)
@@ -6608,7 +7038,31 @@ let xml_lists () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_lists_request = () in
+  let input : Types.xml_lists_request =
+    {
+      flattened_structure_list =
+        Some [ { b = Some "6"; a = Some "5" }; { b = Some "8"; a = Some "7" } ];
+      structure_list = Some [ { b = Some "2"; a = Some "1" }; { b = Some "4"; a = Some "3" } ];
+      flattened_list_with_namespace = None;
+      flattened_list_with_member_namespace = None;
+      flattened_list2 = Some [ "yep"; "nope" ];
+      flattened_list = Some [ "hi"; "bye" ];
+      renamed_list_members = Some [ "foo"; "bar" ];
+      nested_string_list = Some [ [ "foo"; "bar" ]; [ "baz"; "qux" ] ];
+      int_enum_list = Some [ A; B ];
+      enum_list = Some [ FOO; ZERO ];
+      timestamp_list =
+        Some
+          [
+            Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.);
+            Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.);
+          ];
+      boolean_list = Some [ true; false ];
+      integer_list = Some [ 1; 2 ];
+      string_set = Some [ "foo"; "bar" ];
+      string_list = Some [ "foo"; "bar" ];
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -6860,10 +7314,54 @@ let xml_lists () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = XmlLists.request ctx () in
+  let response =
+    XmlLists.request ctx
+      {
+        flattened_structure_list = None;
+        structure_list = None;
+        flattened_list_with_namespace = None;
+        flattened_list_with_member_namespace = None;
+        flattened_list2 = None;
+        flattened_list = None;
+        renamed_list_members = None;
+        nested_string_list = None;
+        int_enum_list = None;
+        enum_list = None;
+        timestamp_list = None;
+        boolean_list = None;
+        integer_list = None;
+        string_set = None;
+        string_list = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.xml_lists_response) in
+      let expected =
+        ({
+           flattened_structure_list =
+             Some [ { b = Some "6"; a = Some "5" }; { b = Some "8"; a = Some "7" } ];
+           structure_list = Some [ { b = Some "2"; a = Some "1" }; { b = Some "4"; a = Some "3" } ];
+           flattened_list_with_namespace = Some [ "a"; "b" ];
+           flattened_list_with_member_namespace = Some [ "a"; "b" ];
+           flattened_list2 = Some [ "yep"; "nope" ];
+           flattened_list = Some [ "hi"; "bye" ];
+           renamed_list_members = Some [ "foo"; "bar" ];
+           nested_string_list = Some [ [ "foo"; "bar" ]; [ "baz"; "qux" ] ];
+           int_enum_list = Some [ A; B ];
+           enum_list = Some [ FOO; ZERO ];
+           timestamp_list =
+             Some
+               [
+                 Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.);
+                 Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.);
+               ];
+           boolean_list = Some [ true; false ];
+           integer_list = Some [ 1; 2 ];
+           string_set = Some [ "foo"; "bar" ];
+           string_list = Some [ "foo"; "bar" ];
+         }
+          : Types.xml_lists_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_xml_lists_response Types.equal_xml_lists_response)
         "expected output" expected result
@@ -6879,7 +7377,9 @@ let rest_xml_xml_map_with_xml_namespace () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_map_with_xml_namespace_request = () in
+  let input : Types.xml_map_with_xml_namespace_request =
+    { my_map = Some [ ("a", "A"); ("b", "B") ] }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -6966,10 +7466,12 @@ let rest_xml_xml_map_with_xml_namespace () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = XmlMapWithXmlNamespace.request ctx () in
+  let response = XmlMapWithXmlNamespace.request ctx { my_map = None } in
   match response with
   | Ok result ->
-      let expected = (() : Types.xml_map_with_xml_namespace_response) in
+      let expected =
+        ({ my_map = Some [ ("a", "A"); ("b", "B") ] } : Types.xml_map_with_xml_namespace_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_xml_map_with_xml_namespace_response
            Types.equal_xml_map_with_xml_namespace_response)
@@ -7235,7 +7737,9 @@ let xml_namespaces () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_namespaces_request = () in
+  let input : Types.xml_namespaces_request =
+    { nested = Some { values = Some [ "Bar"; "Baz" ]; foo = Some "Foo" } }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -7312,10 +7816,13 @@ let xml_namespaces () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = XmlNamespaces.request ctx () in
+  let response = XmlNamespaces.request ctx { nested = None } in
   match response with
   | Ok result ->
-      let expected = (() : Types.xml_namespaces_response) in
+      let expected =
+        ({ nested = Some { values = Some [ "Bar"; "Baz" ]; foo = Some "Foo" } }
+          : Types.xml_namespaces_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_xml_namespaces_response
            Types.equal_xml_namespaces_response)
@@ -7332,7 +7839,17 @@ let xml_timestamps () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_timestamps_request = () in
+  let input : Types.xml_timestamps_request =
+    {
+      http_date_on_target = None;
+      http_date = None;
+      epoch_seconds_on_target = None;
+      epoch_seconds = None;
+      date_time_on_target = None;
+      date_time = None;
+      normal = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -7382,7 +7899,17 @@ let xml_timestamps_with_date_time_format () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_timestamps_request = () in
+  let input : Types.xml_timestamps_request =
+    {
+      http_date_on_target = None;
+      http_date = None;
+      epoch_seconds_on_target = None;
+      epoch_seconds = None;
+      date_time_on_target = None;
+      date_time = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+      normal = None;
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -7432,7 +7959,17 @@ let xml_timestamps_with_date_time_on_target_format () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_timestamps_request = () in
+  let input : Types.xml_timestamps_request =
+    {
+      http_date_on_target = None;
+      http_date = None;
+      epoch_seconds_on_target = None;
+      epoch_seconds = None;
+      date_time_on_target = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+      date_time = None;
+      normal = None;
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -7482,7 +8019,17 @@ let xml_timestamps_with_epoch_seconds_format () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_timestamps_request = () in
+  let input : Types.xml_timestamps_request =
+    {
+      http_date_on_target = None;
+      http_date = None;
+      epoch_seconds_on_target = None;
+      epoch_seconds = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+      date_time_on_target = None;
+      date_time = None;
+      normal = None;
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -7532,7 +8079,18 @@ let xml_timestamps_with_epoch_seconds_on_target_format () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_timestamps_request = () in
+  let input : Types.xml_timestamps_request =
+    {
+      http_date_on_target = None;
+      http_date = None;
+      epoch_seconds_on_target =
+        Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+      epoch_seconds = None;
+      date_time_on_target = None;
+      date_time = None;
+      normal = None;
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -7582,7 +8140,17 @@ let xml_timestamps_with_http_date_format () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_timestamps_request = () in
+  let input : Types.xml_timestamps_request =
+    {
+      http_date_on_target = None;
+      http_date = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+      epoch_seconds_on_target = None;
+      epoch_seconds = None;
+      date_time_on_target = None;
+      date_time = None;
+      normal = None;
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -7632,7 +8200,17 @@ let xml_timestamps_with_http_date_on_target_format () =
   let http_type = ((module Mock) : (module Smaws_Lib.Http.Client with type t = Mock.t)) in
   let config = Config.dummy in
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
-  let input : Types.xml_timestamps_request = () in
+  let input : Types.xml_timestamps_request =
+    {
+      http_date_on_target = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+      http_date = None;
+      epoch_seconds_on_target = None;
+      epoch_seconds = None;
+      date_time_on_target = None;
+      date_time = None;
+      normal = None;
+    }
+  in
   Mock.mock_response
     ?body:
       (Some
@@ -7691,10 +8269,32 @@ let xml_timestamps () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = XmlTimestamps.request ctx () in
+  let response =
+    XmlTimestamps.request ctx
+      {
+        http_date_on_target = None;
+        http_date = None;
+        epoch_seconds_on_target = None;
+        epoch_seconds = None;
+        date_time_on_target = None;
+        date_time = None;
+        normal = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.xml_timestamps_response) in
+      let expected =
+        ({
+           http_date_on_target = None;
+           http_date = None;
+           epoch_seconds_on_target = None;
+           epoch_seconds = None;
+           date_time_on_target = None;
+           date_time = None;
+           normal = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+         }
+          : Types.xml_timestamps_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_xml_timestamps_response
            Types.equal_xml_timestamps_response)
@@ -7716,10 +8316,32 @@ let xml_timestamps_with_date_time_format () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = XmlTimestamps.request ctx () in
+  let response =
+    XmlTimestamps.request ctx
+      {
+        http_date_on_target = None;
+        http_date = None;
+        epoch_seconds_on_target = None;
+        epoch_seconds = None;
+        date_time_on_target = None;
+        date_time = None;
+        normal = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.xml_timestamps_response) in
+      let expected =
+        ({
+           http_date_on_target = None;
+           http_date = None;
+           epoch_seconds_on_target = None;
+           epoch_seconds = None;
+           date_time_on_target = None;
+           date_time = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           normal = None;
+         }
+          : Types.xml_timestamps_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_xml_timestamps_response
            Types.equal_xml_timestamps_response)
@@ -7741,10 +8363,33 @@ let xml_timestamps_with_date_time_on_target_format () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = XmlTimestamps.request ctx () in
+  let response =
+    XmlTimestamps.request ctx
+      {
+        http_date_on_target = None;
+        http_date = None;
+        epoch_seconds_on_target = None;
+        epoch_seconds = None;
+        date_time_on_target = None;
+        date_time = None;
+        normal = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.xml_timestamps_response) in
+      let expected =
+        ({
+           http_date_on_target = None;
+           http_date = None;
+           epoch_seconds_on_target = None;
+           epoch_seconds = None;
+           date_time_on_target =
+             Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           date_time = None;
+           normal = None;
+         }
+          : Types.xml_timestamps_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_xml_timestamps_response
            Types.equal_xml_timestamps_response)
@@ -7766,10 +8411,32 @@ let xml_timestamps_with_epoch_seconds_format () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = XmlTimestamps.request ctx () in
+  let response =
+    XmlTimestamps.request ctx
+      {
+        http_date_on_target = None;
+        http_date = None;
+        epoch_seconds_on_target = None;
+        epoch_seconds = None;
+        date_time_on_target = None;
+        date_time = None;
+        normal = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.xml_timestamps_response) in
+      let expected =
+        ({
+           http_date_on_target = None;
+           http_date = None;
+           epoch_seconds_on_target = None;
+           epoch_seconds = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           date_time_on_target = None;
+           date_time = None;
+           normal = None;
+         }
+          : Types.xml_timestamps_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_xml_timestamps_response
            Types.equal_xml_timestamps_response)
@@ -7791,10 +8458,33 @@ let xml_timestamps_with_epoch_seconds_on_target_format () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = XmlTimestamps.request ctx () in
+  let response =
+    XmlTimestamps.request ctx
+      {
+        http_date_on_target = None;
+        http_date = None;
+        epoch_seconds_on_target = None;
+        epoch_seconds = None;
+        date_time_on_target = None;
+        date_time = None;
+        normal = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.xml_timestamps_response) in
+      let expected =
+        ({
+           http_date_on_target = None;
+           http_date = None;
+           epoch_seconds_on_target =
+             Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           epoch_seconds = None;
+           date_time_on_target = None;
+           date_time = None;
+           normal = None;
+         }
+          : Types.xml_timestamps_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_xml_timestamps_response
            Types.equal_xml_timestamps_response)
@@ -7816,10 +8506,32 @@ let xml_timestamps_with_http_date_format () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = XmlTimestamps.request ctx () in
+  let response =
+    XmlTimestamps.request ctx
+      {
+        http_date_on_target = None;
+        http_date = None;
+        epoch_seconds_on_target = None;
+        epoch_seconds = None;
+        date_time_on_target = None;
+        date_time = None;
+        normal = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.xml_timestamps_response) in
+      let expected =
+        ({
+           http_date_on_target = None;
+           http_date = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           epoch_seconds_on_target = None;
+           epoch_seconds = None;
+           date_time_on_target = None;
+           date_time = None;
+           normal = None;
+         }
+          : Types.xml_timestamps_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_xml_timestamps_response
            Types.equal_xml_timestamps_response)
@@ -7841,10 +8553,33 @@ let xml_timestamps_with_http_date_on_target_format () =
     ~status:200
     ~headers:[ ("Content-Type", "application/xml") ]
     ();
-  let response = XmlTimestamps.request ctx () in
+  let response =
+    XmlTimestamps.request ctx
+      {
+        http_date_on_target = None;
+        http_date = None;
+        epoch_seconds_on_target = None;
+        epoch_seconds = None;
+        date_time_on_target = None;
+        date_time = None;
+        normal = None;
+      }
+  in
   match response with
   | Ok result ->
-      let expected = (() : Types.xml_timestamps_response) in
+      let expected =
+        ({
+           http_date_on_target =
+             Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           http_date = None;
+           epoch_seconds_on_target = None;
+           epoch_seconds = None;
+           date_time_on_target = None;
+           date_time = None;
+           normal = None;
+         }
+          : Types.xml_timestamps_response)
+      in
       check
         (Alcotest_http.testable_nan_aware Types.pp_xml_timestamps_response
            Types.equal_xml_timestamps_response)

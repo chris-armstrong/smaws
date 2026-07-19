@@ -166,7 +166,7 @@ let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescri
   match descriptor with
   | StructureShape { members = []; _ } ->
       manifest_type ~name ~manifest:[%type: unit] ~is_exception_type
-  | StructureShape { members; traits } ->
+  | StructureShape { members; traits; _ } ->
       let structure_members =
         members
         |> List.map ~f:(fun ({ name; target; traits } : member) ->
@@ -202,7 +202,7 @@ let make_complex_type_declaration ctx ~name ~(descriptor : Ast.Shape.shapeDescri
       let doc_string = Docs.convert_docs traits in
       type_declaration ~name ~is_exception_type ~kind:Ptype_abstract ~manifest:(Some list_type)
         ~doc_string ()
-  | UnionShape { traits; members } ->
+  | UnionShape { traits; members; _ } ->
       let union_members =
         members
         |> List.map ~f:(fun ({ name; target; traits } : member) ->

@@ -116,7 +116,8 @@ module Serialiser = struct
                 (Nolabel, w);
                 ( Nolabel,
                   qualified_apply
-                    ~names:[ "Smaws_Lib"; "Protocols"; "AwsQuery"; "Serialize"; "float_to_string" ]
+                    ~names:
+                      [ "Smaws_Lib"; "Protocols"; "RestXml"; "Serialize"; "float_field_to_string" ]
                     [ (Nolabel, v) ] );
               ])
     | "smithy.api#Blob" ->
@@ -168,151 +169,224 @@ module Serialiser = struct
         (* Reference to the complex type's _to_xml function *)
         B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver target_name))
 
+  (* Extract an [@xmlNamespace] (uri, prefix) from a trait list, if present. *)
+  let xml_namespace_of (traits : Trait.t list option) : (string * string option) option =
+    Option.bind traits ~f:(fun ts ->
+        List.find_map ts ~f:(function
+          | Trait.ApiXmlNamespaceTrait { uri; prefix } -> Some (uri, prefix)
+          | _ -> None))
+
+  (* The attribute members of a structure/union shape, in declaration order. *)
+  let attribute_members (descriptor : Shape.structureShapeDetails) =
+    List.filter descriptor.members ~f:(fun m -> is_attribute m.traits)
+
+  (* A single attribute's contribution to the runtime [attrs] list:
+     [(name, value, None)] when the member is required, or
+     [match v.am with Some s -> [(name, s, None)] | None -> []] when optional.
+     The attribute name embeds any prefix (e.g. "xsi:someName") via the
+     member's [@xmlName]. *)
+  let attribute_contribution (value_expr : Ppxlib.expression) (mem : Shape.member) =
+    let attr_name = xml_name mem.traits mem.name in
+    let access = B.pexp_field value_expr (lident_noloc (SafeNames.safeMemberName mem.name)) in
+    let triple v_expr =
+      B.pexp_tuple [ const_str attr_name; v_expr; B.pexp_construct (lident_noloc "None") None ]
+    in
+    if is_required mem.traits then B.elist [ triple access ]
+    else
+      B.pexp_match access
+        [
+          B.case
+            ~lhs:(B.ppat_construct (lident_noloc "Some") (Some (B.ppat_var (Location.mknoloc "s"))))
+            ~guard:None
+            ~rhs:(B.elist [ triple (exp_ident "s") ]);
+          B.case ~lhs:(B.ppat_construct (lident_noloc "None") None) ~guard:None ~rhs:(B.elist []);
+        ]
+
+  (* The runtime [attrs] expression for the wrapping element of a
+      structure/union target: the concatenation of each attribute member's
+      contribution. [None] when the target has no attributes (so the wrapping
+      element is emitted with no ~attrs). *)
+  let attrs_expr_of_target ~shape_resolver value_expr target_name =
+    match Shape_resolver.find_shape_by_name ~name:target_name shape_resolver with
+    | Some (Shape.StructureShape s | Shape.UnionShape s) ->
+        let attrs = attribute_members s in
+        if List.is_empty attrs then None
+        else (
+          let contribs = List.map attrs ~f:(attribute_contribution value_expr) in
+          Some (B.pexp_apply (exp_ident "List.concat") [ (Nolabel, B.elist contribs) ]))
+    | _ -> None
+
+  (* Emit [element w tag ?ns ?attrs body], picking [element_with_ns] when the
+      namespace carries a prefix. [ns] is (uri, prefix_opt). [attrs_opt] is the
+      runtime attrs list expression or None. *)
+  let element_with_namespace ~tag ~ns ~attrs_opt body_expr =
+    let body_arg : Ppxlib.arg_label * Ppxlib.expression =
+      (Ppxlib.Nolabel, B.pexp_fun Ppxlib.Nolabel None (B.ppat_var (Location.mknoloc "w")) body_expr)
+    in
+    let attrs_args : (Ppxlib.arg_label * Ppxlib.expression) list =
+      match attrs_opt with Some e -> [ (Ppxlib.Labelled "attrs", e) ] | None -> []
+    in
+    let positional = [ (Ppxlib.Nolabel, exp_ident "w"); (Ppxlib.Nolabel, const_str tag) ] in
+    match ns with
+    | None -> B.pexp_apply (exp_ident "element") (positional @ attrs_args @ [ body_arg ])
+    | Some (uri, None) ->
+        let with_ns = positional @ [ (Ppxlib.Labelled "ns", const_str uri) ] in
+        B.pexp_apply (exp_ident "element") (with_ns @ attrs_args @ [ body_arg ])
+    | Some (uri, Some prefix) ->
+        let with_ns =
+          [
+            (Ppxlib.Nolabel, exp_ident "w");
+            (Ppxlib.Nolabel, const_str uri);
+            (Ppxlib.Nolabel, B.pexp_construct (lident_noloc "Some") (Some (const_str prefix)));
+            (Ppxlib.Nolabel, const_str tag);
+          ]
+        in
+        B.pexp_apply (exp_ident "element_with_ns") (with_ns @ attrs_args @ [ body_arg ])
+
   (* Generate value expression for a member at a given path.
      Returns: expr that produces unit (writes to XML writer) *)
   let member_value_expr ~namespace_resolver ~shape_resolver ~member_traits ~shape_traits ~tag_name
       value_expr target_name =
+    (* The wrapping element's namespace: the member's own [@xmlNamespace] wins,
+       otherwise the target shape's [@xmlNamespace] (e.g. a list/map shape's
+       namespace applied to its wrapping element). *)
+    let target_ns =
+      match xml_namespace_of (Some member_traits) with
+      | Some _ as ns -> ns
+      | None -> (
+          match Shape_resolver.find_shape_by_name ~name:target_name shape_resolver with
+          | Some shape -> xml_namespace_of (Some (Shape.getShapeTraits shape))
+          | None -> None)
+    in
+    (* Attribute members on a structure/union target render as attributes on
+       this wrapping element. *)
+    let attrs_opt = attrs_expr_of_target ~shape_resolver value_expr target_name in
     match
       primitive_serialize_helper ~member_traits:(Some member_traits)
         ~shape_traits:(Some shape_traits) target_name
     with
     | Some helper ->
-        xml_write_call "element"
-          [
-            (Nolabel, exp_ident "w");
-            (Nolabel, const_str tag_name);
-            ( Nolabel,
-              B.pexp_fun Nolabel None
-                (B.ppat_var (Location.mknoloc "w"))
-                (helper (exp_ident "w") value_expr) );
-          ]
+        element_with_namespace ~tag:tag_name ~ns:target_ns ~attrs_opt
+          (helper (exp_ident "w") value_expr)
     | None -> (
         let shape = Shape_resolver.find_shape_by_name ~name:target_name shape_resolver in
         match shape with
         | Some (Shape.ListShape ls) when is_flattened (Some member_traits) ->
+            (* Flattened list: the member's [<tag_name>] becomes the per-item
+               element (no container wrapper); items are emitted as repeated
+               siblings. *)
             let elem_f = item_serializer_expr ~namespace_resolver ls.target in
-            xml_write_call "element"
+            B.pexp_apply (exp_ident "List.iter")
               [
-                (Nolabel, exp_ident "w");
-                (Nolabel, const_str tag_name);
                 ( Nolabel,
                   B.pexp_fun Nolabel None
-                    (B.ppat_var (Location.mknoloc "w"))
-                    (B.pexp_apply (exp_ident "List.iter")
-                       [
-                         ( Nolabel,
-                           B.pexp_fun Nolabel None
-                             (B.ppat_var (Location.mknoloc "item"))
-                             (B.pexp_apply elem_f
-                                [ (Nolabel, exp_ident "w"); (Nolabel, exp_ident "item") ]) );
-                         (Nolabel, value_expr);
-                       ]) );
+                    (B.ppat_var (Location.mknoloc "item"))
+                    (element_with_namespace ~tag:tag_name ~ns:target_ns ~attrs_opt
+                       (B.pexp_apply elem_f
+                          [ (Nolabel, exp_ident "w"); (Nolabel, exp_ident "item") ])) );
+                (Nolabel, value_expr);
               ]
         | Some (Shape.SetShape ss) when is_flattened (Some member_traits) ->
             let elem_f = item_serializer_expr ~namespace_resolver ss.target in
-            xml_write_call "element"
+            B.pexp_apply (exp_ident "List.iter")
               [
-                (Nolabel, exp_ident "w");
-                (Nolabel, const_str tag_name);
                 ( Nolabel,
                   B.pexp_fun Nolabel None
-                    (B.ppat_var (Location.mknoloc "w"))
-                    (B.pexp_apply (exp_ident "List.iter")
-                       [
-                         ( Nolabel,
-                           B.pexp_fun Nolabel None
-                             (B.ppat_var (Location.mknoloc "item"))
-                             (B.pexp_apply elem_f
-                                [ (Nolabel, exp_ident "w"); (Nolabel, exp_ident "item") ]) );
-                         (Nolabel, value_expr);
-                       ]) );
+                    (B.ppat_var (Location.mknoloc "item"))
+                    (element_with_namespace ~tag:tag_name ~ns:target_ns ~attrs_opt
+                       (B.pexp_apply elem_f
+                          [ (Nolabel, exp_ident "w"); (Nolabel, exp_ident "item") ])) );
+                (Nolabel, value_expr);
               ]
         | Some (Shape.MapShape ms) when is_flattened (Some member_traits) ->
+            (* Flattened map: each entry becomes a repeated [<tag_name>] sibling
+               containing the key/value child elements. xmlName on key/value is
+               retained for flattened maps. *)
             let key_f = item_serializer_expr ~namespace_resolver ms.mapKey.target in
             let val_f = item_serializer_expr ~namespace_resolver ms.mapValue.target in
             let key_tag = xml_name ms.mapKey.traits "key" in
             let val_tag = xml_name ms.mapValue.traits "value" in
-            xml_write_call "element"
+            let entry_body =
+              B.pexp_sequence
+                (xml_write_call "element"
+                   [
+                     (Nolabel, exp_ident "w");
+                     (Nolabel, const_str key_tag);
+                     ( Nolabel,
+                       B.pexp_fun Nolabel None
+                         (B.ppat_var (Location.mknoloc "w"))
+                         (B.pexp_apply key_f [ (Nolabel, exp_ident "w"); (Nolabel, exp_ident "k") ])
+                     );
+                   ])
+                (xml_write_call "element"
+                   [
+                     (Nolabel, exp_ident "w");
+                     (Nolabel, const_str val_tag);
+                     ( Nolabel,
+                       B.pexp_fun Nolabel None
+                         (B.ppat_var (Location.mknoloc "w"))
+                         (B.pexp_apply val_f [ (Nolabel, exp_ident "w"); (Nolabel, exp_ident "v") ])
+                     );
+                   ])
+            in
+            B.pexp_apply (exp_ident "List.iter")
               [
-                (Nolabel, exp_ident "w");
-                (Nolabel, const_str tag_name);
                 ( Nolabel,
                   B.pexp_fun Nolabel None
-                    (B.ppat_var (Location.mknoloc "w"))
-                    (B.pexp_apply (exp_ident "List.iter")
-                       [
-                         ( Nolabel,
-                           B.pexp_fun Nolabel None
-                             (B.ppat_tuple
-                                [
-                                  B.ppat_var (Location.mknoloc "k");
-                                  B.ppat_var (Location.mknoloc "v");
-                                ])
-                             (B.pexp_sequence
-                                (xml_write_call "element"
-                                   [
-                                     (Nolabel, exp_ident "w");
-                                     (Nolabel, const_str key_tag);
-                                     ( Nolabel,
-                                       B.pexp_fun Nolabel None
-                                         (B.ppat_var (Location.mknoloc "w"))
-                                         (B.pexp_apply key_f
-                                            [ (Nolabel, exp_ident "w"); (Nolabel, exp_ident "k") ])
-                                     );
-                                   ])
-                                (xml_write_call "element"
-                                   [
-                                     (Nolabel, exp_ident "w");
-                                     (Nolabel, const_str val_tag);
-                                     ( Nolabel,
-                                       B.pexp_fun Nolabel None
-                                         (B.ppat_var (Location.mknoloc "w"))
-                                         (B.pexp_apply val_f
-                                            [ (Nolabel, exp_ident "w"); (Nolabel, exp_ident "v") ])
-                                     );
-                                   ])) );
-                         (Nolabel, value_expr);
-                       ]) );
+                    (B.ppat_tuple
+                       [ B.ppat_var (Location.mknoloc "k"); B.ppat_var (Location.mknoloc "v") ])
+                    (element_with_namespace ~tag:tag_name ~ns:target_ns ~attrs_opt entry_body) );
+                (Nolabel, value_expr);
               ]
         | _ ->
-            (* Normal complex type: call its _to_xml function *)
-            B.pexp_apply
-              (B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver target_name)))
-              [ (Nolabel, exp_ident "w"); (Nolabel, value_expr) ])
+            (* Normal complex type (structure/union/non-flattened list/map/set):
+               wrap the target's [_to_xml] (which writes the shape's content with
+               no outer element of its own) in the member's [<tag_name>] element. *)
+            element_with_namespace ~tag:tag_name ~ns:target_ns ~attrs_opt
+              (B.pexp_apply
+                 (B.pexp_ident (Location.mknoloc (func_longident ~namespace_resolver target_name)))
+                 [ (Nolabel, exp_ident "w"); (Nolabel, value_expr) ]))
 
-  (* Generate expression for a structure member *)
+  (* Generate expression for a structure member. [@xmlAttribute] members are
+     NOT written as child elements here — they render as attributes on the
+     wrapping element, which [member_value_expr] collects from the target
+     shape when a parent serializes this structure as a member. The body-root
+     case (operations / [@httpPayload]) is handled in Phase 7. *)
   let generate_member_expr ~namespace_resolver ~shape_resolver (mem : Shape.member) =
-    let is_req = is_required mem.traits in
-    let is_idemp = is_idempotency_token mem.traits in
-    let is_attr = is_attribute mem.traits in
-    let xml_key = xml_name mem.traits mem.name in
-    let field_access =
-      B.pexp_field (exp_ident "x") (lident_noloc (SafeNames.safeMemberName mem.name))
-    in
-    let member_traits = Option.value ~default:[] mem.traits in
-    let shape_traits = [] in
-    if is_req then
-      member_value_expr ~namespace_resolver ~shape_resolver ~member_traits ~shape_traits
-        ~tag_name:xml_key field_access mem.target
+    if is_attribute mem.traits then xml_write_call "null" [ (Nolabel, exp_ident "w") ]
     else begin
-      let inner_expr v_expr =
+      let is_req = is_required mem.traits in
+      let is_idemp = is_idempotency_token mem.traits in
+      let xml_key = xml_name mem.traits mem.name in
+      let field_access =
+        B.pexp_field (exp_ident "x") (lident_noloc (SafeNames.safeMemberName mem.name))
+      in
+      let member_traits = Option.value ~default:[] mem.traits in
+      let shape_traits = [] in
+      if is_req then
         member_value_expr ~namespace_resolver ~shape_resolver ~member_traits ~shape_traits
-          ~tag_name:xml_key v_expr mem.target
-      in
-      let none_rhs =
-        if is_idemp then
-          inner_expr
-            (qualified_apply ~names:[ "Smaws_Lib"; "Uuid"; "generate" ] [ (Nolabel, unit_expr) ])
-        else xml_write_call "null" [ (Nolabel, exp_ident "w") ]
-      in
-      B.pexp_match field_access
-        [
-          B.case ~lhs:(B.ppat_construct (lident_noloc "None") None) ~guard:None ~rhs:none_rhs;
-          B.case
-            ~lhs:(B.ppat_construct (lident_noloc "Some") (Some (B.ppat_var (Location.mknoloc "v"))))
-            ~guard:None
-            ~rhs:(inner_expr (exp_ident "v"));
-        ]
+          ~tag_name:xml_key field_access mem.target
+      else begin
+        let inner_expr v_expr =
+          member_value_expr ~namespace_resolver ~shape_resolver ~member_traits ~shape_traits
+            ~tag_name:xml_key v_expr mem.target
+        in
+        let none_rhs =
+          if is_idemp then
+            inner_expr
+              (qualified_apply ~names:[ "Smaws_Lib"; "Uuid"; "generate" ] [ (Nolabel, unit_expr) ])
+          else xml_write_call "null" [ (Nolabel, exp_ident "w") ]
+        in
+        B.pexp_match field_access
+          [
+            B.case ~lhs:(B.ppat_construct (lident_noloc "None") None) ~guard:None ~rhs:none_rhs;
+            B.case
+              ~lhs:
+                (B.ppat_construct (lident_noloc "Some") (Some (B.ppat_var (Location.mknoloc "v"))))
+              ~guard:None
+              ~rhs:(inner_expr (exp_ident "v"));
+          ]
+      end
     end
 
   let enum_func_body name (s : Shape.enumShapeDetails) =
@@ -579,7 +653,13 @@ module Serialiser = struct
                      ( Nolabel,
                        qualified_apply
                          ~names:
-                           [ "Smaws_Lib"; "Protocols"; "AwsQuery"; "Serialize"; "float_to_string" ]
+                           [
+                             "Smaws_Lib";
+                             "Protocols";
+                             "RestXml";
+                             "Serialize";
+                             "float_field_to_string";
+                           ]
                          [ (Nolabel, exp_ident "v") ] );
                    ])))
     | BlobShape _ ->
