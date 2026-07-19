@@ -50,6 +50,7 @@ let generate ~name ~(service : Shape.serviceShapeDetails) ~operation_shapes ~str
         Codegen.Ppx_util.stri_open [ "Service_metadata" ];
         Codegen.Ppx_util.stri_open [ "Xml_deserializers" ];
         Codegen.Ppx_util.stri_open [ "Xml_serializers" ];
+        Codegen.Ppx_util.stri_open [ "Smaws_Lib"; "Xml"; "Parse" ];
       ]
     in
     try

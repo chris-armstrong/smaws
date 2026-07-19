@@ -1138,10 +1138,7 @@ module Operations = struct
                       ~lhs:
                         (B.ppat_construct (lident_noloc "Error")
                            (Some
-                              (B.ppat_construct
-                                 (Location.mknoloc
-                                    (make_lident
-                                       ~names:[ "Smaws_Lib"; "Xml"; "Parse"; "XmlParseError" ]))
+                              (B.ppat_construct (lident_noloc "XmlParseError")
                                  (Some (B.ppat_var (Location.mknoloc "msg"))))))
                       ~guard:None
                       ~rhs:(B.pexp_variant "XmlParseError" (Some (exp_ident "msg")));
