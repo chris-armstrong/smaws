@@ -164,12 +164,38 @@ noted. Stop and wait for developer review between phases (per AGENTS.md).
       record) at that point. Phase 6's checkpoint (build + parse unit test) is
       met without this wiring.
 
-## Phase 7 — Codegen `RestXml.Operations` (§7.3; G17, G18, G20, G23, G6d)
-- [ ] Per-operation `request` with greedy labels, `httpQuery`/`httpQueryParams`
+## Phase 7 — Codegen `RestXml.Operations` (§7.3; G17, G18, G20, G23, G6d) — LANDED
+- [x] Per-operation `request` with greedy labels, `httpQuery`/`httpQueryParams`
       precedence (+ list-valued maps), `httpHeader`/`httpPrefixHeaders`
       precedence, `endpoint`/`hostLabel` host-prefix, `idempotencyToken`
       auto-fill, `Code` error dispatch (`String.equal`).
-- [ ] `dune build`; a generated restXml SDK compiles end-to-end.
+- [x] Body-root wrapping + service-level `@xmlNamespace` (deferred from Phase 5):
+      the non-payload body is wrapped in the input structure's root element
+      (shape name / `@xmlName`, structure `@xmlNamespace` or service-level
+      default, structure `@xmlAttribute` members as root attrs); `@httpPayload`
+      body construction — raw blob (`application/octet-stream` or `mediaType`),
+      raw string (`text/plain`), raw enum value (`text/plain`), and
+      structure/union (the target's own root element, member `@xmlName` wins,
+      then structure `@xmlName`, then shape name).
+- [x] Prefixed-`@xmlNamespace` correction: `Serialiser.element_with_namespace`
+      now declares `xmlns:prefix` as an attribute and keeps the element name
+      unprefixed (conformance wants `<Nested xmlns:xsi=... xsi:someName=...>`,
+      not `<xsi:Nested>`). The low-level `Write.element_with_ns` (prefixed
+      name) is kept for the round-trip unit tests and is no longer used by
+      codegen.
+- [x] Runtime: `RestXml.request_with_metadata` expands list-valued query
+      entries into repeated `(key, [v])` keys before `Uri.with_query` (the
+      `uri` library serialises `(key, [v1; v2])` as `key=v1,v2`, not repeated);
+      `Http_bindings.apply_path` overlays a resolved path-with-query string
+      onto the base URI (preserves percent-encoded labels and literal query).
+- [x] `dune build`; a generated restXml SDK compiles end-to-end (the
+      `aws.protocoltests.restxml` namespace). The `restxml.xmlns` namespace is
+      generated correctly (service-level namespace verified on the root) but
+      has no dune rule yet — wiring it into the build is Phase 8/9.
+- [ ] Phase 8 conformance (`dune runtest model_tests`) still fails (170/171) —
+      the test harness assumes JSON bodies / hardcodes `application/json` mocks
+      (G11/G12). That is Phase 8's scope, not a Phase 7 regression; AwsJson /
+      AwsQuery / `smaws_lib_test` / `codegen_test` all stay green.
 
 ## Phase 8 — Conformance tests (§8; G10–G12)
 - [ ] Add `aws.protocoltests.restxml -> Restxml` to `model_tests/gen.ml`.

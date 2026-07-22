@@ -92,6 +92,20 @@ let merge_headers ~named_headers ~prefix_headers =
   in
   named_headers @ filtered_prefix
 
+(** Overlay a resolved path-with-query string (the [@http] uri template after
+    {label} substitution, e.g. ["/Foo/{hello}?bar=1"] -> ["/Foo/hi?bar=1"]) onto a
+    base URI built by [Service.makeUri]. The base contributes scheme + host; the
+    resolved string contributes the path and any literal query string embedded in
+    the [@http] uri. Percent-encoding in the path (already applied by
+    [substitute_labels]) is preserved: [Uri.path] returns the encoded form and
+    [Uri.with_path] does not re-encode it. Variable query params from @httpQuery/
+    @httpQueryParams are appended by the protocol runtime via [Uri.with_query], so
+    they are NOT part of [path]. *)
+let apply_path ~base ~path =
+  let parsed = Uri.of_string path in
+  let uri = Uri.with_path base (Uri.path parsed) in
+  match Uri.query parsed with [] -> uri | q -> Uri.with_query uri q
+
 (** Substitute host prefix from @endpoint trait into the URI host.
     [host_prefix] is the prefix string (e.g. "foo.").
     [labels] is (name, value) list from @hostLabel members.

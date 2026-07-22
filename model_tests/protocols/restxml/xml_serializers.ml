@@ -192,7 +192,8 @@ let xml_namespace_nested_to_xml w (x : xml_namespace_nested) =
       | Some v -> element w "values" ~ns:"http://qux.com" (fun w -> xml_namespaced_list_to_xml w v));
       (match x.foo with
       | None -> null w
-      | Some v -> element_with_ns w "http://baz.com" (Some "baz") "foo" (fun w -> text w v));
+      | Some v ->
+          element w "foo" ~attrs:[ ("xmlns:baz", "http://baz.com", None) ] (fun w -> text w v));
     ]
 
 let xml_namespaces_response_to_xml w (x : xml_namespaces_response) =
@@ -1468,8 +1469,9 @@ let http_payload_with_xml_namespace_and_prefix_input_output_to_xml w
       (match x.nested with
       | None -> null w
       | Some v ->
-          element_with_ns w "http://foo.com" (Some "baz") "nested" (fun w ->
-              payload_with_xml_namespace_and_prefix_to_xml w v));
+          element w "nested"
+            ~attrs:[ ("xmlns:baz", "http://foo.com", None) ]
+            (fun w -> payload_with_xml_namespace_and_prefix_to_xml w v));
     ]
 
 let payload_with_xml_namespace_to_xml w (x : payload_with_xml_namespace) =

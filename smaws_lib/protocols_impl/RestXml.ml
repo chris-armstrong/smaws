@@ -276,12 +276,19 @@ let request_with_metadata (type http_t) ~(shape_name : string) ~(service : Servi
     ~(error_deserializer : Error.t -> body:string -> 'err) :
     ('out Response.t, 'err * Response.metadata) result =
   let config = Context.config context in
-  (* Build the full URI with query parameters *)
+  (* Build the full URI with query parameters. [query] is [(string * string
+     list) list] where a list-valued entry is a single @httpQuery member bound to
+     a list/set (or a @httpQueryParams map entry whose value is a list). The [uri]
+     library represents repeated query keys as separate [(key, [value])] entries
+     - a single (key, [v1; v2]) entry would serialise as "key=v1,v2" (comma-
+     joined), which is wrong for repeated keys (e.g. "StringList=a&StringList=b").
+     Expand each entry into one (key, [v]) per value before [Uri.with_query]. *)
   let uri =
     if query = [] then uri
     else (
       let existing_query = Uri.query uri in
-      Uri.with_query uri (existing_query @ query))
+      let expanded = List.concat_map (fun (k, vs) -> List.map (fun v -> (k, [ v ])) vs) query in
+      Uri.with_query uri (existing_query @ expanded))
   in
   (* Build the body and content type *)
   let input_body, content_type =
