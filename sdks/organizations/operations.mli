@@ -1904,71 +1904,6 @@ end
   \    To view the status of available policy types in the organization, use [ListRoots].\n\
   \   "]
 
-module EnableAWSServiceAccess : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `AWSOrganizationsNotInUseException of aws_organizations_not_in_use_exception
-    | `ConcurrentModificationException of concurrent_modification_exception
-    | `ConstraintViolationException of constraint_violation_exception
-    | `InvalidInputException of invalid_input_exception
-    | `ServiceException of service_exception
-    | `TooManyRequestsException of too_many_requests_exception
-    | `UnsupportedAPIEndpointException of unsupported_api_endpoint_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    enable_aws_service_access_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `AWSOrganizationsNotInUseException of aws_organizations_not_in_use_exception
-      | `ConcurrentModificationException of concurrent_modification_exception
-      | `ConstraintViolationException of constraint_violation_exception
-      | `InvalidInputException of invalid_input_exception
-      | `ServiceException of service_exception
-      | `TooManyRequestsException of too_many_requests_exception
-      | `UnsupportedAPIEndpointException of unsupported_api_endpoint_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    enable_aws_service_access_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `AWSOrganizationsNotInUseException of aws_organizations_not_in_use_exception
-      | `ConcurrentModificationException of concurrent_modification_exception
-      | `ConstraintViolationException of constraint_violation_exception
-      | `InvalidInputException of invalid_input_exception
-      | `ServiceException of service_exception
-      | `TooManyRequestsException of too_many_requests_exception
-      | `UnsupportedAPIEndpointException of unsupported_api_endpoint_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides an Amazon Web Services service (the service that is specified by [ServicePrincipal]) \
-   with permissions to view the structure of an organization, create a \
-   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html}service-linked \
-   role} in all the accounts in the organization, and allow the service to perform operations on \
-   behalf of the organization and its accounts. Establishing these permissions can be a first step \
-   in enabling the integration of an Amazon Web Services service with Organizations.\n\n\
-  \  We recommend that you enable integration between Organizations and the specified Amazon Web \
-   Services service by using the console or commands that are provided by the specified service. \
-   Doing so ensures that the service is aware that it can create the resources that are required \
-   for the integration. How the service creates those resources in the organization's accounts \
-   depends on that service. For more information, see the documentation for the other Amazon Web \
-   Services service.\n\
-  \  \n\
-  \    For more information about enabling services to integrate with Organizations, see \
-   {{:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html}Using \
-   Organizations with other Amazon Web Services services} in the {i Organizations User Guide}.\n\
-  \    \n\
-  \     You can only call this operation from the management account.\n\
-  \     "]
-
 module EnableAllFeatures : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -2042,6 +1977,71 @@ end
   \      \n\
   \       You can only call this operation from the management account.\n\
   \       "]
+
+module EnableAWSServiceAccess : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AWSOrganizationsNotInUseException of aws_organizations_not_in_use_exception
+    | `ConcurrentModificationException of concurrent_modification_exception
+    | `ConstraintViolationException of constraint_violation_exception
+    | `InvalidInputException of invalid_input_exception
+    | `ServiceException of service_exception
+    | `TooManyRequestsException of too_many_requests_exception
+    | `UnsupportedAPIEndpointException of unsupported_api_endpoint_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    enable_aws_service_access_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `AWSOrganizationsNotInUseException of aws_organizations_not_in_use_exception
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `ConstraintViolationException of constraint_violation_exception
+      | `InvalidInputException of invalid_input_exception
+      | `ServiceException of service_exception
+      | `TooManyRequestsException of too_many_requests_exception
+      | `UnsupportedAPIEndpointException of unsupported_api_endpoint_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    enable_aws_service_access_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `AWSOrganizationsNotInUseException of aws_organizations_not_in_use_exception
+      | `ConcurrentModificationException of concurrent_modification_exception
+      | `ConstraintViolationException of constraint_violation_exception
+      | `InvalidInputException of invalid_input_exception
+      | `ServiceException of service_exception
+      | `TooManyRequestsException of too_many_requests_exception
+      | `UnsupportedAPIEndpointException of unsupported_api_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides an Amazon Web Services service (the service that is specified by [ServicePrincipal]) \
+   with permissions to view the structure of an organization, create a \
+   {{:https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html}service-linked \
+   role} in all the accounts in the organization, and allow the service to perform operations on \
+   behalf of the organization and its accounts. Establishing these permissions can be a first step \
+   in enabling the integration of an Amazon Web Services service with Organizations.\n\n\
+  \  We recommend that you enable integration between Organizations and the specified Amazon Web \
+   Services service by using the console or commands that are provided by the specified service. \
+   Doing so ensures that the service is aware that it can create the resources that are required \
+   for the integration. How the service creates those resources in the organization's accounts \
+   depends on that service. For more information, see the documentation for the other Amazon Web \
+   Services service.\n\
+  \  \n\
+  \    For more information about enabling services to integrate with Organizations, see \
+   {{:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html}Using \
+   Organizations with other Amazon Web Services services} in the {i Organizations User Guide}.\n\
+  \    \n\
+  \     You can only call this operation from the management account.\n\
+  \     "]
 
 module EnablePolicyType : sig
   val error_to_string :
@@ -2356,60 +2356,6 @@ end
   \          }\n\
   \   "]
 
-module ListAWSServiceAccessForOrganization : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `AWSOrganizationsNotInUseException of aws_organizations_not_in_use_exception
-    | `ConstraintViolationException of constraint_violation_exception
-    | `InvalidInputException of invalid_input_exception
-    | `ServiceException of service_exception
-    | `TooManyRequestsException of too_many_requests_exception
-    | `UnsupportedAPIEndpointException of unsupported_api_endpoint_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_aws_service_access_for_organization_request ->
-    ( list_aws_service_access_for_organization_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `AWSOrganizationsNotInUseException of aws_organizations_not_in_use_exception
-      | `ConstraintViolationException of constraint_violation_exception
-      | `InvalidInputException of invalid_input_exception
-      | `ServiceException of service_exception
-      | `TooManyRequestsException of too_many_requests_exception
-      | `UnsupportedAPIEndpointException of unsupported_api_endpoint_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_aws_service_access_for_organization_request ->
-    ( list_aws_service_access_for_organization_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `AWSOrganizationsNotInUseException of aws_organizations_not_in_use_exception
-      | `ConstraintViolationException of constraint_violation_exception
-      | `InvalidInputException of invalid_input_exception
-      | `ServiceException of service_exception
-      | `TooManyRequestsException of too_many_requests_exception
-      | `UnsupportedAPIEndpointException of unsupported_api_endpoint_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns a list of the Amazon Web Services services that you enabled to integrate with your \
-   organization. After a service on this list creates the resources that it requires for the \
-   integration, it can perform operations on your organization and its accounts.\n\n\
-  \ For more information about integrating other services with Organizations, including the list \
-   of services that currently work with Organizations, see \
-   {{:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html}Using \
-   Organizations with other Amazon Web Services services} in the {i Organizations User Guide}.\n\
-  \ \n\
-  \  You can only call this operation from the management account or a member account that is a \
-   delegated administrator.\n\
-  \  "]
-
 module ListAccounts : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -2563,6 +2509,60 @@ end
   \ You can only call this operation from the management account or a member account that is a \
    delegated administrator.\n\
   \ "]
+
+module ListAWSServiceAccessForOrganization : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `AWSOrganizationsNotInUseException of aws_organizations_not_in_use_exception
+    | `ConstraintViolationException of constraint_violation_exception
+    | `InvalidInputException of invalid_input_exception
+    | `ServiceException of service_exception
+    | `TooManyRequestsException of too_many_requests_exception
+    | `UnsupportedAPIEndpointException of unsupported_api_endpoint_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_aws_service_access_for_organization_request ->
+    ( list_aws_service_access_for_organization_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `AWSOrganizationsNotInUseException of aws_organizations_not_in_use_exception
+      | `ConstraintViolationException of constraint_violation_exception
+      | `InvalidInputException of invalid_input_exception
+      | `ServiceException of service_exception
+      | `TooManyRequestsException of too_many_requests_exception
+      | `UnsupportedAPIEndpointException of unsupported_api_endpoint_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_aws_service_access_for_organization_request ->
+    ( list_aws_service_access_for_organization_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `AWSOrganizationsNotInUseException of aws_organizations_not_in_use_exception
+      | `ConstraintViolationException of constraint_violation_exception
+      | `InvalidInputException of invalid_input_exception
+      | `ServiceException of service_exception
+      | `TooManyRequestsException of too_many_requests_exception
+      | `UnsupportedAPIEndpointException of unsupported_api_endpoint_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns a list of the Amazon Web Services services that you enabled to integrate with your \
+   organization. After a service on this list creates the resources that it requires for the \
+   integration, it can perform operations on your organization and its accounts.\n\n\
+  \ For more information about integrating other services with Organizations, including the list \
+   of services that currently work with Organizations, see \
+   {{:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html}Using \
+   Organizations with other Amazon Web Services services} in the {i Organizations User Guide}.\n\
+  \ \n\
+  \  You can only call this operation from the management account or a member account that is a \
+   delegated administrator.\n\
+  \  "]
 
 module ListChildren : sig
   val error_to_string :

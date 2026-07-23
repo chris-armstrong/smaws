@@ -1,138 +1,5 @@
 open Types
 
-module AddTags : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ChannelARNInvalidException of channel_arn_invalid_exception
-    | `ChannelNotFoundException of channel_not_found_exception
-    | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
-    | `ConflictException of conflict_exception
-    | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
-    | `EventDataStoreNotFoundException of event_data_store_not_found_exception
-    | `InactiveEventDataStoreException of inactive_event_data_store_exception
-    | `InvalidTagParameterException of invalid_tag_parameter_exception
-    | `InvalidTrailNameException of invalid_trail_name_exception
-    | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
-    | `NotOrganizationMasterAccountException of not_organization_master_account_exception
-    | `OperationNotPermittedException of operation_not_permitted_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
-    | `TagsLimitExceededException of tags_limit_exceeded_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_request ->
-    ( add_tags_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ChannelARNInvalidException of channel_arn_invalid_exception
-      | `ChannelNotFoundException of channel_not_found_exception
-      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
-      | `ConflictException of conflict_exception
-      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
-      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
-      | `InactiveEventDataStoreException of inactive_event_data_store_exception
-      | `InvalidTagParameterException of invalid_tag_parameter_exception
-      | `InvalidTrailNameException of invalid_trail_name_exception
-      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
-      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
-      | `OperationNotPermittedException of operation_not_permitted_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
-      | `TagsLimitExceededException of tags_limit_exceeded_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_request ->
-    ( add_tags_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ChannelARNInvalidException of channel_arn_invalid_exception
-      | `ChannelNotFoundException of channel_not_found_exception
-      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
-      | `ConflictException of conflict_exception
-      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
-      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
-      | `InactiveEventDataStoreException of inactive_event_data_store_exception
-      | `InvalidTagParameterException of invalid_tag_parameter_exception
-      | `InvalidTrailNameException of invalid_trail_name_exception
-      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
-      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
-      | `OperationNotPermittedException of operation_not_permitted_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
-      | `TagsLimitExceededException of tags_limit_exceeded_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds one or more tags to a trail, event data store, dashboard, or channel, up to a limit of 50. \
-   Overwrites an existing tag's value when a new value is specified for an existing tag key. Tag \
-   key names must be unique; you cannot have two keys with the same name but different values. If \
-   you specify a key without a value, the tag will be created with the specified key and a value \
-   of null. You can tag a trail or event data store that applies to all Amazon Web Services \
-   Regions only from the Region in which the trail or event data store was created (also known as \
-   its home Region).\n"]
-
-module CancelQuery : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ConflictException of conflict_exception
-    | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
-    | `EventDataStoreNotFoundException of event_data_store_not_found_exception
-    | `InactiveEventDataStoreException of inactive_event_data_store_exception
-    | `InactiveQueryException of inactive_query_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
-    | `OperationNotPermittedException of operation_not_permitted_exception
-    | `QueryIdNotFoundException of query_id_not_found_exception
-    | `UnsupportedOperationException of unsupported_operation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    cancel_query_request ->
-    ( cancel_query_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
-      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
-      | `InactiveEventDataStoreException of inactive_event_data_store_exception
-      | `InactiveQueryException of inactive_query_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
-      | `OperationNotPermittedException of operation_not_permitted_exception
-      | `QueryIdNotFoundException of query_id_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    cancel_query_request ->
-    ( cancel_query_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ConflictException of conflict_exception
-      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
-      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
-      | `InactiveEventDataStoreException of inactive_event_data_store_exception
-      | `InactiveQueryException of inactive_query_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
-      | `OperationNotPermittedException of operation_not_permitted_exception
-      | `QueryIdNotFoundException of query_id_not_found_exception
-      | `UnsupportedOperationException of unsupported_operation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Cancels a query if the query is not in a terminated state, such as [CANCELLED], [FAILED], \
-   [TIMED_OUT], or [FINISHED]. You must specify an ARN value for [EventDataStore]. The ID of the \
-   query that you want to cancel is also required. When you run [CancelQuery], the query status \
-   might show as [CANCELLED] even if the operation is not yet finished.\n"]
-
 module CreateChannel : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -3693,3 +3560,136 @@ end
    an existing bucket for log delivery. If the existing bucket has previously been a target for \
    CloudTrail log files, an IAM policy exists for the bucket. [UpdateTrail] must be called from \
    the Region in which the trail was created; otherwise, an [InvalidHomeRegionException] is thrown.\n"]
+
+module CancelQuery : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ConflictException of conflict_exception
+    | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+    | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+    | `InactiveEventDataStoreException of inactive_event_data_store_exception
+    | `InactiveQueryException of inactive_query_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+    | `OperationNotPermittedException of operation_not_permitted_exception
+    | `QueryIdNotFoundException of query_id_not_found_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_query_request ->
+    ( cancel_query_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InactiveQueryException of inactive_query_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `QueryIdNotFoundException of query_id_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_query_request ->
+    ( cancel_query_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ConflictException of conflict_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InactiveQueryException of inactive_query_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `QueryIdNotFoundException of query_id_not_found_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Cancels a query if the query is not in a terminated state, such as [CANCELLED], [FAILED], \
+   [TIMED_OUT], or [FINISHED]. You must specify an ARN value for [EventDataStore]. The ID of the \
+   query that you want to cancel is also required. When you run [CancelQuery], the query status \
+   might show as [CANCELLED] even if the operation is not yet finished.\n"]
+
+module AddTags : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ChannelARNInvalidException of channel_arn_invalid_exception
+    | `ChannelNotFoundException of channel_not_found_exception
+    | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+    | `ConflictException of conflict_exception
+    | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+    | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+    | `InactiveEventDataStoreException of inactive_event_data_store_exception
+    | `InvalidTagParameterException of invalid_tag_parameter_exception
+    | `InvalidTrailNameException of invalid_trail_name_exception
+    | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+    | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+    | `OperationNotPermittedException of operation_not_permitted_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
+    | `TagsLimitExceededException of tags_limit_exceeded_exception
+    | `UnsupportedOperationException of unsupported_operation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_request ->
+    ( add_tags_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ChannelARNInvalidException of channel_arn_invalid_exception
+      | `ChannelNotFoundException of channel_not_found_exception
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `ConflictException of conflict_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InvalidTagParameterException of invalid_tag_parameter_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
+      | `TagsLimitExceededException of tags_limit_exceeded_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_request ->
+    ( add_tags_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ChannelARNInvalidException of channel_arn_invalid_exception
+      | `ChannelNotFoundException of channel_not_found_exception
+      | `CloudTrailARNInvalidException of cloud_trail_arn_invalid_exception
+      | `ConflictException of conflict_exception
+      | `EventDataStoreARNInvalidException of event_data_store_arn_invalid_exception
+      | `EventDataStoreNotFoundException of event_data_store_not_found_exception
+      | `InactiveEventDataStoreException of inactive_event_data_store_exception
+      | `InvalidTagParameterException of invalid_tag_parameter_exception
+      | `InvalidTrailNameException of invalid_trail_name_exception
+      | `NoManagementAccountSLRExistsException of no_management_account_slr_exists_exception
+      | `NotOrganizationMasterAccountException of not_organization_master_account_exception
+      | `OperationNotPermittedException of operation_not_permitted_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ResourceTypeNotSupportedException of resource_type_not_supported_exception
+      | `TagsLimitExceededException of tags_limit_exceeded_exception
+      | `UnsupportedOperationException of unsupported_operation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds one or more tags to a trail, event data store, dashboard, or channel, up to a limit of 50. \
+   Overwrites an existing tag's value when a new value is specified for an existing tag key. Tag \
+   key names must be unique; you cannot have two keys with the same name but different values. If \
+   you specify a key without a value, the tag will be created with the specified key and a value \
+   of null. You can tag a trail or event data store that applies to all Amazon Web Services \
+   Regions only from the Region in which the trail or event data store was created (also known as \
+   its home Region).\n"]

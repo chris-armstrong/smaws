@@ -1,523 +1,159 @@
 open Types
 
-val make_vehicle_summary :
-  ?attributes:attributes_map ->
-  last_modification_time:timestamp ->
-  creation_time:timestamp ->
-  decoder_manifest_arn:arn ->
-  model_manifest_arn:arn ->
-  arn:arn ->
-  vehicle_name:vehicle_name ->
+val make_actuator :
+  ?description:description ->
+  ?unit_:string_ ->
+  ?allowed_values:list_of_strings ->
+  ?min:double ->
+  ?max:double ->
+  ?assigned_value:string_ ->
+  ?deprecation_message:message ->
+  ?comment:message ->
+  ?struct_fully_qualified_name:node_path ->
+  fully_qualified_name:string_ ->
+  data_type:node_data_type ->
   unit ->
-  vehicle_summary
+  actuator
 
-val make_update_vehicle_response_item :
-  ?arn:arn -> ?vehicle_name:vehicle_name -> unit -> update_vehicle_response_item
+val make_validation_exception_field :
+  name:Smaws_Lib.Smithy_api.Types.string_ ->
+  message:Smaws_Lib.Smithy_api.Types.string_ ->
+  unit ->
+  validation_exception_field
 
-val make_time_period : value:positive_integer -> unit_:time_unit -> unit -> time_period
+val make_associate_vehicle_fleet_response : unit -> unit
+
+val make_associate_vehicle_fleet_request :
+  vehicle_name:vehicle_name -> fleet_id:fleet_id -> unit -> associate_vehicle_fleet_request
+
+val make_attribute :
+  ?description:description ->
+  ?unit_:string_ ->
+  ?allowed_values:list_of_strings ->
+  ?min:double ->
+  ?max:double ->
+  ?assigned_value:string_ ->
+  ?default_value:string_ ->
+  ?deprecation_message:message ->
+  ?comment:message ->
+  fully_qualified_name:string_ ->
+  data_type:node_data_type ->
+  unit ->
+  attribute
+
+val make_create_vehicle_error :
+  ?vehicle_name:vehicle_name -> ?code:string_ -> ?message:string_ -> unit -> create_vehicle_error
+
+val make_create_vehicle_response_item :
+  ?vehicle_name:vehicle_name -> ?arn:arn -> ?thing_arn:arn -> unit -> create_vehicle_response_item
+
+val make_batch_create_vehicle_response :
+  ?vehicles:create_vehicle_responses ->
+  ?errors:create_vehicle_errors ->
+  unit ->
+  batch_create_vehicle_response
+
+val make_on_change_state_template_update_strategy : unit -> unit
+val make_time_period : unit_:time_unit -> value:positive_integer -> unit -> time_period
 
 val make_periodic_state_template_update_strategy :
   state_template_update_rate:time_period -> unit -> periodic_state_template_update_strategy
 
-val make_on_change_state_template_update_strategy : unit -> unit
-
 val make_state_template_association :
-  state_template_update_strategy:state_template_update_strategy ->
   identifier:resource_identifier ->
+  state_template_update_strategy:state_template_update_strategy ->
   unit ->
   state_template_association
 
-val make_update_vehicle_request_item :
-  ?state_templates_to_update:state_template_associations ->
-  ?state_templates_to_remove:state_template_association_identifiers ->
-  ?state_templates_to_add:state_template_associations ->
-  ?attribute_update_mode:update_mode ->
+val make_tag : key:tag_key -> value:tag_value -> unit -> tag
+
+val make_create_vehicle_request_item :
   ?attributes:attributes_map ->
-  ?decoder_manifest_arn:arn ->
+  ?association_behavior:vehicle_association_behavior ->
+  ?tags:tag_list ->
+  ?state_templates:state_template_associations ->
+  vehicle_name:vehicle_name ->
+  model_manifest_arn:arn ->
+  decoder_manifest_arn:arn ->
+  unit ->
+  create_vehicle_request_item
+
+val make_batch_create_vehicle_request :
+  vehicles:create_vehicle_request_items -> unit -> batch_create_vehicle_request
+
+val make_update_vehicle_error :
+  ?vehicle_name:vehicle_name -> ?code:number -> ?message:string_ -> unit -> update_vehicle_error
+
+val make_update_vehicle_response_item :
+  ?vehicle_name:vehicle_name -> ?arn:arn -> unit -> update_vehicle_response_item
+
+val make_batch_update_vehicle_response :
+  ?vehicles:update_vehicle_response_items ->
+  ?errors:update_vehicle_errors ->
+  unit ->
+  batch_update_vehicle_response
+
+val make_update_vehicle_request_item :
   ?model_manifest_arn:arn ->
+  ?decoder_manifest_arn:arn ->
+  ?attributes:attributes_map ->
+  ?attribute_update_mode:update_mode ->
+  ?state_templates_to_add:state_template_associations ->
+  ?state_templates_to_remove:state_template_association_identifiers ->
+  ?state_templates_to_update:state_template_associations ->
   vehicle_name:vehicle_name ->
   unit ->
   update_vehicle_request_item
 
-val make_update_vehicle_error :
-  ?message:string_ -> ?code:number -> ?vehicle_name:vehicle_name -> unit -> update_vehicle_error
-
-val make_signal_catalog_summary :
-  ?last_modification_time:timestamp ->
-  ?creation_time:timestamp ->
-  ?arn:arn ->
-  ?name:string_ ->
-  unit ->
-  signal_catalog_summary
-
-val make_model_manifest_summary :
-  ?status:manifest_status ->
-  ?description:description ->
-  ?signal_catalog_arn:arn ->
-  ?arn:arn ->
-  ?name:string_ ->
-  last_modification_time:timestamp ->
-  creation_time:timestamp ->
-  unit ->
-  model_manifest_summary
-
-val make_fleet_summary :
-  ?last_modification_time:timestamp ->
-  ?description:description ->
-  creation_time:timestamp ->
-  signal_catalog_arn:arn ->
-  arn:arn ->
-  id:fleet_id ->
-  unit ->
-  fleet_summary
-
-val make_decoder_manifest_summary :
-  ?message:message ->
-  ?status:manifest_status ->
-  ?description:description ->
-  ?model_manifest_arn:arn ->
-  ?arn:arn ->
-  ?name:string_ ->
-  last_modification_time:timestamp ->
-  creation_time:timestamp ->
-  unit ->
-  decoder_manifest_summary
-
-val make_create_vehicle_response_item :
-  ?thing_arn:arn -> ?arn:arn -> ?vehicle_name:vehicle_name -> unit -> create_vehicle_response_item
-
-val make_tag : value:tag_value -> key:tag_key -> unit -> tag
-
-val make_create_vehicle_request_item :
-  ?state_templates:state_template_associations ->
-  ?tags:tag_list ->
-  ?association_behavior:vehicle_association_behavior ->
-  ?attributes:attributes_map ->
-  decoder_manifest_arn:arn ->
-  model_manifest_arn:arn ->
-  vehicle_name:vehicle_name ->
-  unit ->
-  create_vehicle_request_item
-
-val make_create_vehicle_error :
-  ?message:string_ -> ?code:string_ -> ?vehicle_name:vehicle_name -> unit -> create_vehicle_error
-
-val make_campaign_summary :
-  ?status:campaign_status ->
-  ?target_arn:arn ->
-  ?signal_catalog_arn:arn ->
-  ?description:description ->
-  ?name:campaign_name ->
-  ?arn:campaign_arn ->
-  last_modification_time:timestamp ->
-  creation_time:timestamp ->
-  unit ->
-  campaign_summary
-
-val make_vehicle_status :
-  ?status:vehicle_state ->
-  ?vehicle_name:vehicle_name ->
-  ?campaign_name:campaign_name ->
-  unit ->
-  vehicle_status
-
-val make_vehicle_middleware :
-  protocol_name:vehicle_middleware_protocol ->
-  name:vehicle_middleware_name ->
-  unit ->
-  vehicle_middleware
-
-val make_validation_exception_field :
-  message:Smaws_Lib.Smithy_api.Types.string_ ->
-  name:Smaws_Lib.Smithy_api.Types.string_ ->
-  unit ->
-  validation_exception_field
-
-val make_update_vehicle_response :
-  ?arn:arn -> ?vehicle_name:vehicle_name -> unit -> update_vehicle_response
-
-val make_update_vehicle_request :
-  ?state_templates_to_update:state_template_associations ->
-  ?state_templates_to_remove:state_template_association_identifiers ->
-  ?state_templates_to_add:state_template_associations ->
-  ?attribute_update_mode:update_mode ->
-  ?attributes:attributes_map ->
-  ?decoder_manifest_arn:arn ->
-  ?model_manifest_arn:arn ->
-  vehicle_name:vehicle_name ->
-  unit ->
-  update_vehicle_request
-
-val make_update_state_template_response :
-  ?id:resource_unique_id ->
-  ?arn:arn ->
-  ?name:resource_name ->
-  unit ->
-  update_state_template_response
-
-val make_update_state_template_request :
-  ?metadata_extra_dimensions:state_template_metadata_extra_dimension_node_path_list ->
-  ?data_extra_dimensions:state_template_data_extra_dimension_node_path_list ->
-  ?state_template_properties_to_remove:state_template_properties ->
-  ?state_template_properties_to_add:state_template_properties ->
-  ?description:description ->
-  identifier:resource_identifier ->
-  unit ->
-  update_state_template_request
-
-val make_invalid_signal : ?reason:string_ -> ?name:fully_qualified_name -> unit -> invalid_signal
-
-val make_update_signal_catalog_response :
-  arn:arn -> name:resource_name -> unit -> update_signal_catalog_response
+val make_batch_update_vehicle_request :
+  vehicles:update_vehicle_request_items -> unit -> batch_update_vehicle_request
 
 val make_branch :
-  ?comment:message ->
-  ?deprecation_message:message ->
   ?description:description ->
+  ?deprecation_message:message ->
+  ?comment:message ->
   fully_qualified_name:string_ ->
   unit ->
   branch
 
-val make_sensor :
-  ?struct_fully_qualified_name:node_path ->
-  ?comment:message ->
-  ?deprecation_message:message ->
-  ?max:double ->
-  ?min:double ->
-  ?allowed_values:list_of_strings ->
-  ?unit_:string_ ->
+val make_campaign_summary :
+  ?arn:campaign_arn ->
+  ?name:campaign_name ->
   ?description:description ->
-  data_type:node_data_type ->
-  fully_qualified_name:string_ ->
+  ?signal_catalog_arn:arn ->
+  ?target_arn:arn ->
+  ?status:campaign_status ->
+  creation_time:timestamp ->
+  last_modification_time:timestamp ->
   unit ->
-  sensor
+  campaign_summary
 
-val make_actuator :
-  ?struct_fully_qualified_name:node_path ->
-  ?comment:message ->
-  ?deprecation_message:message ->
-  ?assigned_value:string_ ->
-  ?max:double ->
-  ?min:double ->
-  ?allowed_values:list_of_strings ->
-  ?unit_:string_ ->
-  ?description:description ->
-  data_type:node_data_type ->
-  fully_qualified_name:string_ ->
+val make_can_dbc_definition :
+  ?signals_map:model_signals_map ->
+  network_interface:interface_id ->
+  can_dbc_files:network_files_list ->
   unit ->
-  actuator
-
-val make_attribute :
-  ?comment:message ->
-  ?deprecation_message:message ->
-  ?default_value:string_ ->
-  ?assigned_value:string_ ->
-  ?max:double ->
-  ?min:double ->
-  ?allowed_values:list_of_strings ->
-  ?unit_:string_ ->
-  ?description:description ->
-  data_type:node_data_type ->
-  fully_qualified_name:string_ ->
-  unit ->
-  attribute
-
-val make_custom_struct :
-  ?comment:message ->
-  ?deprecation_message:message ->
-  ?description:description ->
-  fully_qualified_name:string_ ->
-  unit ->
-  custom_struct
-
-val make_custom_property :
-  ?struct_fully_qualified_name:node_path ->
-  ?comment:message ->
-  ?deprecation_message:message ->
-  ?description:description ->
-  ?data_encoding:node_data_encoding ->
-  data_type:node_data_type ->
-  fully_qualified_name:string_ ->
-  unit ->
-  custom_property
-
-val make_update_signal_catalog_request :
-  ?nodes_to_remove:node_paths ->
-  ?nodes_to_update:nodes ->
-  ?nodes_to_add:nodes ->
-  ?description:description ->
-  name:resource_name ->
-  unit ->
-  update_signal_catalog_request
-
-val make_update_model_manifest_response :
-  arn:arn -> name:resource_name -> unit -> update_model_manifest_response
-
-val make_update_model_manifest_request :
-  ?status:manifest_status ->
-  ?nodes_to_remove:node_paths ->
-  ?nodes_to_add:node_paths ->
-  ?description:description ->
-  name:resource_name ->
-  unit ->
-  update_model_manifest_request
-
-val make_update_fleet_response : ?arn:arn -> ?id:fleet_id -> unit -> update_fleet_response
-
-val make_update_fleet_request :
-  ?description:description -> fleet_id:fleet_id -> unit -> update_fleet_request
-
-val make_update_decoder_manifest_response :
-  arn:arn -> name:resource_name -> unit -> update_decoder_manifest_response
-
-val make_can_signal :
-  ?signal_value_type:signal_value_type ->
-  ?name:can_signal_name ->
-  length:non_negative_integer ->
-  factor:double ->
-  offset:double ->
-  start_bit:non_negative_integer ->
-  is_signed:Smaws_Lib.Smithy_api.Types.primitive_boolean ->
-  is_big_endian:Smaws_Lib.Smithy_api.Types.primitive_boolean ->
-  message_id:non_negative_integer ->
-  unit ->
-  can_signal
-
-val make_obd_signal :
-  ?signal_value_type:signal_value_type ->
-  ?is_signed:Smaws_Lib.Smithy_api.Types.primitive_boolean ->
-  ?bit_mask_length:obd_bitmask_length ->
-  ?bit_right_shift:non_negative_integer ->
-  byte_length:obd_byte_length ->
-  start_byte:non_negative_integer ->
-  offset:double ->
-  scaling:double ->
-  pid:non_negative_integer ->
-  service_mode:non_negative_integer ->
-  pid_response_length:positive_integer ->
-  unit ->
-  obd_signal
-
-val make_ros2_primitive_message_definition :
-  ?upper_bound:max_string_size ->
-  ?scaling:double ->
-  ?offset:double ->
-  primitive_type:ros2_primitive_type ->
-  unit ->
-  ros2_primitive_message_definition
-
-val make_structured_message_field_name_and_data_type_pair :
-  data_type:structured_message ->
-  field_name:structure_message_name ->
-  unit ->
-  structured_message_field_name_and_data_type_pair
-
-val make_structured_message_list_definition :
-  ?capacity:non_negative_integer ->
-  list_type:structured_message_list_type ->
-  member_type:structured_message ->
-  name:structure_message_name ->
-  unit ->
-  structured_message_list_definition
-
-val make_message_signal :
-  structured_message:structured_message -> topic_name:topic_name -> unit -> message_signal
-
-val make_custom_decoding_signal : id:custom_decoding_id -> unit -> custom_decoding_signal
-
-val make_signal_decoder :
-  ?custom_decoding_signal:custom_decoding_signal ->
-  ?message_signal:message_signal ->
-  ?obd_signal:obd_signal ->
-  ?can_signal:can_signal ->
-  interface_id:interface_id ->
-  type_:signal_decoder_type ->
-  fully_qualified_name:fully_qualified_name ->
-  unit ->
-  signal_decoder
+  can_dbc_definition
 
 val make_can_interface :
-  ?protocol_version:protocol_version ->
   ?protocol_name:protocol_name ->
+  ?protocol_version:protocol_version ->
   name:can_interface_name ->
   unit ->
   can_interface
 
-val make_obd_interface :
-  ?has_transmission_ecu:Smaws_Lib.Smithy_api.Types.primitive_boolean ->
-  ?use_extended_ids:Smaws_Lib.Smithy_api.Types.primitive_boolean ->
-  ?dtc_request_interval_seconds:non_negative_integer ->
-  ?pid_request_interval_seconds:non_negative_integer ->
-  ?obd_standard:obd_standard ->
-  request_message_id:non_negative_integer ->
-  name:obd_interface_name ->
+val make_can_signal :
+  ?name:can_signal_name ->
+  ?signal_value_type:signal_value_type ->
+  message_id:non_negative_integer ->
+  is_big_endian:Smaws_Lib.Smithy_api.Types.primitive_boolean ->
+  is_signed:Smaws_Lib.Smithy_api.Types.primitive_boolean ->
+  start_bit:non_negative_integer ->
+  offset:double ->
+  factor:double ->
+  length:non_negative_integer ->
   unit ->
-  obd_interface
-
-val make_custom_decoding_interface :
-  name:custom_decoding_signal_interface_name -> unit -> custom_decoding_interface
-
-val make_network_interface :
-  ?custom_decoding_interface:custom_decoding_interface ->
-  ?vehicle_middleware:vehicle_middleware ->
-  ?obd_interface:obd_interface ->
-  ?can_interface:can_interface ->
-  type_:network_interface_type ->
-  interface_id:interface_id ->
-  unit ->
-  network_interface
-
-val make_update_decoder_manifest_request :
-  ?default_for_unmapped_signals:default_for_unmapped_signals_type ->
-  ?status:manifest_status ->
-  ?network_interfaces_to_remove:interface_ids ->
-  ?network_interfaces_to_update:network_interfaces ->
-  ?network_interfaces_to_add:network_interfaces ->
-  ?signal_decoders_to_remove:fqns ->
-  ?signal_decoders_to_update:signal_decoders ->
-  ?signal_decoders_to_add:signal_decoders ->
-  ?description:description ->
-  name:resource_name ->
-  unit ->
-  update_decoder_manifest_request
-
-val make_invalid_signal_decoder :
-  ?hint:message ->
-  ?reason:signal_decoder_failure_reason ->
-  ?name:fully_qualified_name ->
-  unit ->
-  invalid_signal_decoder
-
-val make_invalid_network_interface :
-  ?reason:network_interface_failure_reason ->
-  ?interface_id:interface_id ->
-  unit ->
-  invalid_network_interface
-
-val make_update_campaign_response :
-  ?status:campaign_status ->
-  ?name:campaign_name ->
-  ?arn:campaign_arn ->
-  unit ->
-  update_campaign_response
-
-val make_update_campaign_request :
-  ?data_extra_dimensions:data_extra_dimension_node_path_list ->
-  ?description:description ->
-  action:update_campaign_action ->
-  name:campaign_name ->
-  unit ->
-  update_campaign_request
-
-val make_untag_resource_response : unit -> unit
-
-val make_untag_resource_request :
-  tag_keys:tag_key_list -> resource_ar_n:amazon_resource_name -> unit -> untag_resource_request
-
-val make_timestream_resources :
-  timestream_table_name:timestream_table_name ->
-  timestream_database_name:timestream_database_name ->
-  unit ->
-  timestream_resources
-
-val make_timestream_registration_response :
-  ?error_message:error_message ->
-  ?timestream_table_arn:arn ->
-  ?timestream_database_arn:arn ->
-  registration_status:registration_status ->
-  timestream_table_name:timestream_table_name ->
-  timestream_database_name:timestream_database_name ->
-  unit ->
-  timestream_registration_response
-
-val make_timestream_config :
-  execution_role_arn:iam_role_arn ->
-  timestream_table_arn:timestream_table_arn ->
-  unit ->
-  timestream_config
-
-val make_time_based_signal_fetch_config :
-  execution_frequency_ms:positive_long -> unit -> time_based_signal_fetch_config
-
-val make_time_based_collection_scheme :
-  period_ms:collection_period_ms -> unit -> time_based_collection_scheme
-
-val make_tag_resource_response : unit -> unit
-
-val make_tag_resource_request :
-  tags:tag_list -> resource_ar_n:amazon_resource_name -> unit -> tag_resource_request
-
-val make_storage_minimum_time_to_live :
-  value:storage_minimum_time_to_live_value ->
-  unit_:storage_minimum_time_to_live_unit ->
-  unit ->
-  storage_minimum_time_to_live
-
-val make_storage_maximum_size :
-  value:storage_maximum_size_value ->
-  unit_:storage_maximum_size_unit ->
-  unit ->
-  storage_maximum_size
-
-val make_state_template_summary :
-  ?id:resource_unique_id ->
-  ?last_modification_time:timestamp ->
-  ?creation_time:timestamp ->
-  ?description:description ->
-  ?signal_catalog_arn:arn ->
-  ?arn:arn ->
-  ?name:resource_name ->
-  unit ->
-  state_template_summary
-
-val make_signal_information :
-  ?data_partition_id:data_partition_id ->
-  ?minimum_sampling_interval_ms:uint32 ->
-  ?max_sample_count:max_sample_count ->
-  name:wildcard_signal_name ->
-  unit ->
-  signal_information
-
-val make_condition_based_signal_fetch_config :
-  trigger_mode:trigger_mode ->
-  condition_expression:fetch_config_event_expression ->
-  unit ->
-  condition_based_signal_fetch_config
-
-val make_signal_fetch_information :
-  ?condition_language_version:language_version ->
-  actions:event_expression_list ->
-  signal_fetch_config:signal_fetch_config ->
-  fully_qualified_name:node_path ->
-  unit ->
-  signal_fetch_information
-
-val make_s3_config :
-  ?prefix:prefix ->
-  ?storage_compression_format:storage_compression_format ->
-  ?data_format:data_format ->
-  bucket_arn:s3_bucket_arn ->
-  unit ->
-  s3_config
-
-val make_iam_resources : role_arn:iam_role_arn -> unit -> iam_resources
-
-val make_register_account_response :
-  ?timestream_resources:timestream_resources ->
-  last_modification_time:timestamp ->
-  creation_time:timestamp ->
-  iam_resources:iam_resources ->
-  register_account_status:registration_status ->
-  unit ->
-  register_account_response
-
-val make_register_account_request :
-  ?iam_resources:iam_resources ->
-  ?timestream_resources:timestream_resources ->
-  unit ->
-  register_account_request
-
-val make_put_logging_options_response : unit -> unit
+  can_signal
 
 val make_cloud_watch_log_delivery_options :
   ?log_group_name:cloud_watch_log_group_name ->
@@ -525,13 +161,636 @@ val make_cloud_watch_log_delivery_options :
   unit ->
   cloud_watch_log_delivery_options
 
+val make_condition_based_collection_scheme :
+  ?minimum_trigger_interval_ms:uint32 ->
+  ?trigger_mode:trigger_mode ->
+  ?condition_language_version:language_version ->
+  expression:event_expression ->
+  unit ->
+  condition_based_collection_scheme
+
+val make_time_based_collection_scheme :
+  period_ms:collection_period_ms -> unit -> time_based_collection_scheme
+
+val make_condition_based_signal_fetch_config :
+  condition_expression:fetch_config_event_expression ->
+  trigger_mode:trigger_mode ->
+  unit ->
+  condition_based_signal_fetch_config
+
+val make_create_campaign_response :
+  ?name:campaign_name -> ?arn:campaign_arn -> unit -> create_campaign_response
+
+val make_time_based_signal_fetch_config :
+  execution_frequency_ms:positive_long -> unit -> time_based_signal_fetch_config
+
+val make_signal_fetch_information :
+  ?condition_language_version:language_version ->
+  fully_qualified_name:node_path ->
+  signal_fetch_config:signal_fetch_config ->
+  actions:event_expression_list ->
+  unit ->
+  signal_fetch_information
+
+val make_data_partition_upload_options :
+  ?condition_language_version:language_version ->
+  expression:event_expression ->
+  unit ->
+  data_partition_upload_options
+
+val make_storage_minimum_time_to_live :
+  unit_:storage_minimum_time_to_live_unit ->
+  value:storage_minimum_time_to_live_value ->
+  unit ->
+  storage_minimum_time_to_live
+
+val make_storage_maximum_size :
+  unit_:storage_maximum_size_unit ->
+  value:storage_maximum_size_value ->
+  unit ->
+  storage_maximum_size
+
+val make_data_partition_storage_options :
+  maximum_size:storage_maximum_size ->
+  storage_location:storage_location ->
+  minimum_time_to_live:storage_minimum_time_to_live ->
+  unit ->
+  data_partition_storage_options
+
+val make_data_partition :
+  ?upload_options:data_partition_upload_options ->
+  id:data_partition_id ->
+  storage_options:data_partition_storage_options ->
+  unit ->
+  data_partition
+
+val make_mqtt_topic_config :
+  mqtt_topic_arn:mqtt_topic_arn -> execution_role_arn:iam_role_arn -> unit -> mqtt_topic_config
+
+val make_timestream_config :
+  timestream_table_arn:timestream_table_arn ->
+  execution_role_arn:iam_role_arn ->
+  unit ->
+  timestream_config
+
+val make_s3_config :
+  ?data_format:data_format ->
+  ?storage_compression_format:storage_compression_format ->
+  ?prefix:prefix ->
+  bucket_arn:s3_bucket_arn ->
+  unit ->
+  s3_config
+
+val make_signal_information :
+  ?max_sample_count:max_sample_count ->
+  ?minimum_sampling_interval_ms:uint32 ->
+  ?data_partition_id:data_partition_id ->
+  name:wildcard_signal_name ->
+  unit ->
+  signal_information
+
+val make_create_campaign_request :
+  ?description:description ->
+  ?start_time:timestamp ->
+  ?expiry_time:timestamp ->
+  ?post_trigger_collection_duration:uint32 ->
+  ?diagnostics_mode:diagnostics_mode ->
+  ?spooling_mode:spooling_mode ->
+  ?compression:compression ->
+  ?priority:priority ->
+  ?signals_to_collect:signal_information_list ->
+  ?data_extra_dimensions:data_extra_dimension_node_path_list ->
+  ?tags:tag_list ->
+  ?data_destination_configs:data_destination_configs ->
+  ?data_partitions:data_partitions ->
+  ?signals_to_fetch:signal_fetch_information_list ->
+  name:campaign_name ->
+  signal_catalog_arn:arn ->
+  target_arn:arn ->
+  collection_scheme:collection_scheme ->
+  unit ->
+  create_campaign_request
+
+val make_invalid_network_interface :
+  ?interface_id:interface_id ->
+  ?reason:network_interface_failure_reason ->
+  unit ->
+  invalid_network_interface
+
+val make_invalid_signal_decoder :
+  ?name:fully_qualified_name ->
+  ?reason:signal_decoder_failure_reason ->
+  ?hint:message ->
+  unit ->
+  invalid_signal_decoder
+
+val make_create_decoder_manifest_response :
+  name:resource_name -> arn:arn -> unit -> create_decoder_manifest_response
+
+val make_custom_decoding_interface :
+  name:custom_decoding_signal_interface_name -> unit -> custom_decoding_interface
+
+val make_vehicle_middleware :
+  name:vehicle_middleware_name ->
+  protocol_name:vehicle_middleware_protocol ->
+  unit ->
+  vehicle_middleware
+
+val make_obd_interface :
+  ?obd_standard:obd_standard ->
+  ?pid_request_interval_seconds:non_negative_integer ->
+  ?dtc_request_interval_seconds:non_negative_integer ->
+  ?use_extended_ids:Smaws_Lib.Smithy_api.Types.primitive_boolean ->
+  ?has_transmission_ecu:Smaws_Lib.Smithy_api.Types.primitive_boolean ->
+  name:obd_interface_name ->
+  request_message_id:non_negative_integer ->
+  unit ->
+  obd_interface
+
+val make_network_interface :
+  ?can_interface:can_interface ->
+  ?obd_interface:obd_interface ->
+  ?vehicle_middleware:vehicle_middleware ->
+  ?custom_decoding_interface:custom_decoding_interface ->
+  interface_id:interface_id ->
+  type_:network_interface_type ->
+  unit ->
+  network_interface
+
+val make_custom_decoding_signal : id:custom_decoding_id -> unit -> custom_decoding_signal
+
+val make_ros2_primitive_message_definition :
+  ?offset:double ->
+  ?scaling:double ->
+  ?upper_bound:max_string_size ->
+  primitive_type:ros2_primitive_type ->
+  unit ->
+  ros2_primitive_message_definition
+
+val make_structured_message_list_definition :
+  ?capacity:non_negative_integer ->
+  name:structure_message_name ->
+  member_type:structured_message ->
+  list_type:structured_message_list_type ->
+  unit ->
+  structured_message_list_definition
+
+val make_structured_message_field_name_and_data_type_pair :
+  field_name:structure_message_name ->
+  data_type:structured_message ->
+  unit ->
+  structured_message_field_name_and_data_type_pair
+
+val make_message_signal :
+  topic_name:topic_name -> structured_message:structured_message -> unit -> message_signal
+
+val make_obd_signal :
+  ?bit_right_shift:non_negative_integer ->
+  ?bit_mask_length:obd_bitmask_length ->
+  ?is_signed:Smaws_Lib.Smithy_api.Types.primitive_boolean ->
+  ?signal_value_type:signal_value_type ->
+  pid_response_length:positive_integer ->
+  service_mode:non_negative_integer ->
+  pid:non_negative_integer ->
+  scaling:double ->
+  offset:double ->
+  start_byte:non_negative_integer ->
+  byte_length:obd_byte_length ->
+  unit ->
+  obd_signal
+
+val make_signal_decoder :
+  ?can_signal:can_signal ->
+  ?obd_signal:obd_signal ->
+  ?message_signal:message_signal ->
+  ?custom_decoding_signal:custom_decoding_signal ->
+  fully_qualified_name:fully_qualified_name ->
+  type_:signal_decoder_type ->
+  interface_id:interface_id ->
+  unit ->
+  signal_decoder
+
+val make_create_decoder_manifest_request :
+  ?description:description ->
+  ?signal_decoders:signal_decoders ->
+  ?network_interfaces:network_interfaces ->
+  ?default_for_unmapped_signals:default_for_unmapped_signals_type ->
+  ?tags:tag_list ->
+  name:resource_name ->
+  model_manifest_arn:arn ->
+  unit ->
+  create_decoder_manifest_request
+
+val make_create_fleet_response : id:fleet_id -> arn:arn -> unit -> create_fleet_response
+
+val make_create_fleet_request :
+  ?description:description ->
+  ?tags:tag_list ->
+  fleet_id:fleet_id ->
+  signal_catalog_arn:arn ->
+  unit ->
+  create_fleet_request
+
+val make_invalid_signal : ?name:fully_qualified_name -> ?reason:string_ -> unit -> invalid_signal
+
+val make_create_model_manifest_response :
+  name:resource_name -> arn:arn -> unit -> create_model_manifest_response
+
+val make_create_model_manifest_request :
+  ?description:description ->
+  ?tags:tag_list ->
+  name:resource_name ->
+  nodes:list_of_strings ->
+  signal_catalog_arn:arn ->
+  unit ->
+  create_model_manifest_request
+
+val make_custom_property :
+  ?data_encoding:node_data_encoding ->
+  ?description:description ->
+  ?deprecation_message:message ->
+  ?comment:message ->
+  ?struct_fully_qualified_name:node_path ->
+  fully_qualified_name:string_ ->
+  data_type:node_data_type ->
+  unit ->
+  custom_property
+
+val make_custom_struct :
+  ?description:description ->
+  ?deprecation_message:message ->
+  ?comment:message ->
+  fully_qualified_name:string_ ->
+  unit ->
+  custom_struct
+
+val make_sensor :
+  ?description:description ->
+  ?unit_:string_ ->
+  ?allowed_values:list_of_strings ->
+  ?min:double ->
+  ?max:double ->
+  ?deprecation_message:message ->
+  ?comment:message ->
+  ?struct_fully_qualified_name:node_path ->
+  fully_qualified_name:string_ ->
+  data_type:node_data_type ->
+  unit ->
+  sensor
+
+val make_create_signal_catalog_response :
+  name:resource_name -> arn:arn -> unit -> create_signal_catalog_response
+
+val make_create_signal_catalog_request :
+  ?description:description ->
+  ?nodes:nodes ->
+  ?tags:tag_list ->
+  name:resource_name ->
+  unit ->
+  create_signal_catalog_request
+
+val make_create_state_template_response :
+  ?name:resource_name ->
+  ?arn:arn ->
+  ?id:resource_unique_id ->
+  unit ->
+  create_state_template_response
+
+val make_create_state_template_request :
+  ?description:description ->
+  ?data_extra_dimensions:state_template_data_extra_dimension_node_path_list ->
+  ?metadata_extra_dimensions:state_template_metadata_extra_dimension_node_path_list ->
+  ?tags:tag_list ->
+  name:resource_name ->
+  signal_catalog_arn:arn ->
+  state_template_properties:state_template_properties ->
+  unit ->
+  create_state_template_request
+
+val make_create_vehicle_response :
+  ?vehicle_name:vehicle_name -> ?arn:arn -> ?thing_arn:arn -> unit -> create_vehicle_response
+
+val make_create_vehicle_request :
+  ?attributes:attributes_map ->
+  ?association_behavior:vehicle_association_behavior ->
+  ?tags:tag_list ->
+  ?state_templates:state_template_associations ->
+  vehicle_name:vehicle_name ->
+  model_manifest_arn:arn ->
+  decoder_manifest_arn:arn ->
+  unit ->
+  create_vehicle_request
+
+val make_decoder_manifest_summary :
+  ?name:string_ ->
+  ?arn:arn ->
+  ?model_manifest_arn:arn ->
+  ?description:description ->
+  ?status:manifest_status ->
+  ?message:message ->
+  creation_time:timestamp ->
+  last_modification_time:timestamp ->
+  unit ->
+  decoder_manifest_summary
+
+val make_delete_campaign_response :
+  ?name:campaign_name -> ?arn:campaign_arn -> unit -> delete_campaign_response
+
+val make_delete_campaign_request : name:campaign_name -> unit -> delete_campaign_request
+
+val make_delete_decoder_manifest_response :
+  name:resource_name -> arn:arn -> unit -> delete_decoder_manifest_response
+
+val make_delete_decoder_manifest_request :
+  name:resource_name -> unit -> delete_decoder_manifest_request
+
+val make_delete_fleet_response : ?id:fleet_id -> ?arn:arn -> unit -> delete_fleet_response
+val make_delete_fleet_request : fleet_id:fleet_id -> unit -> delete_fleet_request
+
+val make_delete_model_manifest_response :
+  name:resource_name -> arn:arn -> unit -> delete_model_manifest_response
+
+val make_delete_model_manifest_request : name:resource_name -> unit -> delete_model_manifest_request
+
+val make_delete_signal_catalog_response :
+  name:resource_name -> arn:arn -> unit -> delete_signal_catalog_response
+
+val make_delete_signal_catalog_request : name:resource_name -> unit -> delete_signal_catalog_request
+
+val make_delete_state_template_response :
+  ?name:resource_name ->
+  ?arn:arn ->
+  ?id:resource_unique_id ->
+  unit ->
+  delete_state_template_response
+
+val make_delete_state_template_request :
+  identifier:resource_identifier -> unit -> delete_state_template_request
+
+val make_delete_vehicle_response :
+  vehicle_name:vehicle_name -> arn:arn -> unit -> delete_vehicle_response
+
+val make_delete_vehicle_request : vehicle_name:vehicle_name -> unit -> delete_vehicle_request
+val make_disassociate_vehicle_fleet_response : unit -> unit
+
+val make_disassociate_vehicle_fleet_request :
+  vehicle_name:vehicle_name -> fleet_id:fleet_id -> unit -> disassociate_vehicle_fleet_request
+
+val make_fleet_summary :
+  ?description:description ->
+  ?last_modification_time:timestamp ->
+  id:fleet_id ->
+  arn:arn ->
+  signal_catalog_arn:arn ->
+  creation_time:timestamp ->
+  unit ->
+  fleet_summary
+
+val make_get_campaign_response :
+  ?name:campaign_name ->
+  ?arn:campaign_arn ->
+  ?description:description ->
+  ?signal_catalog_arn:arn ->
+  ?target_arn:arn ->
+  ?status:campaign_status ->
+  ?start_time:timestamp ->
+  ?expiry_time:timestamp ->
+  ?post_trigger_collection_duration:uint32 ->
+  ?diagnostics_mode:diagnostics_mode ->
+  ?spooling_mode:spooling_mode ->
+  ?compression:compression ->
+  ?priority:priority ->
+  ?signals_to_collect:signal_information_list ->
+  ?collection_scheme:collection_scheme ->
+  ?data_extra_dimensions:data_extra_dimension_node_path_list ->
+  ?creation_time:timestamp ->
+  ?last_modification_time:timestamp ->
+  ?data_destination_configs:data_destination_configs ->
+  ?data_partitions:data_partitions ->
+  ?signals_to_fetch:signal_fetch_information_list ->
+  unit ->
+  get_campaign_response
+
+val make_get_campaign_request : name:campaign_name -> unit -> get_campaign_request
+
+val make_get_decoder_manifest_response :
+  ?description:description ->
+  ?model_manifest_arn:arn ->
+  ?status:manifest_status ->
+  ?message:message ->
+  name:string_ ->
+  arn:arn ->
+  creation_time:timestamp ->
+  last_modification_time:timestamp ->
+  unit ->
+  get_decoder_manifest_response
+
+val make_get_decoder_manifest_request : name:resource_name -> unit -> get_decoder_manifest_request
+
+val make_get_encryption_configuration_response :
+  ?kms_key_id:Smaws_Lib.Smithy_api.Types.string_ ->
+  ?error_message:error_message ->
+  ?creation_time:timestamp ->
+  ?last_modification_time:timestamp ->
+  encryption_status:encryption_status ->
+  encryption_type:encryption_type ->
+  unit ->
+  get_encryption_configuration_response
+
+val make_get_encryption_configuration_request : unit -> unit
+
+val make_get_fleet_response :
+  ?description:description ->
+  id:fleet_id ->
+  arn:arn ->
+  signal_catalog_arn:arn ->
+  creation_time:timestamp ->
+  last_modification_time:timestamp ->
+  unit ->
+  get_fleet_response
+
+val make_get_fleet_request : fleet_id:fleet_id -> unit -> get_fleet_request
+
+val make_get_logging_options_response :
+  cloud_watch_log_delivery:cloud_watch_log_delivery_options -> unit -> get_logging_options_response
+
+val make_get_logging_options_request : unit -> unit
+
+val make_get_model_manifest_response :
+  ?description:description ->
+  ?signal_catalog_arn:arn ->
+  ?status:manifest_status ->
+  name:resource_name ->
+  arn:arn ->
+  creation_time:timestamp ->
+  last_modification_time:timestamp ->
+  unit ->
+  get_model_manifest_response
+
+val make_get_model_manifest_request : name:resource_name -> unit -> get_model_manifest_request
+
+val make_iam_registration_response :
+  ?error_message:error_message ->
+  role_arn:arn ->
+  registration_status:registration_status ->
+  unit ->
+  iam_registration_response
+
+val make_timestream_registration_response :
+  ?timestream_database_arn:arn ->
+  ?timestream_table_arn:arn ->
+  ?error_message:error_message ->
+  timestream_database_name:timestream_database_name ->
+  timestream_table_name:timestream_table_name ->
+  registration_status:registration_status ->
+  unit ->
+  timestream_registration_response
+
+val make_get_register_account_status_response :
+  ?timestream_registration_response:timestream_registration_response ->
+  customer_account_id:customer_account_id ->
+  account_status:registration_status ->
+  iam_registration_response:iam_registration_response ->
+  creation_time:timestamp ->
+  last_modification_time:timestamp ->
+  unit ->
+  get_register_account_status_response
+
+val make_get_register_account_status_request : unit -> unit
+
+val make_node_counts :
+  ?total_nodes:number ->
+  ?total_branches:number ->
+  ?total_sensors:number ->
+  ?total_attributes:number ->
+  ?total_actuators:number ->
+  ?total_structs:number ->
+  ?total_properties:number ->
+  unit ->
+  node_counts
+
+val make_get_signal_catalog_response :
+  ?description:description ->
+  ?node_counts:node_counts ->
+  name:resource_name ->
+  arn:arn ->
+  creation_time:timestamp ->
+  last_modification_time:timestamp ->
+  unit ->
+  get_signal_catalog_response
+
+val make_get_signal_catalog_request : name:resource_name -> unit -> get_signal_catalog_request
+
+val make_get_state_template_response :
+  ?name:resource_name ->
+  ?arn:arn ->
+  ?description:description ->
+  ?signal_catalog_arn:arn ->
+  ?state_template_properties:state_template_properties ->
+  ?data_extra_dimensions:state_template_data_extra_dimension_node_path_list ->
+  ?metadata_extra_dimensions:state_template_metadata_extra_dimension_node_path_list ->
+  ?creation_time:timestamp ->
+  ?last_modification_time:timestamp ->
+  ?id:resource_unique_id ->
+  unit ->
+  get_state_template_response
+
+val make_get_state_template_request :
+  identifier:resource_identifier -> unit -> get_state_template_request
+
+val make_get_vehicle_response :
+  ?vehicle_name:vehicle_name ->
+  ?arn:arn ->
+  ?model_manifest_arn:arn ->
+  ?decoder_manifest_arn:arn ->
+  ?attributes:attributes_map ->
+  ?state_templates:state_template_associations ->
+  ?creation_time:timestamp ->
+  ?last_modification_time:timestamp ->
+  unit ->
+  get_vehicle_response
+
+val make_get_vehicle_request : vehicle_name:vehicle_name -> unit -> get_vehicle_request
+
+val make_vehicle_status :
+  ?campaign_name:campaign_name ->
+  ?vehicle_name:vehicle_name ->
+  ?status:vehicle_state ->
+  unit ->
+  vehicle_status
+
+val make_get_vehicle_status_response :
+  ?campaigns:vehicle_status_list -> ?next_token:next_token -> unit -> get_vehicle_status_response
+
+val make_get_vehicle_status_request :
+  ?next_token:next_token ->
+  ?max_results:max_results ->
+  vehicle_name:vehicle_name ->
+  unit ->
+  get_vehicle_status_request
+
+val make_iam_resources : role_arn:iam_role_arn -> unit -> iam_resources
+
+val make_import_decoder_manifest_response :
+  name:resource_name -> arn:arn -> unit -> import_decoder_manifest_response
+
+val make_import_decoder_manifest_request :
+  name:resource_name ->
+  network_file_definitions:network_file_definitions ->
+  unit ->
+  import_decoder_manifest_request
+
+val make_import_signal_catalog_response :
+  name:resource_name -> arn:arn -> unit -> import_signal_catalog_response
+
+val make_import_signal_catalog_request :
+  ?description:description ->
+  ?vss:formatted_vss ->
+  ?tags:tag_list ->
+  name:resource_name ->
+  unit ->
+  import_signal_catalog_request
+
+val make_untag_resource_response : unit -> unit
+
+val make_untag_resource_request :
+  resource_ar_n:amazon_resource_name -> tag_keys:tag_key_list -> unit -> untag_resource_request
+
+val make_tag_resource_response : unit -> unit
+
+val make_tag_resource_request :
+  resource_ar_n:amazon_resource_name -> tags:tag_list -> unit -> tag_resource_request
+
+val make_timestream_resources :
+  timestream_database_name:timestream_database_name ->
+  timestream_table_name:timestream_table_name ->
+  unit ->
+  timestream_resources
+
+val make_register_account_response :
+  ?timestream_resources:timestream_resources ->
+  register_account_status:registration_status ->
+  iam_resources:iam_resources ->
+  creation_time:timestamp ->
+  last_modification_time:timestamp ->
+  unit ->
+  register_account_response
+
+val make_register_account_request :
+  ?timestream_resources:timestream_resources ->
+  ?iam_resources:iam_resources ->
+  unit ->
+  register_account_request
+
+val make_put_logging_options_response : unit -> unit
+
 val make_put_logging_options_request :
   cloud_watch_log_delivery:cloud_watch_log_delivery_options -> unit -> put_logging_options_request
 
 val make_put_encryption_configuration_response :
   ?kms_key_id:Smaws_Lib.Smithy_api.Types.string_ ->
-  encryption_type:encryption_type ->
   encryption_status:encryption_status ->
+  encryption_type:encryption_type ->
   unit ->
   put_encryption_configuration_response
 
@@ -541,554 +800,295 @@ val make_put_encryption_configuration_request :
   unit ->
   put_encryption_configuration_request
 
-val make_node_counts :
-  ?total_properties:number ->
-  ?total_structs:number ->
-  ?total_actuators:number ->
-  ?total_attributes:number ->
-  ?total_sensors:number ->
-  ?total_branches:number ->
-  ?total_nodes:number ->
-  unit ->
-  node_counts
-
-val make_can_dbc_definition :
-  ?signals_map:model_signals_map ->
-  can_dbc_files:network_files_list ->
-  network_interface:interface_id ->
-  unit ->
-  can_dbc_definition
-
-val make_mqtt_topic_config :
-  execution_role_arn:iam_role_arn -> mqtt_topic_arn:mqtt_topic_arn -> unit -> mqtt_topic_config
-
-val make_list_vehicles_response :
-  ?next_token:next_token -> ?vehicle_summaries:vehicle_summaries -> unit -> list_vehicles_response
-
-val make_list_vehicles_request :
-  ?list_response_scope:list_response_scope ->
-  ?max_results:list_vehicles_max_results ->
-  ?next_token:next_token ->
-  ?attribute_values:attribute_values_list ->
-  ?attribute_names:attribute_names_list ->
-  ?model_manifest_arn:arn ->
-  unit ->
-  list_vehicles_request
-
-val make_list_vehicles_in_fleet_response :
-  ?next_token:next_token -> ?vehicles:vehicles -> unit -> list_vehicles_in_fleet_response
-
-val make_list_vehicles_in_fleet_request :
-  ?max_results:max_results ->
-  ?next_token:next_token ->
-  fleet_id:fleet_id ->
-  unit ->
-  list_vehicles_in_fleet_request
-
 val make_list_tags_for_resource_response : ?tags:tag_list -> unit -> list_tags_for_resource_response
 
 val make_list_tags_for_resource_request :
   resource_ar_n:amazon_resource_name -> unit -> list_tags_for_resource_request
 
-val make_list_state_templates_response :
-  ?next_token:next_token ->
-  ?summaries:state_template_summaries ->
-  unit ->
-  list_state_templates_response
-
-val make_list_state_templates_request :
-  ?list_response_scope:list_response_scope ->
-  ?max_results:max_results ->
-  ?next_token:next_token ->
-  unit ->
-  list_state_templates_request
-
-val make_list_signal_catalogs_response :
-  ?next_token:next_token ->
-  ?summaries:signal_catalog_summaries ->
-  unit ->
-  list_signal_catalogs_response
-
-val make_list_signal_catalogs_request :
-  ?max_results:max_results -> ?next_token:next_token -> unit -> list_signal_catalogs_request
-
-val make_list_signal_catalog_nodes_response :
-  ?next_token:next_token -> ?nodes:nodes -> unit -> list_signal_catalog_nodes_response
-
-val make_list_signal_catalog_nodes_request :
-  ?signal_node_type:signal_node_type ->
-  ?max_results:max_results ->
-  ?next_token:next_token ->
-  name:resource_name ->
-  unit ->
-  list_signal_catalog_nodes_request
-
-val make_list_model_manifests_response :
-  ?next_token:next_token ->
-  ?summaries:model_manifest_summaries ->
-  unit ->
-  list_model_manifests_response
-
-val make_list_model_manifests_request :
-  ?list_response_scope:list_response_scope ->
-  ?max_results:max_results ->
-  ?next_token:next_token ->
-  ?signal_catalog_arn:arn ->
-  unit ->
-  list_model_manifests_request
-
-val make_list_model_manifest_nodes_response :
-  ?next_token:next_token -> ?nodes:nodes -> unit -> list_model_manifest_nodes_response
-
-val make_list_model_manifest_nodes_request :
-  ?max_results:max_results ->
-  ?next_token:next_token ->
-  name:resource_name ->
-  unit ->
-  list_model_manifest_nodes_request
-
-val make_list_fleets_response :
-  ?next_token:next_token -> ?fleet_summaries:fleet_summaries -> unit -> list_fleets_response
-
-val make_list_fleets_request :
-  ?list_response_scope:list_response_scope ->
-  ?max_results:max_results ->
-  ?next_token:next_token ->
-  unit ->
-  list_fleets_request
-
-val make_list_fleets_for_vehicle_response :
-  ?next_token:next_token -> ?fleets:fleets -> unit -> list_fleets_for_vehicle_response
-
-val make_list_fleets_for_vehicle_request :
-  ?max_results:max_results ->
-  ?next_token:next_token ->
-  vehicle_name:vehicle_name ->
-  unit ->
-  list_fleets_for_vehicle_request
-
-val make_list_decoder_manifests_response :
-  ?next_token:next_token ->
-  ?summaries:decoder_manifest_summaries ->
-  unit ->
-  list_decoder_manifests_response
-
-val make_list_decoder_manifests_request :
-  ?list_response_scope:list_response_scope ->
-  ?max_results:max_results ->
-  ?next_token:next_token ->
-  ?model_manifest_arn:arn ->
-  unit ->
-  list_decoder_manifests_request
-
-val make_list_decoder_manifest_signals_response :
-  ?next_token:next_token ->
-  ?signal_decoders:signal_decoders ->
-  unit ->
-  list_decoder_manifest_signals_response
-
-val make_list_decoder_manifest_signals_request :
-  ?max_results:max_results ->
-  ?next_token:next_token ->
-  name:resource_name ->
-  unit ->
-  list_decoder_manifest_signals_request
-
-val make_list_decoder_manifest_network_interfaces_response :
-  ?next_token:next_token ->
-  ?network_interfaces:network_interfaces ->
-  unit ->
-  list_decoder_manifest_network_interfaces_response
-
-val make_list_decoder_manifest_network_interfaces_request :
-  ?max_results:max_results ->
-  ?next_token:next_token ->
-  name:resource_name ->
-  unit ->
-  list_decoder_manifest_network_interfaces_request
-
 val make_list_campaigns_response :
-  ?next_token:next_token ->
   ?campaign_summaries:campaign_summaries ->
+  ?next_token:next_token ->
   unit ->
   list_campaigns_response
 
 val make_list_campaigns_request :
-  ?list_response_scope:list_response_scope ->
-  ?status:status_str ->
-  ?max_results:max_results ->
   ?next_token:next_token ->
+  ?max_results:max_results ->
+  ?status:status_str ->
+  ?list_response_scope:list_response_scope ->
   unit ->
   list_campaigns_request
 
-val make_get_vehicle_status_response :
-  ?next_token:next_token -> ?campaigns:vehicle_status_list -> unit -> get_vehicle_status_response
-
-val make_get_vehicle_status_request :
-  ?max_results:max_results ->
+val make_list_decoder_manifest_network_interfaces_response :
+  ?network_interfaces:network_interfaces ->
   ?next_token:next_token ->
+  unit ->
+  list_decoder_manifest_network_interfaces_response
+
+val make_list_decoder_manifest_network_interfaces_request :
+  ?next_token:next_token ->
+  ?max_results:max_results ->
+  name:resource_name ->
+  unit ->
+  list_decoder_manifest_network_interfaces_request
+
+val make_list_decoder_manifest_signals_response :
+  ?signal_decoders:signal_decoders ->
+  ?next_token:next_token ->
+  unit ->
+  list_decoder_manifest_signals_response
+
+val make_list_decoder_manifest_signals_request :
+  ?next_token:next_token ->
+  ?max_results:max_results ->
+  name:resource_name ->
+  unit ->
+  list_decoder_manifest_signals_request
+
+val make_list_decoder_manifests_response :
+  ?summaries:decoder_manifest_summaries ->
+  ?next_token:next_token ->
+  unit ->
+  list_decoder_manifests_response
+
+val make_list_decoder_manifests_request :
+  ?model_manifest_arn:arn ->
+  ?next_token:next_token ->
+  ?max_results:max_results ->
+  ?list_response_scope:list_response_scope ->
+  unit ->
+  list_decoder_manifests_request
+
+val make_list_fleets_response :
+  ?fleet_summaries:fleet_summaries -> ?next_token:next_token -> unit -> list_fleets_response
+
+val make_list_fleets_request :
+  ?next_token:next_token ->
+  ?max_results:max_results ->
+  ?list_response_scope:list_response_scope ->
+  unit ->
+  list_fleets_request
+
+val make_list_fleets_for_vehicle_response :
+  ?fleets:fleets -> ?next_token:next_token -> unit -> list_fleets_for_vehicle_response
+
+val make_list_fleets_for_vehicle_request :
+  ?next_token:next_token ->
+  ?max_results:max_results ->
   vehicle_name:vehicle_name ->
   unit ->
-  get_vehicle_status_request
+  list_fleets_for_vehicle_request
 
-val make_iam_registration_response :
-  ?error_message:error_message ->
-  registration_status:registration_status ->
-  role_arn:arn ->
-  unit ->
-  iam_registration_response
+val make_list_model_manifest_nodes_response :
+  ?nodes:nodes -> ?next_token:next_token -> unit -> list_model_manifest_nodes_response
 
-val make_get_register_account_status_response :
-  ?timestream_registration_response:timestream_registration_response ->
-  last_modification_time:timestamp ->
-  creation_time:timestamp ->
-  iam_registration_response:iam_registration_response ->
-  account_status:registration_status ->
-  customer_account_id:customer_account_id ->
-  unit ->
-  get_register_account_status_response
-
-val make_get_register_account_status_request : unit -> unit
-
-val make_get_logging_options_response :
-  cloud_watch_log_delivery:cloud_watch_log_delivery_options -> unit -> get_logging_options_response
-
-val make_get_logging_options_request : unit -> unit
-
-val make_get_encryption_configuration_response :
-  ?last_modification_time:timestamp ->
-  ?creation_time:timestamp ->
-  ?error_message:error_message ->
-  ?kms_key_id:Smaws_Lib.Smithy_api.Types.string_ ->
-  encryption_type:encryption_type ->
-  encryption_status:encryption_status ->
-  unit ->
-  get_encryption_configuration_response
-
-val make_get_encryption_configuration_request : unit -> unit
-
-val make_batch_update_vehicle_response :
-  ?errors:update_vehicle_errors ->
-  ?vehicles:update_vehicle_response_items ->
-  unit ->
-  batch_update_vehicle_response
-
-val make_batch_update_vehicle_request :
-  vehicles:update_vehicle_request_items -> unit -> batch_update_vehicle_request
-
-val make_batch_create_vehicle_response :
-  ?errors:create_vehicle_errors ->
-  ?vehicles:create_vehicle_responses ->
-  unit ->
-  batch_create_vehicle_response
-
-val make_batch_create_vehicle_request :
-  vehicles:create_vehicle_request_items -> unit -> batch_create_vehicle_request
-
-val make_import_signal_catalog_response :
-  arn:arn -> name:resource_name -> unit -> import_signal_catalog_response
-
-val make_import_signal_catalog_request :
-  ?tags:tag_list ->
-  ?vss:formatted_vss ->
-  ?description:description ->
+val make_list_model_manifest_nodes_request :
+  ?next_token:next_token ->
+  ?max_results:max_results ->
   name:resource_name ->
   unit ->
-  import_signal_catalog_request
+  list_model_manifest_nodes_request
 
-val make_import_decoder_manifest_response :
-  arn:arn -> name:resource_name -> unit -> import_decoder_manifest_response
-
-val make_import_decoder_manifest_request :
-  network_file_definitions:network_file_definitions ->
-  name:resource_name ->
-  unit ->
-  import_decoder_manifest_request
-
-val make_get_vehicle_response :
-  ?last_modification_time:timestamp ->
-  ?creation_time:timestamp ->
-  ?state_templates:state_template_associations ->
-  ?attributes:attributes_map ->
-  ?decoder_manifest_arn:arn ->
-  ?model_manifest_arn:arn ->
+val make_model_manifest_summary :
+  ?name:string_ ->
   ?arn:arn ->
-  ?vehicle_name:vehicle_name ->
-  unit ->
-  get_vehicle_response
-
-val make_get_vehicle_request : vehicle_name:vehicle_name -> unit -> get_vehicle_request
-
-val make_get_state_template_response :
-  ?id:resource_unique_id ->
-  ?last_modification_time:timestamp ->
-  ?creation_time:timestamp ->
-  ?metadata_extra_dimensions:state_template_metadata_extra_dimension_node_path_list ->
-  ?data_extra_dimensions:state_template_data_extra_dimension_node_path_list ->
-  ?state_template_properties:state_template_properties ->
   ?signal_catalog_arn:arn ->
   ?description:description ->
-  ?arn:arn ->
-  ?name:resource_name ->
-  unit ->
-  get_state_template_response
-
-val make_get_state_template_request :
-  identifier:resource_identifier -> unit -> get_state_template_request
-
-val make_get_signal_catalog_response :
-  ?node_counts:node_counts ->
-  ?description:description ->
-  last_modification_time:timestamp ->
-  creation_time:timestamp ->
-  arn:arn ->
-  name:resource_name ->
-  unit ->
-  get_signal_catalog_response
-
-val make_get_signal_catalog_request : name:resource_name -> unit -> get_signal_catalog_request
-
-val make_get_model_manifest_response :
   ?status:manifest_status ->
-  ?signal_catalog_arn:arn ->
-  ?description:description ->
-  last_modification_time:timestamp ->
   creation_time:timestamp ->
-  arn:arn ->
+  last_modification_time:timestamp ->
+  unit ->
+  model_manifest_summary
+
+val make_list_model_manifests_response :
+  ?summaries:model_manifest_summaries ->
+  ?next_token:next_token ->
+  unit ->
+  list_model_manifests_response
+
+val make_list_model_manifests_request :
+  ?signal_catalog_arn:arn ->
+  ?next_token:next_token ->
+  ?max_results:max_results ->
+  ?list_response_scope:list_response_scope ->
+  unit ->
+  list_model_manifests_request
+
+val make_list_signal_catalog_nodes_response :
+  ?nodes:nodes -> ?next_token:next_token -> unit -> list_signal_catalog_nodes_response
+
+val make_list_signal_catalog_nodes_request :
+  ?next_token:next_token ->
+  ?max_results:max_results ->
+  ?signal_node_type:signal_node_type ->
   name:resource_name ->
   unit ->
-  get_model_manifest_response
+  list_signal_catalog_nodes_request
 
-val make_get_model_manifest_request : name:resource_name -> unit -> get_model_manifest_request
-
-val make_get_fleet_response :
-  ?description:description ->
-  last_modification_time:timestamp ->
-  creation_time:timestamp ->
-  signal_catalog_arn:arn ->
-  arn:arn ->
-  id:fleet_id ->
-  unit ->
-  get_fleet_response
-
-val make_get_fleet_request : fleet_id:fleet_id -> unit -> get_fleet_request
-
-val make_get_decoder_manifest_response :
-  ?message:message ->
-  ?status:manifest_status ->
-  ?model_manifest_arn:arn ->
-  ?description:description ->
-  last_modification_time:timestamp ->
-  creation_time:timestamp ->
-  arn:arn ->
-  name:string_ ->
-  unit ->
-  get_decoder_manifest_response
-
-val make_get_decoder_manifest_request : name:resource_name -> unit -> get_decoder_manifest_request
-
-val make_condition_based_collection_scheme :
-  ?condition_language_version:language_version ->
-  ?trigger_mode:trigger_mode ->
-  ?minimum_trigger_interval_ms:uint32 ->
-  expression:event_expression ->
-  unit ->
-  condition_based_collection_scheme
-
-val make_data_partition_storage_options :
-  minimum_time_to_live:storage_minimum_time_to_live ->
-  storage_location:storage_location ->
-  maximum_size:storage_maximum_size ->
-  unit ->
-  data_partition_storage_options
-
-val make_data_partition_upload_options :
-  ?condition_language_version:language_version ->
-  expression:event_expression ->
-  unit ->
-  data_partition_upload_options
-
-val make_data_partition :
-  ?upload_options:data_partition_upload_options ->
-  storage_options:data_partition_storage_options ->
-  id:data_partition_id ->
-  unit ->
-  data_partition
-
-val make_get_campaign_response :
-  ?signals_to_fetch:signal_fetch_information_list ->
-  ?data_partitions:data_partitions ->
-  ?data_destination_configs:data_destination_configs ->
-  ?last_modification_time:timestamp ->
+val make_signal_catalog_summary :
+  ?name:string_ ->
+  ?arn:arn ->
   ?creation_time:timestamp ->
-  ?data_extra_dimensions:data_extra_dimension_node_path_list ->
-  ?collection_scheme:collection_scheme ->
-  ?signals_to_collect:signal_information_list ->
-  ?priority:priority ->
-  ?compression:compression ->
-  ?spooling_mode:spooling_mode ->
-  ?diagnostics_mode:diagnostics_mode ->
-  ?post_trigger_collection_duration:uint32 ->
-  ?expiry_time:timestamp ->
-  ?start_time:timestamp ->
-  ?status:campaign_status ->
-  ?target_arn:arn ->
+  ?last_modification_time:timestamp ->
+  unit ->
+  signal_catalog_summary
+
+val make_list_signal_catalogs_response :
+  ?summaries:signal_catalog_summaries ->
+  ?next_token:next_token ->
+  unit ->
+  list_signal_catalogs_response
+
+val make_list_signal_catalogs_request :
+  ?next_token:next_token -> ?max_results:max_results -> unit -> list_signal_catalogs_request
+
+val make_state_template_summary :
+  ?name:resource_name ->
+  ?arn:arn ->
   ?signal_catalog_arn:arn ->
   ?description:description ->
-  ?arn:campaign_arn ->
-  ?name:campaign_name ->
-  unit ->
-  get_campaign_response
-
-val make_get_campaign_request : name:campaign_name -> unit -> get_campaign_request
-val make_disassociate_vehicle_fleet_response : unit -> unit
-
-val make_disassociate_vehicle_fleet_request :
-  fleet_id:fleet_id -> vehicle_name:vehicle_name -> unit -> disassociate_vehicle_fleet_request
-
-val make_delete_vehicle_response :
-  arn:arn -> vehicle_name:vehicle_name -> unit -> delete_vehicle_response
-
-val make_delete_vehicle_request : vehicle_name:vehicle_name -> unit -> delete_vehicle_request
-
-val make_delete_state_template_response :
+  ?creation_time:timestamp ->
+  ?last_modification_time:timestamp ->
   ?id:resource_unique_id ->
-  ?arn:arn ->
-  ?name:resource_name ->
   unit ->
-  delete_state_template_response
+  state_template_summary
 
-val make_delete_state_template_request :
-  identifier:resource_identifier -> unit -> delete_state_template_request
+val make_list_state_templates_response :
+  ?summaries:state_template_summaries ->
+  ?next_token:next_token ->
+  unit ->
+  list_state_templates_response
 
-val make_delete_signal_catalog_response :
-  arn:arn -> name:resource_name -> unit -> delete_signal_catalog_response
+val make_list_state_templates_request :
+  ?next_token:next_token ->
+  ?max_results:max_results ->
+  ?list_response_scope:list_response_scope ->
+  unit ->
+  list_state_templates_request
 
-val make_delete_signal_catalog_request : name:resource_name -> unit -> delete_signal_catalog_request
-
-val make_delete_model_manifest_response :
-  arn:arn -> name:resource_name -> unit -> delete_model_manifest_response
-
-val make_delete_model_manifest_request : name:resource_name -> unit -> delete_model_manifest_request
-val make_delete_fleet_response : ?arn:arn -> ?id:fleet_id -> unit -> delete_fleet_response
-val make_delete_fleet_request : fleet_id:fleet_id -> unit -> delete_fleet_request
-
-val make_delete_decoder_manifest_response :
-  arn:arn -> name:resource_name -> unit -> delete_decoder_manifest_response
-
-val make_delete_decoder_manifest_request :
-  name:resource_name -> unit -> delete_decoder_manifest_request
-
-val make_delete_campaign_response :
-  ?arn:campaign_arn -> ?name:campaign_name -> unit -> delete_campaign_response
-
-val make_delete_campaign_request : name:campaign_name -> unit -> delete_campaign_request
-
-val make_create_vehicle_response :
-  ?thing_arn:arn -> ?arn:arn -> ?vehicle_name:vehicle_name -> unit -> create_vehicle_response
-
-val make_create_vehicle_request :
-  ?state_templates:state_template_associations ->
-  ?tags:tag_list ->
-  ?association_behavior:vehicle_association_behavior ->
+val make_vehicle_summary :
   ?attributes:attributes_map ->
-  decoder_manifest_arn:arn ->
+  vehicle_name:vehicle_name ->
+  arn:arn ->
   model_manifest_arn:arn ->
-  vehicle_name:vehicle_name ->
+  decoder_manifest_arn:arn ->
+  creation_time:timestamp ->
+  last_modification_time:timestamp ->
   unit ->
-  create_vehicle_request
+  vehicle_summary
 
-val make_create_state_template_response :
-  ?id:resource_unique_id ->
-  ?arn:arn ->
-  ?name:resource_name ->
+val make_list_vehicles_response :
+  ?vehicle_summaries:vehicle_summaries -> ?next_token:next_token -> unit -> list_vehicles_response
+
+val make_list_vehicles_request :
+  ?model_manifest_arn:arn ->
+  ?attribute_names:attribute_names_list ->
+  ?attribute_values:attribute_values_list ->
+  ?next_token:next_token ->
+  ?max_results:list_vehicles_max_results ->
+  ?list_response_scope:list_response_scope ->
   unit ->
-  create_state_template_response
+  list_vehicles_request
 
-val make_create_state_template_request :
-  ?tags:tag_list ->
-  ?metadata_extra_dimensions:state_template_metadata_extra_dimension_node_path_list ->
-  ?data_extra_dimensions:state_template_data_extra_dimension_node_path_list ->
-  ?description:description ->
-  state_template_properties:state_template_properties ->
-  signal_catalog_arn:arn ->
-  name:resource_name ->
-  unit ->
-  create_state_template_request
+val make_list_vehicles_in_fleet_response :
+  ?vehicles:vehicles -> ?next_token:next_token -> unit -> list_vehicles_in_fleet_response
 
-val make_create_signal_catalog_response :
-  arn:arn -> name:resource_name -> unit -> create_signal_catalog_response
-
-val make_create_signal_catalog_request :
-  ?tags:tag_list ->
-  ?nodes:nodes ->
-  ?description:description ->
-  name:resource_name ->
-  unit ->
-  create_signal_catalog_request
-
-val make_create_model_manifest_response :
-  arn:arn -> name:resource_name -> unit -> create_model_manifest_response
-
-val make_create_model_manifest_request :
-  ?tags:tag_list ->
-  ?description:description ->
-  signal_catalog_arn:arn ->
-  nodes:list_of_strings ->
-  name:resource_name ->
-  unit ->
-  create_model_manifest_request
-
-val make_create_fleet_response : arn:arn -> id:fleet_id -> unit -> create_fleet_response
-
-val make_create_fleet_request :
-  ?tags:tag_list ->
-  ?description:description ->
-  signal_catalog_arn:arn ->
+val make_list_vehicles_in_fleet_request :
+  ?next_token:next_token ->
+  ?max_results:max_results ->
   fleet_id:fleet_id ->
   unit ->
-  create_fleet_request
+  list_vehicles_in_fleet_request
 
-val make_create_decoder_manifest_response :
-  arn:arn -> name:resource_name -> unit -> create_decoder_manifest_response
+val make_update_campaign_response :
+  ?arn:campaign_arn ->
+  ?name:campaign_name ->
+  ?status:campaign_status ->
+  unit ->
+  update_campaign_response
 
-val make_create_decoder_manifest_request :
-  ?tags:tag_list ->
-  ?default_for_unmapped_signals:default_for_unmapped_signals_type ->
-  ?network_interfaces:network_interfaces ->
-  ?signal_decoders:signal_decoders ->
+val make_update_campaign_request :
   ?description:description ->
-  model_manifest_arn:arn ->
+  ?data_extra_dimensions:data_extra_dimension_node_path_list ->
+  name:campaign_name ->
+  action:update_campaign_action ->
+  unit ->
+  update_campaign_request
+
+val make_update_decoder_manifest_response :
+  name:resource_name -> arn:arn -> unit -> update_decoder_manifest_response
+
+val make_update_decoder_manifest_request :
+  ?description:description ->
+  ?signal_decoders_to_add:signal_decoders ->
+  ?signal_decoders_to_update:signal_decoders ->
+  ?signal_decoders_to_remove:fqns ->
+  ?network_interfaces_to_add:network_interfaces ->
+  ?network_interfaces_to_update:network_interfaces ->
+  ?network_interfaces_to_remove:interface_ids ->
+  ?status:manifest_status ->
+  ?default_for_unmapped_signals:default_for_unmapped_signals_type ->
   name:resource_name ->
   unit ->
-  create_decoder_manifest_request
+  update_decoder_manifest_request
 
-val make_create_campaign_response :
-  ?arn:campaign_arn -> ?name:campaign_name -> unit -> create_campaign_response
+val make_update_fleet_response : ?id:fleet_id -> ?arn:arn -> unit -> update_fleet_response
 
-val make_create_campaign_request :
-  ?signals_to_fetch:signal_fetch_information_list ->
-  ?data_partitions:data_partitions ->
-  ?data_destination_configs:data_destination_configs ->
-  ?tags:tag_list ->
-  ?data_extra_dimensions:data_extra_dimension_node_path_list ->
-  ?signals_to_collect:signal_information_list ->
-  ?priority:priority ->
-  ?compression:compression ->
-  ?spooling_mode:spooling_mode ->
-  ?diagnostics_mode:diagnostics_mode ->
-  ?post_trigger_collection_duration:uint32 ->
-  ?expiry_time:timestamp ->
-  ?start_time:timestamp ->
+val make_update_fleet_request :
+  ?description:description -> fleet_id:fleet_id -> unit -> update_fleet_request
+
+val make_update_model_manifest_response :
+  name:resource_name -> arn:arn -> unit -> update_model_manifest_response
+
+val make_update_model_manifest_request :
   ?description:description ->
-  collection_scheme:collection_scheme ->
-  target_arn:arn ->
-  signal_catalog_arn:arn ->
-  name:campaign_name ->
+  ?nodes_to_add:node_paths ->
+  ?nodes_to_remove:node_paths ->
+  ?status:manifest_status ->
+  name:resource_name ->
   unit ->
-  create_campaign_request
+  update_model_manifest_request
 
-val make_associate_vehicle_fleet_response : unit -> unit
+val make_update_signal_catalog_response :
+  name:resource_name -> arn:arn -> unit -> update_signal_catalog_response
 
-val make_associate_vehicle_fleet_request :
-  fleet_id:fleet_id -> vehicle_name:vehicle_name -> unit -> associate_vehicle_fleet_request
+val make_update_signal_catalog_request :
+  ?description:description ->
+  ?nodes_to_add:nodes ->
+  ?nodes_to_update:nodes ->
+  ?nodes_to_remove:node_paths ->
+  name:resource_name ->
+  unit ->
+  update_signal_catalog_request
+
+val make_update_state_template_response :
+  ?name:resource_name ->
+  ?arn:arn ->
+  ?id:resource_unique_id ->
+  unit ->
+  update_state_template_response
+
+val make_update_state_template_request :
+  ?description:description ->
+  ?state_template_properties_to_add:state_template_properties ->
+  ?state_template_properties_to_remove:state_template_properties ->
+  ?data_extra_dimensions:state_template_data_extra_dimension_node_path_list ->
+  ?metadata_extra_dimensions:state_template_metadata_extra_dimension_node_path_list ->
+  identifier:resource_identifier ->
+  unit ->
+  update_state_template_request
+
+val make_update_vehicle_response :
+  ?vehicle_name:vehicle_name -> ?arn:arn -> unit -> update_vehicle_response
+
+val make_update_vehicle_request :
+  ?model_manifest_arn:arn ->
+  ?decoder_manifest_arn:arn ->
+  ?attributes:attributes_map ->
+  ?attribute_update_mode:update_mode ->
+  ?state_templates_to_add:state_template_associations ->
+  ?state_templates_to_remove:state_template_association_identifiers ->
+  ?state_templates_to_update:state_template_associations ->
+  vehicle_name:vehicle_name ->
+  unit ->
+  update_vehicle_request

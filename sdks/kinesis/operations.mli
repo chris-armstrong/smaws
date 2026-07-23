@@ -1,918 +1,5 @@
 open Types
 
-module AddTagsToStream : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InvalidArgumentException of invalid_argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_stream_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_stream_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds or updates tags for the specified Kinesis data stream. You can assign up to 50 tags to a \
-   data stream.\n\n\
-  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
-   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
-  \  \n\
-  \    If tags have already been assigned to the stream, [AddTagsToStream] overwrites any existing \
-   tags that correspond to the specified tag keys.\n\
-  \    \n\
-  \      [AddTagsToStream] has a limit of five transactions per second per account.\n\
-  \     "]
-
-module CreateStream : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidArgumentException of invalid_argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_stream_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_stream_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a Kinesis data stream. A stream captures and transports data records that are \
-   continuously emitted from different data sources or {i producers}. Scale-out within a stream is \
-   explicitly supported by means of shards, which are uniquely identified groups of data records \
-   in a stream.\n\n\
-  \ You can create your data stream using either on-demand or provisioned capacity mode. Data \
-   streams with an on-demand mode require no capacity planning and automatically scale to handle \
-   gigabytes of write and read throughput per minute. With the on-demand mode, Kinesis Data \
-   Streams automatically manages the shards in order to provide the necessary throughput.\n\
-  \ \n\
-  \  If you'd still like to proactively scale your on-demand data stream\226\128\153s capacity, \
-   you can unlock the warm throughput feature for on-demand data streams by enabling \
-   [MinimumThroughputBillingCommitment] for your account. Once your account has \
-   [MinimumThroughputBillingCommitment] enabled, you can specify the warm throughput in MiB per \
-   second that your stream can support in writes.\n\
-  \  \n\
-  \   For the data streams with a provisioned mode, you must specify the number of shards for the \
-   data stream. Each shard can support reads up to five transactions per second, up to a maximum \
-   data read total of 2 MiB per second. Each shard can support writes up to 1,000 records per \
-   second, up to a maximum data write total of 1 MiB per second. If the amount of data input \
-   increases or decreases, you can add or remove shards.\n\
-  \   \n\
-  \    The stream name identifies the stream. The name is scoped to the Amazon Web Services \
-   account used by the application. It is also scoped by Amazon Web Services Region. That is, two \
-   streams in two different accounts can have the same name, and two streams in the same account, \
-   but in two different Regions, can have the same name.\n\
-  \    \n\
-  \      [CreateStream] is an asynchronous operation. Upon receiving a [CreateStream] request, \
-   Kinesis Data Streams immediately returns and sets the stream status to [CREATING]. After the \
-   stream is created, Kinesis Data Streams sets the stream status to [ACTIVE]. You should perform \
-   read and write operations only on an [ACTIVE] stream. \n\
-  \     \n\
-  \      You receive a [LimitExceededException] when making a [CreateStream] request when you try \
-   to do one of the following:\n\
-  \      \n\
-  \       {ul\n\
-  \             {-  Have more than five streams in the [CREATING] state at any point in time.\n\
-  \                 \n\
-  \                  }\n\
-  \             {-  Create more shards than are authorized for your account.\n\
-  \                 \n\
-  \                  }\n\
-  \             }\n\
-  \   For the default shard or on-demand throughput limits for an Amazon Web Services account, see \
-   {{:https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html}Amazon Kinesis \
-   Data Streams Limits} in the {i Amazon Kinesis Data Streams Developer Guide}. To increase this \
-   limit, {{:https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html}contact Amazon \
-   Web Services Support}.\n\
-  \   \n\
-  \    You can use [DescribeStreamSummary] to check the stream status, which is returned in \
-   [StreamStatus].\n\
-  \    \n\
-  \      [CreateStream] has a limit of five transactions per second per account.\n\
-  \     \n\
-  \      You can add tags to the stream when making a [CreateStream] request by setting the [Tags] \
-   parameter. If you pass the [Tags] parameter, in addition to having the [kinesis:CreateStream] \
-   permission, you must also have the [kinesis:AddTagsToStream] permission for the stream that \
-   will be created. The [kinesis:TagResource] permission won\226\128\153t work to tag streams on \
-   creation. Tags will take effect from the [CREATING] status of the stream, but you can't make \
-   any updates to the tags until the stream is in [ACTIVE] state.\n\
-  \      "]
-
-module DecreaseStreamRetentionPeriod : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InvalidArgumentException of invalid_argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    decrease_stream_retention_period_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    decrease_stream_retention_period_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Decreases the Kinesis data stream's retention period, which is the length of time data records \
-   are accessible after they are added to the stream. The minimum value of a stream's retention \
-   period is 24 hours.\n\n\
-  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
-   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
-  \  \n\
-  \    This operation may result in lost data. For example, if the stream's retention period is 48 \
-   hours and is decreased to 24 hours, any data already in the stream that is older than 24 hours \
-   is inaccessible.\n\
-  \    "]
-
-module DeleteResourcePolicy : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InvalidArgumentException of invalid_argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_resource_policy_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_resource_policy_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Delete a policy for the specified data stream or consumer. Request patterns can be one of the \
-   following:\n\n\
-  \ {ul\n\
-  \       {-  Data stream pattern: [arn:aws.*:kinesis:.*:\\d{12}:.*stream/\\S+] \n\
-  \           \n\
-  \            }\n\
-  \       {-  Consumer pattern: \
-   [^(arn):aws.*:kinesis:.*:\\d{12}:.*stream\\/\\[a-zA-Z0-9_.-\\]+\\/consumer\\/\\[a-zA-Z0-9_.-\\]+:\\[0-9\\]+] \n\
-  \           \n\
-  \            }\n\
-  \       }\n\
-  \  "]
-
-module DeleteStream : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InvalidArgumentException of invalid_argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_stream_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_stream_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes a Kinesis data stream and all its shards and data. You must shut down any applications \
-   that are operating on the stream before you delete the stream. If an application attempts to \
-   operate on a deleted stream, it receives the exception [ResourceNotFoundException].\n\n\
-  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
-   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
-  \  \n\
-  \    If the stream is in the [ACTIVE] state, you can delete it. After a [DeleteStream] request, \
-   the specified stream is in the [DELETING] state until Kinesis Data Streams completes the \
-   deletion.\n\
-  \    \n\
-  \      {b Note:} Kinesis Data Streams might continue to accept data read and write operations, \
-   such as [PutRecord], [PutRecords], and [GetRecords], on a stream in the [DELETING] state until \
-   the stream deletion is complete.\n\
-  \     \n\
-  \      When you delete a stream, any shards in that stream are also deleted, and any tags are \
-   dissociated from the stream.\n\
-  \      \n\
-  \       You can use the [DescribeStreamSummary] operation to check the state of the stream, \
-   which is returned in [StreamStatus].\n\
-  \       \n\
-  \         [DeleteStream] has a limit of five transactions per second per account.\n\
-  \        "]
-
-module DeregisterStreamConsumer : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidArgumentException of invalid_argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    deregister_stream_consumer_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    deregister_stream_consumer_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "To deregister a consumer, provide its ARN. Alternatively, you can provide the ARN of the data \
-   stream and the name you gave the consumer when you registered it. You may also provide all \
-   three parameters, as long as they don't conflict with each other. If you don't know the name or \
-   ARN of the consumer that you want to deregister, you can use the [ListStreamConsumers] \
-   operation to get a list of the descriptions of all the consumers that are currently registered \
-   with a given data stream. The description of a consumer contains its name and ARN.\n\n\
-  \ This operation has a limit of five transactions per second per stream.\n\
-  \ "]
-
-module DescribeAccountSettings : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_account_settings_input ->
-    ( describe_account_settings_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
-    )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_account_settings_input ->
-    ( describe_account_settings_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Describes the account-level settings for Amazon Kinesis Data Streams. This operation returns \
-   information about the minimum throughput billing commitments and other account-level \
-   configurations.\n\n\
-  \ This API has a call limit of 5 transactions per second (TPS) for each Amazon Web Services \
-   account. TPS over 5 will initiate the [LimitExceededException].\n\
-  \ "]
-
-module DescribeLimits : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_limits_input ->
-    ( describe_limits_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
-    )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_limits_input ->
-    ( describe_limits_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Describes the shard limits and usage for the account.\n\n\
-  \ If you update your account limits, the old limits might be returned for a few minutes.\n\
-  \ \n\
-  \  This operation has a limit of one transaction per second per account.\n\
-  \  "]
-
-module DescribeStream : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InvalidArgumentException of invalid_argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_stream_input ->
-    ( describe_stream_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_stream_input ->
-    ( describe_stream_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Describes the specified Kinesis data stream.\n\n\
-  \  This API has been revised. It's highly recommended that you use the [DescribeStreamSummary] \
-   API to get a summarized description of the specified Kinesis data stream and the [ListShards] \
-   API to list the shards in a specified data stream and obtain information about each shard. \n\
-  \  \n\
-  \     When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, \
-   or both. It is recommended that you use the [StreamARN] input parameter when you invoke this \
-   API.\n\
-  \     \n\
-  \       The information returned includes the stream name, Amazon Resource Name (ARN), creation \
-   time, enhanced metric configuration, and shard map. The shard map is an array of shard objects. \
-   For each shard object, there is the hash key and sequence number ranges that the shard spans, \
-   and the IDs of any earlier shards that played in a role in creating the shard. Every record \
-   ingested in the stream is identified by a sequence number, which is assigned when the record is \
-   put into the stream.\n\
-  \       \n\
-  \        You can limit the number of shards returned by each call. For more information, see \
-   {{:https://docs.aws.amazon.com/kinesis/latest/dev/kinesis-using-sdk-java-retrieve-shards.html}Retrieving \
-   Shards from a Stream} in the {i Amazon Kinesis Data Streams Developer Guide}.\n\
-  \        \n\
-  \         There are no guarantees about the chronological order shards returned. To process \
-   shards in chronological order, use the ID of the parent shard to track the lineage to the \
-   oldest shard.\n\
-  \         \n\
-  \          This operation has a limit of 10 transactions per second per account.\n\
-  \          "]
-
-module DescribeStreamConsumer : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidArgumentException of invalid_argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_stream_consumer_input ->
-    ( describe_stream_consumer_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_stream_consumer_input ->
-    ( describe_stream_consumer_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "To get the description of a registered consumer, provide the ARN of the consumer. \
-   Alternatively, you can provide the ARN of the data stream and the name you gave the consumer \
-   when you registered it. You may also provide all three parameters, as long as they don't \
-   conflict with each other. If you don't know the name or ARN of the consumer that you want to \
-   describe, you can use the [ListStreamConsumers] operation to get a list of the descriptions of \
-   all the consumers that are currently registered with a given data stream.\n\n\
-  \ This operation has a limit of 20 transactions per second per stream.\n\
-  \ \n\
-  \   When making a cross-account call with [DescribeStreamConsumer], make sure to provide the ARN \
-   of the consumer. \n\
-  \   \n\
-  \    "]
-
-module DescribeStreamSummary : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InvalidArgumentException of invalid_argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_stream_summary_input ->
-    ( describe_stream_summary_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_stream_summary_input ->
-    ( describe_stream_summary_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides a summarized description of the specified Kinesis data stream without the shard list.\n\n\
-  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
-   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
-  \  \n\
-  \    The information returned includes the stream name, Amazon Resource Name (ARN), status, \
-   record retention period, approximate creation time, monitoring, encryption details, and open \
-   shard count. \n\
-  \    \n\
-  \      [DescribeStreamSummary] has a limit of 20 transactions per second per account.\n\
-  \     "]
-
-module DisableEnhancedMonitoring : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InvalidArgumentException of invalid_argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    disable_enhanced_monitoring_input ->
-    ( enhanced_monitoring_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    disable_enhanced_monitoring_input ->
-    ( enhanced_monitoring_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Disables enhanced monitoring.\n\n\
-  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
-   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
-  \  \n\
-  \   "]
-
-module EnableEnhancedMonitoring : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InvalidArgumentException of invalid_argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    enable_enhanced_monitoring_input ->
-    ( enhanced_monitoring_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    enable_enhanced_monitoring_input ->
-    ( enhanced_monitoring_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Enables enhanced Kinesis data stream monitoring for shard-level metrics.\n\n\
-  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
-   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
-  \  \n\
-  \   "]
-
-module GetRecords : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ExpiredIteratorException of expired_iterator_exception
-    | `InternalFailureException of internal_failure_exception
-    | `InvalidArgumentException of invalid_argument_exception
-    | `KMSAccessDeniedException of kms_access_denied_exception
-    | `KMSDisabledException of kms_disabled_exception
-    | `KMSInvalidStateException of kms_invalid_state_exception
-    | `KMSNotFoundException of kms_not_found_exception
-    | `KMSOptInRequired of kms_opt_in_required
-    | `KMSThrottlingException of kms_throttling_exception
-    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_records_input ->
-    ( get_records_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ExpiredIteratorException of expired_iterator_exception
-      | `InternalFailureException of internal_failure_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `KMSAccessDeniedException of kms_access_denied_exception
-      | `KMSDisabledException of kms_disabled_exception
-      | `KMSInvalidStateException of kms_invalid_state_exception
-      | `KMSNotFoundException of kms_not_found_exception
-      | `KMSOptInRequired of kms_opt_in_required
-      | `KMSThrottlingException of kms_throttling_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_records_input ->
-    ( get_records_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ExpiredIteratorException of expired_iterator_exception
-      | `InternalFailureException of internal_failure_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `KMSAccessDeniedException of kms_access_denied_exception
-      | `KMSDisabledException of kms_disabled_exception
-      | `KMSInvalidStateException of kms_invalid_state_exception
-      | `KMSNotFoundException of kms_not_found_exception
-      | `KMSOptInRequired of kms_opt_in_required
-      | `KMSThrottlingException of kms_throttling_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Gets data records from a Kinesis data stream's shard.\n\n\
-  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
-   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
-  \  \n\
-  \    Specify a shard iterator using the [ShardIterator] parameter. The shard iterator specifies \
-   the position in the shard from which you want to start reading data records sequentially. If \
-   there are no records available in the portion of the shard that the iterator points to, \
-   [GetRecords] returns an empty list. It might take multiple calls to get to a portion of the \
-   shard that contains records.\n\
-  \    \n\
-  \     You can scale by provisioning multiple shards per stream while considering service limits \
-   (for more information, see \
-   {{:https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html}Amazon Kinesis \
-   Data Streams Limits} in the {i Amazon Kinesis Data Streams Developer Guide}). Your application \
-   should have one thread per shard, each reading continuously from its stream. To read from a \
-   stream continually, call [GetRecords] in a loop. Use [GetShardIterator] to get the shard \
-   iterator to specify in the first [GetRecords] call. [GetRecords] returns a new shard iterator \
-   in [NextShardIterator]. Specify the shard iterator returned in [NextShardIterator] in \
-   subsequent calls to [GetRecords]. If the shard has been closed, the shard iterator can't return \
-   more data and [GetRecords] returns [null] in [NextShardIterator]. You can terminate the loop \
-   when the shard is closed, or when the shard iterator reaches the record with the sequence \
-   number or other attribute that marks it as the last record to process.\n\
-  \     \n\
-  \      Each data record can be up to 1 MiB in size, and each shard can read up to 2 MiB per \
-   second. You can ensure that your calls don't exceed the maximum supported size or throughput by \
-   using the [Limit] parameter to specify the maximum number of records that [GetRecords] can \
-   return. Consider your average record size when determining this limit. The maximum number of \
-   records that can be returned per call is 10,000.\n\
-  \      \n\
-  \       The size of the data returned by [GetRecords] varies depending on the utilization of the \
-   shard. It is recommended that consumer applications retrieve records via the [GetRecords] \
-   command using the 5 TPS limit to remain caught up. Retrieving records less frequently can lead \
-   to consumer applications falling behind. The maximum size of data that [GetRecords] can return \
-   is 10 MiB. If a call returns this amount of data, subsequent calls made within the next 5 \
-   seconds throw [ProvisionedThroughputExceededException]. If there is insufficient provisioned \
-   throughput on the stream, subsequent calls made within the next 1 second throw \
-   [ProvisionedThroughputExceededException]. [GetRecords] doesn't return any data when it throws \
-   an exception. For this reason, we recommend that you wait 1 second between calls to \
-   [GetRecords]. However, it's possible that the application will get exceptions for longer than 1 \
-   second.\n\
-  \       \n\
-  \        To detect whether the application is falling behind in processing, you can use the \
-   [MillisBehindLatest] response attribute. You can also monitor the stream using CloudWatch \
-   metrics and other mechanisms (see \
-   {{:https://docs.aws.amazon.com/kinesis/latest/dev/monitoring.html}Monitoring} in the {i Amazon \
-   Kinesis Data Streams Developer Guide}).\n\
-  \        \n\
-  \         Each Amazon Kinesis record includes a value, [ApproximateArrivalTimestamp], that is \
-   set when a stream successfully receives and stores a record. This is commonly referred to as a \
-   server-side time stamp, whereas a client-side time stamp is set when a data producer creates or \
-   sends the record to a stream (a data producer is any data source putting data records into a \
-   stream, for example with [PutRecords]). The time stamp has millisecond precision. There are no \
-   guarantees about the time stamp accuracy, or that the time stamp is always increasing. For \
-   example, records in a shard or across a stream might have time stamps that are out of order.\n\
-  \         \n\
-  \          This operation has a limit of five transactions per second per shard.\n\
-  \          "]
-
-module GetResourcePolicy : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InvalidArgumentException of invalid_argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_resource_policy_input ->
-    ( get_resource_policy_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_resource_policy_input ->
-    ( get_resource_policy_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns a policy attached to the specified data stream or consumer. Request patterns can be one \
-   of the following:\n\n\
-  \ {ul\n\
-  \       {-  Data stream pattern: [arn:aws.*:kinesis:.*:\\d{12}:.*stream/\\S+] \n\
-  \           \n\
-  \            }\n\
-  \       {-   Consumer pattern: \
-   [^(arn):aws.*:kinesis:.*:\\d{12}:.*stream\\/\\[a-zA-Z0-9_.-\\]+\\/consumer\\/\\[a-zA-Z0-9_.-\\]+:\\[0-9\\]+] \n\
-  \           \n\
-  \            }\n\
-  \       }\n\
-  \  "]
-
-module GetShardIterator : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalFailureException of internal_failure_exception
-    | `InvalidArgumentException of invalid_argument_exception
-    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_shard_iterator_input ->
-    ( get_shard_iterator_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalFailureException of internal_failure_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_shard_iterator_input ->
-    ( get_shard_iterator_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalFailureException of internal_failure_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Gets an Amazon Kinesis shard iterator. A shard iterator expires 5 minutes after it is returned \
-   to the requester.\n\n\
-  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
-   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
-  \  \n\
-  \    A shard iterator specifies the shard position from which to start reading data records \
-   sequentially. The position is specified using the sequence number of a data record in a shard. \
-   A sequence number is the identifier associated with every record ingested in the stream, and is \
-   assigned when a record is put into the stream. Each stream has one or more shards.\n\
-  \    \n\
-  \     You must specify the shard iterator type. For example, you can set the [ShardIteratorType] \
-   parameter to read exactly from the position denoted by a specific sequence number by using the \
-   [AT_SEQUENCE_NUMBER] shard iterator type. Alternatively, the parameter can read right after the \
-   sequence number by using the [AFTER_SEQUENCE_NUMBER] shard iterator type, using sequence \
-   numbers returned by earlier calls to [PutRecord], [PutRecords], [GetRecords], or \
-   [DescribeStream]. In the request, you can specify the shard iterator type [AT_TIMESTAMP] to \
-   read records from an arbitrary point in time, [TRIM_HORIZON] to cause [ShardIterator] to point \
-   to the last untrimmed record in the shard in the system (the oldest data record in the shard), \
-   or [LATEST] so that you always read the most recent data in the shard. \n\
-  \     \n\
-  \      When you read repeatedly from a stream, use a [GetShardIterator] request to get the first \
-   shard iterator for use in your first [GetRecords] request and for subsequent reads use the \
-   shard iterator returned by the [GetRecords] request in [NextShardIterator]. A new shard \
-   iterator is returned by every [GetRecords] request in [NextShardIterator], which you use in the \
-   [ShardIterator] parameter of the next [GetRecords] request. \n\
-  \      \n\
-  \       If a [GetShardIterator] request is made too often, you receive a \
-   [ProvisionedThroughputExceededException]. For more information about throughput limits, see \
-   [GetRecords], and \
-   {{:https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html}Streams Limits} \
-   in the {i Amazon Kinesis Data Streams Developer Guide}.\n\
-  \       \n\
-  \        If the shard is closed, [GetShardIterator] returns a valid iterator for the last \
-   sequence number of the shard. A shard can be closed as a result of using [SplitShard] or \
-   [MergeShards].\n\
-  \        \n\
-  \          [GetShardIterator] has a limit of five transactions per second per account per open \
-   shard.\n\
-  \         "]
-
-module IncreaseStreamRetentionPeriod : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InvalidArgumentException of invalid_argument_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceInUseException of resource_in_use_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    increase_stream_retention_period_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    increase_stream_retention_period_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InvalidArgumentException of invalid_argument_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceInUseException of resource_in_use_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Increases the Kinesis data stream's retention period, which is the length of time data records \
-   are accessible after they are added to the stream. The maximum value of a stream's retention \
-   period is 8760 hours (365 days).\n\n\
-  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
-   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
-  \  \n\
-  \    If you choose a longer stream retention period, this operation increases the time period \
-   during which records that have not yet expired are accessible. However, it does not make \
-   previous, expired data (older than the stream's previous retention period) accessible after the \
-   operation has been called. For example, if a stream's retention period is set to 24 hours and \
-   is increased to 168 hours, any data that is older than 24 hours remains inaccessible to \
-   consumer applications.\n\
-  \    "]
-
 module ListShards : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -2265,3 +1352,916 @@ end
    {{:https://console.aws.amazon.com/support/v1#/case/create?issueType=service-limit-increase&limitType=service-code-kinesis}limits \
    form}.\n\
   \   "]
+
+module IncreaseStreamRetentionPeriod : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    increase_stream_retention_period_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    increase_stream_retention_period_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Increases the Kinesis data stream's retention period, which is the length of time data records \
+   are accessible after they are added to the stream. The maximum value of a stream's retention \
+   period is 8760 hours (365 days).\n\n\
+  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
+   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
+  \  \n\
+  \    If you choose a longer stream retention period, this operation increases the time period \
+   during which records that have not yet expired are accessible. However, it does not make \
+   previous, expired data (older than the stream's previous retention period) accessible after the \
+   operation has been called. For example, if a stream's retention period is set to 24 hours and \
+   is increased to 168 hours, any data that is older than 24 hours remains inaccessible to \
+   consumer applications.\n\
+  \    "]
+
+module GetShardIterator : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalFailureException of internal_failure_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_shard_iterator_input ->
+    ( get_shard_iterator_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalFailureException of internal_failure_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_shard_iterator_input ->
+    ( get_shard_iterator_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalFailureException of internal_failure_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Gets an Amazon Kinesis shard iterator. A shard iterator expires 5 minutes after it is returned \
+   to the requester.\n\n\
+  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
+   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
+  \  \n\
+  \    A shard iterator specifies the shard position from which to start reading data records \
+   sequentially. The position is specified using the sequence number of a data record in a shard. \
+   A sequence number is the identifier associated with every record ingested in the stream, and is \
+   assigned when a record is put into the stream. Each stream has one or more shards.\n\
+  \    \n\
+  \     You must specify the shard iterator type. For example, you can set the [ShardIteratorType] \
+   parameter to read exactly from the position denoted by a specific sequence number by using the \
+   [AT_SEQUENCE_NUMBER] shard iterator type. Alternatively, the parameter can read right after the \
+   sequence number by using the [AFTER_SEQUENCE_NUMBER] shard iterator type, using sequence \
+   numbers returned by earlier calls to [PutRecord], [PutRecords], [GetRecords], or \
+   [DescribeStream]. In the request, you can specify the shard iterator type [AT_TIMESTAMP] to \
+   read records from an arbitrary point in time, [TRIM_HORIZON] to cause [ShardIterator] to point \
+   to the last untrimmed record in the shard in the system (the oldest data record in the shard), \
+   or [LATEST] so that you always read the most recent data in the shard. \n\
+  \     \n\
+  \      When you read repeatedly from a stream, use a [GetShardIterator] request to get the first \
+   shard iterator for use in your first [GetRecords] request and for subsequent reads use the \
+   shard iterator returned by the [GetRecords] request in [NextShardIterator]. A new shard \
+   iterator is returned by every [GetRecords] request in [NextShardIterator], which you use in the \
+   [ShardIterator] parameter of the next [GetRecords] request. \n\
+  \      \n\
+  \       If a [GetShardIterator] request is made too often, you receive a \
+   [ProvisionedThroughputExceededException]. For more information about throughput limits, see \
+   [GetRecords], and \
+   {{:https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html}Streams Limits} \
+   in the {i Amazon Kinesis Data Streams Developer Guide}.\n\
+  \       \n\
+  \        If the shard is closed, [GetShardIterator] returns a valid iterator for the last \
+   sequence number of the shard. A shard can be closed as a result of using [SplitShard] or \
+   [MergeShards].\n\
+  \        \n\
+  \          [GetShardIterator] has a limit of five transactions per second per account per open \
+   shard.\n\
+  \         "]
+
+module GetResourcePolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_resource_policy_input ->
+    ( get_resource_policy_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_resource_policy_input ->
+    ( get_resource_policy_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns a policy attached to the specified data stream or consumer. Request patterns can be one \
+   of the following:\n\n\
+  \ {ul\n\
+  \       {-  Data stream pattern: [arn:aws.*:kinesis:.*:\\d{12}:.*stream/\\S+] \n\
+  \           \n\
+  \            }\n\
+  \       {-   Consumer pattern: \
+   [^(arn):aws.*:kinesis:.*:\\d{12}:.*stream\\/\\[a-zA-Z0-9_.-\\]+\\/consumer\\/\\[a-zA-Z0-9_.-\\]+:\\[0-9\\]+] \n\
+  \           \n\
+  \            }\n\
+  \       }\n\
+  \  "]
+
+module GetRecords : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ExpiredIteratorException of expired_iterator_exception
+    | `InternalFailureException of internal_failure_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `KMSAccessDeniedException of kms_access_denied_exception
+    | `KMSDisabledException of kms_disabled_exception
+    | `KMSInvalidStateException of kms_invalid_state_exception
+    | `KMSNotFoundException of kms_not_found_exception
+    | `KMSOptInRequired of kms_opt_in_required
+    | `KMSThrottlingException of kms_throttling_exception
+    | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_records_input ->
+    ( get_records_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ExpiredIteratorException of expired_iterator_exception
+      | `InternalFailureException of internal_failure_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `KMSAccessDeniedException of kms_access_denied_exception
+      | `KMSDisabledException of kms_disabled_exception
+      | `KMSInvalidStateException of kms_invalid_state_exception
+      | `KMSNotFoundException of kms_not_found_exception
+      | `KMSOptInRequired of kms_opt_in_required
+      | `KMSThrottlingException of kms_throttling_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_records_input ->
+    ( get_records_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ExpiredIteratorException of expired_iterator_exception
+      | `InternalFailureException of internal_failure_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `KMSAccessDeniedException of kms_access_denied_exception
+      | `KMSDisabledException of kms_disabled_exception
+      | `KMSInvalidStateException of kms_invalid_state_exception
+      | `KMSNotFoundException of kms_not_found_exception
+      | `KMSOptInRequired of kms_opt_in_required
+      | `KMSThrottlingException of kms_throttling_exception
+      | `ProvisionedThroughputExceededException of provisioned_throughput_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Gets data records from a Kinesis data stream's shard.\n\n\
+  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
+   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
+  \  \n\
+  \    Specify a shard iterator using the [ShardIterator] parameter. The shard iterator specifies \
+   the position in the shard from which you want to start reading data records sequentially. If \
+   there are no records available in the portion of the shard that the iterator points to, \
+   [GetRecords] returns an empty list. It might take multiple calls to get to a portion of the \
+   shard that contains records.\n\
+  \    \n\
+  \     You can scale by provisioning multiple shards per stream while considering service limits \
+   (for more information, see \
+   {{:https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html}Amazon Kinesis \
+   Data Streams Limits} in the {i Amazon Kinesis Data Streams Developer Guide}). Your application \
+   should have one thread per shard, each reading continuously from its stream. To read from a \
+   stream continually, call [GetRecords] in a loop. Use [GetShardIterator] to get the shard \
+   iterator to specify in the first [GetRecords] call. [GetRecords] returns a new shard iterator \
+   in [NextShardIterator]. Specify the shard iterator returned in [NextShardIterator] in \
+   subsequent calls to [GetRecords]. If the shard has been closed, the shard iterator can't return \
+   more data and [GetRecords] returns [null] in [NextShardIterator]. You can terminate the loop \
+   when the shard is closed, or when the shard iterator reaches the record with the sequence \
+   number or other attribute that marks it as the last record to process.\n\
+  \     \n\
+  \      Each data record can be up to 1 MiB in size, and each shard can read up to 2 MiB per \
+   second. You can ensure that your calls don't exceed the maximum supported size or throughput by \
+   using the [Limit] parameter to specify the maximum number of records that [GetRecords] can \
+   return. Consider your average record size when determining this limit. The maximum number of \
+   records that can be returned per call is 10,000.\n\
+  \      \n\
+  \       The size of the data returned by [GetRecords] varies depending on the utilization of the \
+   shard. It is recommended that consumer applications retrieve records via the [GetRecords] \
+   command using the 5 TPS limit to remain caught up. Retrieving records less frequently can lead \
+   to consumer applications falling behind. The maximum size of data that [GetRecords] can return \
+   is 10 MiB. If a call returns this amount of data, subsequent calls made within the next 5 \
+   seconds throw [ProvisionedThroughputExceededException]. If there is insufficient provisioned \
+   throughput on the stream, subsequent calls made within the next 1 second throw \
+   [ProvisionedThroughputExceededException]. [GetRecords] doesn't return any data when it throws \
+   an exception. For this reason, we recommend that you wait 1 second between calls to \
+   [GetRecords]. However, it's possible that the application will get exceptions for longer than 1 \
+   second.\n\
+  \       \n\
+  \        To detect whether the application is falling behind in processing, you can use the \
+   [MillisBehindLatest] response attribute. You can also monitor the stream using CloudWatch \
+   metrics and other mechanisms (see \
+   {{:https://docs.aws.amazon.com/kinesis/latest/dev/monitoring.html}Monitoring} in the {i Amazon \
+   Kinesis Data Streams Developer Guide}).\n\
+  \        \n\
+  \         Each Amazon Kinesis record includes a value, [ApproximateArrivalTimestamp], that is \
+   set when a stream successfully receives and stores a record. This is commonly referred to as a \
+   server-side time stamp, whereas a client-side time stamp is set when a data producer creates or \
+   sends the record to a stream (a data producer is any data source putting data records into a \
+   stream, for example with [PutRecords]). The time stamp has millisecond precision. There are no \
+   guarantees about the time stamp accuracy, or that the time stamp is always increasing. For \
+   example, records in a shard or across a stream might have time stamps that are out of order.\n\
+  \         \n\
+  \          This operation has a limit of five transactions per second per shard.\n\
+  \          "]
+
+module EnableEnhancedMonitoring : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    enable_enhanced_monitoring_input ->
+    ( enhanced_monitoring_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    enable_enhanced_monitoring_input ->
+    ( enhanced_monitoring_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Enables enhanced Kinesis data stream monitoring for shard-level metrics.\n\n\
+  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
+   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
+  \  \n\
+  \   "]
+
+module DisableEnhancedMonitoring : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    disable_enhanced_monitoring_input ->
+    ( enhanced_monitoring_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    disable_enhanced_monitoring_input ->
+    ( enhanced_monitoring_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Disables enhanced monitoring.\n\n\
+  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
+   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
+  \  \n\
+  \   "]
+
+module DescribeStreamSummary : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stream_summary_input ->
+    ( describe_stream_summary_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stream_summary_input ->
+    ( describe_stream_summary_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides a summarized description of the specified Kinesis data stream without the shard list.\n\n\
+  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
+   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
+  \  \n\
+  \    The information returned includes the stream name, Amazon Resource Name (ARN), status, \
+   record retention period, approximate creation time, monitoring, encryption details, and open \
+   shard count. \n\
+  \    \n\
+  \      [DescribeStreamSummary] has a limit of 20 transactions per second per account.\n\
+  \     "]
+
+module DescribeStreamConsumer : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stream_consumer_input ->
+    ( describe_stream_consumer_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stream_consumer_input ->
+    ( describe_stream_consumer_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "To get the description of a registered consumer, provide the ARN of the consumer. \
+   Alternatively, you can provide the ARN of the data stream and the name you gave the consumer \
+   when you registered it. You may also provide all three parameters, as long as they don't \
+   conflict with each other. If you don't know the name or ARN of the consumer that you want to \
+   describe, you can use the [ListStreamConsumers] operation to get a list of the descriptions of \
+   all the consumers that are currently registered with a given data stream.\n\n\
+  \ This operation has a limit of 20 transactions per second per stream.\n\
+  \ \n\
+  \   When making a cross-account call with [DescribeStreamConsumer], make sure to provide the ARN \
+   of the consumer. \n\
+  \   \n\
+  \    "]
+
+module DescribeStream : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stream_input ->
+    ( describe_stream_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stream_input ->
+    ( describe_stream_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Describes the specified Kinesis data stream.\n\n\
+  \  This API has been revised. It's highly recommended that you use the [DescribeStreamSummary] \
+   API to get a summarized description of the specified Kinesis data stream and the [ListShards] \
+   API to list the shards in a specified data stream and obtain information about each shard. \n\
+  \  \n\
+  \     When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, \
+   or both. It is recommended that you use the [StreamARN] input parameter when you invoke this \
+   API.\n\
+  \     \n\
+  \       The information returned includes the stream name, Amazon Resource Name (ARN), creation \
+   time, enhanced metric configuration, and shard map. The shard map is an array of shard objects. \
+   For each shard object, there is the hash key and sequence number ranges that the shard spans, \
+   and the IDs of any earlier shards that played in a role in creating the shard. Every record \
+   ingested in the stream is identified by a sequence number, which is assigned when the record is \
+   put into the stream.\n\
+  \       \n\
+  \        You can limit the number of shards returned by each call. For more information, see \
+   {{:https://docs.aws.amazon.com/kinesis/latest/dev/kinesis-using-sdk-java-retrieve-shards.html}Retrieving \
+   Shards from a Stream} in the {i Amazon Kinesis Data Streams Developer Guide}.\n\
+  \        \n\
+  \         There are no guarantees about the chronological order shards returned. To process \
+   shards in chronological order, use the ID of the parent shard to track the lineage to the \
+   oldest shard.\n\
+  \         \n\
+  \          This operation has a limit of 10 transactions per second per account.\n\
+  \          "]
+
+module DescribeLimits : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_limits_input ->
+    ( describe_limits_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
+    )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_limits_input ->
+    ( describe_limits_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Describes the shard limits and usage for the account.\n\n\
+  \ If you update your account limits, the old limits might be returned for a few minutes.\n\
+  \ \n\
+  \  This operation has a limit of one transaction per second per account.\n\
+  \  "]
+
+module DescribeAccountSettings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_account_settings_input ->
+    ( describe_account_settings_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
+    )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_account_settings_input ->
+    ( describe_account_settings_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `LimitExceededException of limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Describes the account-level settings for Amazon Kinesis Data Streams. This operation returns \
+   information about the minimum throughput billing commitments and other account-level \
+   configurations.\n\n\
+  \ This API has a call limit of 5 transactions per second (TPS) for each Amazon Web Services \
+   account. TPS over 5 will initiate the [LimitExceededException].\n\
+  \ "]
+
+module DeregisterStreamConsumer : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    deregister_stream_consumer_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    deregister_stream_consumer_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "To deregister a consumer, provide its ARN. Alternatively, you can provide the ARN of the data \
+   stream and the name you gave the consumer when you registered it. You may also provide all \
+   three parameters, as long as they don't conflict with each other. If you don't know the name or \
+   ARN of the consumer that you want to deregister, you can use the [ListStreamConsumers] \
+   operation to get a list of the descriptions of all the consumers that are currently registered \
+   with a given data stream. The description of a consumer contains its name and ARN.\n\n\
+  \ This operation has a limit of five transactions per second per stream.\n\
+  \ "]
+
+module DeleteStream : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_stream_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_stream_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes a Kinesis data stream and all its shards and data. You must shut down any applications \
+   that are operating on the stream before you delete the stream. If an application attempts to \
+   operate on a deleted stream, it receives the exception [ResourceNotFoundException].\n\n\
+  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
+   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
+  \  \n\
+  \    If the stream is in the [ACTIVE] state, you can delete it. After a [DeleteStream] request, \
+   the specified stream is in the [DELETING] state until Kinesis Data Streams completes the \
+   deletion.\n\
+  \    \n\
+  \      {b Note:} Kinesis Data Streams might continue to accept data read and write operations, \
+   such as [PutRecord], [PutRecords], and [GetRecords], on a stream in the [DELETING] state until \
+   the stream deletion is complete.\n\
+  \     \n\
+  \      When you delete a stream, any shards in that stream are also deleted, and any tags are \
+   dissociated from the stream.\n\
+  \      \n\
+  \       You can use the [DescribeStreamSummary] operation to check the state of the stream, \
+   which is returned in [StreamStatus].\n\
+  \       \n\
+  \         [DeleteStream] has a limit of five transactions per second per account.\n\
+  \        "]
+
+module DeleteResourcePolicy : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_resource_policy_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_resource_policy_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Delete a policy for the specified data stream or consumer. Request patterns can be one of the \
+   following:\n\n\
+  \ {ul\n\
+  \       {-  Data stream pattern: [arn:aws.*:kinesis:.*:\\d{12}:.*stream/\\S+] \n\
+  \           \n\
+  \            }\n\
+  \       {-  Consumer pattern: \
+   [^(arn):aws.*:kinesis:.*:\\d{12}:.*stream\\/\\[a-zA-Z0-9_.-\\]+\\/consumer\\/\\[a-zA-Z0-9_.-\\]+:\\[0-9\\]+] \n\
+  \           \n\
+  \            }\n\
+  \       }\n\
+  \  "]
+
+module DecreaseStreamRetentionPeriod : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    decrease_stream_retention_period_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    decrease_stream_retention_period_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Decreases the Kinesis data stream's retention period, which is the length of time data records \
+   are accessible after they are added to the stream. The minimum value of a stream's retention \
+   period is 24 hours.\n\n\
+  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
+   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
+  \  \n\
+  \    This operation may result in lost data. For example, if the stream's retention period is 48 \
+   hours and is decreased to 24 hours, any data already in the stream that is older than 24 hours \
+   is inaccessible.\n\
+  \    "]
+
+module CreateStream : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_stream_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_stream_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a Kinesis data stream. A stream captures and transports data records that are \
+   continuously emitted from different data sources or {i producers}. Scale-out within a stream is \
+   explicitly supported by means of shards, which are uniquely identified groups of data records \
+   in a stream.\n\n\
+  \ You can create your data stream using either on-demand or provisioned capacity mode. Data \
+   streams with an on-demand mode require no capacity planning and automatically scale to handle \
+   gigabytes of write and read throughput per minute. With the on-demand mode, Kinesis Data \
+   Streams automatically manages the shards in order to provide the necessary throughput.\n\
+  \ \n\
+  \  If you'd still like to proactively scale your on-demand data stream\226\128\153s capacity, \
+   you can unlock the warm throughput feature for on-demand data streams by enabling \
+   [MinimumThroughputBillingCommitment] for your account. Once your account has \
+   [MinimumThroughputBillingCommitment] enabled, you can specify the warm throughput in MiB per \
+   second that your stream can support in writes.\n\
+  \  \n\
+  \   For the data streams with a provisioned mode, you must specify the number of shards for the \
+   data stream. Each shard can support reads up to five transactions per second, up to a maximum \
+   data read total of 2 MiB per second. Each shard can support writes up to 1,000 records per \
+   second, up to a maximum data write total of 1 MiB per second. If the amount of data input \
+   increases or decreases, you can add or remove shards.\n\
+  \   \n\
+  \    The stream name identifies the stream. The name is scoped to the Amazon Web Services \
+   account used by the application. It is also scoped by Amazon Web Services Region. That is, two \
+   streams in two different accounts can have the same name, and two streams in the same account, \
+   but in two different Regions, can have the same name.\n\
+  \    \n\
+  \      [CreateStream] is an asynchronous operation. Upon receiving a [CreateStream] request, \
+   Kinesis Data Streams immediately returns and sets the stream status to [CREATING]. After the \
+   stream is created, Kinesis Data Streams sets the stream status to [ACTIVE]. You should perform \
+   read and write operations only on an [ACTIVE] stream. \n\
+  \     \n\
+  \      You receive a [LimitExceededException] when making a [CreateStream] request when you try \
+   to do one of the following:\n\
+  \      \n\
+  \       {ul\n\
+  \             {-  Have more than five streams in the [CREATING] state at any point in time.\n\
+  \                 \n\
+  \                  }\n\
+  \             {-  Create more shards than are authorized for your account.\n\
+  \                 \n\
+  \                  }\n\
+  \             }\n\
+  \   For the default shard or on-demand throughput limits for an Amazon Web Services account, see \
+   {{:https://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html}Amazon Kinesis \
+   Data Streams Limits} in the {i Amazon Kinesis Data Streams Developer Guide}. To increase this \
+   limit, {{:https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html}contact Amazon \
+   Web Services Support}.\n\
+  \   \n\
+  \    You can use [DescribeStreamSummary] to check the stream status, which is returned in \
+   [StreamStatus].\n\
+  \    \n\
+  \      [CreateStream] has a limit of five transactions per second per account.\n\
+  \     \n\
+  \      You can add tags to the stream when making a [CreateStream] request by setting the [Tags] \
+   parameter. If you pass the [Tags] parameter, in addition to having the [kinesis:CreateStream] \
+   permission, you must also have the [kinesis:AddTagsToStream] permission for the stream that \
+   will be created. The [kinesis:TagResource] permission won\226\128\153t work to tag streams on \
+   creation. Tags will take effect from the [CREATING] status of the stream, but you can't make \
+   any updates to the tags until the stream is in [ACTIVE] state.\n\
+  \      "]
+
+module AddTagsToStream : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InvalidArgumentException of invalid_argument_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceInUseException of resource_in_use_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_stream_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_stream_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InvalidArgumentException of invalid_argument_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceInUseException of resource_in_use_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds or updates tags for the specified Kinesis data stream. You can assign up to 50 tags to a \
+   data stream.\n\n\
+  \  When invoking this API, you must use either the [StreamARN] or the [StreamName] parameter, or \
+   both. It is recommended that you use the [StreamARN] input parameter when you invoke this API.\n\
+  \  \n\
+  \    If tags have already been assigned to the stream, [AddTagsToStream] overwrites any existing \
+   tags that correspond to the specified tag keys.\n\
+  \    \n\
+  \      [AddTagsToStream] has a limit of five transactions per second per account.\n\
+  \     "]

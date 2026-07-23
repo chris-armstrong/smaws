@@ -4,5 +4,5 @@ let service =
     namespace = "monitoring";
     endpointPrefix = "monitoring";
     version = "2010-08-01";
-    protocol = Smaws_Lib.Service.AwsQuery;
+    protocol = Smaws_Lib.Service.AwsJson_1_0;
   }

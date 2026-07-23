@@ -675,6 +675,25 @@ module DescribeAccountAttributes = struct
       ~fields ~output_deserializer:describe_account_attributes_result_of_xml ~error_deserializer
 end
 
+module DescribeApplications = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsQuery.error_to_string
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body:_ =
+    Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : describe_applications_message) =
+    let fields = describe_applications_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeApplications"
+      ~xmlNamespace:"http://elasticbeanstalk.amazonaws.com/docs/2010-12-01/" ~service ~context
+      ~fields ~output_deserializer:application_descriptions_message_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : describe_applications_message) =
+    let fields = describe_applications_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeApplications"
+      ~xmlNamespace:"http://elasticbeanstalk.amazonaws.com/docs/2010-12-01/" ~service ~context
+      ~fields ~output_deserializer:application_descriptions_message_of_xml ~error_deserializer
+end
+
 module DescribeApplicationVersions = struct
   let error_to_string = Smaws_Lib.Protocols.AwsQuery.error_to_string
 
@@ -694,25 +713,6 @@ module DescribeApplicationVersions = struct
       ~xmlNamespace:"http://elasticbeanstalk.amazonaws.com/docs/2010-12-01/" ~service ~context
       ~fields ~output_deserializer:application_version_descriptions_message_of_xml
       ~error_deserializer
-end
-
-module DescribeApplications = struct
-  let error_to_string = Smaws_Lib.Protocols.AwsQuery.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body:_ =
-    Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : describe_applications_message) =
-    let fields = describe_applications_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeApplications"
-      ~xmlNamespace:"http://elasticbeanstalk.amazonaws.com/docs/2010-12-01/" ~service ~context
-      ~fields ~output_deserializer:application_descriptions_message_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : describe_applications_message) =
-    let fields = describe_applications_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeApplications"
-      ~xmlNamespace:"http://elasticbeanstalk.amazonaws.com/docs/2010-12-01/" ~service ~context
-      ~fields ~output_deserializer:application_descriptions_message_of_xml ~error_deserializer
 end
 
 module DescribeConfigurationOptions = struct

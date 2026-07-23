@@ -1,73 +1,5 @@
 open Types
 
-module AcknowledgeJob : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidNonceException of invalid_nonce_exception
-    | `JobNotFoundException of job_not_found_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    acknowledge_job_input ->
-    ( acknowledge_job_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidNonceException of invalid_nonce_exception
-      | `JobNotFoundException of job_not_found_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    acknowledge_job_input ->
-    ( acknowledge_job_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidNonceException of invalid_nonce_exception
-      | `JobNotFoundException of job_not_found_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about a specified job and whether that job has been received by the job \
-   worker. Used for custom actions only.\n"]
-
-module AcknowledgeThirdPartyJob : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidClientTokenException of invalid_client_token_exception
-    | `InvalidNonceException of invalid_nonce_exception
-    | `JobNotFoundException of job_not_found_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    acknowledge_third_party_job_input ->
-    ( acknowledge_third_party_job_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidClientTokenException of invalid_client_token_exception
-      | `InvalidNonceException of invalid_nonce_exception
-      | `JobNotFoundException of job_not_found_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    acknowledge_third_party_job_input ->
-    ( acknowledge_third_party_job_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidClientTokenException of invalid_client_token_exception
-      | `InvalidNonceException of invalid_nonce_exception
-      | `JobNotFoundException of job_not_found_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Confirms a job worker has received the specified job. Used for partner actions only.\n"]
-
 module CreateCustomActionType : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1631,3 +1563,71 @@ end
   "Updates a specified pipeline with edits or changes to its structure. Use a JSON file with the \
    pipeline structure and [UpdatePipeline] to provide the full structure of the pipeline. Updating \
    the pipeline increases the version number of the pipeline by 1.\n"]
+
+module AcknowledgeThirdPartyJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidClientTokenException of invalid_client_token_exception
+    | `InvalidNonceException of invalid_nonce_exception
+    | `JobNotFoundException of job_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    acknowledge_third_party_job_input ->
+    ( acknowledge_third_party_job_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidClientTokenException of invalid_client_token_exception
+      | `InvalidNonceException of invalid_nonce_exception
+      | `JobNotFoundException of job_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    acknowledge_third_party_job_input ->
+    ( acknowledge_third_party_job_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidClientTokenException of invalid_client_token_exception
+      | `InvalidNonceException of invalid_nonce_exception
+      | `JobNotFoundException of job_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Confirms a job worker has received the specified job. Used for partner actions only.\n"]
+
+module AcknowledgeJob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidNonceException of invalid_nonce_exception
+    | `JobNotFoundException of job_not_found_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    acknowledge_job_input ->
+    ( acknowledge_job_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNonceException of invalid_nonce_exception
+      | `JobNotFoundException of job_not_found_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    acknowledge_job_input ->
+    ( acknowledge_job_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidNonceException of invalid_nonce_exception
+      | `JobNotFoundException of job_not_found_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about a specified job and whether that job has been received by the job \
+   worker. Used for custom actions only.\n"]

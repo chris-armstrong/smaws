@@ -1,38 +1,5 @@
 open Types
 
-module AddTagsToResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidResourceStateFault of invalid_resource_state_fault
-    | `ResourceNotFoundFault of resource_not_found_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_resource_message ->
-    ( add_tags_to_resource_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidResourceStateFault of invalid_resource_state_fault
-      | `ResourceNotFoundFault of resource_not_found_fault ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_resource_message ->
-    ( add_tags_to_resource_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidResourceStateFault of invalid_resource_state_fault
-      | `ResourceNotFoundFault of resource_not_found_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds metadata tags to an DMS resource, including replication instance, endpoint, subnet group, \
-   and migration task. These tags can also be used with cost allocation reporting to track cost \
-   associated with DMS resources, or used in a Condition statement in an IAM policy for DMS. For \
-   more information, see {{:https://docs.aws.amazon.com/dms/latest/APIReference/API_Tag.html} \
-   [Tag] } data type description.\n"]
-
 module ApplyPendingMaintenanceAction : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ] ->
@@ -1478,6 +1445,29 @@ module DescribeDataProviders : sig
 end
 [@@ocaml.doc "Returns a paginated list of data providers for your account in the current region.\n"]
 
+module DescribeEndpoints : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_endpoints_message ->
+    ( describe_endpoints_response,
+      [> Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ]
+    )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_endpoints_message ->
+    ( describe_endpoints_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns information about the endpoints for your account in the current region.\n"]
+
 module DescribeEndpointSettings : sig
   val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
 
@@ -1513,29 +1503,6 @@ module DescribeEndpointTypes : sig
     result
 end
 [@@ocaml.doc "Returns information about the type of endpoints available.\n"]
-
-module DescribeEndpoints : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_endpoints_message ->
-    ( describe_endpoints_response,
-      [> Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ]
-    )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_endpoints_message ->
-    ( describe_endpoints_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns information about the endpoints for your account in the current region.\n"]
 
 module DescribeEngineVersions : sig
   val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
@@ -1575,6 +1542,27 @@ end
    {{:https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Events.html}Working with Events and \
    Notifications} in the {i Database Migration Service User Guide.} \n"]
 
+module DescribeEvents : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_events_message ->
+    (describe_events_response, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_events_message ->
+    ( describe_events_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Lists events for a given source identifier and source type. You can also specify a start and \
+   end time. For more information on DMS events, see \
+   {{:https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Events.html}Working with Events and \
+   Notifications} in the {i Database Migration Service User Guide.} \n"]
+
 module DescribeEventSubscriptions : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ] ->
@@ -1602,27 +1590,6 @@ end
    [CreationTime], and [Status]. \n\n\
   \ If you specify [SubscriptionName], this action lists the description for that subscription.\n\
   \ "]
-
-module DescribeEvents : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_events_message ->
-    (describe_events_response, [> Smaws_Lib.Protocols.AwsJson.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_events_message ->
-    ( describe_events_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Lists events for a given source identifier and source type. You can also specify a start and \
-   end time. For more information on DMS events, see \
-   {{:https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Events.html}Working with Events and \
-   Notifications} in the {i Database Migration Service User Guide.} \n"]
 
 module DescribeExtensionPackAssociations : sig
   val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
@@ -2256,6 +2223,30 @@ end
 [@@ocaml.doc
   "Returns one or more existing DMS Serverless replication configurations as a list of structures.\n"]
 
+module DescribeReplicationInstances : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_replication_instances_message ->
+    ( describe_replication_instances_response,
+      [> Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ]
+    )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_replication_instances_message ->
+    ( describe_replication_instances_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about replication instances for your account in the current region.\n"]
+
 module DescribeReplicationInstanceTaskLogs : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -2284,29 +2275,30 @@ module DescribeReplicationInstanceTaskLogs : sig
 end
 [@@ocaml.doc "Returns information about the task logs for the specified task.\n"]
 
-module DescribeReplicationInstances : sig
+module DescribeReplications : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    describe_replication_instances_message ->
-    ( describe_replication_instances_response,
+    describe_replications_message ->
+    ( describe_replications_response,
       [> Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ]
     )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    describe_replication_instances_message ->
-    ( describe_replication_instances_response Smaws_Lib.Response.t,
+    describe_replications_message ->
+    ( describe_replications_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  "Returns information about replication instances for your account in the current region.\n"]
+  "Provides details on replication progress by returning status information for one or more \
+   provisioned DMS Serverless replications.\n"]
 
 module DescribeReplicationSubnetGroups : sig
   val error_to_string :
@@ -2471,31 +2463,6 @@ module DescribeReplicationTasks : sig
 end
 [@@ocaml.doc
   "Returns information about replication tasks for your account in the current region.\n"]
-
-module DescribeReplications : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_replications_message ->
-    ( describe_replications_response,
-      [> Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ]
-    )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_replications_message ->
-    ( describe_replications_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `ResourceNotFoundFault of resource_not_found_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides details on replication progress by returning status information for one or more \
-   provisioned DMS Serverless replications.\n"]
 
 module DescribeSchemas : sig
   val error_to_string :
@@ -4158,3 +4125,36 @@ end
    event subscriptions to Amazon EventBridge} in the {i Amazon Web Services Database Migration \
    Service User Guide}.\n\
   \ "]
+
+module AddTagsToResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidResourceStateFault of invalid_resource_state_fault
+    | `ResourceNotFoundFault of resource_not_found_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_resource_message ->
+    ( add_tags_to_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidResourceStateFault of invalid_resource_state_fault
+      | `ResourceNotFoundFault of resource_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_resource_message ->
+    ( add_tags_to_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidResourceStateFault of invalid_resource_state_fault
+      | `ResourceNotFoundFault of resource_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds metadata tags to an DMS resource, including replication instance, endpoint, subnet group, \
+   and migration task. These tags can also be used with cost allocation reporting to track cost \
+   associated with DMS resources, or used in a Condition statement in an IAM policy for DMS. For \
+   more information, see {{:https://docs.aws.amazon.com/dms/latest/APIReference/API_Tag.html} \
+   [Tag] } data type description.\n"]

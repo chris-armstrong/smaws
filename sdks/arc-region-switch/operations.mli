@@ -1,37 +1,213 @@
 open Types
 
-module ApprovePlanExecutionStep : sig
+module UpdatePlan : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
     | `ResourceNotFoundException of resource_not_found_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    approve_plan_execution_step_request ->
-    ( approve_plan_execution_step_response,
+    update_plan_request ->
+    ( update_plan_response,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
       | `ResourceNotFoundException of resource_not_found_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    approve_plan_execution_step_request ->
-    ( approve_plan_execution_step_response Smaws_Lib.Response.t,
+    update_plan_request ->
+    ( update_plan_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
       | `ResourceNotFoundException of resource_not_found_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  "Approves a step in a plan execution that requires manual approval. When you create a plan, you \
-   can include approval steps that require manual intervention before the execution can proceed. \
-   This operation allows you to provide that approval.\n\n\
-  \ You must specify the plan ARN, execution ID, step name, and approval status. You can also \
-   provide an optional comment explaining the approval decision.\n\
+  "Updates an existing Region switch plan. You can modify the plan's description, workflows, \
+   execution role, recovery time objective, associated alarms, and triggers.\n"]
+
+module UntagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_request ->
+    ( untag_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    untag_resource_request ->
+    ( untag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Removes tags from a Region switch resource.\n"]
+
+module TagResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    tag_resource_request ->
+    ( tag_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds or updates tags for a Region switch resource. You can assign metadata to your resources in \
+   the form of tags, which are key-value pairs.\n"]
+
+module ListTagsForResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_tags_for_resource_request ->
+    ( list_tags_for_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Lists the tags attached to a Region switch resource.\n"]
+
+module ListPlans : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_plans_request ->
+    (list_plans_response, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_plans_request ->
+    ( list_plans_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Lists all Region switch plans in your Amazon Web Services account.\n"]
+
+module GetPlan : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_plan_request ->
+    ( get_plan_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_plan_request ->
+    ( get_plan_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Retrieves detailed information about a Region switch plan. You must specify the ARN of the plan.\n"]
+
+module DeletePlan : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `IllegalStateException of illegal_state_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_plan_request ->
+    ( delete_plan_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `IllegalStateException of illegal_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_plan_request ->
+    ( delete_plan_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `IllegalStateException of illegal_state_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes a Region switch plan. You must specify the ARN of the plan to delete.\n\n\
+  \ You cannot delete a plan that has an active execution in progress.\n\
+  \ "]
+
+module CreatePlan : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_plan_request ->
+    (create_plan_response, [> Smaws_Lib.Protocols.AwsJson.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_plan_request ->
+    ( create_plan_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a new Region switch plan. A plan defines the steps required to shift traffic from one \
+   Amazon Web Services Region to another.\n\n\
+  \ You must specify a name for the plan, the primary Region, and at least one additional Region. \
+   You can also provide a description, execution role, recovery time objective, associated alarms, \
+   triggers, and workflows that define the steps to execute during a Region switch.\n\
   \ "]
 
 module CancelPlanExecution : sig
@@ -66,86 +242,6 @@ end
   \ You must specify the plan ARN and execution ID. You can also provide an optional comment \
    explaining why the execution was canceled.\n\
   \ "]
-
-module CreatePlan : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_plan_request ->
-    (create_plan_response, [> Smaws_Lib.Protocols.AwsJson.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_plan_request ->
-    ( create_plan_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a new Region switch plan. A plan defines the steps required to shift traffic from one \
-   Amazon Web Services Region to another.\n\n\
-  \ You must specify a name for the plan, the primary Region, and at least one additional Region. \
-   You can also provide a description, execution role, recovery time objective, associated alarms, \
-   triggers, and workflows that define the steps to execute during a Region switch.\n\
-  \ "]
-
-module DeletePlan : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `IllegalStateException of illegal_state_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_plan_request ->
-    ( delete_plan_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `IllegalStateException of illegal_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_plan_request ->
-    ( delete_plan_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `IllegalStateException of illegal_state_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes a Region switch plan. You must specify the ARN of the plan to delete.\n\n\
-  \ You cannot delete a plan that has an active execution in progress.\n\
-  \ "]
-
-module GetPlan : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_plan_request ->
-    ( get_plan_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_plan_request ->
-    ( get_plan_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Retrieves detailed information about a Region switch plan. You must specify the ARN of the plan.\n"]
 
 module GetPlanEvaluationStatus : sig
   val error_to_string :
@@ -297,23 +393,6 @@ end
   "Lists the executions of a Region switch plan. This operation returns information about both \
    current and historical executions.\n"]
 
-module ListPlans : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_plans_request ->
-    (list_plans_response, [> Smaws_Lib.Protocols.AwsJson.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_plans_request ->
-    ( list_plans_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Lists all Region switch plans in your Amazon Web Services account.\n"]
-
 module ListPlansInRegion : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error | `AccessDeniedException of access_denied_exception ] ->
@@ -406,34 +485,6 @@ module ListRoute53HealthChecksInRegion : sig
 end
 [@@ocaml.doc "List the Amazon Route 53 health checks in a specific Amazon Web Services Region.\n"]
 
-module ListTagsForResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_tags_for_resource_request ->
-    ( list_tags_for_resource_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_tags_for_resource_request ->
-    ( list_tags_for_resource_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Lists the tags attached to a Region switch resource.\n"]
-
 module StartPlanExecution : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -472,91 +523,6 @@ end
   \ Specifing [ungraceful] mode either changes the behavior of the execution blocks in a workflow \
    or skips specific execution blocks.\n\
   \ "]
-
-module TagResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    tag_resource_request ->
-    ( tag_resource_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    tag_resource_request ->
-    ( tag_resource_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds or updates tags for a Region switch resource. You can assign metadata to your resources in \
-   the form of tags, which are key-value pairs.\n"]
-
-module UntagResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    untag_resource_request ->
-    ( untag_resource_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    untag_resource_request ->
-    ( untag_resource_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Removes tags from a Region switch resource.\n"]
-
-module UpdatePlan : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    update_plan_request ->
-    ( update_plan_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    update_plan_request ->
-    ( update_plan_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Updates an existing Region switch plan. You can modify the plan's description, workflows, \
-   execution role, recovery time objective, associated alarms, and triggers.\n"]
 
 module UpdatePlanExecution : sig
   val error_to_string :
@@ -620,3 +586,37 @@ end
 [@@ocaml.doc
   "Updates a specific step in an in-progress plan execution. This operation allows you to modify \
    the step's comment or action.\n"]
+
+module ApprovePlanExecutionStep : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    approve_plan_execution_step_request ->
+    ( approve_plan_execution_step_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    approve_plan_execution_step_request ->
+    ( approve_plan_execution_step_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Approves a step in a plan execution that requires manual approval. When you create a plan, you \
+   can include approval steps that require manual intervention before the execution can proceed. \
+   This operation allows you to provide that approval.\n\n\
+  \ You must specify the plan ARN, execution ID, step name, and approval status. You can also \
+   provide an optional comment explaining the approval decision.\n\
+  \ "]

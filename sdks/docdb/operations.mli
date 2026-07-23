@@ -1,67 +1,5 @@
 open Types
 
-module AddSourceIdentifierToSubscription : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `SourceNotFoundFault of source_not_found_fault
-    | `SubscriptionNotFoundFault of subscription_not_found_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_source_identifier_to_subscription_message ->
-    ( add_source_identifier_to_subscription_result,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `SourceNotFoundFault of source_not_found_fault
-      | `SubscriptionNotFoundFault of subscription_not_found_fault ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_source_identifier_to_subscription_message ->
-    ( add_source_identifier_to_subscription_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `SourceNotFoundFault of source_not_found_fault
-      | `SubscriptionNotFoundFault of subscription_not_found_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Adds a source identifier to an existing event notification subscription.\n"]
-
-module AddTagsToResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `DBClusterNotFoundFault of db_cluster_not_found_fault
-    | `DBInstanceNotFoundFault of db_instance_not_found_fault
-    | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_resource_message ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `DBClusterNotFoundFault of db_cluster_not_found_fault
-      | `DBInstanceNotFoundFault of db_instance_not_found_fault
-      | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_resource_message ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `DBClusterNotFoundFault of db_cluster_not_found_fault
-      | `DBInstanceNotFoundFault of db_instance_not_found_fault
-      | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds metadata tags to an Amazon DocumentDB resource. You can use these tags with cost \
-   allocation reporting to track costs that are associated with Amazon DocumentDB resources or in \
-   a [Condition] statement in an Identity and Access Management (IAM) policy for Amazon DocumentDB.\n"]
-
 module ApplyPendingMaintenanceAction : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -864,6 +802,34 @@ module DescribeDBClusterParameters : sig
 end
 [@@ocaml.doc "Returns the detailed parameter list for a particular cluster parameter group.\n"]
 
+module DescribeDBClusters : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error | `DBClusterNotFoundFault of db_cluster_not_found_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_db_clusters_message ->
+    ( db_cluster_message,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `DBClusterNotFoundFault of db_cluster_not_found_fault ]
+    )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_db_clusters_message ->
+    ( db_cluster_message Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `DBClusterNotFoundFault of db_cluster_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about provisioned Amazon DocumentDB clusters. This API operation supports \
+   pagination. For certain management features such as cluster and instance lifecycle management, \
+   Amazon DocumentDB leverages operational technology that is shared with Amazon RDS and Amazon \
+   Neptune. Use the [filterName=engine,Values=docdb] filter parameter to return only Amazon \
+   DocumentDB clusters.\n"]
+
 module DescribeDBClusterSnapshotAttributes : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -922,34 +888,6 @@ module DescribeDBClusterSnapshots : sig
 end
 [@@ocaml.doc
   "Returns information about cluster snapshots. This API operation supports pagination.\n"]
-
-module DescribeDBClusters : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error | `DBClusterNotFoundFault of db_cluster_not_found_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_db_clusters_message ->
-    ( db_cluster_message,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `DBClusterNotFoundFault of db_cluster_not_found_fault ]
-    )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_db_clusters_message ->
-    ( db_cluster_message Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `DBClusterNotFoundFault of db_cluster_not_found_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about provisioned Amazon DocumentDB clusters. This API operation supports \
-   pagination. For certain management features such as cluster and instance lifecycle management, \
-   Amazon DocumentDB leverages operational technology that is shared with Amazon RDS and Amazon \
-   Neptune. Use the [filterName=engine,Values=docdb] filter parameter to return only Amazon \
-   DocumentDB clusters.\n"]
 
 module DescribeDBEngineVersions : sig
   val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
@@ -1059,6 +997,27 @@ end
   "Displays a list of categories for all event source types, or, if specified, for a specified \
    source type. \n"]
 
+module DescribeEvents : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_events_message ->
+    (events_message, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_events_message ->
+    ( events_message Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns events related to instances, security groups, snapshots, and DB parameter groups for \
+   the past 14 days. You can obtain events specific to a particular DB instance, security group, \
+   snapshot, or parameter group by providing the name as a parameter. By default, the events of \
+   the past hour are returned.\n"]
+
 module DescribeEventSubscriptions : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -1088,27 +1047,6 @@ end
    [SourceID], [CreationTime], and [Status].\n\n\
   \ If you specify a [SubscriptionName], lists the description for that subscription.\n\
   \ "]
-
-module DescribeEvents : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_events_message ->
-    (events_message, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_events_message ->
-    ( events_message Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns events related to instances, security groups, snapshots, and DB parameter groups for \
-   the past 14 days. You can obtain events specific to a particular DB instance, security group, \
-   snapshot, or parameter group by providing the name as a parameter. By default, the events of \
-   the past hour are returned.\n"]
 
 module DescribeGlobalClusters : sig
   val error_to_string :
@@ -2034,3 +1972,65 @@ end
 [@@ocaml.doc
   "Switches over the specified secondary Amazon DocumentDB cluster to be the new primary Amazon \
    DocumentDB cluster in the global database cluster.\n"]
+
+module AddTagsToResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `DBClusterNotFoundFault of db_cluster_not_found_fault
+    | `DBInstanceNotFoundFault of db_instance_not_found_fault
+    | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_resource_message ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `DBClusterNotFoundFault of db_cluster_not_found_fault
+      | `DBInstanceNotFoundFault of db_instance_not_found_fault
+      | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_resource_message ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `DBClusterNotFoundFault of db_cluster_not_found_fault
+      | `DBInstanceNotFoundFault of db_instance_not_found_fault
+      | `DBSnapshotNotFoundFault of db_snapshot_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds metadata tags to an Amazon DocumentDB resource. You can use these tags with cost \
+   allocation reporting to track costs that are associated with Amazon DocumentDB resources or in \
+   a [Condition] statement in an Identity and Access Management (IAM) policy for Amazon DocumentDB.\n"]
+
+module AddSourceIdentifierToSubscription : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `SourceNotFoundFault of source_not_found_fault
+    | `SubscriptionNotFoundFault of subscription_not_found_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_source_identifier_to_subscription_message ->
+    ( add_source_identifier_to_subscription_result,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `SourceNotFoundFault of source_not_found_fault
+      | `SubscriptionNotFoundFault of subscription_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_source_identifier_to_subscription_message ->
+    ( add_source_identifier_to_subscription_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `SourceNotFoundFault of source_not_found_fault
+      | `SubscriptionNotFoundFault of subscription_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Adds a source identifier to an existing event notification subscription.\n"]

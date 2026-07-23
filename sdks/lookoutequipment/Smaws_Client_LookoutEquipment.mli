@@ -9,22 +9,13 @@ module Types = Types
 (** {1:builders Builders} *)
 
 val make_update_retraining_scheduler_request :
-  ?promote_mode:model_promote_mode ->
-  ?lookback_window:lookback_window ->
-  ?retraining_frequency:retraining_frequency ->
   ?retraining_start_date:timestamp ->
+  ?retraining_frequency:retraining_frequency ->
+  ?lookback_window:lookback_window ->
+  ?promote_mode:model_promote_mode ->
   model_name:model_name ->
   unit ->
   update_retraining_scheduler_request
-
-val make_labels_s3_input_configuration :
-  ?prefix:s3_prefix -> bucket:s3_bucket -> unit -> labels_s3_input_configuration
-
-val make_labels_input_configuration :
-  ?label_group_name:label_group_name ->
-  ?s3_input_configuration:labels_s3_input_configuration ->
-  unit ->
-  labels_input_configuration
 
 val make_model_diagnostics_s3_output_configuration :
   ?prefix:s3_prefix -> bucket:s3_bucket -> unit -> model_diagnostics_s3_output_configuration
@@ -35,10 +26,19 @@ val make_model_diagnostics_output_configuration :
   unit ->
   model_diagnostics_output_configuration
 
+val make_labels_s3_input_configuration :
+  ?prefix:s3_prefix -> bucket:s3_bucket -> unit -> labels_s3_input_configuration
+
+val make_labels_input_configuration :
+  ?s3_input_configuration:labels_s3_input_configuration ->
+  ?label_group_name:label_group_name ->
+  unit ->
+  labels_input_configuration
+
 val make_update_model_request :
-  ?model_diagnostics_output_configuration:model_diagnostics_output_configuration ->
-  ?role_arn:iam_role_arn ->
   ?labels_input_configuration:labels_input_configuration ->
+  ?role_arn:iam_role_arn ->
+  ?model_diagnostics_output_configuration:model_diagnostics_output_configuration ->
   model_name:model_name ->
   unit ->
   update_model_request
@@ -49,22 +49,6 @@ val make_update_label_group_request :
   unit ->
   update_label_group_request
 
-val make_inference_s3_input_configuration :
-  ?prefix:s3_prefix -> bucket:s3_bucket -> unit -> inference_s3_input_configuration
-
-val make_inference_input_name_configuration :
-  ?component_timestamp_delimiter:component_timestamp_delimiter ->
-  ?timestamp_format:file_name_timestamp_format ->
-  unit ->
-  inference_input_name_configuration
-
-val make_inference_input_configuration :
-  ?inference_input_name_configuration:inference_input_name_configuration ->
-  ?input_time_zone_offset:time_zone_offset ->
-  ?s3_input_configuration:inference_s3_input_configuration ->
-  unit ->
-  inference_input_configuration
-
 val make_inference_s3_output_configuration :
   ?prefix:s3_prefix -> bucket:s3_bucket -> unit -> inference_s3_output_configuration
 
@@ -74,50 +58,63 @@ val make_inference_output_configuration :
   unit ->
   inference_output_configuration
 
+val make_inference_input_name_configuration :
+  ?timestamp_format:file_name_timestamp_format ->
+  ?component_timestamp_delimiter:component_timestamp_delimiter ->
+  unit ->
+  inference_input_name_configuration
+
+val make_inference_s3_input_configuration :
+  ?prefix:s3_prefix -> bucket:s3_bucket -> unit -> inference_s3_input_configuration
+
+val make_inference_input_configuration :
+  ?s3_input_configuration:inference_s3_input_configuration ->
+  ?input_time_zone_offset:time_zone_offset ->
+  ?inference_input_name_configuration:inference_input_name_configuration ->
+  unit ->
+  inference_input_configuration
+
 val make_update_inference_scheduler_request :
-  ?role_arn:iam_role_arn ->
-  ?data_output_configuration:inference_output_configuration ->
-  ?data_input_configuration:inference_input_configuration ->
-  ?data_upload_frequency:data_upload_frequency ->
   ?data_delay_offset_in_minutes:data_delay_offset_in_minutes ->
+  ?data_upload_frequency:data_upload_frequency ->
+  ?data_input_configuration:inference_input_configuration ->
+  ?data_output_configuration:inference_output_configuration ->
+  ?role_arn:iam_role_arn ->
   inference_scheduler_name:inference_scheduler_identifier ->
   unit ->
   update_inference_scheduler_request
 
 val make_update_active_model_version_response :
-  ?previous_active_version_arn:model_version_arn ->
-  ?current_active_version_arn:model_version_arn ->
-  ?previous_active_version:model_version ->
-  ?current_active_version:model_version ->
-  ?model_arn:model_arn ->
   ?model_name:model_name ->
+  ?model_arn:model_arn ->
+  ?current_active_version:model_version ->
+  ?previous_active_version:model_version ->
+  ?current_active_version_arn:model_version_arn ->
+  ?previous_active_version_arn:model_version_arn ->
   unit ->
   update_active_model_version_response
 
 val make_update_active_model_version_request :
-  model_version:model_version ->
   model_name:model_name ->
+  model_version:model_version ->
   unit ->
   update_active_model_version_request
 
 val make_untag_resource_response : unit -> unit
 
 val make_untag_resource_request :
-  tag_keys:tag_key_list -> resource_arn:amazon_resource_arn -> unit -> untag_resource_request
-
-val make_unsupported_timestamps :
-  total_number_of_unsupported_timestamps:integer -> unit -> unsupported_timestamps
+  resource_arn:amazon_resource_arn -> tag_keys:tag_key_list -> unit -> untag_resource_request
 
 val make_tag_resource_response : unit -> unit
-val make_tag : value:tag_value -> key:tag_key -> unit -> tag
+val make_tag : key:tag_key -> value:tag_value -> unit -> tag
 
 val make_tag_resource_request :
-  tags:tag_list -> resource_arn:amazon_resource_arn -> unit -> tag_resource_request
+  resource_arn:amazon_resource_arn -> tags:tag_list -> unit -> tag_resource_request
 
 val make_stop_retraining_scheduler_response :
-  ?status:retraining_scheduler_status ->
-  ?model_arn:model_arn ->
   ?model_name:model_name ->
+  ?model_arn:model_arn ->
+  ?status:retraining_scheduler_status ->
   unit ->
   stop_retraining_scheduler_response
 
@@ -125,11 +122,11 @@ val make_stop_retraining_scheduler_request :
   model_name:model_name -> unit -> stop_retraining_scheduler_request
 
 val make_stop_inference_scheduler_response :
-  ?status:inference_scheduler_status ->
-  ?inference_scheduler_arn:inference_scheduler_arn ->
-  ?inference_scheduler_name:inference_scheduler_name ->
-  ?model_name:model_name ->
   ?model_arn:model_arn ->
+  ?model_name:model_name ->
+  ?inference_scheduler_name:inference_scheduler_name ->
+  ?inference_scheduler_arn:inference_scheduler_arn ->
+  ?status:inference_scheduler_status ->
   unit ->
   stop_inference_scheduler_response
 
@@ -139,9 +136,9 @@ val make_stop_inference_scheduler_request :
   stop_inference_scheduler_request
 
 val make_start_retraining_scheduler_response :
-  ?status:retraining_scheduler_status ->
-  ?model_arn:model_arn ->
   ?model_name:model_name ->
+  ?model_arn:model_arn ->
+  ?status:retraining_scheduler_status ->
   unit ->
   start_retraining_scheduler_response
 
@@ -149,11 +146,11 @@ val make_start_retraining_scheduler_request :
   model_name:model_name -> unit -> start_retraining_scheduler_request
 
 val make_start_inference_scheduler_response :
-  ?status:inference_scheduler_status ->
-  ?inference_scheduler_arn:inference_scheduler_arn ->
-  ?inference_scheduler_name:inference_scheduler_name ->
-  ?model_name:model_name ->
   ?model_arn:model_arn ->
+  ?model_name:model_name ->
+  ?inference_scheduler_name:inference_scheduler_name ->
+  ?inference_scheduler_arn:inference_scheduler_arn ->
+  ?status:inference_scheduler_status ->
   unit ->
   start_inference_scheduler_response
 
@@ -163,14 +160,14 @@ val make_start_inference_scheduler_request :
   start_inference_scheduler_request
 
 val make_start_data_ingestion_job_response :
-  ?status:ingestion_job_status ->
   ?job_id:ingestion_job_id ->
+  ?status:ingestion_job_status ->
   unit ->
   start_data_ingestion_job_response
 
 val make_ingestion_s3_input_configuration :
-  ?key_pattern:key_pattern ->
   ?prefix:s3_prefix ->
+  ?key_pattern:key_pattern ->
   bucket:s3_bucket ->
   unit ->
   ingestion_s3_input_configuration
@@ -179,427 +176,393 @@ val make_ingestion_input_configuration :
   s3_input_configuration:ingestion_s3_input_configuration -> unit -> ingestion_input_configuration
 
 val make_start_data_ingestion_job_request :
-  client_token:idempotence_token ->
-  role_arn:iam_role_arn ->
-  ingestion_input_configuration:ingestion_input_configuration ->
   dataset_name:dataset_identifier ->
+  ingestion_input_configuration:ingestion_input_configuration ->
+  role_arn:iam_role_arn ->
+  client_token:idempotence_token ->
   unit ->
   start_data_ingestion_job_request
 
-val make_sensors_with_short_date_range :
-  affected_sensor_count:integer -> unit -> sensors_with_short_date_range
-
-val make_count_percent : percentage:float_ -> count:integer -> unit -> count_percent
-
-val make_categorical_values :
-  ?number_of_category:integer -> status:statistical_issue_status -> unit -> categorical_values
-
-val make_multiple_operating_modes :
-  status:statistical_issue_status -> unit -> multiple_operating_modes
-
-val make_large_timestamp_gaps :
-  ?max_timestamp_gap_in_days:integer ->
-  ?number_of_large_timestamp_gaps:integer ->
-  status:statistical_issue_status ->
-  unit ->
-  large_timestamp_gaps
-
-val make_monotonic_values :
-  ?monotonicity:monotonicity -> status:statistical_issue_status -> unit -> monotonic_values
-
-val make_sensor_statistics_summary :
-  ?data_end_time:timestamp ->
-  ?data_start_time:timestamp ->
-  ?monotonic_values:monotonic_values ->
-  ?large_timestamp_gaps:large_timestamp_gaps ->
-  ?multiple_operating_modes:multiple_operating_modes ->
-  ?categorical_values:categorical_values ->
-  ?duplicate_timestamps:count_percent ->
-  ?invalid_date_entries:count_percent ->
-  ?invalid_values:count_percent ->
-  ?missing_values:count_percent ->
-  ?data_exists:boolean_ ->
-  ?sensor_name:sensor_name ->
-  ?component_name:component_name ->
-  unit ->
-  sensor_statistics_summary
-
-val make_s3_object : key:s3_key -> bucket:s3_bucket -> unit -> s3_object
-
-val make_retraining_scheduler_summary :
-  ?lookback_window:lookback_window ->
-  ?retraining_frequency:retraining_frequency ->
-  ?retraining_start_date:timestamp ->
-  ?status:retraining_scheduler_status ->
-  ?model_arn:model_arn ->
-  ?model_name:model_name ->
-  unit ->
-  retraining_scheduler_summary
-
 val make_put_resource_policy_response :
-  ?policy_revision_id:policy_revision_id ->
   ?resource_arn:resource_arn ->
+  ?policy_revision_id:policy_revision_id ->
   unit ->
   put_resource_policy_response
 
 val make_put_resource_policy_request :
   ?policy_revision_id:policy_revision_id ->
-  client_token:idempotence_token ->
-  resource_policy:policy ->
   resource_arn:resource_arn ->
+  resource_policy:policy ->
+  client_token:idempotence_token ->
   unit ->
   put_resource_policy_request
-
-val make_model_version_summary :
-  ?model_quality:model_quality ->
-  ?source_type:model_version_source_type ->
-  ?status:model_version_status ->
-  ?created_at:timestamp ->
-  ?model_version_arn:model_version_arn ->
-  ?model_version:model_version ->
-  ?model_arn:model_arn ->
-  ?model_name:model_name ->
-  unit ->
-  model_version_summary
-
-val make_model_summary :
-  ?model_quality:model_quality ->
-  ?model_diagnostics_output_configuration:model_diagnostics_output_configuration ->
-  ?retraining_scheduler_status:retraining_scheduler_status ->
-  ?next_scheduled_retraining_start_date:timestamp ->
-  ?latest_scheduled_retraining_start_time:timestamp ->
-  ?latest_scheduled_retraining_model_version:model_version ->
-  ?latest_scheduled_retraining_status:model_version_status ->
-  ?active_model_version_arn:model_version_arn ->
-  ?active_model_version:model_version ->
-  ?created_at:timestamp ->
-  ?status:model_status ->
-  ?dataset_arn:dataset_arn ->
-  ?dataset_name:dataset_name ->
-  ?model_arn:model_arn ->
-  ?model_name:model_name ->
-  unit ->
-  model_summary
-
-val make_missing_sensor_data :
-  total_number_of_missing_values:integer ->
-  affected_sensor_count:integer ->
-  unit ->
-  missing_sensor_data
-
-val make_missing_complete_sensor_data :
-  affected_sensor_count:integer -> unit -> missing_complete_sensor_data
 
 val make_list_tags_for_resource_response : ?tags:tag_list -> unit -> list_tags_for_resource_response
 
 val make_list_tags_for_resource_request :
   resource_arn:amazon_resource_arn -> unit -> list_tags_for_resource_request
 
+val make_monotonic_values :
+  ?monotonicity:monotonicity -> status:statistical_issue_status -> unit -> monotonic_values
+
+val make_large_timestamp_gaps :
+  ?number_of_large_timestamp_gaps:integer ->
+  ?max_timestamp_gap_in_days:integer ->
+  status:statistical_issue_status ->
+  unit ->
+  large_timestamp_gaps
+
+val make_multiple_operating_modes :
+  status:statistical_issue_status -> unit -> multiple_operating_modes
+
+val make_categorical_values :
+  ?number_of_category:integer -> status:statistical_issue_status -> unit -> categorical_values
+
+val make_count_percent : count:integer -> percentage:float_ -> unit -> count_percent
+
+val make_sensor_statistics_summary :
+  ?component_name:component_name ->
+  ?sensor_name:sensor_name ->
+  ?data_exists:boolean_ ->
+  ?missing_values:count_percent ->
+  ?invalid_values:count_percent ->
+  ?invalid_date_entries:count_percent ->
+  ?duplicate_timestamps:count_percent ->
+  ?categorical_values:categorical_values ->
+  ?multiple_operating_modes:multiple_operating_modes ->
+  ?large_timestamp_gaps:large_timestamp_gaps ->
+  ?monotonic_values:monotonic_values ->
+  ?data_start_time:timestamp ->
+  ?data_end_time:timestamp ->
+  unit ->
+  sensor_statistics_summary
+
 val make_list_sensor_statistics_response :
-  ?next_token:next_token ->
   ?sensor_statistics_summaries:sensor_statistics_summaries ->
+  ?next_token:next_token ->
   unit ->
   list_sensor_statistics_response
 
 val make_list_sensor_statistics_request :
-  ?next_token:next_token ->
-  ?max_results:max_results ->
   ?ingestion_job_id:ingestion_job_id ->
+  ?max_results:max_results ->
+  ?next_token:next_token ->
   dataset_name:dataset_name ->
   unit ->
   list_sensor_statistics_request
 
+val make_retraining_scheduler_summary :
+  ?model_name:model_name ->
+  ?model_arn:model_arn ->
+  ?status:retraining_scheduler_status ->
+  ?retraining_start_date:timestamp ->
+  ?retraining_frequency:retraining_frequency ->
+  ?lookback_window:lookback_window ->
+  unit ->
+  retraining_scheduler_summary
+
 val make_list_retraining_schedulers_response :
-  ?next_token:next_token ->
   ?retraining_scheduler_summaries:retraining_scheduler_summaries ->
+  ?next_token:next_token ->
   unit ->
   list_retraining_schedulers_response
 
 val make_list_retraining_schedulers_request :
-  ?max_results:max_results ->
-  ?next_token:next_token ->
-  ?status:retraining_scheduler_status ->
   ?model_name_begins_with:model_name ->
+  ?status:retraining_scheduler_status ->
+  ?next_token:next_token ->
+  ?max_results:max_results ->
   unit ->
   list_retraining_schedulers_request
 
-val make_list_models_response :
-  ?model_summaries:model_summaries -> ?next_token:next_token -> unit -> list_models_response
-
-val make_list_models_request :
-  ?dataset_name_begins_with:dataset_name ->
-  ?model_name_begins_with:model_name ->
-  ?status:model_status ->
-  ?max_results:max_results ->
-  ?next_token:next_token ->
+val make_model_version_summary :
+  ?model_name:model_name ->
+  ?model_arn:model_arn ->
+  ?model_version:model_version ->
+  ?model_version_arn:model_version_arn ->
+  ?created_at:timestamp ->
+  ?status:model_version_status ->
+  ?source_type:model_version_source_type ->
+  ?model_quality:model_quality ->
   unit ->
-  list_models_request
+  model_version_summary
 
 val make_list_model_versions_response :
-  ?model_version_summaries:model_version_summaries ->
   ?next_token:next_token ->
+  ?model_version_summaries:model_version_summaries ->
   unit ->
   list_model_versions_response
 
 val make_list_model_versions_request :
-  ?min_model_version:model_version ->
-  ?max_model_version:model_version ->
-  ?created_at_start_time:timestamp ->
-  ?created_at_end_time:timestamp ->
-  ?source_type:model_version_source_type ->
-  ?status:model_version_status ->
-  ?max_results:max_results ->
   ?next_token:next_token ->
+  ?max_results:max_results ->
+  ?status:model_version_status ->
+  ?source_type:model_version_source_type ->
+  ?created_at_end_time:timestamp ->
+  ?created_at_start_time:timestamp ->
+  ?max_model_version:model_version ->
+  ?min_model_version:model_version ->
   model_name:model_name ->
   unit ->
   list_model_versions_request
 
-val make_label_summary :
+val make_model_summary :
+  ?model_name:model_name ->
+  ?model_arn:model_arn ->
+  ?dataset_name:dataset_name ->
+  ?dataset_arn:dataset_arn ->
+  ?status:model_status ->
   ?created_at:timestamp ->
-  ?equipment:equipment ->
-  ?fault_code:fault_code ->
-  ?rating:label_rating ->
-  ?end_time:timestamp ->
-  ?start_time:timestamp ->
-  ?label_group_arn:label_group_arn ->
-  ?label_id:label_id ->
+  ?active_model_version:model_version ->
+  ?active_model_version_arn:model_version_arn ->
+  ?latest_scheduled_retraining_status:model_version_status ->
+  ?latest_scheduled_retraining_model_version:model_version ->
+  ?latest_scheduled_retraining_start_time:timestamp ->
+  ?next_scheduled_retraining_start_date:timestamp ->
+  ?retraining_scheduler_status:retraining_scheduler_status ->
+  ?model_diagnostics_output_configuration:model_diagnostics_output_configuration ->
+  ?model_quality:model_quality ->
+  unit ->
+  model_summary
+
+val make_list_models_response :
+  ?next_token:next_token -> ?model_summaries:model_summaries -> unit -> list_models_response
+
+val make_list_models_request :
+  ?next_token:next_token ->
+  ?max_results:max_results ->
+  ?status:model_status ->
+  ?model_name_begins_with:model_name ->
+  ?dataset_name_begins_with:dataset_name ->
+  unit ->
+  list_models_request
+
+val make_label_summary :
   ?label_group_name:label_group_name ->
+  ?label_id:label_id ->
+  ?label_group_arn:label_group_arn ->
+  ?start_time:timestamp ->
+  ?end_time:timestamp ->
+  ?rating:label_rating ->
+  ?fault_code:fault_code ->
+  ?equipment:equipment ->
+  ?created_at:timestamp ->
   unit ->
   label_summary
 
 val make_list_labels_response :
-  ?label_summaries:label_summaries -> ?next_token:next_token -> unit -> list_labels_response
+  ?next_token:next_token -> ?label_summaries:label_summaries -> unit -> list_labels_response
 
 val make_list_labels_request :
-  ?max_results:max_results ->
-  ?next_token:next_token ->
-  ?equipment:equipment ->
-  ?fault_code:fault_code ->
-  ?interval_end_time:timestamp ->
   ?interval_start_time:timestamp ->
+  ?interval_end_time:timestamp ->
+  ?fault_code:fault_code ->
+  ?equipment:equipment ->
+  ?next_token:next_token ->
+  ?max_results:max_results ->
   label_group_name:label_group_name ->
   unit ->
   list_labels_request
 
 val make_label_group_summary :
-  ?updated_at:timestamp ->
-  ?created_at:timestamp ->
-  ?label_group_arn:label_group_arn ->
   ?label_group_name:label_group_name ->
+  ?label_group_arn:label_group_arn ->
+  ?created_at:timestamp ->
+  ?updated_at:timestamp ->
   unit ->
   label_group_summary
 
 val make_list_label_groups_response :
-  ?label_group_summaries:label_group_summaries ->
   ?next_token:next_token ->
+  ?label_group_summaries:label_group_summaries ->
   unit ->
   list_label_groups_response
 
 val make_list_label_groups_request :
-  ?max_results:max_results ->
-  ?next_token:next_token ->
   ?label_group_name_begins_with:label_group_name ->
+  ?next_token:next_token ->
+  ?max_results:max_results ->
   unit ->
   list_label_groups_request
 
 val make_inference_scheduler_summary :
-  ?latest_inference_result:latest_inference_result ->
-  ?data_upload_frequency:data_upload_frequency ->
-  ?data_delay_offset_in_minutes:data_delay_offset_in_minutes ->
-  ?status:inference_scheduler_status ->
-  ?inference_scheduler_arn:inference_scheduler_arn ->
-  ?inference_scheduler_name:inference_scheduler_name ->
-  ?model_arn:model_arn ->
   ?model_name:model_name ->
+  ?model_arn:model_arn ->
+  ?inference_scheduler_name:inference_scheduler_name ->
+  ?inference_scheduler_arn:inference_scheduler_arn ->
+  ?status:inference_scheduler_status ->
+  ?data_delay_offset_in_minutes:data_delay_offset_in_minutes ->
+  ?data_upload_frequency:data_upload_frequency ->
+  ?latest_inference_result:latest_inference_result ->
   unit ->
   inference_scheduler_summary
 
 val make_list_inference_schedulers_response :
-  ?inference_scheduler_summaries:inference_scheduler_summaries ->
   ?next_token:next_token ->
+  ?inference_scheduler_summaries:inference_scheduler_summaries ->
   unit ->
   list_inference_schedulers_response
 
 val make_list_inference_schedulers_request :
-  ?status:inference_scheduler_status ->
-  ?model_name:model_name ->
-  ?inference_scheduler_name_begins_with:inference_scheduler_identifier ->
-  ?max_results:max_results ->
   ?next_token:next_token ->
+  ?max_results:max_results ->
+  ?inference_scheduler_name_begins_with:inference_scheduler_identifier ->
+  ?model_name:model_name ->
+  ?status:inference_scheduler_status ->
   unit ->
   list_inference_schedulers_request
 
+val make_s3_object : bucket:s3_bucket -> key:s3_key -> unit -> s3_object
+
 val make_inference_execution_summary :
-  ?model_version_arn:model_version_arn ->
-  ?model_version:model_version ->
-  ?failed_reason:bounded_length_string ->
-  ?status:inference_execution_status ->
-  ?customer_result_object:s3_object ->
-  ?data_output_configuration:inference_output_configuration ->
-  ?data_input_configuration:inference_input_configuration ->
-  ?data_end_time:timestamp ->
-  ?data_start_time:timestamp ->
-  ?scheduled_start_time:timestamp ->
-  ?inference_scheduler_arn:inference_scheduler_arn ->
-  ?inference_scheduler_name:inference_scheduler_name ->
-  ?model_arn:model_arn ->
   ?model_name:model_name ->
+  ?model_arn:model_arn ->
+  ?inference_scheduler_name:inference_scheduler_name ->
+  ?inference_scheduler_arn:inference_scheduler_arn ->
+  ?scheduled_start_time:timestamp ->
+  ?data_start_time:timestamp ->
+  ?data_end_time:timestamp ->
+  ?data_input_configuration:inference_input_configuration ->
+  ?data_output_configuration:inference_output_configuration ->
+  ?customer_result_object:s3_object ->
+  ?status:inference_execution_status ->
+  ?failed_reason:bounded_length_string ->
+  ?model_version:model_version ->
+  ?model_version_arn:model_version_arn ->
   unit ->
   inference_execution_summary
 
 val make_list_inference_executions_response :
-  ?inference_execution_summaries:inference_execution_summaries ->
   ?next_token:next_token ->
+  ?inference_execution_summaries:inference_execution_summaries ->
   unit ->
   list_inference_executions_response
 
 val make_list_inference_executions_request :
-  ?status:inference_execution_status ->
-  ?data_end_time_before:timestamp ->
-  ?data_start_time_after:timestamp ->
-  ?max_results:max_results ->
   ?next_token:next_token ->
+  ?max_results:max_results ->
+  ?data_start_time_after:timestamp ->
+  ?data_end_time_before:timestamp ->
+  ?status:inference_execution_status ->
   inference_scheduler_name:inference_scheduler_identifier ->
   unit ->
   list_inference_executions_request
 
 val make_inference_event_summary :
-  ?event_duration_in_seconds:event_duration_in_seconds ->
-  ?diagnostics:model_metrics ->
-  ?event_end_time:timestamp ->
-  ?event_start_time:timestamp ->
-  ?inference_scheduler_name:inference_scheduler_name ->
   ?inference_scheduler_arn:inference_scheduler_arn ->
+  ?inference_scheduler_name:inference_scheduler_name ->
+  ?event_start_time:timestamp ->
+  ?event_end_time:timestamp ->
+  ?diagnostics:model_metrics ->
+  ?event_duration_in_seconds:event_duration_in_seconds ->
   unit ->
   inference_event_summary
 
 val make_list_inference_events_response :
-  ?inference_event_summaries:inference_event_summaries ->
   ?next_token:next_token ->
+  ?inference_event_summaries:inference_event_summaries ->
   unit ->
   list_inference_events_response
 
 val make_list_inference_events_request :
-  ?max_results:max_results ->
   ?next_token:next_token ->
-  interval_end_time:timestamp ->
-  interval_start_time:timestamp ->
+  ?max_results:max_results ->
   inference_scheduler_name:inference_scheduler_identifier ->
+  interval_start_time:timestamp ->
+  interval_end_time:timestamp ->
   unit ->
   list_inference_events_request
 
 val make_dataset_summary :
-  ?created_at:timestamp ->
-  ?status:dataset_status ->
-  ?dataset_arn:dataset_arn ->
   ?dataset_name:dataset_name ->
+  ?dataset_arn:dataset_arn ->
+  ?status:dataset_status ->
+  ?created_at:timestamp ->
   unit ->
   dataset_summary
 
 val make_list_datasets_response :
-  ?dataset_summaries:dataset_summaries -> ?next_token:next_token -> unit -> list_datasets_response
+  ?next_token:next_token -> ?dataset_summaries:dataset_summaries -> unit -> list_datasets_response
 
 val make_list_datasets_request :
-  ?dataset_name_begins_with:dataset_name ->
-  ?max_results:max_results ->
   ?next_token:next_token ->
+  ?max_results:max_results ->
+  ?dataset_name_begins_with:dataset_name ->
   unit ->
   list_datasets_request
 
 val make_data_ingestion_job_summary :
-  ?status:ingestion_job_status ->
-  ?ingestion_input_configuration:ingestion_input_configuration ->
-  ?dataset_arn:dataset_arn ->
-  ?dataset_name:dataset_name ->
   ?job_id:ingestion_job_id ->
+  ?dataset_name:dataset_name ->
+  ?dataset_arn:dataset_arn ->
+  ?ingestion_input_configuration:ingestion_input_configuration ->
+  ?status:ingestion_job_status ->
   unit ->
   data_ingestion_job_summary
 
 val make_list_data_ingestion_jobs_response :
-  ?data_ingestion_job_summaries:data_ingestion_job_summaries ->
   ?next_token:next_token ->
+  ?data_ingestion_job_summaries:data_ingestion_job_summaries ->
   unit ->
   list_data_ingestion_jobs_response
 
 val make_list_data_ingestion_jobs_request :
-  ?status:ingestion_job_status ->
-  ?max_results:max_results ->
-  ?next_token:next_token ->
   ?dataset_name:dataset_name ->
+  ?next_token:next_token ->
+  ?max_results:max_results ->
+  ?status:ingestion_job_status ->
   unit ->
   list_data_ingestion_jobs_request
 
-val make_invalid_sensor_data :
-  total_number_of_invalid_values:integer ->
-  affected_sensor_count:integer ->
-  unit ->
-  invalid_sensor_data
-
-val make_insufficient_sensor_data :
-  sensors_with_short_date_range:sensors_with_short_date_range ->
-  missing_complete_sensor_data:missing_complete_sensor_data ->
-  unit ->
-  insufficient_sensor_data
-
-val make_ingested_files_summary :
-  ?discarded_files:list_of_discarded_files ->
-  ingested_number_of_files:integer ->
-  total_number_of_files:integer ->
-  unit ->
-  ingested_files_summary
-
 val make_import_model_version_response :
-  ?status:model_version_status ->
-  ?model_version:model_version ->
-  ?model_version_arn:model_version_arn ->
-  ?model_arn:model_arn ->
   ?model_name:model_name ->
+  ?model_arn:model_arn ->
+  ?model_version_arn:model_version_arn ->
+  ?model_version:model_version ->
+  ?status:model_version_status ->
   unit ->
   import_model_version_response
 
 val make_import_model_version_request :
-  ?inference_data_import_strategy:inference_data_import_strategy ->
-  ?tags:tag_list ->
-  ?server_side_kms_key_id:name_or_arn ->
-  ?role_arn:iam_role_arn ->
-  ?labels_input_configuration:labels_input_configuration ->
   ?model_name:model_name ->
-  client_token:idempotence_token ->
-  dataset_name:dataset_identifier ->
+  ?labels_input_configuration:labels_input_configuration ->
+  ?role_arn:iam_role_arn ->
+  ?server_side_kms_key_id:name_or_arn ->
+  ?tags:tag_list ->
+  ?inference_data_import_strategy:inference_data_import_strategy ->
   source_model_version_arn:model_version_arn ->
+  dataset_name:dataset_identifier ->
+  client_token:idempotence_token ->
   unit ->
   import_model_version_request
 
 val make_import_dataset_response :
-  ?job_id:ingestion_job_id ->
-  ?status:dataset_status ->
-  ?dataset_arn:dataset_arn ->
   ?dataset_name:dataset_name ->
+  ?dataset_arn:dataset_arn ->
+  ?status:dataset_status ->
+  ?job_id:ingestion_job_id ->
   unit ->
   import_dataset_response
 
 val make_import_dataset_request :
-  ?tags:tag_list ->
-  ?server_side_kms_key_id:name_or_arn ->
   ?dataset_name:dataset_name ->
-  client_token:idempotence_token ->
+  ?server_side_kms_key_id:name_or_arn ->
+  ?tags:tag_list ->
   source_dataset_arn:dataset_arn ->
+  client_token:idempotence_token ->
   unit ->
   import_dataset_request
 
-val make_duplicate_timestamps :
-  total_number_of_duplicate_timestamps:integer -> unit -> duplicate_timestamps
-
 val make_describe_retraining_scheduler_response :
-  ?updated_at:timestamp ->
-  ?created_at:timestamp ->
-  ?promote_mode:model_promote_mode ->
-  ?status:retraining_scheduler_status ->
-  ?lookback_window:lookback_window ->
-  ?retraining_frequency:retraining_frequency ->
-  ?retraining_start_date:timestamp ->
-  ?model_arn:model_arn ->
   ?model_name:model_name ->
+  ?model_arn:model_arn ->
+  ?retraining_start_date:timestamp ->
+  ?retraining_frequency:retraining_frequency ->
+  ?lookback_window:lookback_window ->
+  ?status:retraining_scheduler_status ->
+  ?promote_mode:model_promote_mode ->
+  ?created_at:timestamp ->
+  ?updated_at:timestamp ->
   unit ->
   describe_retraining_scheduler_response
 
@@ -607,10 +570,10 @@ val make_describe_retraining_scheduler_request :
   model_name:model_name -> unit -> describe_retraining_scheduler_request
 
 val make_describe_resource_policy_response :
-  ?last_modified_time:timestamp ->
-  ?creation_time:timestamp ->
-  ?resource_policy:policy ->
   ?policy_revision_id:policy_revision_id ->
+  ?resource_policy:policy ->
+  ?creation_time:timestamp ->
+  ?last_modified_time:timestamp ->
   unit ->
   describe_resource_policy_response
 
@@ -621,139 +584,139 @@ val make_data_pre_processing_configuration :
   ?target_sampling_rate:target_sampling_rate -> unit -> data_pre_processing_configuration
 
 val make_describe_model_version_response :
-  ?model_quality:model_quality ->
-  ?model_diagnostics_results_object:s3_object ->
-  ?model_diagnostics_output_configuration:model_diagnostics_output_configuration ->
-  ?auto_promotion_result_reason:auto_promotion_result_reason ->
-  ?auto_promotion_result:auto_promotion_result ->
-  ?retraining_available_data_in_days:integer ->
-  ?prior_model_metrics:model_metrics ->
-  ?imported_data_size_in_bytes:data_size_in_bytes ->
-  ?import_job_end_time:timestamp ->
-  ?import_job_start_time:timestamp ->
-  ?source_model_version_arn:model_version_arn ->
-  ?off_condition:off_condition ->
-  ?server_side_kms_key_id:kms_key_arn ->
-  ?created_at:timestamp ->
-  ?last_updated_time:timestamp ->
-  ?model_metrics:model_metrics ->
-  ?failed_reason:bounded_length_string ->
-  ?training_execution_end_time:timestamp ->
-  ?training_execution_start_time:timestamp ->
-  ?data_pre_processing_configuration:data_pre_processing_configuration ->
-  ?role_arn:iam_role_arn ->
-  ?evaluation_data_end_time:timestamp ->
-  ?evaluation_data_start_time:timestamp ->
-  ?training_data_end_time:timestamp ->
-  ?training_data_start_time:timestamp ->
-  ?labels_input_configuration:labels_input_configuration ->
-  ?schema:inline_data_schema ->
-  ?dataset_arn:dataset_arn ->
-  ?dataset_name:dataset_name ->
-  ?source_type:model_version_source_type ->
-  ?status:model_version_status ->
-  ?model_version_arn:model_version_arn ->
-  ?model_version:model_version ->
-  ?model_arn:model_arn ->
   ?model_name:model_name ->
+  ?model_arn:model_arn ->
+  ?model_version:model_version ->
+  ?model_version_arn:model_version_arn ->
+  ?status:model_version_status ->
+  ?source_type:model_version_source_type ->
+  ?dataset_name:dataset_name ->
+  ?dataset_arn:dataset_arn ->
+  ?schema:inline_data_schema ->
+  ?labels_input_configuration:labels_input_configuration ->
+  ?training_data_start_time:timestamp ->
+  ?training_data_end_time:timestamp ->
+  ?evaluation_data_start_time:timestamp ->
+  ?evaluation_data_end_time:timestamp ->
+  ?role_arn:iam_role_arn ->
+  ?data_pre_processing_configuration:data_pre_processing_configuration ->
+  ?training_execution_start_time:timestamp ->
+  ?training_execution_end_time:timestamp ->
+  ?failed_reason:bounded_length_string ->
+  ?model_metrics:model_metrics ->
+  ?last_updated_time:timestamp ->
+  ?created_at:timestamp ->
+  ?server_side_kms_key_id:kms_key_arn ->
+  ?off_condition:off_condition ->
+  ?source_model_version_arn:model_version_arn ->
+  ?import_job_start_time:timestamp ->
+  ?import_job_end_time:timestamp ->
+  ?imported_data_size_in_bytes:data_size_in_bytes ->
+  ?prior_model_metrics:model_metrics ->
+  ?retraining_available_data_in_days:integer ->
+  ?auto_promotion_result:auto_promotion_result ->
+  ?auto_promotion_result_reason:auto_promotion_result_reason ->
+  ?model_diagnostics_output_configuration:model_diagnostics_output_configuration ->
+  ?model_diagnostics_results_object:s3_object ->
+  ?model_quality:model_quality ->
   unit ->
   describe_model_version_response
 
 val make_describe_model_version_request :
-  model_version:model_version -> model_name:model_name -> unit -> describe_model_version_request
+  model_name:model_name -> model_version:model_version -> unit -> describe_model_version_request
 
 val make_describe_model_response :
-  ?model_quality:model_quality ->
-  ?model_diagnostics_output_configuration:model_diagnostics_output_configuration ->
-  ?retraining_scheduler_status:retraining_scheduler_status ->
-  ?accumulated_inference_data_end_time:timestamp ->
-  ?accumulated_inference_data_start_time:timestamp ->
-  ?next_scheduled_retraining_start_date:timestamp ->
-  ?latest_scheduled_retraining_available_data_in_days:integer ->
-  ?latest_scheduled_retraining_start_time:timestamp ->
-  ?latest_scheduled_retraining_model_version:model_version ->
-  ?latest_scheduled_retraining_status:model_version_status ->
-  ?latest_scheduled_retraining_failed_reason:bounded_length_string ->
-  ?prior_model_metrics:synthesized_json_model_metrics ->
-  ?previous_model_version_activated_at:timestamp ->
-  ?previous_active_model_version_arn:model_version_arn ->
-  ?previous_active_model_version:model_version ->
-  ?model_version_activated_at:timestamp ->
-  ?active_model_version_arn:model_version_arn ->
-  ?active_model_version:model_version ->
-  ?import_job_end_time:timestamp ->
-  ?import_job_start_time:timestamp ->
-  ?source_model_version_arn:model_version_arn ->
-  ?off_condition:off_condition ->
-  ?server_side_kms_key_id:kms_key_arn ->
-  ?created_at:timestamp ->
-  ?last_updated_time:timestamp ->
-  ?model_metrics:synthesized_json_model_metrics ->
-  ?failed_reason:bounded_length_string ->
-  ?training_execution_end_time:timestamp ->
-  ?training_execution_start_time:timestamp ->
-  ?status:model_status ->
-  ?data_pre_processing_configuration:data_pre_processing_configuration ->
-  ?role_arn:iam_role_arn ->
-  ?evaluation_data_end_time:timestamp ->
-  ?evaluation_data_start_time:timestamp ->
-  ?training_data_end_time:timestamp ->
-  ?training_data_start_time:timestamp ->
-  ?labels_input_configuration:labels_input_configuration ->
-  ?schema:synthesized_json_inline_data_schema ->
-  ?dataset_arn:dataset_arn ->
-  ?dataset_name:dataset_name ->
-  ?model_arn:model_arn ->
   ?model_name:model_name ->
+  ?model_arn:model_arn ->
+  ?dataset_name:dataset_name ->
+  ?dataset_arn:dataset_arn ->
+  ?schema:synthesized_json_inline_data_schema ->
+  ?labels_input_configuration:labels_input_configuration ->
+  ?training_data_start_time:timestamp ->
+  ?training_data_end_time:timestamp ->
+  ?evaluation_data_start_time:timestamp ->
+  ?evaluation_data_end_time:timestamp ->
+  ?role_arn:iam_role_arn ->
+  ?data_pre_processing_configuration:data_pre_processing_configuration ->
+  ?status:model_status ->
+  ?training_execution_start_time:timestamp ->
+  ?training_execution_end_time:timestamp ->
+  ?failed_reason:bounded_length_string ->
+  ?model_metrics:synthesized_json_model_metrics ->
+  ?last_updated_time:timestamp ->
+  ?created_at:timestamp ->
+  ?server_side_kms_key_id:kms_key_arn ->
+  ?off_condition:off_condition ->
+  ?source_model_version_arn:model_version_arn ->
+  ?import_job_start_time:timestamp ->
+  ?import_job_end_time:timestamp ->
+  ?active_model_version:model_version ->
+  ?active_model_version_arn:model_version_arn ->
+  ?model_version_activated_at:timestamp ->
+  ?previous_active_model_version:model_version ->
+  ?previous_active_model_version_arn:model_version_arn ->
+  ?previous_model_version_activated_at:timestamp ->
+  ?prior_model_metrics:synthesized_json_model_metrics ->
+  ?latest_scheduled_retraining_failed_reason:bounded_length_string ->
+  ?latest_scheduled_retraining_status:model_version_status ->
+  ?latest_scheduled_retraining_model_version:model_version ->
+  ?latest_scheduled_retraining_start_time:timestamp ->
+  ?latest_scheduled_retraining_available_data_in_days:integer ->
+  ?next_scheduled_retraining_start_date:timestamp ->
+  ?accumulated_inference_data_start_time:timestamp ->
+  ?accumulated_inference_data_end_time:timestamp ->
+  ?retraining_scheduler_status:retraining_scheduler_status ->
+  ?model_diagnostics_output_configuration:model_diagnostics_output_configuration ->
+  ?model_quality:model_quality ->
   unit ->
   describe_model_response
 
 val make_describe_model_request : model_name:model_name -> unit -> describe_model_request
 
-val make_describe_label_response :
-  ?created_at:timestamp ->
-  ?equipment:equipment ->
-  ?notes:comments ->
-  ?fault_code:fault_code ->
-  ?rating:label_rating ->
-  ?end_time:timestamp ->
-  ?start_time:timestamp ->
-  ?label_id:label_id ->
-  ?label_group_arn:label_group_arn ->
-  ?label_group_name:label_group_name ->
-  unit ->
-  describe_label_response
-
-val make_describe_label_request :
-  label_id:label_id -> label_group_name:label_group_name -> unit -> describe_label_request
-
 val make_describe_label_group_response :
-  ?updated_at:timestamp ->
-  ?created_at:timestamp ->
-  ?fault_codes:fault_codes ->
-  ?label_group_arn:label_group_arn ->
   ?label_group_name:label_group_name ->
+  ?label_group_arn:label_group_arn ->
+  ?fault_codes:fault_codes ->
+  ?created_at:timestamp ->
+  ?updated_at:timestamp ->
   unit ->
   describe_label_group_response
 
 val make_describe_label_group_request :
   label_group_name:label_group_name -> unit -> describe_label_group_request
 
-val make_describe_inference_scheduler_response :
-  ?latest_inference_result:latest_inference_result ->
-  ?server_side_kms_key_id:kms_key_arn ->
-  ?role_arn:iam_role_arn ->
-  ?data_output_configuration:inference_output_configuration ->
-  ?data_input_configuration:inference_input_configuration ->
-  ?updated_at:timestamp ->
+val make_describe_label_response :
+  ?label_group_name:label_group_name ->
+  ?label_group_arn:label_group_arn ->
+  ?label_id:label_id ->
+  ?start_time:timestamp ->
+  ?end_time:timestamp ->
+  ?rating:label_rating ->
+  ?fault_code:fault_code ->
+  ?notes:comments ->
+  ?equipment:equipment ->
   ?created_at:timestamp ->
-  ?data_upload_frequency:data_upload_frequency ->
-  ?data_delay_offset_in_minutes:data_delay_offset_in_minutes ->
-  ?status:inference_scheduler_status ->
-  ?inference_scheduler_arn:inference_scheduler_arn ->
-  ?inference_scheduler_name:inference_scheduler_name ->
-  ?model_name:model_name ->
+  unit ->
+  describe_label_response
+
+val make_describe_label_request :
+  label_group_name:label_group_name -> label_id:label_id -> unit -> describe_label_request
+
+val make_describe_inference_scheduler_response :
   ?model_arn:model_arn ->
+  ?model_name:model_name ->
+  ?inference_scheduler_name:inference_scheduler_name ->
+  ?inference_scheduler_arn:inference_scheduler_arn ->
+  ?status:inference_scheduler_status ->
+  ?data_delay_offset_in_minutes:data_delay_offset_in_minutes ->
+  ?data_upload_frequency:data_upload_frequency ->
+  ?created_at:timestamp ->
+  ?updated_at:timestamp ->
+  ?data_input_configuration:inference_input_configuration ->
+  ?data_output_configuration:inference_output_configuration ->
+  ?role_arn:iam_role_arn ->
+  ?server_side_kms_key_id:kms_key_arn ->
+  ?latest_inference_result:latest_inference_result ->
   unit ->
   describe_inference_scheduler_response
 
@@ -762,30 +725,67 @@ val make_describe_inference_scheduler_request :
   unit ->
   describe_inference_scheduler_request
 
+val make_ingested_files_summary :
+  ?discarded_files:list_of_discarded_files ->
+  total_number_of_files:integer ->
+  ingested_number_of_files:integer ->
+  unit ->
+  ingested_files_summary
+
+val make_duplicate_timestamps :
+  total_number_of_duplicate_timestamps:integer -> unit -> duplicate_timestamps
+
+val make_unsupported_timestamps :
+  total_number_of_unsupported_timestamps:integer -> unit -> unsupported_timestamps
+
+val make_invalid_sensor_data :
+  affected_sensor_count:integer ->
+  total_number_of_invalid_values:integer ->
+  unit ->
+  invalid_sensor_data
+
+val make_missing_sensor_data :
+  affected_sensor_count:integer ->
+  total_number_of_missing_values:integer ->
+  unit ->
+  missing_sensor_data
+
+val make_sensors_with_short_date_range :
+  affected_sensor_count:integer -> unit -> sensors_with_short_date_range
+
+val make_missing_complete_sensor_data :
+  affected_sensor_count:integer -> unit -> missing_complete_sensor_data
+
+val make_insufficient_sensor_data :
+  missing_complete_sensor_data:missing_complete_sensor_data ->
+  sensors_with_short_date_range:sensors_with_short_date_range ->
+  unit ->
+  insufficient_sensor_data
+
 val make_data_quality_summary :
-  duplicate_timestamps:duplicate_timestamps ->
-  unsupported_timestamps:unsupported_timestamps ->
-  invalid_sensor_data:invalid_sensor_data ->
-  missing_sensor_data:missing_sensor_data ->
   insufficient_sensor_data:insufficient_sensor_data ->
+  missing_sensor_data:missing_sensor_data ->
+  invalid_sensor_data:invalid_sensor_data ->
+  unsupported_timestamps:unsupported_timestamps ->
+  duplicate_timestamps:duplicate_timestamps ->
   unit ->
   data_quality_summary
 
 val make_describe_dataset_response :
-  ?source_dataset_arn:dataset_arn ->
-  ?data_end_time:timestamp ->
-  ?data_start_time:timestamp ->
-  ?role_arn:iam_role_arn ->
-  ?ingested_files_summary:ingested_files_summary ->
-  ?data_quality_summary:data_quality_summary ->
-  ?ingestion_input_configuration:ingestion_input_configuration ->
-  ?server_side_kms_key_id:kms_key_arn ->
-  ?schema:synthesized_json_inline_data_schema ->
-  ?status:dataset_status ->
-  ?last_updated_at:timestamp ->
-  ?created_at:timestamp ->
-  ?dataset_arn:dataset_arn ->
   ?dataset_name:dataset_name ->
+  ?dataset_arn:dataset_arn ->
+  ?created_at:timestamp ->
+  ?last_updated_at:timestamp ->
+  ?status:dataset_status ->
+  ?schema:synthesized_json_inline_data_schema ->
+  ?server_side_kms_key_id:kms_key_arn ->
+  ?ingestion_input_configuration:ingestion_input_configuration ->
+  ?data_quality_summary:data_quality_summary ->
+  ?ingested_files_summary:ingested_files_summary ->
+  ?role_arn:iam_role_arn ->
+  ?data_start_time:timestamp ->
+  ?data_end_time:timestamp ->
+  ?source_dataset_arn:dataset_arn ->
   unit ->
   describe_dataset_response
 
@@ -793,20 +793,20 @@ val make_describe_dataset_request :
   dataset_name:dataset_identifier -> unit -> describe_dataset_request
 
 val make_describe_data_ingestion_job_response :
-  ?source_dataset_arn:dataset_arn ->
-  ?data_end_time:timestamp ->
-  ?data_start_time:timestamp ->
-  ?ingested_data_size:data_size_in_bytes ->
-  ?status_detail:bounded_length_string ->
-  ?ingested_files_summary:ingested_files_summary ->
-  ?data_quality_summary:data_quality_summary ->
-  ?failed_reason:bounded_length_string ->
-  ?status:ingestion_job_status ->
-  ?created_at:timestamp ->
-  ?role_arn:iam_role_arn ->
-  ?ingestion_input_configuration:ingestion_input_configuration ->
-  ?dataset_arn:dataset_arn ->
   ?job_id:ingestion_job_id ->
+  ?dataset_arn:dataset_arn ->
+  ?ingestion_input_configuration:ingestion_input_configuration ->
+  ?role_arn:iam_role_arn ->
+  ?created_at:timestamp ->
+  ?status:ingestion_job_status ->
+  ?failed_reason:bounded_length_string ->
+  ?data_quality_summary:data_quality_summary ->
+  ?ingested_files_summary:ingested_files_summary ->
+  ?status_detail:bounded_length_string ->
+  ?ingested_data_size:data_size_in_bytes ->
+  ?data_start_time:timestamp ->
+  ?data_end_time:timestamp ->
+  ?source_dataset_arn:dataset_arn ->
   unit ->
   describe_data_ingestion_job_response
 
@@ -821,11 +821,11 @@ val make_delete_resource_policy_request :
 
 val make_delete_model_request : model_name:model_name -> unit -> delete_model_request
 
-val make_delete_label_request :
-  label_id:label_id -> label_group_name:label_group_name -> unit -> delete_label_request
-
 val make_delete_label_group_request :
   label_group_name:label_group_name -> unit -> delete_label_group_request
+
+val make_delete_label_request :
+  label_group_name:label_group_name -> label_id:label_id -> unit -> delete_label_request
 
 val make_delete_inference_scheduler_request :
   inference_scheduler_name:inference_scheduler_identifier ->
@@ -834,111 +834,111 @@ val make_delete_inference_scheduler_request :
 
 val make_delete_dataset_request : dataset_name:dataset_identifier -> unit -> delete_dataset_request
 
-val make_dataset_schema :
-  ?inline_data_schema:synthesized_json_inline_data_schema -> unit -> dataset_schema
-
 val make_create_retraining_scheduler_response :
-  ?status:retraining_scheduler_status ->
-  ?model_arn:model_arn ->
   ?model_name:model_name ->
+  ?model_arn:model_arn ->
+  ?status:retraining_scheduler_status ->
   unit ->
   create_retraining_scheduler_response
 
 val make_create_retraining_scheduler_request :
-  ?promote_mode:model_promote_mode ->
   ?retraining_start_date:timestamp ->
-  client_token:idempotence_token ->
-  lookback_window:lookback_window ->
-  retraining_frequency:retraining_frequency ->
+  ?promote_mode:model_promote_mode ->
   model_name:model_name ->
+  retraining_frequency:retraining_frequency ->
+  lookback_window:lookback_window ->
+  client_token:idempotence_token ->
   unit ->
   create_retraining_scheduler_request
 
 val make_create_model_response :
-  ?status:model_status -> ?model_arn:model_arn -> unit -> create_model_response
+  ?model_arn:model_arn -> ?status:model_status -> unit -> create_model_response
+
+val make_dataset_schema :
+  ?inline_data_schema:synthesized_json_inline_data_schema -> unit -> dataset_schema
 
 val make_create_model_request :
-  ?model_diagnostics_output_configuration:model_diagnostics_output_configuration ->
-  ?off_condition:off_condition ->
-  ?tags:tag_list ->
-  ?server_side_kms_key_id:name_or_arn ->
-  ?data_pre_processing_configuration:data_pre_processing_configuration ->
-  ?role_arn:iam_role_arn ->
-  ?evaluation_data_end_time:timestamp ->
-  ?evaluation_data_start_time:timestamp ->
-  ?training_data_end_time:timestamp ->
-  ?training_data_start_time:timestamp ->
-  ?labels_input_configuration:labels_input_configuration ->
   ?dataset_schema:dataset_schema ->
-  client_token:idempotence_token ->
-  dataset_name:dataset_identifier ->
+  ?labels_input_configuration:labels_input_configuration ->
+  ?training_data_start_time:timestamp ->
+  ?training_data_end_time:timestamp ->
+  ?evaluation_data_start_time:timestamp ->
+  ?evaluation_data_end_time:timestamp ->
+  ?role_arn:iam_role_arn ->
+  ?data_pre_processing_configuration:data_pre_processing_configuration ->
+  ?server_side_kms_key_id:name_or_arn ->
+  ?tags:tag_list ->
+  ?off_condition:off_condition ->
+  ?model_diagnostics_output_configuration:model_diagnostics_output_configuration ->
   model_name:model_name ->
+  dataset_name:dataset_identifier ->
+  client_token:idempotence_token ->
   unit ->
   create_model_request
 
-val make_create_label_response : ?label_id:label_id -> unit -> create_label_response
-
-val make_create_label_request :
-  ?equipment:equipment ->
-  ?notes:comments ->
-  ?fault_code:fault_code ->
-  client_token:idempotence_token ->
-  rating:label_rating ->
-  end_time:timestamp ->
-  start_time:timestamp ->
-  label_group_name:label_group_name ->
-  unit ->
-  create_label_request
-
 val make_create_label_group_response :
-  ?label_group_arn:label_group_arn ->
   ?label_group_name:label_group_name ->
+  ?label_group_arn:label_group_arn ->
   unit ->
   create_label_group_response
 
 val make_create_label_group_request :
-  ?tags:tag_list ->
   ?fault_codes:fault_codes ->
-  client_token:idempotence_token ->
+  ?tags:tag_list ->
   label_group_name:label_group_name ->
+  client_token:idempotence_token ->
   unit ->
   create_label_group_request
 
+val make_create_label_response : ?label_id:label_id -> unit -> create_label_response
+
+val make_create_label_request :
+  ?fault_code:fault_code ->
+  ?notes:comments ->
+  ?equipment:equipment ->
+  label_group_name:label_group_name ->
+  start_time:timestamp ->
+  end_time:timestamp ->
+  rating:label_rating ->
+  client_token:idempotence_token ->
+  unit ->
+  create_label_request
+
 val make_create_inference_scheduler_response :
-  ?model_quality:model_quality ->
-  ?status:inference_scheduler_status ->
-  ?inference_scheduler_name:inference_scheduler_name ->
   ?inference_scheduler_arn:inference_scheduler_arn ->
+  ?inference_scheduler_name:inference_scheduler_name ->
+  ?status:inference_scheduler_status ->
+  ?model_quality:model_quality ->
   unit ->
   create_inference_scheduler_response
 
 val make_create_inference_scheduler_request :
-  ?tags:tag_list ->
-  ?server_side_kms_key_id:name_or_arn ->
   ?data_delay_offset_in_minutes:data_delay_offset_in_minutes ->
-  client_token:idempotence_token ->
-  role_arn:iam_role_arn ->
-  data_output_configuration:inference_output_configuration ->
-  data_input_configuration:inference_input_configuration ->
-  data_upload_frequency:data_upload_frequency ->
-  inference_scheduler_name:inference_scheduler_name ->
+  ?server_side_kms_key_id:name_or_arn ->
+  ?tags:tag_list ->
   model_name:model_name ->
+  inference_scheduler_name:inference_scheduler_name ->
+  data_upload_frequency:data_upload_frequency ->
+  data_input_configuration:inference_input_configuration ->
+  data_output_configuration:inference_output_configuration ->
+  role_arn:iam_role_arn ->
+  client_token:idempotence_token ->
   unit ->
   create_inference_scheduler_request
 
 val make_create_dataset_response :
-  ?status:dataset_status ->
-  ?dataset_arn:dataset_arn ->
   ?dataset_name:dataset_name ->
+  ?dataset_arn:dataset_arn ->
+  ?status:dataset_status ->
   unit ->
   create_dataset_response
 
 val make_create_dataset_request :
-  ?tags:tag_list ->
-  ?server_side_kms_key_id:name_or_arn ->
   ?dataset_schema:dataset_schema ->
-  client_token:idempotence_token ->
+  ?server_side_kms_key_id:name_or_arn ->
+  ?tags:tag_list ->
   dataset_name:dataset_name ->
+  client_token:idempotence_token ->
   unit ->
   create_dataset_request
 (** {1:operations Operations} *)
@@ -2181,6 +2181,42 @@ module ListLabels : sig
 end
 [@@ocaml.doc " Provides a list of labels. \n"]
 
+module ListModels : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_models_request ->
+    ( list_models_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_models_request ->
+    ( list_models_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Generates a list of all models in the account, including model name and ARN, dataset, and \
+   status. \n"]
+
 module ListModelVersions : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -2220,42 +2256,6 @@ end
   "Generates a list of all model versions for a given model, including the model version, model \
    version ARN, and status. To list a subset of versions, use the [MaxModelVersion] and \
    [MinModelVersion] fields.\n"]
-
-module ListModels : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_models_request ->
-    ( list_models_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_models_request ->
-    ( list_models_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Generates a list of all models in the account, including model name and ARN, dataset, and \
-   status. \n"]
 
 module ListRetrainingSchedulers : sig
   val error_to_string :

@@ -252,56 +252,6 @@ end
   \  \n\
   \   "]
 
-module DescribeEnvironmentStatus : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `BadRequestException of bad_request_exception
-    | `ConflictException of conflict_exception
-    | `ForbiddenException of forbidden_exception
-    | `InternalServerErrorException of internal_server_error_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `NotFoundException of not_found_exception
-    | `TooManyRequestsException of too_many_requests_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_environment_status_request ->
-    ( describe_environment_status_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BadRequestException of bad_request_exception
-      | `ConflictException of conflict_exception
-      | `ForbiddenException of forbidden_exception
-      | `InternalServerErrorException of internal_server_error_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_environment_status_request ->
-    ( describe_environment_status_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `BadRequestException of bad_request_exception
-      | `ConflictException of conflict_exception
-      | `ForbiddenException of forbidden_exception
-      | `InternalServerErrorException of internal_server_error_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `NotFoundException of not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Gets status information for an Cloud9 development environment.\n\n\
-  \  Cloud9 is no longer available to new customers. Existing customers of Cloud9 can continue to \
-   use the service as normal. \
-   {{:http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/}Learn \
-   more\"} \n\
-  \  \n\
-  \   "]
-
 module DescribeEnvironments : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -345,6 +295,56 @@ module DescribeEnvironments : sig
 end
 [@@ocaml.doc
   "Gets information about Cloud9 development environments.\n\n\
+  \  Cloud9 is no longer available to new customers. Existing customers of Cloud9 can continue to \
+   use the service as normal. \
+   {{:http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/}Learn \
+   more\"} \n\
+  \  \n\
+  \   "]
+
+module DescribeEnvironmentStatus : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `BadRequestException of bad_request_exception
+    | `ConflictException of conflict_exception
+    | `ForbiddenException of forbidden_exception
+    | `InternalServerErrorException of internal_server_error_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `NotFoundException of not_found_exception
+    | `TooManyRequestsException of too_many_requests_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_environment_status_request ->
+    ( describe_environment_status_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `ForbiddenException of forbidden_exception
+      | `InternalServerErrorException of internal_server_error_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_environment_status_request ->
+    ( describe_environment_status_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `BadRequestException of bad_request_exception
+      | `ConflictException of conflict_exception
+      | `ForbiddenException of forbidden_exception
+      | `InternalServerErrorException of internal_server_error_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `NotFoundException of not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Gets status information for an Cloud9 development environment.\n\n\
   \  Cloud9 is no longer available to new customers. Existing customers of Cloud9 can continue to \
    use the service as normal. \
    {{:http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/}Learn \

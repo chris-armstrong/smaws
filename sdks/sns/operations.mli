@@ -1,45 +1,5 @@
 open Types
 
-module AddPermission : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `AuthorizationErrorException of authorization_error_exception
-    | `InternalErrorException of internal_error_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `NotFoundException of not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_permission_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `AuthorizationErrorException of authorization_error_exception
-      | `InternalErrorException of internal_error_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `NotFoundException of not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_permission_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `AuthorizationErrorException of authorization_error_exception
-      | `InternalErrorException of internal_error_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `NotFoundException of not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds a statement to a topic's access control policy, granting access for the specified Amazon \
-   Web Services accounts to the specified actions.\n\n\
-  \  To remove the ability to change topic permissions, you must deny permissions to the \
-   [AddPermission], [RemovePermission], and [SetTopicAttributes] actions in your IAM policy.\n\
-  \  \n\
-  \   "]
-
 module CheckIfPhoneNumberIsOptedOut : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -1953,3 +1913,43 @@ end
    {{:https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html}SMS sandbox} in the {i Amazon \
    SNS Developer Guide}.\n\
   \ "]
+
+module AddPermission : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `AuthorizationErrorException of authorization_error_exception
+    | `InternalErrorException of internal_error_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `NotFoundException of not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_permission_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `AuthorizationErrorException of authorization_error_exception
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotFoundException of not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_permission_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `AuthorizationErrorException of authorization_error_exception
+      | `InternalErrorException of internal_error_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `NotFoundException of not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds a statement to a topic's access control policy, granting access for the specified Amazon \
+   Web Services accounts to the specified actions.\n\n\
+  \  To remove the ability to change topic permissions, you must deny permissions to the \
+   [AddPermission], [RemovePermission], and [SetTopicAttributes] actions in your IAM policy.\n\
+  \  \n\
+  \   "]

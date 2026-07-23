@@ -728,34 +728,6 @@ module GetCapacityReservation : sig
 end
 [@@ocaml.doc "Returns information about the capacity reservation with the specified name.\n"]
 
-module GetDataCatalog : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_data_catalog_input ->
-    ( get_data_catalog_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_data_catalog_input ->
-    ( get_data_catalog_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns the specified data catalog.\n"]
-
 module GetDatabase : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -786,6 +758,34 @@ module GetDatabase : sig
     result
 end
 [@@ocaml.doc "Returns a database object for the specified database and data catalog.\n"]
+
+module GetDataCatalog : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_data_catalog_input ->
+    ( get_data_catalog_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_data_catalog_input ->
+    ( get_data_catalog_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns the specified data catalog.\n"]
 
 module GetNamedQuery : sig
   val error_to_string :
@@ -1307,6 +1307,37 @@ module ListCapacityReservations : sig
 end
 [@@ocaml.doc "Lists the capacity reservations for the current account.\n"]
 
+module ListDatabases : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception
+    | `MetadataException of metadata_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_databases_input ->
+    ( list_databases_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `MetadataException of metadata_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_databases_input ->
+    ( list_databases_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception
+      | `MetadataException of metadata_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Lists the databases in the specified data catalog.\n"]
+
 module ListDataCatalogs : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1339,37 +1370,6 @@ end
    page under the {b Data source name} column.\n\
   \  \n\
   \   "]
-
-module ListDatabases : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception
-    | `MetadataException of metadata_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_databases_input ->
-    ( list_databases_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `MetadataException of metadata_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_databases_input ->
-    ( list_databases_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception
-      | `MetadataException of metadata_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Lists the databases in the specified data catalog.\n"]
 
 module ListEngineVersions : sig
   val error_to_string :

@@ -1238,6 +1238,42 @@ module ListLabels : sig
 end
 [@@ocaml.doc " Provides a list of labels. \n"]
 
+module ListModels : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_models_request ->
+    ( list_models_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_models_request ->
+    ( list_models_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Generates a list of all models in the account, including model name and ARN, dataset, and \
+   status. \n"]
+
 module ListModelVersions : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1277,42 +1313,6 @@ end
   "Generates a list of all model versions for a given model, including the model version, model \
    version ARN, and status. To list a subset of versions, use the [MaxModelVersion] and \
    [MinModelVersion] fields.\n"]
-
-module ListModels : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_models_request ->
-    ( list_models_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_models_request ->
-    ( list_models_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Generates a list of all models in the account, including model name and ARN, dataset, and \
-   status. \n"]
 
 module ListRetrainingSchedulers : sig
   val error_to_string :

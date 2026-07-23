@@ -2084,6 +2084,37 @@ module ListSchemas = struct
       ~output_deserializer:Json_deserializers.list_schemas_response_of_yojson ~error_deserializer
 end
 
+module ListSolutions = struct
+  let error_to_string = function
+    | `InvalidInputException _ -> "com.amazonaws.personalize#InvalidInputException"
+    | `InvalidNextTokenException _ -> "com.amazonaws.personalize#InvalidNextTokenException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "InvalidNextTokenException" ->
+          `InvalidNextTokenException
+            (Json_deserializers.invalid_next_token_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_solutions_request) =
+    let input = Json_serializers.list_solutions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonPersonalize.ListSolutions" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_solutions_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_solutions_request) =
+    let input = Json_serializers.list_solutions_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonPersonalize.ListSolutions"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_solutions_response_of_yojson ~error_deserializer
+end
+
 module ListSolutionVersions = struct
   let error_to_string = function
     | `InvalidInputException _ -> "com.amazonaws.personalize#InvalidInputException"
@@ -2119,37 +2150,6 @@ module ListSolutionVersions = struct
       ~shape_name:"AmazonPersonalize.ListSolutionVersions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_solution_versions_response_of_yojson
       ~error_deserializer
-end
-
-module ListSolutions = struct
-  let error_to_string = function
-    | `InvalidInputException _ -> "com.amazonaws.personalize#InvalidInputException"
-    | `InvalidNextTokenException _ -> "com.amazonaws.personalize#InvalidNextTokenException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "InvalidNextTokenException" ->
-          `InvalidNextTokenException
-            (Json_deserializers.invalid_next_token_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_solutions_request) =
-    let input = Json_serializers.list_solutions_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonPersonalize.ListSolutions" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.list_solutions_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_solutions_request) =
-    let input = Json_serializers.list_solutions_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonPersonalize.ListSolutions"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_solutions_response_of_yojson ~error_deserializer
 end
 
 module ListTagsForResource = struct

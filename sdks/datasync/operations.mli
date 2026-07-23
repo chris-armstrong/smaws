@@ -1,1038 +1,5 @@
 open Types
 
-module CancelTaskExecution : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    cancel_task_execution_request ->
-    ( cancel_task_execution_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    cancel_task_execution_request ->
-    ( cancel_task_execution_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Stops an DataSync task execution that's in progress. The transfer of some files are abruptly \
-   interrupted. File contents that're transferred to the destination might be incomplete or \
-   inconsistent with the source files.\n\n\
-  \ However, if you start a new task execution using the same task and allow it to finish, file \
-   content on the destination will be complete and consistent. This applies to other unexpected \
-   failures that interrupt a task execution. In all of these cases, DataSync successfully \
-   completes the transfer when you start the next task execution.\n\
-  \ "]
-
-module CreateAgent : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_agent_request ->
-    ( create_agent_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_agent_request ->
-    ( create_agent_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Activates an DataSync agent that you deploy in your storage environment. The activation process \
-   associates the agent with your Amazon Web Services account.\n\n\
-  \ If you haven't deployed an agent yet, see \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/do-i-need-datasync-agent.html}Do I \
-   need a DataSync agent?} \n\
-  \ "]
-
-module CreateLocationAzureBlob : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_azure_blob_request ->
-    ( create_location_azure_blob_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_azure_blob_request ->
-    ( create_location_azure_blob_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a transfer {i location} for a Microsoft Azure Blob Storage container. DataSync can use \
-   this location as a transfer source or destination. You can make transfers with or without a \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#azure-blob-creating-agent}DataSync \
-   agent} that connects to your container.\n\n\
-  \ Before you begin, make sure you know \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#azure-blob-access}how \
-   DataSync accesses Azure Blob Storage} and works with \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#azure-blob-access-tiers}access \
-   tiers} and \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#blob-types}blob \
-   types}.\n\
-  \ "]
-
-module CreateLocationEfs : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_efs_request ->
-    ( create_location_efs_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_efs_request ->
-    ( create_location_efs_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a transfer {i location} for an Amazon EFS file system. DataSync can use this location \
-   as a source or destination for transferring data.\n\n\
-  \ Before you begin, make sure that you understand how DataSync \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-efs-location.html#create-efs-location-access}accesses \
-   Amazon EFS file systems}.\n\
-  \ "]
-
-module CreateLocationFsxLustre : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_fsx_lustre_request ->
-    ( create_location_fsx_lustre_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_fsx_lustre_request ->
-    ( create_location_fsx_lustre_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a transfer {i location} for an Amazon FSx for Lustre file system. DataSync can use this \
-   location as a source or destination for transferring data.\n\n\
-  \ Before you begin, make sure that you understand how DataSync \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-lustre-location.html#create-lustre-location-access}accesses \
-   FSx for Lustre file systems}.\n\
-  \ "]
-
-module CreateLocationFsxOntap : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_fsx_ontap_request ->
-    ( create_location_fsx_ontap_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_fsx_ontap_request ->
-    ( create_location_fsx_ontap_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a transfer {i location} for an Amazon FSx for NetApp ONTAP file system. DataSync can \
-   use this location as a source or destination for transferring data.\n\n\
-  \ Before you begin, make sure that you understand how DataSync \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-ontap-location.html#create-ontap-location-access}accesses \
-   FSx for ONTAP file systems}.\n\
-  \ "]
-
-module CreateLocationFsxOpenZfs : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_fsx_open_zfs_request ->
-    ( create_location_fsx_open_zfs_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_fsx_open_zfs_request ->
-    ( create_location_fsx_open_zfs_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a transfer {i location} for an Amazon FSx for OpenZFS file system. DataSync can use \
-   this location as a source or destination for transferring data.\n\n\
-  \ Before you begin, make sure that you understand how DataSync \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-openzfs-location.html#create-openzfs-access}accesses \
-   FSx for OpenZFS file systems}.\n\
-  \ \n\
-  \   Request parameters related to [SMB] aren't supported with the [CreateLocationFsxOpenZfs] \
-   operation.\n\
-  \   \n\
-  \    "]
-
-module CreateLocationFsxWindows : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_fsx_windows_request ->
-    ( create_location_fsx_windows_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_fsx_windows_request ->
-    ( create_location_fsx_windows_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a transfer {i location} for an Amazon FSx for Windows File Server file system. DataSync \
-   can use this location as a source or destination for transferring data.\n\n\
-  \ Before you begin, make sure that you understand how DataSync \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-fsx-location.html#create-fsx-location-access}accesses \
-   FSx for Windows File Server file systems}.\n\
-  \ "]
-
-module CreateLocationHdfs : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_hdfs_request ->
-    ( create_location_hdfs_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_hdfs_request ->
-    ( create_location_hdfs_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a transfer {i location} for a Hadoop Distributed File System (HDFS). DataSync can use \
-   this location as a source or destination for transferring data.\n\n\
-  \ Before you begin, make sure that you understand how DataSync \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-hdfs-location.html#accessing-hdfs}accesses \
-   HDFS clusters}.\n\
-  \ "]
-
-module CreateLocationNfs : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_nfs_request ->
-    ( create_location_nfs_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_nfs_request ->
-    ( create_location_nfs_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a transfer {i location} for a Network File System (NFS) file server. DataSync can use \
-   this location as a source or destination for transferring data.\n\n\
-  \ Before you begin, make sure that you understand how DataSync \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html#accessing-nfs}accesses \
-   NFS file servers}.\n\
-  \ "]
-
-module CreateLocationObjectStorage : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_object_storage_request ->
-    ( create_location_object_storage_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_object_storage_request ->
-    ( create_location_object_storage_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a transfer {i location} for an object storage system. DataSync can use this location as \
-   a source or destination for transferring data. You can make transfers with or without a \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/do-i-need-datasync-agent.html#when-agent-required}DataSync \
-   agent}.\n\n\
-  \ Before you begin, make sure that you understand the \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-object-location.html#create-object-location-prerequisites}prerequisites} \
-   for DataSync to work with object storage systems.\n\
-  \ "]
-
-module CreateLocationS3 : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_s3_request ->
-    ( create_location_s3_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_s3_request ->
-    ( create_location_s3_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a transfer {i location} for an Amazon S3 bucket. DataSync can use this location as a \
-   source or destination for transferring data.\n\n\
-  \  Before you begin, make sure that you read the following topics:\n\
-  \  \n\
-  \   {ul\n\
-  \         {-   \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes}Storage \
-   class considerations with Amazon S3 locations} \n\
-  \             \n\
-  \              }\n\
-  \         {-   \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#create-s3-location-s3-requests}Evaluating \
-   S3 request costs when using DataSync} \n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \     For more information, see \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html}Configuring \
-   transfers with Amazon S3}.\n\
-  \    "]
-
-module CreateLocationSmb : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_smb_request ->
-    ( create_location_smb_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_location_smb_request ->
-    ( create_location_smb_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a transfer {i location} for a Server Message Block (SMB) file server. DataSync can use \
-   this location as a source or destination for transferring data.\n\n\
-  \ Before you begin, make sure that you understand how DataSync accesses SMB file servers. For \
-   more information, see \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html#configuring-smb-permissions}Providing \
-   DataSync access to SMB file servers}.\n\
-  \ "]
-
-module CreateTask : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_task_request ->
-    ( create_task_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_task_request ->
-    ( create_task_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Configures a {i task}, which defines where and how DataSync transfers your data.\n\n\
-  \ A task includes a source location, destination location, and transfer options (such as \
-   bandwidth limits, scheduling, and more).\n\
-  \ \n\
-  \   If you're planning to transfer data to or from an Amazon S3 location, review \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#create-s3-location-s3-requests}how \
-   DataSync can affect your S3 request charges} and the \
-   {{:http://aws.amazon.com/datasync/pricing/}DataSync pricing page} before you begin.\n\
-  \   \n\
-  \    "]
-
-module DeleteAgent : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_agent_request ->
-    ( delete_agent_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_agent_request ->
-    ( delete_agent_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Removes an DataSync agent resource from your Amazon Web Services account.\n\n\
-  \ Keep in mind that this operation (which can't be undone) doesn't remove the agent's virtual \
-   machine (VM) or Amazon EC2 instance from your storage environment. For next steps, you can \
-   delete the VM or instance from your storage environment or reuse it to \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/activate-agent.html}activate a new \
-   agent}.\n\
-  \ "]
-
-module DeleteLocation : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_location_request ->
-    ( delete_location_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_location_request ->
-    ( delete_location_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes a transfer location resource from DataSync. \n"]
-
-module DeleteTask : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_task_request ->
-    ( delete_task_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_task_request ->
-    ( delete_task_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes a transfer task resource from DataSync.\n"]
-
-module DescribeAgent : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_agent_request ->
-    ( describe_agent_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_agent_request ->
-    ( describe_agent_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about an DataSync agent, such as its name, service endpoint type, and status.\n"]
-
-module DescribeLocationAzureBlob : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_azure_blob_request ->
-    ( describe_location_azure_blob_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_azure_blob_request ->
-    ( describe_location_azure_blob_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides details about how an DataSync transfer location for Microsoft Azure Blob Storage is \
-   configured.\n"]
-
-module DescribeLocationEfs : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_efs_request ->
-    ( describe_location_efs_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_efs_request ->
-    ( describe_location_efs_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides details about how an DataSync transfer location for an Amazon EFS file system is \
-   configured.\n"]
-
-module DescribeLocationFsxLustre : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_fsx_lustre_request ->
-    ( describe_location_fsx_lustre_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_fsx_lustre_request ->
-    ( describe_location_fsx_lustre_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides details about how an DataSync transfer location for an Amazon FSx for Lustre file \
-   system is configured.\n"]
-
-module DescribeLocationFsxOntap : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_fsx_ontap_request ->
-    ( describe_location_fsx_ontap_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_fsx_ontap_request ->
-    ( describe_location_fsx_ontap_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides details about how an DataSync transfer location for an Amazon FSx for NetApp ONTAP \
-   file system is configured.\n\n\
-  \  If your location uses SMB, the [DescribeLocationFsxOntap] operation doesn't actually return a \
-   [Password].\n\
-  \  \n\
-  \   "]
-
-module DescribeLocationFsxOpenZfs : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_fsx_open_zfs_request ->
-    ( describe_location_fsx_open_zfs_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_fsx_open_zfs_request ->
-    ( describe_location_fsx_open_zfs_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides details about how an DataSync transfer location for an Amazon FSx for OpenZFS file \
-   system is configured.\n\n\
-  \  Response elements related to [SMB] aren't supported with the [DescribeLocationFsxOpenZfs] \
-   operation.\n\
-  \  \n\
-  \   "]
-
-module DescribeLocationFsxWindows : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_fsx_windows_request ->
-    ( describe_location_fsx_windows_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_fsx_windows_request ->
-    ( describe_location_fsx_windows_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides details about how an DataSync transfer location for an Amazon FSx for Windows File \
-   Server file system is configured.\n"]
-
-module DescribeLocationHdfs : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_hdfs_request ->
-    ( describe_location_hdfs_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_hdfs_request ->
-    ( describe_location_hdfs_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides details about how an DataSync transfer location for a Hadoop Distributed File System \
-   (HDFS) is configured.\n"]
-
-module DescribeLocationNfs : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_nfs_request ->
-    ( describe_location_nfs_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_nfs_request ->
-    ( describe_location_nfs_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides details about how an DataSync transfer location for a Network File System (NFS) file \
-   server is configured.\n"]
-
-module DescribeLocationObjectStorage : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_object_storage_request ->
-    ( describe_location_object_storage_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_object_storage_request ->
-    ( describe_location_object_storage_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides details about how an DataSync transfer location for an object storage system is \
-   configured.\n"]
-
-module DescribeLocationS3 : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_s3_request ->
-    ( describe_location_s3_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_s3_request ->
-    ( describe_location_s3_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides details about how an DataSync transfer location for an S3 bucket is configured.\n"]
-
-module DescribeLocationSmb : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_smb_request ->
-    ( describe_location_smb_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_location_smb_request ->
-    ( describe_location_smb_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides details about how an DataSync transfer location for a Server Message Block (SMB) file \
-   server is configured.\n"]
-
-module DescribeTask : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_task_request ->
-    ( describe_task_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_task_request ->
-    ( describe_task_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides information about a {i task}, which defines where and how DataSync transfers your data.\n"]
-
-module DescribeTaskExecution : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalException of internal_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_task_execution_request ->
-    ( describe_task_execution_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_task_execution_request ->
-    ( describe_task_execution_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalException of internal_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides information about an execution of your DataSync task. You can use this operation to \
-   help monitor the progress of an ongoing data transfer or check the results of the transfer.\n\n\
-  \  Some [DescribeTaskExecution] response elements are only relevant to a specific task mode. For \
-   information, see \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/choosing-task-mode.html#task-mode-differences}Understanding \
-   task mode differences} and \
-   {{:https://docs.aws.amazon.com/datasync/latest/userguide/transfer-performance-counters.html}Understanding \
-   data transfer performance counters}.\n\
-  \  \n\
-  \   "]
-
 module ListAgents : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1774,3 +741,1036 @@ end
   \  , which throttles bandwidth for a running or queued task execution.\n\
   \  \n\
   \   "]
+
+module DescribeTaskExecution : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_task_execution_request ->
+    ( describe_task_execution_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_task_execution_request ->
+    ( describe_task_execution_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides information about an execution of your DataSync task. You can use this operation to \
+   help monitor the progress of an ongoing data transfer or check the results of the transfer.\n\n\
+  \  Some [DescribeTaskExecution] response elements are only relevant to a specific task mode. For \
+   information, see \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/choosing-task-mode.html#task-mode-differences}Understanding \
+   task mode differences} and \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/transfer-performance-counters.html}Understanding \
+   data transfer performance counters}.\n\
+  \  \n\
+  \   "]
+
+module DescribeTask : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_task_request ->
+    ( describe_task_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_task_request ->
+    ( describe_task_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides information about a {i task}, which defines where and how DataSync transfers your data.\n"]
+
+module DescribeLocationSmb : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_smb_request ->
+    ( describe_location_smb_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_smb_request ->
+    ( describe_location_smb_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides details about how an DataSync transfer location for a Server Message Block (SMB) file \
+   server is configured.\n"]
+
+module DescribeLocationS3 : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_s3_request ->
+    ( describe_location_s3_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_s3_request ->
+    ( describe_location_s3_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides details about how an DataSync transfer location for an S3 bucket is configured.\n"]
+
+module DescribeLocationObjectStorage : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_object_storage_request ->
+    ( describe_location_object_storage_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_object_storage_request ->
+    ( describe_location_object_storage_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides details about how an DataSync transfer location for an object storage system is \
+   configured.\n"]
+
+module DescribeLocationNfs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_nfs_request ->
+    ( describe_location_nfs_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_nfs_request ->
+    ( describe_location_nfs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides details about how an DataSync transfer location for a Network File System (NFS) file \
+   server is configured.\n"]
+
+module DescribeLocationHdfs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_hdfs_request ->
+    ( describe_location_hdfs_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_hdfs_request ->
+    ( describe_location_hdfs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides details about how an DataSync transfer location for a Hadoop Distributed File System \
+   (HDFS) is configured.\n"]
+
+module DescribeLocationFsxWindows : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_fsx_windows_request ->
+    ( describe_location_fsx_windows_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_fsx_windows_request ->
+    ( describe_location_fsx_windows_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides details about how an DataSync transfer location for an Amazon FSx for Windows File \
+   Server file system is configured.\n"]
+
+module DescribeLocationFsxOpenZfs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_fsx_open_zfs_request ->
+    ( describe_location_fsx_open_zfs_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_fsx_open_zfs_request ->
+    ( describe_location_fsx_open_zfs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides details about how an DataSync transfer location for an Amazon FSx for OpenZFS file \
+   system is configured.\n\n\
+  \  Response elements related to [SMB] aren't supported with the [DescribeLocationFsxOpenZfs] \
+   operation.\n\
+  \  \n\
+  \   "]
+
+module DescribeLocationFsxOntap : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_fsx_ontap_request ->
+    ( describe_location_fsx_ontap_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_fsx_ontap_request ->
+    ( describe_location_fsx_ontap_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides details about how an DataSync transfer location for an Amazon FSx for NetApp ONTAP \
+   file system is configured.\n\n\
+  \  If your location uses SMB, the [DescribeLocationFsxOntap] operation doesn't actually return a \
+   [Password].\n\
+  \  \n\
+  \   "]
+
+module DescribeLocationFsxLustre : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_fsx_lustre_request ->
+    ( describe_location_fsx_lustre_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_fsx_lustre_request ->
+    ( describe_location_fsx_lustre_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides details about how an DataSync transfer location for an Amazon FSx for Lustre file \
+   system is configured.\n"]
+
+module DescribeLocationEfs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_efs_request ->
+    ( describe_location_efs_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_efs_request ->
+    ( describe_location_efs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides details about how an DataSync transfer location for an Amazon EFS file system is \
+   configured.\n"]
+
+module DescribeLocationAzureBlob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_azure_blob_request ->
+    ( describe_location_azure_blob_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_location_azure_blob_request ->
+    ( describe_location_azure_blob_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides details about how an DataSync transfer location for Microsoft Azure Blob Storage is \
+   configured.\n"]
+
+module DescribeAgent : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_agent_request ->
+    ( describe_agent_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_agent_request ->
+    ( describe_agent_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about an DataSync agent, such as its name, service endpoint type, and status.\n"]
+
+module DeleteTask : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_task_request ->
+    ( delete_task_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_task_request ->
+    ( delete_task_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes a transfer task resource from DataSync.\n"]
+
+module DeleteLocation : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_location_request ->
+    ( delete_location_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_location_request ->
+    ( delete_location_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes a transfer location resource from DataSync. \n"]
+
+module DeleteAgent : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_agent_request ->
+    ( delete_agent_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_agent_request ->
+    ( delete_agent_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Removes an DataSync agent resource from your Amazon Web Services account.\n\n\
+  \ Keep in mind that this operation (which can't be undone) doesn't remove the agent's virtual \
+   machine (VM) or Amazon EC2 instance from your storage environment. For next steps, you can \
+   delete the VM or instance from your storage environment or reuse it to \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/activate-agent.html}activate a new \
+   agent}.\n\
+  \ "]
+
+module CreateTask : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_task_request ->
+    ( create_task_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_task_request ->
+    ( create_task_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Configures a {i task}, which defines where and how DataSync transfers your data.\n\n\
+  \ A task includes a source location, destination location, and transfer options (such as \
+   bandwidth limits, scheduling, and more).\n\
+  \ \n\
+  \   If you're planning to transfer data to or from an Amazon S3 location, review \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#create-s3-location-s3-requests}how \
+   DataSync can affect your S3 request charges} and the \
+   {{:http://aws.amazon.com/datasync/pricing/}DataSync pricing page} before you begin.\n\
+  \   \n\
+  \    "]
+
+module CreateLocationSmb : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_smb_request ->
+    ( create_location_smb_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_smb_request ->
+    ( create_location_smb_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a transfer {i location} for a Server Message Block (SMB) file server. DataSync can use \
+   this location as a source or destination for transferring data.\n\n\
+  \ Before you begin, make sure that you understand how DataSync accesses SMB file servers. For \
+   more information, see \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html#configuring-smb-permissions}Providing \
+   DataSync access to SMB file servers}.\n\
+  \ "]
+
+module CreateLocationS3 : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_s3_request ->
+    ( create_location_s3_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_s3_request ->
+    ( create_location_s3_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a transfer {i location} for an Amazon S3 bucket. DataSync can use this location as a \
+   source or destination for transferring data.\n\n\
+  \  Before you begin, make sure that you read the following topics:\n\
+  \  \n\
+  \   {ul\n\
+  \         {-   \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes}Storage \
+   class considerations with Amazon S3 locations} \n\
+  \             \n\
+  \              }\n\
+  \         {-   \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#create-s3-location-s3-requests}Evaluating \
+   S3 request costs when using DataSync} \n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \     For more information, see \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html}Configuring \
+   transfers with Amazon S3}.\n\
+  \    "]
+
+module CreateLocationObjectStorage : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_object_storage_request ->
+    ( create_location_object_storage_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_object_storage_request ->
+    ( create_location_object_storage_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a transfer {i location} for an object storage system. DataSync can use this location as \
+   a source or destination for transferring data. You can make transfers with or without a \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/do-i-need-datasync-agent.html#when-agent-required}DataSync \
+   agent}.\n\n\
+  \ Before you begin, make sure that you understand the \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-object-location.html#create-object-location-prerequisites}prerequisites} \
+   for DataSync to work with object storage systems.\n\
+  \ "]
+
+module CreateLocationNfs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_nfs_request ->
+    ( create_location_nfs_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_nfs_request ->
+    ( create_location_nfs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a transfer {i location} for a Network File System (NFS) file server. DataSync can use \
+   this location as a source or destination for transferring data.\n\n\
+  \ Before you begin, make sure that you understand how DataSync \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html#accessing-nfs}accesses \
+   NFS file servers}.\n\
+  \ "]
+
+module CreateLocationHdfs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_hdfs_request ->
+    ( create_location_hdfs_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_hdfs_request ->
+    ( create_location_hdfs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a transfer {i location} for a Hadoop Distributed File System (HDFS). DataSync can use \
+   this location as a source or destination for transferring data.\n\n\
+  \ Before you begin, make sure that you understand how DataSync \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-hdfs-location.html#accessing-hdfs}accesses \
+   HDFS clusters}.\n\
+  \ "]
+
+module CreateLocationFsxWindows : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_fsx_windows_request ->
+    ( create_location_fsx_windows_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_fsx_windows_request ->
+    ( create_location_fsx_windows_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a transfer {i location} for an Amazon FSx for Windows File Server file system. DataSync \
+   can use this location as a source or destination for transferring data.\n\n\
+  \ Before you begin, make sure that you understand how DataSync \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-fsx-location.html#create-fsx-location-access}accesses \
+   FSx for Windows File Server file systems}.\n\
+  \ "]
+
+module CreateLocationFsxOpenZfs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_fsx_open_zfs_request ->
+    ( create_location_fsx_open_zfs_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_fsx_open_zfs_request ->
+    ( create_location_fsx_open_zfs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a transfer {i location} for an Amazon FSx for OpenZFS file system. DataSync can use \
+   this location as a source or destination for transferring data.\n\n\
+  \ Before you begin, make sure that you understand how DataSync \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-openzfs-location.html#create-openzfs-access}accesses \
+   FSx for OpenZFS file systems}.\n\
+  \ \n\
+  \   Request parameters related to [SMB] aren't supported with the [CreateLocationFsxOpenZfs] \
+   operation.\n\
+  \   \n\
+  \    "]
+
+module CreateLocationFsxOntap : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_fsx_ontap_request ->
+    ( create_location_fsx_ontap_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_fsx_ontap_request ->
+    ( create_location_fsx_ontap_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a transfer {i location} for an Amazon FSx for NetApp ONTAP file system. DataSync can \
+   use this location as a source or destination for transferring data.\n\n\
+  \ Before you begin, make sure that you understand how DataSync \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-ontap-location.html#create-ontap-location-access}accesses \
+   FSx for ONTAP file systems}.\n\
+  \ "]
+
+module CreateLocationFsxLustre : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_fsx_lustre_request ->
+    ( create_location_fsx_lustre_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_fsx_lustre_request ->
+    ( create_location_fsx_lustre_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a transfer {i location} for an Amazon FSx for Lustre file system. DataSync can use this \
+   location as a source or destination for transferring data.\n\n\
+  \ Before you begin, make sure that you understand how DataSync \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-lustre-location.html#create-lustre-location-access}accesses \
+   FSx for Lustre file systems}.\n\
+  \ "]
+
+module CreateLocationEfs : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_efs_request ->
+    ( create_location_efs_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_efs_request ->
+    ( create_location_efs_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a transfer {i location} for an Amazon EFS file system. DataSync can use this location \
+   as a source or destination for transferring data.\n\n\
+  \ Before you begin, make sure that you understand how DataSync \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/create-efs-location.html#create-efs-location-access}accesses \
+   Amazon EFS file systems}.\n\
+  \ "]
+
+module CreateLocationAzureBlob : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_azure_blob_request ->
+    ( create_location_azure_blob_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_location_azure_blob_request ->
+    ( create_location_azure_blob_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a transfer {i location} for a Microsoft Azure Blob Storage container. DataSync can use \
+   this location as a transfer source or destination. You can make transfers with or without a \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#azure-blob-creating-agent}DataSync \
+   agent} that connects to your container.\n\n\
+  \ Before you begin, make sure you know \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#azure-blob-access}how \
+   DataSync accesses Azure Blob Storage} and works with \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#azure-blob-access-tiers}access \
+   tiers} and \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#blob-types}blob \
+   types}.\n\
+  \ "]
+
+module CreateAgent : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_agent_request ->
+    ( create_agent_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_agent_request ->
+    ( create_agent_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Activates an DataSync agent that you deploy in your storage environment. The activation process \
+   associates the agent with your Amazon Web Services account.\n\n\
+  \ If you haven't deployed an agent yet, see \
+   {{:https://docs.aws.amazon.com/datasync/latest/userguide/do-i-need-datasync-agent.html}Do I \
+   need a DataSync agent?} \n\
+  \ "]
+
+module CancelTaskExecution : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalException of internal_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_task_execution_request ->
+    ( cancel_task_execution_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_task_execution_request ->
+    ( cancel_task_execution_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalException of internal_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Stops an DataSync task execution that's in progress. The transfer of some files are abruptly \
+   interrupted. File contents that're transferred to the destination might be incomplete or \
+   inconsistent with the source files.\n\n\
+  \ However, if you start a new task execution using the same task and allow it to finish, file \
+   content on the destination will be complete and consistent. This applies to other unexpected \
+   failures that interrupt a task execution. In all of these cases, DataSync successfully \
+   completes the transfer when you start the next task execution.\n\
+  \ "]

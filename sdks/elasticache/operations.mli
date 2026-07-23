@@ -1,90 +1,5 @@
 open Types
 
-module AddTagsToResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `CacheClusterNotFoundFault of cache_cluster_not_found_fault
-    | `CacheParameterGroupNotFoundFault of cache_parameter_group_not_found_fault
-    | `CacheSecurityGroupNotFoundFault of cache_security_group_not_found_fault
-    | `CacheSubnetGroupNotFoundFault of cache_subnet_group_not_found_fault
-    | `InvalidARNFault of invalid_arn_fault
-    | `InvalidReplicationGroupStateFault of invalid_replication_group_state_fault
-    | `InvalidServerlessCacheSnapshotStateFault of invalid_serverless_cache_snapshot_state_fault
-    | `InvalidServerlessCacheStateFault of invalid_serverless_cache_state_fault
-    | `ReplicationGroupNotFoundFault of replication_group_not_found_fault
-    | `ReservedCacheNodeNotFoundFault of reserved_cache_node_not_found_fault
-    | `ServerlessCacheNotFoundFault of serverless_cache_not_found_fault
-    | `ServerlessCacheSnapshotNotFoundFault of serverless_cache_snapshot_not_found_fault
-    | `SnapshotNotFoundFault of snapshot_not_found_fault
-    | `TagQuotaPerResourceExceeded of tag_quota_per_resource_exceeded
-    | `UserGroupNotFoundFault of user_group_not_found_fault
-    | `UserNotFoundFault of user_not_found_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_resource_message ->
-    ( tag_list_message,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `CacheClusterNotFoundFault of cache_cluster_not_found_fault
-      | `CacheParameterGroupNotFoundFault of cache_parameter_group_not_found_fault
-      | `CacheSecurityGroupNotFoundFault of cache_security_group_not_found_fault
-      | `CacheSubnetGroupNotFoundFault of cache_subnet_group_not_found_fault
-      | `InvalidARNFault of invalid_arn_fault
-      | `InvalidReplicationGroupStateFault of invalid_replication_group_state_fault
-      | `InvalidServerlessCacheSnapshotStateFault of invalid_serverless_cache_snapshot_state_fault
-      | `InvalidServerlessCacheStateFault of invalid_serverless_cache_state_fault
-      | `ReplicationGroupNotFoundFault of replication_group_not_found_fault
-      | `ReservedCacheNodeNotFoundFault of reserved_cache_node_not_found_fault
-      | `ServerlessCacheNotFoundFault of serverless_cache_not_found_fault
-      | `ServerlessCacheSnapshotNotFoundFault of serverless_cache_snapshot_not_found_fault
-      | `SnapshotNotFoundFault of snapshot_not_found_fault
-      | `TagQuotaPerResourceExceeded of tag_quota_per_resource_exceeded
-      | `UserGroupNotFoundFault of user_group_not_found_fault
-      | `UserNotFoundFault of user_not_found_fault ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_resource_message ->
-    ( tag_list_message Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `CacheClusterNotFoundFault of cache_cluster_not_found_fault
-      | `CacheParameterGroupNotFoundFault of cache_parameter_group_not_found_fault
-      | `CacheSecurityGroupNotFoundFault of cache_security_group_not_found_fault
-      | `CacheSubnetGroupNotFoundFault of cache_subnet_group_not_found_fault
-      | `InvalidARNFault of invalid_arn_fault
-      | `InvalidReplicationGroupStateFault of invalid_replication_group_state_fault
-      | `InvalidServerlessCacheSnapshotStateFault of invalid_serverless_cache_snapshot_state_fault
-      | `InvalidServerlessCacheStateFault of invalid_serverless_cache_state_fault
-      | `ReplicationGroupNotFoundFault of replication_group_not_found_fault
-      | `ReservedCacheNodeNotFoundFault of reserved_cache_node_not_found_fault
-      | `ServerlessCacheNotFoundFault of serverless_cache_not_found_fault
-      | `ServerlessCacheSnapshotNotFoundFault of serverless_cache_snapshot_not_found_fault
-      | `SnapshotNotFoundFault of snapshot_not_found_fault
-      | `TagQuotaPerResourceExceeded of tag_quota_per_resource_exceeded
-      | `UserGroupNotFoundFault of user_group_not_found_fault
-      | `UserNotFoundFault of user_not_found_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "A tag is a key-value pair where the key and value are case-sensitive. You can use tags to \
-   categorize and track all your ElastiCache resources, with the exception of global replication \
-   group. When you add or remove tags on replication groups, those actions will be replicated to \
-   all nodes in the replication group. For more information, see \
-   {{:http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/IAM.ResourceLevelPermissions.html}Resource-level \
-   permissions}.\n\n\
-  \  For example, you can use cost-allocation tags to your ElastiCache resources, Amazon generates \
-   a cost allocation report as a comma-separated value (CSV) file with your usage and costs \
-   aggregated by your tags. You can apply tags that represent business categories (such as cost \
-   centers, application names, or owners) to organize your costs across multiple services.\n\
-  \ \n\
-  \  For more information, see \
-   {{:https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Tagging.html}Using Cost Allocation \
-   Tags in Amazon ElastiCache} in the {i ElastiCache User Guide}.\n\
-  \  "]
-
 module AuthorizeCacheSecurityGroupIngress : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -2029,6 +1944,40 @@ module DescribeReservedCacheNodesOfferings : sig
 end
 [@@ocaml.doc "Lists available reserved cache node offerings.\n"]
 
+module DescribeServerlessCaches : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+    | `InvalidParameterValueException of invalid_parameter_value_exception
+    | `ServerlessCacheNotFoundFault of serverless_cache_not_found_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_serverless_caches_request ->
+    ( describe_serverless_caches_response,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `ServerlessCacheNotFoundFault of serverless_cache_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_serverless_caches_request ->
+    ( describe_serverless_caches_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `ServerlessCacheNotFoundFault of serverless_cache_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about a specific serverless cache. If no identifier is specified, then the \
+   API returns information on all the serverless caches belonging to this Amazon Web Services \
+   account.\n"]
+
 module DescribeServerlessCacheSnapshots : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -2066,40 +2015,6 @@ end
    customer\226\128\153s serverless cache snapshots. It can also describe a single serverless \
    cache snapshot, or the snapshots associated with a particular serverless cache. Available for \
    Valkey, Redis OSS and Serverless Memcached only.\n"]
-
-module DescribeServerlessCaches : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InvalidParameterCombinationException of invalid_parameter_combination_exception
-    | `InvalidParameterValueException of invalid_parameter_value_exception
-    | `ServerlessCacheNotFoundFault of serverless_cache_not_found_fault ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_serverless_caches_request ->
-    ( describe_serverless_caches_response,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `ServerlessCacheNotFoundFault of serverless_cache_not_found_fault ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_serverless_caches_request ->
-    ( describe_serverless_caches_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `ServerlessCacheNotFoundFault of serverless_cache_not_found_fault ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about a specific serverless cache. If no identifier is specified, then the \
-   API returns information on all the serverless caches belonging to this Amazon Web Services \
-   account.\n"]
 
 module DescribeServiceUpdates : sig
   val error_to_string :
@@ -3508,3 +3423,88 @@ module TestMigration : sig
     result
 end
 [@@ocaml.doc " Async API to test connection between source and target replication group. \n"]
+
+module AddTagsToResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `CacheClusterNotFoundFault of cache_cluster_not_found_fault
+    | `CacheParameterGroupNotFoundFault of cache_parameter_group_not_found_fault
+    | `CacheSecurityGroupNotFoundFault of cache_security_group_not_found_fault
+    | `CacheSubnetGroupNotFoundFault of cache_subnet_group_not_found_fault
+    | `InvalidARNFault of invalid_arn_fault
+    | `InvalidReplicationGroupStateFault of invalid_replication_group_state_fault
+    | `InvalidServerlessCacheSnapshotStateFault of invalid_serverless_cache_snapshot_state_fault
+    | `InvalidServerlessCacheStateFault of invalid_serverless_cache_state_fault
+    | `ReplicationGroupNotFoundFault of replication_group_not_found_fault
+    | `ReservedCacheNodeNotFoundFault of reserved_cache_node_not_found_fault
+    | `ServerlessCacheNotFoundFault of serverless_cache_not_found_fault
+    | `ServerlessCacheSnapshotNotFoundFault of serverless_cache_snapshot_not_found_fault
+    | `SnapshotNotFoundFault of snapshot_not_found_fault
+    | `TagQuotaPerResourceExceeded of tag_quota_per_resource_exceeded
+    | `UserGroupNotFoundFault of user_group_not_found_fault
+    | `UserNotFoundFault of user_not_found_fault ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_resource_message ->
+    ( tag_list_message,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `CacheClusterNotFoundFault of cache_cluster_not_found_fault
+      | `CacheParameterGroupNotFoundFault of cache_parameter_group_not_found_fault
+      | `CacheSecurityGroupNotFoundFault of cache_security_group_not_found_fault
+      | `CacheSubnetGroupNotFoundFault of cache_subnet_group_not_found_fault
+      | `InvalidARNFault of invalid_arn_fault
+      | `InvalidReplicationGroupStateFault of invalid_replication_group_state_fault
+      | `InvalidServerlessCacheSnapshotStateFault of invalid_serverless_cache_snapshot_state_fault
+      | `InvalidServerlessCacheStateFault of invalid_serverless_cache_state_fault
+      | `ReplicationGroupNotFoundFault of replication_group_not_found_fault
+      | `ReservedCacheNodeNotFoundFault of reserved_cache_node_not_found_fault
+      | `ServerlessCacheNotFoundFault of serverless_cache_not_found_fault
+      | `ServerlessCacheSnapshotNotFoundFault of serverless_cache_snapshot_not_found_fault
+      | `SnapshotNotFoundFault of snapshot_not_found_fault
+      | `TagQuotaPerResourceExceeded of tag_quota_per_resource_exceeded
+      | `UserGroupNotFoundFault of user_group_not_found_fault
+      | `UserNotFoundFault of user_not_found_fault ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_resource_message ->
+    ( tag_list_message Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `CacheClusterNotFoundFault of cache_cluster_not_found_fault
+      | `CacheParameterGroupNotFoundFault of cache_parameter_group_not_found_fault
+      | `CacheSecurityGroupNotFoundFault of cache_security_group_not_found_fault
+      | `CacheSubnetGroupNotFoundFault of cache_subnet_group_not_found_fault
+      | `InvalidARNFault of invalid_arn_fault
+      | `InvalidReplicationGroupStateFault of invalid_replication_group_state_fault
+      | `InvalidServerlessCacheSnapshotStateFault of invalid_serverless_cache_snapshot_state_fault
+      | `InvalidServerlessCacheStateFault of invalid_serverless_cache_state_fault
+      | `ReplicationGroupNotFoundFault of replication_group_not_found_fault
+      | `ReservedCacheNodeNotFoundFault of reserved_cache_node_not_found_fault
+      | `ServerlessCacheNotFoundFault of serverless_cache_not_found_fault
+      | `ServerlessCacheSnapshotNotFoundFault of serverless_cache_snapshot_not_found_fault
+      | `SnapshotNotFoundFault of snapshot_not_found_fault
+      | `TagQuotaPerResourceExceeded of tag_quota_per_resource_exceeded
+      | `UserGroupNotFoundFault of user_group_not_found_fault
+      | `UserNotFoundFault of user_not_found_fault ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "A tag is a key-value pair where the key and value are case-sensitive. You can use tags to \
+   categorize and track all your ElastiCache resources, with the exception of global replication \
+   group. When you add or remove tags on replication groups, those actions will be replicated to \
+   all nodes in the replication group. For more information, see \
+   {{:http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/IAM.ResourceLevelPermissions.html}Resource-level \
+   permissions}.\n\n\
+  \  For example, you can use cost-allocation tags to your ElastiCache resources, Amazon generates \
+   a cost allocation report as a comma-separated value (CSV) file with your usage and costs \
+   aggregated by your tags. You can apply tags that represent business categories (such as cost \
+   centers, application names, or owners) to organize your costs across multiple services.\n\
+  \ \n\
+  \  For more information, see \
+   {{:https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Tagging.html}Using Cost Allocation \
+   Tags in Amazon ElastiCache} in the {i ElastiCache User Guide}.\n\
+  \  "]
