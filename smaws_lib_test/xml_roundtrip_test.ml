@@ -52,7 +52,7 @@ let test_roundtrip () =
   let open Smaws_Lib.Xml.Parse in
   let result =
     run (fun () ->
-        let src = source_with_encoding ~src:xml_str ~encoding:None in
+        let src = source_with_encoding ~strip:true ~src:xml_str ~encoding:None in
         Read.dtd src;
         Read.sequence src "Root"
           (fun i _ ->

@@ -66,12 +66,17 @@ module Write = struct
 end
 
 module Parse = struct
-  let source_with_encoding ~src ~encoding =
+  let source_with_encoding ~strip ~src ~encoding =
     let enc =
       Option.bind encoding (fun encoding ->
           match String.lowercase_ascii encoding with "utf-8" -> Some `UTF_8 | _ -> None)
     in
-    make_input ~enc ~strip:true (`String (0, src))
+    (* [strip] defaults to [true] (xmlm collapses whitespace runs, matching the
+       AwsQuery/AwsJson fixtures). restXml passes [~strip:false] to preserve
+       whitespace text inside leaf elements (its whitespace / escape / CDATA
+       conformance tests); inter-element whitespace is then skipped by
+       [Accept.skip_data] and [Structure.scanSequence]. *)
+    make_input ~enc ~strip (`String (0, src))
 
   type expected =
     | XmlStartSequence of string * string option
@@ -120,7 +125,19 @@ module Parse = struct
     | `Dtd _ -> "Dtd"
 
   module Accept = struct
+    (* With [strip:false] (needed to preserve whitespace inside leaf elements),
+       inter-element whitespace / CDATA arrives as [`Data] signals between an
+       end tag and the next start tag. Skip those before expecting a start / end
+       tag; leaf text is read by [Read.element], which concatenates [Data]. *)
+    let rec skip_data i =
+      match Xmlm.peek i with
+      | `Data _ ->
+          ignore (input i);
+          skip_data i
+      | _ -> ()
+
     let startTag i tag ~ns ~expected =
+      skip_data i;
       let next = input i in
       match next with
       | `El_start ((nns, nname), attributes)
@@ -131,6 +148,7 @@ module Parse = struct
       | _ -> raise (XmlUnexpectedConstruct (expected, next, Xmlm.pos i))
 
     let endTag i ~expected =
+      skip_data i;
       let next = input i in
       match next with
       | `El_end -> ()
@@ -169,12 +187,24 @@ module Parse = struct
 
     let element i tag ?ns () =
       let _, _, _ = Accept.startTag i tag ~ns ~expected:(XmlStartElement (tag, ns)) in
-      (* Xmlm emits no `Data signal for empty/self-closing elements (<x/>), so
-         accept an immediate `El_end as an empty string value. *)
+      (* Concatenate every [`Data] signal up to the end tag. Xmlm may split an
+         element's text into several [Data] signals (around character references
+         or CDATA, or trailing whitespace); reading only the first would lose the
+         rest. An empty/self-closing element (<x/>) yields no [Data] signal, so
+         the buffer stays empty. *)
       let data =
-        match Xmlm.peek i with
-        | `El_end -> ""
-        | _ -> Accept.data i ~expected:(XmlElementData (tag, ns))
+        let buf = Buffer.create 16 in
+        let rec loop () =
+          match Xmlm.peek i with
+          | `El_end -> ()
+          | `Data d ->
+              ignore (Xmlm.input i);
+              Buffer.add_string buf d;
+              loop ()
+          | _ -> ()
+        in
+        loop ();
+        Buffer.contents buf
       in
       let _ = Accept.endTag i ~expected:(XmlEndElement (tag, ns)) in
       data
@@ -193,6 +223,9 @@ module Parse = struct
         | `El_start el when tag_equal tag ns el ->
             let next = element i tag ?ns () in
             readList ~items:(next :: items)
+        | `Data _ ->
+            ignore (Xmlm.input i);
+            readList ~items
         | _ -> items
       in
       readList ~items:[] |> List.rev
@@ -215,6 +248,9 @@ module Parse = struct
         | `El_start el when tag_equal tag ns el ->
             let next = sequence i tag reader ?ns () in
             readList ~items:(next :: items)
+        | `Data _ ->
+            ignore (Xmlm.input i);
+            readList ~items
         | _ -> items
       in
       readList ~items:[] |> List.rev
@@ -224,9 +260,15 @@ module Parse = struct
       match List.is_empty elements with true -> None | false -> Some elements
 
     let optionalElement i tag ?ns () =
-      match Xmlm.peek i with
-      | `El_start el when tag_equal tag ns el -> Some (element i tag ?ns ())
-      | _ -> None
+      let rec peek () =
+        match Xmlm.peek i with
+        | `Data _ ->
+            ignore (Xmlm.input i);
+            peek ()
+        | `El_start el when tag_equal tag ns el -> Some (element i tag ?ns ())
+        | _ -> None
+      in
+      peek ()
 
     let dtd i = Accept.dtd i
 
@@ -236,6 +278,18 @@ module Parse = struct
       while !depth > 0 do
         match Xmlm.input i with `El_start _ -> incr depth | `El_end -> decr depth | _ -> ()
       done
+
+    (** Skip leading [`Data] (whitespace / CDATA) signals without consuming an element, so a
+        [Xmlm.peek]-based check for a following sibling element works under [strip:false]. *)
+    let skip_data i =
+      let rec loop () =
+        match Xmlm.peek i with
+        | `Data _ ->
+            ignore (input i);
+            loop ()
+        | _ -> ()
+      in
+      loop ()
 
     (** Consume remaining sibling elements and whitespace until the enclosing element's end tag is
         reached. The end tag itself is left unconsumed so the caller's [Accept.endTag] can read it.
@@ -254,6 +308,26 @@ module Parse = struct
       loop ()
 
     let data i = Accept.data i ~expected:(XmlElementData ("", None))
+
+    (** [enter_root i reader] reads the document's single root element's start tag (whatever its
+        name - restXml success bodies are validated by the generated per-shape deserialiser's child
+        scan, not by the root name), runs [reader i attributes] positioned inside it, then consumes
+        the matching end tag. Used by [Smaws_Lib.Protocols.RestXml.parse_response] where the
+        response root element is the output / payload shape's own element (entered generically so
+        the per-shape [<shape>_of_xml], which scans children, can be reused for both the body root
+        and nested members). *)
+    let enter_root i (reader : 'a reader) =
+      let next = Xmlm.input i in
+      match next with
+      | `El_start ((nns, nname), attributes) ->
+          let res =
+            try reader i attributes
+            with XmlDeserializeError e ->
+              raise (XmlDeserializeError { e with path = nname :: e.path })
+          in
+          let _ = Accept.endTag i ~expected:(XmlEndSequence (nname, Some nns)) in
+          res
+      | _ -> raise (XmlUnexpectedConstruct (XmlOneOfElement [ "<root>" ], next, Xmlm.pos i))
   end
 
   module Structure = struct
@@ -283,8 +357,10 @@ module Parse = struct
         match next with
         | `El_start ((_, tag), _) -> reader tag next
         | `El_end -> break := true
-        | `Dtd _ | `Data _ ->
-            raise (XmlUnexpectedConstruct (XmlOneOfElement expectedTags, next, Xmlm.pos i))
+        (* Whitespace and CDATA text between child elements is not a member -
+           skip it rather than raising. Leaf text is read by [Read.element],
+           which concatenates all [Data] signals up to the end tag. *)
+        | `Dtd _ | `Data _ -> ignore (Xmlm.input i)
       done
 
     let item2 : type a b. input -> a inputItem -> b inputItem -> a option * b option =
@@ -530,4 +606,67 @@ module Parse = struct
           (XmlParseError (Fmt.str "invalid %s at %s: %S" e.kind (path_to_string e.path) e.value))
     | Failure msg | Invalid_argument msg -> Error (XmlParseError msg)
     | exn -> Error (XmlParseError (Printexc.to_string exn))
+end
+
+(** A canonical XML tree for protocol-test body comparison: element names, sorted attributes, and
+    children, with whitespace-only text nodes dropped (the parser is created with [strip:true]).
+    Used by the restXml conformance test harness to compare expected and actual XML request bodies
+    without being sensitive to attribute ordering or incidental whitespace. Both sides go through
+    the same parser, so the [xmlns]/[xmlns:prefix] attribute representation is consistent. *)
+module Canonical = struct
+  type t = Element of string * (string * string) list * t list | Text of string
+
+  let rec to_string = function
+    | Element (n, attrs, cs) ->
+        let attrs_s =
+          List.map (fun (k, v) -> Printf.sprintf " %s=%S" k v) attrs |> String.concat ""
+        in
+        let cs_s = List.map to_string cs |> String.concat "" in
+        Printf.sprintf "<%s%s>%s</%s>" n attrs_s cs_s n
+    | Text s -> Printf.sprintf "%S" s
+
+  (* Structure members are semantically unordered, so compare children as a
+     sorted multiset (keyed by the canonical [to_string]) rather than
+     positionally. List items happen to compare positionally too because both
+     sides are sorted identically; the conformance list fixtures already match
+     the serialiser's order, so this does not mask a real list-ordering bug. *)
+  let compare_t a b = String.compare (to_string a) (to_string b)
+
+  let rec equal a b =
+    match (a, b) with
+    | Element (n1, a1, c1), Element (n2, a2, c2) ->
+        String.equal n1 n2
+        && List.equal (fun (k1, v1) (k2, v2) -> String.equal k1 k2 && String.equal v1 v2) a1 a2
+        && List.equal equal (List.sort compare_t c1) (List.sort compare_t c2)
+    | Text x, Text y -> String.equal x y
+    | _ -> false
+
+  let of_string s =
+    let i = make_input ~enc:None ~strip:true (`String (0, s)) in
+    let rec read_element () =
+      match Xmlm.input i with
+      | `El_start ((_, name), attrs) ->
+          let attrs = attrs |> List.map (fun ((_, k), v) -> (k, v)) |> List.sort compare in
+          let children = read_children [] in
+          Element (name, attrs, children)
+      | other -> raise (Failure "expected El_start in canonical XML")
+    and read_children acc =
+      match Xmlm.peek i with
+      | `El_end ->
+          ignore (Xmlm.input i);
+          List.rev acc
+      | `El_start _ ->
+          let e = read_element () in
+          read_children (e :: acc)
+      | `Data d ->
+          ignore (Xmlm.input i);
+          read_children (Text d :: acc)
+      | `Dtd _ ->
+          ignore (Xmlm.input i);
+          read_children acc
+    in
+    (match Xmlm.input i with `Dtd _ -> () | _ -> ());
+    read_element ()
+
+  let pp fmt t = Fmt.string fmt (to_string t)
 end

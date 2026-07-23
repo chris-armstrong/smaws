@@ -106,7 +106,7 @@ let element_value_failure_decorates_path () =
   let parse () =
     let open Xml.Parse in
     run (fun () ->
-        let i = source_with_encoding ~src:body ~encoding:None in
+        let i = source_with_encoding ~strip:true ~src:body ~encoding:None in
         Read.dtd i;
         Read.element_value i "Foo" Primitive.int_of_string ())
   in

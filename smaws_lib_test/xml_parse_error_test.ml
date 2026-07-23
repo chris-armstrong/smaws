@@ -6,7 +6,7 @@
 let parse body parser =
   let open Smaws_Lib.Xml.Parse in
   run (fun () ->
-      let src = source_with_encoding ~src:body ~encoding:None in
+      let src = source_with_encoding ~strip:true ~src:body ~encoding:None in
       Read.dtd src;
       parser src)
 

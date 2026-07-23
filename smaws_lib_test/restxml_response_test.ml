@@ -68,8 +68,14 @@ let success_path_parses_root_and_returns_value () =
   (* The deserializer consumes the single root element; the runtime must not
      peek past it once consumed, or [Xmlm.peek] raises [Xmlm.Error] at
      end-of-input. *)
-  let deserializer i =
+  (* The deserializer owns body parsing: it sets up the [Xmlm.input], reads the
+     DTD, then consumes the single root element (and must not peek past it, or
+     [Xmlm.peek] raises [Xmlm.Error] at end-of-input). [parse_response] wraps this
+     in [Xml.Parse.run]. *)
+  let deserializer ~body ~headers:_ ~status:_ =
     let open Xml.Parse in
+    let i = source_with_encoding ~strip:false ~src:body ~encoding:None in
+    Read.dtd i;
     Read.sequence i "GetXResponse" ~ns:"https://example.com/"
       (fun i _ ->
         let r_foo = ref None in
@@ -83,7 +89,7 @@ let success_path_parses_root_and_returns_value () =
       ()
   in
   let result =
-    RestXml.parse_response ~body:success_body_with_trailing_newline
+    RestXml.parse_response ~body:success_body_with_trailing_newline ~headers:[] ~status:200
       ~output_deserializer:deserializer
     |> Result.get_ok
   in

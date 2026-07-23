@@ -19,7 +19,7 @@ let parse_text_inside ~root body =
      so a test can [Result.get_ok]. *)
   let open Xml.Parse in
   run (fun () ->
-      let src = source_with_encoding ~src:body ~encoding:None in
+      let src = source_with_encoding ~strip:true ~src:body ~encoding:None in
       Read.dtd src;
       Read.element src root ())
 

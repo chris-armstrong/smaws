@@ -85,7 +85,7 @@ let merge_headers ~named_headers ~prefix_headers =
       (fun (prefix, entries) ->
         List.filter_map
           (fun (key, value) ->
-            let header_name = if prefix = "" then key else prefix ^ "-" ^ key in
+            let header_name = if prefix = "" then key else prefix ^ key in
             if List.mem header_name named_keys then None else Some (header_name, value))
           entries)
       prefix_headers

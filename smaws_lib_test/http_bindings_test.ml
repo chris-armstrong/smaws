@@ -105,18 +105,19 @@ let merge_hdrs () =
     "empty prefix passthrough"
     [ ("x", "1"); ("y", "2") ]
     (H.merge_headers ~named_headers:[] ~prefix_headers:[ ("", [ ("x", "1"); ("y", "2") ]) ]);
-  (* non-empty prefix prepends "prefix-" to each entry name *)
+  (* non-empty prefix: the [@httpPrefixHeaders] value is the full prefix
+     (including the trailing "-"); the header name is [prefix ^ key]. *)
   Alcotest.(check (list (pair string string)))
     "prefix prepends name"
     [ ("foo-a", "1") ]
-    (H.merge_headers ~named_headers:[] ~prefix_headers:[ ("foo", [ ("a", "1") ]) ]);
+    (H.merge_headers ~named_headers:[] ~prefix_headers:[ ("foo-", [ ("a", "1") ]) ]);
   (* named header wins over a prefixed entry that resolves to the same name *)
   Alcotest.(check (list (pair string string)))
     "named wins over nonempty prefix"
     [ ("foo-a", "specific") ]
     (H.merge_headers
        ~named_headers:[ ("foo-a", "specific") ]
-       ~prefix_headers:[ ("foo", [ ("a", "prefix-val") ]) ])
+       ~prefix_headers:[ ("foo-", [ ("a", "prefix-val") ]) ])
 
 (* ---- substitute_host_prefix ---- *)
 

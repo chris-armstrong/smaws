@@ -1194,65 +1194,8 @@ module Operations = struct
     B.pstr_value Nonrecursive
       [ B.value_binding ~pat:(B.ppat_var (Location.mknoloc "error_to_string")) ~expr:handler_body ]
 
-  let generate_error_handler ~(operation_shape : Ast.Shape.operationShapeDetails)
-      ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
-      ~(shape_resolver : Shape_resolver.t) () =
-    let errors = operation_shape.errors |> Option.value ~default:[] in
-    let default_handler = qualified_ident ~names:(restxml_mod @ [ "Errors"; "default_handler" ]) in
-    let parse_error_struct = qualified_ident ~names:(restxml_mod @ [ "parse_error_struct" ]) in
-    let body =
-      if List.is_empty errors then
-        [%expr
-          fun (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ->
-            Smaws_Lib.Protocols.RestXml.Errors.default_handler error]
-      else begin
-        let cases =
-          errors
-          |> List.map ~f:(fun error ->
-              let wire_code = Util.symbolName error in
-              let variant = SafeNames.safeConstructorName error in
-              let deser_func = Deserialiser.func_longident ~namespace_resolver error in
-              let parse_call =
-                B.pexp_apply parse_error_struct
-                  [
-                    (Labelled "body", exp_ident "body");
-                    (Labelled "structParser", B.pexp_ident (Location.mknoloc deser_func));
-                  ]
-              in
-              let rhs =
-                B.pexp_match parse_call
-                  [
-                    B.case
-                      ~lhs:
-                        (B.ppat_construct (lident_noloc "Ok")
-                           (Some (B.ppat_var (Location.mknoloc "s"))))
-                      ~guard:None
-                      ~rhs:(B.pexp_variant variant (Some (exp_ident "s")));
-                    B.case
-                      ~lhs:
-                        (B.ppat_construct (lident_noloc "Error")
-                           (Some
-                              (B.ppat_construct (lident_noloc "XmlParseError")
-                                 (Some (B.ppat_var (Location.mknoloc "msg"))))))
-                      ~guard:None
-                      ~rhs:(B.pexp_variant "XmlParseError" (Some (exp_ident "msg")));
-                  ]
-              in
-              B.case ~lhs:(pat_const_str wire_code) ~guard:None ~rhs)
-        in
-        let default_case =
-          B.case ~lhs:B.ppat_any ~guard:None
-            ~rhs:(B.pexp_apply default_handler [ (Nolabel, exp_ident "error") ])
-        in
-        let match_body =
-          B.pexp_match [%expr error.Smaws_Lib.Protocols.RestXml.Error.code]
-            (cases @ [ default_case ])
-        in
-        [%expr fun (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body -> [%e match_body]]
-      end
-    in
-    B.pstr_value Nonrecursive
-      [ B.value_binding ~pat:(B.ppat_var (Location.mknoloc "error_deserializer")) ~expr:body ]
+  (* generate_error_handler is defined further below, after the output/error
+     deserialiser helpers (scan_inner_expr etc.) it depends on. *)
 
   (* ------------------------------------------------------------------ *)
   (* HTTP binding assembly helpers (Phase 7: plan §7.3)                  *)
@@ -1294,14 +1237,28 @@ module Operations = struct
 
   (* A member is serialized into the request body unless an HTTP binding trait
      relocates it out of the body. [@xmlAttribute] members count as body
-     members - they render as attributes on the body-root element. *)
+     members - they render as attributes on the body-root element. [@hostLabel]
+     members are NOT excluded: the smithy restXml fixtures serialise them into
+     the body in addition to substituting them into the [@endpoint] hostPrefix. *)
   let is_body_member (mem : Shape.member) =
     not
-      (is_http_label mem || is_http_payload mem || is_host_label mem
+      (is_http_label mem || is_http_payload mem
       || Option.is_some (http_query_name mem)
       || is_http_query_params mem
       || Option.is_some (http_header_name mem)
       || Option.is_some (http_prefix_headers mem))
+
+  (* A member is read from the response body unless an HTTP binding trait
+     relocates it to the response headers / status. Note [@httpQuery]/
+     [@httpLabel]/[@httpQueryParams]/[@hostLabel] are request-side bindings; on an
+     OUTPUT member they are ignored and the member is read from the body (see
+     [aws.protocoltests.restxml#IgnoreQueryParamsInResponse]). *)
+  let is_output_body_member (mem : Shape.member) =
+    not
+      (is_http_payload mem
+      || Option.is_some (http_header_name mem)
+      || Option.is_some (http_prefix_headers mem)
+      || trait_mem mem.traits (function Trait.HttpResponseCodeTrait -> true | _ -> false))
 
   let http_trait_of (operation_shape : Shape.operationShapeDetails) =
     find_trait operation_shape.traits (function Trait.HttpTrait h -> Some h | _ -> None)
@@ -1510,6 +1467,498 @@ module Operations = struct
         |> Longident.unflatten |> Option.value_exn
       in
       B.pexp_ident (Location.mknoloc func_ident))
+
+  (* ------------------------------------------------------------------ *)
+  (* Output / error deserialiser generation (Phase 8: plan §7.2 wiring)    *)
+  (* ------------------------------------------------------------------ *)
+  let parse_mod = [ "Smaws_Lib"; "Xml"; "Parse" ]
+  let enter_root_fn = qualified_ident ~names:(parse_mod @ [ "Read"; "enter_root" ])
+  let parse_primitive_mod = parse_mod @ [ "Primitive" ]
+  let header_value_fn = qualified_ident ~names:(restxml_mod @ [ "header_value" ])
+  let prefix_headers_fn = qualified_ident ~names:(restxml_mod @ [ "prefix_headers" ])
+
+  (* [fun i attrs -> exp]: a two-parameter lambda binding the root element's attribute list.
+     Used by [Read.enter_root] readers that need to read [@xmlAttribute] members from the root. *)
+  let exp_fun_ident_attrs arg_name exp =
+    B.pexp_fun Ppxlib.Nolabel None
+      (B.ppat_var (Location.mknoloc arg_name))
+      (B.pexp_fun Ppxlib.Nolabel None (B.ppat_var (Location.mknoloc "attrs")) exp)
+
+  (* string -> target leaf parser for an @httpHeader value (inverse of
+     [scalar_to_string_lambda]). [None] for non-leaf targets. Default timestamp
+     format for headers is [http-date] (plan §2.4). *)
+  let rec scalar_of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits ~shape_traits
+      target =
+    let mk helper =
+      exp_fun_untyped "s"
+        (qualified_apply ~names:(parse_primitive_mod @ [ helper ]) [ (Nolabel, exp_ident "s") ])
+    in
+    let timestamp_helper fmt =
+      match fmt with
+      | Trait.TimestampFormatDateTime -> "timestamp_iso_of_string"
+      | Trait.TimestampFormatEpochSeconds -> "timestamp_epoch_of_string"
+      | Trait.TimestampFormatHttpDate -> "timestamp_httpdate_of_string"
+    in
+    match Shape_resolver.find_shape_by_name ~name:target shape_resolver with
+    | Some (Shape.StringShape _) -> Some (exp_fun_untyped "s" (exp_ident "s"))
+    | Some (Shape.IntegerShape _ | Shape.ByteShape _ | Shape.ShortShape _) ->
+        Some (mk "int_of_string")
+    | Some (Shape.LongShape _) -> Some (mk "long_of_string")
+    | Some (Shape.BigIntegerShape _) -> Some (mk "big_int_of_string")
+    | Some (Shape.BigDecimalShape _) -> Some (mk "big_decimal_of_string")
+    | Some (Shape.BooleanShape _) -> Some (mk "bool_of_string")
+    | Some (Shape.FloatShape _) -> Some (mk "float_of_string")
+    | Some (Shape.DoubleShape _) -> Some (mk "double_of_string")
+    | Some (Shape.BlobShape _) -> Some (mk "blob_of_string")
+    | Some (Shape.TimestampShape { traits }) ->
+        let fmt =
+          resolve_timestamp_format' ~member_traits ~shape_traits:traits
+            ~default:Trait.TimestampFormatHttpDate
+        in
+        Some (mk (timestamp_helper fmt))
+    | Some (Shape.EnumShape _) -> enum_of_string_lambda ~namespace_resolver ~shape_resolver target
+    | _ -> (
+        match target with
+        | "smithy.api#String" -> Some (exp_fun_untyped "s" (exp_ident "s"))
+        | "smithy.api#Integer" | "smithy.api#Byte" | "smithy.api#Short" -> Some (mk "int_of_string")
+        | "smithy.api#Long" -> Some (mk "long_of_string")
+        | "smithy.api#BigInteger" -> Some (mk "big_int_of_string")
+        | "smithy.api#BigDecimal" -> Some (mk "big_decimal_of_string")
+        | "smithy.api#Boolean" -> Some (mk "bool_of_string")
+        | "smithy.api#Float" -> Some (mk "float_of_string")
+        | "smithy.api#Double" -> Some (mk "double_of_string")
+        | "smithy.api#Blob" -> Some (mk "blob_of_string")
+        | "smithy.api#Timestamp" ->
+            let fmt =
+              resolve_timestamp_format' ~member_traits ~shape_traits
+                ~default:Trait.TimestampFormatHttpDate
+            in
+            Some (mk (timestamp_helper fmt))
+        | _ -> None)
+
+  and enum_of_string_lambda ~namespace_resolver ~shape_resolver target =
+    match Shape_resolver.find_shape_by_name ~name:target shape_resolver with
+    | Some (Shape.EnumShape s) ->
+        let module_path =
+          let resolved =
+            Namespace_resolver.Namespace_resolver.resolve_reference
+              ~symbol_transformer:(fun ~local x ->
+                if local then [ SafeNames.safeTypeName x ]
+                else [ "Types"; SafeNames.safeTypeName x ])
+              namespace_resolver target
+          in
+          match List.rev resolved with _ :: rest -> List.rev rest | [] -> []
+        in
+        let cases =
+          List.map s.members ~f:(fun (m : Shape.member) ->
+              let value =
+                List.find_map_exn (Option.value ~default:[] m.traits) ~f:(function
+                  | Trait.EnumValueTrait e -> Some e
+                  | _ -> None)
+              in
+              let ctor = SafeNames.safeConstructorName m.name in
+              let ctor_ident = make_lident ~names:(module_path @ [ ctor ]) |> Location.mknoloc in
+              let pat =
+                match value with
+                | `String sv -> pat_const_str sv
+                | `Int iv -> pat_const_str (Int.to_string iv)
+              in
+              B.case ~lhs:pat ~guard:None ~rhs:(B.pexp_construct ctor_ident None))
+        in
+        let failure =
+          B.case ~lhs:B.ppat_any ~guard:None ~rhs:[%expr failwith "unknown enum value"]
+        in
+        Some (exp_fun_untyped "s" (B.pexp_match (exp_ident "s") (cases @ [ failure ])))
+    | _ -> None
+
+  let is_http_response_code (mem : Shape.member) =
+    trait_mem mem.traits (function Trait.HttpResponseCodeTrait -> true | _ -> false)
+
+  (* Strip a namespace prefix from an [@xmlName] for matching against [Xmlm]'s
+     resolved attribute local name (e.g. [xsi:someName] -> [someName]). *)
+  let attr_local_name name =
+    match String.index name ':' with
+    | Some i -> String.sub ~pos:(i + 1) ~len:(String.length name - i - 1) name
+    | None -> name
+
+  (* The option-typed value expression for a non-body-scan (overlay) member,
+     assuming the in-scope identifiers [attrs]/[headers]/[status]. Covers
+     [@xmlAttribute] (root attrs), [@httpHeader] (headers, incl. list split on
+     ", "), [@httpPrefixHeaders] (headers), [@httpResponseCode] (status). *)
+  let overlay_option_expr ~namespace_resolver ~shape_resolver ~(mem : Shape.member)
+      ~(attrs_var : Ppxlib.expression) ~(headers_var : Ppxlib.expression)
+      ~(status_var : Ppxlib.expression) =
+    let field_name = xml_name mem.traits mem.name in
+    if is_attribute mem.traits then (
+      let conv =
+        Option.value
+          (scalar_of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
+             ~shape_traits:None mem.target)
+          ~default:(exp_ident "Fun.id")
+      in
+      let find =
+        [%expr
+          List.find_map
+            (fun ((_, n), v) ->
+              if String.equal n [%e const_str (attr_local_name field_name)] then Some v else None)
+            [%e attrs_var]]
+      in
+      [%expr Option.map [%e conv] [%e find]])
+    else if Option.is_some (http_header_name mem) then (
+      let name = Option.value_exn (http_header_name mem) in
+      match list_item_info ~shape_resolver mem.target with
+      | Some (item_target, item_member_traits) ->
+          let conv =
+            Option.value
+              (scalar_of_string_lambda ~namespace_resolver ~shape_resolver
+                 ~member_traits:item_member_traits ~shape_traits:None item_target)
+              ~default:(exp_ident "Fun.id")
+          in
+          [%expr
+            Option.map
+              (fun s -> String.split_on_char ',' s |> List.map String.trim |> List.map [%e conv])
+              ([%e header_value_fn] [%e headers_var] [%e const_str name])]
+      | None ->
+          let conv =
+            Option.value
+              (scalar_of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:mem.traits
+                 ~shape_traits:None mem.target)
+              ~default:(exp_ident "Fun.id")
+          in
+          [%expr Option.map [%e conv] ([%e header_value_fn] [%e headers_var] [%e const_str name])])
+    else if Option.is_some (http_prefix_headers mem) then (
+      let prefix = Option.value_exn (http_prefix_headers mem) in
+      let map_value_target =
+        match Shape_resolver.find_shape_by_name ~name:mem.target shape_resolver with
+        | Some (Shape.MapShape ms) -> ms.mapValue.target
+        | _ -> "smithy.api#String"
+      in
+      let conv =
+        Option.value
+          (scalar_of_string_lambda ~namespace_resolver ~shape_resolver ~member_traits:None
+             ~shape_traits:None map_value_target)
+          ~default:(exp_ident "Fun.id")
+      in
+      [%expr
+        Some
+          ([%e prefix_headers_fn] ~prefix:[%e const_str prefix] [%e headers_var]
+          |> List.map (fun (k, v) -> (k, [%e conv] v)))])
+    else if is_http_response_code mem then [%expr Some [%e status_var]]
+    else [%expr None]
+
+  (* Wrap an option-typed value for a [@required] member: [required tag opt i]
+     when [i] is in scope (root scan path), else an explicit match. Optional
+     members keep the [option] value. *)
+  let field_value_expr ~(mem : Shape.member) ~opt_expr ~i_in_scope =
+    if is_required mem.traits then
+      if i_in_scope then
+        B.pexp_apply (exp_ident "required")
+          [
+            (Nolabel, const_str (xml_name mem.traits mem.name));
+            (Nolabel, opt_expr);
+            (Nolabel, exp_ident "i");
+          ]
+      else
+        [%expr match [%e opt_expr] with Some v -> v | None -> failwith "missing required field"]
+    else opt_expr
+
+  (* The inner expression (refs + child scan + typed record) for a structure
+     whose root element has been entered via [Read.enter_root], assuming
+     [i]/[attrs]/[headers]/[status] are in scope. Body-scan members are read
+     from child elements (refs + [Structure.scanSequence]); [@xmlAttribute]
+     members from [attrs]; [@httpHeader]/[@httpPrefixHeaders]/[@httpResponseCode]
+     members are overlaid from [headers]/[status]. *)
+  let scan_inner_expr ~out_name ~members ~namespace_resolver ~shape_resolver =
+    (* Empty structures are generated as [type t = unit]; an empty record
+       literal [{ }] is not valid OCaml, so return [()] cast to the type. *)
+    if List.is_empty members then
+      B.pexp_constraint unit_expr
+        (B.ptyp_constr (lident_noloc (SafeNames.safeTypeName out_name)) [])
+    else begin
+      let body_scan_members =
+        List.filter members ~f:(fun m -> is_output_body_member m && not (is_attribute m.traits))
+      in
+      let ref_bindings = Deserialiser.structure_ref_bindings body_scan_members in
+      let scan_call =
+        Deserialiser.structure_scan_call ~namespace_resolver ~shape_resolver body_scan_members
+      in
+      let record_fields =
+        List.map members ~f:(fun mem ->
+            let opt_expr =
+              if is_output_body_member mem && not (is_attribute mem.traits) then
+                B.pexp_apply (exp_ident "( ! )")
+                  [ (Nolabel, exp_ident (Deserialiser.member_ref_name mem)) ]
+              else
+                overlay_option_expr ~namespace_resolver ~shape_resolver ~mem
+                  ~attrs_var:(exp_ident "attrs") ~headers_var:(exp_ident "headers")
+                  ~status_var:(exp_ident "status")
+            in
+            let val_expr = field_value_expr ~mem ~opt_expr ~i_in_scope:true in
+            (lident_noloc (SafeNames.safeMemberName mem.name), val_expr))
+      in
+      let record = B.pexp_record record_fields None in
+      let typed =
+        B.pexp_constraint record (B.ptyp_constr (lident_noloc (SafeNames.safeTypeName out_name)) [])
+      in
+      List.fold_right ref_bindings ~init:(B.pexp_sequence scan_call typed) ~f:(fun b acc ->
+          B.pexp_let Nonrecursive [ b ] acc)
+    end
+
+  (* A typed record built purely from overlay members ([@httpHeader]/
+     [@httpPrefixHeaders]/[@httpResponseCode]) - no body root, no child scan,
+     no [i]. Used when an output has no body members (empty response body). *)
+  let overlay_record_expr ~out_name ~members ~i_in_scope ~namespace_resolver ~shape_resolver =
+    let record_fields =
+      List.map members ~f:(fun mem ->
+          let opt_expr =
+            overlay_option_expr ~namespace_resolver ~shape_resolver ~mem
+              ~attrs_var:(exp_ident "attrs") ~headers_var:(exp_ident "headers")
+              ~status_var:(exp_ident "status")
+          in
+          let val_expr = field_value_expr ~mem ~opt_expr ~i_in_scope in
+          (lident_noloc (SafeNames.safeMemberName mem.name), val_expr))
+    in
+    let record = B.pexp_record record_fields None in
+    B.pexp_constraint record (B.ptyp_constr (lident_noloc (SafeNames.safeTypeName out_name)) [])
+
+  (* A typed record for an [@httpPayload] output: the payload member takes a
+     precomputed [payload_opt] (an [option] expression); the remaining members are
+     overlaid from [headers]/[status]. *)
+  let payload_record_expr ~out_name ~(pmem : Shape.member) ~members ~payload_opt ~i_in_scope
+      ~namespace_resolver ~shape_resolver =
+    let other_members = List.filter members ~f:(fun m -> not (is_http_payload m)) in
+    let payload_field =
+      let val_expr = field_value_expr ~mem:pmem ~opt_expr:payload_opt ~i_in_scope in
+      (lident_noloc (SafeNames.safeMemberName pmem.name), val_expr)
+    in
+    let other_fields =
+      List.map other_members ~f:(fun mem ->
+          let opt_expr =
+            overlay_option_expr ~namespace_resolver ~shape_resolver ~mem
+              ~attrs_var:(exp_ident "attrs") ~headers_var:(exp_ident "headers")
+              ~status_var:(exp_ident "status")
+          in
+          let val_expr = field_value_expr ~mem ~opt_expr ~i_in_scope in
+          (lident_noloc (SafeNames.safeMemberName mem.name), val_expr))
+    in
+    let record = B.pexp_record (payload_field :: other_fields) None in
+    B.pexp_constraint record (B.ptyp_constr (lident_noloc (SafeNames.safeTypeName out_name)) [])
+
+  (* The per-operation [output_deserializer] lambda: [fun ~body ~headers ~status
+     -> ...]. Reads the body root (name-agnostic) for XML outputs, or the raw
+     [body] string for [@httpPayload] blob/string/enum outputs; overlays
+     [@httpHeader]/[@httpPrefixHeaders]/[@httpResponseCode] from [headers]/[status]. *)
+  let generate_output_deserializer_expr ~(operation_shape : Shape.operationShapeDetails)
+      ~namespace_resolver ~shape_resolver =
+    match operation_shape.output with
+    | None | Some "smithy.api#Unit" -> [%expr fun ~body ~headers ~status -> ()]
+    | Some out_name ->
+        let members =
+          match Shape_resolver.find_shape_by_name ~name:out_name shape_resolver with
+          | Some (Shape.StructureShape s | Shape.UnionShape s) -> s.members
+          | _ -> []
+        in
+        if List.is_empty members then [%expr fun ~body ~headers ~status -> ()]
+        else begin
+          let pmem = List.find members ~f:is_http_payload in
+          match pmem with
+          | Some pmem -> (
+              let target = pmem.target in
+              let pshape = Shape_resolver.find_shape_by_name ~name:target shape_resolver in
+              match pshape with
+              | Some (Shape.StructureShape ps | Shape.UnionShape ps) ->
+                  let is_union =
+                    match pshape with Some (Shape.UnionShape _) -> true | _ -> false
+                  in
+                  let payload_inner =
+                    if is_union then (
+                      let deser =
+                        B.pexp_ident
+                          (Location.mknoloc
+                             (Deserialiser.func_longident ~namespace_resolver target))
+                      in
+                      B.pexp_apply deser [ (Nolabel, exp_ident "i") ])
+                    else
+                      scan_inner_expr ~out_name:target ~members:ps.members ~namespace_resolver
+                        ~shape_resolver
+                  in
+                  let payload_enter =
+                    B.pexp_apply enter_root_fn
+                      [
+                        (Nolabel, exp_ident "i");
+                        ( Nolabel,
+                          if is_union then exp_fun_ident_any "i" payload_inner
+                          else exp_fun_ident_attrs "i" payload_inner );
+                      ]
+                  in
+                  let record =
+                    payload_record_expr ~out_name ~pmem ~members
+                      ~payload_opt:(exp_ident "payload_val") ~i_in_scope:false ~namespace_resolver
+                      ~shape_resolver
+                  in
+                  [%expr
+                    fun ~body ~headers ~status ->
+                      let payload_val =
+                        if String.equal body "" then None
+                        else (
+                          let i =
+                            Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body
+                              ~encoding:None
+                          in
+                          Smaws_Lib.Xml.Parse.Read.dtd i;
+                          Some [%e payload_enter])
+                      in
+                      [%e record]]
+              | Some (Shape.BlobShape _) ->
+                  let conv =
+                    qualified_apply
+                      ~names:[ "Smaws_Lib"; "CoreTypes"; "Blob"; "of_string" ]
+                      [ (Nolabel, exp_ident "body") ]
+                  in
+                  let payload_opt = [%expr if String.equal body "" then None else Some [%e conv]] in
+                  let record =
+                    payload_record_expr ~out_name ~pmem ~members ~payload_opt ~i_in_scope:false
+                      ~namespace_resolver ~shape_resolver
+                  in
+                  [%expr fun ~body ~headers ~status -> [%e record]]
+              | Some (Shape.StringShape _) ->
+                  let payload_opt = [%expr if String.equal body "" then None else Some body] in
+                  let record =
+                    payload_record_expr ~out_name ~pmem ~members ~payload_opt ~i_in_scope:false
+                      ~namespace_resolver ~shape_resolver
+                  in
+                  [%expr fun ~body ~headers ~status -> [%e record]]
+              | Some (Shape.EnumShape _) ->
+                  let conv =
+                    Option.value_exn
+                      (enum_of_string_lambda ~namespace_resolver ~shape_resolver target)
+                  in
+                  let applied = B.pexp_apply conv [ (Nolabel, exp_ident "body") ] in
+                  let payload_opt =
+                    [%expr if String.equal body "" then None else Some [%e applied]]
+                  in
+                  let record =
+                    payload_record_expr ~out_name ~pmem ~members ~payload_opt ~i_in_scope:false
+                      ~namespace_resolver ~shape_resolver
+                  in
+                  [%expr fun ~body ~headers ~status -> [%e record]]
+              | _ ->
+                  let record =
+                    payload_record_expr ~out_name ~pmem ~members ~payload_opt:[%expr None]
+                      ~i_in_scope:false ~namespace_resolver ~shape_resolver
+                  in
+                  [%expr fun ~body ~headers ~status -> [%e record]])
+          | None ->
+              let body_root_needed = List.exists members ~f:is_output_body_member in
+              if body_root_needed then (
+                let inner =
+                  scan_inner_expr ~out_name ~members ~namespace_resolver ~shape_resolver
+                in
+                [%expr
+                  fun ~body ~headers ~status ->
+                    let i =
+                      Smaws_Lib.Xml.Parse.source_with_encoding ~strip:false ~src:body ~encoding:None
+                    in
+                    Smaws_Lib.Xml.Parse.Read.dtd i;
+                    Smaws_Lib.Xml.Parse.Read.enter_root i (fun i attrs -> [%e inner])])
+              else (
+                let record =
+                  overlay_record_expr ~out_name ~members ~i_in_scope:false ~namespace_resolver
+                    ~shape_resolver
+                in
+                [%expr fun ~body ~headers ~status -> [%e record]])
+        end
+
+  (* The per-operation [error_deserializer]: [fun (error : Error.t) ~body ~headers
+     -> ...]. For an error shape with [@httpHeader]/[@httpPrefixHeaders]
+     members, a custom structParser (built by [scan_inner_expr]) reads the body
+     members from the [<Error>] envelope children and the header-bound members
+     from the response [headers]; otherwise the per-shape [<error>_of_xml] is
+     used (positioned inside [<Error>] by [parse_error_struct]). *)
+  let generate_error_handler ~(operation_shape : Ast.Shape.operationShapeDetails)
+      ~(namespace_resolver : Namespace_resolver.Namespace_resolver.t)
+      ~(shape_resolver : Shape_resolver.t) () =
+    let errors = operation_shape.errors |> Option.value ~default:[] in
+    let default_handler = qualified_ident ~names:(restxml_mod @ [ "Errors"; "default_handler" ]) in
+    let parse_error_struct = qualified_ident ~names:(restxml_mod @ [ "parse_error_struct" ]) in
+    let error_has_http_bound_members error =
+      match Shape_resolver.find_shape_by_name ~name:error shape_resolver with
+      | Some (Shape.StructureShape s) ->
+          List.exists s.members ~f:(fun m ->
+              Option.is_some (http_header_name m) || Option.is_some (http_prefix_headers m))
+      | _ -> false
+    in
+    let struct_parser_for error =
+      if error_has_http_bound_members error then (
+        match Shape_resolver.find_shape_by_name ~name:error shape_resolver with
+        | Some (Shape.StructureShape s) ->
+            let inner =
+              scan_inner_expr ~out_name:error ~members:s.members ~namespace_resolver ~shape_resolver
+            in
+            exp_fun_untyped "i" inner
+        | _ ->
+            let deser_func = Deserialiser.func_longident ~namespace_resolver error in
+            exp_fun_untyped "i"
+              (B.pexp_apply
+                 (B.pexp_ident (Location.mknoloc deser_func))
+                 [ (Nolabel, exp_ident "i") ]))
+      else (
+        let deser_func = Deserialiser.func_longident ~namespace_resolver error in
+        exp_fun_untyped "i"
+          (B.pexp_apply (B.pexp_ident (Location.mknoloc deser_func)) [ (Nolabel, exp_ident "i") ]))
+    in
+    let body =
+      if List.is_empty errors then
+        [%expr
+          fun (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body:_ ~headers:_ ->
+            Smaws_Lib.Protocols.RestXml.Errors.default_handler error]
+      else begin
+        let cases =
+          errors
+          |> List.map ~f:(fun error ->
+              let wire_code = Util.symbolName error in
+              let variant = SafeNames.safeConstructorName error in
+              let parse_call =
+                B.pexp_apply parse_error_struct
+                  [
+                    (Labelled "body", exp_ident "body");
+                    (Labelled "structParser", struct_parser_for error);
+                  ]
+              in
+              let rhs =
+                B.pexp_match parse_call
+                  [
+                    B.case
+                      ~lhs:
+                        (B.ppat_construct (lident_noloc "Ok")
+                           (Some (B.ppat_var (Location.mknoloc "s"))))
+                      ~guard:None
+                      ~rhs:(B.pexp_variant variant (Some (exp_ident "s")));
+                    B.case
+                      ~lhs:
+                        (B.ppat_construct (lident_noloc "Error")
+                           (Some
+                              (B.ppat_construct (lident_noloc "XmlParseError")
+                                 (Some (B.ppat_var (Location.mknoloc "msg"))))))
+                      ~guard:None
+                      ~rhs:(B.pexp_variant "XmlParseError" (Some (exp_ident "msg")));
+                  ]
+              in
+              B.case ~lhs:(pat_const_str wire_code) ~guard:None ~rhs)
+        in
+        let default_case =
+          B.case ~lhs:B.ppat_any ~guard:None
+            ~rhs:(B.pexp_apply default_handler [ (Nolabel, exp_ident "error") ])
+        in
+        let match_body =
+          B.pexp_match [%expr error.Smaws_Lib.Protocols.RestXml.Error.code]
+            (cases @ [ default_case ])
+        in
+        [%expr fun (error : Smaws_Lib.Protocols.RestXml.Error.t) ~body ~headers -> [%e match_body]]
+      end
+    in
+    B.pstr_value Nonrecursive
+      [ B.value_binding ~pat:(B.ppat_var (Location.mknoloc "error_deserializer")) ~expr:body ]
 
   (* Build [Smaws_Lib.Xml.Write.element w tag ?ns ?attrs body] (qualified) for a
      body-root element, with the same prefixed-namespace handling as
@@ -1765,9 +2214,7 @@ module Operations = struct
     in
     let body_members = List.filter members ~f:is_body_member in
     let output_deserializer =
-      Option.value_map operation_shape.output
-        ~default:(qualified_ident ~names:[ "Xml_deserializers"; "unit_of_xml" ])
-        ~f:(deserializer_ref_expr ~namespace_resolver)
+      generate_output_deserializer_expr ~operation_shape ~namespace_resolver ~shape_resolver
     in
     let labels_list =
       B.elist

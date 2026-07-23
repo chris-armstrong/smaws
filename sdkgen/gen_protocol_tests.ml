@@ -384,10 +384,93 @@ let make_query_request_body_test input_body =
             | `None -> ""))]
   | None -> [%expr ()]
 
+(* restXml request-body comparison: both sides compared as canonical XML trees
+   via [Alcotest_http.input_body_xml_testable], so attribute ordering and
+   incidental whitespace do not affect equality. The actual body is the
+   [`String] payload (restXml serialises bodies to a string); [None] means the
+   operation sends no body, so there is nothing to compare. *)
+let make_restxml_request_body_test ~raw input_body =
+  let extract () =
+    [%expr
+      request.body
+      |> Option.map (function
+        | `String x -> x
+        | `Compressed (x, _) -> x
+        | `Form _ -> failwith "not expecting form"
+        | `None -> "")]
+  in
+  match input_body with
+  | Some "" ->
+      (* An empty expected body means the operation sends no body. The runtime
+         passes a [`None] body variant, which the mock records as [Some ""] after
+         extraction, so compare the raw strings (not canonical XML, which cannot
+         parse the empty string). *)
+      [%expr
+        check
+          (Alcotest.option (Alcotest.testable Fmt.string String.equal))
+          "expected request body value" (Some "") [%e extract ()]]
+  | Some input_body when raw ->
+      (* A raw [@httpPayload] (blob/string/enum) request body is a plain string,
+         not XML - compare verbatim. *)
+      [%expr
+        check
+          (Alcotest.option (Alcotest.testable Fmt.string String.equal))
+          "expected request body value"
+          (Some [%e const_str input_body])
+          [%e extract ()]]
+  | Some input_body ->
+      [%expr
+        check Alcotest_http.input_body_xml_testable "expected request body value"
+          (Some [%e const_str input_body])
+          [%e extract ()]]
+  | None -> [%expr ()]
+
+(* Whether an output shape is a raw [@httpPayload] output - i.e. it has a single
+   [@httpPayload] member whose target is a blob/string/enum (the body is the raw
+   payload, not XML). Used to choose the mock response body and the request-body
+   comparison strategy. *)
+let raw_payload_output ~shape_resolver ~output_shape =
+  Option.value_map output_shape ~default:false ~f:(fun out ->
+      if String.equal out "smithy.api#Unit" then false
+      else (
+        match Codegen.Shape_resolver.find_shape_by_name ~name:out shape_resolver with
+        | Some (Shape.StructureShape s) ->
+            List.exists s.members ~f:(fun m ->
+                let is_payload =
+                  Option.value ~default:[] m.traits
+                  |> List.exists ~f:(function Trait.HttpPayloadTrait -> true | _ -> false)
+                in
+                if not is_payload then false
+                else (
+                  match Codegen.Shape_resolver.find_shape_by_name ~name:m.target shape_resolver with
+                  | Some (Shape.BlobShape _ | Shape.StringShape _ | Shape.EnumShape _) -> true
+                  | _ -> false))
+        | _ -> false))
+
+(* The mock RESPONSE body for a restXml request test. The response content is
+   irrelevant (request tests assert on the outgoing request), but the operation
+   must return [Ok] so the request can be inspected. For XML outputs an empty
+   root element [<x/>] deserialises to an all-defaults value; for a raw
+   [@httpPayload] blob/string/enum output the body is the raw payload, so an
+   empty string deserialises to [None] (the payload member is optional). *)
+let restxml_mock_body_expr ~shape_resolver ~output_shape =
+  if raw_payload_output ~shape_resolver ~output_shape then const_str "" else const_str "<x/>"
+
 let make_request_method_expected_expr method_ = B.pexp_variant method_ None
 
 let make_request_uri_expected_expr uri =
   B.pexp_apply (exp_ident "Uri.of_string") [ (Nolabel, const_str uri) ]
+
+(* restXml request tests carry the expected query separately in [queryParams]
+   (a list of "key=value" strings); the [uri] field is the path only. Build the
+   full expected URI by appending the query so [restxml_uri_testable] can
+   compare path + canonical query. *)
+let make_restxml_request_uri_expected_expr uri query_params =
+  match query_params with
+  | Some qs when not (List.is_empty qs) ->
+      B.pexp_apply (exp_ident "Uri.of_string")
+        [ (Nolabel, const_str (uri ^ "?" ^ String.concat ~sep:"&" qs)) ]
+  | _ -> B.pexp_apply (exp_ident "Uri.of_string") [ (Nolabel, const_str uri) ]
 
 let make_test_case_function_name (request_test : Trait.httpRequestTest) =
   request_test.id |> Codegen.SafeNames.snakeCase
@@ -662,6 +745,63 @@ let make_query_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output
           in
           ()])
 
+let make_restxml_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
+    ~operation_name http_protocols =
+  http_protocols
+  |> List.map ~f:(fun (request_test : Trait.httpRequestTest) ->
+      Fmt.pr "Generating restXml test for %s\n" request_test.id;
+      let test_name_str = B.pexp_constant (Ppxlib.Ast.Pconst_string (request_test.id, loc, None)) in
+      let test_name_pat =
+        B.ppat_var (Location.mknoloc (make_test_case_function_name request_test))
+      in
+      let input_pat = make_input_pattern ~pattern_name:"input" ~namespace_resolver input_shape in
+      let input_expr = make_input_expr ~shape_resolver input_shape request_test.params in
+      let operation_call_expr =
+        make_operation_call_expr ~namespace_resolver ~shape_resolver ~operation_name
+      in
+      let operation_call_expr =
+        wrap_operation_call_for_idempotency request_test
+          (B.pexp_apply operation_call_expr
+             [ (Nolabel, exp_ident "ctx"); (Nolabel, exp_ident "input") ])
+      in
+      let raw = raw_payload_output ~shape_resolver ~output_shape in
+      let request_body_test = make_restxml_request_body_test ~raw request_test.body in
+      let mock_body = if raw then const_str "" else const_str "<x/>" in
+      let request_method_expected_expr = make_request_method_expected_expr request_test.method_ in
+      let request_uri_expected_expr =
+        make_restxml_request_uri_expected_expr request_test.uri request_test.queryParams
+      in
+      let request_headers_expected_expr = make_headers_expr request_test.headers in
+      let config_expr = make_config_expr request_test in
+      [%stri
+        let [%p test_name_pat] =
+         fun () ->
+          Eio.Switch.run ~name:[%e test_name_str] @@ fun sw ->
+          let module Mock = (val Http_mock.create_http_mock ()) in
+          let http_type = (module Mock : Smaws_Lib.Http.Client with type t = Mock.t) in
+
+          let config = [%e config_expr] in
+
+          let ctx = Smaws_Lib.Context.make ~config ~http_type () in
+          let [%p input_pat] = [%e input_expr] in
+          Mock.mock_response ~body:[%e mock_body] ~status:200 ~headers:[] ();
+          let _response = [%e operation_call_expr] in
+          let request = Mock.last_request () in
+          let () = [%e request_body_test] in
+          let () =
+            check Alcotest_http.method_testable "expected request method"
+              [%e request_method_expected_expr] request.method_
+          in
+          let () =
+            check Alcotest_http.restxml_uri_testable "expected request uri"
+              [%e request_uri_expected_expr] request.uri
+          in
+          let () =
+            check Alcotest_http.headers_testable "expected request headers"
+              [%e request_headers_expected_expr] request.headers
+          in
+          ()])
+
 (* Tests which are disabled for reasons *)
 let bannedTests =
   [
@@ -670,6 +810,19 @@ let bannedTests =
     "SDKAppendsGzipAndIgnoresHttpProvidedEncoding_awsJson1_1";
     "SDKAppliedContentEncoding_awsQuery";
     "SDKAppendsGzipAndIgnoresHttpProvidedEncoding_awsQuery";
+    (* restXml requestCompression is out of scope (add_request_compression.md). *)
+    "SDKAppliedContentEncoding_restXml";
+    "SDKAppendedGzipAfterProvidedEncoding_restXml";
+    (* restXml [@httpPayload] of a union: an empty mock response body cannot be
+       deserialised into a union (which member would it pick?), and the conformance
+       harness mocks an arbitrary response for request tests. Pending a union-aware
+       mock. *)
+    "RestXmlHttpPayloadWithUnion";
+    "RestXmlHttpPayloadWithUnsetUnion";
+    (* restXml [@httpHeader] of a [list<timestamp>] with the default [http-date]
+       format: the values are joined with ", " but each http-date itself contains
+       ", " (after the weekday), so the list cannot be split unambiguously. *)
+    "InputAndOutputWithTimestampHeaders";
   ]
 
 let is_query_service (service : Shape.serviceShapeDetails option) =
@@ -678,11 +831,17 @@ let is_query_service (service : Shape.serviceShapeDetails option) =
   | Some s ->
       Trait.hasTrait s.traits (function Trait.AwsProtocolAwsQueryTrait -> true | _ -> false)
 
+let is_restxml_service (service : Shape.serviceShapeDetails option) =
+  match service with
+  | None -> false
+  | Some s ->
+      Trait.hasTrait s.traits (function Trait.AwsProtocolRestXmlTrait _ -> true | _ -> false)
+
 (* httpResponseTests attached to an operation's error shapes (rather than to the
    operation itself). Returns (error_shape_name, httpResponseTest) pairs, after
    the same banned/appliesTo/protocol filters as the operation-level tests. *)
-let error_shape_response_tests ~query_protocol ~query_protocol_id
-    ~(shape_resolver : Codegen.Shape_resolver.t)
+let error_shape_response_tests ~query_protocol ~query_protocol_id ~restxml_protocol
+    ~restxml_protocol_id ~(shape_resolver : Codegen.Shape_resolver.t)
     (operationShapeDetails : Shape.operationShapeDetails) =
   operationShapeDetails.errors |> Option.value ~default:[]
   |> List.concat_map ~f:(fun error_name ->
@@ -704,6 +863,7 @@ let error_shape_response_tests ~query_protocol ~query_protocol_id
           match t.appliesTo with Some `Server -> false | Some `Client | None -> true)
       |> List.filter ~f:(fun (t : Trait.httpResponseTest) ->
           if query_protocol then String.equal t.protocol query_protocol_id
+          else if restxml_protocol then String.equal t.protocol restxml_protocol_id
           else not (String.equal t.protocol query_protocol_id))
       |> List.map ~f:(fun t -> (error_name, t)))
 
@@ -713,6 +873,8 @@ let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_conte
     ~(namespace_resolver : Codegen.Namespace_resolver.Namespace_resolver.t) fmt =
   let query_protocol = is_query_service service in
   let query_protocol_id = "aws.protocols#awsQuery" in
+  let restxml_protocol = is_restxml_service service in
+  let restxml_protocol_id = "aws.protocols#restXml" in
   let all_test_structures =
     operation_shapes
     |> List.map
@@ -730,6 +892,7 @@ let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_conte
                  match t.appliesTo with Some `Client | None -> true | Some `Server -> false)
              |> List.filter ~f:(fun (t : Trait.httpRequestTest) ->
                  if query_protocol then String.equal t.protocol query_protocol_id
+                 else if restxml_protocol then String.equal t.protocol restxml_protocol_id
                  else not (String.equal t.protocol query_protocol_id))
            in
            let http_response_protocols =
@@ -765,22 +928,26 @@ let generate_ml ~shape_resolver ~operation_shapes ~structure_shapes ~alias_conte
                        unexpected / __type-tagged output, and allow nulls.
                        Running them would fail for unimplemented-feature reasons,
                        not bugs; they stay skipped until that robustness is built. *)
-                 if query_protocol then (
+                 if query_protocol || restxml_protocol then (
                    match t.appliesTo with Some `Client | None -> true | Some `Server -> false)
                  else (match t.appliesTo with Some `Server | None -> true | Some `Client -> false))
              |> List.filter ~f:(fun (t : Trait.httpResponseTest) ->
                  if query_protocol then String.equal t.protocol query_protocol_id
+                 else if restxml_protocol then String.equal t.protocol restxml_protocol_id
                  else not (String.equal t.protocol query_protocol_id))
            in
            let input_shape = input in
            let output_shape = output in
            let error_response_tests =
-             error_shape_response_tests ~query_protocol ~query_protocol_id ~shape_resolver
-               operationShapeDetails
+             error_shape_response_tests ~query_protocol ~query_protocol_id ~restxml_protocol
+               ~restxml_protocol_id ~shape_resolver operationShapeDetails
            in
            let request_test_functions =
              if query_protocol then
                make_query_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
+                 ~operation_name:name http_protocols
+             else if restxml_protocol then
+               make_restxml_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
                  ~operation_name:name http_protocols
              else
                make_test_str ~namespace_resolver ~shape_resolver ~input_shape ~output_shape
