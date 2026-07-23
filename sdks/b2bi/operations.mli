@@ -1,6 +1,6 @@
 open Types
 
-module CreateCapability : sig
+module UpdateTransformer : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
@@ -14,8 +14,8 @@ module CreateCapability : sig
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    create_capability_request ->
-    ( create_capability_response,
+    update_transformer_request ->
+    ( update_transformer_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -28,8 +28,8 @@ module CreateCapability : sig
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    create_capability_request ->
-    ( create_capability_response Smaws_Lib.Response.t,
+    update_transformer_request ->
+    ( update_transformer_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
@@ -42,147 +42,624 @@ module CreateCapability : sig
     result
 end
 [@@ocaml.doc
-  "Instantiates a capability based on the specified parameters. A trading capability contains the \
+  "Updates the specified parameters for a transformer. A transformer can take an EDI file as input \
+   and transform it into a JSON-or XML-formatted document. Alternatively, a transformer can take a \
+   JSON-or XML-formatted document as input and transform it into an EDI file.\n"]
+
+module UpdateProfile : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_profile_request ->
+    ( update_profile_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_profile_request ->
+    ( update_profile_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Updates the specified parameters for a profile. A profile is the mechanism used to create the \
+   concept of a private network.\n"]
+
+module UpdatePartnership : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_partnership_request ->
+    ( update_partnership_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_partnership_request ->
+    ( update_partnership_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Updates some of the parameters for a partnership between a customer and trading partner. A \
+   partnership represents the connection between you and your trading partner. It ties together a \
+   profile and one or more trading capabilities.\n"]
+
+module UpdateCapability : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    update_capability_request ->
+    ( update_capability_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    update_capability_request ->
+    ( update_capability_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Updates some of the parameters for a capability, based on the specified parameters. A trading \
+   capability contains the information required to transform incoming EDI documents into JSON or \
+   XML outputs.\n"]
+
+module ListTransformers : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_transformers_request ->
+    ( list_transformers_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_transformers_request ->
+    ( list_transformers_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists the available transformers. A transformer can take an EDI file as input and transform it \
+   into a JSON-or XML-formatted document. Alternatively, a transformer can take a JSON-or \
+   XML-formatted document as input and transform it into an EDI file.\n"]
+
+module ListProfiles : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_profiles_request ->
+    ( list_profiles_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_profiles_request ->
+    ( list_profiles_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists the profiles associated with your Amazon Web Services account for your current or \
+   specified region. A profile is the mechanism used to create the concept of a private network.\n"]
+
+module ListPartnerships : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_partnerships_request ->
+    ( list_partnerships_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_partnerships_request ->
+    ( list_partnerships_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists the partnerships associated with your Amazon Web Services account for your current or \
+   specified region. A partnership represents the connection between you and your trading partner. \
+   It ties together a profile and one or more trading capabilities.\n"]
+
+module ListCapabilities : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_capabilities_request ->
+    ( list_capabilities_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_capabilities_request ->
+    ( list_capabilities_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists the capabilities associated with your Amazon Web Services account for your current or \
+   specified region. A trading capability contains the information required to transform incoming \
+   EDI documents into JSON or XML outputs.\n"]
+
+module GetTransformer : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_transformer_request ->
+    ( get_transformer_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_transformer_request ->
+    ( get_transformer_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Retrieves the details for the transformer specified by the transformer ID. A transformer can \
+   take an EDI file as input and transform it into a JSON-or XML-formatted document. \
+   Alternatively, a transformer can take a JSON-or XML-formatted document as input and transform \
+   it into an EDI file.\n"]
+
+module GetProfile : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_profile_request ->
+    ( get_profile_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_profile_request ->
+    ( get_profile_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Retrieves the details for the profile specified by the profile ID. A profile is the mechanism \
+   used to create the concept of a private network.\n"]
+
+module GetPartnership : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_partnership_request ->
+    ( get_partnership_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_partnership_request ->
+    ( get_partnership_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Retrieves the details for a partnership, based on the partner and profile IDs specified. A \
+   partnership represents the connection between you and your trading partner. It ties together a \
+   profile and one or more trading capabilities.\n"]
+
+module GetCapability : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_capability_request ->
+    ( get_capability_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_capability_request ->
+    ( get_capability_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Retrieves the details for the specified capability. A trading capability contains the \
    information required to transform incoming EDI documents into JSON or XML outputs.\n"]
 
-module CreatePartnership : sig
+module DeleteTransformer : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `ConflictException of conflict_exception
     | `InternalServerException of internal_server_exception
     | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
     | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    create_partnership_request ->
-    ( create_partnership_response,
+    delete_transformer_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    create_partnership_request ->
-    ( create_partnership_response Smaws_Lib.Response.t,
+    delete_transformer_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  "Creates a partnership between a customer and a trading partner, based on the supplied \
-   parameters. A partnership represents the connection between you and your trading partner. It \
-   ties together a profile and one or more trading capabilities.\n"]
+  "Deletes the specified transformer. A transformer can take an EDI file as input and transform it \
+   into a JSON-or XML-formatted document. Alternatively, a transformer can take a JSON-or \
+   XML-formatted document as input and transform it into an EDI file.\n"]
 
-module CreateProfile : sig
+module DeleteProfile : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `ConflictException of conflict_exception
     | `InternalServerException of internal_server_exception
     | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
     | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    create_profile_request ->
-    ( create_profile_response,
+    delete_profile_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    create_profile_request ->
-    ( create_profile_response Smaws_Lib.Response.t,
+    delete_profile_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  "Creates a customer profile. You can have up to five customer profiles, each representing a \
-   distinct private network. A profile is the mechanism used to create the concept of a private \
-   network.\n"]
+  "Deletes the specified profile. A profile is the mechanism used to create the concept of a \
+   private network.\n"]
 
-module CreateStarterMappingTemplate : sig
+module DeletePartnership : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
     | `InternalServerException of internal_server_exception
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    create_starter_mapping_template_request ->
-    ( create_starter_mapping_template_response,
+    delete_partnership_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    create_starter_mapping_template_request ->
-    ( create_starter_mapping_template_response Smaws_Lib.Response.t,
+    delete_partnership_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  "Amazon Web Services B2B Data Interchange uses a mapping template in JSONata or XSLT format to \
-   transform a customer input file into a JSON or XML file that can be converted to EDI.\n\n\
-  \ If you provide a sample EDI file with the same structure as the EDI files that you wish to \
-   generate, then the service can generate a mapping template. The starter template contains \
-   placeholder values which you can replace with JSONata or XSLT expressions to take data from \
-   your input file and insert it into the JSON or XML file that is used to generate the EDI.\n\
-  \ \n\
-  \  If you do not provide a sample EDI file, then the service can generate a mapping template \
-   based on the EDI settings in the [templateDetails] parameter. \n\
-  \  \n\
-  \    Currently, we only support generating a template that can generate the input to produce an \
-   Outbound X12 EDI file.\n\
-  \   "]
+  "Deletes the specified partnership. A partnership represents the connection between you and your \
+   trading partner. It ties together a profile and one or more trading capabilities.\n"]
+
+module DeleteCapability : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `ConflictException of conflict_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_capability_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_capability_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `ConflictException of conflict_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes the specified capability. A trading capability contains the information required to \
+   transform incoming EDI documents into JSON or XML outputs.\n"]
 
 module CreateTransformer : sig
   val error_to_string :
@@ -259,174 +736,189 @@ end
   \           }\n\
   \   "]
 
-module DeleteCapability : sig
+module CreateProfile : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `ConflictException of conflict_exception
     | `InternalServerException of internal_server_exception
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
     | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    delete_capability_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
+    create_profile_request ->
+    ( create_profile_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    delete_capability_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+    create_profile_request ->
+    ( create_profile_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  "Deletes the specified capability. A trading capability contains the information required to \
-   transform incoming EDI documents into JSON or XML outputs.\n"]
+  "Creates a customer profile. You can have up to five customer profiles, each representing a \
+   distinct private network. A profile is the mechanism used to create the concept of a private \
+   network.\n"]
 
-module DeletePartnership : sig
+module CreatePartnership : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `ConflictException of conflict_exception
     | `InternalServerException of internal_server_exception
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
     | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    delete_partnership_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
+    create_partnership_request ->
+    ( create_partnership_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    delete_partnership_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+    create_partnership_request ->
+    ( create_partnership_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  "Deletes the specified partnership. A partnership represents the connection between you and your \
-   trading partner. It ties together a profile and one or more trading capabilities.\n"]
+  "Creates a partnership between a customer and a trading partner, based on the supplied \
+   parameters. A partnership represents the connection between you and your trading partner. It \
+   ties together a profile and one or more trading capabilities.\n"]
 
-module DeleteProfile : sig
+module CreateCapability : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
     | `ConflictException of conflict_exception
     | `InternalServerException of internal_server_exception
     | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
     | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    delete_profile_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
+    create_capability_request ->
+    ( create_capability_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    delete_profile_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+    create_capability_request ->
+    ( create_capability_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
       | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
       | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  "Deletes the specified profile. A profile is the mechanism used to create the concept of a \
-   private network.\n"]
+  "Instantiates a capability based on the specified parameters. A trading capability contains the \
+   information required to transform incoming EDI documents into JSON or XML outputs.\n"]
 
-module DeleteTransformer : sig
+module CreateStarterMappingTemplate : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
     | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
     | `InternalServerException of internal_server_exception
     | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
     | `ValidationException of validation_exception ] ->
     string
 
   val request :
     'http_type Smaws_Lib.Context.t ->
-    delete_transformer_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
+    create_starter_mapping_template_request ->
+    ( create_starter_mapping_template_response,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ] )
     result
 
   val request_with_metadata :
     'http_type Smaws_Lib.Context.t ->
-    delete_transformer_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+    create_starter_mapping_template_request ->
+    ( create_starter_mapping_template_response Smaws_Lib.Response.t,
       [> Smaws_Lib.Protocols.AwsJson.error
       | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
       | `InternalServerException of internal_server_exception
       | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
       | `ValidationException of validation_exception ]
       * Smaws_Lib.Response.metadata )
     result
 end
 [@@ocaml.doc
-  "Deletes the specified transformer. A transformer can take an EDI file as input and transform it \
-   into a JSON-or XML-formatted document. Alternatively, a transformer can take a JSON-or \
-   XML-formatted document as input and transform it into an EDI file.\n"]
+  "Amazon Web Services B2B Data Interchange uses a mapping template in JSONata or XSLT format to \
+   transform a customer input file into a JSON or XML file that can be converted to EDI.\n\n\
+  \ If you provide a sample EDI file with the same structure as the EDI files that you wish to \
+   generate, then the service can generate a mapping template. The starter template contains \
+   placeholder values which you can replace with JSONata or XSLT expressions to take data from \
+   your input file and insert it into the JSON or XML file that is used to generate the EDI.\n\
+  \ \n\
+  \  If you do not provide a sample EDI file, then the service can generate a mapping template \
+   based on the EDI settings in the [templateDetails] parameter. \n\
+  \  \n\
+  \    Currently, we only support generating a template that can generate the input to produce an \
+   Outbound X12 EDI file.\n\
+  \   "]
 
 module GenerateMapping : sig
   val error_to_string :
@@ -485,165 +977,6 @@ end
   \           }\n\
   \  "]
 
-module GetCapability : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_capability_request ->
-    ( get_capability_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_capability_request ->
-    ( get_capability_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Retrieves the details for the specified capability. A trading capability contains the \
-   information required to transform incoming EDI documents into JSON or XML outputs.\n"]
-
-module GetPartnership : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_partnership_request ->
-    ( get_partnership_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_partnership_request ->
-    ( get_partnership_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Retrieves the details for a partnership, based on the partner and profile IDs specified. A \
-   partnership represents the connection between you and your trading partner. It ties together a \
-   profile and one or more trading capabilities.\n"]
-
-module GetProfile : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_profile_request ->
-    ( get_profile_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_profile_request ->
-    ( get_profile_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Retrieves the details for the profile specified by the profile ID. A profile is the mechanism \
-   used to create the concept of a private network.\n"]
-
-module GetTransformer : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_transformer_request ->
-    ( get_transformer_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_transformer_request ->
-    ( get_transformer_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Retrieves the details for the transformer specified by the transformer ID. A transformer can \
-   take an EDI file as input and transform it into a JSON-or XML-formatted document. \
-   Alternatively, a transformer can take a JSON-or XML-formatted document as input and transform \
-   it into an EDI file.\n"]
-
 module GetTransformerJob : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -687,119 +1020,6 @@ end
   \  \n\
   \   "]
 
-module ListCapabilities : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_capabilities_request ->
-    ( list_capabilities_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_capabilities_request ->
-    ( list_capabilities_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists the capabilities associated with your Amazon Web Services account for your current or \
-   specified region. A trading capability contains the information required to transform incoming \
-   EDI documents into JSON or XML outputs.\n"]
-
-module ListPartnerships : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_partnerships_request ->
-    ( list_partnerships_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_partnerships_request ->
-    ( list_partnerships_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists the partnerships associated with your Amazon Web Services account for your current or \
-   specified region. A partnership represents the connection between you and your trading partner. \
-   It ties together a profile and one or more trading capabilities.\n"]
-
-module ListProfiles : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_profiles_request ->
-    ( list_profiles_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_profiles_request ->
-    ( list_profiles_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists the profiles associated with your Amazon Web Services account for your current or \
-   specified region. A profile is the mechanism used to create the concept of a private network.\n"]
-
 module ListTagsForResource : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -832,43 +1052,6 @@ end
 [@@ocaml.doc
   "Lists all of the tags associated with the Amazon Resource Name (ARN) that you specify. The \
    resource can be a capability, partnership, profile, or transformer.\n"]
-
-module ListTransformers : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_transformers_request ->
-    ( list_transformers_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_transformers_request ->
-    ( list_transformers_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists the available transformers. A transformer can take an EDI file as input and transform it \
-   into a JSON-or XML-formatted document. Alternatively, a transformer can take a JSON-or \
-   XML-formatted document as input and transform it into an EDI file.\n"]
 
 module StartTransformerJob : sig
   val error_to_string :
@@ -1109,186 +1292,3 @@ end
 [@@ocaml.doc
   "Detaches a key-value pair from the specified resource, as identified by its Amazon Resource \
    Name (ARN). Resources are capability, partnership, profile, transformers and other entities.\n"]
-
-module UpdateCapability : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    update_capability_request ->
-    ( update_capability_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    update_capability_request ->
-    ( update_capability_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Updates some of the parameters for a capability, based on the specified parameters. A trading \
-   capability contains the information required to transform incoming EDI documents into JSON or \
-   XML outputs.\n"]
-
-module UpdatePartnership : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    update_partnership_request ->
-    ( update_partnership_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    update_partnership_request ->
-    ( update_partnership_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Updates some of the parameters for a partnership between a customer and trading partner. A \
-   partnership represents the connection between you and your trading partner. It ties together a \
-   profile and one or more trading capabilities.\n"]
-
-module UpdateProfile : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    update_profile_request ->
-    ( update_profile_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    update_profile_request ->
-    ( update_profile_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Updates the specified parameters for a profile. A profile is the mechanism used to create the \
-   concept of a private network.\n"]
-
-module UpdateTransformer : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `ConflictException of conflict_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    update_transformer_request ->
-    ( update_transformer_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    update_transformer_request ->
-    ( update_transformer_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `ConflictException of conflict_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Updates the specified parameters for a transformer. A transformer can take an EDI file as input \
-   and transform it into a JSON-or XML-formatted document. Alternatively, a transformer can take a \
-   JSON-or XML-formatted document as input and transform it into an EDI file.\n"]

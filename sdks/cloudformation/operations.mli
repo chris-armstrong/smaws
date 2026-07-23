@@ -1,148 +1,5 @@
 open Types
 
-module ActivateOrganizationsAccess : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InvalidOperationException of invalid_operation_exception
-    | `OperationNotFoundException of operation_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    activate_organizations_access_input ->
-    ( activate_organizations_access_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidOperationException of invalid_operation_exception
-      | `OperationNotFoundException of operation_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    activate_organizations_access_input ->
-    ( activate_organizations_access_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidOperationException of invalid_operation_exception
-      | `OperationNotFoundException of operation_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Activate trusted access with Organizations. With trusted access between StackSets and \
-   Organizations activated, the management account has permissions to create and manage StackSets \
-   for your organization.\n"]
-
-module ActivateType : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `CFNRegistryException of cfn_registry_exception
-    | `TypeNotFoundException of type_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    activate_type_input ->
-    ( activate_type_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `CFNRegistryException of cfn_registry_exception
-      | `TypeNotFoundException of type_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    activate_type_input ->
-    ( activate_type_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `CFNRegistryException of cfn_registry_exception
-      | `TypeNotFoundException of type_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Activates a public third-party extension, such as a resource or module, to make it available \
-   for use in stack templates in your current account and Region. It can also create \
-   CloudFormation Hooks, which allow you to evaluate resource configurations before CloudFormation \
-   provisions them. Hooks integrate with both CloudFormation and Cloud Control API operations.\n\n\
-  \ After you activate an extension, you can use \
-   {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_SetTypeConfiguration.html}SetTypeConfiguration} \
-   to set specific properties for the extension.\n\
-  \ \n\
-  \  To see which extensions have been activated, use \
-   {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListTypes.html}ListTypes}. \
-   To see configuration details for an extension, use \
-   {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_DescribeType.html}DescribeType}.\n\
-  \  \n\
-  \   For more information, see \
-   {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry-public-activate-extension.html}Activate \
-   a third-party public extension in your account} in the {i CloudFormation User Guide}. For \
-   information about creating Hooks, see the \
-   {{:https://docs.aws.amazon.com/cloudformation-cli/latest/hooks-userguide/what-is-cloudformation-hooks.html}CloudFormation \
-   Hooks User Guide}.\n\
-  \   "]
-
-module BatchDescribeTypeConfigurations : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `CFNRegistryException of cfn_registry_exception
-    | `TypeConfigurationNotFoundException of type_configuration_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_describe_type_configurations_input ->
-    ( batch_describe_type_configurations_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `CFNRegistryException of cfn_registry_exception
-      | `TypeConfigurationNotFoundException of type_configuration_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_describe_type_configurations_input ->
-    ( batch_describe_type_configurations_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `CFNRegistryException of cfn_registry_exception
-      | `TypeConfigurationNotFoundException of type_configuration_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns configuration data for the specified CloudFormation extensions, from the CloudFormation \
-   registry in your current account and Region.\n\n\
-  \ For more information, see \
-   {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry-set-configuration.html}Edit \
-   configuration data for extensions in your account} in the {i CloudFormation User Guide}.\n\
-  \ "]
-
-module CancelUpdateStack : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `TokenAlreadyExistsException of token_already_exists_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    cancel_update_stack_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `TokenAlreadyExistsException of token_already_exists_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    cancel_update_stack_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `TokenAlreadyExistsException of token_already_exists_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Cancels an update on the specified stack. If the call completes successfully, the stack rolls \
-   back the update and reverts to the previous stack configuration.\n\n\
-  \  You can cancel only stacks that are in the [UPDATE_IN_PROGRESS] state.\n\
-  \  \n\
-  \   "]
-
 module ContinueUpdateRollback : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -1164,6 +1021,31 @@ end
   \       \n\
   \        "]
 
+module DescribeStacks : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stacks_input ->
+    (describe_stacks_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stacks_input ->
+    ( describe_stacks_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns the description for the specified stack; if no stack name was specified, then it \
+   returns the description for all the stacks created. For more information about a stack's event \
+   history, see \
+   {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stack-resource-configuration-complete.html}Understand \
+   CloudFormation stack creation events} in the {i CloudFormation User Guide}.\n\n\
+  \  If the stack doesn't exist, a [ValidationError] is returned.\n\
+  \  \n\
+  \   "]
+
 module DescribeStackSet : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -1224,31 +1106,6 @@ end
   "Returns the description of the specified StackSet operation.\n\n\
   \  This API provides {i strongly consistent} reads meaning it will always return the most \
    up-to-date data.\n\
-  \  \n\
-  \   "]
-
-module DescribeStacks : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_stacks_input ->
-    (describe_stacks_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_stacks_input ->
-    ( describe_stacks_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns the description for the specified stack; if no stack name was specified, then it \
-   returns the description for all the stacks created. For more information about a stack's event \
-   history, see \
-   {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stack-resource-configuration-complete.html}Understand \
-   CloudFormation stack creation events} in the {i CloudFormation User Guide}.\n\n\
-  \  If the stack doesn't exist, a [ValidationError] is returned.\n\
   \  \n\
   \   "]
 
@@ -2065,6 +1922,27 @@ end
    the stack has been deleted.\n\
   \ "]
 
+module ListStacks : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_stacks_input ->
+    (list_stacks_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_stacks_input ->
+    ( list_stacks_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns the summary information for stacks whose status matches the specified \
+   [StackStatusFilter]. Summary information for stacks that have been deleted is kept for 90 days \
+   after the stack is deleted. If no [StackStatusFilter] is specified, summary information for all \
+   stacks is returned (including existing stacks and stacks that have been deleted).\n"]
+
 module ListStackSetAutoDeploymentTargets : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -2192,27 +2070,6 @@ end
   \          }\n\
   \  "]
 
-module ListStacks : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_stacks_input ->
-    (list_stacks_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_stacks_input ->
-    ( list_stacks_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns the summary information for stacks whose status matches the specified \
-   [StackStatusFilter]. Summary information for stacks that have been deleted is kept for 90 days \
-   after the stack is deleted. If no [StackStatusFilter] is specified, summary information for all \
-   stacks is returned (including existing stacks and stacks that have been deleted).\n"]
-
 module ListTypeRegistrations : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error | `CFNRegistryException of cfn_registry_exception ] ->
@@ -2234,28 +2091,6 @@ module ListTypeRegistrations : sig
     result
 end
 [@@ocaml.doc "Returns a list of registration tokens for the specified extension(s).\n"]
-
-module ListTypeVersions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error | `CFNRegistryException of cfn_registry_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_type_versions_input ->
-    ( list_type_versions_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `CFNRegistryException of cfn_registry_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_type_versions_input ->
-    ( list_type_versions_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `CFNRegistryException of cfn_registry_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns summary information about the versions of an extension.\n"]
 
 module ListTypes : sig
   val error_to_string :
@@ -2281,6 +2116,28 @@ end
   "Returns summary information about all extensions, including your private resource types, \
    modules, and Hooks as well as all public extensions from Amazon Web Services and third-party \
    publishers.\n"]
+
+module ListTypeVersions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error | `CFNRegistryException of cfn_registry_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_type_versions_input ->
+    ( list_type_versions_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `CFNRegistryException of cfn_registry_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_type_versions_input ->
+    ( list_type_versions_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `CFNRegistryException of cfn_registry_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns summary information about the versions of an extension.\n"]
 
 module PublishType : sig
   val error_to_string :
@@ -2996,3 +2853,146 @@ end
   "Validates a specified template. CloudFormation first checks if the template is valid JSON. If \
    it isn't, CloudFormation checks if the template is valid YAML. If both these checks fail, \
    CloudFormation returns a template validation error.\n"]
+
+module CancelUpdateStack : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `TokenAlreadyExistsException of token_already_exists_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_update_stack_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `TokenAlreadyExistsException of token_already_exists_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_update_stack_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `TokenAlreadyExistsException of token_already_exists_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Cancels an update on the specified stack. If the call completes successfully, the stack rolls \
+   back the update and reverts to the previous stack configuration.\n\n\
+  \  You can cancel only stacks that are in the [UPDATE_IN_PROGRESS] state.\n\
+  \  \n\
+  \   "]
+
+module BatchDescribeTypeConfigurations : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `CFNRegistryException of cfn_registry_exception
+    | `TypeConfigurationNotFoundException of type_configuration_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_describe_type_configurations_input ->
+    ( batch_describe_type_configurations_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `CFNRegistryException of cfn_registry_exception
+      | `TypeConfigurationNotFoundException of type_configuration_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_describe_type_configurations_input ->
+    ( batch_describe_type_configurations_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `CFNRegistryException of cfn_registry_exception
+      | `TypeConfigurationNotFoundException of type_configuration_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns configuration data for the specified CloudFormation extensions, from the CloudFormation \
+   registry in your current account and Region.\n\n\
+  \ For more information, see \
+   {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry-set-configuration.html}Edit \
+   configuration data for extensions in your account} in the {i CloudFormation User Guide}.\n\
+  \ "]
+
+module ActivateType : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `CFNRegistryException of cfn_registry_exception
+    | `TypeNotFoundException of type_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    activate_type_input ->
+    ( activate_type_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `CFNRegistryException of cfn_registry_exception
+      | `TypeNotFoundException of type_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    activate_type_input ->
+    ( activate_type_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `CFNRegistryException of cfn_registry_exception
+      | `TypeNotFoundException of type_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Activates a public third-party extension, such as a resource or module, to make it available \
+   for use in stack templates in your current account and Region. It can also create \
+   CloudFormation Hooks, which allow you to evaluate resource configurations before CloudFormation \
+   provisions them. Hooks integrate with both CloudFormation and Cloud Control API operations.\n\n\
+  \ After you activate an extension, you can use \
+   {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_SetTypeConfiguration.html}SetTypeConfiguration} \
+   to set specific properties for the extension.\n\
+  \ \n\
+  \  To see which extensions have been activated, use \
+   {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListTypes.html}ListTypes}. \
+   To see configuration details for an extension, use \
+   {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_DescribeType.html}DescribeType}.\n\
+  \  \n\
+  \   For more information, see \
+   {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry-public-activate-extension.html}Activate \
+   a third-party public extension in your account} in the {i CloudFormation User Guide}. For \
+   information about creating Hooks, see the \
+   {{:https://docs.aws.amazon.com/cloudformation-cli/latest/hooks-userguide/what-is-cloudformation-hooks.html}CloudFormation \
+   Hooks User Guide}.\n\
+  \   "]
+
+module ActivateOrganizationsAccess : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InvalidOperationException of invalid_operation_exception
+    | `OperationNotFoundException of operation_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    activate_organizations_access_input ->
+    ( activate_organizations_access_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidOperationException of invalid_operation_exception
+      | `OperationNotFoundException of operation_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    activate_organizations_access_input ->
+    ( activate_organizations_access_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidOperationException of invalid_operation_exception
+      | `OperationNotFoundException of operation_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Activate trusted access with Organizations. With trusted access between StackSets and \
+   Organizations activated, the management account has permissions to create and manage StackSets \
+   for your organization.\n"]

@@ -253,8 +253,10 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
     | "smithy.api#httpError" -> value |> parseInteger >>| fun error -> Trait.HttpErrorTrait error
     | "smithy.api#title" -> value |> parseString >>| fun title -> Trait.ApiTitleTrait title
     | "smithy.api#xmlNamespace" ->
-        value |> parseObject |> field "uri" |> parseString >>| fun uri ->
-        Trait.ApiXmlNamespaceTrait uri
+        let obj = value |> parseObject in
+        let uri = obj |> field "uri" |> parseString in
+        let prefix = optional (obj |> field "prefix") |> mapOptional parseString in
+        map2 uri prefix (fun uri prefix -> Trait.ApiXmlNamespaceTrait { uri; prefix })
     | "smithy.api#enum" ->
         value |> parseArray parseEnumNameValue >>| fun enumPairs -> Trait.EnumTrait enumPairs
     | "aws.auth#sigv4" ->
@@ -267,8 +269,10 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
     | "aws.protocols#restJson1" -> Ok Trait.AwsProtocolRestJson1Trait
     | "smithy.api#idempotencyToken" -> Ok Trait.IdempotencyTokenTrait
     | "smithy.api#httpLabel" -> Ok Trait.HttpLabelTrait
-    | "smithy.api#httpQuery" -> Ok Trait.HttpQueryTrait
-    | "smithy.api#httpHeader" -> Ok Trait.HttpHeaderTrait
+    | "smithy.api#httpQuery" ->
+        value |> parseString >>| fun queryName -> Trait.HttpQueryTrait queryName
+    | "smithy.api#httpHeader" ->
+        value |> parseString >>| fun headerName -> Trait.HttpHeaderTrait headerName
     | "smithy.api#retryable" -> Ok Trait.RetryableTrait
     | "smithy.api#timestampFormat" -> (
         value |> parseString >>| function
@@ -301,7 +305,25 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
     | "smithy.api#deprecated" -> Ok Trait.DeprecatedTrait
     | "smithy.api#mediaType" ->
         parseString value >>| fun mediaType -> Trait.MediaTypeTrait mediaType
-    | "aws.protocols#restXml" -> Ok Trait.AwsProtocolRestXmlTrait
+    | "aws.protocols#restXml" ->
+        let obj = value |> parseObject in
+        let http =
+          optional (obj |> field "http")
+          |> mapOptional (parseArray parseString)
+          |> Result.map ~f:(Option.value ~default:[])
+        in
+        let eventStreamHttp =
+          optional (obj |> field "eventStreamHttp")
+          |> mapOptional (parseArray parseString)
+          |> Result.map ~f:(Option.value ~default:[])
+        in
+        let noErrorWrapping =
+          optional (obj |> field "noErrorWrapping")
+          |> mapOptional parseBool
+          |> Result.map ~f:(Option.value ~default:false)
+        in
+        map3 http eventStreamHttp noErrorWrapping (fun http eventStreamHttp noErrorWrapping ->
+            Trait.AwsProtocolRestXmlTrait { http; eventStreamHttp; noErrorWrapping })
     | "aws.api#clientEndpointDiscovery" ->
         let obj = parseObject value in
         let operation = obj |> field "operation" |> parseString in
@@ -311,6 +333,7 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
     | "aws.protocols#ec2QueryName" ->
         value |> parseString >>| fun queryName -> Trait.AwsProtocolEc2QueryNameTrait queryName
     | "aws.protocols#ec2Query" -> Ok Trait.AwsProtocolEc2QueryTrait
+    | "smithy.api#internal" -> Ok Trait.InternalTrait
     | "smithy.api#httpResponseCode" -> Ok Trait.HttpResponseCodeTrait
     | "smithy.api#streaming" -> Ok Trait.StreamingTrait
     | "smithy.api#hostLabel" -> Ok Trait.HostLabelTrait
@@ -329,11 +352,18 @@ let parseTrait name (value : (jsonTreeRef, jsonParseError) Result.t) =
                     |> Result.map ~f:(fun s -> (key, s) :: entries))))
         |> Result.map ~f:(fun x -> Trait.ExternalDocumentationTrait x)
     | "smithy.api#eventPayload" -> Ok Trait.EventPayloadTrait
-    | "smithy.api#http" -> Ok Trait.HttpTrait
+    | "smithy.api#http" ->
+        let obj = value |> parseObject in
+        let method_ = obj |> field "method" |> parseString in
+        let uri = obj |> field "uri" |> parseString in
+        let code = optional (obj |> field "code") |> mapOptional parseInteger in
+        map3 method_ uri code (fun method_ uri code -> Trait.HttpTrait { method_; uri; code })
     | "smithy.api#idempotent" -> Ok Trait.IdempotentTrait
     | "smithy.api#readonly" -> Ok Trait.ReadonlyTrait
     | "smithy.waiters#waitable" -> Ok Trait.WaitableTrait
-    | "smithy.api#endpoint" -> Ok Trait.EndpointTrait
+    | "smithy.api#endpoint" ->
+        value |> parseObject |> field "hostPrefix" |> parseString >>| fun hostPrefix ->
+        Trait.EndpointTrait { hostPrefix }
     | "smithy.api#auth" -> Ok Trait.AuthTrait
     | "smithy.api#optionalAuth" -> Ok Trait.OptionalAuthTrait
     | "smithy.api#suppress" -> Ok Trait.SuppressTrait
@@ -406,7 +436,12 @@ let parseMembers value = parseRecord parseMember value
 let parseStructureShape value =
   let members = value |> field "members" |> parseMembers in
   let traits = optional (value |> field "traits" |> parseRecord parseTrait) in
-  map2 members traits (fun members traits -> Shape.StructureShape { members; traits })
+  let mixins =
+    value |> field "mixins" |> parseArray extractTargetSpec |> optional
+    |> Result.map ~f:(Option.value ~default:[])
+  in
+  map3 members traits mixins (fun members traits mixins ->
+      Shape.StructureShape { members; traits; mixins })
 
 let parseOperationShape shape =
   let inputTarget = optional (shape |> field "input" |> extractTargetSpec) in
@@ -488,7 +523,12 @@ let parseMapShape shapeDict =
 let parseUnionShape value =
   let members = value |> field "members" |> parseMembers in
   let traits = optional (value |> field "traits" |> parseRecord parseTrait) in
-  map2 members traits (fun members traits -> Shape.UnionShape { members; traits })
+  let mixins =
+    value |> field "mixins" |> parseArray extractTargetSpec |> optional
+    |> Result.map ~f:(Option.value ~default:[])
+  in
+  map3 members traits mixins (fun members traits mixins ->
+      Shape.UnionShape { members; traits; mixins })
 
 let parsePrimitive shapeDict =
   let traits_ =
@@ -562,4 +602,83 @@ let parseShape name shape =
           { name; descriptor }))
 
 let parseShapes shapesModel = parseRecord parseShape shapesModel
-let parseModel baseModel = baseModel |> parseObject |> field "shapes" |> parseShapes
+
+(* Mixin flattening — see [smithy_ast/Shape.ml.structureShapeDetails.mixins]. A
+   structure/union that lists other shapes under "mixins" inherits those shapes'
+   members (and the traits the mixin carries, except its own [@mixin] marker).
+   Direct members and traits take precedence over mixin members/traits. The
+   conformance restXml model uses mixins for every *Request / *Response pair
+   (the *InputOutput shape carries the members, the *Request/*Response shape
+   adds [@input]/[@output]), so without flattening every request body serializer
+   is a no-op. This is a parse-time pass so the rest of the pipeline (types,
+   builders, serializers, deserializers) sees the fully populated shapes.
+
+   Cycles (A mixes in B which mixes in A) are guarded by a visited set; a
+   mixin that is not a structure/union or that is absent from the model is
+   skipped. *)
+let resolve_mixins (shapes : Shape.t list) : Shape.t list =
+  let by_name = Hashtbl.Poly.create () in
+  List.iter shapes ~f:(fun shape -> Hashtbl.Poly.set by_name ~key:shape.Shape.name ~data:shape);
+  let is_mixin_marker = function
+    | Trait.UnspecifiedTrait (name, _) -> String.equal name "smithy.api#mixin"
+    | _ -> false
+  in
+  let rec effective_members_and_traits ~visited name : Shape.member list * Trait.t list =
+    match Hashtbl.Poly.find by_name name with
+    | None -> ([], [])
+    | Some { descriptor = Shape.StructureShape s | Shape.UnionShape s; _ } ->
+        let visited = name :: visited in
+        (* Fold in the direct members/traits first (direct wins), then each
+           mixin's transitively-resolved members/traits. *)
+        let own_members : Shape.member list = s.members in
+        let own_traits : Trait.t list = Option.value ~default:[] s.traits in
+        let rec fold_mixins (acc_members : Shape.member list) (acc_traits : Trait.t list) lst :
+            Shape.member list * Trait.t list =
+          match lst with
+          | [] -> (acc_members, acc_traits)
+          | m :: rest when Stdlib.List.mem m visited -> fold_mixins acc_members acc_traits rest
+          | m :: rest ->
+              let m_members, m_traits = effective_members_and_traits ~visited m in
+              let m_traits = List.filter m_traits ~f:(Fn.non is_mixin_marker) in
+              let acc_members =
+                List.fold m_members
+                  ~f:(fun acc (mem : Shape.member) ->
+                    if
+                      List.exists acc ~f:(fun existing ->
+                          String.equal existing.Shape.name mem.Shape.name)
+                    then acc
+                    else acc @ [ mem ])
+                  ~init:acc_members
+              in
+              let acc_traits =
+                List.fold m_traits
+                  ~f:(fun acc (t : Trait.t) ->
+                    if
+                      List.exists acc ~f:(fun existing ->
+                          String.equal (Trait.type_key existing) (Trait.type_key t))
+                    then acc
+                    else acc @ [ t ])
+                  ~init:acc_traits
+              in
+              fold_mixins acc_members acc_traits rest
+        in
+        fold_mixins own_members own_traits s.mixins
+    | Some _ -> ([], [])
+  in
+  shapes
+  |> List.map ~f:(fun shape ->
+      match shape.Shape.descriptor with
+      | (Shape.StructureShape s | Shape.UnionShape s) when not (List.is_empty s.mixins) ->
+          let members, traits = effective_members_and_traits ~visited:[] shape.Shape.name in
+          let descriptor =
+            match shape.Shape.descriptor with
+            | Shape.StructureShape _ ->
+                Shape.StructureShape { s with members; traits = Some traits }
+            | Shape.UnionShape _ -> Shape.UnionShape { s with members; traits = Some traits }
+            | _ -> shape.Shape.descriptor (* unreachable *)
+          in
+          { shape with Shape.descriptor }
+      | _ -> shape)
+
+let parseModel baseModel =
+  baseModel |> parseObject |> field "shapes" |> parseShapes |> Result.map ~f:resolve_mixins

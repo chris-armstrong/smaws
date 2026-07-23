@@ -207,7 +207,7 @@ module Response = struct
       else body
     in
     run (fun () ->
-        let xmlSource = source_with_encoding ~src:effective_body ~encoding:None in
+        let xmlSource = source_with_encoding ~strip:true ~src:effective_body ~encoding:None in
         Read.dtd xmlSource;
         Read.sequence xmlSource (action ^ "Response") ~ns:xmlNamespace
           (fun _ _ ->
@@ -250,7 +250,7 @@ module Response = struct
       =
     let open Xml.Parse in
     run (fun () ->
-        let xmlSource = source_with_encoding ~src:body ~encoding:None in
+        let xmlSource = source_with_encoding ~strip:true ~src:body ~encoding:None in
         Read.dtd xmlSource;
         Read.sequence xmlSource "ErrorResponse"
           (fun _ _ ->
@@ -298,7 +298,7 @@ module Response = struct
   let parse_error_struct ~(body : string) ~structParser =
     let open Xml.Parse in
     run (fun () ->
-        let xmlSource = source_with_encoding ~src:body ~encoding:None in
+        let xmlSource = source_with_encoding ~strip:true ~src:body ~encoding:None in
         Read.dtd xmlSource;
         Read.sequence xmlSource "ErrorResponse"
           (fun _ _ ->

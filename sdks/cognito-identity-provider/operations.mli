@@ -6323,47 +6323,6 @@ end
   \          }\n\
   \   "]
 
-module ListUserPoolClientSecrets : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `TooManyRequestsException of too_many_requests_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_user_pool_client_secrets_request ->
-    ( list_user_pool_client_secrets_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_user_pool_client_secrets_request ->
-    ( list_user_pool_client_secrets_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `TooManyRequestsException of too_many_requests_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists all client secrets associated with a user pool app client. Returns metadata about the \
-   secrets. The response does not include pagination tokens as there are only 2 secrets at any \
-   given time and we return both with every ListUserPoolClientSecrets call. For security reasons, \
-   the response never reveals the actual secret value in ClientSecretValue.\n"]
-
 module ListUserPoolClients : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -6426,6 +6385,47 @@ end
   \               }\n\
   \          }\n\
   \   "]
+
+module ListUserPoolClientSecrets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `TooManyRequestsException of too_many_requests_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_user_pool_client_secrets_request ->
+    ( list_user_pool_client_secrets_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_user_pool_client_secrets_request ->
+    ( list_user_pool_client_secrets_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TooManyRequestsException of too_many_requests_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists all client secrets associated with a user pool app client. Returns metadata about the \
+   secrets. The response does not include pagination tokens as there are only 2 secrets at any \
+   given time and we return both with every ListUserPoolClientSecrets call. For security reasons, \
+   the response never reveals the actual secret value in ClientSecretValue.\n"]
 
 module ListUserPoolReplicas : sig
   val error_to_string :

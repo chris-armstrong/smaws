@@ -800,38 +800,6 @@ module GetCapacityReservation = struct
       ~error_deserializer
 end
 
-module GetDataCatalog = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.athena#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.athena#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : get_data_catalog_input) =
-    let input = Json_serializers.get_data_catalog_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonAthena.GetDataCatalog" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.get_data_catalog_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : get_data_catalog_input) =
-    let input = Json_serializers.get_data_catalog_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonAthena.GetDataCatalog"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.get_data_catalog_output_of_yojson ~error_deserializer
-end
-
 module GetDatabase = struct
   let error_to_string = function
     | `InternalServerException _ -> "com.amazonaws.athena#InternalServerException"
@@ -865,6 +833,38 @@ module GetDatabase = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonAthena.GetDatabase"
       ~service ~context ~input ~output_deserializer:Json_deserializers.get_database_output_of_yojson
       ~error_deserializer
+end
+
+module GetDataCatalog = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.athena#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.athena#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_data_catalog_input) =
+    let input = Json_serializers.get_data_catalog_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonAthena.GetDataCatalog" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.get_data_catalog_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_data_catalog_input) =
+    let input = Json_serializers.get_data_catalog_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonAthena.GetDataCatalog"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_data_catalog_output_of_yojson ~error_deserializer
 end
 
 module GetNamedQuery = struct
@@ -1440,39 +1440,6 @@ module ListCapacityReservations = struct
       ~error_deserializer
 end
 
-module ListDataCatalogs = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.athena#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.athena#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_data_catalogs_input) =
-    let input = Json_serializers.list_data_catalogs_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonAthena.ListDataCatalogs" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.list_data_catalogs_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_data_catalogs_input) =
-    let input = Json_serializers.list_data_catalogs_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonAthena.ListDataCatalogs"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_data_catalogs_output_of_yojson
-      ~error_deserializer
-end
-
 module ListDatabases = struct
   let error_to_string = function
     | `InternalServerException _ -> "com.amazonaws.athena#InternalServerException"
@@ -1506,6 +1473,39 @@ module ListDatabases = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonAthena.ListDatabases"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_databases_output_of_yojson ~error_deserializer
+end
+
+module ListDataCatalogs = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.athena#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.athena#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_data_catalogs_input) =
+    let input = Json_serializers.list_data_catalogs_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AmazonAthena.ListDataCatalogs" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_data_catalogs_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_data_catalogs_input) =
+    let input = Json_serializers.list_data_catalogs_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AmazonAthena.ListDataCatalogs"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_data_catalogs_output_of_yojson
+      ~error_deserializer
 end
 
 module ListEngineVersions = struct

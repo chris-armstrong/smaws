@@ -1,5 +1,42 @@
 open Types
 
+module InvokeDataAutomationAsync : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ServiceQuotaExceededException of service_quota_exceeded_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    invoke_data_automation_async_request ->
+    ( invoke_data_automation_async_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    invoke_data_automation_async_request ->
+    ( invoke_data_automation_async_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ServiceQuotaExceededException of service_quota_exceeded_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Async API: Invoke data automation."]
+
 module GetDataAutomationStatus : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -73,43 +110,6 @@ module InvokeDataAutomation : sig
     result
 end
 [@@ocaml.doc "Sync API: Invoke data automation."]
-
-module InvokeDataAutomationAsync : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ServiceQuotaExceededException of service_quota_exceeded_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    invoke_data_automation_async_request ->
-    ( invoke_data_automation_async_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    invoke_data_automation_async_request ->
-    ( invoke_data_automation_async_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ServiceQuotaExceededException of service_quota_exceeded_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Async API: Invoke data automation."]
 
 module ListTagsForResource : sig
   val error_to_string :

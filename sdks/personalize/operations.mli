@@ -2655,6 +2655,39 @@ end
    for each schema, including the Amazon Resource Name (ARN). For more information on schemas, see \
    {{:https://docs.aws.amazon.com/personalize/latest/dg/API_CreateSchema.html}CreateSchema}.\n"]
 
+module ListSolutions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidInputException of invalid_input_exception
+    | `InvalidNextTokenException of invalid_next_token_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_solutions_request ->
+    ( list_solutions_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidNextTokenException of invalid_next_token_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_solutions_request ->
+    ( list_solutions_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidNextTokenException of invalid_next_token_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns a list of solutions in a given dataset group. When a dataset group is not specified, \
+   all the solutions associated with the account are listed. The response provides the properties \
+   for each solution, including the Amazon Resource Name (ARN). For more information on solutions, \
+   see \
+   {{:https://docs.aws.amazon.com/personalize/latest/dg/API_CreateSolution.html}CreateSolution}.\n"]
+
 module ListSolutionVersions : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -2688,39 +2721,6 @@ end
   "Returns a list of solution versions for the given solution. When a solution is not specified, \
    all the solution versions associated with the account are listed. The response provides the \
    properties for each solution version, including the Amazon Resource Name (ARN).\n"]
-
-module ListSolutions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidInputException of invalid_input_exception
-    | `InvalidNextTokenException of invalid_next_token_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_solutions_request ->
-    ( list_solutions_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidInputException of invalid_input_exception
-      | `InvalidNextTokenException of invalid_next_token_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_solutions_request ->
-    ( list_solutions_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidInputException of invalid_input_exception
-      | `InvalidNextTokenException of invalid_next_token_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns a list of solutions in a given dataset group. When a dataset group is not specified, \
-   all the solutions associated with the account are listed. The response provides the properties \
-   for each solution, including the Amazon Resource Name (ARN). For more information on solutions, \
-   see \
-   {{:https://docs.aws.amazon.com/personalize/latest/dg/API_CreateSolution.html}CreateSolution}.\n"]
 
 module ListTagsForResource : sig
   val error_to_string :

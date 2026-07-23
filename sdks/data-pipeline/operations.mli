@@ -1,122 +1,5 @@
 open Types
 
-module ActivatePipeline : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceError of internal_service_error
-    | `InvalidRequestException of invalid_request_exception
-    | `PipelineDeletedException of pipeline_deleted_exception
-    | `PipelineNotFoundException of pipeline_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    activate_pipeline_input ->
-    ( activate_pipeline_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceError of internal_service_error
-      | `InvalidRequestException of invalid_request_exception
-      | `PipelineDeletedException of pipeline_deleted_exception
-      | `PipelineNotFoundException of pipeline_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    activate_pipeline_input ->
-    ( activate_pipeline_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceError of internal_service_error
-      | `InvalidRequestException of invalid_request_exception
-      | `PipelineDeletedException of pipeline_deleted_exception
-      | `PipelineNotFoundException of pipeline_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Validates the specified pipeline and starts processing pipeline tasks. If the pipeline does not \
-   pass validation, activation fails.\n\n\
-  \ If you need to pause the pipeline to investigate an issue with a component, such as a data \
-   source or script, call [DeactivatePipeline].\n\
-  \ \n\
-  \  To activate a finished pipeline, modify the end date for the pipeline and then activate it.\n\
-  \  \n\
-  \     POST / HTTP/1.1 Content-Type: application/x-amz-json-1.1 X-Amz-Target: \
-   DataPipeline.ActivatePipeline Content-Length: 39 Host: datapipeline.us-east-1.amazonaws.com \
-   X-Amz-Date: Mon, 12 Nov 2012 17:49:52 GMT Authorization: AuthParams \\{\"pipelineId\": \
-   \"df-06372391ZG65EXAMPLE\"\\}   HTTP/1.1 200 x-amzn-RequestId: \
-   ee19d5bf-074e-11e2-af6f-6bc7a6be60d9 Content-Type: application/x-amz-json-1.1 Content-Length: 2 \
-   Date: Mon, 12 Nov 2012 17:50:53 GMT \\{\\}  "]
-
-module AddTags : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceError of internal_service_error
-    | `InvalidRequestException of invalid_request_exception
-    | `PipelineDeletedException of pipeline_deleted_exception
-    | `PipelineNotFoundException of pipeline_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_input ->
-    ( add_tags_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceError of internal_service_error
-      | `InvalidRequestException of invalid_request_exception
-      | `PipelineDeletedException of pipeline_deleted_exception
-      | `PipelineNotFoundException of pipeline_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_input ->
-    ( add_tags_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceError of internal_service_error
-      | `InvalidRequestException of invalid_request_exception
-      | `PipelineDeletedException of pipeline_deleted_exception
-      | `PipelineNotFoundException of pipeline_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Adds or modifies tags for the specified pipeline.\n"]
-
-module CreatePipeline : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServiceError of internal_service_error
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_pipeline_input ->
-    ( create_pipeline_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceError of internal_service_error
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_pipeline_input ->
-    ( create_pipeline_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServiceError of internal_service_error
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a new, empty pipeline. Use [PutPipelineDefinition] to populate the pipeline.\n\n\
-  \   POST / HTTP/1.1 Content-Type: application/x-amz-json-1.1 X-Amz-Target: \
-   DataPipeline.CreatePipeline Content-Length: 91 Host: datapipeline.us-east-1.amazonaws.com \
-   X-Amz-Date: Mon, 12 Nov 2012 17:49:52 GMT Authorization: AuthParams \\{\"name\": \
-   \"myPipeline\", \"uniqueId\": \"123456789\", \"description\": \"This is my first \
-   pipeline\"\\}   HTTP/1.1 200 x-amzn-RequestId: b16911ce-0774-11e2-af6f-6bc7a6be60d9 \
-   Content-Type: application/x-amz-json-1.1 Content-Length: 40 Date: Mon, 12 Nov 2012 17:50:53 GMT \
-   \\{\"pipelineId\": \"df-06372391ZG65EXAMPLE\"\\}  "]
-
 module DeactivatePipeline : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -928,3 +811,120 @@ end
    278 Date: Mon, 12 Nov 2012 17:50:53 GMT \\{\"errored\": true, \"validationErrors\": \\[ \
    \\{\"errors\": \\[\"INVALID_FIELD_VALUE: 'startDateTime' value must be a literal datetime \
    value.\"\\], \"id\": \"Schedule\"\\} \\] \\}   "]
+
+module CreatePipeline : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceError of internal_service_error
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_pipeline_input ->
+    ( create_pipeline_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_pipeline_input ->
+    ( create_pipeline_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a new, empty pipeline. Use [PutPipelineDefinition] to populate the pipeline.\n\n\
+  \   POST / HTTP/1.1 Content-Type: application/x-amz-json-1.1 X-Amz-Target: \
+   DataPipeline.CreatePipeline Content-Length: 91 Host: datapipeline.us-east-1.amazonaws.com \
+   X-Amz-Date: Mon, 12 Nov 2012 17:49:52 GMT Authorization: AuthParams \\{\"name\": \
+   \"myPipeline\", \"uniqueId\": \"123456789\", \"description\": \"This is my first \
+   pipeline\"\\}   HTTP/1.1 200 x-amzn-RequestId: b16911ce-0774-11e2-af6f-6bc7a6be60d9 \
+   Content-Type: application/x-amz-json-1.1 Content-Length: 40 Date: Mon, 12 Nov 2012 17:50:53 GMT \
+   \\{\"pipelineId\": \"df-06372391ZG65EXAMPLE\"\\}  "]
+
+module AddTags : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceError of internal_service_error
+    | `InvalidRequestException of invalid_request_exception
+    | `PipelineDeletedException of pipeline_deleted_exception
+    | `PipelineNotFoundException of pipeline_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_input ->
+    ( add_tags_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidRequestException of invalid_request_exception
+      | `PipelineDeletedException of pipeline_deleted_exception
+      | `PipelineNotFoundException of pipeline_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_input ->
+    ( add_tags_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidRequestException of invalid_request_exception
+      | `PipelineDeletedException of pipeline_deleted_exception
+      | `PipelineNotFoundException of pipeline_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Adds or modifies tags for the specified pipeline.\n"]
+
+module ActivatePipeline : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServiceError of internal_service_error
+    | `InvalidRequestException of invalid_request_exception
+    | `PipelineDeletedException of pipeline_deleted_exception
+    | `PipelineNotFoundException of pipeline_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    activate_pipeline_input ->
+    ( activate_pipeline_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidRequestException of invalid_request_exception
+      | `PipelineDeletedException of pipeline_deleted_exception
+      | `PipelineNotFoundException of pipeline_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    activate_pipeline_input ->
+    ( activate_pipeline_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServiceError of internal_service_error
+      | `InvalidRequestException of invalid_request_exception
+      | `PipelineDeletedException of pipeline_deleted_exception
+      | `PipelineNotFoundException of pipeline_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Validates the specified pipeline and starts processing pipeline tasks. If the pipeline does not \
+   pass validation, activation fails.\n\n\
+  \ If you need to pause the pipeline to investigate an issue with a component, such as a data \
+   source or script, call [DeactivatePipeline].\n\
+  \ \n\
+  \  To activate a finished pipeline, modify the end date for the pipeline and then activate it.\n\
+  \  \n\
+  \     POST / HTTP/1.1 Content-Type: application/x-amz-json-1.1 X-Amz-Target: \
+   DataPipeline.ActivatePipeline Content-Length: 39 Host: datapipeline.us-east-1.amazonaws.com \
+   X-Amz-Date: Mon, 12 Nov 2012 17:49:52 GMT Authorization: AuthParams \\{\"pipelineId\": \
+   \"df-06372391ZG65EXAMPLE\"\\}   HTTP/1.1 200 x-amzn-RequestId: \
+   ee19d5bf-074e-11e2-af6f-6bc7a6be60d9 Content-Type: application/x-amz-json-1.1 Content-Length: 2 \
+   Date: Mon, 12 Nov 2012 17:50:53 GMT \\{\\}  "]

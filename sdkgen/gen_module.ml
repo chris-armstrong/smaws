@@ -10,14 +10,27 @@ let generate ~service_details ~(protocol : SmithyHelpers.protocol) output_fmt =
       Fmt.pf output_fmt "module Query_serializers = Query_serializers\n";
       Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n"
   | Json ->
-      (* Non-service namespaces (e.g. shared) always get query_serializers/deserializers.ml generated *)
+      (* Non-service namespaces (e.g. shared) always get all serializers/deserializers *)
       (match service_details with
       | None ->
           Fmt.pf output_fmt "module Query_serializers = Query_serializers\n";
-          Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n"
+          Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n";
+          Fmt.pf output_fmt "module Xml_serializers = Xml_serializers\n";
+          Fmt.pf output_fmt "module Xml_deserializers = Xml_deserializers\n"
       | Some _ -> ());
       Fmt.pf output_fmt "module Json_serializers = Json_serializers\n";
       Fmt.pf output_fmt "module Json_deserializers = Json_deserializers\n"
+  | RestXml ->
+      (* Non-service namespaces (e.g. shared) always get all serializers/deserializers *)
+      (match service_details with
+      | None ->
+          Fmt.pf output_fmt "module Query_serializers = Query_serializers\n";
+          Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n";
+          Fmt.pf output_fmt "module Json_serializers = Json_serializers\n";
+          Fmt.pf output_fmt "module Json_deserializers = Json_deserializers\n"
+      | Some _ -> ());
+      Fmt.pf output_fmt "module Xml_serializers = Xml_serializers\n";
+      Fmt.pf output_fmt "module Xml_deserializers = Xml_deserializers\n"
 
 let generate_mli
     ~(service_details : (string * Ast.Shape.serviceShapeDetails * Ast.Trait.serviceDetails) option)
@@ -39,8 +52,11 @@ let generate_mli
   service_details
   |> Option.iter ~f:(fun (name, service, _) ->
       Fmt.pf output_fmt "(** {1:operations Operations} *)@\n@\n";
-      Gen_operations.generate_mli ~name ~service ~namespace_resolver ~operation_shapes
-        ~structure_shapes ~alias_context ~no_open:true output_fmt);
+      match protocol with
+      | RestXml -> ()
+      | _ ->
+          Gen_operations.generate_mli ~name ~service ~namespace_resolver ~operation_shapes
+            ~structure_shapes ~alias_context ~no_open:true output_fmt);
   Fmt.pf output_fmt "(** {1:Serialization and Deserialization} *)@\n@\n";
   match protocol with
   | Query ->
@@ -50,7 +66,19 @@ let generate_mli
       (match service_details with
       | None ->
           Fmt.pf output_fmt "module Query_serializers = Query_serializers\n";
-          Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n"
+          Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n";
+          Fmt.pf output_fmt "module Xml_serializers = Xml_serializers\n";
+          Fmt.pf output_fmt "module Xml_deserializers = Xml_deserializers\n"
       | Some _ -> ());
       Fmt.pf output_fmt "module Json_serializers = Json_serializers\n";
       Fmt.pf output_fmt "module Json_deserializers = Json_deserializers\n"
+  | RestXml ->
+      (match service_details with
+      | None ->
+          Fmt.pf output_fmt "module Query_serializers = Query_serializers\n";
+          Fmt.pf output_fmt "module Query_deserializers = Query_deserializers\n";
+          Fmt.pf output_fmt "module Json_serializers = Json_serializers\n";
+          Fmt.pf output_fmt "module Json_deserializers = Json_deserializers\n"
+      | Some _ -> ());
+      Fmt.pf output_fmt "module Xml_serializers = Xml_serializers\n";
+      Fmt.pf output_fmt "module Xml_deserializers = Xml_deserializers\n"

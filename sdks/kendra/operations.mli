@@ -1748,6 +1748,43 @@ end
    access information for your documents. This is useful for user context filtering, where search \
    results are filtered based on the user or their group access to documents.\n"]
 
+module ListDataSources : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerException of internal_server_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ThrottlingException of throttling_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_data_sources_request ->
+    ( list_data_sources_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_data_sources_request ->
+    ( list_data_sources_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerException of internal_server_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ThrottlingException of throttling_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Lists the data source connectors that you have created.\n"]
+
 module ListDataSourceSyncJobs : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1787,43 +1824,6 @@ module ListDataSourceSyncJobs : sig
     result
 end
 [@@ocaml.doc "Gets statistics about synchronizing a data source connector.\n"]
-
-module ListDataSources : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerException of internal_server_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ThrottlingException of throttling_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_data_sources_request ->
-    ( list_data_sources_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_data_sources_request ->
-    ( list_data_sources_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerException of internal_server_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ThrottlingException of throttling_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Lists the data source connectors that you have created.\n"]
 
 module ListEntityPersonas : sig
   val error_to_string :

@@ -1,203 +1,5 @@
 open Types
 
-module BatchDeleteBuilds : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_delete_builds_input ->
-    ( batch_delete_builds_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_delete_builds_input ->
-    ( batch_delete_builds_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes one or more builds.\n"]
-
-module BatchGetBuildBatches : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_build_batches_input ->
-    ( batch_get_build_batches_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_build_batches_input ->
-    ( batch_get_build_batches_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Retrieves information about one or more batch builds.\n"]
-
-module BatchGetBuilds : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_builds_input ->
-    ( batch_get_builds_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_builds_input ->
-    ( batch_get_builds_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Gets information about one or more builds.\n"]
-
-module BatchGetCommandExecutions : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_command_executions_input ->
-    ( batch_get_command_executions_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_command_executions_input ->
-    ( batch_get_command_executions_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Gets information about the command executions.\n"]
-
-module BatchGetFleets : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_fleets_input ->
-    ( batch_get_fleets_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_fleets_input ->
-    ( batch_get_fleets_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Gets information about one or more compute fleets.\n"]
-
-module BatchGetProjects : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_projects_input ->
-    ( batch_get_projects_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_projects_input ->
-    ( batch_get_projects_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Gets information about one or more build projects.\n"]
-
-module BatchGetReportGroups : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_report_groups_input ->
-    ( batch_get_report_groups_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_report_groups_input ->
-    ( batch_get_report_groups_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Returns an array of report groups. \n"]
-
-module BatchGetReports : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_reports_input ->
-    ( batch_get_reports_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_reports_input ->
-    ( batch_get_reports_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc " Returns an array of reports. \n"]
-
-module BatchGetSandboxes : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_sandboxes_input ->
-    ( batch_get_sandboxes_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    batch_get_sandboxes_input ->
-    ( batch_get_sandboxes_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Gets information about the sandbox status.\n"]
-
 module CreateFleet : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1601,3 +1403,201 @@ end
   \   If you use Bitbucket for your repository, [rotateSecret] is ignored. \n\
   \  \n\
   \   "]
+
+module BatchGetSandboxes : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_sandboxes_input ->
+    ( batch_get_sandboxes_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_sandboxes_input ->
+    ( batch_get_sandboxes_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Gets information about the sandbox status.\n"]
+
+module BatchGetReports : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_reports_input ->
+    ( batch_get_reports_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_reports_input ->
+    ( batch_get_reports_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Returns an array of reports. \n"]
+
+module BatchGetReportGroups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_report_groups_input ->
+    ( batch_get_report_groups_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_report_groups_input ->
+    ( batch_get_report_groups_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc " Returns an array of report groups. \n"]
+
+module BatchGetProjects : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_projects_input ->
+    ( batch_get_projects_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_projects_input ->
+    ( batch_get_projects_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Gets information about one or more build projects.\n"]
+
+module BatchGetFleets : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_fleets_input ->
+    ( batch_get_fleets_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_fleets_input ->
+    ( batch_get_fleets_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Gets information about one or more compute fleets.\n"]
+
+module BatchGetCommandExecutions : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_command_executions_input ->
+    ( batch_get_command_executions_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_command_executions_input ->
+    ( batch_get_command_executions_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Gets information about the command executions.\n"]
+
+module BatchGetBuilds : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_builds_input ->
+    ( batch_get_builds_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_builds_input ->
+    ( batch_get_builds_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Gets information about one or more builds.\n"]
+
+module BatchGetBuildBatches : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_build_batches_input ->
+    ( batch_get_build_batches_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_get_build_batches_input ->
+    ( batch_get_build_batches_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Retrieves information about one or more batch builds.\n"]
+
+module BatchDeleteBuilds : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    batch_delete_builds_input ->
+    ( batch_delete_builds_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    batch_delete_builds_input ->
+    ( batch_delete_builds_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InvalidInputException of invalid_input_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes one or more builds.\n"]

@@ -1,45 +1,5 @@
 open Types
 
-module AddTags : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidInputException of invalid_input_exception
-    | `InvalidTagException of invalid_tag_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `TagLimitExceededException of tag_limit_exceeded_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_input ->
-    ( add_tags_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidInputException of invalid_input_exception
-      | `InvalidTagException of invalid_tag_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `TagLimitExceededException of tag_limit_exceeded_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_input ->
-    ( add_tags_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidInputException of invalid_input_exception
-      | `InvalidTagException of invalid_tag_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `TagLimitExceededException of tag_limit_exceeded_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds one or more tags to an object, up to a limit of 10. Each tag consists of a key and an \
-   optional value. If you add a tag using a key that is already associated with the ML object, \
-   [AddTags] updates the tag's value.\n"]
-
 module CreateBatchPrediction : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1042,3 +1002,43 @@ end
   "Updates the [MLModelName] and the [ScoreThreshold] of an [MLModel].\n\n\
   \ You can use the [GetMLModel] operation to view the contents of the updated data element.\n\
   \ "]
+
+module AddTags : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidInputException of invalid_input_exception
+    | `InvalidTagException of invalid_tag_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `TagLimitExceededException of tag_limit_exceeded_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_input ->
+    ( add_tags_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidTagException of invalid_tag_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TagLimitExceededException of tag_limit_exceeded_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_input ->
+    ( add_tags_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidInputException of invalid_input_exception
+      | `InvalidTagException of invalid_tag_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TagLimitExceededException of tag_limit_exceeded_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds one or more tags to an object, up to a limit of 10. Each tag consists of a key and an \
+   optional value. If you add a tag using a key that is already associated with the ML object, \
+   [AddTags] updates the tag's value.\n"]

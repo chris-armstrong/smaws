@@ -1,690 +1,6 @@
 open Types
 open Service_metadata
 
-module CreateDevicePool = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_device_pool_request) =
-    let input = Json_serializers.create_device_pool_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateDevicePool" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.create_device_pool_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_device_pool_request) =
-    let input = Json_serializers.create_device_pool_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.CreateDevicePool" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_device_pool_result_of_yojson
-      ~error_deserializer
-end
-
-module CreateInstanceProfile = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_instance_profile_request) =
-    let input = Json_serializers.create_instance_profile_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateInstanceProfile"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_instance_profile_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_instance_profile_request) =
-    let input = Json_serializers.create_instance_profile_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.CreateInstanceProfile" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_instance_profile_result_of_yojson
-      ~error_deserializer
-end
-
-module CreateNetworkProfile = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_network_profile_request) =
-    let input = Json_serializers.create_network_profile_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateNetworkProfile"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_network_profile_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_network_profile_request) =
-    let input = Json_serializers.create_network_profile_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.CreateNetworkProfile" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_network_profile_result_of_yojson
-      ~error_deserializer
-end
-
-module CreateProject = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | `TagOperationException _ -> "com.amazonaws.devicefarm#TagOperationException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _, "TagOperationException" ->
-          `TagOperationException (Json_deserializers.tag_operation_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_project_request) =
-    let input = Json_serializers.create_project_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateProject" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.create_project_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_project_request) =
-    let input = Json_serializers.create_project_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.CreateProject" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_project_result_of_yojson ~error_deserializer
-end
-
-module CreateRemoteAccessSession = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_remote_access_session_request) =
-    let input = Json_serializers.create_remote_access_session_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateRemoteAccessSession"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_remote_access_session_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_remote_access_session_request) =
-    let input = Json_serializers.create_remote_access_session_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.CreateRemoteAccessSession" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_remote_access_session_result_of_yojson
-      ~error_deserializer
-end
-
-module CreateTestGridProject = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `InternalServiceException _ -> "com.amazonaws.devicefarm#InternalServiceException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "InternalServiceException" ->
-          `InternalServiceException
-            (Json_deserializers.internal_service_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_test_grid_project_request) =
-    let input = Json_serializers.create_test_grid_project_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateTestGridProject"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_test_grid_project_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_test_grid_project_request) =
-    let input = Json_serializers.create_test_grid_project_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.CreateTestGridProject" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_test_grid_project_result_of_yojson
-      ~error_deserializer
-end
-
-module CreateTestGridUrl = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `InternalServiceException _ -> "com.amazonaws.devicefarm#InternalServiceException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "InternalServiceException" ->
-          `InternalServiceException
-            (Json_deserializers.internal_service_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_test_grid_url_request) =
-    let input = Json_serializers.create_test_grid_url_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateTestGridUrl" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.create_test_grid_url_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_test_grid_url_request) =
-    let input = Json_serializers.create_test_grid_url_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.CreateTestGridUrl" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_test_grid_url_result_of_yojson
-      ~error_deserializer
-end
-
-module CreateUpload = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_upload_request) =
-    let input = Json_serializers.create_upload_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateUpload" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.create_upload_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_upload_request) =
-    let input = Json_serializers.create_upload_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DeviceFarm_20150623.CreateUpload"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_upload_result_of_yojson ~error_deserializer
-end
-
-module CreateVPCEConfiguration = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_vpce_configuration_request) =
-    let input = Json_serializers.create_vpce_configuration_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateVPCEConfiguration"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_vpce_configuration_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_vpce_configuration_request) =
-    let input = Json_serializers.create_vpce_configuration_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.CreateVPCEConfiguration" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_vpce_configuration_result_of_yojson
-      ~error_deserializer
-end
-
-module DeleteDevicePool = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : delete_device_pool_request) =
-    let input = Json_serializers.delete_device_pool_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteDevicePool" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.delete_device_pool_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : delete_device_pool_request) =
-    let input = Json_serializers.delete_device_pool_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.DeleteDevicePool" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_device_pool_result_of_yojson
-      ~error_deserializer
-end
-
-module DeleteInstanceProfile = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : delete_instance_profile_request) =
-    let input = Json_serializers.delete_instance_profile_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteInstanceProfile"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_instance_profile_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : delete_instance_profile_request) =
-    let input = Json_serializers.delete_instance_profile_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.DeleteInstanceProfile" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_instance_profile_result_of_yojson
-      ~error_deserializer
-end
-
-module DeleteNetworkProfile = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : delete_network_profile_request) =
-    let input = Json_serializers.delete_network_profile_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteNetworkProfile"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_network_profile_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : delete_network_profile_request) =
-    let input = Json_serializers.delete_network_profile_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.DeleteNetworkProfile" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_network_profile_result_of_yojson
-      ~error_deserializer
-end
-
-module DeleteProject = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : delete_project_request) =
-    let input = Json_serializers.delete_project_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteProject" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.delete_project_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : delete_project_request) =
-    let input = Json_serializers.delete_project_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.DeleteProject" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_project_result_of_yojson ~error_deserializer
-end
-
-module DeleteRemoteAccessSession = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : delete_remote_access_session_request) =
-    let input = Json_serializers.delete_remote_access_session_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteRemoteAccessSession"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_remote_access_session_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : delete_remote_access_session_request) =
-    let input = Json_serializers.delete_remote_access_session_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.DeleteRemoteAccessSession" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_remote_access_session_result_of_yojson
-      ~error_deserializer
-end
-
-module DeleteRun = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : delete_run_request) =
-    let input = Json_serializers.delete_run_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteRun" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.delete_run_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : delete_run_request) =
-    let input = Json_serializers.delete_run_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DeviceFarm_20150623.DeleteRun"
-      ~service ~context ~input ~output_deserializer:Json_deserializers.delete_run_result_of_yojson
-      ~error_deserializer
-end
-
-module DeleteTestGridProject = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `CannotDeleteException _ -> "com.amazonaws.devicefarm#CannotDeleteException"
-    | `InternalServiceException _ -> "com.amazonaws.devicefarm#InternalServiceException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "CannotDeleteException" ->
-          `CannotDeleteException (Json_deserializers.cannot_delete_exception_of_yojson tree path)
-      | _, "InternalServiceException" ->
-          `InternalServiceException
-            (Json_deserializers.internal_service_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : delete_test_grid_project_request) =
-    let input = Json_serializers.delete_test_grid_project_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteTestGridProject"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_test_grid_project_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : delete_test_grid_project_request) =
-    let input = Json_serializers.delete_test_grid_project_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.DeleteTestGridProject" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_test_grid_project_result_of_yojson
-      ~error_deserializer
-end
-
-module DeleteUpload = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : delete_upload_request) =
-    let input = Json_serializers.delete_upload_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteUpload" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.delete_upload_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : delete_upload_request) =
-    let input = Json_serializers.delete_upload_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DeviceFarm_20150623.DeleteUpload"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_upload_result_of_yojson ~error_deserializer
-end
-
-module DeleteVPCEConfiguration = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `InvalidOperationException _ -> "com.amazonaws.devicefarm#InvalidOperationException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "InvalidOperationException" ->
-          `InvalidOperationException
-            (Json_deserializers.invalid_operation_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : delete_vpce_configuration_request) =
-    let input = Json_serializers.delete_vpce_configuration_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteVPCEConfiguration"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_vpce_configuration_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : delete_vpce_configuration_request) =
-    let input = Json_serializers.delete_vpce_configuration_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.DeleteVPCEConfiguration" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_vpce_configuration_result_of_yojson
-      ~error_deserializer
-end
-
 module GetAccountSettings = struct
   let error_to_string = function
     | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
@@ -1703,6 +1019,46 @@ module ListOfferingPromotions = struct
       ~error_deserializer
 end
 
+module ListOfferings = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | `NotEligibleException _ -> "com.amazonaws.devicefarm#NotEligibleException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "NotEligibleException" ->
+          `NotEligibleException (Json_deserializers.not_eligible_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_offerings_request) =
+    let input = Json_serializers.list_offerings_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.ListOfferings" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_offerings_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_offerings_request) =
+    let input = Json_serializers.list_offerings_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.ListOfferings" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_offerings_result_of_yojson ~error_deserializer
+end
+
 module ListOfferingTransactions = struct
   let error_to_string = function
     | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
@@ -1743,46 +1099,6 @@ module ListOfferingTransactions = struct
       ~shape_name:"DeviceFarm_20150623.ListOfferingTransactions" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_offering_transactions_result_of_yojson
       ~error_deserializer
-end
-
-module ListOfferings = struct
-  let error_to_string = function
-    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
-    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
-    | `NotEligibleException _ -> "com.amazonaws.devicefarm#NotEligibleException"
-    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
-    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ArgumentException" ->
-          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "NotEligibleException" ->
-          `NotEligibleException (Json_deserializers.not_eligible_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "ServiceAccountException" ->
-          `ServiceAccountException
-            (Json_deserializers.service_account_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_offerings_request) =
-    let input = Json_serializers.list_offerings_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.ListOfferings" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.list_offerings_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_offerings_request) =
-    let input = Json_serializers.list_offerings_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"DeviceFarm_20150623.ListOfferings" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_offerings_result_of_yojson ~error_deserializer
 end
 
 module ListProjects = struct
@@ -2901,5 +2217,689 @@ module UpdateVPCEConfiguration = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"DeviceFarm_20150623.UpdateVPCEConfiguration" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_vpce_configuration_result_of_yojson
+      ~error_deserializer
+end
+
+module DeleteVPCEConfiguration = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `InvalidOperationException _ -> "com.amazonaws.devicefarm#InvalidOperationException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "InvalidOperationException" ->
+          `InvalidOperationException
+            (Json_deserializers.invalid_operation_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_vpce_configuration_request) =
+    let input = Json_serializers.delete_vpce_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteVPCEConfiguration"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_vpce_configuration_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_vpce_configuration_request) =
+    let input = Json_serializers.delete_vpce_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.DeleteVPCEConfiguration" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_vpce_configuration_result_of_yojson
+      ~error_deserializer
+end
+
+module DeleteUpload = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_upload_request) =
+    let input = Json_serializers.delete_upload_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteUpload" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.delete_upload_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_upload_request) =
+    let input = Json_serializers.delete_upload_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DeviceFarm_20150623.DeleteUpload"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_upload_result_of_yojson ~error_deserializer
+end
+
+module DeleteTestGridProject = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `CannotDeleteException _ -> "com.amazonaws.devicefarm#CannotDeleteException"
+    | `InternalServiceException _ -> "com.amazonaws.devicefarm#InternalServiceException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "CannotDeleteException" ->
+          `CannotDeleteException (Json_deserializers.cannot_delete_exception_of_yojson tree path)
+      | _, "InternalServiceException" ->
+          `InternalServiceException
+            (Json_deserializers.internal_service_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_test_grid_project_request) =
+    let input = Json_serializers.delete_test_grid_project_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteTestGridProject"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_test_grid_project_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_test_grid_project_request) =
+    let input = Json_serializers.delete_test_grid_project_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.DeleteTestGridProject" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_test_grid_project_result_of_yojson
+      ~error_deserializer
+end
+
+module DeleteRun = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_run_request) =
+    let input = Json_serializers.delete_run_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteRun" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.delete_run_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_run_request) =
+    let input = Json_serializers.delete_run_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DeviceFarm_20150623.DeleteRun"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.delete_run_result_of_yojson
+      ~error_deserializer
+end
+
+module DeleteRemoteAccessSession = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_remote_access_session_request) =
+    let input = Json_serializers.delete_remote_access_session_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteRemoteAccessSession"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_remote_access_session_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_remote_access_session_request) =
+    let input = Json_serializers.delete_remote_access_session_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.DeleteRemoteAccessSession" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_remote_access_session_result_of_yojson
+      ~error_deserializer
+end
+
+module DeleteProject = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_project_request) =
+    let input = Json_serializers.delete_project_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteProject" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.delete_project_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_project_request) =
+    let input = Json_serializers.delete_project_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.DeleteProject" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_project_result_of_yojson ~error_deserializer
+end
+
+module DeleteNetworkProfile = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_network_profile_request) =
+    let input = Json_serializers.delete_network_profile_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteNetworkProfile"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_network_profile_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_network_profile_request) =
+    let input = Json_serializers.delete_network_profile_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.DeleteNetworkProfile" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_network_profile_result_of_yojson
+      ~error_deserializer
+end
+
+module DeleteInstanceProfile = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_instance_profile_request) =
+    let input = Json_serializers.delete_instance_profile_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteInstanceProfile"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_instance_profile_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_instance_profile_request) =
+    let input = Json_serializers.delete_instance_profile_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.DeleteInstanceProfile" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_instance_profile_result_of_yojson
+      ~error_deserializer
+end
+
+module DeleteDevicePool = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_device_pool_request) =
+    let input = Json_serializers.delete_device_pool_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.DeleteDevicePool" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.delete_device_pool_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_device_pool_request) =
+    let input = Json_serializers.delete_device_pool_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.DeleteDevicePool" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_device_pool_result_of_yojson
+      ~error_deserializer
+end
+
+module CreateVPCEConfiguration = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_vpce_configuration_request) =
+    let input = Json_serializers.create_vpce_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateVPCEConfiguration"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_vpce_configuration_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_vpce_configuration_request) =
+    let input = Json_serializers.create_vpce_configuration_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.CreateVPCEConfiguration" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_vpce_configuration_result_of_yojson
+      ~error_deserializer
+end
+
+module CreateUpload = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_upload_request) =
+    let input = Json_serializers.create_upload_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateUpload" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.create_upload_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_upload_request) =
+    let input = Json_serializers.create_upload_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"DeviceFarm_20150623.CreateUpload"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_upload_result_of_yojson ~error_deserializer
+end
+
+module CreateTestGridUrl = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `InternalServiceException _ -> "com.amazonaws.devicefarm#InternalServiceException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "InternalServiceException" ->
+          `InternalServiceException
+            (Json_deserializers.internal_service_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_test_grid_url_request) =
+    let input = Json_serializers.create_test_grid_url_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateTestGridUrl" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.create_test_grid_url_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_test_grid_url_request) =
+    let input = Json_serializers.create_test_grid_url_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.CreateTestGridUrl" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_test_grid_url_result_of_yojson
+      ~error_deserializer
+end
+
+module CreateTestGridProject = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `InternalServiceException _ -> "com.amazonaws.devicefarm#InternalServiceException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "InternalServiceException" ->
+          `InternalServiceException
+            (Json_deserializers.internal_service_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_test_grid_project_request) =
+    let input = Json_serializers.create_test_grid_project_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateTestGridProject"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_test_grid_project_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_test_grid_project_request) =
+    let input = Json_serializers.create_test_grid_project_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.CreateTestGridProject" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_test_grid_project_result_of_yojson
+      ~error_deserializer
+end
+
+module CreateRemoteAccessSession = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_remote_access_session_request) =
+    let input = Json_serializers.create_remote_access_session_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateRemoteAccessSession"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_remote_access_session_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_remote_access_session_request) =
+    let input = Json_serializers.create_remote_access_session_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.CreateRemoteAccessSession" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_remote_access_session_result_of_yojson
+      ~error_deserializer
+end
+
+module CreateProject = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | `TagOperationException _ -> "com.amazonaws.devicefarm#TagOperationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _, "TagOperationException" ->
+          `TagOperationException (Json_deserializers.tag_operation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_project_request) =
+    let input = Json_serializers.create_project_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateProject" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.create_project_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_project_request) =
+    let input = Json_serializers.create_project_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.CreateProject" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_project_result_of_yojson ~error_deserializer
+end
+
+module CreateNetworkProfile = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_network_profile_request) =
+    let input = Json_serializers.create_network_profile_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateNetworkProfile"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_network_profile_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_network_profile_request) =
+    let input = Json_serializers.create_network_profile_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.CreateNetworkProfile" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_network_profile_result_of_yojson
+      ~error_deserializer
+end
+
+module CreateInstanceProfile = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_instance_profile_request) =
+    let input = Json_serializers.create_instance_profile_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateInstanceProfile"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_instance_profile_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_instance_profile_request) =
+    let input = Json_serializers.create_instance_profile_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.CreateInstanceProfile" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_instance_profile_result_of_yojson
+      ~error_deserializer
+end
+
+module CreateDevicePool = struct
+  let error_to_string = function
+    | `ArgumentException _ -> "com.amazonaws.devicefarm#ArgumentException"
+    | `LimitExceededException _ -> "com.amazonaws.devicefarm#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.devicefarm#NotFoundException"
+    | `ServiceAccountException _ -> "com.amazonaws.devicefarm#ServiceAccountException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ArgumentException" ->
+          `ArgumentException (Json_deserializers.argument_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "ServiceAccountException" ->
+          `ServiceAccountException
+            (Json_deserializers.service_account_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_device_pool_request) =
+    let input = Json_serializers.create_device_pool_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"DeviceFarm_20150623.CreateDevicePool" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.create_device_pool_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_device_pool_request) =
+    let input = Json_serializers.create_device_pool_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"DeviceFarm_20150623.CreateDevicePool" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_device_pool_result_of_yojson
       ~error_deserializer
 end

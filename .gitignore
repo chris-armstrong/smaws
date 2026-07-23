@@ -2,3 +2,4 @@ node_modules
 _opam
 _build
 _esy
+.pi/

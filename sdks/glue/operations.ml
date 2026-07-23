@@ -1370,51 +1370,6 @@ module CreateCustomEntityType = struct
       ~error_deserializer
 end
 
-module CreateDataQualityRuleset = struct
-  let error_to_string = function
-    | `AlreadyExistsException _ -> "com.amazonaws.glue#AlreadyExistsException"
-    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
-    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
-    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
-    | `ResourceNumberLimitExceededException _ ->
-        "com.amazonaws.glue#ResourceNumberLimitExceededException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "AlreadyExistsException" ->
-          `AlreadyExistsException (Json_deserializers.already_exists_exception_of_yojson tree path)
-      | _, "InternalServiceException" ->
-          `InternalServiceException
-            (Json_deserializers.internal_service_exception_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "OperationTimeoutException" ->
-          `OperationTimeoutException
-            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
-      | _, "ResourceNumberLimitExceededException" ->
-          `ResourceNumberLimitExceededException
-            (Json_deserializers.resource_number_limit_exceeded_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_data_quality_ruleset_request) =
-    let input = Json_serializers.create_data_quality_ruleset_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.CreateDataQualityRuleset" ~service
-      ~context ~input
-      ~output_deserializer:Json_deserializers.create_data_quality_ruleset_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_data_quality_ruleset_request) =
-    let input = Json_serializers.create_data_quality_ruleset_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.CreateDataQualityRuleset"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_data_quality_ruleset_response_of_yojson
-      ~error_deserializer
-end
-
 module CreateDatabase = struct
   let error_to_string = function
     | `AlreadyExistsException _ -> "com.amazonaws.glue#AlreadyExistsException"
@@ -1477,6 +1432,51 @@ module CreateDatabase = struct
     let input = Json_serializers.create_database_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.CreateDatabase" ~service
       ~context ~input ~output_deserializer:Json_deserializers.create_database_response_of_yojson
+      ~error_deserializer
+end
+
+module CreateDataQualityRuleset = struct
+  let error_to_string = function
+    | `AlreadyExistsException _ -> "com.amazonaws.glue#AlreadyExistsException"
+    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
+    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
+    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
+    | `ResourceNumberLimitExceededException _ ->
+        "com.amazonaws.glue#ResourceNumberLimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AlreadyExistsException" ->
+          `AlreadyExistsException (Json_deserializers.already_exists_exception_of_yojson tree path)
+      | _, "InternalServiceException" ->
+          `InternalServiceException
+            (Json_deserializers.internal_service_exception_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "OperationTimeoutException" ->
+          `OperationTimeoutException
+            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
+      | _, "ResourceNumberLimitExceededException" ->
+          `ResourceNumberLimitExceededException
+            (Json_deserializers.resource_number_limit_exceeded_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_data_quality_ruleset_request) =
+    let input = Json_serializers.create_data_quality_ruleset_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.CreateDataQualityRuleset" ~service
+      ~context ~input
+      ~output_deserializer:Json_deserializers.create_data_quality_ruleset_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_data_quality_ruleset_request) =
+    let input = Json_serializers.create_data_quality_ruleset_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.CreateDataQualityRuleset"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_data_quality_ruleset_response_of_yojson
       ~error_deserializer
 end
 
@@ -3154,47 +3154,6 @@ module DeleteCustomEntityType = struct
       ~error_deserializer
 end
 
-module DeleteDataQualityRuleset = struct
-  let error_to_string = function
-    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
-    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
-    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
-    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "EntityNotFoundException" ->
-          `EntityNotFoundException
-            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
-      | _, "InternalServiceException" ->
-          `InternalServiceException
-            (Json_deserializers.internal_service_exception_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "OperationTimeoutException" ->
-          `OperationTimeoutException
-            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : delete_data_quality_ruleset_request) =
-    let input = Json_serializers.delete_data_quality_ruleset_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.DeleteDataQualityRuleset" ~service
-      ~context ~input
-      ~output_deserializer:Json_deserializers.delete_data_quality_ruleset_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : delete_data_quality_ruleset_request) =
-    let input = Json_serializers.delete_data_quality_ruleset_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.DeleteDataQualityRuleset"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_data_quality_ruleset_response_of_yojson
-      ~error_deserializer
-end
-
 module DeleteDatabase = struct
   let error_to_string = function
     | `ConcurrentModificationException _ -> "com.amazonaws.glue#ConcurrentModificationException"
@@ -3244,6 +3203,47 @@ module DeleteDatabase = struct
     let input = Json_serializers.delete_database_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.DeleteDatabase" ~service
       ~context ~input ~output_deserializer:Json_deserializers.delete_database_response_of_yojson
+      ~error_deserializer
+end
+
+module DeleteDataQualityRuleset = struct
+  let error_to_string = function
+    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
+    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
+    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
+    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "EntityNotFoundException" ->
+          `EntityNotFoundException
+            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
+      | _, "InternalServiceException" ->
+          `InternalServiceException
+            (Json_deserializers.internal_service_exception_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "OperationTimeoutException" ->
+          `OperationTimeoutException
+            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_data_quality_ruleset_request) =
+    let input = Json_serializers.delete_data_quality_ruleset_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.DeleteDataQualityRuleset" ~service
+      ~context ~input
+      ~output_deserializer:Json_deserializers.delete_data_quality_ruleset_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_data_quality_ruleset_request) =
+    let input = Json_serializers.delete_data_quality_ruleset_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.DeleteDataQualityRuleset"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_data_quality_ruleset_response_of_yojson
       ~error_deserializer
 end
 
@@ -5419,6 +5419,108 @@ module GetDashboardUrl = struct
       ~error_deserializer
 end
 
+module GetDatabase = struct
+  let error_to_string = function
+    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
+    | `FederationSourceException _ -> "com.amazonaws.glue#FederationSourceException"
+    | `FederationSourceRetryableException _ ->
+        "com.amazonaws.glue#FederationSourceRetryableException"
+    | `GlueEncryptionException _ -> "com.amazonaws.glue#GlueEncryptionException"
+    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
+    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
+    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "EntityNotFoundException" ->
+          `EntityNotFoundException
+            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
+      | _, "FederationSourceException" ->
+          `FederationSourceException
+            (Json_deserializers.federation_source_exception_of_yojson tree path)
+      | _, "FederationSourceRetryableException" ->
+          `FederationSourceRetryableException
+            (Json_deserializers.federation_source_retryable_exception_of_yojson tree path)
+      | _, "GlueEncryptionException" ->
+          `GlueEncryptionException
+            (Json_deserializers.glue_encryption_exception_of_yojson tree path)
+      | _, "InternalServiceException" ->
+          `InternalServiceException
+            (Json_deserializers.internal_service_exception_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "OperationTimeoutException" ->
+          `OperationTimeoutException
+            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_database_request) =
+    let input = Json_serializers.get_database_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.GetDatabase" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_database_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_database_request) =
+    let input = Json_serializers.get_database_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.GetDatabase" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_database_response_of_yojson
+      ~error_deserializer
+end
+
+module GetDatabases = struct
+  let error_to_string = function
+    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
+    | `FederationSourceException _ -> "com.amazonaws.glue#FederationSourceException"
+    | `FederationSourceRetryableException _ ->
+        "com.amazonaws.glue#FederationSourceRetryableException"
+    | `GlueEncryptionException _ -> "com.amazonaws.glue#GlueEncryptionException"
+    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
+    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
+    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "EntityNotFoundException" ->
+          `EntityNotFoundException
+            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
+      | _, "FederationSourceException" ->
+          `FederationSourceException
+            (Json_deserializers.federation_source_exception_of_yojson tree path)
+      | _, "FederationSourceRetryableException" ->
+          `FederationSourceRetryableException
+            (Json_deserializers.federation_source_retryable_exception_of_yojson tree path)
+      | _, "GlueEncryptionException" ->
+          `GlueEncryptionException
+            (Json_deserializers.glue_encryption_exception_of_yojson tree path)
+      | _, "InternalServiceException" ->
+          `InternalServiceException
+            (Json_deserializers.internal_service_exception_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "OperationTimeoutException" ->
+          `OperationTimeoutException
+            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_databases_request) =
+    let input = Json_serializers.get_databases_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.GetDatabases" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_databases_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_databases_request) =
+    let input = Json_serializers.get_databases_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.GetDatabases" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_databases_response_of_yojson
+      ~error_deserializer
+end
+
 module GetDataCatalogEncryptionSettings = struct
   let error_to_string = function
     | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
@@ -5455,6 +5557,42 @@ module GetDataCatalogEncryptionSettings = struct
       ~shape_name:"AWSGlue.GetDataCatalogEncryptionSettings" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.get_data_catalog_encryption_settings_response_of_yojson
+      ~error_deserializer
+end
+
+module GetDataflowGraph = struct
+  let error_to_string = function
+    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
+    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
+    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServiceException" ->
+          `InternalServiceException
+            (Json_deserializers.internal_service_exception_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "OperationTimeoutException" ->
+          `OperationTimeoutException
+            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_dataflow_graph_request) =
+    let input = Json_serializers.get_dataflow_graph_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.GetDataflowGraph" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.get_dataflow_graph_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_dataflow_graph_request) =
+    let input = Json_serializers.get_dataflow_graph_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.GetDataflowGraph"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_dataflow_graph_response_of_yojson
       ~error_deserializer
 end
 
@@ -5711,144 +5849,6 @@ module GetDataQualityRulesetEvaluationRun = struct
       ~shape_name:"AWSGlue.GetDataQualityRulesetEvaluationRun" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.get_data_quality_ruleset_evaluation_run_response_of_yojson
-      ~error_deserializer
-end
-
-module GetDatabase = struct
-  let error_to_string = function
-    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
-    | `FederationSourceException _ -> "com.amazonaws.glue#FederationSourceException"
-    | `FederationSourceRetryableException _ ->
-        "com.amazonaws.glue#FederationSourceRetryableException"
-    | `GlueEncryptionException _ -> "com.amazonaws.glue#GlueEncryptionException"
-    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
-    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
-    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "EntityNotFoundException" ->
-          `EntityNotFoundException
-            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
-      | _, "FederationSourceException" ->
-          `FederationSourceException
-            (Json_deserializers.federation_source_exception_of_yojson tree path)
-      | _, "FederationSourceRetryableException" ->
-          `FederationSourceRetryableException
-            (Json_deserializers.federation_source_retryable_exception_of_yojson tree path)
-      | _, "GlueEncryptionException" ->
-          `GlueEncryptionException
-            (Json_deserializers.glue_encryption_exception_of_yojson tree path)
-      | _, "InternalServiceException" ->
-          `InternalServiceException
-            (Json_deserializers.internal_service_exception_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "OperationTimeoutException" ->
-          `OperationTimeoutException
-            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : get_database_request) =
-    let input = Json_serializers.get_database_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.GetDatabase" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.get_database_response_of_yojson ~error_deserializer
-
-  let request_with_metadata context (request : get_database_request) =
-    let input = Json_serializers.get_database_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.GetDatabase" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.get_database_response_of_yojson
-      ~error_deserializer
-end
-
-module GetDatabases = struct
-  let error_to_string = function
-    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
-    | `FederationSourceException _ -> "com.amazonaws.glue#FederationSourceException"
-    | `FederationSourceRetryableException _ ->
-        "com.amazonaws.glue#FederationSourceRetryableException"
-    | `GlueEncryptionException _ -> "com.amazonaws.glue#GlueEncryptionException"
-    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
-    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
-    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "EntityNotFoundException" ->
-          `EntityNotFoundException
-            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
-      | _, "FederationSourceException" ->
-          `FederationSourceException
-            (Json_deserializers.federation_source_exception_of_yojson tree path)
-      | _, "FederationSourceRetryableException" ->
-          `FederationSourceRetryableException
-            (Json_deserializers.federation_source_retryable_exception_of_yojson tree path)
-      | _, "GlueEncryptionException" ->
-          `GlueEncryptionException
-            (Json_deserializers.glue_encryption_exception_of_yojson tree path)
-      | _, "InternalServiceException" ->
-          `InternalServiceException
-            (Json_deserializers.internal_service_exception_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "OperationTimeoutException" ->
-          `OperationTimeoutException
-            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : get_databases_request) =
-    let input = Json_serializers.get_databases_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.GetDatabases" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.get_databases_response_of_yojson ~error_deserializer
-
-  let request_with_metadata context (request : get_databases_request) =
-    let input = Json_serializers.get_databases_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.GetDatabases" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.get_databases_response_of_yojson
-      ~error_deserializer
-end
-
-module GetDataflowGraph = struct
-  let error_to_string = function
-    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
-    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
-    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServiceException" ->
-          `InternalServiceException
-            (Json_deserializers.internal_service_exception_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "OperationTimeoutException" ->
-          `OperationTimeoutException
-            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : get_dataflow_graph_request) =
-    let input = Json_serializers.get_dataflow_graph_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.GetDataflowGraph" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.get_dataflow_graph_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : get_dataflow_graph_request) =
-    let input = Json_serializers.get_dataflow_graph_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.GetDataflowGraph"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.get_dataflow_graph_response_of_yojson
       ~error_deserializer
 end
 
@@ -6440,6 +6440,86 @@ module GetJobs = struct
       ~error_deserializer
 end
 
+module GetMapping = struct
+  let error_to_string = function
+    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
+    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
+    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
+    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "EntityNotFoundException" ->
+          `EntityNotFoundException
+            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
+      | _, "InternalServiceException" ->
+          `InternalServiceException
+            (Json_deserializers.internal_service_exception_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "OperationTimeoutException" ->
+          `OperationTimeoutException
+            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_mapping_request) =
+    let input = Json_serializers.get_mapping_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.GetMapping" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_mapping_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_mapping_request) =
+    let input = Json_serializers.get_mapping_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.GetMapping" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_mapping_response_of_yojson
+      ~error_deserializer
+end
+
+module GetMaterializedViewRefreshTaskRun = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.glue#AccessDeniedException"
+    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
+    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
+    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "EntityNotFoundException" ->
+          `EntityNotFoundException
+            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "OperationTimeoutException" ->
+          `OperationTimeoutException
+            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_materialized_view_refresh_task_run_request) =
+    let input = Json_serializers.get_materialized_view_refresh_task_run_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.GetMaterializedViewRefreshTaskRun"
+      ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.get_materialized_view_refresh_task_run_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : get_materialized_view_refresh_task_run_request) =
+    let input = Json_serializers.get_materialized_view_refresh_task_run_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSGlue.GetMaterializedViewRefreshTaskRun" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.get_materialized_view_refresh_task_run_response_of_yojson
+      ~error_deserializer
+end
+
 module GetMLTaskRun = struct
   let error_to_string = function
     | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
@@ -6592,86 +6672,6 @@ module GetMLTransforms = struct
     let input = Json_serializers.get_ml_transforms_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.GetMLTransforms" ~service
       ~context ~input ~output_deserializer:Json_deserializers.get_ml_transforms_response_of_yojson
-      ~error_deserializer
-end
-
-module GetMapping = struct
-  let error_to_string = function
-    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
-    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
-    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
-    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "EntityNotFoundException" ->
-          `EntityNotFoundException
-            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
-      | _, "InternalServiceException" ->
-          `InternalServiceException
-            (Json_deserializers.internal_service_exception_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "OperationTimeoutException" ->
-          `OperationTimeoutException
-            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : get_mapping_request) =
-    let input = Json_serializers.get_mapping_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.GetMapping" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.get_mapping_response_of_yojson ~error_deserializer
-
-  let request_with_metadata context (request : get_mapping_request) =
-    let input = Json_serializers.get_mapping_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.GetMapping" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.get_mapping_response_of_yojson
-      ~error_deserializer
-end
-
-module GetMaterializedViewRefreshTaskRun = struct
-  let error_to_string = function
-    | `AccessDeniedException _ -> "com.amazonaws.glue#AccessDeniedException"
-    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
-    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
-    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "AccessDeniedException" ->
-          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
-      | _, "EntityNotFoundException" ->
-          `EntityNotFoundException
-            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "OperationTimeoutException" ->
-          `OperationTimeoutException
-            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : get_materialized_view_refresh_task_run_request) =
-    let input = Json_serializers.get_materialized_view_refresh_task_run_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.GetMaterializedViewRefreshTaskRun"
-      ~service ~context ~input
-      ~output_deserializer:
-        Json_deserializers.get_materialized_view_refresh_task_run_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : get_materialized_view_refresh_task_run_request) =
-    let input = Json_serializers.get_materialized_view_refresh_task_run_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AWSGlue.GetMaterializedViewRefreshTaskRun" ~service ~context ~input
-      ~output_deserializer:
-        Json_deserializers.get_materialized_view_refresh_task_run_response_of_yojson
       ~error_deserializer
 end
 
@@ -7450,6 +7450,57 @@ module GetTableOptimizer = struct
       ~error_deserializer
 end
 
+module GetTables = struct
+  let error_to_string = function
+    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
+    | `FederationSourceException _ -> "com.amazonaws.glue#FederationSourceException"
+    | `FederationSourceRetryableException _ ->
+        "com.amazonaws.glue#FederationSourceRetryableException"
+    | `GlueEncryptionException _ -> "com.amazonaws.glue#GlueEncryptionException"
+    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
+    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
+    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "EntityNotFoundException" ->
+          `EntityNotFoundException
+            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
+      | _, "FederationSourceException" ->
+          `FederationSourceException
+            (Json_deserializers.federation_source_exception_of_yojson tree path)
+      | _, "FederationSourceRetryableException" ->
+          `FederationSourceRetryableException
+            (Json_deserializers.federation_source_retryable_exception_of_yojson tree path)
+      | _, "GlueEncryptionException" ->
+          `GlueEncryptionException
+            (Json_deserializers.glue_encryption_exception_of_yojson tree path)
+      | _, "InternalServiceException" ->
+          `InternalServiceException
+            (Json_deserializers.internal_service_exception_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "OperationTimeoutException" ->
+          `OperationTimeoutException
+            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_tables_request) =
+    let input = Json_serializers.get_tables_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.GetTables" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_tables_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_tables_request) =
+    let input = Json_serializers.get_tables_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.GetTables" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.get_tables_response_of_yojson
+      ~error_deserializer
+end
+
 module GetTableVersion = struct
   let error_to_string = function
     | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
@@ -7534,57 +7585,6 @@ module GetTableVersions = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.GetTableVersions"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_table_versions_response_of_yojson
-      ~error_deserializer
-end
-
-module GetTables = struct
-  let error_to_string = function
-    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
-    | `FederationSourceException _ -> "com.amazonaws.glue#FederationSourceException"
-    | `FederationSourceRetryableException _ ->
-        "com.amazonaws.glue#FederationSourceRetryableException"
-    | `GlueEncryptionException _ -> "com.amazonaws.glue#GlueEncryptionException"
-    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
-    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
-    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "EntityNotFoundException" ->
-          `EntityNotFoundException
-            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
-      | _, "FederationSourceException" ->
-          `FederationSourceException
-            (Json_deserializers.federation_source_exception_of_yojson tree path)
-      | _, "FederationSourceRetryableException" ->
-          `FederationSourceRetryableException
-            (Json_deserializers.federation_source_retryable_exception_of_yojson tree path)
-      | _, "GlueEncryptionException" ->
-          `GlueEncryptionException
-            (Json_deserializers.glue_encryption_exception_of_yojson tree path)
-      | _, "InternalServiceException" ->
-          `InternalServiceException
-            (Json_deserializers.internal_service_exception_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "OperationTimeoutException" ->
-          `OperationTimeoutException
-            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : get_tables_request) =
-    let input = Json_serializers.get_tables_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.GetTables" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.get_tables_response_of_yojson ~error_deserializer
-
-  let request_with_metadata context (request : get_tables_request) =
-    let input = Json_serializers.get_tables_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.GetTables" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.get_tables_response_of_yojson
       ~error_deserializer
 end
 
@@ -9003,46 +9003,6 @@ module ListJobs = struct
       ~error_deserializer
 end
 
-module ListMLTransforms = struct
-  let error_to_string = function
-    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
-    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
-    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
-    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "EntityNotFoundException" ->
-          `EntityNotFoundException
-            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
-      | _, "InternalServiceException" ->
-          `InternalServiceException
-            (Json_deserializers.internal_service_exception_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "OperationTimeoutException" ->
-          `OperationTimeoutException
-            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_ml_transforms_request) =
-    let input = Json_serializers.list_ml_transforms_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.ListMLTransforms" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.list_ml_transforms_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_ml_transforms_request) =
-    let input = Json_serializers.list_ml_transforms_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.ListMLTransforms"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_ml_transforms_response_of_yojson
-      ~error_deserializer
-end
-
 module ListMaterializedViewRefreshTaskRuns = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.glue#AccessDeniedException"
@@ -9085,6 +9045,46 @@ module ListMaterializedViewRefreshTaskRuns = struct
       ~error_deserializer
 end
 
+module ListMLTransforms = struct
+  let error_to_string = function
+    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
+    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
+    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
+    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "EntityNotFoundException" ->
+          `EntityNotFoundException
+            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
+      | _, "InternalServiceException" ->
+          `InternalServiceException
+            (Json_deserializers.internal_service_exception_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "OperationTimeoutException" ->
+          `OperationTimeoutException
+            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_ml_transforms_request) =
+    let input = Json_serializers.list_ml_transforms_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.ListMLTransforms" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.list_ml_transforms_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_ml_transforms_request) =
+    let input = Json_serializers.list_ml_transforms_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.ListMLTransforms"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_ml_transforms_response_of_yojson
+      ~error_deserializer
+end
+
 module ListRegistries = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.glue#AccessDeniedException"
@@ -9116,6 +9116,43 @@ module ListRegistries = struct
     let input = Json_serializers.list_registries_input_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.ListRegistries" ~service
       ~context ~input ~output_deserializer:Json_deserializers.list_registries_response_of_yojson
+      ~error_deserializer
+end
+
+module ListSchemas = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.glue#AccessDeniedException"
+    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
+    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
+    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "EntityNotFoundException" ->
+          `EntityNotFoundException
+            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
+      | _, "InternalServiceException" ->
+          `InternalServiceException
+            (Json_deserializers.internal_service_exception_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_schemas_input) =
+    let input = Json_serializers.list_schemas_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.ListSchemas" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_schemas_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : list_schemas_input) =
+    let input = Json_serializers.list_schemas_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.ListSchemas" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.list_schemas_response_of_yojson
       ~error_deserializer
 end
 
@@ -9155,43 +9192,6 @@ module ListSchemaVersions = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.ListSchemaVersions"
       ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_schema_versions_response_of_yojson
-      ~error_deserializer
-end
-
-module ListSchemas = struct
-  let error_to_string = function
-    | `AccessDeniedException _ -> "com.amazonaws.glue#AccessDeniedException"
-    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
-    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
-    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "AccessDeniedException" ->
-          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
-      | _, "EntityNotFoundException" ->
-          `EntityNotFoundException
-            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
-      | _, "InternalServiceException" ->
-          `InternalServiceException
-            (Json_deserializers.internal_service_exception_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_schemas_input) =
-    let input = Json_serializers.list_schemas_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.ListSchemas" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_schemas_response_of_yojson ~error_deserializer
-
-  let request_with_metadata context (request : list_schemas_input) =
-    let input = Json_serializers.list_schemas_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.ListSchemas" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.list_schemas_response_of_yojson
       ~error_deserializer
 end
 
@@ -10726,6 +10726,62 @@ module StartJobRun = struct
       ~error_deserializer
 end
 
+module StartMaterializedViewRefreshTaskRun = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.glue#AccessDeniedException"
+    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
+    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
+    | `MaterializedViewRefreshTaskRunningException _ ->
+        "com.amazonaws.glue#MaterializedViewRefreshTaskRunningException"
+    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
+    | `ResourceNumberLimitExceededException _ ->
+        "com.amazonaws.glue#ResourceNumberLimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "EntityNotFoundException" ->
+          `EntityNotFoundException
+            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "MaterializedViewRefreshTaskRunningException" ->
+          `MaterializedViewRefreshTaskRunningException
+            (Json_deserializers.materialized_view_refresh_task_running_exception_of_yojson tree path)
+      | _, "OperationTimeoutException" ->
+          `OperationTimeoutException
+            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
+      | _, "ResourceNumberLimitExceededException" ->
+          `ResourceNumberLimitExceededException
+            (Json_deserializers.resource_number_limit_exceeded_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : start_materialized_view_refresh_task_run_request) =
+    let input =
+      Json_serializers.start_materialized_view_refresh_task_run_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.StartMaterializedViewRefreshTaskRun"
+      ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.start_materialized_view_refresh_task_run_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : start_materialized_view_refresh_task_run_request) =
+    let input =
+      Json_serializers.start_materialized_view_refresh_task_run_request_to_yojson request
+    in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSGlue.StartMaterializedViewRefreshTaskRun" ~service ~context ~input
+      ~output_deserializer:
+        Json_deserializers.start_materialized_view_refresh_task_run_response_of_yojson
+      ~error_deserializer
+end
+
 module StartMLEvaluationTaskRun = struct
   let error_to_string = function
     | `ConcurrentRunsExceededException _ -> "com.amazonaws.glue#ConcurrentRunsExceededException"
@@ -10823,62 +10879,6 @@ module StartMLLabelingSetGenerationTaskRun = struct
       ~shape_name:"AWSGlue.StartMLLabelingSetGenerationTaskRun" ~service ~context ~input
       ~output_deserializer:
         Json_deserializers.start_ml_labeling_set_generation_task_run_response_of_yojson
-      ~error_deserializer
-end
-
-module StartMaterializedViewRefreshTaskRun = struct
-  let error_to_string = function
-    | `AccessDeniedException _ -> "com.amazonaws.glue#AccessDeniedException"
-    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
-    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
-    | `MaterializedViewRefreshTaskRunningException _ ->
-        "com.amazonaws.glue#MaterializedViewRefreshTaskRunningException"
-    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
-    | `ResourceNumberLimitExceededException _ ->
-        "com.amazonaws.glue#ResourceNumberLimitExceededException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "AccessDeniedException" ->
-          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
-      | _, "EntityNotFoundException" ->
-          `EntityNotFoundException
-            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "MaterializedViewRefreshTaskRunningException" ->
-          `MaterializedViewRefreshTaskRunningException
-            (Json_deserializers.materialized_view_refresh_task_running_exception_of_yojson tree path)
-      | _, "OperationTimeoutException" ->
-          `OperationTimeoutException
-            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
-      | _, "ResourceNumberLimitExceededException" ->
-          `ResourceNumberLimitExceededException
-            (Json_deserializers.resource_number_limit_exceeded_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : start_materialized_view_refresh_task_run_request) =
-    let input =
-      Json_serializers.start_materialized_view_refresh_task_run_request_to_yojson request
-    in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.StartMaterializedViewRefreshTaskRun"
-      ~service ~context ~input
-      ~output_deserializer:
-        Json_deserializers.start_materialized_view_refresh_task_run_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : start_materialized_view_refresh_task_run_request) =
-    let input =
-      Json_serializers.start_materialized_view_refresh_task_run_request_to_yojson request
-    in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AWSGlue.StartMaterializedViewRefreshTaskRun" ~service ~context ~input
-      ~output_deserializer:
-        Json_deserializers.start_materialized_view_refresh_task_run_response_of_yojson
       ~error_deserializer
 end
 
@@ -11912,60 +11912,6 @@ module UpdateCrawlerSchedule = struct
       ~error_deserializer
 end
 
-module UpdateDataQualityRuleset = struct
-  let error_to_string = function
-    | `AlreadyExistsException _ -> "com.amazonaws.glue#AlreadyExistsException"
-    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
-    | `IdempotentParameterMismatchException _ ->
-        "com.amazonaws.glue#IdempotentParameterMismatchException"
-    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
-    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
-    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
-    | `ResourceNumberLimitExceededException _ ->
-        "com.amazonaws.glue#ResourceNumberLimitExceededException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "AlreadyExistsException" ->
-          `AlreadyExistsException (Json_deserializers.already_exists_exception_of_yojson tree path)
-      | _, "EntityNotFoundException" ->
-          `EntityNotFoundException
-            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
-      | _, "IdempotentParameterMismatchException" ->
-          `IdempotentParameterMismatchException
-            (Json_deserializers.idempotent_parameter_mismatch_exception_of_yojson tree path)
-      | _, "InternalServiceException" ->
-          `InternalServiceException
-            (Json_deserializers.internal_service_exception_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "OperationTimeoutException" ->
-          `OperationTimeoutException
-            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
-      | _, "ResourceNumberLimitExceededException" ->
-          `ResourceNumberLimitExceededException
-            (Json_deserializers.resource_number_limit_exceeded_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : update_data_quality_ruleset_request) =
-    let input = Json_serializers.update_data_quality_ruleset_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.UpdateDataQualityRuleset" ~service
-      ~context ~input
-      ~output_deserializer:Json_deserializers.update_data_quality_ruleset_response_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : update_data_quality_ruleset_request) =
-    let input = Json_serializers.update_data_quality_ruleset_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.UpdateDataQualityRuleset"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.update_data_quality_ruleset_response_of_yojson
-      ~error_deserializer
-end
-
 module UpdateDatabase = struct
   let error_to_string = function
     | `AlreadyExistsException _ -> "com.amazonaws.glue#AlreadyExistsException"
@@ -12022,6 +11968,60 @@ module UpdateDatabase = struct
     let input = Json_serializers.update_database_request_to_yojson request in
     Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.UpdateDatabase" ~service
       ~context ~input ~output_deserializer:Json_deserializers.update_database_response_of_yojson
+      ~error_deserializer
+end
+
+module UpdateDataQualityRuleset = struct
+  let error_to_string = function
+    | `AlreadyExistsException _ -> "com.amazonaws.glue#AlreadyExistsException"
+    | `EntityNotFoundException _ -> "com.amazonaws.glue#EntityNotFoundException"
+    | `IdempotentParameterMismatchException _ ->
+        "com.amazonaws.glue#IdempotentParameterMismatchException"
+    | `InternalServiceException _ -> "com.amazonaws.glue#InternalServiceException"
+    | `InvalidInputException _ -> "com.amazonaws.glue#InvalidInputException"
+    | `OperationTimeoutException _ -> "com.amazonaws.glue#OperationTimeoutException"
+    | `ResourceNumberLimitExceededException _ ->
+        "com.amazonaws.glue#ResourceNumberLimitExceededException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AlreadyExistsException" ->
+          `AlreadyExistsException (Json_deserializers.already_exists_exception_of_yojson tree path)
+      | _, "EntityNotFoundException" ->
+          `EntityNotFoundException
+            (Json_deserializers.entity_not_found_exception_of_yojson tree path)
+      | _, "IdempotentParameterMismatchException" ->
+          `IdempotentParameterMismatchException
+            (Json_deserializers.idempotent_parameter_mismatch_exception_of_yojson tree path)
+      | _, "InternalServiceException" ->
+          `InternalServiceException
+            (Json_deserializers.internal_service_exception_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "OperationTimeoutException" ->
+          `OperationTimeoutException
+            (Json_deserializers.operation_timeout_exception_of_yojson tree path)
+      | _, "ResourceNumberLimitExceededException" ->
+          `ResourceNumberLimitExceededException
+            (Json_deserializers.resource_number_limit_exceeded_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : update_data_quality_ruleset_request) =
+    let input = Json_serializers.update_data_quality_ruleset_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSGlue.UpdateDataQualityRuleset" ~service
+      ~context ~input
+      ~output_deserializer:Json_deserializers.update_data_quality_ruleset_response_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : update_data_quality_ruleset_request) =
+    let input = Json_serializers.update_data_quality_ruleset_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"AWSGlue.UpdateDataQualityRuleset"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.update_data_quality_ruleset_response_of_yojson
       ~error_deserializer
 end
 

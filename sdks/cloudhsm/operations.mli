@@ -1,50 +1,5 @@
 open Types
 
-module AddTagsToResource : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `CloudHsmInternalException of cloud_hsm_internal_exception
-    | `CloudHsmServiceException of cloud_hsm_service_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_resource_request ->
-    ( add_tags_to_resource_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `CloudHsmInternalException of cloud_hsm_internal_exception
-      | `CloudHsmServiceException of cloud_hsm_service_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_resource_request ->
-    ( add_tags_to_resource_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `CloudHsmInternalException of cloud_hsm_internal_exception
-      | `CloudHsmServiceException of cloud_hsm_service_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "This is documentation for {b AWS CloudHSM Classic}. For more information, see \
-   {{:http://aws.amazon.com/cloudhsm/faqs-classic/}AWS CloudHSM Classic FAQs}, the \
-   {{:https://docs.aws.amazon.com/cloudhsm/classic/userguide/}AWS CloudHSM Classic User Guide}, \
-   and the {{:https://docs.aws.amazon.com/cloudhsm/classic/APIReference/}AWS CloudHSM Classic API \
-   Reference}.\n\n\
-  \  {b For information about the current version of AWS CloudHSM}, see \
-   {{:http://aws.amazon.com/cloudhsm/}AWS CloudHSM}, the \
-   {{:https://docs.aws.amazon.com/cloudhsm/latest/userguide/}AWS CloudHSM User Guide}, and the \
-   {{:https://docs.aws.amazon.com/cloudhsm/latest/APIReference/}AWS CloudHSM API Reference}.\n\
-  \ \n\
-  \  Adds or overwrites one or more tags for the specified AWS CloudHSM resource.\n\
-  \  \n\
-  \   Each tag consists of a key and a value. Tag keys must be unique to each resource.\n\
-  \   "]
-
 module CreateHapg : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -891,4 +846,49 @@ end
   \  \n\
   \   To remove a tag, specify only the tag key to remove (not the value). To overwrite the value \
    for an existing tag, use [AddTagsToResource].\n\
+  \   "]
+
+module AddTagsToResource : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `CloudHsmInternalException of cloud_hsm_internal_exception
+    | `CloudHsmServiceException of cloud_hsm_service_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_resource_request ->
+    ( add_tags_to_resource_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudHsmInternalException of cloud_hsm_internal_exception
+      | `CloudHsmServiceException of cloud_hsm_service_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_resource_request ->
+    ( add_tags_to_resource_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `CloudHsmInternalException of cloud_hsm_internal_exception
+      | `CloudHsmServiceException of cloud_hsm_service_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "This is documentation for {b AWS CloudHSM Classic}. For more information, see \
+   {{:http://aws.amazon.com/cloudhsm/faqs-classic/}AWS CloudHSM Classic FAQs}, the \
+   {{:https://docs.aws.amazon.com/cloudhsm/classic/userguide/}AWS CloudHSM Classic User Guide}, \
+   and the {{:https://docs.aws.amazon.com/cloudhsm/classic/APIReference/}AWS CloudHSM Classic API \
+   Reference}.\n\n\
+  \  {b For information about the current version of AWS CloudHSM}, see \
+   {{:http://aws.amazon.com/cloudhsm/}AWS CloudHSM}, the \
+   {{:https://docs.aws.amazon.com/cloudhsm/latest/userguide/}AWS CloudHSM User Guide}, and the \
+   {{:https://docs.aws.amazon.com/cloudhsm/latest/APIReference/}AWS CloudHSM API Reference}.\n\
+  \ \n\
+  \  Adds or overwrites one or more tags for the specified AWS CloudHSM resource.\n\
+  \  \n\
+  \   Each tag consists of a key and a value. Tag keys must be unique to each resource.\n\
   \   "]

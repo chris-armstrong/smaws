@@ -767,6 +767,44 @@ module DescribeImageReplicationStatus = struct
       ~error_deserializer
 end
 
+module DescribeImages = struct
+  let error_to_string = function
+    | `ImageNotFoundException _ -> "com.amazonaws.ecr#ImageNotFoundException"
+    | `InvalidParameterException _ -> "com.amazonaws.ecr#InvalidParameterException"
+    | `RepositoryNotFoundException _ -> "com.amazonaws.ecr#RepositoryNotFoundException"
+    | `ServerException _ -> "com.amazonaws.ecr#ServerException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ImageNotFoundException" ->
+          `ImageNotFoundException (Json_deserializers.image_not_found_exception_of_yojson tree path)
+      | _, "InvalidParameterException" ->
+          `InvalidParameterException
+            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
+      | _, "RepositoryNotFoundException" ->
+          `RepositoryNotFoundException
+            (Json_deserializers.repository_not_found_exception_of_yojson tree path)
+      | _, "ServerException" ->
+          `ServerException (Json_deserializers.server_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_images_request) =
+    let input = Json_serializers.describe_images_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AmazonEC2ContainerRegistry_V20150921.DescribeImages" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_images_response_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : describe_images_request) =
+    let input = Json_serializers.describe_images_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AmazonEC2ContainerRegistry_V20150921.DescribeImages" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_images_response_of_yojson ~error_deserializer
+end
+
 module DescribeImageScanFindings = struct
   let error_to_string = function
     | `ImageNotFoundException _ -> "com.amazonaws.ecr#ImageNotFoundException"
@@ -856,44 +894,6 @@ module DescribeImageSigningStatus = struct
       ~context ~input
       ~output_deserializer:Json_deserializers.describe_image_signing_status_response_of_yojson
       ~error_deserializer
-end
-
-module DescribeImages = struct
-  let error_to_string = function
-    | `ImageNotFoundException _ -> "com.amazonaws.ecr#ImageNotFoundException"
-    | `InvalidParameterException _ -> "com.amazonaws.ecr#InvalidParameterException"
-    | `RepositoryNotFoundException _ -> "com.amazonaws.ecr#RepositoryNotFoundException"
-    | `ServerException _ -> "com.amazonaws.ecr#ServerException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ImageNotFoundException" ->
-          `ImageNotFoundException (Json_deserializers.image_not_found_exception_of_yojson tree path)
-      | _, "InvalidParameterException" ->
-          `InvalidParameterException
-            (Json_deserializers.invalid_parameter_exception_of_yojson tree path)
-      | _, "RepositoryNotFoundException" ->
-          `RepositoryNotFoundException
-            (Json_deserializers.repository_not_found_exception_of_yojson tree path)
-      | _, "ServerException" ->
-          `ServerException (Json_deserializers.server_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_images_request) =
-    let input = Json_serializers.describe_images_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"AmazonEC2ContainerRegistry_V20150921.DescribeImages" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_images_response_of_yojson ~error_deserializer
-
-  let request_with_metadata context (request : describe_images_request) =
-    let input = Json_serializers.describe_images_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AmazonEC2ContainerRegistry_V20150921.DescribeImages" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_images_response_of_yojson ~error_deserializer
 end
 
 module DescribePullThroughCacheRules = struct

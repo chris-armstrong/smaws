@@ -252,55 +252,6 @@ module DescribeEnvironmentMemberships = struct
       ~error_deserializer
 end
 
-module DescribeEnvironmentStatus = struct
-  let error_to_string = function
-    | `BadRequestException _ -> "com.amazonaws.cloud9#BadRequestException"
-    | `ConflictException _ -> "com.amazonaws.cloud9#ConflictException"
-    | `ForbiddenException _ -> "com.amazonaws.cloud9#ForbiddenException"
-    | `InternalServerErrorException _ -> "com.amazonaws.cloud9#InternalServerErrorException"
-    | `LimitExceededException _ -> "com.amazonaws.cloud9#LimitExceededException"
-    | `NotFoundException _ -> "com.amazonaws.cloud9#NotFoundException"
-    | `TooManyRequestsException _ -> "com.amazonaws.cloud9#TooManyRequestsException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "BadRequestException" ->
-          `BadRequestException (Json_deserializers.bad_request_exception_of_yojson tree path)
-      | _, "ConflictException" ->
-          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
-      | _, "ForbiddenException" ->
-          `ForbiddenException (Json_deserializers.forbidden_exception_of_yojson tree path)
-      | _, "InternalServerErrorException" ->
-          `InternalServerErrorException
-            (Json_deserializers.internal_server_error_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "NotFoundException" ->
-          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
-      | _, "TooManyRequestsException" ->
-          `TooManyRequestsException
-            (Json_deserializers.too_many_requests_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_environment_status_request) =
-    let input = Json_serializers.describe_environment_status_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request
-      ~shape_name:"AWSCloud9WorkspaceManagementService.DescribeEnvironmentStatus" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.describe_environment_status_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_environment_status_request) =
-    let input = Json_serializers.describe_environment_status_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AWSCloud9WorkspaceManagementService.DescribeEnvironmentStatus" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.describe_environment_status_result_of_yojson
-      ~error_deserializer
-end
-
 module DescribeEnvironments = struct
   let error_to_string = function
     | `BadRequestException _ -> "com.amazonaws.cloud9#BadRequestException"
@@ -347,6 +298,55 @@ module DescribeEnvironments = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSCloud9WorkspaceManagementService.DescribeEnvironments" ~service ~context
       ~input ~output_deserializer:Json_deserializers.describe_environments_result_of_yojson
+      ~error_deserializer
+end
+
+module DescribeEnvironmentStatus = struct
+  let error_to_string = function
+    | `BadRequestException _ -> "com.amazonaws.cloud9#BadRequestException"
+    | `ConflictException _ -> "com.amazonaws.cloud9#ConflictException"
+    | `ForbiddenException _ -> "com.amazonaws.cloud9#ForbiddenException"
+    | `InternalServerErrorException _ -> "com.amazonaws.cloud9#InternalServerErrorException"
+    | `LimitExceededException _ -> "com.amazonaws.cloud9#LimitExceededException"
+    | `NotFoundException _ -> "com.amazonaws.cloud9#NotFoundException"
+    | `TooManyRequestsException _ -> "com.amazonaws.cloud9#TooManyRequestsException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "BadRequestException" ->
+          `BadRequestException (Json_deserializers.bad_request_exception_of_yojson tree path)
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "ForbiddenException" ->
+          `ForbiddenException (Json_deserializers.forbidden_exception_of_yojson tree path)
+      | _, "InternalServerErrorException" ->
+          `InternalServerErrorException
+            (Json_deserializers.internal_server_error_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "NotFoundException" ->
+          `NotFoundException (Json_deserializers.not_found_exception_of_yojson tree path)
+      | _, "TooManyRequestsException" ->
+          `TooManyRequestsException
+            (Json_deserializers.too_many_requests_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_environment_status_request) =
+    let input = Json_serializers.describe_environment_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request
+      ~shape_name:"AWSCloud9WorkspaceManagementService.DescribeEnvironmentStatus" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.describe_environment_status_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_environment_status_request) =
+    let input = Json_serializers.describe_environment_status_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSCloud9WorkspaceManagementService.DescribeEnvironmentStatus" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.describe_environment_status_result_of_yojson
       ~error_deserializer
 end
 

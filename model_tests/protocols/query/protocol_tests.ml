@@ -427,7 +427,7 @@ let query_complex_error () =
   match response with
   | Error (`ComplexError e) ->
       let expected =
-        ({ nested = Some { foo = Some "bar" }; top_level = Some "Top level" } : Types.complex_error)
+        ({ top_level = Some "Top level"; nested = Some { foo = Some "bar" } } : Types.complex_error)
       in
       check
         (Alcotest_http.testable_nan_aware Types.pp_complex_error Types.equal_complex_error)
@@ -582,9 +582,9 @@ let nested_structures () =
       nested =
         Some
           {
-            recursive_arg = Some { recursive_arg = None; other_arg = None; string_arg = Some "baz" };
-            other_arg = Some true;
             string_arg = Some "foo";
+            other_arg = Some true;
+            recursive_arg = Some { string_arg = Some "baz"; other_arg = None; recursive_arg = None };
           };
     }
   in
@@ -838,12 +838,12 @@ let query_lists () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_lists_input =
     {
-      nested_with_list = None;
-      flattened_list_arg_with_xml_name = None;
-      list_arg_with_xml_name_member = None;
-      flattened_list_arg = None;
-      complex_list_arg = Some [ { hi = Some "hello" }; { hi = Some "hola" } ];
       list_arg = Some [ "foo"; "bar"; "baz" ];
+      complex_list_arg = Some [ { hi = Some "hello" }; { hi = Some "hola" } ];
+      flattened_list_arg = None;
+      list_arg_with_xml_name_member = None;
+      flattened_list_arg_with_xml_name = None;
+      nested_with_list = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -879,12 +879,12 @@ let empty_query_lists () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_lists_input =
     {
-      nested_with_list = None;
-      flattened_list_arg_with_xml_name = None;
-      list_arg_with_xml_name_member = None;
-      flattened_list_arg = None;
-      complex_list_arg = None;
       list_arg = Some [];
+      complex_list_arg = None;
+      flattened_list_arg = None;
+      list_arg_with_xml_name_member = None;
+      flattened_list_arg_with_xml_name = None;
+      nested_with_list = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -919,12 +919,12 @@ let flattened_query_lists () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_lists_input =
     {
-      nested_with_list = None;
-      flattened_list_arg_with_xml_name = None;
-      list_arg_with_xml_name_member = None;
-      flattened_list_arg = Some [ "A"; "B" ];
-      complex_list_arg = None;
       list_arg = None;
+      complex_list_arg = None;
+      flattened_list_arg = Some [ "A"; "B" ];
+      list_arg_with_xml_name_member = None;
+      flattened_list_arg_with_xml_name = None;
+      nested_with_list = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -959,12 +959,12 @@ let query_list_arg_with_xml_name_member () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_lists_input =
     {
-      nested_with_list = None;
-      flattened_list_arg_with_xml_name = None;
-      list_arg_with_xml_name_member = Some [ "A"; "B" ];
-      flattened_list_arg = None;
-      complex_list_arg = None;
       list_arg = None;
+      complex_list_arg = None;
+      flattened_list_arg = None;
+      list_arg_with_xml_name_member = Some [ "A"; "B" ];
+      flattened_list_arg_with_xml_name = None;
+      nested_with_list = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1000,12 +1000,12 @@ let query_flattened_list_arg_with_xml_name () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_lists_input =
     {
-      nested_with_list = None;
-      flattened_list_arg_with_xml_name = Some [ "A"; "B" ];
-      list_arg_with_xml_name_member = None;
-      flattened_list_arg = None;
-      complex_list_arg = None;
       list_arg = None;
+      complex_list_arg = None;
+      flattened_list_arg = None;
+      list_arg_with_xml_name_member = None;
+      flattened_list_arg_with_xml_name = Some [ "A"; "B" ];
+      nested_with_list = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1040,12 +1040,12 @@ let query_nested_struct_with_list () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_lists_input =
     {
-      nested_with_list = Some { list_arg = Some [ "A"; "B" ] };
-      flattened_list_arg_with_xml_name = None;
-      list_arg_with_xml_name_member = None;
-      flattened_list_arg = None;
-      complex_list_arg = None;
       list_arg = None;
+      complex_list_arg = None;
+      flattened_list_arg = None;
+      list_arg_with_xml_name_member = None;
+      flattened_list_arg_with_xml_name = None;
+      nested_with_list = Some { list_arg = Some [ "A"; "B" ] };
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1092,14 +1092,14 @@ let query_simple_query_maps () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
     {
-      nested_struct_with_map = None;
-      map_of_lists = None;
-      flattened_map_with_xml_name = None;
-      flattened_map = None;
-      map_with_xml_member_name = None;
-      complex_map_arg = None;
-      renamed_map_arg = None;
       map_arg = Some [ ("bar", "Bar"); ("foo", "Foo") ];
+      renamed_map_arg = None;
+      complex_map_arg = None;
+      map_with_xml_member_name = None;
+      flattened_map = None;
+      flattened_map_with_xml_name = None;
+      map_of_lists = None;
+      nested_struct_with_map = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1135,14 +1135,14 @@ let query_simple_query_maps_with_xml_name () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
     {
-      nested_struct_with_map = None;
-      map_of_lists = None;
-      flattened_map_with_xml_name = None;
-      flattened_map = None;
-      map_with_xml_member_name = None;
-      complex_map_arg = None;
-      renamed_map_arg = Some [ ("foo", "Foo") ];
       map_arg = None;
+      renamed_map_arg = Some [ ("foo", "Foo") ];
+      complex_map_arg = None;
+      map_with_xml_member_name = None;
+      flattened_map = None;
+      flattened_map_with_xml_name = None;
+      map_of_lists = None;
+      nested_struct_with_map = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1177,14 +1177,14 @@ let query_complex_query_maps () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
     {
-      nested_struct_with_map = None;
-      map_of_lists = None;
-      flattened_map_with_xml_name = None;
-      flattened_map = None;
-      map_with_xml_member_name = None;
-      complex_map_arg = Some [ ("bar", { hi = Some "Bar" }); ("foo", { hi = Some "Foo" }) ];
-      renamed_map_arg = None;
       map_arg = None;
+      renamed_map_arg = None;
+      complex_map_arg = Some [ ("bar", { hi = Some "Bar" }); ("foo", { hi = Some "Foo" }) ];
+      map_with_xml_member_name = None;
+      flattened_map = None;
+      flattened_map_with_xml_name = None;
+      map_of_lists = None;
+      nested_struct_with_map = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1220,14 +1220,14 @@ let query_empty_query_maps () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
     {
-      nested_struct_with_map = None;
-      map_of_lists = None;
-      flattened_map_with_xml_name = None;
-      flattened_map = None;
-      map_with_xml_member_name = None;
-      complex_map_arg = None;
-      renamed_map_arg = None;
       map_arg = Some [];
+      renamed_map_arg = None;
+      complex_map_arg = None;
+      map_with_xml_member_name = None;
+      flattened_map = None;
+      flattened_map_with_xml_name = None;
+      map_of_lists = None;
+      nested_struct_with_map = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1262,14 +1262,14 @@ let query_query_map_with_member_xml_name () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
     {
-      nested_struct_with_map = None;
-      map_of_lists = None;
-      flattened_map_with_xml_name = None;
-      flattened_map = None;
-      map_with_xml_member_name = Some [ ("bar", "Bar"); ("foo", "Foo") ];
-      complex_map_arg = None;
-      renamed_map_arg = None;
       map_arg = None;
+      renamed_map_arg = None;
+      complex_map_arg = None;
+      map_with_xml_member_name = Some [ ("bar", "Bar"); ("foo", "Foo") ];
+      flattened_map = None;
+      flattened_map_with_xml_name = None;
+      map_of_lists = None;
+      nested_struct_with_map = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1305,14 +1305,14 @@ let query_flattened_query_maps () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
     {
-      nested_struct_with_map = None;
-      map_of_lists = None;
-      flattened_map_with_xml_name = None;
-      flattened_map = Some [ ("bar", "Bar"); ("foo", "Foo") ];
-      map_with_xml_member_name = None;
-      complex_map_arg = None;
-      renamed_map_arg = None;
       map_arg = None;
+      renamed_map_arg = None;
+      complex_map_arg = None;
+      map_with_xml_member_name = None;
+      flattened_map = Some [ ("bar", "Bar"); ("foo", "Foo") ];
+      flattened_map_with_xml_name = None;
+      map_of_lists = None;
+      nested_struct_with_map = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1348,14 +1348,14 @@ let query_flattened_query_maps_with_xml_name () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
     {
-      nested_struct_with_map = None;
-      map_of_lists = None;
-      flattened_map_with_xml_name = Some [ ("bar", "Bar"); ("foo", "Foo") ];
-      flattened_map = None;
-      map_with_xml_member_name = None;
-      complex_map_arg = None;
-      renamed_map_arg = None;
       map_arg = None;
+      renamed_map_arg = None;
+      complex_map_arg = None;
+      map_with_xml_member_name = None;
+      flattened_map = None;
+      flattened_map_with_xml_name = Some [ ("bar", "Bar"); ("foo", "Foo") ];
+      map_of_lists = None;
+      nested_struct_with_map = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1390,14 +1390,14 @@ let query_query_map_of_lists () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
     {
-      nested_struct_with_map = None;
-      map_of_lists = Some [ ("bar", [ "C"; "D" ]); ("foo", [ "A"; "B" ]) ];
-      flattened_map_with_xml_name = None;
-      flattened_map = None;
-      map_with_xml_member_name = None;
-      complex_map_arg = None;
-      renamed_map_arg = None;
       map_arg = None;
+      renamed_map_arg = None;
+      complex_map_arg = None;
+      map_with_xml_member_name = None;
+      flattened_map = None;
+      flattened_map_with_xml_name = None;
+      map_of_lists = Some [ ("bar", [ "C"; "D" ]); ("foo", [ "A"; "B" ]) ];
+      nested_struct_with_map = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1433,14 +1433,14 @@ let query_nested_struct_with_map () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_maps_input =
     {
-      nested_struct_with_map = Some { map_arg = Some [ ("bar", "Bar"); ("foo", "Foo") ] };
-      map_of_lists = None;
-      flattened_map_with_xml_name = None;
-      flattened_map = None;
-      map_with_xml_member_name = None;
-      complex_map_arg = None;
-      renamed_map_arg = None;
       map_arg = None;
+      renamed_map_arg = None;
+      complex_map_arg = None;
+      map_with_xml_member_name = None;
+      flattened_map = None;
+      flattened_map_with_xml_name = None;
+      map_of_lists = None;
+      nested_struct_with_map = Some { map_arg = Some [ ("bar", "Bar"); ("foo", "Foo") ] };
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1490,9 +1490,9 @@ let query_timestamps_input () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.query_timestamps_input =
     {
-      epoch_target = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1422172800.));
-      epoch_member = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1422172800.));
       normal_format = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1422172800.));
+      epoch_member = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1422172800.));
+      epoch_target = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1422172800.));
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1560,18 +1560,18 @@ let query_recursive_shapes () =
            nested =
              Some
                {
+                 foo = Some "Foo1";
                  nested =
                    Some
                      {
+                       bar = Some "Bar1";
                        recursive_member =
                          Some
                            {
-                             nested = Some { recursive_member = None; bar = Some "Bar2" };
                              foo = Some "Foo2";
+                             nested = Some { bar = Some "Bar2"; recursive_member = None };
                            };
-                       bar = Some "Bar1";
                      };
-                 foo = Some "Foo1";
                };
          }
           : Types.recursive_xml_shapes_output)
@@ -1594,15 +1594,15 @@ let query_simple_input_params_strings () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
     {
-      integer_enum = None;
-      foo_enum = None;
-      qux = None;
-      boo = None;
-      float_value = None;
-      bam = None;
-      baz = None;
-      bar = Some "val2";
       foo = Some "val1";
+      bar = Some "val2";
+      baz = None;
+      bam = None;
+      float_value = None;
+      boo = None;
+      qux = None;
+      foo_enum = None;
+      integer_enum = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1637,15 +1637,15 @@ let query_simple_input_params_string_and_boolean_true () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
     {
-      integer_enum = None;
-      foo_enum = None;
-      qux = None;
-      boo = None;
-      float_value = None;
-      bam = None;
-      baz = Some true;
-      bar = None;
       foo = Some "val1";
+      bar = None;
+      baz = Some true;
+      bam = None;
+      float_value = None;
+      boo = None;
+      qux = None;
+      foo_enum = None;
+      integer_enum = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1680,15 +1680,15 @@ let query_simple_input_params_strings_and_boolean_false () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
     {
-      integer_enum = None;
-      foo_enum = None;
-      qux = None;
-      boo = None;
-      float_value = None;
-      bam = None;
-      baz = Some false;
-      bar = None;
       foo = None;
+      bar = None;
+      baz = Some false;
+      bam = None;
+      float_value = None;
+      boo = None;
+      qux = None;
+      foo_enum = None;
+      integer_enum = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1723,15 +1723,15 @@ let query_simple_input_params_integer () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
     {
-      integer_enum = None;
-      foo_enum = None;
-      qux = None;
-      boo = None;
-      float_value = None;
-      bam = Some 10;
-      baz = None;
-      bar = None;
       foo = None;
+      bar = None;
+      baz = None;
+      bam = Some 10;
+      float_value = None;
+      boo = None;
+      qux = None;
+      foo_enum = None;
+      integer_enum = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1766,15 +1766,15 @@ let query_simple_input_params_float () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
     {
-      integer_enum = None;
-      foo_enum = None;
-      qux = None;
-      boo = Some 10.8;
-      float_value = None;
-      bam = None;
-      baz = None;
-      bar = None;
       foo = None;
+      bar = None;
+      baz = None;
+      bam = None;
+      float_value = None;
+      boo = Some 10.8;
+      qux = None;
+      foo_enum = None;
+      integer_enum = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1809,15 +1809,15 @@ let query_simple_input_params_blob () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
     {
-      integer_enum = None;
-      foo_enum = None;
-      qux = Some (Smaws_Lib.CoreTypes.Blob.of_string "value");
-      boo = None;
-      float_value = None;
-      bam = None;
-      baz = None;
-      bar = None;
       foo = None;
+      bar = None;
+      baz = None;
+      bam = None;
+      float_value = None;
+      boo = None;
+      qux = Some (Smaws_Lib.CoreTypes.Blob.of_string "value");
+      foo_enum = None;
+      integer_enum = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1852,15 +1852,15 @@ let query_enums () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
     {
-      integer_enum = None;
-      foo_enum = Some FOO;
-      qux = None;
-      boo = None;
-      float_value = None;
-      bam = None;
-      baz = None;
-      bar = None;
       foo = None;
+      bar = None;
+      baz = None;
+      bam = None;
+      float_value = None;
+      boo = None;
+      qux = None;
+      foo_enum = Some FOO;
+      integer_enum = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1895,15 +1895,15 @@ let query_int_enums () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
     {
-      integer_enum = Some A;
-      foo_enum = None;
-      qux = None;
-      boo = None;
-      float_value = None;
-      bam = None;
-      baz = None;
-      bar = None;
       foo = None;
+      bar = None;
+      baz = None;
+      bam = None;
+      float_value = None;
+      boo = None;
+      qux = None;
+      foo_enum = None;
+      integer_enum = Some A;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1938,15 +1938,15 @@ let aws_query_supports_na_n_float_inputs () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
     {
-      integer_enum = None;
-      foo_enum = None;
-      qux = None;
-      boo = Some Float.nan;
-      float_value = Some Float.nan;
-      bam = None;
-      baz = None;
-      bar = None;
       foo = None;
+      bar = None;
+      baz = None;
+      bam = None;
+      float_value = Some Float.nan;
+      boo = Some Float.nan;
+      qux = None;
+      foo_enum = None;
+      integer_enum = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -1981,15 +1981,15 @@ let aws_query_supports_infinity_float_inputs () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
     {
-      integer_enum = None;
-      foo_enum = None;
-      qux = None;
-      boo = Some Float.infinity;
-      float_value = Some Float.infinity;
-      bam = None;
-      baz = None;
-      bar = None;
       foo = None;
+      bar = None;
+      baz = None;
+      bam = None;
+      float_value = Some Float.infinity;
+      boo = Some Float.infinity;
+      qux = None;
+      foo_enum = None;
+      integer_enum = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -2024,15 +2024,15 @@ let aws_query_supports_negative_infinity_float_inputs () =
   let ctx = Smaws_Lib.Context.make ~config ~http_type () in
   let input : Types.simple_input_params_input =
     {
-      integer_enum = None;
-      foo_enum = None;
-      qux = None;
-      boo = Some Float.neg_infinity;
-      float_value = Some Float.neg_infinity;
-      bam = None;
-      baz = None;
-      bar = None;
       foo = None;
+      bar = None;
+      baz = None;
+      bam = None;
+      float_value = Some Float.neg_infinity;
+      boo = Some Float.neg_infinity;
+      qux = None;
+      foo_enum = None;
+      integer_enum = None;
     }
   in
   Mock.mock_response ~status:200 ~headers:[] ();
@@ -2112,16 +2112,16 @@ let query_simple_scalar_properties () =
   | Ok result ->
       let expected =
         ({
-           double_value = Some 6.5;
-           float_value = Some 5.5;
-           long_value = Some (Smaws_Lib.CoreTypes.Int64.of_int 4);
-           integer_value = Some 3;
-           short_value = Some 2;
-           byte_value = Some 1;
-           false_boolean_value = Some false;
-           true_boolean_value = Some true;
-           empty_string_value = Some "";
            string_value = Some "string";
+           empty_string_value = Some "";
+           true_boolean_value = Some true;
+           false_boolean_value = Some false;
+           byte_value = Some 1;
+           short_value = Some 2;
+           integer_value = Some 3;
+           long_value = Some (Smaws_Lib.CoreTypes.Int64.of_int 4);
+           float_value = Some 5.5;
+           double_value = Some 6.5;
          }
           : Types.simple_scalar_xml_properties_output)
       in
@@ -2154,16 +2154,16 @@ let aws_query_supports_na_n_float_outputs () =
   | Ok result ->
       let expected =
         ({
-           double_value = Some Float.nan;
-           float_value = Some Float.nan;
-           long_value = None;
-           integer_value = None;
-           short_value = None;
-           byte_value = None;
-           false_boolean_value = None;
-           true_boolean_value = None;
-           empty_string_value = None;
            string_value = None;
+           empty_string_value = None;
+           true_boolean_value = None;
+           false_boolean_value = None;
+           byte_value = None;
+           short_value = None;
+           integer_value = None;
+           long_value = None;
+           float_value = Some Float.nan;
+           double_value = Some Float.nan;
          }
           : Types.simple_scalar_xml_properties_output)
       in
@@ -2196,16 +2196,16 @@ let aws_query_supports_infinity_float_outputs () =
   | Ok result ->
       let expected =
         ({
-           double_value = Some Float.infinity;
-           float_value = Some Float.infinity;
-           long_value = None;
-           integer_value = None;
-           short_value = None;
-           byte_value = None;
-           false_boolean_value = None;
-           true_boolean_value = None;
-           empty_string_value = None;
            string_value = None;
+           empty_string_value = None;
+           true_boolean_value = None;
+           false_boolean_value = None;
+           byte_value = None;
+           short_value = None;
+           integer_value = None;
+           long_value = None;
+           float_value = Some Float.infinity;
+           double_value = Some Float.infinity;
          }
           : Types.simple_scalar_xml_properties_output)
       in
@@ -2238,16 +2238,16 @@ let aws_query_supports_negative_infinity_float_outputs () =
   | Ok result ->
       let expected =
         ({
-           double_value = Some Float.neg_infinity;
-           float_value = Some Float.neg_infinity;
-           long_value = None;
-           integer_value = None;
-           short_value = None;
-           byte_value = None;
-           false_boolean_value = None;
-           true_boolean_value = None;
-           empty_string_value = None;
            string_value = None;
+           empty_string_value = None;
+           true_boolean_value = None;
+           false_boolean_value = None;
+           byte_value = None;
+           short_value = None;
+           integer_value = None;
+           long_value = None;
+           float_value = Some Float.neg_infinity;
+           double_value = Some Float.neg_infinity;
          }
           : Types.simple_scalar_xml_properties_output)
       in
@@ -2385,20 +2385,20 @@ let query_xml_empty_lists () =
   | Ok result ->
       let expected =
         ({
-           structure_list = None;
-           flattened_list_with_namespace = None;
-           flattened_list_with_member_namespace = None;
-           flattened_list2 = None;
-           flattened_list = None;
-           renamed_list_members = None;
-           nested_string_list = None;
-           int_enum_list = None;
-           enum_list = None;
-           timestamp_list = None;
-           boolean_list = None;
-           integer_list = None;
-           string_set = Some [];
            string_list = Some [];
+           string_set = Some [];
+           integer_list = None;
+           boolean_list = None;
+           timestamp_list = None;
+           enum_list = None;
+           int_enum_list = None;
+           nested_string_list = None;
+           renamed_list_members = None;
+           flattened_list = None;
+           flattened_list2 = None;
+           flattened_list_with_member_namespace = None;
+           flattened_list_with_namespace = None;
+           structure_list = None;
          }
           : Types.xml_lists_output)
       in
@@ -2513,12 +2513,12 @@ let query_xml_enums () =
   | Ok result ->
       let expected =
         ({
-           foo_enum_map = Some [ ("hi", FOO); ("zero", ZERO) ];
-           foo_enum_set = Some [ FOO; ZERO ];
-           foo_enum_list = Some [ FOO; ZERO ];
-           foo_enum3 = Some ONE;
-           foo_enum2 = Some ZERO;
            foo_enum1 = Some FOO;
+           foo_enum2 = Some ZERO;
+           foo_enum3 = Some ONE;
+           foo_enum_list = Some [ FOO; ZERO ];
+           foo_enum_set = Some [ FOO; ZERO ];
+           foo_enum_map = Some [ ("hi", FOO); ("zero", ZERO) ];
          }
           : Types.xml_enums_output)
       in
@@ -2572,12 +2572,12 @@ let query_xml_int_enums () =
   | Ok result ->
       let expected =
         ({
-           int_enum_map = Some [ ("a", A); ("b", B) ];
-           int_enum_set = Some [ A; B ];
-           int_enum_list = Some [ A; B ];
-           int_enum3 = Some C;
-           int_enum2 = Some B;
            int_enum1 = Some A;
+           int_enum2 = Some B;
+           int_enum3 = Some C;
+           int_enum_list = Some [ A; B ];
+           int_enum_set = Some [ A; B ];
+           int_enum_map = Some [ ("a", A); ("b", B) ];
          }
           : Types.xml_int_enums_output)
       in
@@ -2673,25 +2673,25 @@ let query_xml_lists () =
   | Ok result ->
       let expected =
         ({
-           structure_list = Some [ { b = Some "2"; a = Some "1" }; { b = Some "4"; a = Some "3" } ];
-           flattened_list_with_namespace = Some [ "a"; "b" ];
-           flattened_list_with_member_namespace = Some [ "a"; "b" ];
-           flattened_list2 = Some [ "yep"; "nope" ];
-           flattened_list = Some [ "hi"; "bye" ];
-           renamed_list_members = Some [ "foo"; "bar" ];
-           nested_string_list = Some [ [ "foo"; "bar" ]; [ "baz"; "qux" ] ];
-           int_enum_list = Some [ A; B ];
-           enum_list = Some [ FOO; ZERO ];
+           string_list = Some [ "foo"; "bar" ];
+           string_set = Some [ "foo"; "bar" ];
+           integer_list = Some [ 1; 2 ];
+           boolean_list = Some [ true; false ];
            timestamp_list =
              Some
                [
                  Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.);
                  Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.);
                ];
-           boolean_list = Some [ true; false ];
-           integer_list = Some [ 1; 2 ];
-           string_set = Some [ "foo"; "bar" ];
-           string_list = Some [ "foo"; "bar" ];
+           enum_list = Some [ FOO; ZERO ];
+           int_enum_list = Some [ A; B ];
+           nested_string_list = Some [ [ "foo"; "bar" ]; [ "baz"; "qux" ] ];
+           renamed_list_members = Some [ "foo"; "bar" ];
+           flattened_list = Some [ "hi"; "bye" ];
+           flattened_list2 = Some [ "yep"; "nope" ];
+           flattened_list_with_member_namespace = Some [ "a"; "b" ];
+           flattened_list_with_namespace = Some [ "a"; "b" ];
+           structure_list = Some [ { a = Some "1"; b = Some "2" }; { a = Some "3"; b = Some "4" } ];
          }
           : Types.xml_lists_output)
       in
@@ -2822,7 +2822,7 @@ let query_xml_namespaces () =
   match response with
   | Ok result ->
       let expected =
-        ({ nested = Some { values = Some [ "Bar"; "Baz" ]; foo = Some "Foo" } }
+        ({ nested = Some { foo = Some "Foo"; values = Some [ "Bar"; "Baz" ] } }
           : Types.xml_namespaces_output)
       in
       check
@@ -2856,13 +2856,13 @@ let query_xml_timestamps () =
   | Ok result ->
       let expected =
         ({
-           http_date_on_target = None;
-           http_date = None;
-           epoch_seconds_on_target = None;
-           epoch_seconds = None;
-           date_time_on_target = None;
-           date_time = None;
            normal = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           date_time = None;
+           date_time_on_target = None;
+           epoch_seconds = None;
+           epoch_seconds_on_target = None;
+           http_date = None;
+           http_date_on_target = None;
          }
           : Types.xml_timestamps_output)
       in
@@ -2894,13 +2894,13 @@ let query_xml_timestamps_with_date_time_format () =
   | Ok result ->
       let expected =
         ({
-           http_date_on_target = None;
-           http_date = None;
-           epoch_seconds_on_target = None;
-           epoch_seconds = None;
-           date_time_on_target = None;
-           date_time = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
            normal = None;
+           date_time = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           date_time_on_target = None;
+           epoch_seconds = None;
+           epoch_seconds_on_target = None;
+           http_date = None;
+           http_date_on_target = None;
          }
           : Types.xml_timestamps_output)
       in
@@ -2932,14 +2932,14 @@ let query_xml_timestamps_with_date_time_on_target_format () =
   | Ok result ->
       let expected =
         ({
-           http_date_on_target = None;
-           http_date = None;
-           epoch_seconds_on_target = None;
-           epoch_seconds = None;
+           normal = None;
+           date_time = None;
            date_time_on_target =
              Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
-           date_time = None;
-           normal = None;
+           epoch_seconds = None;
+           epoch_seconds_on_target = None;
+           http_date = None;
+           http_date_on_target = None;
          }
           : Types.xml_timestamps_output)
       in
@@ -2971,13 +2971,13 @@ let query_xml_timestamps_with_epoch_seconds_format () =
   | Ok result ->
       let expected =
         ({
-           http_date_on_target = None;
-           http_date = None;
-           epoch_seconds_on_target = None;
-           epoch_seconds = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
-           date_time_on_target = None;
-           date_time = None;
            normal = None;
+           date_time = None;
+           date_time_on_target = None;
+           epoch_seconds = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           epoch_seconds_on_target = None;
+           http_date = None;
+           http_date_on_target = None;
          }
           : Types.xml_timestamps_output)
       in
@@ -3009,14 +3009,14 @@ let query_xml_timestamps_with_epoch_seconds_on_target_format () =
   | Ok result ->
       let expected =
         ({
-           http_date_on_target = None;
-           http_date = None;
+           normal = None;
+           date_time = None;
+           date_time_on_target = None;
+           epoch_seconds = None;
            epoch_seconds_on_target =
              Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
-           epoch_seconds = None;
-           date_time_on_target = None;
-           date_time = None;
-           normal = None;
+           http_date = None;
+           http_date_on_target = None;
          }
           : Types.xml_timestamps_output)
       in
@@ -3048,13 +3048,13 @@ let query_xml_timestamps_with_http_date_format () =
   | Ok result ->
       let expected =
         ({
-           http_date_on_target = None;
-           http_date = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
-           epoch_seconds_on_target = None;
-           epoch_seconds = None;
-           date_time_on_target = None;
-           date_time = None;
            normal = None;
+           date_time = None;
+           date_time_on_target = None;
+           epoch_seconds = None;
+           epoch_seconds_on_target = None;
+           http_date = Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
+           http_date_on_target = None;
          }
           : Types.xml_timestamps_output)
       in
@@ -3086,14 +3086,14 @@ let query_xml_timestamps_with_http_date_on_target_format () =
   | Ok result ->
       let expected =
         ({
+           normal = None;
+           date_time = None;
+           date_time_on_target = None;
+           epoch_seconds = None;
+           epoch_seconds_on_target = None;
+           http_date = None;
            http_date_on_target =
              Some (Option.get (Smaws_Lib.CoreTypes.Timestamp.of_float_s 1398796238.));
-           http_date = None;
-           epoch_seconds_on_target = None;
-           epoch_seconds = None;
-           date_time_on_target = None;
-           date_time = None;
-           normal = None;
          }
           : Types.xml_timestamps_output)
       in

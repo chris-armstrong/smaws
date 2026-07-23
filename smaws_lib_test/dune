@@ -33,6 +33,36 @@
  (libraries Smaws_Lib alcotest))
 
 (test
+ (name xml_roundtrip_test)
+ (modules xml_roundtrip_test)
+ (libraries Smaws_Lib alcotest))
+
+(test
  (name uint64_test)
  (modules uint64_test)
+ (libraries Smaws_Lib alcotest))
+
+(test
+ (name http_bindings_test)
+ (modules http_bindings_test)
+ (libraries Smaws_Lib alcotest))
+
+(test
+ (name restxml_response_test)
+ (modules restxml_response_test)
+ (libraries Smaws_Lib alcotest))
+
+(test
+ (name restxml_serialize_test)
+ (modules restxml_serialize_test)
+ (libraries Smaws_Lib alcotest))
+
+(test
+ (name restxml_deserialize_test)
+ (modules restxml_deserialize_test)
+ (libraries Smaws_Lib alcotest))
+
+(test
+ (name xml_parse_error_test)
+ (modules xml_parse_error_test)
  (libraries Smaws_Lib alcotest))

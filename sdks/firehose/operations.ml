@@ -1,109 +1,6 @@
 open Types
 open Service_metadata
 
-module CreateDeliveryStream = struct
-  let error_to_string = function
-    | `InvalidArgumentException _ -> "com.amazonaws.firehose#InvalidArgumentException"
-    | `InvalidKMSResourceException _ -> "com.amazonaws.firehose#InvalidKMSResourceException"
-    | `LimitExceededException _ -> "com.amazonaws.firehose#LimitExceededException"
-    | `ResourceInUseException _ -> "com.amazonaws.firehose#ResourceInUseException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InvalidArgumentException" ->
-          `InvalidArgumentException
-            (Json_deserializers.invalid_argument_exception_of_yojson tree path)
-      | _, "InvalidKMSResourceException" ->
-          `InvalidKMSResourceException
-            (Json_deserializers.invalid_kms_resource_exception_of_yojson tree path)
-      | _, "LimitExceededException" ->
-          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
-      | _, "ResourceInUseException" ->
-          `ResourceInUseException (Json_deserializers.resource_in_use_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_delivery_stream_input) =
-    let input = Json_serializers.create_delivery_stream_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Firehose_20150804.CreateDeliveryStream"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_delivery_stream_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_delivery_stream_input) =
-    let input = Json_serializers.create_delivery_stream_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"Firehose_20150804.CreateDeliveryStream" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_delivery_stream_output_of_yojson
-      ~error_deserializer
-end
-
-module DeleteDeliveryStream = struct
-  let error_to_string = function
-    | `ResourceInUseException _ -> "com.amazonaws.firehose#ResourceInUseException"
-    | `ResourceNotFoundException _ -> "com.amazonaws.firehose#ResourceNotFoundException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ResourceInUseException" ->
-          `ResourceInUseException (Json_deserializers.resource_in_use_exception_of_yojson tree path)
-      | _, "ResourceNotFoundException" ->
-          `ResourceNotFoundException
-            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : delete_delivery_stream_input) =
-    let input = Json_serializers.delete_delivery_stream_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Firehose_20150804.DeleteDeliveryStream"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_delivery_stream_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : delete_delivery_stream_input) =
-    let input = Json_serializers.delete_delivery_stream_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"Firehose_20150804.DeleteDeliveryStream" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_delivery_stream_output_of_yojson
-      ~error_deserializer
-end
-
-module DescribeDeliveryStream = struct
-  let error_to_string = function
-    | `ResourceNotFoundException _ -> "com.amazonaws.firehose#ResourceNotFoundException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "ResourceNotFoundException" ->
-          `ResourceNotFoundException
-            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_delivery_stream_input) =
-    let input = Json_serializers.describe_delivery_stream_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Firehose_20150804.DescribeDeliveryStream"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_delivery_stream_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_delivery_stream_input) =
-    let input = Json_serializers.describe_delivery_stream_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"Firehose_20150804.DescribeDeliveryStream" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_delivery_stream_output_of_yojson
-      ~error_deserializer
-end
-
 module ListDeliveryStreams = struct
   let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
 
@@ -447,5 +344,108 @@ module UpdateDestination = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"Firehose_20150804.UpdateDestination" ~service ~context ~input
       ~output_deserializer:Json_deserializers.update_destination_output_of_yojson
+      ~error_deserializer
+end
+
+module DescribeDeliveryStream = struct
+  let error_to_string = function
+    | `ResourceNotFoundException _ -> "com.amazonaws.firehose#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_delivery_stream_input) =
+    let input = Json_serializers.describe_delivery_stream_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Firehose_20150804.DescribeDeliveryStream"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_delivery_stream_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_delivery_stream_input) =
+    let input = Json_serializers.describe_delivery_stream_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Firehose_20150804.DescribeDeliveryStream" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_delivery_stream_output_of_yojson
+      ~error_deserializer
+end
+
+module DeleteDeliveryStream = struct
+  let error_to_string = function
+    | `ResourceInUseException _ -> "com.amazonaws.firehose#ResourceInUseException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.firehose#ResourceNotFoundException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "ResourceInUseException" ->
+          `ResourceInUseException (Json_deserializers.resource_in_use_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_delivery_stream_input) =
+    let input = Json_serializers.delete_delivery_stream_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Firehose_20150804.DeleteDeliveryStream"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_delivery_stream_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_delivery_stream_input) =
+    let input = Json_serializers.delete_delivery_stream_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Firehose_20150804.DeleteDeliveryStream" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_delivery_stream_output_of_yojson
+      ~error_deserializer
+end
+
+module CreateDeliveryStream = struct
+  let error_to_string = function
+    | `InvalidArgumentException _ -> "com.amazonaws.firehose#InvalidArgumentException"
+    | `InvalidKMSResourceException _ -> "com.amazonaws.firehose#InvalidKMSResourceException"
+    | `LimitExceededException _ -> "com.amazonaws.firehose#LimitExceededException"
+    | `ResourceInUseException _ -> "com.amazonaws.firehose#ResourceInUseException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InvalidArgumentException" ->
+          `InvalidArgumentException
+            (Json_deserializers.invalid_argument_exception_of_yojson tree path)
+      | _, "InvalidKMSResourceException" ->
+          `InvalidKMSResourceException
+            (Json_deserializers.invalid_kms_resource_exception_of_yojson tree path)
+      | _, "LimitExceededException" ->
+          `LimitExceededException (Json_deserializers.limit_exceeded_exception_of_yojson tree path)
+      | _, "ResourceInUseException" ->
+          `ResourceInUseException (Json_deserializers.resource_in_use_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_delivery_stream_input) =
+    let input = Json_serializers.create_delivery_stream_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"Firehose_20150804.CreateDeliveryStream"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_delivery_stream_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_delivery_stream_input) =
+    let input = Json_serializers.create_delivery_stream_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"Firehose_20150804.CreateDeliveryStream" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_delivery_stream_output_of_yojson
       ~error_deserializer
 end

@@ -1,58 +1,52 @@
-type nonrec topic_name = string [@@ocaml.doc ""]
-
-type nonrec topic_ar_n = string [@@ocaml.doc ""]
-
-type nonrec token = string [@@ocaml.doc ""]
-
-type nonrec subscription_ar_n = string [@@ocaml.doc ""]
-
-type nonrec subject = string [@@ocaml.doc ""]
-
-type nonrec protocol = string [@@ocaml.doc ""]
-
-type nonrec next_token = string [@@ocaml.doc ""]
-
-type nonrec message_structure = string [@@ocaml.doc ""]
-
-type nonrec message_id = string [@@ocaml.doc ""]
-
-type nonrec message = string [@@ocaml.doc ""]
-
-type nonrec label = string [@@ocaml.doc ""]
-
-type nonrec delegate = string [@@ocaml.doc ""]
-
-type nonrec boolean_ = bool [@@ocaml.doc ""]
-
-type nonrec authenticate_on_unsubscribe = string [@@ocaml.doc ""]
-
-type nonrec attribute_value = string [@@ocaml.doc ""]
-
-type nonrec attribute_name = string [@@ocaml.doc ""]
-
 type nonrec action = string [@@ocaml.doc ""]
 
-type nonrec account = string [@@ocaml.doc ""]
-
-type nonrec verify_sms_sandbox_phone_number_result = unit [@@ocaml.doc ""]
-
-type nonrec phone_number_string = string [@@ocaml.doc ""]
-
-type nonrec otp_code = string [@@ocaml.doc ""]
-
-type nonrec verify_sms_sandbox_phone_number_input = {
-  one_time_password : otp_code;
-      [@ocaml.doc
-        "The OTP sent to the destination number from the [CreateSMSSandBoxPhoneNumber] call.\n"]
-  phone_number : phone_number_string; [@ocaml.doc "The destination phone number to verify.\n"]
-}
-[@@ocaml.doc ""]
+type nonrec actions_list = action list [@@ocaml.doc ""]
 
 type nonrec string_ = string [@@ocaml.doc ""]
 
+type nonrec not_found_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc "Indicates that the requested resource does not exist.\n"]
+
+type nonrec invalid_parameter_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "Indicates that a request parameter does not comply with the associated constraints.\n"]
+
+type nonrec internal_error_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc "Indicates an internal service error.\n"]
+
+type nonrec authorization_error_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc "Indicates that the user has been denied access to the requested resource.\n"]
+
+type nonrec delegate = string [@@ocaml.doc ""]
+
+type nonrec delegates_list = delegate list [@@ocaml.doc ""]
+
+type nonrec label = string [@@ocaml.doc ""]
+
+type nonrec topic_ar_n = string [@@ocaml.doc ""]
+
+type nonrec add_permission_input = {
+  topic_arn : topic_ar_n;
+      [@ocaml.doc "The ARN of the topic whose access control policy you wish to modify.\n"]
+  label : label; [@ocaml.doc "A unique identifier for the new policy statement.\n"]
+  aws_account_id : delegates_list;
+      [@ocaml.doc
+        "The Amazon Web Services account IDs of the users (principals) who will be given access to \
+         the specified actions. The users must have Amazon Web Services account, but do not need \
+         to be signed up for this service.\n"]
+  action_name : actions_list;
+      [@ocaml.doc
+        "The action you want to allow for the specified principal(s).\n\n\
+        \ Valid values: Any Amazon SNS action name, for example [Publish].\n\
+        \ "]
+}
+[@@ocaml.doc ""]
+
+type nonrec amazon_resource_name = string [@@ocaml.doc ""]
+
 type nonrec verification_exception = {
-  status : string_; [@ocaml.doc "The status of the verification error.\n"]
   message : string_; [@ocaml.doc ""]
+  status : string_; [@ocaml.doc "The status of the verification error.\n"]
 }
 [@@ocaml.doc "Indicates that the one-time password (OTP) used for verification is invalid.\n"]
 
@@ -66,35 +60,17 @@ type nonrec resource_not_found_exception = { message : string_ option [@ocaml.do
   "Can\226\128\153t perform the action on the specified resource. Make sure that the resource \
    exists.\n"]
 
-type nonrec invalid_parameter_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "Indicates that a request parameter does not comply with the associated constraints.\n"]
+type nonrec verify_sms_sandbox_phone_number_result = unit [@@ocaml.doc ""]
 
-type nonrec internal_error_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc "Indicates an internal service error.\n"]
+type nonrec otp_code = string [@@ocaml.doc ""]
 
-type nonrec authorization_error_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc "Indicates that the user has been denied access to the requested resource.\n"]
+type nonrec phone_number_string = string [@@ocaml.doc ""]
 
-type nonrec validation_exception = { message : string_ [@ocaml.doc ""] }
-[@@ocaml.doc "Indicates that a parameter in the request is invalid.\n"]
-
-type nonrec user_error_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "Indicates that a request parameter does not comply with the associated constraints.\n"]
-
-type nonrec untag_resource_response = unit [@@ocaml.doc ""]
-
-type nonrec amazon_resource_name = string [@@ocaml.doc ""]
-
-type nonrec tag_key = string [@@ocaml.doc ""]
-
-type nonrec tag_key_list = tag_key list [@@ocaml.doc ""]
-
-type nonrec untag_resource_request = {
-  tag_keys : tag_key_list; [@ocaml.doc "The list of tag keys to remove from the specified topic.\n"]
-  resource_arn : amazon_resource_name;
-      [@ocaml.doc "The ARN of the topic from which to remove tags.\n"]
+type nonrec verify_sms_sandbox_phone_number_input = {
+  phone_number : phone_number_string; [@ocaml.doc "The destination phone number to verify.\n"]
+  one_time_password : otp_code;
+      [@ocaml.doc
+        "The OTP sent to the destination number from the [CreateSMSSandBoxPhoneNumber] call.\n"]
 }
 [@@ocaml.doc ""]
 
@@ -114,78 +90,66 @@ type nonrec concurrent_access_exception = { message : string_ option [@ocaml.doc
 [@@ocaml.doc
   "Can't perform multiple operations on a tag simultaneously. Perform the operations sequentially.\n"]
 
-type nonrec unsubscribe_input = {
-  subscription_arn : subscription_ar_n; [@ocaml.doc "The ARN of the subscription to be deleted.\n"]
-}
-[@@ocaml.doc "Input for Unsubscribe action.\n"]
+type nonrec untag_resource_response = unit [@@ocaml.doc ""]
 
-type nonrec not_found_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc "Indicates that the requested resource does not exist.\n"]
+type nonrec tag_key = string [@@ocaml.doc ""]
+
+type nonrec tag_key_list = tag_key list [@@ocaml.doc ""]
+
+type nonrec untag_resource_request = {
+  resource_arn : amazon_resource_name;
+      [@ocaml.doc "The ARN of the topic from which to remove tags.\n"]
+  tag_keys : tag_key_list; [@ocaml.doc "The list of tag keys to remove from the specified topic.\n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec invalid_security_exception = { message : string_ option [@ocaml.doc ""] }
 [@@ocaml.doc
   "The credential signature isn't valid. You must use an HTTPS endpoint and sign your request \
    using Signature Version 4.\n"]
 
-type nonrec topic = { topic_arn : topic_ar_n option [@ocaml.doc "The topic's ARN.\n"] }
-[@@ocaml.doc
-  "A wrapper type for the topic's Amazon Resource Name (ARN). To retrieve a topic's attributes, \
-   use [GetTopicAttributes].\n"]
+type nonrec subscription_ar_n = string [@@ocaml.doc ""]
 
-type nonrec topics_list = topic list [@@ocaml.doc ""]
-
-type nonrec topic_limit_exceeded_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc "Indicates that the customer already owns the maximum allowed number of topics.\n"]
-
-type nonrec topic_attributes_map = (attribute_name * attribute_value) list [@@ocaml.doc ""]
-
-type nonrec too_many_entries_in_batch_request_exception = {
-  message : string_ option; [@ocaml.doc ""]
+type nonrec unsubscribe_input = {
+  subscription_arn : subscription_ar_n; [@ocaml.doc "The ARN of the subscription to be deleted.\n"]
 }
-[@@ocaml.doc " The batch request contains more entries than permissible (more than 10).\n"]
-
-type nonrec timestamp = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
-type nonrec tag_value = string [@@ocaml.doc ""]
+[@@ocaml.doc "Input for Unsubscribe action.\n"]
 
 type nonrec tag_resource_response = unit [@@ocaml.doc ""]
 
+type nonrec tag_value = string [@@ocaml.doc ""]
+
 type nonrec tag = {
-  value : tag_value; [@ocaml.doc "The optional value portion of the tag.\n"]
   key : tag_key; [@ocaml.doc "The required key portion of the tag.\n"]
+  value : tag_value; [@ocaml.doc "The optional value portion of the tag.\n"]
 }
 [@@ocaml.doc "The list of tags to be added to the specified topic.\n"]
 
 type nonrec tag_list = tag list [@@ocaml.doc ""]
 
 type nonrec tag_resource_request = {
+  resource_arn : amazon_resource_name; [@ocaml.doc "The ARN of the topic to which to add tags.\n"]
   tags : tag_list;
       [@ocaml.doc
         "The tags to be added to the specified topic. A tag consists of a required key and an \
          optional value.\n"]
-  resource_arn : amazon_resource_name; [@ocaml.doc "The ARN of the topic to which to add tags.\n"]
 }
 [@@ocaml.doc ""]
-
-type nonrec endpoint2 = string [@@ocaml.doc ""]
-
-type nonrec subscription = {
-  topic_arn : topic_ar_n option; [@ocaml.doc "The ARN of the subscription's topic.\n"]
-  endpoint : endpoint2 option;
-      [@ocaml.doc "The subscription's endpoint (format depends on the protocol).\n"]
-  protocol : protocol option; [@ocaml.doc "The subscription's protocol.\n"]
-  owner : account option; [@ocaml.doc "The subscription's owner.\n"]
-  subscription_arn : subscription_ar_n option; [@ocaml.doc "The subscription's ARN.\n"]
-}
-[@@ocaml.doc "A wrapper type for the attributes of an Amazon SNS subscription.\n"]
-
-type nonrec subscriptions_list = subscription list [@@ocaml.doc ""]
 
 type nonrec subscription_limit_exceeded_exception = { message : string_ option [@ocaml.doc ""] }
 [@@ocaml.doc
   "Indicates that the customer already owns the maximum allowed number of subscriptions.\n"]
 
-type nonrec subscription_attributes_map = (attribute_name * attribute_value) list [@@ocaml.doc ""]
+type nonrec replay_limit_exceeded_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "Indicates that the request parameter has exceeded the maximum number of concurrent message \
+   replays.\n"]
+
+type nonrec filter_policy_limit_exceeded_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "Indicates that the number of filter polices in your Amazon Web Services account exceeds the \
+   limit. To add more filter polices, submit an Amazon SNS Limit Increase case in the Amazon Web \
+   Services Support Center.\n"]
 
 type nonrec subscribe_response = {
   subscription_arn : subscription_ar_n option;
@@ -197,22 +161,92 @@ type nonrec subscribe_response = {
 }
 [@@ocaml.doc "Response for Subscribe action.\n"]
 
+type nonrec boolean_ = bool [@@ocaml.doc ""]
+
+type nonrec attribute_value = string [@@ocaml.doc ""]
+
+type nonrec attribute_name = string [@@ocaml.doc ""]
+
+type nonrec subscription_attributes_map = (attribute_name * attribute_value) list [@@ocaml.doc ""]
+
+type nonrec endpoint2 = string [@@ocaml.doc ""]
+
+type nonrec protocol = string [@@ocaml.doc ""]
+
 type nonrec subscribe_input = {
-  return_subscription_arn : boolean_ option;
+  topic_arn : topic_ar_n; [@ocaml.doc "The ARN of the topic you want to subscribe to.\n"]
+  protocol : protocol;
       [@ocaml.doc
-        "Sets whether the response from the [Subscribe] request includes the subscription ARN, \
-         even if the subscription is not yet confirmed.\n\n\
-        \ If you set this parameter to [true], the response includes the ARN in all cases, even if \
-         the subscription is not yet confirmed. In addition to the ARN for confirmed \
-         subscriptions, the response also includes the [pending\n\
-        \                subscription] ARN value for subscriptions that aren't yet confirmed. A \
-         subscription becomes confirmed when the subscriber calls the [ConfirmSubscription] action \
-         with a confirmation token.\n\
-        \ \n\
-        \  \n\
-        \  \n\
-        \   The default value is [false].\n\
-        \   "]
+        "The protocol that you want to use. Supported protocols include:\n\n\
+        \ {ul\n\
+        \       {-   [http] \226\128\147 delivery of JSON-encoded message via HTTP POST\n\
+        \           \n\
+        \            }\n\
+        \       {-   [https] \226\128\147 delivery of JSON-encoded message via HTTPS POST\n\
+        \           \n\
+        \            }\n\
+        \       {-   [email] \226\128\147 delivery of message via SMTP\n\
+        \           \n\
+        \            }\n\
+        \       {-   [email-json] \226\128\147 delivery of JSON-encoded message via SMTP\n\
+        \           \n\
+        \            }\n\
+        \       {-   [sms] \226\128\147 delivery of message via SMS\n\
+        \           \n\
+        \            }\n\
+        \       {-   [sqs] \226\128\147 delivery of JSON-encoded message to an Amazon SQS queue\n\
+        \           \n\
+        \            }\n\
+        \       {-   [application] \226\128\147 delivery of JSON-encoded message to an EndpointArn \
+         for a mobile app and device\n\
+        \           \n\
+        \            }\n\
+        \       {-   [lambda] \226\128\147 delivery of JSON-encoded message to an Lambda function\n\
+        \           \n\
+        \            }\n\
+        \       {-   [firehose] \226\128\147 delivery of JSON-encoded message to an Amazon Data \
+         Firehose delivery stream.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \  "]
+  endpoint : endpoint2 option;
+      [@ocaml.doc
+        "The endpoint that you want to receive notifications. Endpoints vary by protocol:\n\n\
+        \ {ul\n\
+        \       {-  For the [http] protocol, the (public) endpoint is a URL beginning with \
+         [http://].\n\
+        \           \n\
+        \            }\n\
+        \       {-  For the [https] protocol, the (public) endpoint is a URL beginning with \
+         [https://].\n\
+        \           \n\
+        \            }\n\
+        \       {-  For the [email] protocol, the endpoint is an email address.\n\
+        \           \n\
+        \            }\n\
+        \       {-  For the [email-json] protocol, the endpoint is an email address.\n\
+        \           \n\
+        \            }\n\
+        \       {-  For the [sms] protocol, the endpoint is a phone number of an SMS-enabled device.\n\
+        \           \n\
+        \            }\n\
+        \       {-  For the [sqs] protocol, the endpoint is the ARN of an Amazon SQS queue.\n\
+        \           \n\
+        \            }\n\
+        \       {-  For the [application] protocol, the endpoint is the EndpointArn of a mobile \
+         app and device.\n\
+        \           \n\
+        \            }\n\
+        \       {-  For the [lambda] protocol, the endpoint is the ARN of an Lambda function.\n\
+        \           \n\
+        \            }\n\
+        \       {-  For the [firehose] protocol, the endpoint is the ARN of an Amazon Data \
+         Firehose delivery stream.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \  "]
   attributes : subscription_attributes_map option;
       [@ocaml.doc
         "A map of attributes with their corresponding values.\n\n\
@@ -314,95 +348,26 @@ type nonrec subscribe_input = {
         \            }\n\
         \          }\n\
         \  "]
-  endpoint : endpoint2 option;
+  return_subscription_arn : boolean_ option;
       [@ocaml.doc
-        "The endpoint that you want to receive notifications. Endpoints vary by protocol:\n\n\
-        \ {ul\n\
-        \       {-  For the [http] protocol, the (public) endpoint is a URL beginning with \
-         [http://].\n\
-        \           \n\
-        \            }\n\
-        \       {-  For the [https] protocol, the (public) endpoint is a URL beginning with \
-         [https://].\n\
-        \           \n\
-        \            }\n\
-        \       {-  For the [email] protocol, the endpoint is an email address.\n\
-        \           \n\
-        \            }\n\
-        \       {-  For the [email-json] protocol, the endpoint is an email address.\n\
-        \           \n\
-        \            }\n\
-        \       {-  For the [sms] protocol, the endpoint is a phone number of an SMS-enabled device.\n\
-        \           \n\
-        \            }\n\
-        \       {-  For the [sqs] protocol, the endpoint is the ARN of an Amazon SQS queue.\n\
-        \           \n\
-        \            }\n\
-        \       {-  For the [application] protocol, the endpoint is the EndpointArn of a mobile \
-         app and device.\n\
-        \           \n\
-        \            }\n\
-        \       {-  For the [lambda] protocol, the endpoint is the ARN of an Lambda function.\n\
-        \           \n\
-        \            }\n\
-        \       {-  For the [firehose] protocol, the endpoint is the ARN of an Amazon Data \
-         Firehose delivery stream.\n\
-        \           \n\
-        \            }\n\
-        \       }\n\
-        \  "]
-  protocol : protocol;
-      [@ocaml.doc
-        "The protocol that you want to use. Supported protocols include:\n\n\
-        \ {ul\n\
-        \       {-   [http] \226\128\147 delivery of JSON-encoded message via HTTP POST\n\
-        \           \n\
-        \            }\n\
-        \       {-   [https] \226\128\147 delivery of JSON-encoded message via HTTPS POST\n\
-        \           \n\
-        \            }\n\
-        \       {-   [email] \226\128\147 delivery of message via SMTP\n\
-        \           \n\
-        \            }\n\
-        \       {-   [email-json] \226\128\147 delivery of JSON-encoded message via SMTP\n\
-        \           \n\
-        \            }\n\
-        \       {-   [sms] \226\128\147 delivery of message via SMS\n\
-        \           \n\
-        \            }\n\
-        \       {-   [sqs] \226\128\147 delivery of JSON-encoded message to an Amazon SQS queue\n\
-        \           \n\
-        \            }\n\
-        \       {-   [application] \226\128\147 delivery of JSON-encoded message to an EndpointArn \
-         for a mobile app and device\n\
-        \           \n\
-        \            }\n\
-        \       {-   [lambda] \226\128\147 delivery of JSON-encoded message to an Lambda function\n\
-        \           \n\
-        \            }\n\
-        \       {-   [firehose] \226\128\147 delivery of JSON-encoded message to an Amazon Data \
-         Firehose delivery stream.\n\
-        \           \n\
-        \            }\n\
-        \       }\n\
-        \  "]
-  topic_arn : topic_ar_n; [@ocaml.doc "The ARN of the topic you want to subscribe to.\n"]
+        "Sets whether the response from the [Subscribe] request includes the subscription ARN, \
+         even if the subscription is not yet confirmed.\n\n\
+        \ If you set this parameter to [true], the response includes the ARN in all cases, even if \
+         the subscription is not yet confirmed. In addition to the ARN for confirmed \
+         subscriptions, the response also includes the [pending\n\
+        \                subscription] ARN value for subscriptions that aren't yet confirmed. A \
+         subscription becomes confirmed when the subscriber calls the [ConfirmSubscription] action \
+         with a confirmation token.\n\
+        \ \n\
+        \  \n\
+        \  \n\
+        \   The default value is [false].\n\
+        \   "]
 }
 [@@ocaml.doc "Input for Subscribe action.\n"]
 
-type nonrec replay_limit_exceeded_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "Indicates that the request parameter has exceeded the maximum number of concurrent message \
-   replays.\n"]
-
-type nonrec filter_policy_limit_exceeded_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "Indicates that the number of filter polices in your Amazon Web Services account exceeds the \
-   limit. To add more filter polices, submit an Amazon SNS Limit Increase case in the Amazon Web \
-   Services Support Center.\n"]
-
 type nonrec set_topic_attributes_input = {
-  attribute_value : attribute_value option; [@ocaml.doc "The new value for the attribute.\n"]
+  topic_arn : topic_ar_n; [@ocaml.doc "The ARN of the topic to modify.\n"]
   attribute_name : attribute_name;
       [@ocaml.doc
         "A map of attributes with their corresponding values.\n\n\
@@ -617,13 +582,12 @@ type nonrec set_topic_attributes_input = {
         \           }\n\
         \         }\n\
         \  "]
-  topic_arn : topic_ar_n; [@ocaml.doc "The ARN of the topic to modify.\n"]
+  attribute_value : attribute_value option; [@ocaml.doc "The new value for the attribute.\n"]
 }
 [@@ocaml.doc "Input for SetTopicAttributes action.\n"]
 
 type nonrec set_subscription_attributes_input = {
-  attribute_value : attribute_value option;
-      [@ocaml.doc "The new value for the attribute in JSON format.\n"]
+  subscription_arn : subscription_ar_n; [@ocaml.doc "The ARN of the subscription to modify.\n"]
   attribute_name : attribute_name;
       [@ocaml.doc
         "A map of attributes with their corresponding values.\n\n\
@@ -692,7 +656,8 @@ type nonrec set_subscription_attributes_input = {
         \             }\n\
         \          }\n\
         \  "]
-  subscription_arn : subscription_ar_n; [@ocaml.doc "The ARN of the subscription to modify.\n"]
+  attribute_value : attribute_value option;
+      [@ocaml.doc "The new value for the attribute in JSON format.\n"]
 }
 [@@ocaml.doc "Input for SetSubscriptionAttributes action.\n"]
 
@@ -794,6 +759,8 @@ type nonrec set_sms_attributes_input = {
 [@@ocaml.doc "The input for the SetSMSAttributes action.\n"]
 
 type nonrec set_platform_application_attributes_input = {
+  platform_application_arn : string_;
+      [@ocaml.doc " [PlatformApplicationArn] for [SetPlatformApplicationAttributes] action.\n"]
   attributes : map_string_to_string;
       [@ocaml.doc
         "A map of the platform application attributes. Attributes in this map include the \
@@ -898,12 +865,11 @@ type nonrec set_platform_application_attributes_input = {
         \               }\n\
         \          }\n\
         \  "]
-  platform_application_arn : string_;
-      [@ocaml.doc " [PlatformApplicationArn] for [SetPlatformApplicationAttributes] action.\n"]
 }
 [@@ocaml.doc "Input for [SetPlatformApplicationAttributes] action.\n"]
 
 type nonrec set_endpoint_attributes_input = {
+  endpoint_arn : string_; [@ocaml.doc "EndpointArn used for [SetEndpointAttributes] action.\n"]
   attributes : map_string_to_string;
       [@ocaml.doc
         "A map of the endpoint attributes. Attributes in this map include the following:\n\n\
@@ -926,61 +892,17 @@ type nonrec set_endpoint_attributes_input = {
         \            }\n\
         \       }\n\
         \  "]
-  endpoint_arn : string_; [@ocaml.doc "EndpointArn used for [SetEndpointAttributes] action.\n"]
 }
 [@@ocaml.doc "Input for [SetEndpointAttributes] action.\n"]
 
-type nonrec sms_sandbox_phone_number_verification_status =
-  | Verified [@ocaml.doc ""]
-  | Pending [@ocaml.doc ""]
-[@@ocaml.doc
-  "Enum listing out all supported destination phone number verification statuses. The following \
-   enum values are supported. 1. PENDING : The destination phone number is pending verification. \
-   2. VERIFIED : The destination phone number is verified."]
-
-type nonrec sms_sandbox_phone_number = {
-  status : sms_sandbox_phone_number_verification_status option;
-      [@ocaml.doc "The destination phone number's verification status.\n"]
-  phone_number : phone_number_string option; [@ocaml.doc "The destination phone number.\n"]
-}
-[@@ocaml.doc
-  "A verified or pending destination phone number in the SMS sandbox.\n\n\
-  \ When you start using Amazon SNS to send SMS messages, your Amazon Web Services account is in \
-   the {i SMS sandbox}. The SMS sandbox provides a safe environment for you to try Amazon SNS \
-   features without risking your reputation as an SMS sender. While your Amazon Web Services \
-   account is in the SMS sandbox, you can use all of the features of Amazon SNS. However, you can \
-   send SMS messages only to verified destination phone numbers. For more information, including \
-   how to move out of the sandbox to send messages without restrictions, see \
-   {{:https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html}SMS sandbox} in the {i Amazon \
-   SNS Developer Guide}.\n\
-  \ "]
-
-type nonrec sms_sandbox_phone_number_list = sms_sandbox_phone_number list [@@ocaml.doc ""]
-
-type nonrec route_type =
-  | Premium [@ocaml.doc ""]
-  | Promotional [@ocaml.doc ""]
-  | Transactional [@ocaml.doc ""]
-[@@ocaml.doc
-  "Enum listing out all supported route types. The following enum values are supported. 1. \
-   Transactional : Non-marketing traffic 2. Promotional : Marketing 3. Premium : Premium routes \
-   for OTP delivery to the carriers"]
-
 type nonrec remove_permission_input = {
-  label : label; [@ocaml.doc "The unique label of the statement you want to remove.\n"]
   topic_arn : topic_ar_n;
       [@ocaml.doc "The ARN of the topic whose access control policy you wish to modify.\n"]
+  label : label; [@ocaml.doc "The unique label of the statement you want to remove.\n"]
 }
 [@@ocaml.doc "Input for RemovePermission action.\n"]
 
 type nonrec put_data_protection_policy_input = {
-  data_protection_policy : attribute_value;
-      [@ocaml.doc
-        "The JSON serialization of the topic's [DataProtectionPolicy].\n\n\
-        \ The [DataProtectionPolicy] must be in JSON string format.\n\
-        \ \n\
-        \  Length Constraints: Maximum length of 30,720.\n\
-        \  "]
   resource_arn : topic_ar_n;
       [@ocaml.doc
         "The ARN of the topic whose [DataProtectionPolicy] you want to add or update.\n\n\
@@ -988,45 +910,137 @@ type nonrec put_data_protection_policy_input = {
          {{:https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html}Amazon \
          Resource Names (ARNs)} in the Amazon Web Services General Reference.\n\
         \ "]
+  data_protection_policy : attribute_value;
+      [@ocaml.doc
+        "The JSON serialization of the topic's [DataProtectionPolicy].\n\n\
+        \ The [DataProtectionPolicy] must be in JSON string format.\n\
+        \ \n\
+        \  Length Constraints: Maximum length of 30,720.\n\
+        \  "]
 }
 [@@ocaml.doc ""]
 
-type nonrec publish_response = {
+type nonrec validation_exception = { message : string_ [@ocaml.doc ""] }
+[@@ocaml.doc "Indicates that a parameter in the request is invalid.\n"]
+
+type nonrec too_many_entries_in_batch_request_exception = {
+  message : string_ option; [@ocaml.doc ""]
+}
+[@@ocaml.doc " The batch request contains more entries than permissible (more than 10).\n"]
+
+type nonrec platform_application_disabled_exception = {
+  message : string_ option; [@ocaml.doc "Message for platform application disabled.\n"]
+}
+[@@ocaml.doc "Exception error indicating platform application disabled.\n"]
+
+type nonrec kms_throttling_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The request was denied due to request throttling. For more information about throttling, see \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/limits.html#requests-per-second}Limits} \
+   in the {i Key Management Service Developer Guide.} \n"]
+
+type nonrec kms_opt_in_required = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc "The Amazon Web Services access key ID needs a subscription for the service.\n"]
+
+type nonrec kms_not_found_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc "The request was rejected because the specified entity or resource can't be found.\n"]
+
+type nonrec kms_invalid_state_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The request was rejected because the state of the specified resource isn't valid for this \
+   request. For more information, see \
+   {{:https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html}Key states of Amazon \
+   Web Services KMS keys} in the {i Key Management Service Developer Guide}.\n"]
+
+type nonrec kms_disabled_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The request was rejected because the specified Amazon Web Services KMS key isn't enabled.\n"]
+
+type nonrec kms_access_denied_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The ciphertext references a key that doesn't exist or that you don't have access to.\n"]
+
+type nonrec invalid_parameter_value_exception = {
+  message : string_ option;
+      [@ocaml.doc "The parameter of an entry in a request doesn't abide by the specification. \n"]
+}
+[@@ocaml.doc
+  "Indicates that a request parameter does not comply with the associated constraints.\n"]
+
+type nonrec invalid_batch_entry_id_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc "The [Id] of a batch entry in a batch request doesn't abide by the specification. \n"]
+
+type nonrec endpoint_disabled_exception = {
+  message : string_ option; [@ocaml.doc "Message for endpoint disabled.\n"]
+}
+[@@ocaml.doc "Exception error indicating endpoint disabled.\n"]
+
+type nonrec empty_batch_request_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc "The batch request doesn't contain any entries.\n"]
+
+type nonrec batch_request_too_long_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc "The length of all the batch messages put together is more than the limit.\n"]
+
+type nonrec batch_entry_ids_not_distinct_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc "Two or more batch entries in the request have the same [Id].\n"]
+
+type nonrec batch_result_error_entry = {
+  id : string_; [@ocaml.doc "The [Id] of an entry in a batch request\n"]
+  code : string_; [@ocaml.doc "An error code representing why the action failed on this entry.\n"]
+  message : string_ option;
+      [@ocaml.doc "A message explaining why the action failed on this entry.\n"]
+  sender_fault : boolean_;
+      [@ocaml.doc
+        "Specifies whether the error happened due to the caller of the batch API action.\n"]
+}
+[@@ocaml.doc "Gives a detailed description of failed messages in the batch.\n"]
+
+type nonrec batch_result_error_entry_list = batch_result_error_entry list [@@ocaml.doc ""]
+
+type nonrec message_id = string [@@ocaml.doc ""]
+
+type nonrec publish_batch_result_entry = {
+  id : string_ option; [@ocaml.doc "The [Id] of an entry in a batch request.\n"]
+  message_id : message_id option; [@ocaml.doc "An identifier for the message.\n"]
   sequence_number : string_ option;
       [@ocaml.doc
-        "This response element applies only to FIFO (first-in-first-out) topics. \n\n\
-        \ The sequence number is a large, non-consecutive number that Amazon SNS assigns to each \
-         message. The length of [SequenceNumber] is 128 bits. [SequenceNumber] continues to \
-         increase for each [MessageGroupId].\n\
-        \ "]
-  message_id : message_id option;
-      [@ocaml.doc
-        "Unique identifier assigned to the published message.\n\n\
-        \ Length Constraint: Maximum 100 characters\n\
-        \ "]
+        "This parameter applies only to FIFO (first-in-first-out) topics.\n\n\
+        \ The large, non-consecutive number that Amazon SNS assigns to each message.\n\
+        \ \n\
+        \  The length of [SequenceNumber] is 128 bits. [SequenceNumber] continues to increase for \
+         a particular [MessageGroupId].\n\
+        \  "]
 }
-[@@ocaml.doc "Response for Publish action.\n"]
+[@@ocaml.doc "Encloses data related to a successful message in a batch request for topic.\n"]
 
-type nonrec phone_number = string [@@ocaml.doc ""]
+type nonrec publish_batch_result_entry_list = publish_batch_result_entry list [@@ocaml.doc ""]
+
+type nonrec publish_batch_response = {
+  successful : publish_batch_result_entry_list option;
+      [@ocaml.doc "A list of successful [PublishBatch] responses.\n"]
+  failed : batch_result_error_entry_list option;
+      [@ocaml.doc "A list of failed [PublishBatch] responses. \n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec binary = bytes [@@ocaml.doc ""]
 
 type nonrec message_attribute_value = {
-  binary_value : binary option;
-      [@ocaml.doc
-        "Binary type attributes can store any binary data, for example, compressed data, encrypted \
-         data, or images.\n"]
-  string_value : string_ option;
-      [@ocaml.doc
-        "Strings are Unicode with UTF8 binary encoding. For a list of code values, see \
-         {{:https://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters}ASCII Printable \
-         Characters}.\n"]
   data_type : string_;
       [@ocaml.doc
         "Amazon SNS supports the following logical data types: String, String.Array, Number, and \
          Binary. For more information, see \
          {{:https://docs.aws.amazon.com/sns/latest/dg/SNSMessageAttributes.html#SNSMessageAttributes.DataTypes}Message \
          Attribute Data Types}.\n"]
+  string_value : string_ option;
+      [@ocaml.doc
+        "Strings are Unicode with UTF8 binary encoding. For a list of code values, see \
+         {{:https://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters}ASCII Printable \
+         Characters}.\n"]
+  binary_value : binary option;
+      [@ocaml.doc
+        "Binary type attributes can store any binary data, for example, compressed data, encrypted \
+         data, or images.\n"]
 }
 [@@ocaml.doc
   "The user-specified message attribute value. For string data types, the value attribute has the \
@@ -1043,83 +1057,24 @@ type nonrec message_attribute_value = {
 
 type nonrec message_attribute_map = (string_ * message_attribute_value) list [@@ocaml.doc ""]
 
-type nonrec publish_input = {
-  message_group_id : string_ option;
+type nonrec message_structure = string [@@ocaml.doc ""]
+
+type nonrec subject = string [@@ocaml.doc ""]
+
+type nonrec message = string [@@ocaml.doc ""]
+
+type nonrec publish_batch_request_entry = {
+  id : string_;
       [@ocaml.doc
-        "The [MessageGroupId] can contain up to 128 alphanumeric characters [(a-z, A-Z, 0-9)] and \
-         punctuation [(!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~)].\n\n\
-        \  For FIFO topics: The [MessageGroupId] is a tag that specifies that a message belongs to \
-         a specific message group. Messages that belong to the same message group are processed in \
-         a FIFO manner (however, messages in different message groups might be processed out of \
-         order). Every message must include a [MessageGroupId]. \n\
-        \ \n\
-        \   For standard topics: The [MessageGroupId] is optional and is forwarded only to Amazon \
-         SQS standard subscriptions to activate \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-fair-queues.html}fair \
-         queues}. The [MessageGroupId] is not used for, or sent to, any other endpoint types. When \
-         provided, the same validation rules apply as for FIFO topics. \n\
-        \  "]
-  message_deduplication_id : string_ option;
-      [@ocaml.doc
-        "{ul\n\
-        \      {-  This parameter applies only to FIFO (first-in-first-out) topics. The \
-         [MessageDeduplicationId] can contain up to 128 alphanumeric characters [(a-z, A-Z, 0-9)] \
-         and punctuation [(!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~)].\n\
-        \          \n\
-        \           }\n\
-        \      {-  Every message must have a unique [MessageDeduplicationId], which is a token \
-         used for deduplication of sent messages within the 5 minute minimum deduplication \
-         interval.\n\
-        \          \n\
-        \           }\n\
-        \      {-  The scope of deduplication depends on the [FifoThroughputScope] attribute, when \
-         set to [Topic] the message deduplication scope is across the entire topic, when set to \
-         [MessageGroup] the message deduplication scope is within each individual message group.\n\
-        \          \n\
-        \           }\n\
-        \      {-  If a message with a particular [MessageDeduplicationId] is sent successfully, \
-         subsequent messages within the deduplication scope and interval, with the same \
-         [MessageDeduplicationId], are accepted successfully but aren't delivered.\n\
-        \          \n\
-        \           }\n\
-        \      {-  Every message must have a unique [MessageDeduplicationId]:\n\
-        \          \n\
-        \           {ul\n\
-        \                 {-  You may provide a [MessageDeduplicationId] explicitly.\n\
-        \                     \n\
-        \                      }\n\
-        \                 {-  If you aren't able to provide a [MessageDeduplicationId] and you \
-         enable [ContentBasedDeduplication] for your topic, Amazon SNS uses a SHA-256 hash to \
-         generate the [MessageDeduplicationId] using the body of the message (but not the \
-         attributes of the message).\n\
-        \                     \n\
-        \                      }\n\
-        \                 {-  If you don't provide a [MessageDeduplicationId] and the topic \
-         doesn't have [ContentBasedDeduplication] set, the action fails with an error.\n\
-        \                     \n\
-        \                      }\n\
-        \                 {-  If the topic has a [ContentBasedDeduplication] set, your \
-         [MessageDeduplicationId] overrides the generated one. \n\
-        \                     \n\
-        \                      }\n\
-        \                 \n\
-        \       }\n\
-        \        }\n\
-        \      {-  When [ContentBasedDeduplication] is in effect, messages with identical content \
-         sent within the deduplication scope and interval are treated as duplicates and only one \
-         copy of the message is delivered.\n\
-        \          \n\
-        \           }\n\
-        \      {-  If you send one message with [ContentBasedDeduplication] enabled, and then \
-         another message with a [MessageDeduplicationId] that is the same as the one generated for \
-         the first [MessageDeduplicationId], the two messages are treated as duplicates, within \
-         the deduplication scope and interval, and only one copy of the message is delivered.\n\
-        \          \n\
-        \           }\n\
-        \      }\n\
-        \  "]
-  message_attributes : message_attribute_map option;
-      [@ocaml.doc "Message attributes for Publish action.\n"]
+        "An identifier for the message in this batch.\n\n\
+        \  The [Ids] of a batch request must be unique within a request. \n\
+        \  \n\
+        \   This identifier can have up to 80 characters. The following characters are accepted: \
+         alphanumeric characters, hyphens(-), and underscores (_). \n\
+        \   \n\
+        \    "]
+  message : message; [@ocaml.doc "The body of the message.\n"]
+  subject : subject option; [@ocaml.doc "The subject of the batch message.\n"]
   message_structure : message_structure option;
       [@ocaml.doc
         "Set [MessageStructure] to [json] if you want to send a different message for each \
@@ -1136,161 +1091,13 @@ type nonrec publish_input = {
         \            }\n\
         \       }\n\
         \   You can define other top-level keys that define the message you want to send to a \
-         specific transport protocol (e.g., \"http\").\n\
-        \   \n\
-        \    Valid value: [json] \n\
-        \    "]
-  subject : subject option;
-      [@ocaml.doc
-        "Optional parameter to be used as the \"Subject\" line when the message is delivered to \
-         email endpoints. This field will also be included, if present, in the standard JSON \
-         messages delivered to other endpoints.\n\n\
-        \ Constraints: Subjects must be UTF-8 text with no line breaks or control characters, and \
-         less than 100 characters long.\n\
-        \ "]
-  message : message;
-      [@ocaml.doc
-        "The message you want to send.\n\n\
-        \ If you are publishing to a topic and you want to send the same message to all transport \
-         protocols, include the text of the message as a String value. If you want to send \
-         different messages for each transport protocol, set the value of the [MessageStructure] \
-         parameter to [json] and use a JSON object for the [Message] parameter. \n\
-        \ \n\
-        \  \n\
-        \  \n\
-        \   Constraints:\n\
-        \   \n\
-        \    {ul\n\
-        \          {-  With the exception of SMS, messages must be UTF-8 encoded strings and at \
-         most 256 KB in size (262,144 bytes, not 262,144 characters).\n\
-        \              \n\
-        \               }\n\
-        \          {-  For SMS, each message can contain up to 140 characters. This character \
-         limit depends on the encoding schema. For example, an SMS message can contain 160 GSM \
-         characters, 140 ASCII characters, or 70 UCS-2 characters.\n\
-        \              \n\
-        \               If you publish a message that exceeds this size limit, Amazon SNS sends \
-         the message as multiple messages, each fitting within the size limit. Messages aren't \
-         truncated mid-word but are cut off at whole-word boundaries.\n\
-        \               \n\
-        \                The total size limit for a single SMS [Publish] action is 1,600 characters.\n\
-        \                \n\
-        \                 }\n\
-        \          }\n\
-        \   JSON-specific constraints:\n\
-        \   \n\
-        \    {ul\n\
-        \          {-  Keys in the JSON object that correspond to supported transport protocols \
-         must have simple JSON string values.\n\
-        \              \n\
-        \               }\n\
-        \          {-  The values will be parsed (unescaped) before they are used in outgoing \
-         messages.\n\
-        \              \n\
-        \               }\n\
-        \          {-  Outbound notifications are JSON encoded (meaning that the characters will \
-         be reescaped for sending).\n\
-        \              \n\
-        \               }\n\
-        \          {-  Values have a minimum length of 0 (the empty string, \"\", is allowed).\n\
-        \              \n\
-        \               }\n\
-        \          {-  Values have a maximum length bounded by the overall message size (so, \
-         including multiple protocols may limit message sizes).\n\
-        \              \n\
-        \               }\n\
-        \          {-  Non-string values will cause the key to be ignored.\n\
-        \              \n\
-        \               }\n\
-        \          {-  Keys that do not correspond to supported transport protocols are ignored.\n\
-        \              \n\
-        \               }\n\
-        \          {-  Duplicate keys are not allowed.\n\
-        \              \n\
-        \               }\n\
-        \          {-  Failure to parse or validate any key or value in the message will cause the \
-         [Publish] call to return an error (no partial delivery).\n\
-        \              \n\
-        \               }\n\
-        \          }\n\
-        \  "]
-  phone_number : phone_number option;
-      [@ocaml.doc
-        "The phone number to which you want to deliver an SMS message. Use E.164 format.\n\n\
-        \ If you don't specify a value for the [PhoneNumber] parameter, you must specify a value \
-         for the [TargetArn] or [TopicArn] parameters.\n\
-        \ "]
-  target_arn : string_ option;
-      [@ocaml.doc
-        "If you don't specify a value for the [TargetArn] parameter, you must specify a value for \
-         the [PhoneNumber] or [TopicArn] parameters.\n"]
-  topic_arn : topic_ar_n option;
-      [@ocaml.doc
-        "The topic you want to publish to.\n\n\
-        \ If you don't specify a value for the [TopicArn] parameter, you must specify a value for \
-         the [PhoneNumber] or [TargetArn] parameters.\n\
-        \ "]
-}
-[@@ocaml.doc "Input for Publish action.\n"]
-
-type nonrec publish_batch_result_entry = {
-  sequence_number : string_ option;
-      [@ocaml.doc
-        "This parameter applies only to FIFO (first-in-first-out) topics.\n\n\
-        \ The large, non-consecutive number that Amazon SNS assigns to each message.\n\
-        \ \n\
-        \  The length of [SequenceNumber] is 128 bits. [SequenceNumber] continues to increase for \
-         a particular [MessageGroupId].\n\
-        \  "]
-  message_id : message_id option; [@ocaml.doc "An identifier for the message.\n"]
-  id : string_ option; [@ocaml.doc "The [Id] of an entry in a batch request.\n"]
-}
-[@@ocaml.doc "Encloses data related to a successful message in a batch request for topic.\n"]
-
-type nonrec publish_batch_result_entry_list = publish_batch_result_entry list [@@ocaml.doc ""]
-
-type nonrec batch_result_error_entry = {
-  sender_fault : boolean_;
-      [@ocaml.doc
-        "Specifies whether the error happened due to the caller of the batch API action.\n"]
-  message : string_ option;
-      [@ocaml.doc "A message explaining why the action failed on this entry.\n"]
-  code : string_; [@ocaml.doc "An error code representing why the action failed on this entry.\n"]
-  id : string_; [@ocaml.doc "The [Id] of an entry in a batch request\n"]
-}
-[@@ocaml.doc "Gives a detailed description of failed messages in the batch.\n"]
-
-type nonrec batch_result_error_entry_list = batch_result_error_entry list [@@ocaml.doc ""]
-
-type nonrec publish_batch_response = {
-  failed : batch_result_error_entry_list option;
-      [@ocaml.doc "A list of failed [PublishBatch] responses. \n"]
-  successful : publish_batch_result_entry_list option;
-      [@ocaml.doc "A list of successful [PublishBatch] responses.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec publish_batch_request_entry = {
-  message_group_id : string_ option;
-      [@ocaml.doc
-        "FIFO topics: The tag that specifies that a message belongs to a specific message group. \
-         Messages that belong to the same message group are processed in a FIFO manner (however, \
-         messages in different message groups might be processed out of order). To interleave \
-         multiple ordered streams within a single topic, use [MessageGroupId] values (for example, \
-         session data for multiple users). In this scenario, multiple consumers can process the \
-         topic, but the session data of each user is processed in a FIFO fashion. You must \
-         associate a non-empty [MessageGroupId] with a message. If you do not provide a \
-         [MessageGroupId], the action fails. \n\n\
-        \ Standard topics: The [MessageGroupId] is optional and is forwarded only to Amazon SQS \
-         standard subscriptions to activate \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-fair-queues.html}fair \
-         queues}. The [MessageGroupId] is not used for, or sent to, any other endpoint types.\n\
-        \ \n\
-        \  The length of [MessageGroupId] is 128 characters.\n\
-        \  \n\
-        \    [MessageGroupId] can contain alphanumeric characters [(a-z, A-Z,\n\
-        \                0-9)] and punctuation [(!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~)].\n\
+         specific transport protocol (for example, http). \n\
         \   "]
+  message_attributes : message_attribute_map option;
+      [@ocaml.doc
+        "Each message attribute consists of a [Name], [Type], and [Value]. For more information, \
+         see {{:https://docs.aws.amazon.com/sns/latest/dg/sns-message-attributes.html}Amazon SNS \
+         message attributes} in the Amazon SNS Developer Guide.\n"]
   message_deduplication_id : string_ option;
       [@ocaml.doc
         "This parameter applies only to FIFO (first-in-first-out) topics.\n\n\
@@ -1362,11 +1169,150 @@ type nonrec publish_batch_request_entry = {
          message is received and deleted. \n\
         \      \n\
         \       "]
-  message_attributes : message_attribute_map option;
+  message_group_id : string_ option;
       [@ocaml.doc
-        "Each message attribute consists of a [Name], [Type], and [Value]. For more information, \
-         see {{:https://docs.aws.amazon.com/sns/latest/dg/sns-message-attributes.html}Amazon SNS \
-         message attributes} in the Amazon SNS Developer Guide.\n"]
+        "FIFO topics: The tag that specifies that a message belongs to a specific message group. \
+         Messages that belong to the same message group are processed in a FIFO manner (however, \
+         messages in different message groups might be processed out of order). To interleave \
+         multiple ordered streams within a single topic, use [MessageGroupId] values (for example, \
+         session data for multiple users). In this scenario, multiple consumers can process the \
+         topic, but the session data of each user is processed in a FIFO fashion. You must \
+         associate a non-empty [MessageGroupId] with a message. If you do not provide a \
+         [MessageGroupId], the action fails. \n\n\
+        \ Standard topics: The [MessageGroupId] is optional and is forwarded only to Amazon SQS \
+         standard subscriptions to activate \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-fair-queues.html}fair \
+         queues}. The [MessageGroupId] is not used for, or sent to, any other endpoint types.\n\
+        \ \n\
+        \  The length of [MessageGroupId] is 128 characters.\n\
+        \  \n\
+        \    [MessageGroupId] can contain alphanumeric characters [(a-z, A-Z,\n\
+        \                0-9)] and punctuation [(!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~)].\n\
+        \   "]
+}
+[@@ocaml.doc
+  "Contains the details of a single Amazon SNS message along with an [Id] that identifies a \
+   message within the batch. \n"]
+
+type nonrec publish_batch_request_entry_list = publish_batch_request_entry list [@@ocaml.doc ""]
+
+type nonrec publish_batch_input = {
+  topic_arn : topic_ar_n;
+      [@ocaml.doc "The Amazon resource name (ARN) of the topic you want to batch publish to.\n"]
+  publish_batch_request_entries : publish_batch_request_entry_list;
+      [@ocaml.doc "A list of [PublishBatch] request entries to be sent to the SNS topic.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec publish_response = {
+  message_id : message_id option;
+      [@ocaml.doc
+        "Unique identifier assigned to the published message.\n\n\
+        \ Length Constraint: Maximum 100 characters\n\
+        \ "]
+  sequence_number : string_ option;
+      [@ocaml.doc
+        "This response element applies only to FIFO (first-in-first-out) topics. \n\n\
+        \ The sequence number is a large, non-consecutive number that Amazon SNS assigns to each \
+         message. The length of [SequenceNumber] is 128 bits. [SequenceNumber] continues to \
+         increase for each [MessageGroupId].\n\
+        \ "]
+}
+[@@ocaml.doc "Response for Publish action.\n"]
+
+type nonrec phone_number = string [@@ocaml.doc ""]
+
+type nonrec publish_input = {
+  topic_arn : topic_ar_n option;
+      [@ocaml.doc
+        "The topic you want to publish to.\n\n\
+        \ If you don't specify a value for the [TopicArn] parameter, you must specify a value for \
+         the [PhoneNumber] or [TargetArn] parameters.\n\
+        \ "]
+  target_arn : string_ option;
+      [@ocaml.doc
+        "If you don't specify a value for the [TargetArn] parameter, you must specify a value for \
+         the [PhoneNumber] or [TopicArn] parameters.\n"]
+  phone_number : phone_number option;
+      [@ocaml.doc
+        "The phone number to which you want to deliver an SMS message. Use E.164 format.\n\n\
+        \ If you don't specify a value for the [PhoneNumber] parameter, you must specify a value \
+         for the [TargetArn] or [TopicArn] parameters.\n\
+        \ "]
+  message : message;
+      [@ocaml.doc
+        "The message you want to send.\n\n\
+        \ If you are publishing to a topic and you want to send the same message to all transport \
+         protocols, include the text of the message as a String value. If you want to send \
+         different messages for each transport protocol, set the value of the [MessageStructure] \
+         parameter to [json] and use a JSON object for the [Message] parameter. \n\
+        \ \n\
+        \  \n\
+        \  \n\
+        \   Constraints:\n\
+        \   \n\
+        \    {ul\n\
+        \          {-  With the exception of SMS, messages must be UTF-8 encoded strings and at \
+         most 256 KB in size (262,144 bytes, not 262,144 characters).\n\
+        \              \n\
+        \               }\n\
+        \          {-  For SMS, each message can contain up to 140 characters. This character \
+         limit depends on the encoding schema. For example, an SMS message can contain 160 GSM \
+         characters, 140 ASCII characters, or 70 UCS-2 characters.\n\
+        \              \n\
+        \               If you publish a message that exceeds this size limit, Amazon SNS sends \
+         the message as multiple messages, each fitting within the size limit. Messages aren't \
+         truncated mid-word but are cut off at whole-word boundaries.\n\
+        \               \n\
+        \                The total size limit for a single SMS [Publish] action is 1,600 characters.\n\
+        \                \n\
+        \                 }\n\
+        \          }\n\
+        \   JSON-specific constraints:\n\
+        \   \n\
+        \    {ul\n\
+        \          {-  Keys in the JSON object that correspond to supported transport protocols \
+         must have simple JSON string values.\n\
+        \              \n\
+        \               }\n\
+        \          {-  The values will be parsed (unescaped) before they are used in outgoing \
+         messages.\n\
+        \              \n\
+        \               }\n\
+        \          {-  Outbound notifications are JSON encoded (meaning that the characters will \
+         be reescaped for sending).\n\
+        \              \n\
+        \               }\n\
+        \          {-  Values have a minimum length of 0 (the empty string, \"\", is allowed).\n\
+        \              \n\
+        \               }\n\
+        \          {-  Values have a maximum length bounded by the overall message size (so, \
+         including multiple protocols may limit message sizes).\n\
+        \              \n\
+        \               }\n\
+        \          {-  Non-string values will cause the key to be ignored.\n\
+        \              \n\
+        \               }\n\
+        \          {-  Keys that do not correspond to supported transport protocols are ignored.\n\
+        \              \n\
+        \               }\n\
+        \          {-  Duplicate keys are not allowed.\n\
+        \              \n\
+        \               }\n\
+        \          {-  Failure to parse or validate any key or value in the message will cause the \
+         [Publish] call to return an error (no partial delivery).\n\
+        \              \n\
+        \               }\n\
+        \          }\n\
+        \  "]
+  subject : subject option;
+      [@ocaml.doc
+        "Optional parameter to be used as the \"Subject\" line when the message is delivered to \
+         email endpoints. This field will also be included, if present, in the standard JSON \
+         messages delivered to other endpoints.\n\n\
+        \ Constraints: Subjects must be UTF-8 text with no line breaks or control characters, and \
+         less than 100 characters long.\n\
+        \ "]
   message_structure : message_structure option;
       [@ocaml.doc
         "Set [MessageStructure] to [json] if you want to send a different message for each \
@@ -1383,127 +1329,88 @@ type nonrec publish_batch_request_entry = {
         \            }\n\
         \       }\n\
         \   You can define other top-level keys that define the message you want to send to a \
-         specific transport protocol (for example, http). \n\
-        \   "]
-  subject : subject option; [@ocaml.doc "The subject of the batch message.\n"]
-  message : message; [@ocaml.doc "The body of the message.\n"]
-  id : string_;
-      [@ocaml.doc
-        "An identifier for the message in this batch.\n\n\
-        \  The [Ids] of a batch request must be unique within a request. \n\
-        \  \n\
-        \   This identifier can have up to 80 characters. The following characters are accepted: \
-         alphanumeric characters, hyphens(-), and underscores (_). \n\
+         specific transport protocol (e.g., \"http\").\n\
         \   \n\
+        \    Valid value: [json] \n\
         \    "]
-}
-[@@ocaml.doc
-  "Contains the details of a single Amazon SNS message along with an [Id] that identifies a \
-   message within the batch. \n"]
-
-type nonrec publish_batch_request_entry_list = publish_batch_request_entry list [@@ocaml.doc ""]
-
-type nonrec publish_batch_input = {
-  publish_batch_request_entries : publish_batch_request_entry_list;
-      [@ocaml.doc "A list of [PublishBatch] request entries to be sent to the SNS topic.\n"]
-  topic_arn : topic_ar_n;
-      [@ocaml.doc "The Amazon resource name (ARN) of the topic you want to batch publish to.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec platform_application_disabled_exception = {
-  message : string_ option; [@ocaml.doc "Message for platform application disabled.\n"]
-}
-[@@ocaml.doc "Exception error indicating platform application disabled.\n"]
-
-type nonrec kms_throttling_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "The request was denied due to request throttling. For more information about throttling, see \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/limits.html#requests-per-second}Limits} \
-   in the {i Key Management Service Developer Guide.} \n"]
-
-type nonrec kms_opt_in_required = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc "The Amazon Web Services access key ID needs a subscription for the service.\n"]
-
-type nonrec kms_not_found_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc "The request was rejected because the specified entity or resource can't be found.\n"]
-
-type nonrec kms_invalid_state_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "The request was rejected because the state of the specified resource isn't valid for this \
-   request. For more information, see \
-   {{:https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html}Key states of Amazon \
-   Web Services KMS keys} in the {i Key Management Service Developer Guide}.\n"]
-
-type nonrec kms_disabled_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "The request was rejected because the specified Amazon Web Services KMS key isn't enabled.\n"]
-
-type nonrec kms_access_denied_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "The ciphertext references a key that doesn't exist or that you don't have access to.\n"]
-
-type nonrec invalid_parameter_value_exception = {
-  message : string_ option;
-      [@ocaml.doc "The parameter of an entry in a request doesn't abide by the specification. \n"]
-}
-[@@ocaml.doc
-  "Indicates that a request parameter does not comply with the associated constraints.\n"]
-
-type nonrec invalid_batch_entry_id_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc "The [Id] of a batch entry in a batch request doesn't abide by the specification. \n"]
-
-type nonrec endpoint_disabled_exception = {
-  message : string_ option; [@ocaml.doc "Message for endpoint disabled.\n"]
-}
-[@@ocaml.doc "Exception error indicating endpoint disabled.\n"]
-
-type nonrec empty_batch_request_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc "The batch request doesn't contain any entries.\n"]
-
-type nonrec batch_request_too_long_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc "The length of all the batch messages put together is more than the limit.\n"]
-
-type nonrec batch_entry_ids_not_distinct_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc "Two or more batch entries in the request have the same [Id].\n"]
-
-type nonrec platform_application = {
-  attributes : map_string_to_string option;
-      [@ocaml.doc "Attributes for platform application object.\n"]
-  platform_application_arn : string_ option;
-      [@ocaml.doc "PlatformApplicationArn for platform application object.\n"]
-}
-[@@ocaml.doc "Platform application object.\n"]
-
-type nonrec phone_number_list = phone_number list [@@ocaml.doc ""]
-
-type nonrec iso2_country_code = string [@@ocaml.doc ""]
-
-type nonrec number_capability = VOICE [@ocaml.doc ""] | MMS [@ocaml.doc ""] | SMS [@ocaml.doc ""]
-[@@ocaml.doc "Enum listing out all supported number capabilities."]
-
-type nonrec number_capability_list = number_capability list [@@ocaml.doc ""]
-
-type nonrec phone_number_information = {
-  number_capabilities : number_capability_list option;
-      [@ocaml.doc "The capabilities of each phone number.\n"]
-  route_type : route_type option; [@ocaml.doc "The list of supported routes.\n"]
-  iso2_country_code : iso2_country_code option;
+  message_attributes : message_attribute_map option;
+      [@ocaml.doc "Message attributes for Publish action.\n"]
+  message_deduplication_id : string_ option;
       [@ocaml.doc
-        "The two-character code for the country or region, in ISO 3166-1 alpha-2 format.\n"]
-  status : string_ option; [@ocaml.doc "The status of the phone number.\n"]
-  phone_number : phone_number option; [@ocaml.doc "The phone number.\n"]
-  created_at : timestamp option;
-      [@ocaml.doc "The date and time when the phone number was created.\n"]
+        "{ul\n\
+        \      {-  This parameter applies only to FIFO (first-in-first-out) topics. The \
+         [MessageDeduplicationId] can contain up to 128 alphanumeric characters [(a-z, A-Z, 0-9)] \
+         and punctuation [(!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~)].\n\
+        \          \n\
+        \           }\n\
+        \      {-  Every message must have a unique [MessageDeduplicationId], which is a token \
+         used for deduplication of sent messages within the 5 minute minimum deduplication \
+         interval.\n\
+        \          \n\
+        \           }\n\
+        \      {-  The scope of deduplication depends on the [FifoThroughputScope] attribute, when \
+         set to [Topic] the message deduplication scope is across the entire topic, when set to \
+         [MessageGroup] the message deduplication scope is within each individual message group.\n\
+        \          \n\
+        \           }\n\
+        \      {-  If a message with a particular [MessageDeduplicationId] is sent successfully, \
+         subsequent messages within the deduplication scope and interval, with the same \
+         [MessageDeduplicationId], are accepted successfully but aren't delivered.\n\
+        \          \n\
+        \           }\n\
+        \      {-  Every message must have a unique [MessageDeduplicationId]:\n\
+        \          \n\
+        \           {ul\n\
+        \                 {-  You may provide a [MessageDeduplicationId] explicitly.\n\
+        \                     \n\
+        \                      }\n\
+        \                 {-  If you aren't able to provide a [MessageDeduplicationId] and you \
+         enable [ContentBasedDeduplication] for your topic, Amazon SNS uses a SHA-256 hash to \
+         generate the [MessageDeduplicationId] using the body of the message (but not the \
+         attributes of the message).\n\
+        \                     \n\
+        \                      }\n\
+        \                 {-  If you don't provide a [MessageDeduplicationId] and the topic \
+         doesn't have [ContentBasedDeduplication] set, the action fails with an error.\n\
+        \                     \n\
+        \                      }\n\
+        \                 {-  If the topic has a [ContentBasedDeduplication] set, your \
+         [MessageDeduplicationId] overrides the generated one. \n\
+        \                     \n\
+        \                      }\n\
+        \                 \n\
+        \       }\n\
+        \        }\n\
+        \      {-  When [ContentBasedDeduplication] is in effect, messages with identical content \
+         sent within the deduplication scope and interval are treated as duplicates and only one \
+         copy of the message is delivered.\n\
+        \          \n\
+        \           }\n\
+        \      {-  If you send one message with [ContentBasedDeduplication] enabled, and then \
+         another message with a [MessageDeduplicationId] that is the same as the one generated for \
+         the first [MessageDeduplicationId], the two messages are treated as duplicates, within \
+         the deduplication scope and interval, and only one copy of the message is delivered.\n\
+        \          \n\
+        \           }\n\
+        \      }\n\
+        \  "]
+  message_group_id : string_ option;
+      [@ocaml.doc
+        "The [MessageGroupId] can contain up to 128 alphanumeric characters [(a-z, A-Z, 0-9)] and \
+         punctuation [(!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~)].\n\n\
+        \  For FIFO topics: The [MessageGroupId] is a tag that specifies that a message belongs to \
+         a specific message group. Messages that belong to the same message group are processed in \
+         a FIFO manner (however, messages in different message groups might be processed out of \
+         order). Every message must include a [MessageGroupId]. \n\
+        \ \n\
+        \   For standard topics: The [MessageGroupId] is optional and is forwarded only to Amazon \
+         SQS standard subscriptions to activate \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-fair-queues.html}fair \
+         queues}. The [MessageGroupId] is not used for, or sent to, any other endpoint types. When \
+         provided, the same validation rules apply as for FIFO topics. \n\
+        \  "]
 }
-[@@ocaml.doc "A list of phone numbers and their metadata.\n"]
-
-type nonrec phone_number_information_list = phone_number_information list [@@ocaml.doc ""]
-
-type nonrec opted_out_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "Indicates that the specified phone number opted out of receiving SMS messages from your Amazon \
-   Web Services account. You can't send SMS messages to phone numbers that opt out.\n"]
+[@@ocaml.doc "Input for Publish action.\n"]
 
 type nonrec opt_in_phone_number_response = unit [@@ocaml.doc ""]
 
@@ -1512,16 +1419,21 @@ type nonrec opt_in_phone_number_input = {
 }
 [@@ocaml.doc "Input for the OptInPhoneNumber action.\n"]
 
-type nonrec max_items_list_origination_numbers = int [@@ocaml.doc ""]
+type nonrec next_token = string [@@ocaml.doc ""]
 
-type nonrec max_items = int [@@ocaml.doc ""]
+type nonrec topic = { topic_arn : topic_ar_n option [@ocaml.doc "The topic's ARN.\n"] }
+[@@ocaml.doc
+  "A wrapper type for the topic's Amazon Resource Name (ARN). To retrieve a topic's attributes, \
+   use [GetTopicAttributes].\n"]
+
+type nonrec topics_list = topic list [@@ocaml.doc ""]
 
 type nonrec list_topics_response = {
+  topics : topics_list option; [@ocaml.doc "A list of topic ARNs.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "Token to pass along to the next [ListTopics] request. This element is returned if there \
          are additional topics to retrieve.\n"]
-  topics : topics_list option; [@ocaml.doc "A list of topic ARNs.\n"]
 }
 [@@ocaml.doc "Response for ListTopics action.\n"]
 
@@ -1541,12 +1453,43 @@ type nonrec list_tags_for_resource_request = {
 }
 [@@ocaml.doc ""]
 
+type nonrec account = string [@@ocaml.doc ""]
+
+type nonrec subscription = {
+  subscription_arn : subscription_ar_n option; [@ocaml.doc "The subscription's ARN.\n"]
+  owner : account option; [@ocaml.doc "The subscription's owner.\n"]
+  protocol : protocol option; [@ocaml.doc "The subscription's protocol.\n"]
+  endpoint : endpoint2 option;
+      [@ocaml.doc "The subscription's endpoint (format depends on the protocol).\n"]
+  topic_arn : topic_ar_n option; [@ocaml.doc "The ARN of the subscription's topic.\n"]
+}
+[@@ocaml.doc "A wrapper type for the attributes of an Amazon SNS subscription.\n"]
+
+type nonrec subscriptions_list = subscription list [@@ocaml.doc ""]
+
+type nonrec list_subscriptions_by_topic_response = {
+  subscriptions : subscriptions_list option; [@ocaml.doc "A list of subscriptions.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "Token to pass along to the next [ListSubscriptionsByTopic] request. This element is \
+         returned if there are more subscriptions to retrieve.\n"]
+}
+[@@ocaml.doc "Response for ListSubscriptionsByTopic action.\n"]
+
+type nonrec list_subscriptions_by_topic_input = {
+  topic_arn : topic_ar_n;
+      [@ocaml.doc "The ARN of the topic for which you wish to find subscriptions.\n"]
+  next_token : next_token option;
+      [@ocaml.doc "Token returned by the previous [ListSubscriptionsByTopic] request.\n"]
+}
+[@@ocaml.doc "Input for ListSubscriptionsByTopic action.\n"]
+
 type nonrec list_subscriptions_response = {
+  subscriptions : subscriptions_list option; [@ocaml.doc "A list of subscriptions.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "Token to pass along to the next [ListSubscriptions] request. This element is returned if \
          there are more subscriptions to retrieve.\n"]
-  subscriptions : subscriptions_list option; [@ocaml.doc "A list of subscriptions.\n"]
 }
 [@@ocaml.doc "Response for ListSubscriptions action\n"]
 
@@ -1556,52 +1499,70 @@ type nonrec list_subscriptions_input = {
 }
 [@@ocaml.doc "Input for ListSubscriptions action.\n"]
 
-type nonrec list_subscriptions_by_topic_response = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "Token to pass along to the next [ListSubscriptionsByTopic] request. This element is \
-         returned if there are more subscriptions to retrieve.\n"]
-  subscriptions : subscriptions_list option; [@ocaml.doc "A list of subscriptions.\n"]
-}
-[@@ocaml.doc "Response for ListSubscriptionsByTopic action.\n"]
+type nonrec sms_sandbox_phone_number_verification_status =
+  | Pending [@ocaml.doc ""]
+  | Verified [@ocaml.doc ""]
+[@@ocaml.doc
+  "Enum listing out all supported destination phone number verification statuses. The following \
+   enum values are supported. 1. PENDING : The destination phone number is pending verification. \
+   2. VERIFIED : The destination phone number is verified."]
 
-type nonrec list_subscriptions_by_topic_input = {
-  next_token : next_token option;
-      [@ocaml.doc "Token returned by the previous [ListSubscriptionsByTopic] request.\n"]
-  topic_arn : topic_ar_n;
-      [@ocaml.doc "The ARN of the topic for which you wish to find subscriptions.\n"]
+type nonrec sms_sandbox_phone_number = {
+  phone_number : phone_number_string option; [@ocaml.doc "The destination phone number.\n"]
+  status : sms_sandbox_phone_number_verification_status option;
+      [@ocaml.doc "The destination phone number's verification status.\n"]
 }
-[@@ocaml.doc "Input for ListSubscriptionsByTopic action.\n"]
+[@@ocaml.doc
+  "A verified or pending destination phone number in the SMS sandbox.\n\n\
+  \ When you start using Amazon SNS to send SMS messages, your Amazon Web Services account is in \
+   the {i SMS sandbox}. The SMS sandbox provides a safe environment for you to try Amazon SNS \
+   features without risking your reputation as an SMS sender. While your Amazon Web Services \
+   account is in the SMS sandbox, you can use all of the features of Amazon SNS. However, you can \
+   send SMS messages only to verified destination phone numbers. For more information, including \
+   how to move out of the sandbox to send messages without restrictions, see \
+   {{:https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html}SMS sandbox} in the {i Amazon \
+   SNS Developer Guide}.\n\
+  \ "]
 
-type nonrec list_string = string_ list [@@ocaml.doc ""]
+type nonrec sms_sandbox_phone_number_list = sms_sandbox_phone_number list [@@ocaml.doc ""]
 
 type nonrec list_sms_sandbox_phone_numbers_result = {
+  phone_numbers : sms_sandbox_phone_number_list;
+      [@ocaml.doc "A list of the calling account's pending and verified phone numbers.\n"]
   next_token : string_ option;
       [@ocaml.doc
         "A [NextToken] string is returned when you call the [ListSMSSandboxPhoneNumbersInput] \
          operation if additional pages of records are available.\n"]
-  phone_numbers : sms_sandbox_phone_number_list;
-      [@ocaml.doc "A list of the calling account's pending and verified phone numbers.\n"]
 }
 [@@ocaml.doc ""]
 
+type nonrec max_items = int [@@ocaml.doc ""]
+
 type nonrec list_sms_sandbox_phone_numbers_input = {
-  max_results : max_items option; [@ocaml.doc "The maximum number of phone numbers to return.\n"]
   next_token : next_token option;
       [@ocaml.doc "Token that the previous [ListSMSSandboxPhoneNumbersInput] request returns.\n"]
+  max_results : max_items option; [@ocaml.doc "The maximum number of phone numbers to return.\n"]
 }
 [@@ocaml.doc ""]
+
+type nonrec platform_application = {
+  platform_application_arn : string_ option;
+      [@ocaml.doc "PlatformApplicationArn for platform application object.\n"]
+  attributes : map_string_to_string option;
+      [@ocaml.doc "Attributes for platform application object.\n"]
+}
+[@@ocaml.doc "Platform application object.\n"]
 
 type nonrec list_of_platform_applications = platform_application list [@@ocaml.doc ""]
 
 type nonrec list_platform_applications_response = {
+  platform_applications : list_of_platform_applications option;
+      [@ocaml.doc
+        "Platform applications returned when calling [ListPlatformApplications] action.\n"]
   next_token : string_ option;
       [@ocaml.doc
         " [NextToken] string is returned when calling [ListPlatformApplications] action if \
          additional records are available after the first page results.\n"]
-  platform_applications : list_of_platform_applications option;
-      [@ocaml.doc
-        "Platform applications returned when calling [ListPlatformApplications] action.\n"]
 }
 [@@ocaml.doc "Response for [ListPlatformApplications] action.\n"]
 
@@ -1613,15 +1574,17 @@ type nonrec list_platform_applications_input = {
 }
 [@@ocaml.doc "Input for [ListPlatformApplications] action.\n"]
 
+type nonrec phone_number_list = phone_number list [@@ocaml.doc ""]
+
 type nonrec list_phone_numbers_opted_out_response = {
-  next_token : string_ option;
-      [@ocaml.doc
-        "A [NextToken] string is returned when you call the [ListPhoneNumbersOptedOut] action if \
-         additional records are available after the first page of results.\n"]
   phone_numbers : phone_number_list option;
       [@ocaml.doc
         "A list of phone numbers that are opted out of receiving SMS messages. The list is \
          paginated, and each page can contain up to 100 phone numbers.\n"]
+  next_token : string_ option;
+      [@ocaml.doc
+        "A [NextToken] string is returned when you call the [ListPhoneNumbersOptedOut] action if \
+         additional records are available after the first page of results.\n"]
 }
 [@@ocaml.doc "The response from the [ListPhoneNumbersOptedOut] action.\n"]
 
@@ -1633,71 +1596,90 @@ type nonrec list_phone_numbers_opted_out_input = {
 }
 [@@ocaml.doc "The input for the [ListPhoneNumbersOptedOut] action.\n"]
 
+type nonrec number_capability = SMS [@ocaml.doc ""] | MMS [@ocaml.doc ""] | VOICE [@ocaml.doc ""]
+[@@ocaml.doc "Enum listing out all supported number capabilities."]
+
+type nonrec number_capability_list = number_capability list [@@ocaml.doc ""]
+
+type nonrec route_type =
+  | Transactional [@ocaml.doc ""]
+  | Promotional [@ocaml.doc ""]
+  | Premium [@ocaml.doc ""]
+[@@ocaml.doc
+  "Enum listing out all supported route types. The following enum values are supported. 1. \
+   Transactional : Non-marketing traffic 2. Promotional : Marketing 3. Premium : Premium routes \
+   for OTP delivery to the carriers"]
+
+type nonrec iso2_country_code = string [@@ocaml.doc ""]
+
+type nonrec timestamp = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec phone_number_information = {
+  created_at : timestamp option;
+      [@ocaml.doc "The date and time when the phone number was created.\n"]
+  phone_number : phone_number option; [@ocaml.doc "The phone number.\n"]
+  status : string_ option; [@ocaml.doc "The status of the phone number.\n"]
+  iso2_country_code : iso2_country_code option;
+      [@ocaml.doc
+        "The two-character code for the country or region, in ISO 3166-1 alpha-2 format.\n"]
+  route_type : route_type option; [@ocaml.doc "The list of supported routes.\n"]
+  number_capabilities : number_capability_list option;
+      [@ocaml.doc "The capabilities of each phone number.\n"]
+}
+[@@ocaml.doc "A list of phone numbers and their metadata.\n"]
+
+type nonrec phone_number_information_list = phone_number_information list [@@ocaml.doc ""]
+
 type nonrec list_origination_numbers_result = {
-  phone_numbers : phone_number_information_list option;
-      [@ocaml.doc "A list of the calling account's verified and pending origination numbers.\n"]
   next_token : next_token option;
       [@ocaml.doc
         "A [NextToken] string is returned when you call the [ListOriginationNumbers] operation if \
          additional pages of records are available.\n"]
+  phone_numbers : phone_number_information_list option;
+      [@ocaml.doc "A list of the calling account's verified and pending origination numbers.\n"]
 }
 [@@ocaml.doc ""]
 
+type nonrec max_items_list_origination_numbers = int [@@ocaml.doc ""]
+
 type nonrec list_origination_numbers_request = {
-  max_results : max_items_list_origination_numbers option;
-      [@ocaml.doc "The maximum number of origination numbers to return.\n"]
   next_token : next_token option;
       [@ocaml.doc "Token that the previous [ListOriginationNumbers] request returns.\n"]
+  max_results : max_items_list_origination_numbers option;
+      [@ocaml.doc "The maximum number of origination numbers to return.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec endpoint = {
-  attributes : map_string_to_string option; [@ocaml.doc "Attributes for endpoint.\n"]
   endpoint_arn : string_ option; [@ocaml.doc "The [EndpointArn] for mobile app and device.\n"]
+  attributes : map_string_to_string option; [@ocaml.doc "Attributes for endpoint.\n"]
 }
 [@@ocaml.doc "The endpoint for mobile app and device.\n"]
 
 type nonrec list_of_endpoints = endpoint list [@@ocaml.doc ""]
 
 type nonrec list_endpoints_by_platform_application_response = {
+  endpoints : list_of_endpoints option;
+      [@ocaml.doc "Endpoints returned for [ListEndpointsByPlatformApplication] action.\n"]
   next_token : string_ option;
       [@ocaml.doc
         " [NextToken] string is returned when calling [ListEndpointsByPlatformApplication] action \
          if additional records are available after the first page results.\n"]
-  endpoints : list_of_endpoints option;
-      [@ocaml.doc "Endpoints returned for [ListEndpointsByPlatformApplication] action.\n"]
 }
 [@@ocaml.doc "Response for [ListEndpointsByPlatformApplication] action.\n"]
 
 type nonrec list_endpoints_by_platform_application_input = {
+  platform_application_arn : string_;
+      [@ocaml.doc
+        " [PlatformApplicationArn] for [ListEndpointsByPlatformApplicationInput] action.\n"]
   next_token : string_ option;
       [@ocaml.doc
         " [NextToken] string is used when calling [ListEndpointsByPlatformApplication] action to \
          retrieve additional records that are available after the first page results.\n"]
-  platform_application_arn : string_;
-      [@ocaml.doc
-        " [PlatformApplicationArn] for [ListEndpointsByPlatformApplicationInput] action.\n"]
 }
 [@@ocaml.doc "Input for [ListEndpointsByPlatformApplication] action.\n"]
 
-type nonrec language_code_string =
-  | Zh_TW [@ocaml.doc ""]
-  | Zh_CN [@ocaml.doc ""]
-  | Kr_KR [@ocaml.doc ""]
-  | Pt_BR [@ocaml.doc ""]
-  | Jp_JP [@ocaml.doc ""]
-  | It_IT [@ocaml.doc ""]
-  | Fr_FR [@ocaml.doc ""]
-  | Fr_CA [@ocaml.doc ""]
-  | De_DE [@ocaml.doc ""]
-  | Es_ES [@ocaml.doc ""]
-  | Es_419 [@ocaml.doc ""]
-  | En_GB [@ocaml.doc ""]
-  | En_US [@ocaml.doc ""]
-[@@ocaml.doc "Supported language code for sending OTP message"]
-
-type nonrec invalid_state_exception = { message : string_ option [@ocaml.doc ""] }
-[@@ocaml.doc "Indicates that the specified state is not a valid state for an event source.\n"]
+type nonrec topic_attributes_map = (attribute_name * attribute_value) list [@@ocaml.doc ""]
 
 type nonrec get_topic_attributes_response = {
   attributes : topic_attributes_map option;
@@ -1942,6 +1924,8 @@ type nonrec get_sms_attributes_response = {
 }
 [@@ocaml.doc "The response from the [GetSMSAttributes] request.\n"]
 
+type nonrec list_string = string_ list [@@ocaml.doc ""]
+
 type nonrec get_sms_attributes_input = {
   attributes : list_string option;
       [@ocaml.doc
@@ -2063,10 +2047,17 @@ type nonrec get_data_protection_policy_input = {
 }
 [@@ocaml.doc ""]
 
+type nonrec invalid_state_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc "Indicates that the specified state is not a valid state for an event source.\n"]
+
 type nonrec delete_topic_input = {
   topic_arn : topic_ar_n; [@ocaml.doc "The ARN of the topic you want to delete.\n"]
 }
 [@@ocaml.doc ""]
+
+type nonrec user_error_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "Indicates that a request parameter does not comply with the associated constraints.\n"]
 
 type nonrec delete_sms_sandbox_phone_number_result = unit [@@ocaml.doc ""]
 
@@ -2086,7 +2077,8 @@ type nonrec delete_endpoint_input = {
 }
 [@@ocaml.doc "Input for [DeleteEndpoint] action.\n"]
 
-type nonrec delegates_list = delegate list [@@ocaml.doc ""]
+type nonrec topic_limit_exceeded_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc "Indicates that the customer already owns the maximum allowed number of topics.\n"]
 
 type nonrec create_topic_response = {
   topic_arn : topic_ar_n option;
@@ -2094,23 +2086,17 @@ type nonrec create_topic_response = {
 }
 [@@ocaml.doc "Response from CreateTopic action.\n"]
 
+type nonrec topic_name = string [@@ocaml.doc ""]
+
 type nonrec create_topic_input = {
-  data_protection_policy : attribute_value option;
+  name : topic_name;
       [@ocaml.doc
-        "The body of the policy document you want to use for this topic.\n\n\
-        \ You can only add one policy per topic.\n\
+        "The name of the topic you want to create.\n\n\
+        \ Constraints: Topic names must be made up of only uppercase and lowercase ASCII letters, \
+         numbers, underscores, and hyphens, and must be between 1 and 256 characters long.\n\
         \ \n\
-        \  The policy must be in JSON string format.\n\
-        \  \n\
-        \   Length Constraints: Maximum length of 30,720.\n\
-        \   "]
-  tags : tag_list option;
-      [@ocaml.doc
-        "The list of tags to add to a new topic.\n\n\
-        \  To be able to tag a topic on creation, you must have the [sns:CreateTopic] and \
-         [sns:TagResource] permissions.\n\
-        \  \n\
-        \   "]
+        \  For a FIFO (first-in-first-out) topic, the name must end with the [.fifo] suffix. \n\
+        \  "]
   attributes : topic_attributes_map option;
       [@ocaml.doc
         "A map of attributes with their corresponding values.\n\n\
@@ -2320,39 +2306,68 @@ type nonrec create_topic_input = {
         \           }\n\
         \         }\n\
         \  "]
-  name : topic_name;
+  tags : tag_list option;
       [@ocaml.doc
-        "The name of the topic you want to create.\n\n\
-        \ Constraints: Topic names must be made up of only uppercase and lowercase ASCII letters, \
-         numbers, underscores, and hyphens, and must be between 1 and 256 characters long.\n\
+        "The list of tags to add to a new topic.\n\n\
+        \  To be able to tag a topic on creation, you must have the [sns:CreateTopic] and \
+         [sns:TagResource] permissions.\n\
+        \  \n\
+        \   "]
+  data_protection_policy : attribute_value option;
+      [@ocaml.doc
+        "The body of the policy document you want to use for this topic.\n\n\
+        \ You can only add one policy per topic.\n\
         \ \n\
-        \  For a FIFO (first-in-first-out) topic, the name must end with the [.fifo] suffix. \n\
-        \  "]
+        \  The policy must be in JSON string format.\n\
+        \  \n\
+        \   Length Constraints: Maximum length of 30,720.\n\
+        \   "]
 }
 [@@ocaml.doc "Input for CreateTopic action.\n"]
 
+type nonrec opted_out_exception = { message : string_ option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "Indicates that the specified phone number opted out of receiving SMS messages from your Amazon \
+   Web Services account. You can't send SMS messages to phone numbers that opt out.\n"]
+
 type nonrec create_sms_sandbox_phone_number_result = unit [@@ocaml.doc ""]
 
+type nonrec language_code_string =
+  | En_US [@ocaml.doc ""]
+  | En_GB [@ocaml.doc ""]
+  | Es_419 [@ocaml.doc ""]
+  | Es_ES [@ocaml.doc ""]
+  | De_DE [@ocaml.doc ""]
+  | Fr_CA [@ocaml.doc ""]
+  | Fr_FR [@ocaml.doc ""]
+  | It_IT [@ocaml.doc ""]
+  | Jp_JP [@ocaml.doc ""]
+  | Pt_BR [@ocaml.doc ""]
+  | Kr_KR [@ocaml.doc ""]
+  | Zh_CN [@ocaml.doc ""]
+  | Zh_TW [@ocaml.doc ""]
+[@@ocaml.doc "Supported language code for sending OTP message"]
+
 type nonrec create_sms_sandbox_phone_number_input = {
-  language_code : language_code_string option;
-      [@ocaml.doc "The language to use for sending the OTP. The default value is [en-US].\n"]
   phone_number : phone_number_string;
       [@ocaml.doc
         "The destination phone number to verify. On verification, Amazon SNS adds this phone \
          number to the list of verified phone numbers that you can send SMS messages to.\n"]
+  language_code : language_code_string option;
+      [@ocaml.doc "The language to use for sending the OTP. The default value is [en-US].\n"]
 }
 [@@ocaml.doc ""]
 
+type nonrec create_endpoint_response = {
+  endpoint_arn : string_ option; [@ocaml.doc "EndpointArn returned from CreateEndpoint action.\n"]
+}
+[@@ocaml.doc "Response from CreateEndpoint action.\n"]
+
 type nonrec create_platform_endpoint_input = {
-  attributes : map_string_to_string option;
+  platform_application_arn : string_;
       [@ocaml.doc
-        "For a list of attributes, see \
-         {{:https://docs.aws.amazon.com/sns/latest/api/API_SetEndpointAttributes.html} \
-         [SetEndpointAttributes] }.\n"]
-  custom_user_data : string_ option;
-      [@ocaml.doc
-        "Arbitrary user data to associate with the endpoint. Amazon SNS does not use this data. \
-         The data must be in UTF-8 format and less than 2KB.\n"]
+        " [PlatformApplicationArn] returned from CreatePlatformApplication is used to create a an \
+         endpoint.\n"]
   token : string_;
       [@ocaml.doc
         "Unique identifier created by the notification service for an app on a device. The \
@@ -2360,17 +2375,17 @@ type nonrec create_platform_endpoint_input = {
          For example, when using APNS as the notification service, you need the device token. \
          Alternatively, when using GCM (Firebase Cloud Messaging) or ADM, the device token \
          equivalent is called the registration ID.\n"]
-  platform_application_arn : string_;
+  custom_user_data : string_ option;
       [@ocaml.doc
-        " [PlatformApplicationArn] returned from CreatePlatformApplication is used to create a an \
-         endpoint.\n"]
+        "Arbitrary user data to associate with the endpoint. Amazon SNS does not use this data. \
+         The data must be in UTF-8 format and less than 2KB.\n"]
+  attributes : map_string_to_string option;
+      [@ocaml.doc
+        "For a list of attributes, see \
+         {{:https://docs.aws.amazon.com/sns/latest/api/API_SetEndpointAttributes.html} \
+         [SetEndpointAttributes] }.\n"]
 }
 [@@ocaml.doc "Input for CreatePlatformEndpoint action.\n"]
-
-type nonrec create_endpoint_response = {
-  endpoint_arn : string_ option; [@ocaml.doc "EndpointArn returned from CreateEndpoint action.\n"]
-}
-[@@ocaml.doc "Response from CreateEndpoint action.\n"]
 
 type nonrec create_platform_application_response = {
   platform_application_arn : string_ option; [@ocaml.doc " [PlatformApplicationArn] is returned.\n"]
@@ -2378,19 +2393,19 @@ type nonrec create_platform_application_response = {
 [@@ocaml.doc "Response from CreatePlatformApplication action.\n"]
 
 type nonrec create_platform_application_input = {
+  name : string_;
+      [@ocaml.doc
+        "Application names must be made up of only uppercase and lowercase ASCII letters, numbers, \
+         underscores, hyphens, and periods, and must be between 1 and 256 characters long.\n"]
+  platform : string_;
+      [@ocaml.doc
+        "The following platforms are supported: ADM (Amazon Device Messaging), APNS (Apple Push \
+         Notification Service), APNS_SANDBOX, and GCM (Firebase Cloud Messaging).\n"]
   attributes : map_string_to_string;
       [@ocaml.doc
         "For a list of attributes, see \
          {{:https://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html} \
          [SetPlatformApplicationAttributes] }.\n"]
-  platform : string_;
-      [@ocaml.doc
-        "The following platforms are supported: ADM (Amazon Device Messaging), APNS (Apple Push \
-         Notification Service), APNS_SANDBOX, and GCM (Firebase Cloud Messaging).\n"]
-  name : string_;
-      [@ocaml.doc
-        "Application names must be made up of only uppercase and lowercase ASCII letters, numbers, \
-         underscores, hyphens, and periods, and must be between 1 and 256 characters long.\n"]
 }
 [@@ocaml.doc "Input for CreatePlatformApplication action.\n"]
 
@@ -2399,17 +2414,21 @@ type nonrec confirm_subscription_response = {
 }
 [@@ocaml.doc "Response for ConfirmSubscriptions action.\n"]
 
+type nonrec authenticate_on_unsubscribe = string [@@ocaml.doc ""]
+
+type nonrec token = string [@@ocaml.doc ""]
+
 type nonrec confirm_subscription_input = {
+  topic_arn : topic_ar_n;
+      [@ocaml.doc "The ARN of the topic for which you wish to confirm a subscription.\n"]
+  token : token;
+      [@ocaml.doc "Short-lived token sent to an endpoint during the [Subscribe] action.\n"]
   authenticate_on_unsubscribe : authenticate_on_unsubscribe option;
       [@ocaml.doc
         "Disallows unauthenticated unsubscribes of the subscription. If the value of this \
          parameter is [true] and the request has an Amazon Web Services signature, then only the \
          topic owner and the subscription owner can unsubscribe the endpoint. The unsubscribe \
          action requires Amazon Web Services authentication. \n"]
-  token : token;
-      [@ocaml.doc "Short-lived token sent to an endpoint during the [Subscribe] action.\n"]
-  topic_arn : topic_ar_n;
-      [@ocaml.doc "The ARN of the topic for which you wish to confirm a subscription.\n"]
 }
 [@@ocaml.doc "Input for ConfirmSubscription action.\n"]
 
@@ -2436,22 +2455,3 @@ type nonrec check_if_phone_number_is_opted_out_input = {
       [@ocaml.doc "The phone number for which you want to check the opt out status.\n"]
 }
 [@@ocaml.doc "The input for the [CheckIfPhoneNumberIsOptedOut] action.\n"]
-
-type nonrec actions_list = action list [@@ocaml.doc ""]
-
-type nonrec add_permission_input = {
-  action_name : actions_list;
-      [@ocaml.doc
-        "The action you want to allow for the specified principal(s).\n\n\
-        \ Valid values: Any Amazon SNS action name, for example [Publish].\n\
-        \ "]
-  aws_account_id : delegates_list;
-      [@ocaml.doc
-        "The Amazon Web Services account IDs of the users (principals) who will be given access to \
-         the specified actions. The users must have Amazon Web Services account, but do not need \
-         to be signed up for this service.\n"]
-  label : label; [@ocaml.doc "A unique identifier for the new policy statement.\n"]
-  topic_arn : topic_ar_n;
-      [@ocaml.doc "The ARN of the topic whose access control policy you wish to modify.\n"]
-}
-[@@ocaml.doc ""]

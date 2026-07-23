@@ -1,14 +1,8 @@
 type nonrec string_ = string [@@ocaml.doc ""]
 
-type nonrec tag_key = string [@@ocaml.doc ""]
+type nonrec aws_account_id_list = string_ list [@@ocaml.doc ""]
 
-type nonrec tag_key_list = tag_key list [@@ocaml.doc ""]
-
-type nonrec untag_queue_request = {
-  tag_keys : tag_key_list; [@ocaml.doc "The list of tags to be removed from the specified queue.\n"]
-  queue_url : string_; [@ocaml.doc "The URL of the queue.\n"]
-}
-[@@ocaml.doc ""]
+type nonrec action_name_list = string_ list [@@ocaml.doc ""]
 
 type nonrec exception_message = string [@@ocaml.doc ""]
 
@@ -34,37 +28,75 @@ type nonrec request_throttled = { message : exception_message option [@ocaml.doc
 type nonrec queue_does_not_exist = { message : exception_message option [@ocaml.doc ""] }
 [@@ocaml.doc "Ensure that the [QueueUrl] is correct and that the queue has not been deleted.\n"]
 
+type nonrec over_limit = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The specified action violates a limit. For example, [ReceiveMessage] returns this error if the \
+   maximum number of in flight messages is reached and [AddPermission] returns this error if the \
+   maximum number of permissions for the queue is reached.\n"]
+
 type nonrec invalid_security = { message : exception_message option [@ocaml.doc ""] }
 [@@ocaml.doc "The request was not made over HTTPS or did not use SigV4 for signing.\n"]
 
 type nonrec invalid_address = { message : exception_message option [@ocaml.doc ""] }
 [@@ocaml.doc "The specified ID is invalid.\n"]
 
-type nonrec too_many_entries_in_batch_request = {
-  message : exception_message option; [@ocaml.doc ""]
+type nonrec add_permission_request = {
+  queue_url : string_;
+      [@ocaml.doc
+        "The URL of the Amazon SQS queue to which permissions are added.\n\n\
+        \ Queue URLs and names are case-sensitive.\n\
+        \ "]
+  label : string_;
+      [@ocaml.doc
+        "The unique identification of the permission you're setting (for example, \
+         [AliceSendMessage]). Maximum 80 characters. Allowed characters include alphanumeric \
+         characters, hyphens ([-]), and underscores ([_]).\n"]
+  aws_account_ids : aws_account_id_list;
+      [@ocaml.doc
+        "The Amazon Web Services account numbers of the \
+         {{:https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#P}principals} who are to \
+         receive permission. For information about locating the Amazon Web Services account \
+         identification, see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-making-api-requests.html#sqs-api-request-authentication}Your \
+         Amazon Web Services Identifiers} in the {i Amazon SQS Developer Guide}.\n"]
+  actions : action_name_list;
+      [@ocaml.doc
+        "The action the client wants to allow for the specified principal. Valid values: the name \
+         of any action or [*].\n\n\
+        \ For more information about these actions, see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-overview-of-managing-access.html}Overview \
+         of Managing Access Permissions to Your Amazon Simple Queue Service Resource} in the {i \
+         Amazon SQS Developer Guide}.\n\
+        \ \n\
+        \  Specifying [SendMessage], [DeleteMessage], or [ChangeMessageVisibility] for \
+         [ActionName.n] also grants permissions for the corresponding batch versions of those \
+         actions: [SendMessageBatch], [DeleteMessageBatch], and [ChangeMessageVisibilityBatch].\n\
+        \  "]
 }
-[@@ocaml.doc
-  "The batch request contains more entries than permissible. For Amazon SQS, the maximum number of \
-   entries you can include in a single \
-   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessageBatch.html}SendMessageBatch}, \
-   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteMessageBatch.html}DeleteMessageBatch}, \
-   or \
-   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ChangeMessageVisibilityBatch.html}ChangeMessageVisibilityBatch} \
-   request is 10.\n"]
+[@@ocaml.doc "\n"]
 
-type nonrec token = string [@@ocaml.doc ""]
+type nonrec tag_key = string [@@ocaml.doc ""]
+
+type nonrec tag_key_list = tag_key list [@@ocaml.doc ""]
+
+type nonrec untag_queue_request = {
+  queue_url : string_; [@ocaml.doc "The URL of the queue.\n"]
+  tag_keys : tag_key_list; [@ocaml.doc "The list of tags to be removed from the specified queue.\n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec tag_value = string [@@ocaml.doc ""]
 
 type nonrec tag_map = (tag_key * tag_value) list [@@ocaml.doc ""]
 
 type nonrec tag_queue_request = {
-  tags : tag_map; [@ocaml.doc "The list of tags to be added to the specified queue.\n"]
   queue_url : string_; [@ocaml.doc "The URL of the queue.\n"]
+  tags : tag_map; [@ocaml.doc "The list of tags to be added to the specified queue.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec string_list = string_ list [@@ocaml.doc ""]
+type nonrec resource_not_found_exception = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc "One or more specified resources don't exist.\n"]
 
 type nonrec start_message_move_task_result = {
   task_handle : string_ option;
@@ -77,6 +109,17 @@ type nonrec start_message_move_task_result = {
 type nonrec nullable_integer = int [@@ocaml.doc ""]
 
 type nonrec start_message_move_task_request = {
+  source_arn : string_;
+      [@ocaml.doc
+        "The ARN of the queue that contains the messages to be moved to another queue. Currently, \
+         only ARNs of dead-letter queues (DLQs) whose sources are other Amazon SQS queues are \
+         accepted. DLQs whose sources are non-SQS queues, such as Lambda or Amazon SNS topics, are \
+         not currently supported.\n"]
+  destination_arn : string_ option;
+      [@ocaml.doc
+        "The ARN of the queue that receives the moved messages. You can use this field to specify \
+         the destination queue where you would like to redrive messages. If this field is left \
+         blank, the messages will be redriven back to their respective original source queues.\n"]
   max_number_of_messages_per_second : nullable_integer option;
       [@ocaml.doc
         "The number of messages to be moved per second (the message movement rate). You can use \
@@ -84,51 +127,48 @@ type nonrec start_message_move_task_request = {
          second is 500. If this field is left blank, the system will optimize the rate based on \
          the queue message backlog size, which may vary throughout the duration of the message \
          movement task.\n"]
-  destination_arn : string_ option;
-      [@ocaml.doc
-        "The ARN of the queue that receives the moved messages. You can use this field to specify \
-         the destination queue where you would like to redrive messages. If this field is left \
-         blank, the messages will be redriven back to their respective original source queues.\n"]
-  source_arn : string_;
-      [@ocaml.doc
-        "The ARN of the queue that contains the messages to be moved to another queue. Currently, \
-         only ARNs of dead-letter queues (DLQs) whose sources are other Amazon SQS queues are \
-         accepted. DLQs whose sources are non-SQS queues, such as Lambda or Amazon SNS topics, are \
-         not currently supported.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec resource_not_found_exception = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc "One or more specified resources don't exist.\n"]
+type nonrec invalid_attribute_value = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc "A queue attribute value is invalid.\n"]
+
+type nonrec invalid_attribute_name = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The specified attribute doesn't exist.\n"]
 
 type nonrec queue_attribute_name =
-  | SqsManagedSseEnabled [@ocaml.doc ""]
-  | RedriveAllowPolicy [@ocaml.doc ""]
-  | FifoThroughputLimit [@ocaml.doc ""]
-  | DeduplicationScope [@ocaml.doc ""]
-  | KmsDataKeyReusePeriodSeconds [@ocaml.doc ""]
-  | KmsMasterKeyId [@ocaml.doc ""]
-  | ContentBasedDeduplication [@ocaml.doc ""]
-  | FifoQueue [@ocaml.doc ""]
-  | RedrivePolicy [@ocaml.doc ""]
-  | ReceiveMessageWaitTimeSeconds [@ocaml.doc ""]
-  | DelaySeconds [@ocaml.doc ""]
-  | ApproximateNumberOfMessagesDelayed [@ocaml.doc ""]
-  | QueueArn [@ocaml.doc ""]
-  | LastModifiedTimestamp [@ocaml.doc ""]
-  | CreatedTimestamp [@ocaml.doc ""]
-  | ApproximateNumberOfMessagesNotVisible [@ocaml.doc ""]
-  | ApproximateNumberOfMessages [@ocaml.doc ""]
-  | MessageRetentionPeriod [@ocaml.doc ""]
-  | MaximumMessageSize [@ocaml.doc ""]
-  | VisibilityTimeout [@ocaml.doc ""]
-  | Policy [@ocaml.doc ""]
   | All [@ocaml.doc ""]
+  | Policy [@ocaml.doc ""]
+  | VisibilityTimeout [@ocaml.doc ""]
+  | MaximumMessageSize [@ocaml.doc ""]
+  | MessageRetentionPeriod [@ocaml.doc ""]
+  | ApproximateNumberOfMessages [@ocaml.doc ""]
+  | ApproximateNumberOfMessagesNotVisible [@ocaml.doc ""]
+  | CreatedTimestamp [@ocaml.doc ""]
+  | LastModifiedTimestamp [@ocaml.doc ""]
+  | QueueArn [@ocaml.doc ""]
+  | ApproximateNumberOfMessagesDelayed [@ocaml.doc ""]
+  | DelaySeconds [@ocaml.doc ""]
+  | ReceiveMessageWaitTimeSeconds [@ocaml.doc ""]
+  | RedrivePolicy [@ocaml.doc ""]
+  | FifoQueue [@ocaml.doc ""]
+  | ContentBasedDeduplication [@ocaml.doc ""]
+  | KmsMasterKeyId [@ocaml.doc ""]
+  | KmsDataKeyReusePeriodSeconds [@ocaml.doc ""]
+  | DeduplicationScope [@ocaml.doc ""]
+  | FifoThroughputLimit [@ocaml.doc ""]
+  | RedriveAllowPolicy [@ocaml.doc ""]
+  | SqsManagedSseEnabled [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
 type nonrec queue_attribute_map = (queue_attribute_name * string_) list [@@ocaml.doc ""]
 
 type nonrec set_queue_attributes_request = {
+  queue_url : string_;
+      [@ocaml.doc
+        "The URL of the Amazon SQS queue whose attributes are set.\n\n\
+        \ Queue URLs and names are case-sensitive.\n\
+        \ "]
   attributes : queue_attribute_map;
       [@ocaml.doc
         "A map of attributes to set.\n\n\
@@ -363,103 +403,168 @@ type nonrec set_queue_attributes_request = {
          {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/quotas-messages.html}Quotas \
          related to messages} in the {i Amazon SQS Developer Guide}.\n\
         \    "]
-  queue_url : string_;
-      [@ocaml.doc
-        "The URL of the Amazon SQS queue whose attributes are set.\n\n\
-        \ Queue URLs and names are case-sensitive.\n\
-        \ "]
 }
 [@@ocaml.doc "\n"]
 
-type nonrec over_limit = { message : exception_message option [@ocaml.doc ""] }
+type nonrec too_many_entries_in_batch_request = {
+  message : exception_message option; [@ocaml.doc ""]
+}
 [@@ocaml.doc
-  "The specified action violates a limit. For example, [ReceiveMessage] returns this error if the \
-   maximum number of in flight messages is reached and [AddPermission] returns this error if the \
-   maximum number of permissions for the queue is reached.\n"]
+  "The batch request contains more entries than permissible. For Amazon SQS, the maximum number of \
+   entries you can include in a single \
+   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessageBatch.html}SendMessageBatch}, \
+   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteMessageBatch.html}DeleteMessageBatch}, \
+   or \
+   {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ChangeMessageVisibilityBatch.html}ChangeMessageVisibilityBatch} \
+   request is 10.\n"]
 
-type nonrec invalid_attribute_value = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc "A queue attribute value is invalid.\n"]
+type nonrec kms_throttled = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc "Amazon Web Services KMS throttles requests for the following conditions.\n"]
 
-type nonrec invalid_attribute_name = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The specified attribute doesn't exist.\n"]
+type nonrec kms_opt_in_required = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The request was rejected because the specified key policy isn't syntactically or semantically \
+   correct.\n"]
 
-type nonrec send_message_result = {
-  sequence_number : string_ option;
+type nonrec kms_not_found = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The request was rejected because the specified entity or resource could not be found. \n"]
+
+type nonrec kms_invalid_state = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The request was rejected because the state of the specified resource is not valid for this \
+   request.\n"]
+
+type nonrec kms_invalid_key_usage = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "The request was rejected for one of the following reasons:\n\n\
+  \ {ul\n\
+  \       {-  The KeyUsage value of the KMS key is incompatible with the API operation.\n\
+  \           \n\
+  \            }\n\
+  \       {-  The encryption algorithm or signing algorithm specified for the operation is \
+   incompatible with the type of key material in the KMS key (KeySpec).\n\
+  \           \n\
+  \            }\n\
+  \       }\n\
+  \  "]
+
+type nonrec kms_disabled = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The request was denied due to request throttling.\n"]
+
+type nonrec kms_access_denied = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The caller doesn't have the required KMS access.\n"]
+
+type nonrec invalid_batch_entry_id = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The [Id] of a batch entry in a batch request doesn't abide by the specification.\n"]
+
+type nonrec empty_batch_request = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The batch request doesn't contain any entries.\n"]
+
+type nonrec batch_request_too_long = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The length of all the messages put together is more than the limit.\n"]
+
+type nonrec batch_entry_ids_not_distinct = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc "Two or more batch entries in the request have the same [Id].\n"]
+
+type nonrec boolean_ = bool [@@ocaml.doc ""]
+
+type nonrec batch_result_error_entry = {
+  id : string_; [@ocaml.doc "The [Id] of an entry in a batch request.\n"]
+  sender_fault : boolean_;
       [@ocaml.doc
-        "This parameter applies only to FIFO (first-in-first-out) queues.\n\n\
-        \ The large, non-consecutive number that Amazon SQS assigns to each message.\n\
-        \ \n\
-        \  The length of [SequenceNumber] is 128 bits. [SequenceNumber] continues to increase for \
-         a particular [MessageGroupId].\n\
-        \  "]
-  message_id : string_ option;
+        "Specifies whether the error happened due to the caller of the batch API action.\n"]
+  code : string_; [@ocaml.doc "An error code representing why the action failed on this entry.\n"]
+  message : string_ option;
+      [@ocaml.doc "A message explaining why the action failed on this entry.\n"]
+}
+[@@ocaml.doc
+  "Gives a detailed description of the result of an action on each entry in the request.\n"]
+
+type nonrec batch_result_error_entry_list = batch_result_error_entry list [@@ocaml.doc ""]
+
+type nonrec send_message_batch_result_entry = {
+  id : string_; [@ocaml.doc "An identifier for the message in this batch.\n"]
+  message_id : string_; [@ocaml.doc "An identifier for the message.\n"]
+  md5_of_message_body : string_;
       [@ocaml.doc
-        "An attribute containing the [MessageId] of the message sent to the queue. For more \
-         information, see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-message-identifiers.html}Queue \
-         and Message Identifiers} in the {i Amazon SQS Developer Guide}. \n"]
-  md5_of_message_system_attributes : string_ option;
-      [@ocaml.doc
-        "An MD5 digest of the non-URL-encoded message system attribute string. You can use this \
-         attribute to verify that Amazon SQS received the message correctly. Amazon SQS \
-         URL-decodes the message before creating the MD5 digest.\n"]
+        "An MD5 digest of the non-URL-encoded message body string. You can use this attribute to \
+         verify that Amazon SQS received the message correctly. Amazon SQS URL-decodes the message \
+         before creating the MD5 digest. For information about MD5, see \
+         {{:https://www.ietf.org/rfc/rfc1321.txt}RFC1321}.\n"]
   md5_of_message_attributes : string_ option;
       [@ocaml.doc
         "An MD5 digest of the non-URL-encoded message attribute string. You can use this attribute \
          to verify that Amazon SQS received the message correctly. Amazon SQS URL-decodes the \
          message before creating the MD5 digest. For information about MD5, see \
          {{:https://www.ietf.org/rfc/rfc1321.txt}RFC1321}.\n"]
-  md5_of_message_body : string_ option;
+  md5_of_message_system_attributes : string_ option;
       [@ocaml.doc
-        "An MD5 digest of the non-URL-encoded message body string. You can use this attribute to \
-         verify that Amazon SQS received the message correctly. Amazon SQS URL-decodes the message \
-         before creating the MD5 digest. For information about MD5, see \
+        "An MD5 digest of the non-URL-encoded message system attribute string. You can use this \
+         attribute to verify that Amazon SQS received the message correctly. Amazon SQS \
+         URL-decodes the message before creating the MD5 digest. For information about MD5, see \
          {{:https://www.ietf.org/rfc/rfc1321.txt}RFC1321}.\n"]
+  sequence_number : string_ option;
+      [@ocaml.doc
+        "This parameter applies only to FIFO (first-in-first-out) queues.\n\n\
+        \ The large, non-consecutive number that Amazon SQS assigns to each message.\n\
+        \ \n\
+        \  The length of [SequenceNumber] is 128 bits. As [SequenceNumber] continues to increase \
+         for a particular [MessageGroupId].\n\
+        \  "]
 }
-[@@ocaml.doc "The [MD5OfMessageBody] and [MessageId] elements.\n"]
+[@@ocaml.doc
+  "Encloses a [MessageId] for a successfully-enqueued message in a \n\
+   {[\n\
+  \ [SendMessageBatch].\n\
+   ]}\n\
+  \ \n"]
+
+type nonrec send_message_batch_result_entry_list = send_message_batch_result_entry list
+[@@ocaml.doc ""]
+
+type nonrec send_message_batch_result = {
+  successful : send_message_batch_result_entry_list;
+      [@ocaml.doc "A list of \n{[\n [SendMessageBatchResultEntry] \n]}\n items.\n"]
+  failed : batch_result_error_entry_list;
+      [@ocaml.doc
+        "A list of \n\
+         {[\n\
+        \ [BatchResultErrorEntry] \n\
+         ]}\n\
+        \ items with error details about each message that can't be enqueued.\n"]
+}
+[@@ocaml.doc
+  "For each message in the batch, the response contains a \n\
+   {[\n\
+  \ [SendMessageBatchResultEntry] \n\
+   ]}\n\
+  \ tag if the message succeeds or a \n\
+   {[\n\
+  \ [BatchResultErrorEntry] \n\
+   ]}\n\
+  \ tag if the message fails.\n"]
 
 type nonrec binary = bytes [@@ocaml.doc ""]
 
 type nonrec binary_list = binary list [@@ocaml.doc ""]
 
-type nonrec message_attribute_value = {
-  data_type : string_;
-      [@ocaml.doc
-        "Amazon SQS supports the following logical data types: [String], [Number], and [Binary]. \
-         For the [Number] data type, you must use [StringValue].\n\n\
-        \ You can also append custom labels. For more information, see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-metadata.html#sqs-message-attributes}Amazon \
-         SQS Message Attributes} in the {i Amazon SQS Developer Guide}.\n\
-        \ "]
-  binary_list_values : binary_list option;
-      [@ocaml.doc "Not implemented. Reserved for future use.\n"]
-  string_list_values : string_list option;
-      [@ocaml.doc "Not implemented. Reserved for future use.\n"]
-  binary_value : binary option;
-      [@ocaml.doc
-        "Binary type attributes can store any binary data, such as compressed data, encrypted \
-         data, or images.\n"]
-  string_value : string_ option;
-      [@ocaml.doc
-        "Strings are Unicode with UTF-8 binary encoding. For a list of code values, see \
-         {{:http://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters}ASCII Printable \
-         Characters}.\n"]
-}
-[@@ocaml.doc
-  "The user-specified message attribute value. For string data types, the [Value] attribute has \
-   the same restrictions on the content as the message body. For more information, see \n\
-   {[\n\
-  \ [SendMessage].\n\
-   ]}\n\
-  \ \n\n\
-  \  [Name], [type], [value] and the message body must not be empty or null. All parts of the \
-   message attribute, including [Name], [Type], and [Value], are part of the message size \
-   restriction (1 MiB or 1,048,576 bytes).\n\
-  \ "]
-
-type nonrec message_body_attribute_map = (string_ * message_attribute_value) list [@@ocaml.doc ""]
+type nonrec string_list = string_ list [@@ocaml.doc ""]
 
 type nonrec message_system_attribute_value = {
+  string_value : string_ option;
+      [@ocaml.doc
+        "Strings are Unicode with UTF-8 binary encoding. For a list of code values, see \
+         {{:http://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters}ASCII Printable \
+         Characters}.\n"]
+  binary_value : binary option;
+      [@ocaml.doc
+        "Binary type attributes can store any binary data, such as compressed data, encrypted \
+         data, or images.\n"]
+  string_list_values : string_list option;
+      [@ocaml.doc "Not implemented. Reserved for future use.\n"]
+  binary_list_values : binary_list option;
+      [@ocaml.doc "Not implemented. Reserved for future use.\n"]
   data_type : string_;
       [@ocaml.doc
         "Amazon SQS supports the following logical data types: [String], [Number], and [Binary]. \
@@ -468,19 +573,6 @@ type nonrec message_system_attribute_value = {
          {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-metadata.html#sqs-message-attributes}Amazon \
          SQS Message Attributes} in the {i Amazon SQS Developer Guide}.\n\
         \ "]
-  binary_list_values : binary_list option;
-      [@ocaml.doc "Not implemented. Reserved for future use.\n"]
-  string_list_values : string_list option;
-      [@ocaml.doc "Not implemented. Reserved for future use.\n"]
-  binary_value : binary option;
-      [@ocaml.doc
-        "Binary type attributes can store any binary data, such as compressed data, encrypted \
-         data, or images.\n"]
-  string_value : string_ option;
-      [@ocaml.doc
-        "Strings are Unicode with UTF-8 binary encoding. For a list of code values, see \
-         {{:http://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters}ASCII Printable \
-         Characters}.\n"]
 }
 [@@ocaml.doc
   "The user-specified message system attribute value. For string data types, the [Value] attribute \
@@ -499,119 +591,73 @@ type nonrec message_body_system_attribute_map =
   (message_system_attribute_name_for_sends * message_system_attribute_value) list
 [@@ocaml.doc ""]
 
-type nonrec send_message_request = {
-  message_group_id : string_ option;
+type nonrec message_attribute_value = {
+  string_value : string_ option;
       [@ocaml.doc
-        " [MessageGroupId] is an attribute used in Amazon SQS FIFO (First-In-First-Out) and \
-         standard queues. In FIFO queues, [MessageGroupId] organizes messages into distinct \
-         groups. Messages within the same message group are always processed one at a time, in \
-         strict order, ensuring that no two messages from the same group are processed \
-         simultaneously. In standard queues, using [MessageGroupId] enables fair queues. It is \
-         used to identify the tenant a message belongs to, helping maintain consistent message \
-         dwell time across all tenants during noisy neighbor events. Unlike FIFO queues, messages \
-         with the same [MessageGroupId] can be processed in parallel, maintaining the high \
-         throughput of standard queues.\n\n\
-        \ {ul\n\
-        \       {-   {b FIFO queues:} [MessageGroupId] acts as the tag that specifies that a \
-         message belongs to a specific message group. Messages that belong to the same message \
-         group are processed in a FIFO manner (however, messages in different message groups might \
-         be processed out of order). To interleave multiple ordered streams within a single queue, \
-         use [MessageGroupId] values (for example, session data for multiple users). In this \
-         scenario, multiple consumers can process the queue, but the session data of each user is \
-         processed in a FIFO fashion.\n\
-        \           \n\
-        \            If you do not provide a [MessageGroupId] when sending a message to a FIFO \
-         queue, the action fails.\n\
-        \            \n\
-        \              [ReceiveMessage] might return messages with multiple [MessageGroupId] \
-         values. For each [MessageGroupId], the messages are sorted by time sent.\n\
-        \             \n\
-        \              }\n\
-        \       {-   {b Standard queues:}Use [MessageGroupId] in standard queues to enable fair \
-         queues. The [MessageGroupId] identifies the tenant a message belongs to. A tenant can be \
-         any entity that shares a queue with others, such as your customer, a client application, \
-         or a request type. When one tenant sends a disproportionately large volume of messages or \
-         has messages that require longer processing time, fair queues ensure other tenants' \
-         messages maintain low dwell time. This preserves quality of service for all tenants while \
-         maintaining the scalability and throughput of standard queues. We recommend that you \
-         include a [MessageGroupId] in all messages when using fair queues.\n\
-        \           \n\
-        \            }\n\
-        \       }\n\
-        \   The length of [MessageGroupId] is 128 characters. Valid values: alphanumeric \
-         characters and punctuation [(!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~)].\n\
+        "Strings are Unicode with UTF-8 binary encoding. For a list of code values, see \
+         {{:http://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters}ASCII Printable \
+         Characters}.\n"]
+  binary_value : binary option;
+      [@ocaml.doc
+        "Binary type attributes can store any binary data, such as compressed data, encrypted \
+         data, or images.\n"]
+  string_list_values : string_list option;
+      [@ocaml.doc "Not implemented. Reserved for future use.\n"]
+  binary_list_values : binary_list option;
+      [@ocaml.doc "Not implemented. Reserved for future use.\n"]
+  data_type : string_;
+      [@ocaml.doc
+        "Amazon SQS supports the following logical data types: [String], [Number], and [Binary]. \
+         For the [Number] data type, you must use [StringValue].\n\n\
+        \ You can also append custom labels. For more information, see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-metadata.html#sqs-message-attributes}Amazon \
+         SQS Message Attributes} in the {i Amazon SQS Developer Guide}.\n\
+        \ "]
+}
+[@@ocaml.doc
+  "The user-specified message attribute value. For string data types, the [Value] attribute has \
+   the same restrictions on the content as the message body. For more information, see \n\
+   {[\n\
+  \ [SendMessage].\n\
+   ]}\n\
+  \ \n\n\
+  \  [Name], [type], [value] and the message body must not be empty or null. All parts of the \
+   message attribute, including [Name], [Type], and [Value], are part of the message size \
+   restriction (1 MiB or 1,048,576 bytes).\n\
+  \ "]
+
+type nonrec message_body_attribute_map = (string_ * message_attribute_value) list [@@ocaml.doc ""]
+
+type nonrec send_message_batch_request_entry = {
+  id : string_;
+      [@ocaml.doc
+        "An identifier for a message in this batch used to communicate the result.\n\n\
+        \  The [Id]s of a batch request need to be unique within a request.\n\
+        \  \n\
+        \   This identifier can have up to 80 characters. The following characters are accepted: \
+         alphanumeric characters, hyphens(-), and underscores (_).\n\
         \   \n\
-        \    For best practices of using [MessageGroupId], see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-messagegroupid-property.html}Using \
-         the MessageGroupId Property} in the {i Amazon SQS Developer Guide}.\n\
         \    "]
-  message_deduplication_id : string_ option;
+  message_body : string_; [@ocaml.doc "The body of the message.\n"]
+  delay_seconds : nullable_integer option;
       [@ocaml.doc
-        "This parameter applies only to FIFO (first-in-first-out) queues.\n\n\
-        \ The token used for deduplication of sent messages. If a message with a particular \
-         [MessageDeduplicationId] is sent successfully, any messages sent with the same \
-         [MessageDeduplicationId] are accepted successfully but aren't delivered during the \
-         5-minute deduplication interval. For more information, see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues-exactly-once-processing.html} \
-         Exactly-once processing} in the {i Amazon SQS Developer Guide}.\n\
-        \ \n\
-        \  {ul\n\
-        \        {-  Every message must have a unique [MessageDeduplicationId],\n\
-        \            \n\
-        \             {ul\n\
-        \                   {-  You may provide a [MessageDeduplicationId] explicitly.\n\
-        \                       \n\
-        \                        }\n\
-        \                   {-  If you aren't able to provide a [MessageDeduplicationId] and you \
-         enable [ContentBasedDeduplication] for your queue, Amazon SQS uses a SHA-256 hash to \
-         generate the [MessageDeduplicationId] using the body of the message (but not the \
-         attributes of the message). \n\
-        \                       \n\
-        \                        }\n\
-        \                   {-  If you don't provide a [MessageDeduplicationId] and the queue \
-         doesn't have [ContentBasedDeduplication] set, the action fails with an error.\n\
-        \                       \n\
-        \                        }\n\
-        \                   {-  If the queue has [ContentBasedDeduplication] set, your \
-         [MessageDeduplicationId] overrides the generated one.\n\
-        \                       \n\
-        \                        }\n\
-        \                   \n\
-        \         }\n\
-        \          }\n\
-        \        {-  When [ContentBasedDeduplication] is in effect, messages with identical \
-         content sent within the deduplication interval are treated as duplicates and only one \
-         copy of the message is delivered.\n\
-        \            \n\
-        \             }\n\
-        \        {-  If you send one message with [ContentBasedDeduplication] enabled and then \
-         another message with a [MessageDeduplicationId] that is the same as the one generated for \
-         the first [MessageDeduplicationId], the two messages are treated as duplicates and only \
-         one copy of the message is delivered. \n\
-        \            \n\
-        \             }\n\
-        \        }\n\
-        \    The [MessageDeduplicationId] is available to the consumer of the message (this can be \
-         useful for troubleshooting delivery issues).\n\
-        \    \n\
-        \     If a message is sent successfully but the acknowledgement is lost and the message is \
-         resent with the same [MessageDeduplicationId] after the deduplication interval, Amazon \
-         SQS can't detect duplicate messages.\n\
-        \     \n\
-        \      Amazon SQS continues to keep track of the message deduplication ID even after the \
-         message is received and deleted.\n\
-        \      \n\
-        \        The maximum length of [MessageDeduplicationId] is 128 characters. \
-         [MessageDeduplicationId] can contain alphanumeric characters ([a-z], [A-Z], [0-9]) and \
-         punctuation ([!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~]).\n\
-        \        \n\
-        \         For best practices of using [MessageDeduplicationId], see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-messagededuplicationid-property.html}Using \
-         the MessageDeduplicationId Property} in the {i Amazon SQS Developer Guide}.\n\
-        \         "]
+        "The length of time, in seconds, for which a specific message is delayed. Valid values: 0 \
+         to 900. Maximum: 15 minutes. Messages with a positive [DelaySeconds] value become \
+         available for processing after the delay period is finished. If you don't specify a \
+         value, the default value for the queue is applied. \n\n\
+        \  When you set [FifoQueue], you can't set [DelaySeconds] per message. You can set this \
+         parameter only on a queue level.\n\
+        \  \n\
+        \   "]
+  message_attributes : message_body_attribute_map option;
+      [@ocaml.doc
+        "Each message attribute consists of a [Name], [Type], and [Value]. For more information, \
+         see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-metadata.html#sqs-message-attributes}Amazon \
+         SQS message attributes} in the {i Amazon SQS Developer Guide}.\n"]
   message_system_attributes : message_body_system_attribute_map option;
       [@ocaml.doc
-        "The message system attribute to send. Each message system attribute consists of a [Name], \
+        "The message system attribute to send Each message system attribute consists of a [Name], \
          [Type], and [Value].\n\n\
         \  {ul\n\
         \        {-  Currently, the only supported message system attribute is [AWSTraceHeader]. \
@@ -625,170 +671,6 @@ type nonrec send_message_request = {
         \             }\n\
         \        }\n\
         \   "]
-  message_attributes : message_body_attribute_map option;
-      [@ocaml.doc
-        "Each message attribute consists of a [Name], [Type], and [Value]. For more information, \
-         see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-metadata.html#sqs-message-attributes}Amazon \
-         SQS message attributes} in the {i Amazon SQS Developer Guide}.\n"]
-  delay_seconds : nullable_integer option;
-      [@ocaml.doc
-        " The length of time, in seconds, for which to delay a specific message. Valid values: 0 \
-         to 900. Maximum: 15 minutes. Messages with a positive [DelaySeconds] value become \
-         available for processing after the delay period is finished. If you don't specify a \
-         value, the default value for the queue applies. \n\n\
-        \  When you set [FifoQueue], you can't set [DelaySeconds] per message. You can set this \
-         parameter only on a queue level.\n\
-        \  \n\
-        \   "]
-  message_body : string_;
-      [@ocaml.doc
-        "The message to send. The minimum size is one character. The maximum size is 1 MiB or \
-         1,048,576 bytes\n\n\
-        \  A message can include only XML, JSON, and unformatted text. The following Unicode \
-         characters are allowed. For more information, see the \
-         {{:http://www.w3.org/TR/REC-xml/#charsets}W3C specification for characters}.\n\
-        \  \n\
-        \    [#x9] | [#xA] | [#xD] | [#x20] to [#xD7FF] | [#xE000] to [#xFFFD] | [#x10000] to \
-         [#x10FFFF] \n\
-        \   \n\
-        \    If a message contains characters outside the allowed set, Amazon SQS rejects the \
-         message and returns an InvalidMessageContents error. Ensure that your message body \
-         includes only valid characters to avoid this exception.\n\
-        \    \n\
-        \     "]
-  queue_url : string_;
-      [@ocaml.doc
-        "The URL of the Amazon SQS queue to which a message is sent.\n\n\
-        \ Queue URLs and names are case-sensitive.\n\
-        \ "]
-}
-[@@ocaml.doc "\n"]
-
-type nonrec send_message_batch_result_entry = {
-  sequence_number : string_ option;
-      [@ocaml.doc
-        "This parameter applies only to FIFO (first-in-first-out) queues.\n\n\
-        \ The large, non-consecutive number that Amazon SQS assigns to each message.\n\
-        \ \n\
-        \  The length of [SequenceNumber] is 128 bits. As [SequenceNumber] continues to increase \
-         for a particular [MessageGroupId].\n\
-        \  "]
-  md5_of_message_system_attributes : string_ option;
-      [@ocaml.doc
-        "An MD5 digest of the non-URL-encoded message system attribute string. You can use this \
-         attribute to verify that Amazon SQS received the message correctly. Amazon SQS \
-         URL-decodes the message before creating the MD5 digest. For information about MD5, see \
-         {{:https://www.ietf.org/rfc/rfc1321.txt}RFC1321}.\n"]
-  md5_of_message_attributes : string_ option;
-      [@ocaml.doc
-        "An MD5 digest of the non-URL-encoded message attribute string. You can use this attribute \
-         to verify that Amazon SQS received the message correctly. Amazon SQS URL-decodes the \
-         message before creating the MD5 digest. For information about MD5, see \
-         {{:https://www.ietf.org/rfc/rfc1321.txt}RFC1321}.\n"]
-  md5_of_message_body : string_;
-      [@ocaml.doc
-        "An MD5 digest of the non-URL-encoded message body string. You can use this attribute to \
-         verify that Amazon SQS received the message correctly. Amazon SQS URL-decodes the message \
-         before creating the MD5 digest. For information about MD5, see \
-         {{:https://www.ietf.org/rfc/rfc1321.txt}RFC1321}.\n"]
-  message_id : string_; [@ocaml.doc "An identifier for the message.\n"]
-  id : string_; [@ocaml.doc "An identifier for the message in this batch.\n"]
-}
-[@@ocaml.doc
-  "Encloses a [MessageId] for a successfully-enqueued message in a \n\
-   {[\n\
-  \ [SendMessageBatch].\n\
-   ]}\n\
-  \ \n"]
-
-type nonrec send_message_batch_result_entry_list = send_message_batch_result_entry list
-[@@ocaml.doc ""]
-
-type nonrec boolean_ = bool [@@ocaml.doc ""]
-
-type nonrec batch_result_error_entry = {
-  message : string_ option;
-      [@ocaml.doc "A message explaining why the action failed on this entry.\n"]
-  code : string_; [@ocaml.doc "An error code representing why the action failed on this entry.\n"]
-  sender_fault : boolean_;
-      [@ocaml.doc
-        "Specifies whether the error happened due to the caller of the batch API action.\n"]
-  id : string_; [@ocaml.doc "The [Id] of an entry in a batch request.\n"]
-}
-[@@ocaml.doc
-  "Gives a detailed description of the result of an action on each entry in the request.\n"]
-
-type nonrec batch_result_error_entry_list = batch_result_error_entry list [@@ocaml.doc ""]
-
-type nonrec send_message_batch_result = {
-  failed : batch_result_error_entry_list;
-      [@ocaml.doc
-        "A list of \n\
-         {[\n\
-        \ [BatchResultErrorEntry] \n\
-         ]}\n\
-        \ items with error details about each message that can't be enqueued.\n"]
-  successful : send_message_batch_result_entry_list;
-      [@ocaml.doc "A list of \n{[\n [SendMessageBatchResultEntry] \n]}\n items.\n"]
-}
-[@@ocaml.doc
-  "For each message in the batch, the response contains a \n\
-   {[\n\
-  \ [SendMessageBatchResultEntry] \n\
-   ]}\n\
-  \ tag if the message succeeds or a \n\
-   {[\n\
-  \ [BatchResultErrorEntry] \n\
-   ]}\n\
-  \ tag if the message fails.\n"]
-
-type nonrec send_message_batch_request_entry = {
-  message_group_id : string_ option;
-      [@ocaml.doc
-        " [MessageGroupId] is an attribute used in Amazon SQS FIFO (First-In-First-Out) and \
-         standard queues. In FIFO queues, [MessageGroupId] organizes messages into distinct \
-         groups. Messages within the same message group are always processed one at a time, in \
-         strict order, ensuring that no two messages from the same group are processed \
-         simultaneously. In standard queues, using [MessageGroupId] enables fair queues. It is \
-         used to identify the tenant a message belongs to, helping maintain consistent message \
-         dwell time across all tenants during noisy neighbor events. Unlike FIFO queues, messages \
-         with the same [MessageGroupId] can be processed in parallel, maintaining the high \
-         throughput of standard queues.\n\n\
-        \ {ul\n\
-        \       {-   {b FIFO queues:} [MessageGroupId] acts as the tag that specifies that a \
-         message belongs to a specific message group. Messages that belong to the same message \
-         group are processed in a FIFO manner (however, messages in different message groups might \
-         be processed out of order). To interleave multiple ordered streams within a single queue, \
-         use [MessageGroupId] values (for example, session data for multiple users). In this \
-         scenario, multiple consumers can process the queue, but the session data of each user is \
-         processed in a FIFO fashion.\n\
-        \           \n\
-        \            If you do not provide a [MessageGroupId] when sending a message to a FIFO \
-         queue, the action fails.\n\
-        \            \n\
-        \              [ReceiveMessage] might return messages with multiple [MessageGroupId] \
-         values. For each [MessageGroupId], the messages are sorted by time sent.\n\
-        \             \n\
-        \              }\n\
-        \       {-   {b Standard queues:}Use [MessageGroupId] in standard queues to enable fair \
-         queues. The [MessageGroupId] identifies the tenant a message belongs to. A tenant can be \
-         any entity that shares a queue with others, such as your customer, a client application, \
-         or a request type. When one tenant sends a disproportionately large volume of messages or \
-         has messages that require longer processing time, fair queues ensure other tenants' \
-         messages maintain low dwell time. This preserves quality of service for all tenants while \
-         maintaining the scalability and throughput of standard queues. We recommend that you \
-         include a [MessageGroupId] in all messages when using fair queues.\n\
-        \           \n\
-        \            }\n\
-        \       }\n\
-        \   The length of [MessageGroupId] is 128 characters. Valid values: alphanumeric \
-         characters and punctuation [(!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~)].\n\
-        \   \n\
-        \    For best practices of using [MessageGroupId], see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-messagegroupid-property.html}Using \
-         the MessageGroupId Property} in the {i Amazon SQS Developer Guide}.\n\
-        \    "]
   message_deduplication_id : string_ option;
       [@ocaml.doc
         "This parameter applies only to FIFO (first-in-first-out) queues.\n\n\
@@ -853,9 +735,147 @@ type nonrec send_message_batch_request_entry = {
          {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-messagededuplicationid-property.html}Using \
          the MessageDeduplicationId Property} in the {i Amazon SQS Developer Guide}.\n\
         \         "]
+  message_group_id : string_ option;
+      [@ocaml.doc
+        " [MessageGroupId] is an attribute used in Amazon SQS FIFO (First-In-First-Out) and \
+         standard queues. In FIFO queues, [MessageGroupId] organizes messages into distinct \
+         groups. Messages within the same message group are always processed one at a time, in \
+         strict order, ensuring that no two messages from the same group are processed \
+         simultaneously. In standard queues, using [MessageGroupId] enables fair queues. It is \
+         used to identify the tenant a message belongs to, helping maintain consistent message \
+         dwell time across all tenants during noisy neighbor events. Unlike FIFO queues, messages \
+         with the same [MessageGroupId] can be processed in parallel, maintaining the high \
+         throughput of standard queues.\n\n\
+        \ {ul\n\
+        \       {-   {b FIFO queues:} [MessageGroupId] acts as the tag that specifies that a \
+         message belongs to a specific message group. Messages that belong to the same message \
+         group are processed in a FIFO manner (however, messages in different message groups might \
+         be processed out of order). To interleave multiple ordered streams within a single queue, \
+         use [MessageGroupId] values (for example, session data for multiple users). In this \
+         scenario, multiple consumers can process the queue, but the session data of each user is \
+         processed in a FIFO fashion.\n\
+        \           \n\
+        \            If you do not provide a [MessageGroupId] when sending a message to a FIFO \
+         queue, the action fails.\n\
+        \            \n\
+        \              [ReceiveMessage] might return messages with multiple [MessageGroupId] \
+         values. For each [MessageGroupId], the messages are sorted by time sent.\n\
+        \             \n\
+        \              }\n\
+        \       {-   {b Standard queues:}Use [MessageGroupId] in standard queues to enable fair \
+         queues. The [MessageGroupId] identifies the tenant a message belongs to. A tenant can be \
+         any entity that shares a queue with others, such as your customer, a client application, \
+         or a request type. When one tenant sends a disproportionately large volume of messages or \
+         has messages that require longer processing time, fair queues ensure other tenants' \
+         messages maintain low dwell time. This preserves quality of service for all tenants while \
+         maintaining the scalability and throughput of standard queues. We recommend that you \
+         include a [MessageGroupId] in all messages when using fair queues.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \   The length of [MessageGroupId] is 128 characters. Valid values: alphanumeric \
+         characters and punctuation [(!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~)].\n\
+        \   \n\
+        \    For best practices of using [MessageGroupId], see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-messagegroupid-property.html}Using \
+         the MessageGroupId Property} in the {i Amazon SQS Developer Guide}.\n\
+        \    "]
+}
+[@@ocaml.doc "Contains the details of a single Amazon SQS message along with an [Id].\n"]
+
+type nonrec send_message_batch_request_entry_list = send_message_batch_request_entry list
+[@@ocaml.doc ""]
+
+type nonrec send_message_batch_request = {
+  queue_url : string_;
+      [@ocaml.doc
+        "The URL of the Amazon SQS queue to which batched messages are sent.\n\n\
+        \ Queue URLs and names are case-sensitive.\n\
+        \ "]
+  entries : send_message_batch_request_entry_list;
+      [@ocaml.doc "A list of \n{[\n [SendMessageBatchRequestEntry] \n]}\n items.\n"]
+}
+[@@ocaml.doc "\n"]
+
+type nonrec invalid_message_contents = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The message contains characters outside the allowed set.\n"]
+
+type nonrec send_message_result = {
+  md5_of_message_body : string_ option;
+      [@ocaml.doc
+        "An MD5 digest of the non-URL-encoded message body string. You can use this attribute to \
+         verify that Amazon SQS received the message correctly. Amazon SQS URL-decodes the message \
+         before creating the MD5 digest. For information about MD5, see \
+         {{:https://www.ietf.org/rfc/rfc1321.txt}RFC1321}.\n"]
+  md5_of_message_attributes : string_ option;
+      [@ocaml.doc
+        "An MD5 digest of the non-URL-encoded message attribute string. You can use this attribute \
+         to verify that Amazon SQS received the message correctly. Amazon SQS URL-decodes the \
+         message before creating the MD5 digest. For information about MD5, see \
+         {{:https://www.ietf.org/rfc/rfc1321.txt}RFC1321}.\n"]
+  md5_of_message_system_attributes : string_ option;
+      [@ocaml.doc
+        "An MD5 digest of the non-URL-encoded message system attribute string. You can use this \
+         attribute to verify that Amazon SQS received the message correctly. Amazon SQS \
+         URL-decodes the message before creating the MD5 digest.\n"]
+  message_id : string_ option;
+      [@ocaml.doc
+        "An attribute containing the [MessageId] of the message sent to the queue. For more \
+         information, see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-message-identifiers.html}Queue \
+         and Message Identifiers} in the {i Amazon SQS Developer Guide}. \n"]
+  sequence_number : string_ option;
+      [@ocaml.doc
+        "This parameter applies only to FIFO (first-in-first-out) queues.\n\n\
+        \ The large, non-consecutive number that Amazon SQS assigns to each message.\n\
+        \ \n\
+        \  The length of [SequenceNumber] is 128 bits. [SequenceNumber] continues to increase for \
+         a particular [MessageGroupId].\n\
+        \  "]
+}
+[@@ocaml.doc "The [MD5OfMessageBody] and [MessageId] elements.\n"]
+
+type nonrec send_message_request = {
+  queue_url : string_;
+      [@ocaml.doc
+        "The URL of the Amazon SQS queue to which a message is sent.\n\n\
+        \ Queue URLs and names are case-sensitive.\n\
+        \ "]
+  message_body : string_;
+      [@ocaml.doc
+        "The message to send. The minimum size is one character. The maximum size is 1 MiB or \
+         1,048,576 bytes\n\n\
+        \  A message can include only XML, JSON, and unformatted text. The following Unicode \
+         characters are allowed. For more information, see the \
+         {{:http://www.w3.org/TR/REC-xml/#charsets}W3C specification for characters}.\n\
+        \  \n\
+        \    [#x9] | [#xA] | [#xD] | [#x20] to [#xD7FF] | [#xE000] to [#xFFFD] | [#x10000] to \
+         [#x10FFFF] \n\
+        \   \n\
+        \    If a message contains characters outside the allowed set, Amazon SQS rejects the \
+         message and returns an InvalidMessageContents error. Ensure that your message body \
+         includes only valid characters to avoid this exception.\n\
+        \    \n\
+        \     "]
+  delay_seconds : nullable_integer option;
+      [@ocaml.doc
+        " The length of time, in seconds, for which to delay a specific message. Valid values: 0 \
+         to 900. Maximum: 15 minutes. Messages with a positive [DelaySeconds] value become \
+         available for processing after the delay period is finished. If you don't specify a \
+         value, the default value for the queue applies. \n\n\
+        \  When you set [FifoQueue], you can't set [DelaySeconds] per message. You can set this \
+         parameter only on a queue level.\n\
+        \  \n\
+        \   "]
+  message_attributes : message_body_attribute_map option;
+      [@ocaml.doc
+        "Each message attribute consists of a [Name], [Type], and [Value]. For more information, \
+         see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-metadata.html#sqs-message-attributes}Amazon \
+         SQS message attributes} in the {i Amazon SQS Developer Guide}.\n"]
   message_system_attributes : message_body_system_attribute_map option;
       [@ocaml.doc
-        "The message system attribute to send Each message system attribute consists of a [Name], \
+        "The message system attribute to send. Each message system attribute consists of a [Name], \
          [Type], and [Value].\n\n\
         \  {ul\n\
         \        {-  Currently, the only supported message system attribute is [AWSTraceHeader]. \
@@ -869,102 +889,124 @@ type nonrec send_message_batch_request_entry = {
         \             }\n\
         \        }\n\
         \   "]
-  message_attributes : message_body_attribute_map option;
+  message_deduplication_id : string_ option;
       [@ocaml.doc
-        "Each message attribute consists of a [Name], [Type], and [Value]. For more information, \
-         see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-metadata.html#sqs-message-attributes}Amazon \
-         SQS message attributes} in the {i Amazon SQS Developer Guide}.\n"]
-  delay_seconds : nullable_integer option;
+        "This parameter applies only to FIFO (first-in-first-out) queues.\n\n\
+        \ The token used for deduplication of sent messages. If a message with a particular \
+         [MessageDeduplicationId] is sent successfully, any messages sent with the same \
+         [MessageDeduplicationId] are accepted successfully but aren't delivered during the \
+         5-minute deduplication interval. For more information, see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues-exactly-once-processing.html} \
+         Exactly-once processing} in the {i Amazon SQS Developer Guide}.\n\
+        \ \n\
+        \  {ul\n\
+        \        {-  Every message must have a unique [MessageDeduplicationId],\n\
+        \            \n\
+        \             {ul\n\
+        \                   {-  You may provide a [MessageDeduplicationId] explicitly.\n\
+        \                       \n\
+        \                        }\n\
+        \                   {-  If you aren't able to provide a [MessageDeduplicationId] and you \
+         enable [ContentBasedDeduplication] for your queue, Amazon SQS uses a SHA-256 hash to \
+         generate the [MessageDeduplicationId] using the body of the message (but not the \
+         attributes of the message). \n\
+        \                       \n\
+        \                        }\n\
+        \                   {-  If you don't provide a [MessageDeduplicationId] and the queue \
+         doesn't have [ContentBasedDeduplication] set, the action fails with an error.\n\
+        \                       \n\
+        \                        }\n\
+        \                   {-  If the queue has [ContentBasedDeduplication] set, your \
+         [MessageDeduplicationId] overrides the generated one.\n\
+        \                       \n\
+        \                        }\n\
+        \                   \n\
+        \         }\n\
+        \          }\n\
+        \        {-  When [ContentBasedDeduplication] is in effect, messages with identical \
+         content sent within the deduplication interval are treated as duplicates and only one \
+         copy of the message is delivered.\n\
+        \            \n\
+        \             }\n\
+        \        {-  If you send one message with [ContentBasedDeduplication] enabled and then \
+         another message with a [MessageDeduplicationId] that is the same as the one generated for \
+         the first [MessageDeduplicationId], the two messages are treated as duplicates and only \
+         one copy of the message is delivered. \n\
+        \            \n\
+        \             }\n\
+        \        }\n\
+        \    The [MessageDeduplicationId] is available to the consumer of the message (this can be \
+         useful for troubleshooting delivery issues).\n\
+        \    \n\
+        \     If a message is sent successfully but the acknowledgement is lost and the message is \
+         resent with the same [MessageDeduplicationId] after the deduplication interval, Amazon \
+         SQS can't detect duplicate messages.\n\
+        \     \n\
+        \      Amazon SQS continues to keep track of the message deduplication ID even after the \
+         message is received and deleted.\n\
+        \      \n\
+        \        The maximum length of [MessageDeduplicationId] is 128 characters. \
+         [MessageDeduplicationId] can contain alphanumeric characters ([a-z], [A-Z], [0-9]) and \
+         punctuation ([!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~]).\n\
+        \        \n\
+        \         For best practices of using [MessageDeduplicationId], see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-messagededuplicationid-property.html}Using \
+         the MessageDeduplicationId Property} in the {i Amazon SQS Developer Guide}.\n\
+        \         "]
+  message_group_id : string_ option;
       [@ocaml.doc
-        "The length of time, in seconds, for which a specific message is delayed. Valid values: 0 \
-         to 900. Maximum: 15 minutes. Messages with a positive [DelaySeconds] value become \
-         available for processing after the delay period is finished. If you don't specify a \
-         value, the default value for the queue is applied. \n\n\
-        \  When you set [FifoQueue], you can't set [DelaySeconds] per message. You can set this \
-         parameter only on a queue level.\n\
-        \  \n\
-        \   "]
-  message_body : string_; [@ocaml.doc "The body of the message.\n"]
-  id : string_;
-      [@ocaml.doc
-        "An identifier for a message in this batch used to communicate the result.\n\n\
-        \  The [Id]s of a batch request need to be unique within a request.\n\
-        \  \n\
-        \   This identifier can have up to 80 characters. The following characters are accepted: \
-         alphanumeric characters, hyphens(-), and underscores (_).\n\
+        " [MessageGroupId] is an attribute used in Amazon SQS FIFO (First-In-First-Out) and \
+         standard queues. In FIFO queues, [MessageGroupId] organizes messages into distinct \
+         groups. Messages within the same message group are always processed one at a time, in \
+         strict order, ensuring that no two messages from the same group are processed \
+         simultaneously. In standard queues, using [MessageGroupId] enables fair queues. It is \
+         used to identify the tenant a message belongs to, helping maintain consistent message \
+         dwell time across all tenants during noisy neighbor events. Unlike FIFO queues, messages \
+         with the same [MessageGroupId] can be processed in parallel, maintaining the high \
+         throughput of standard queues.\n\n\
+        \ {ul\n\
+        \       {-   {b FIFO queues:} [MessageGroupId] acts as the tag that specifies that a \
+         message belongs to a specific message group. Messages that belong to the same message \
+         group are processed in a FIFO manner (however, messages in different message groups might \
+         be processed out of order). To interleave multiple ordered streams within a single queue, \
+         use [MessageGroupId] values (for example, session data for multiple users). In this \
+         scenario, multiple consumers can process the queue, but the session data of each user is \
+         processed in a FIFO fashion.\n\
+        \           \n\
+        \            If you do not provide a [MessageGroupId] when sending a message to a FIFO \
+         queue, the action fails.\n\
+        \            \n\
+        \              [ReceiveMessage] might return messages with multiple [MessageGroupId] \
+         values. For each [MessageGroupId], the messages are sorted by time sent.\n\
+        \             \n\
+        \              }\n\
+        \       {-   {b Standard queues:}Use [MessageGroupId] in standard queues to enable fair \
+         queues. The [MessageGroupId] identifies the tenant a message belongs to. A tenant can be \
+         any entity that shares a queue with others, such as your customer, a client application, \
+         or a request type. When one tenant sends a disproportionately large volume of messages or \
+         has messages that require longer processing time, fair queues ensure other tenants' \
+         messages maintain low dwell time. This preserves quality of service for all tenants while \
+         maintaining the scalability and throughput of standard queues. We recommend that you \
+         include a [MessageGroupId] in all messages when using fair queues.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \   The length of [MessageGroupId] is 128 characters. Valid values: alphanumeric \
+         characters and punctuation [(!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~)].\n\
         \   \n\
+        \    For best practices of using [MessageGroupId], see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-messagegroupid-property.html}Using \
+         the MessageGroupId Property} in the {i Amazon SQS Developer Guide}.\n\
         \    "]
-}
-[@@ocaml.doc "Contains the details of a single Amazon SQS message along with an [Id].\n"]
-
-type nonrec send_message_batch_request_entry_list = send_message_batch_request_entry list
-[@@ocaml.doc ""]
-
-type nonrec send_message_batch_request = {
-  entries : send_message_batch_request_entry_list;
-      [@ocaml.doc "A list of \n{[\n [SendMessageBatchRequestEntry] \n]}\n items.\n"]
-  queue_url : string_;
-      [@ocaml.doc
-        "The URL of the Amazon SQS queue to which batched messages are sent.\n\n\
-        \ Queue URLs and names are case-sensitive.\n\
-        \ "]
 }
 [@@ocaml.doc "\n"]
 
-type nonrec kms_throttled = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc "Amazon Web Services KMS throttles requests for the following conditions.\n"]
-
-type nonrec kms_opt_in_required = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "The request was rejected because the specified key policy isn't syntactically or semantically \
-   correct.\n"]
-
-type nonrec kms_not_found = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "The request was rejected because the specified entity or resource could not be found. \n"]
-
-type nonrec kms_invalid_state = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "The request was rejected because the state of the specified resource is not valid for this \
-   request.\n"]
-
-type nonrec kms_invalid_key_usage = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "The request was rejected for one of the following reasons:\n\n\
-  \ {ul\n\
-  \       {-  The KeyUsage value of the KMS key is incompatible with the API operation.\n\
-  \           \n\
-  \            }\n\
-  \       {-  The encryption algorithm or signing algorithm specified for the operation is \
-   incompatible with the type of key material in the KMS key (KeySpec).\n\
-  \           \n\
-  \            }\n\
-  \       }\n\
-  \  "]
-
-type nonrec kms_disabled = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The request was denied due to request throttling.\n"]
-
-type nonrec kms_access_denied = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The caller doesn't have the required KMS access.\n"]
-
-type nonrec invalid_batch_entry_id = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The [Id] of a batch entry in a batch request doesn't abide by the specification.\n"]
-
-type nonrec empty_batch_request = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The batch request doesn't contain any entries.\n"]
-
-type nonrec batch_request_too_long = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The length of all the messages put together is more than the limit.\n"]
-
-type nonrec batch_entry_ids_not_distinct = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc "Two or more batch entries in the request have the same [Id].\n"]
-
-type nonrec invalid_message_contents = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The message contains characters outside the allowed set.\n"]
-
 type nonrec remove_permission_request = {
+  queue_url : string_;
+      [@ocaml.doc
+        "The URL of the Amazon SQS queue from which permissions are removed.\n\n\
+        \ Queue URLs and names are case-sensitive.\n\
+        \ "]
   label : string_;
       [@ocaml.doc
         "The identification of the permission to remove. This is the label added using the \n\
@@ -972,43 +1014,38 @@ type nonrec remove_permission_request = {
         \ [AddPermission] \n\
          ]}\n\
         \ action.\n"]
-  queue_url : string_;
-      [@ocaml.doc
-        "The URL of the Amazon SQS queue from which permissions are removed.\n\n\
-        \ Queue URLs and names are case-sensitive.\n\
-        \ "]
 }
 [@@ocaml.doc "\n"]
 
 type nonrec message_system_attribute_name =
-  | DeadLetterQueueSourceArn [@ocaml.doc ""]
-  | AWSTraceHeader [@ocaml.doc ""]
-  | MessageGroupId [@ocaml.doc ""]
-  | MessageDeduplicationId [@ocaml.doc ""]
-  | SequenceNumber [@ocaml.doc ""]
-  | ApproximateFirstReceiveTimestamp [@ocaml.doc ""]
-  | ApproximateReceiveCount [@ocaml.doc ""]
-  | SentTimestamp [@ocaml.doc ""]
-  | SenderId [@ocaml.doc ""]
   | All [@ocaml.doc ""]
+  | SenderId [@ocaml.doc ""]
+  | SentTimestamp [@ocaml.doc ""]
+  | ApproximateReceiveCount [@ocaml.doc ""]
+  | ApproximateFirstReceiveTimestamp [@ocaml.doc ""]
+  | SequenceNumber [@ocaml.doc ""]
+  | MessageDeduplicationId [@ocaml.doc ""]
+  | MessageGroupId [@ocaml.doc ""]
+  | AWSTraceHeader [@ocaml.doc ""]
+  | DeadLetterQueueSourceArn [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
 type nonrec message_system_attribute_map = (message_system_attribute_name * string_) list
 [@@ocaml.doc ""]
 
 type nonrec message = {
-  message_attributes : message_body_attribute_map option;
+  message_id : string_ option;
       [@ocaml.doc
-        "Each message attribute consists of a [Name], [Type], and [Value]. For more information, \
-         see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-metadata.html#sqs-message-attributes}Amazon \
-         SQS message attributes} in the {i Amazon SQS Developer Guide}.\n"]
-  md5_of_message_attributes : string_ option;
+        "A unique identifier for the message. A [MessageId]is considered unique across all Amazon \
+         Web Services accounts for an extended period of time.\n"]
+  receipt_handle : string_ option;
       [@ocaml.doc
-        "An MD5 digest of the non-URL-encoded message attribute string. You can use this attribute \
-         to verify that Amazon SQS received the message correctly. Amazon SQS URL-decodes the \
-         message before creating the MD5 digest. For information about MD5, see \
-         {{:https://www.ietf.org/rfc/rfc1321.txt}RFC1321}.\n"]
+        "An identifier associated with the act of receiving the message. A new receipt handle is \
+         returned every time you receive a message. When deleting a message, you provide the last \
+         received receipt handle to delete the message.\n"]
+  md5_of_body : string_ option;
+      [@ocaml.doc "An MD5 digest of the non-URL-encoded message body string.\n"]
+  body : string_ option; [@ocaml.doc "The message's contents (not URL-encoded).\n"]
   attributes : message_system_attribute_map option;
       [@ocaml.doc
         "A map of the attributes requested in \n\
@@ -1043,18 +1080,18 @@ type nonrec message = {
          integer representing the {{:http://en.wikipedia.org/wiki/Unix_time}epoch time} in \
          milliseconds.\n\
         \   "]
-  body : string_ option; [@ocaml.doc "The message's contents (not URL-encoded).\n"]
-  md5_of_body : string_ option;
-      [@ocaml.doc "An MD5 digest of the non-URL-encoded message body string.\n"]
-  receipt_handle : string_ option;
+  md5_of_message_attributes : string_ option;
       [@ocaml.doc
-        "An identifier associated with the act of receiving the message. A new receipt handle is \
-         returned every time you receive a message. When deleting a message, you provide the last \
-         received receipt handle to delete the message.\n"]
-  message_id : string_ option;
+        "An MD5 digest of the non-URL-encoded message attribute string. You can use this attribute \
+         to verify that Amazon SQS received the message correctly. Amazon SQS URL-decodes the \
+         message before creating the MD5 digest. For information about MD5, see \
+         {{:https://www.ietf.org/rfc/rfc1321.txt}RFC1321}.\n"]
+  message_attributes : message_body_attribute_map option;
       [@ocaml.doc
-        "A unique identifier for the message. A [MessageId]is considered unique across all Amazon \
-         Web Services accounts for an extended period of time.\n"]
+        "Each message attribute consists of a [Name], [Type], and [Value]. For more information, \
+         see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-metadata.html#sqs-message-attributes}Amazon \
+         SQS message attributes} in the {i Amazon SQS Developer Guide}.\n"]
 }
 [@@ocaml.doc "An Amazon SQS message.\n"]
 
@@ -1065,225 +1102,20 @@ type nonrec receive_message_result = {
 }
 [@@ocaml.doc "A list of received messages.\n"]
 
-type nonrec attribute_name_list = queue_attribute_name list [@@ocaml.doc ""]
-
-type nonrec message_system_attribute_list = message_system_attribute_name list [@@ocaml.doc ""]
-
 type nonrec message_attribute_name = string [@@ocaml.doc ""]
 
 type nonrec message_attribute_name_list = message_attribute_name list [@@ocaml.doc ""]
 
+type nonrec message_system_attribute_list = message_system_attribute_name list [@@ocaml.doc ""]
+
+type nonrec attribute_name_list = queue_attribute_name list [@@ocaml.doc ""]
+
 type nonrec receive_message_request = {
-  receive_request_attempt_id : string_ option;
+  queue_url : string_;
       [@ocaml.doc
-        "This parameter applies only to FIFO (first-in-first-out) queues.\n\n\
-        \ The token used for deduplication of [ReceiveMessage] calls. If a networking issue occurs \
-         after a [ReceiveMessage] action, and instead of a response you receive a generic error, \
-         it is possible to retry the same action with an identical [ReceiveRequestAttemptId] to \
-         retrieve the same set of messages, even if their visibility timeout has not yet expired.\n\
-        \ \n\
-        \  {ul\n\
-        \        {-  You can use [ReceiveRequestAttemptId] only for 5 minutes after a \
-         [ReceiveMessage] action.\n\
-        \            \n\
-        \             }\n\
-        \        {-  When you set [FifoQueue], a caller of the [ReceiveMessage] action can provide \
-         a [ReceiveRequestAttemptId] explicitly.\n\
-        \            \n\
-        \             }\n\
-        \        {-  It is possible to retry the [ReceiveMessage] action with the same \
-         [ReceiveRequestAttemptId] if none of the messages have been modified (deleted or had \
-         their visibility changes).\n\
-        \            \n\
-        \             }\n\
-        \        {-  During a visibility timeout, subsequent calls with the same \
-         [ReceiveRequestAttemptId] return the same messages and receipt handles. If a retry occurs \
-         within the deduplication interval, it resets the visibility timeout. For more \
-         information, see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html}Visibility \
-         Timeout} in the {i Amazon SQS Developer Guide}.\n\
-        \            \n\
-        \              If a caller of the [ReceiveMessage] action still processes messages when \
-         the visibility timeout expires and messages become visible, another worker consuming from \
-         the same queue can receive the same messages and therefore process duplicates. Also, if a \
-         consumer whose message processing time is longer than the visibility timeout tries to \
-         delete the processed messages, the action fails with an error.\n\
-        \              \n\
-        \               To mitigate this effect, ensure that your application observes a safe \
-         threshold before the visibility timeout expires and extend the visibility timeout as \
-         necessary.\n\
-        \               \n\
-        \                 }\n\
-        \        {-  While messages with a particular [MessageGroupId] are invisible, no more \
-         messages belonging to the same [MessageGroupId] are returned until the visibility timeout \
-         expires. You can still receive messages with another [MessageGroupId] from your FIFO \
-         queue as long as they are visible.\n\
-        \            \n\
-        \             }\n\
-        \        {-  If a caller of [ReceiveMessage] can't track the [ReceiveRequestAttemptId], no \
-         retries work until the original visibility timeout expires. As a result, delays might \
-         occur but the messages in the queue remain in a strict order.\n\
-        \            \n\
-        \             }\n\
-        \        }\n\
-        \   The maximum length of [ReceiveRequestAttemptId] is 128 characters. \
-         [ReceiveRequestAttemptId] can contain alphanumeric characters ([a-z], [A-Z], [0-9]) and \
-         punctuation ([!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~]).\n\
-        \   \n\
-        \    For best practices of using [ReceiveRequestAttemptId], see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-receiverequestattemptid-request-parameter.html}Using \
-         the ReceiveRequestAttemptId Request Parameter} in the {i Amazon SQS Developer Guide}.\n\
-        \    "]
-  wait_time_seconds : nullable_integer option;
-      [@ocaml.doc
-        "The duration (in seconds) for which the call waits for a message to arrive in the queue \
-         before returning. If a message is available, the call returns sooner than \
-         [WaitTimeSeconds]. If no messages are available and the wait time expires, the call does \
-         not return a message list. If you are using the Java SDK, it returns a \
-         [ReceiveMessageResponse] object, which has a empty list instead of a Null object.\n\n\
-        \  To avoid HTTP errors, ensure that the HTTP response timeout for [ReceiveMessage] \
-         requests is longer than the [WaitTimeSeconds] parameter. For example, with the Java SDK, \
-         you can set HTTP transport settings using the \
-         {{:https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/http/nio/netty/NettyNioAsyncHttpClient.html} \
-         NettyNioAsyncHttpClient} for asynchronous clients, or the \
-         {{:https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/http/apache/ApacheHttpClient.html} \
-         ApacheHttpClient} for synchronous clients. \n\
-        \  \n\
-        \   "]
-  visibility_timeout : nullable_integer option;
-      [@ocaml.doc
-        "The duration (in seconds) that the received messages are hidden from subsequent retrieve \
-         requests after being retrieved by a [ReceiveMessage] request. If not specified, the \
-         default visibility timeout for the queue is used, which is 30 seconds.\n\n\
-        \ Understanding [VisibilityTimeout]:\n\
-        \ \n\
-        \  {ul\n\
-        \        {-  When a message is received from a queue, it becomes temporarily invisible to \
-         other consumers for the duration of the visibility timeout. This prevents multiple \
-         consumers from processing the same message simultaneously. If the message is not deleted \
-         or its visibility timeout is not extended before the timeout expires, it becomes visible \
-         again and can be retrieved by other consumers.\n\
-        \            \n\
-        \             }\n\
-        \        {-  Setting an appropriate visibility timeout is crucial. If it's too short, the \
-         message might become visible again before processing is complete, leading to duplicate \
-         processing. If it's too long, it delays the reprocessing of messages if the initial \
-         processing fails.\n\
-        \            \n\
-        \             }\n\
-        \        {-  You can adjust the visibility timeout using the [--visibility-timeout] \
-         parameter in the [receive-message] command to match the processing time required by your \
-         application.\n\
-        \            \n\
-        \             }\n\
-        \        {-  A message that isn't deleted or a message whose visibility isn't extended \
-         before the visibility timeout expires counts as a failed receive. Depending on the \
-         configuration of the queue, the message might be sent to the dead-letter queue.\n\
-        \            \n\
-        \             }\n\
-        \        }\n\
-        \   For more information, see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html}Visibility \
-         Timeout} in the {i Amazon SQS Developer Guide}.\n\
-        \   "]
-  max_number_of_messages : nullable_integer option;
-      [@ocaml.doc
-        "The maximum number of messages to return. Amazon SQS never returns more messages than \
-         this value (however, fewer messages might be returned). Valid values: 1 to 10. Default: 1.\n"]
-  message_attribute_names : message_attribute_name_list option;
-      [@ocaml.doc
-        "The name of the message attribute, where {i N} is the index.\n\n\
-        \ {ul\n\
-        \       {-  The name can contain alphanumeric characters and the underscore ([_]), hyphen \
-         ([-]), and period ([.]).\n\
-        \           \n\
-        \            }\n\
-        \       {-  The name is case-sensitive and must be unique among all attribute names for \
-         the message.\n\
-        \           \n\
-        \            }\n\
-        \       {-  The name must not start with AWS-reserved prefixes such as [AWS.] or [Amazon.] \
-         (or any casing variants).\n\
-        \           \n\
-        \            }\n\
-        \       {-  The name must not start or end with a period ([.]), and it should not have \
-         periods in succession ([..]).\n\
-        \           \n\
-        \            }\n\
-        \       {-  The name can be up to 256 characters long.\n\
-        \           \n\
-        \            }\n\
-        \       }\n\
-        \   When using [ReceiveMessage], you can send a list of attribute names to receive, or you \
-         can return all of the attributes by specifying [All] or [.*] in your request. You can \
-         also use all message attributes starting with a prefix, for example [bar.*].\n\
-        \   "]
-  message_system_attribute_names : message_system_attribute_list option;
-      [@ocaml.doc
-        "A list of attributes that need to be returned along with each message. These attributes \
-         include:\n\n\
-        \ {ul\n\
-        \       {-   [All] \226\128\147 Returns all values.\n\
-        \           \n\
-        \            }\n\
-        \       {-   [ApproximateFirstReceiveTimestamp] \226\128\147 Returns the time the message \
-         was first received from the queue ({{:http://en.wikipedia.org/wiki/Unix_time}epoch time} \
-         in milliseconds).\n\
-        \           \n\
-        \            }\n\
-        \       {-   [ApproximateReceiveCount] \226\128\147 Returns the number of times a message \
-         has been received across all queues but not deleted.\n\
-        \           \n\
-        \            }\n\
-        \       {-   [AWSTraceHeader] \226\128\147 Returns the X-Ray trace header string. \n\
-        \           \n\
-        \            }\n\
-        \       {-   [SenderId] \n\
-        \           \n\
-        \            {ul\n\
-        \                  {-  For a user, returns the user ID, for example [ABCDEFGHI1JKLMNOPQ23R].\n\
-        \                      \n\
-        \                       }\n\
-        \                  {-  For an IAM role, returns the IAM role ID, for example \
-         [ABCDE1F2GH3I4JK5LMNOP:i-a123b456].\n\
-        \                      \n\
-        \                       }\n\
-        \                  \n\
-        \        }\n\
-        \         }\n\
-        \       {-   [SentTimestamp] \226\128\147 Returns the time the message was sent to the \
-         queue ({{:http://en.wikipedia.org/wiki/Unix_time}epoch time} in milliseconds).\n\
-        \           \n\
-        \            }\n\
-        \       {-   [SqsManagedSseEnabled] \226\128\147 Enables server-side queue encryption \
-         using SQS owned encryption keys. Only one server-side encryption option is supported per \
-         queue (for example, \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-configure-sse-existing-queue.html}SSE-KMS} \
-         or \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-configure-sqs-sse-queue.html}SSE-SQS}).\n\
-        \           \n\
-        \            }\n\
-        \       {-   [MessageDeduplicationId] \226\128\147 Returns the value provided by the \
-         producer that calls the \n\
-        \           {[\n\
-        \            [SendMessage] \n\
-        \           ]}\n\
-        \            action.\n\
-        \           \n\
-        \            }\n\
-        \       {-   [MessageGroupId] \226\128\147 Returns the value provided by the producer that \
-         calls the \n\
-        \           {[\n\
-        \            [SendMessage] \n\
-        \           ]}\n\
-        \            action.\n\
-        \           \n\
-        \            }\n\
-        \       {-   [SequenceNumber] \226\128\147 Returns the value provided by Amazon SQS.\n\
-        \           \n\
-        \            }\n\
-        \       }\n\
-        \  "]
+        "The URL of the Amazon SQS queue from which messages are received.\n\n\
+        \ Queue URLs and names are case-sensitive.\n\
+        \ "]
   attribute_names : attribute_name_list option;
       [@ocaml.doc
         " This parameter has been discontinued but will be supported for backward compatibility. \
@@ -1355,73 +1187,228 @@ type nonrec receive_message_request = {
         \               }\n\
         \          }\n\
         \  "]
-  queue_url : string_;
+  message_system_attribute_names : message_system_attribute_list option;
       [@ocaml.doc
-        "The URL of the Amazon SQS queue from which messages are received.\n\n\
-        \ Queue URLs and names are case-sensitive.\n\
-        \ "]
+        "A list of attributes that need to be returned along with each message. These attributes \
+         include:\n\n\
+        \ {ul\n\
+        \       {-   [All] \226\128\147 Returns all values.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [ApproximateFirstReceiveTimestamp] \226\128\147 Returns the time the message \
+         was first received from the queue ({{:http://en.wikipedia.org/wiki/Unix_time}epoch time} \
+         in milliseconds).\n\
+        \           \n\
+        \            }\n\
+        \       {-   [ApproximateReceiveCount] \226\128\147 Returns the number of times a message \
+         has been received across all queues but not deleted.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [AWSTraceHeader] \226\128\147 Returns the X-Ray trace header string. \n\
+        \           \n\
+        \            }\n\
+        \       {-   [SenderId] \n\
+        \           \n\
+        \            {ul\n\
+        \                  {-  For a user, returns the user ID, for example [ABCDEFGHI1JKLMNOPQ23R].\n\
+        \                      \n\
+        \                       }\n\
+        \                  {-  For an IAM role, returns the IAM role ID, for example \
+         [ABCDE1F2GH3I4JK5LMNOP:i-a123b456].\n\
+        \                      \n\
+        \                       }\n\
+        \                  \n\
+        \        }\n\
+        \         }\n\
+        \       {-   [SentTimestamp] \226\128\147 Returns the time the message was sent to the \
+         queue ({{:http://en.wikipedia.org/wiki/Unix_time}epoch time} in milliseconds).\n\
+        \           \n\
+        \            }\n\
+        \       {-   [SqsManagedSseEnabled] \226\128\147 Enables server-side queue encryption \
+         using SQS owned encryption keys. Only one server-side encryption option is supported per \
+         queue (for example, \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-configure-sse-existing-queue.html}SSE-KMS} \
+         or \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-configure-sqs-sse-queue.html}SSE-SQS}).\n\
+        \           \n\
+        \            }\n\
+        \       {-   [MessageDeduplicationId] \226\128\147 Returns the value provided by the \
+         producer that calls the \n\
+        \           {[\n\
+        \            [SendMessage] \n\
+        \           ]}\n\
+        \            action.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [MessageGroupId] \226\128\147 Returns the value provided by the producer that \
+         calls the \n\
+        \           {[\n\
+        \            [SendMessage] \n\
+        \           ]}\n\
+        \            action.\n\
+        \           \n\
+        \            }\n\
+        \       {-   [SequenceNumber] \226\128\147 Returns the value provided by Amazon SQS.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \  "]
+  message_attribute_names : message_attribute_name_list option;
+      [@ocaml.doc
+        "The name of the message attribute, where {i N} is the index.\n\n\
+        \ {ul\n\
+        \       {-  The name can contain alphanumeric characters and the underscore ([_]), hyphen \
+         ([-]), and period ([.]).\n\
+        \           \n\
+        \            }\n\
+        \       {-  The name is case-sensitive and must be unique among all attribute names for \
+         the message.\n\
+        \           \n\
+        \            }\n\
+        \       {-  The name must not start with AWS-reserved prefixes such as [AWS.] or [Amazon.] \
+         (or any casing variants).\n\
+        \           \n\
+        \            }\n\
+        \       {-  The name must not start or end with a period ([.]), and it should not have \
+         periods in succession ([..]).\n\
+        \           \n\
+        \            }\n\
+        \       {-  The name can be up to 256 characters long.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \   When using [ReceiveMessage], you can send a list of attribute names to receive, or you \
+         can return all of the attributes by specifying [All] or [.*] in your request. You can \
+         also use all message attributes starting with a prefix, for example [bar.*].\n\
+        \   "]
+  max_number_of_messages : nullable_integer option;
+      [@ocaml.doc
+        "The maximum number of messages to return. Amazon SQS never returns more messages than \
+         this value (however, fewer messages might be returned). Valid values: 1 to 10. Default: 1.\n"]
+  visibility_timeout : nullable_integer option;
+      [@ocaml.doc
+        "The duration (in seconds) that the received messages are hidden from subsequent retrieve \
+         requests after being retrieved by a [ReceiveMessage] request. If not specified, the \
+         default visibility timeout for the queue is used, which is 30 seconds.\n\n\
+        \ Understanding [VisibilityTimeout]:\n\
+        \ \n\
+        \  {ul\n\
+        \        {-  When a message is received from a queue, it becomes temporarily invisible to \
+         other consumers for the duration of the visibility timeout. This prevents multiple \
+         consumers from processing the same message simultaneously. If the message is not deleted \
+         or its visibility timeout is not extended before the timeout expires, it becomes visible \
+         again and can be retrieved by other consumers.\n\
+        \            \n\
+        \             }\n\
+        \        {-  Setting an appropriate visibility timeout is crucial. If it's too short, the \
+         message might become visible again before processing is complete, leading to duplicate \
+         processing. If it's too long, it delays the reprocessing of messages if the initial \
+         processing fails.\n\
+        \            \n\
+        \             }\n\
+        \        {-  You can adjust the visibility timeout using the [--visibility-timeout] \
+         parameter in the [receive-message] command to match the processing time required by your \
+         application.\n\
+        \            \n\
+        \             }\n\
+        \        {-  A message that isn't deleted or a message whose visibility isn't extended \
+         before the visibility timeout expires counts as a failed receive. Depending on the \
+         configuration of the queue, the message might be sent to the dead-letter queue.\n\
+        \            \n\
+        \             }\n\
+        \        }\n\
+        \   For more information, see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html}Visibility \
+         Timeout} in the {i Amazon SQS Developer Guide}.\n\
+        \   "]
+  wait_time_seconds : nullable_integer option;
+      [@ocaml.doc
+        "The duration (in seconds) for which the call waits for a message to arrive in the queue \
+         before returning. If a message is available, the call returns sooner than \
+         [WaitTimeSeconds]. If no messages are available and the wait time expires, the call does \
+         not return a message list. If you are using the Java SDK, it returns a \
+         [ReceiveMessageResponse] object, which has a empty list instead of a Null object.\n\n\
+        \  To avoid HTTP errors, ensure that the HTTP response timeout for [ReceiveMessage] \
+         requests is longer than the [WaitTimeSeconds] parameter. For example, with the Java SDK, \
+         you can set HTTP transport settings using the \
+         {{:https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/http/nio/netty/NettyNioAsyncHttpClient.html} \
+         NettyNioAsyncHttpClient} for asynchronous clients, or the \
+         {{:https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/http/apache/ApacheHttpClient.html} \
+         ApacheHttpClient} for synchronous clients. \n\
+        \  \n\
+        \   "]
+  receive_request_attempt_id : string_ option;
+      [@ocaml.doc
+        "This parameter applies only to FIFO (first-in-first-out) queues.\n\n\
+        \ The token used for deduplication of [ReceiveMessage] calls. If a networking issue occurs \
+         after a [ReceiveMessage] action, and instead of a response you receive a generic error, \
+         it is possible to retry the same action with an identical [ReceiveRequestAttemptId] to \
+         retrieve the same set of messages, even if their visibility timeout has not yet expired.\n\
+        \ \n\
+        \  {ul\n\
+        \        {-  You can use [ReceiveRequestAttemptId] only for 5 minutes after a \
+         [ReceiveMessage] action.\n\
+        \            \n\
+        \             }\n\
+        \        {-  When you set [FifoQueue], a caller of the [ReceiveMessage] action can provide \
+         a [ReceiveRequestAttemptId] explicitly.\n\
+        \            \n\
+        \             }\n\
+        \        {-  It is possible to retry the [ReceiveMessage] action with the same \
+         [ReceiveRequestAttemptId] if none of the messages have been modified (deleted or had \
+         their visibility changes).\n\
+        \            \n\
+        \             }\n\
+        \        {-  During a visibility timeout, subsequent calls with the same \
+         [ReceiveRequestAttemptId] return the same messages and receipt handles. If a retry occurs \
+         within the deduplication interval, it resets the visibility timeout. For more \
+         information, see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html}Visibility \
+         Timeout} in the {i Amazon SQS Developer Guide}.\n\
+        \            \n\
+        \              If a caller of the [ReceiveMessage] action still processes messages when \
+         the visibility timeout expires and messages become visible, another worker consuming from \
+         the same queue can receive the same messages and therefore process duplicates. Also, if a \
+         consumer whose message processing time is longer than the visibility timeout tries to \
+         delete the processed messages, the action fails with an error.\n\
+        \              \n\
+        \               To mitigate this effect, ensure that your application observes a safe \
+         threshold before the visibility timeout expires and extend the visibility timeout as \
+         necessary.\n\
+        \               \n\
+        \                 }\n\
+        \        {-  While messages with a particular [MessageGroupId] are invisible, no more \
+         messages belonging to the same [MessageGroupId] are returned until the visibility timeout \
+         expires. You can still receive messages with another [MessageGroupId] from your FIFO \
+         queue as long as they are visible.\n\
+        \            \n\
+        \             }\n\
+        \        {-  If a caller of [ReceiveMessage] can't track the [ReceiveRequestAttemptId], no \
+         retries work until the original visibility timeout expires. As a result, delays might \
+         occur but the messages in the queue remain in a strict order.\n\
+        \            \n\
+        \             }\n\
+        \        }\n\
+        \   The maximum length of [ReceiveRequestAttemptId] is 128 characters. \
+         [ReceiveRequestAttemptId] can contain alphanumeric characters ([a-z], [A-Z], [0-9]) and \
+         punctuation ([!\"#$%&'()*+,-./:;<=>?@\\[\\\\]^_`{|}~]).\n\
+        \   \n\
+        \    For best practices of using [ReceiveRequestAttemptId], see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-receiverequestattemptid-request-parameter.html}Using \
+         the ReceiveRequestAttemptId Request Parameter} in the {i Amazon SQS Developer Guide}.\n\
+        \    "]
 }
 [@@ocaml.doc "Retrieves one or more messages from a specified queue.\n"]
-
-type nonrec receipt_handle_is_invalid = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc "The specified receipt handle isn't valid.\n"]
-
-type nonrec queue_url_list = string_ list [@@ocaml.doc ""]
-
-type nonrec queue_name_exists = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "A queue with this name already exists. Amazon SQS returns this error only if the request \
-   includes attributes whose values differ from those of the existing queue.\n"]
-
-type nonrec queue_deleted_recently = { message : exception_message option [@ocaml.doc ""] }
-[@@ocaml.doc
-  "You must wait 60 seconds after deleting a queue before you can create another queue with the \
-   same name.\n"]
-
-type nonrec purge_queue_request = {
-  queue_url : string_;
-      [@ocaml.doc
-        "The URL of the queue from which the [PurgeQueue] action deletes messages.\n\n\
-        \ Queue URLs and names are case-sensitive.\n\
-        \ "]
-}
-[@@ocaml.doc "\n"]
 
 type nonrec purge_queue_in_progress = { message : exception_message option [@ocaml.doc ""] }
 [@@ocaml.doc
   "Indicates that the specified queue previously received a [PurgeQueue] request within the last \
    60 seconds (the time it can take to delete the messages in the queue).\n"]
 
-type nonrec nullable_long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
-
-type nonrec message_not_inflight = unit [@@ocaml.doc ""]
-
-type nonrec long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
-
-type nonrec list_queues_result = {
-  next_token : token option;
+type nonrec purge_queue_request = {
+  queue_url : string_;
       [@ocaml.doc
-        "Pagination token to include in the next request. Token value is [null] if there are no \
-         additional results to request, or if you did not set [MaxResults] in the request.\n"]
-  queue_urls : queue_url_list option;
-      [@ocaml.doc
-        "A list of queue URLs, up to 1,000 entries, or the value of [MaxResults] that you sent in \
-         the request.\n"]
-}
-[@@ocaml.doc "A list of your queues.\n"]
-
-type nonrec boxed_integer = int [@@ocaml.doc ""]
-
-type nonrec list_queues_request = {
-  max_results : boxed_integer option;
-      [@ocaml.doc
-        "Maximum number of results to include in the response. Value range is 1 to 1000. You must \
-         set [MaxResults] to receive a value for [NextToken] in the response.\n"]
-  next_token : token option; [@ocaml.doc "Pagination token to request the next set of results.\n"]
-  queue_name_prefix : string_ option;
-      [@ocaml.doc
-        "A string to use for filtering the list results. Only those queues whose name begins with \
-         the specified string are returned.\n\n\
+        "The URL of the queue from which the [PurgeQueue] action deletes messages.\n\n\
         \ Queue URLs and names are case-sensitive.\n\
         \ "]
 }
@@ -1435,39 +1422,76 @@ type nonrec list_queue_tags_result = {
 type nonrec list_queue_tags_request = { queue_url : string_ [@ocaml.doc "The URL of the queue.\n"] }
 [@@ocaml.doc ""]
 
+type nonrec token = string [@@ocaml.doc ""]
+
+type nonrec queue_url_list = string_ list [@@ocaml.doc ""]
+
+type nonrec list_queues_result = {
+  queue_urls : queue_url_list option;
+      [@ocaml.doc
+        "A list of queue URLs, up to 1,000 entries, or the value of [MaxResults] that you sent in \
+         the request.\n"]
+  next_token : token option;
+      [@ocaml.doc
+        "Pagination token to include in the next request. Token value is [null] if there are no \
+         additional results to request, or if you did not set [MaxResults] in the request.\n"]
+}
+[@@ocaml.doc "A list of your queues.\n"]
+
+type nonrec boxed_integer = int [@@ocaml.doc ""]
+
+type nonrec list_queues_request = {
+  queue_name_prefix : string_ option;
+      [@ocaml.doc
+        "A string to use for filtering the list results. Only those queues whose name begins with \
+         the specified string are returned.\n\n\
+        \ Queue URLs and names are case-sensitive.\n\
+        \ "]
+  next_token : token option; [@ocaml.doc "Pagination token to request the next set of results.\n"]
+  max_results : boxed_integer option;
+      [@ocaml.doc
+        "Maximum number of results to include in the response. Value range is 1 to 1000. You must \
+         set [MaxResults] to receive a value for [NextToken] in the response.\n"]
+}
+[@@ocaml.doc "\n"]
+
+type nonrec long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
+
+type nonrec nullable_long = Smaws_Lib.CoreTypes.Int64.t [@@ocaml.doc ""]
+
 type nonrec list_message_move_tasks_result_entry = {
-  started_timestamp : long option;
-      [@ocaml.doc "The timestamp of starting the message movement task.\n"]
-  failure_reason : string_ option;
-      [@ocaml.doc "The task failure reason (only included if the task status is FAILED).\n"]
-  approximate_number_of_messages_to_move : nullable_long option;
-      [@ocaml.doc
-        "The number of messages to be moved from the source queue. This number is obtained at the \
-         time of starting the message movement task and is only included after the message \
-         movement task is selected to start.\n"]
-  approximate_number_of_messages_moved : long option;
-      [@ocaml.doc "The approximate number of messages already moved to the destination queue.\n"]
-  max_number_of_messages_per_second : nullable_integer option;
-      [@ocaml.doc
-        "The number of messages to be moved per second (the message movement rate), if it has been \
-         specified in the [StartMessageMoveTask] request. If a [MaxNumberOfMessagesPerSecond] has \
-         not been specified in the [StartMessageMoveTask] request, this field value will be NULL.\n"]
-  destination_arn : string_ option;
-      [@ocaml.doc
-        "The ARN of the destination queue if it has been specified in the [StartMessageMoveTask] \
-         request. If a [DestinationArn] has not been specified in the [StartMessageMoveTask] \
-         request, this field value will be NULL.\n"]
-  source_arn : string_ option;
-      [@ocaml.doc "The ARN of the queue that contains the messages to be moved to another queue.\n"]
-  status : string_ option;
-      [@ocaml.doc
-        "The status of the message movement task. Possible values are: RUNNING, COMPLETED, \
-         CANCELLING, CANCELLED, and FAILED.\n"]
   task_handle : string_ option;
       [@ocaml.doc
         "An identifier associated with a message movement task. When this field is returned in the \
          response of the [ListMessageMoveTasks] action, it is only populated for tasks that are in \
          RUNNING status.\n"]
+  status : string_ option;
+      [@ocaml.doc
+        "The status of the message movement task. Possible values are: RUNNING, COMPLETED, \
+         CANCELLING, CANCELLED, and FAILED.\n"]
+  source_arn : string_ option;
+      [@ocaml.doc "The ARN of the queue that contains the messages to be moved to another queue.\n"]
+  destination_arn : string_ option;
+      [@ocaml.doc
+        "The ARN of the destination queue if it has been specified in the [StartMessageMoveTask] \
+         request. If a [DestinationArn] has not been specified in the [StartMessageMoveTask] \
+         request, this field value will be NULL.\n"]
+  max_number_of_messages_per_second : nullable_integer option;
+      [@ocaml.doc
+        "The number of messages to be moved per second (the message movement rate), if it has been \
+         specified in the [StartMessageMoveTask] request. If a [MaxNumberOfMessagesPerSecond] has \
+         not been specified in the [StartMessageMoveTask] request, this field value will be NULL.\n"]
+  approximate_number_of_messages_moved : long option;
+      [@ocaml.doc "The approximate number of messages already moved to the destination queue.\n"]
+  approximate_number_of_messages_to_move : nullable_long option;
+      [@ocaml.doc
+        "The number of messages to be moved from the source queue. This number is obtained at the \
+         time of starting the message movement task and is only included after the message \
+         movement task is selected to start.\n"]
+  failure_reason : string_ option;
+      [@ocaml.doc "The task failure reason (only included if the task status is FAILED).\n"]
+  started_timestamp : long option;
+      [@ocaml.doc "The timestamp of starting the message movement task.\n"]
 }
 [@@ocaml.doc "Contains the details of a message movement task. \n"]
 
@@ -1481,39 +1505,37 @@ type nonrec list_message_move_tasks_result = {
 [@@ocaml.doc ""]
 
 type nonrec list_message_move_tasks_request = {
+  source_arn : string_;
+      [@ocaml.doc "The ARN of the queue whose message movement tasks are to be listed.\n"]
   max_results : nullable_integer option;
       [@ocaml.doc
         "The maximum number of results to include in the response. The default is 1, which \
          provides the most recent message movement task. The upper limit is 10.\n"]
-  source_arn : string_;
-      [@ocaml.doc "The ARN of the queue whose message movement tasks are to be listed.\n"]
 }
 [@@ocaml.doc ""]
 
 type nonrec list_dead_letter_source_queues_result = {
-  next_token : token option;
-      [@ocaml.doc
-        "Pagination token to include in the next request. Token value is [null] if there are no \
-         additional results to request, or if you did not set [MaxResults] in the request.\n"]
   queue_urls : queue_url_list;
       [@ocaml.doc
         "A list of source queue URLs that have the [RedrivePolicy] queue attribute configured with \
          a dead-letter queue.\n"]
+  next_token : token option;
+      [@ocaml.doc
+        "Pagination token to include in the next request. Token value is [null] if there are no \
+         additional results to request, or if you did not set [MaxResults] in the request.\n"]
 }
 [@@ocaml.doc "A list of your dead letter source queues.\n"]
 
 type nonrec list_dead_letter_source_queues_request = {
+  queue_url : string_;
+      [@ocaml.doc "The URL of a dead-letter queue.\n\n Queue URLs and names are case-sensitive.\n "]
+  next_token : token option; [@ocaml.doc "Pagination token to request the next set of results.\n"]
   max_results : boxed_integer option;
       [@ocaml.doc
         "Maximum number of results to include in the response. Value range is 1 to 1000. You must \
          set [MaxResults] to receive a value for [NextToken] in the response.\n"]
-  next_token : token option; [@ocaml.doc "Pagination token to request the next set of results.\n"]
-  queue_url : string_;
-      [@ocaml.doc "The URL of a dead-letter queue.\n\n Queue URLs and names are case-sensitive.\n "]
 }
 [@@ocaml.doc "\n"]
-
-type nonrec invalid_id_format = unit [@@ocaml.doc ""]
 
 type nonrec get_queue_url_result = {
   queue_url : string_ option; [@ocaml.doc "The URL of the queue.\n"]
@@ -1524,16 +1546,16 @@ type nonrec get_queue_url_result = {
    Responses} in the {i Amazon SQS Developer Guide}.\n"]
 
 type nonrec get_queue_url_request = {
-  queue_owner_aws_account_id : string_ option;
-      [@ocaml.doc
-        "(Optional) The Amazon Web Services account ID of the account that created the queue. This \
-         is only required when you are attempting to access a queue owned by another Amazon Web \
-         Services account.\n"]
   queue_name : string_;
       [@ocaml.doc
         "(Required) The name of the queue for which you want to fetch the URL. The name can be up \
          to 80 characters long and can include alphanumeric characters, hyphens (-), and \
          underscores (_). Queue URLs and names are case-sensitive.\n"]
+  queue_owner_aws_account_id : string_ option;
+      [@ocaml.doc
+        "(Optional) The Amazon Web Services account ID of the account that created the queue. This \
+         is only required when you are attempting to access a queue owned by another Amazon Web \
+         Services account.\n"]
 }
 [@@ocaml.doc
   "Retrieves the URL of an existing queue based on its name and, optionally, the Amazon Web \
@@ -1546,6 +1568,11 @@ type nonrec get_queue_attributes_result = {
 [@@ocaml.doc "A list of returned queue attributes.\n"]
 
 type nonrec get_queue_attributes_request = {
+  queue_url : string_;
+      [@ocaml.doc
+        "The URL of the Amazon SQS queue whose attribute information is retrieved.\n\n\
+        \ Queue URLs and names are case-sensitive.\n\
+        \ "]
   attribute_names : attribute_name_list option;
       [@ocaml.doc
         "A list of attributes for which to retrieve information.\n\n\
@@ -1773,11 +1800,6 @@ type nonrec get_queue_attributes_request = {
          {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/quotas-messages.html}Quotas \
          related to messages} in the {i Amazon SQS Developer Guide}.\n\
         \    "]
-  queue_url : string_;
-      [@ocaml.doc
-        "The URL of the Amazon SQS queue whose attribute information is retrieved.\n\n\
-        \ Queue URLs and names are case-sensitive.\n\
-        \ "]
 }
 [@@ocaml.doc "\n"]
 
@@ -1785,17 +1807,6 @@ type nonrec delete_queue_request = {
   queue_url : string_;
       [@ocaml.doc
         "The URL of the Amazon SQS queue to delete.\n\n Queue URLs and names are case-sensitive.\n "]
-}
-[@@ocaml.doc "\n"]
-
-type nonrec delete_message_request = {
-  receipt_handle : string_;
-      [@ocaml.doc "The receipt handle associated with the message to delete.\n"]
-  queue_url : string_;
-      [@ocaml.doc
-        "The URL of the Amazon SQS queue from which messages are deleted.\n\n\
-        \ Queue URLs and names are case-sensitive.\n\
-        \ "]
 }
 [@@ocaml.doc "\n"]
 
@@ -1808,10 +1819,10 @@ type nonrec delete_message_batch_result_entry_list = delete_message_batch_result
 [@@ocaml.doc ""]
 
 type nonrec delete_message_batch_result = {
-  failed : batch_result_error_entry_list;
-      [@ocaml.doc "A list of \n{[\n [BatchResultErrorEntry] \n]}\n items.\n"]
   successful : delete_message_batch_result_entry_list;
       [@ocaml.doc "A list of \n{[\n [DeleteMessageBatchResultEntry] \n]}\n items.\n"]
+  failed : batch_result_error_entry_list;
+      [@ocaml.doc "A list of \n{[\n [BatchResultErrorEntry] \n]}\n items.\n"]
 }
 [@@ocaml.doc
   "For each message in the batch, the response contains a \n\
@@ -1825,7 +1836,6 @@ type nonrec delete_message_batch_result = {
   \ tag if the message can't be deleted.\n"]
 
 type nonrec delete_message_batch_request_entry = {
-  receipt_handle : string_; [@ocaml.doc "A receipt handle.\n"]
   id : string_;
       [@ocaml.doc
         "The identifier for this particular receipt handle. This is used to communicate the \
@@ -1836,6 +1846,7 @@ type nonrec delete_message_batch_request_entry = {
          alphanumeric characters, hyphens(-), and underscores (_).\n\
         \   \n\
         \    "]
+  receipt_handle : string_; [@ocaml.doc "A receipt handle.\n"]
 }
 [@@ocaml.doc "Encloses a receipt handle and an identifier for it.\n"]
 
@@ -1843,15 +1854,41 @@ type nonrec delete_message_batch_request_entry_list = delete_message_batch_reque
 [@@ocaml.doc ""]
 
 type nonrec delete_message_batch_request = {
-  entries : delete_message_batch_request_entry_list;
-      [@ocaml.doc "Lists the receipt handles for the messages to be deleted.\n"]
   queue_url : string_;
       [@ocaml.doc
         "The URL of the Amazon SQS queue from which messages are deleted.\n\n\
         \ Queue URLs and names are case-sensitive.\n\
         \ "]
+  entries : delete_message_batch_request_entry_list;
+      [@ocaml.doc "Lists the receipt handles for the messages to be deleted.\n"]
 }
 [@@ocaml.doc "\n"]
+
+type nonrec receipt_handle_is_invalid = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc "The specified receipt handle isn't valid.\n"]
+
+type nonrec invalid_id_format = unit [@@ocaml.doc ""]
+
+type nonrec delete_message_request = {
+  queue_url : string_;
+      [@ocaml.doc
+        "The URL of the Amazon SQS queue from which messages are deleted.\n\n\
+        \ Queue URLs and names are case-sensitive.\n\
+        \ "]
+  receipt_handle : string_;
+      [@ocaml.doc "The receipt handle associated with the message to delete.\n"]
+}
+[@@ocaml.doc "\n"]
+
+type nonrec queue_name_exists = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "A queue with this name already exists. Amazon SQS returns this error only if the request \
+   includes attributes whose values differ from those of the existing queue.\n"]
+
+type nonrec queue_deleted_recently = { message : exception_message option [@ocaml.doc ""] }
+[@@ocaml.doc
+  "You must wait 60 seconds after deleting a queue before you can create another queue with the \
+   same name.\n"]
 
 type nonrec create_queue_result = {
   queue_url : string_ option; [@ocaml.doc "The URL of the created Amazon SQS queue.\n"]
@@ -1859,41 +1896,22 @@ type nonrec create_queue_result = {
 [@@ocaml.doc "Returns the [QueueUrl] attribute of the created queue.\n"]
 
 type nonrec create_queue_request = {
-  tags : tag_map option;
+  queue_name : string_;
       [@ocaml.doc
-        "Add cost allocation tags to the specified Amazon SQS queue. For an overview, see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-tags.html}Tagging \
-         Your Amazon SQS Queues} in the {i Amazon SQS Developer Guide}.\n\n\
-        \ When you use queue tags, keep the following guidelines in mind:\n\
-        \ \n\
-        \  {ul\n\
-        \        {-  Adding more than 50 tags to a queue isn't recommended.\n\
-        \            \n\
-        \             }\n\
-        \        {-  Tags don't have any semantic meaning. Amazon SQS interprets tags as character \
-         strings.\n\
-        \            \n\
-        \             }\n\
-        \        {-  Tags are case-sensitive.\n\
-        \            \n\
-        \             }\n\
-        \        {-  A new tag with a key identical to that of an existing tag overwrites the \
-         existing tag.\n\
-        \            \n\
-        \             }\n\
-        \        }\n\
-        \   For a full list of tag restrictions, see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-limits.html#limits-queues}Quotas \
-         related to queues} in the {i Amazon SQS Developer Guide}.\n\
-        \   \n\
-        \     To be able to tag a queue on creation, you must have the [sqs:CreateQueue] and \
-         [sqs:TagQueue] permissions.\n\
-        \     \n\
-        \      Cross-account permissions don't apply to this action. For more information, see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-customer-managed-policy-examples.html#grant-cross-account-permissions-to-role-and-user-name}Grant \
-         cross-account permissions to a role and a username} in the {i Amazon SQS Developer Guide}.\n\
-        \      \n\
-        \       "]
+        "The name of the new queue. The following limits apply to this name:\n\n\
+        \ {ul\n\
+        \       {-  A queue name can have up to 80 characters.\n\
+        \           \n\
+        \            }\n\
+        \       {-  Valid values: alphanumeric characters, hyphens ([-]), and underscores ([_]).\n\
+        \           \n\
+        \            }\n\
+        \       {-  A FIFO queue name must end with the [.fifo] suffix.\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \   Queue URLs and names are case-sensitive.\n\
+        \   "]
   attributes : queue_attribute_map option;
       [@ocaml.doc
         "A map of attributes with their corresponding values.\n\n\
@@ -2139,45 +2157,43 @@ type nonrec create_queue_request = {
          {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/quotas-messages.html}Quotas \
          related to messages} in the {i Amazon SQS Developer Guide}.\n\
         \    "]
-  queue_name : string_;
+  tags : tag_map option;
       [@ocaml.doc
-        "The name of the new queue. The following limits apply to this name:\n\n\
-        \ {ul\n\
-        \       {-  A queue name can have up to 80 characters.\n\
-        \           \n\
-        \            }\n\
-        \       {-  Valid values: alphanumeric characters, hyphens ([-]), and underscores ([_]).\n\
-        \           \n\
-        \            }\n\
-        \       {-  A FIFO queue name must end with the [.fifo] suffix.\n\
-        \           \n\
-        \            }\n\
-        \       }\n\
-        \   Queue URLs and names are case-sensitive.\n\
-        \   "]
+        "Add cost allocation tags to the specified Amazon SQS queue. For an overview, see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-tags.html}Tagging \
+         Your Amazon SQS Queues} in the {i Amazon SQS Developer Guide}.\n\n\
+        \ When you use queue tags, keep the following guidelines in mind:\n\
+        \ \n\
+        \  {ul\n\
+        \        {-  Adding more than 50 tags to a queue isn't recommended.\n\
+        \            \n\
+        \             }\n\
+        \        {-  Tags don't have any semantic meaning. Amazon SQS interprets tags as character \
+         strings.\n\
+        \            \n\
+        \             }\n\
+        \        {-  Tags are case-sensitive.\n\
+        \            \n\
+        \             }\n\
+        \        {-  A new tag with a key identical to that of an existing tag overwrites the \
+         existing tag.\n\
+        \            \n\
+        \             }\n\
+        \        }\n\
+        \   For a full list of tag restrictions, see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-limits.html#limits-queues}Quotas \
+         related to queues} in the {i Amazon SQS Developer Guide}.\n\
+        \   \n\
+        \     To be able to tag a queue on creation, you must have the [sqs:CreateQueue] and \
+         [sqs:TagQueue] permissions.\n\
+        \     \n\
+        \      Cross-account permissions don't apply to this action. For more information, see \
+         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-customer-managed-policy-examples.html#grant-cross-account-permissions-to-role-and-user-name}Grant \
+         cross-account permissions to a role and a username} in the {i Amazon SQS Developer Guide}.\n\
+        \      \n\
+        \       "]
 }
 [@@ocaml.doc "\n"]
-
-type nonrec change_message_visibility_request = {
-  visibility_timeout : nullable_integer;
-      [@ocaml.doc
-        "The new value for the message's visibility timeout (in seconds). Values range: [0] to \
-         [43200]. Maximum: 12 hours.\n"]
-  receipt_handle : string_;
-      [@ocaml.doc
-        "The receipt handle associated with the message, whose visibility timeout is changed. This \
-         parameter is returned by the \n\
-         {[\n\
-        \ [ReceiveMessage] \n\
-         ]}\n\
-        \ action.\n"]
-  queue_url : string_;
-      [@ocaml.doc
-        "The URL of the Amazon SQS queue whose message's visibility is changed.\n\n\
-        \ Queue URLs and names are case-sensitive.\n\
-        \ "]
-}
-[@@ocaml.doc ""]
 
 type nonrec change_message_visibility_batch_result_entry = {
   id : string_;
@@ -2190,10 +2206,10 @@ type nonrec change_message_visibility_batch_result_entry_list =
 [@@ocaml.doc ""]
 
 type nonrec change_message_visibility_batch_result = {
-  failed : batch_result_error_entry_list;
-      [@ocaml.doc "A list of \n{[\n [BatchResultErrorEntry] \n]}\n items.\n"]
   successful : change_message_visibility_batch_result_entry_list;
       [@ocaml.doc "A list of \n{[\n [ChangeMessageVisibilityBatchResultEntry] \n]}\n items.\n"]
+  failed : batch_result_error_entry_list;
+      [@ocaml.doc "A list of \n{[\n [BatchResultErrorEntry] \n]}\n items.\n"]
 }
 [@@ocaml.doc
   "For each message in the batch, the response contains a \n\
@@ -2207,9 +2223,6 @@ type nonrec change_message_visibility_batch_result = {
   \ tag if the message fails.\n"]
 
 type nonrec change_message_visibility_batch_request_entry = {
-  visibility_timeout : nullable_integer option;
-      [@ocaml.doc "The new value (in seconds) for the message's visibility timeout.\n"]
-  receipt_handle : string_; [@ocaml.doc "A receipt handle.\n"]
   id : string_;
       [@ocaml.doc
         "An identifier for this particular receipt handle used to communicate the result.\n\n\
@@ -2219,6 +2232,9 @@ type nonrec change_message_visibility_batch_request_entry = {
          alphanumeric characters, hyphens(-), and underscores (_).\n\
         \   \n\
         \    "]
+  receipt_handle : string_; [@ocaml.doc "A receipt handle.\n"]
+  visibility_timeout : nullable_integer option;
+      [@ocaml.doc "The new value (in seconds) for the message's visibility timeout.\n"]
 }
 [@@ocaml.doc
   "Encloses a receipt handle and an entry ID for each message in \n\
@@ -2232,16 +2248,39 @@ type nonrec change_message_visibility_batch_request_entry_list =
 [@@ocaml.doc ""]
 
 type nonrec change_message_visibility_batch_request = {
-  entries : change_message_visibility_batch_request_entry_list;
-      [@ocaml.doc
-        "Lists the receipt handles of the messages for which the visibility timeout must be changed.\n"]
   queue_url : string_;
       [@ocaml.doc
         "The URL of the Amazon SQS queue whose messages' visibility is changed.\n\n\
         \ Queue URLs and names are case-sensitive.\n\
         \ "]
+  entries : change_message_visibility_batch_request_entry_list;
+      [@ocaml.doc
+        "Lists the receipt handles of the messages for which the visibility timeout must be changed.\n"]
 }
 [@@ocaml.doc "\n"]
+
+type nonrec message_not_inflight = unit [@@ocaml.doc ""]
+
+type nonrec change_message_visibility_request = {
+  queue_url : string_;
+      [@ocaml.doc
+        "The URL of the Amazon SQS queue whose message's visibility is changed.\n\n\
+        \ Queue URLs and names are case-sensitive.\n\
+        \ "]
+  receipt_handle : string_;
+      [@ocaml.doc
+        "The receipt handle associated with the message, whose visibility timeout is changed. This \
+         parameter is returned by the \n\
+         {[\n\
+        \ [ReceiveMessage] \n\
+         ]}\n\
+        \ action.\n"]
+  visibility_timeout : nullable_integer;
+      [@ocaml.doc
+        "The new value for the message's visibility timeout (in seconds). Values range: [0] to \
+         [43200]. Maximum: 12 hours.\n"]
+}
+[@@ocaml.doc ""]
 
 type nonrec cancel_message_move_task_result = {
   approximate_number_of_messages_moved : long option;
@@ -2253,42 +2292,3 @@ type nonrec cancel_message_move_task_request = {
   task_handle : string_; [@ocaml.doc "An identifier associated with a message movement task.\n"]
 }
 [@@ocaml.doc ""]
-
-type nonrec aws_account_id_list = string_ list [@@ocaml.doc ""]
-
-type nonrec action_name_list = string_ list [@@ocaml.doc ""]
-
-type nonrec add_permission_request = {
-  actions : action_name_list;
-      [@ocaml.doc
-        "The action the client wants to allow for the specified principal. Valid values: the name \
-         of any action or [*].\n\n\
-        \ For more information about these actions, see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-overview-of-managing-access.html}Overview \
-         of Managing Access Permissions to Your Amazon Simple Queue Service Resource} in the {i \
-         Amazon SQS Developer Guide}.\n\
-        \ \n\
-        \  Specifying [SendMessage], [DeleteMessage], or [ChangeMessageVisibility] for \
-         [ActionName.n] also grants permissions for the corresponding batch versions of those \
-         actions: [SendMessageBatch], [DeleteMessageBatch], and [ChangeMessageVisibilityBatch].\n\
-        \  "]
-  aws_account_ids : aws_account_id_list;
-      [@ocaml.doc
-        "The Amazon Web Services account numbers of the \
-         {{:https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#P}principals} who are to \
-         receive permission. For information about locating the Amazon Web Services account \
-         identification, see \
-         {{:https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-making-api-requests.html#sqs-api-request-authentication}Your \
-         Amazon Web Services Identifiers} in the {i Amazon SQS Developer Guide}.\n"]
-  label : string_;
-      [@ocaml.doc
-        "The unique identification of the permission you're setting (for example, \
-         [AliceSendMessage]). Maximum 80 characters. Allowed characters include alphanumeric \
-         characters, hyphens ([-]), and underscores ([_]).\n"]
-  queue_url : string_;
-      [@ocaml.doc
-        "The URL of the Amazon SQS queue to which permissions are added.\n\n\
-        \ Queue URLs and names are case-sensitive.\n\
-        \ "]
-}
-[@@ocaml.doc "\n"]

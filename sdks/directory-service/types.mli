@@ -1,344 +1,10 @@
-type nonrec vpc_id = string [@@ocaml.doc ""]
-
-type nonrec trust_id = string [@@ocaml.doc ""]
-
-type nonrec verify_trust_result = {
-  trust_id : trust_id option;
-      [@ocaml.doc "The unique Trust ID of the trust relationship that was verified.\n"]
-}
-[@@ocaml.doc "Result of a VerifyTrust request.\n"]
-
-type nonrec verify_trust_request = {
-  trust_id : trust_id; [@ocaml.doc "The unique Trust ID of the trust relationship to verify.\n"]
-}
-[@@ocaml.doc
-  "Initiates the verification of an existing trust relationship between an Managed Microsoft AD \
-   directory and an external domain.\n"]
+type nonrec request_id = string [@@ocaml.doc ""]
 
 type nonrec exception_message = string [@@ocaml.doc ""]
 
-type nonrec request_id = string [@@ocaml.doc ""]
-
-type nonrec unsupported_operation_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "The operation is not supported.\n"]
-
-type nonrec service_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "An exception has occurred in Directory Service.\n"]
-
-type nonrec invalid_parameter_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "One or more parameters are not valid.\n"]
-
-type nonrec entity_does_not_exist_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "The specified entity could not be found.\n"]
-
-type nonrec client_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "A client exception has occurred.\n"]
-
-type nonrec user_password = string [@@ocaml.doc ""]
-
-type nonrec user_name = string [@@ocaml.doc ""]
-
-type nonrec user_does_not_exist_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "The user provided a username that does not exist in your directory.\n"]
-
-type nonrec use_same_username = bool [@@ocaml.doc ""]
-
-type nonrec os_version = VERSION_2019 [@ocaml.doc ""] | VERSION_2012 [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec os_update_settings = {
-  os_version : os_version option;
-      [@ocaml.doc "OS version that the directory needs to be updated to.\n"]
-}
-[@@ocaml.doc "OS version that the directory needs to be updated to.\n"]
-
-type nonrec update_value = {
-  os_update_settings : os_update_settings option; [@ocaml.doc " The OS update related settings. \n"]
-}
-[@@ocaml.doc " The value for a given type of [UpdateSettings]. \n"]
-
-type nonrec update_type = SIZE [@ocaml.doc ""] | NETWORK [@ocaml.doc ""] | OS [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec update_trust_result = {
-  trust_id : trust_id option; [@ocaml.doc "Identifier of the trust relationship.\n"]
-  request_id : request_id option; [@ocaml.doc ""]
-}
-[@@ocaml.doc ""]
-
-type nonrec selective_auth = DISABLED [@ocaml.doc ""] | ENABLED [@ocaml.doc ""] [@@ocaml.doc ""]
-
-type nonrec update_trust_request = {
-  selective_auth : selective_auth option;
-      [@ocaml.doc "Updates selective authentication for the trust.\n"]
-  trust_id : trust_id; [@ocaml.doc "Identifier of the trust relationship.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec update_status_reason = string [@@ocaml.doc ""]
-
-type nonrec update_status =
-  | UPDATE_FAILED [@ocaml.doc ""]
-  | UPDATING [@ocaml.doc ""]
-  | UPDATED [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec directory_id = string [@@ocaml.doc ""]
-
-type nonrec update_settings_result = {
-  directory_id : directory_id option; [@ocaml.doc "The identifier of the directory.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec directory_configuration_setting_name = string [@@ocaml.doc ""]
-
-type nonrec directory_configuration_setting_value = string [@@ocaml.doc ""]
-
-type nonrec setting = {
-  value : directory_configuration_setting_value;
-      [@ocaml.doc
-        "The value of the directory setting for which to retrieve information. For example, for \
-         [TLS_1_0], the valid values are: [Enable] and [Disable].\n"]
-  name : directory_configuration_setting_name;
-      [@ocaml.doc "The name of the directory setting. For example:\n\n  [TLS_1_0] \n "]
-}
-[@@ocaml.doc "Contains information about the configurable settings for a directory.\n"]
-
-type nonrec settings = setting list [@@ocaml.doc ""]
-
-type nonrec update_settings_request = {
-  settings : settings; [@ocaml.doc "The list of [Setting] objects.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc "The identifier of the directory for which to update settings.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec unsupported_settings_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "The specified directory setting is not supported.\n"]
-
-type nonrec incompatible_settings_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "The specified directory setting is not compatible with other settings.\n"]
-
-type nonrec directory_unavailable_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "The specified directory is unavailable.\n"]
-
-type nonrec directory_does_not_exist_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "The specified directory does not exist in the system.\n"]
-
-type nonrec update_security_group_for_directory_controllers = bool [@@ocaml.doc ""]
-
-type nonrec update_radius_result = unit [@@ocaml.doc ""]
-
-type nonrec server = string [@@ocaml.doc ""]
-
-type nonrec servers = server list [@@ocaml.doc ""]
-
-type nonrec port_number = int [@@ocaml.doc ""]
-
-type nonrec radius_timeout = int [@@ocaml.doc ""]
-
-type nonrec radius_retries = int [@@ocaml.doc ""]
-
-type nonrec radius_shared_secret = string [@@ocaml.doc ""]
-
-type nonrec radius_authentication_protocol =
-  | MSCHAPV2 [@ocaml.doc ""]
-  | MSCHAPV1 [@ocaml.doc ""]
-  | CHAP [@ocaml.doc ""]
-  | PAP [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec radius_display_label = string [@@ocaml.doc ""]
-
-type nonrec radius_settings = {
-  use_same_username : use_same_username option; [@ocaml.doc "Not currently used.\n"]
-  display_label : radius_display_label option; [@ocaml.doc "Not currently used.\n"]
-  authentication_protocol : radius_authentication_protocol option;
-      [@ocaml.doc "The protocol specified for your RADIUS endpoints.\n"]
-  shared_secret : radius_shared_secret option;
-      [@ocaml.doc "Required for enabling RADIUS on the directory.\n"]
-  radius_retries : radius_retries option;
-      [@ocaml.doc
-        "The maximum number of times that communication with the RADIUS server is retried after \
-         the initial attempt.\n"]
-  radius_timeout : radius_timeout option;
-      [@ocaml.doc "The amount of time, in seconds, to wait for the RADIUS server to respond.\n"]
-  radius_port : port_number option;
-      [@ocaml.doc
-        "The port that your RADIUS server is using for communications. Your self-managed network \
-         must allow inbound traffic over this port from the Directory Service servers.\n"]
-  radius_servers_ipv6 : servers option;
-      [@ocaml.doc
-        "The IPv6 addresses of the RADIUS server endpoints or RADIUS server load balancer.\n"]
-  radius_servers : servers option;
-      [@ocaml.doc
-        "The fully qualified domain name (FQDN) or IP addresses of the RADIUS server endpoints, or \
-         the FQDN or IP addresses of your RADIUS server load balancer.\n"]
-}
-[@@ocaml.doc
-  "Contains information about a Remote Authentication Dial In User Service (RADIUS) server.\n"]
-
-type nonrec update_radius_request = {
-  radius_settings : radius_settings;
-      [@ocaml.doc "A [RadiusSettings] object that contains information about the RADIUS server.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "The identifier of the directory for which to update the RADIUS server information.\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [UpdateRadius] operation.\n"]
-
-type nonrec update_number_of_domain_controllers_result = unit [@@ocaml.doc ""]
-
-type nonrec desired_number_of_domain_controllers = int [@@ocaml.doc ""]
-
-type nonrec update_number_of_domain_controllers_request = {
-  desired_number : desired_number_of_domain_controllers;
-      [@ocaml.doc "The number of domain controllers desired in the directory.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "Identifier of the directory to which the domain controllers will be added or removed.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec domain_controller_limit_exceeded_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc
-  "The maximum allowed number of domain controllers per directory was exceeded. The default limit \
-   per directory is 20 domain controllers.\n"]
-
-type nonrec region_name = string [@@ocaml.doc ""]
-
-type nonrec initiated_by = string [@@ocaml.doc ""]
-
-type nonrec start_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
-type nonrec last_updated_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
-type nonrec update_info_entry = {
-  last_updated_date_time : last_updated_date_time option;
-      [@ocaml.doc " The last updated date and time of a particular directory setting. \n"]
-  start_time : start_date_time option;
-      [@ocaml.doc " The start time of the [UpdateDirectorySetup] for the particular type. \n"]
-  previous_value : update_value option; [@ocaml.doc " The old value of the target setting. \n"]
-  new_value : update_value option; [@ocaml.doc " The new value of the target setting. \n"]
-  initiated_by : initiated_by option;
-      [@ocaml.doc
-        " This specifies if the update was initiated by the customer or by the service team. \n"]
-  status_reason : update_status_reason option;
-      [@ocaml.doc " The reason for the current status of the update type activity. \n"]
-  status : update_status option;
-      [@ocaml.doc " The status of the update performed on the directory. \n"]
-  region : region_name option; [@ocaml.doc " The name of the Region. \n"]
-}
-[@@ocaml.doc "An entry of update information related to a requested update type.\n"]
-
-type nonrec assessment_id = string [@@ocaml.doc ""]
-
-type nonrec update_hybrid_ad_result = {
-  assessment_id : assessment_id option;
-      [@ocaml.doc
-        "The identifier of the assessment performed to validate the update configuration. This \
-         assessment ensures the updated settings are compatible with your environment.\n"]
-  directory_id : directory_id option;
-      [@ocaml.doc "The identifier of the updated hybrid directory.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec secret_arn = string [@@ocaml.doc ""]
-
-type nonrec hybrid_administrator_account_update = {
-  secret_arn : secret_arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret that \
-         contains the credentials for the AD administrator user, and enables hybrid domain \
-         controllers to join the managed AD domain. For example:\n\n\
-        \  [\n\
-        \                \
-         {\"customerAdAdminDomainUsername\":\"carlos_salazar\",\"customerAdAdminDomainPassword\":\"ExamplePassword123!\"}.\n\
-        \            ] \n\
-        \ "]
-}
-[@@ocaml.doc " Use to recover to the hybrid directory administrator account credentials.\n"]
-
-type nonrec ip_addr = string [@@ocaml.doc ""]
-
-type nonrec customer_dns_ips = ip_addr list [@@ocaml.doc ""]
-
-type nonrec assessment_instance_id = string [@@ocaml.doc ""]
-
-type nonrec assessment_instance_ids = assessment_instance_id list [@@ocaml.doc ""]
-
-type nonrec hybrid_customer_instances_settings = {
-  instance_ids : assessment_instance_ids;
-      [@ocaml.doc
-        "The identifiers of the self-managed instances with SSM used in hybrid directory.\n"]
-  customer_dns_ips : customer_dns_ips;
-      [@ocaml.doc
-        "The IP addresses of the DNS servers or domain controllers in your self-managed AD \
-         environment.\n"]
-}
-[@@ocaml.doc
-  "Contains configuration settings for self-managed instances with SSM used in hybrid directory \
-   operations.\n"]
-
-type nonrec update_hybrid_ad_request = {
-  self_managed_instances_settings : hybrid_customer_instances_settings option;
-      [@ocaml.doc
-        "Updates to the self-managed AD configuration, including DNS server IP addresses and \
-         Amazon Web Services System Manager managed node identifiers.\n"]
-  hybrid_administrator_account_update : hybrid_administrator_account_update option;
-      [@ocaml.doc
-        "We create a hybrid directory administrator account when we create a hybrid directory. Use \
-         [HybridAdministratorAccountUpdate] to recover the hybrid directory administrator account \
-         if you have deleted it.\n\n\
-        \ To recover your hybrid directory administrator account, we need temporary access to a \
-         user in your self-managed AD with administrator permissions in the form of a secret from \
-         Amazon Web Services Secrets Manager. We use these credentials once during recovery and \
-         don't store them.\n\
-        \ \n\
-        \  If your hybrid directory administrator account exists, then you don\226\128\153t need \
-         to use [HybridAdministratorAccountUpdate], even if you have updated your self-managed AD \
-         administrator user.\n\
-        \  "]
-  directory_id : directory_id; [@ocaml.doc "The identifier of the hybrid directory to update.\n"]
-}
-[@@ocaml.doc ""]
-
 type nonrec ad_assessment_limit_exceeded_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
   message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
 }
 [@@ocaml.doc
   "A directory assessment is automatically created when you create a hybrid directory. There are \
@@ -352,1172 +18,162 @@ type nonrec ad_assessment_limit_exceeded_exception = {
    customer support or delete existing CUSTOMER directory assessments; to free up capacity.\n\
   \  "]
 
-type nonrec update_directory_setup_result = unit [@@ocaml.doc ""]
-
-type nonrec directory_size = LARGE [@ocaml.doc ""] | SMALL [@ocaml.doc ""] [@@ocaml.doc ""]
-
-type nonrec directory_size_update_settings = {
-  directory_size : directory_size option;
-      [@ocaml.doc "The target directory size for the update operation.\n"]
-}
-[@@ocaml.doc "Contains the directory size configuration for update operations.\n"]
-
-type nonrec network_type =
-  | IPV6_ONLY [@ocaml.doc ""]
-  | IPV4_ONLY [@ocaml.doc ""]
-  | DUAL_STACK [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec ipv6_addr = string [@@ocaml.doc ""]
-
-type nonrec dns_ipv6_addrs = ipv6_addr list [@@ocaml.doc ""]
-
-type nonrec network_update_settings = {
-  customer_dns_ips_v6 : dns_ipv6_addrs option;
-      [@ocaml.doc
-        "IPv6 addresses of DNS servers or domain controllers in the self-managed directory. \
-         Required only when updating an AD Connector directory.\n"]
-  network_type : network_type option;
-      [@ocaml.doc "The target network type for the directory update.\n"]
-}
-[@@ocaml.doc "Contains the network configuration for directory update operations.\n"]
-
-type nonrec create_snapshot_before_update = bool [@@ocaml.doc ""]
-
-type nonrec update_directory_setup_request = {
-  create_snapshot_before_update : create_snapshot_before_update option;
-      [@ocaml.doc
-        "Specifies whether to create a directory snapshot before performing the update.\n"]
-  network_update_settings : network_update_settings option;
-      [@ocaml.doc "Network configuration to apply during the directory update operation.\n"]
-  directory_size_update_settings : directory_size_update_settings option;
-      [@ocaml.doc "Directory size configuration to apply during the update operation.\n"]
-  os_update_settings : os_update_settings option;
-      [@ocaml.doc
-        "Operating system configuration to apply during the directory update operation.\n"]
-  update_type : update_type; [@ocaml.doc "The type of update to perform on the directory.\n"]
-  directory_id : directory_id; [@ocaml.doc "The identifier of the directory to update.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec snapshot_limit_exceeded_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
+type nonrec service_exception = {
   message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "An exception has occurred in Directory Service.\n"]
+
+type nonrec invalid_parameter_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "One or more parameters are not valid.\n"]
+
+type nonrec entity_does_not_exist_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The specified entity could not be found.\n"]
+
+type nonrec directory_already_shared_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
 }
 [@@ocaml.doc
-  "The maximum number of manual snapshots for the directory has been reached. You can use the \
-   [GetSnapshotLimits] operation to determine the snapshot limits for a directory.\n"]
+  "The specified directory has already been shared with this Amazon Web Services account.\n"]
 
-type nonrec directory_in_desired_state_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
+type nonrec client_exception = {
   message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc " The directory is already updated to desired update type settings. \n"]
-
-type nonrec access_denied_exception = {
   request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
 }
-[@@ocaml.doc "You do not have sufficient access to perform this action.\n"]
+[@@ocaml.doc "A client exception has occurred.\n"]
 
-type nonrec update_conditional_forwarder_result = unit [@@ocaml.doc ""]
-
-type nonrec remote_domain_name = string [@@ocaml.doc ""]
-
-type nonrec dns_ip_addrs = ip_addr list [@@ocaml.doc ""]
-
-type nonrec update_conditional_forwarder_request = {
-  dns_ipv6_addrs : dns_ipv6_addrs option;
-      [@ocaml.doc
-        "The updated IPv6 addresses of the remote DNS server associated with the conditional \
-         forwarder.\n"]
-  dns_ip_addrs : dns_ip_addrs option;
-      [@ocaml.doc
-        "The updated IP addresses of the remote DNS server associated with the conditional \
-         forwarder.\n"]
-  remote_domain_name : remote_domain_name;
-      [@ocaml.doc
-        "The fully qualified domain name (FQDN) of the remote domain with which you will set up a \
-         trust relationship.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "The directory ID of the Amazon Web Services directory for which to update the conditional \
-         forwarder.\n"]
-}
-[@@ocaml.doc "Updates a conditional forwarder.\n"]
-
-type nonrec update_activities = update_info_entry list [@@ocaml.doc ""]
-
-type nonrec target_id = string [@@ocaml.doc ""]
-
-type nonrec target_type = ACCOUNT [@ocaml.doc ""] [@@ocaml.doc ""]
-
-type nonrec unshare_target = {
-  type_ : target_type; [@ocaml.doc "Type of identifier to be used in the {i Id} field.\n"]
-  id : target_id; [@ocaml.doc "Identifier of the directory consumer account.\n"]
-}
-[@@ocaml.doc
-  "Identifier that contains details about the directory consumer account with whom the directory \
-   is being unshared.\n"]
-
-type nonrec unshare_directory_result = {
-  shared_directory_id : directory_id option;
-      [@ocaml.doc
-        "Identifier of the directory stored in the directory consumer account that is to be \
-         unshared from the specified directory ([DirectoryId]).\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec unshare_directory_request = {
-  unshare_target : unshare_target;
-      [@ocaml.doc
-        "Identifier for the directory consumer account with whom the directory has to be unshared.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "The identifier of the Managed Microsoft AD directory that you want to stop sharing.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec invalid_target_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "The specified shared target is not valid.\n"]
-
-type nonrec directory_not_shared_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "The specified directory has not been shared with this Amazon Web Services account.\n"]
-
-type nonrec trust_type = EXTERNAL [@ocaml.doc ""] | FOREST [@ocaml.doc ""] [@@ocaml.doc ""]
-
-type nonrec trust_direction =
-  | TWO_WAY [@ocaml.doc ""]
-  | ONE_WAY_INCOMING [@ocaml.doc ""]
-  | ONE_WAY_OUTGOING [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec trust_state =
-  | FAILED [@ocaml.doc ""]
-  | DELETED [@ocaml.doc ""]
-  | DELETING [@ocaml.doc ""]
-  | UPDATED [@ocaml.doc ""]
-  | UPDATE_FAILED [@ocaml.doc ""]
-  | UPDATING [@ocaml.doc ""]
-  | VERIFIED [@ocaml.doc ""]
-  | VERIFY_FAILED [@ocaml.doc ""]
-  | VERIFYING [@ocaml.doc ""]
-  | CREATED [@ocaml.doc ""]
-  | CREATING [@ocaml.doc ""]
-[@@ocaml.doc ""]
+type nonrec last_updated_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
 
 type nonrec created_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
 
-type nonrec state_last_updated_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+type nonrec notes = string [@@ocaml.doc ""]
 
-type nonrec trust_state_reason = string [@@ocaml.doc ""]
-
-type nonrec trust = {
-  selective_auth : selective_auth option;
-      [@ocaml.doc "Current state of selective authentication for the trust.\n"]
-  trust_state_reason : trust_state_reason option; [@ocaml.doc "The reason for the TrustState.\n"]
-  state_last_updated_date_time : state_last_updated_date_time option;
-      [@ocaml.doc "The date and time that the TrustState was last updated.\n"]
-  last_updated_date_time : last_updated_date_time option;
-      [@ocaml.doc "The date and time that the trust relationship was last updated.\n"]
-  created_date_time : created_date_time option;
-      [@ocaml.doc "The date and time that the trust relationship was created.\n"]
-  trust_state : trust_state option; [@ocaml.doc "The trust relationship state.\n"]
-  trust_direction : trust_direction option; [@ocaml.doc "The trust relationship direction.\n"]
-  trust_type : trust_type option;
-      [@ocaml.doc "The trust relationship type. [Forest] is the default.\n"]
-  remote_domain_name : remote_domain_name option;
-      [@ocaml.doc
-        "The Fully Qualified Domain Name (FQDN) of the external domain involved in the trust \
-         relationship.\n"]
-  trust_id : trust_id option; [@ocaml.doc "The unique ID of the trust relationship.\n"]
-  directory_id : directory_id option;
-      [@ocaml.doc
-        "The Directory ID of the Amazon Web Services directory involved in the trust relationship.\n"]
-}
-[@@ocaml.doc
-  "Describes a trust relationship between an Managed Microsoft AD directory and an external domain.\n"]
-
-type nonrec trusts = trust list [@@ocaml.doc ""]
-
-type nonrec trust_password = string [@@ocaml.doc ""]
-
-type nonrec trust_ids = trust_id list [@@ocaml.doc ""]
-
-type nonrec topic_status =
+type nonrec share_status =
+  | SHARED [@ocaml.doc ""]
+  | PENDING_ACCEPTANCE [@ocaml.doc ""]
+  | REJECTED [@ocaml.doc ""]
+  | REJECTING [@ocaml.doc ""]
+  | REJECT_FAILED [@ocaml.doc ""]
+  | SHARING [@ocaml.doc ""]
+  | SHARE_FAILED [@ocaml.doc ""]
   | DELETED [@ocaml.doc ""]
-  | FAILED [@ocaml.doc ""]
-  | TOPIC_NOT_FOUND [@ocaml.doc ""]
-  | REGISTERED [@ocaml.doc ""]
+  | DELETING [@ocaml.doc ""]
 [@@ocaml.doc ""]
 
-type nonrec topic_name = string [@@ocaml.doc ""]
-
-type nonrec topic_names = topic_name list [@@ocaml.doc ""]
-
-type nonrec topic_arn = string [@@ocaml.doc ""]
-
-type nonrec tag_key = string [@@ocaml.doc ""]
-
-type nonrec tag_value = string [@@ocaml.doc ""]
-
-type nonrec tag = {
-  value : tag_value;
-      [@ocaml.doc
-        "The optional value of the tag. The string value can be Unicode characters. The string can \
-         contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', \
-         '-', ':', '\\@' (Java regex: \
-         \"^(\\[\\\\p\\{L\\}\\\\p\\{Z\\}\\\\p\\{N\\}_.:/=+\\\\-\\]*)$\").\n"]
-  key : tag_key;
-      [@ocaml.doc
-        "Required name of the tag. The string value can be Unicode characters and cannot be \
-         prefixed with \"aws:\". The string can contain only the set of Unicode letters, digits, \
-         white-space, '_', '.', '/', '=', '+', '-', ':', '\\@'(Java regex: \
-         \"^(\\[\\\\p\\{L\\}\\\\p\\{Z\\}\\\\p\\{N\\}_.:/=+\\\\-\\]*)$\").\n"]
-}
-[@@ocaml.doc "Metadata assigned to a directory consisting of a key-value pair.\n"]
-
-type nonrec tags = tag list [@@ocaml.doc ""]
-
-type nonrec tag_limit_exceeded_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "The maximum allowed number of tags was exceeded.\n"]
-
-type nonrec tag_keys = tag_key list [@@ocaml.doc ""]
-
-type nonrec subscription_created_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
-type nonrec subnet_id = string [@@ocaml.doc ""]
-
-type nonrec subnet_ids = subnet_id list [@@ocaml.doc ""]
-
-type nonrec start_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
-type nonrec schema_extension_id = string [@@ocaml.doc ""]
-
-type nonrec start_schema_extension_result = {
-  schema_extension_id : schema_extension_id option;
-      [@ocaml.doc "The identifier of the schema extension that will be applied.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec create_snapshot_before_schema_extension = bool [@@ocaml.doc ""]
-
-type nonrec ldif_content = string [@@ocaml.doc ""]
-
-type nonrec description = string [@@ocaml.doc ""]
-
-type nonrec start_schema_extension_request = {
-  description : description; [@ocaml.doc "A description of the schema extension.\n"]
-  ldif_content : ldif_content;
-      [@ocaml.doc
-        "The LDIF file represented as a string. To construct the LdifContent string, precede each \
-         line as it would be formatted in an ldif file with \\n. See the example request below for \
-         more details. The file size can be no larger than 1MB.\n"]
-  create_snapshot_before_schema_extension : create_snapshot_before_schema_extension;
-      [@ocaml.doc
-        "If true, creates a snapshot of the directory before applying the schema extension.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "The identifier of the directory for which the schema extension will be applied to.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec start_ad_assessment_result = {
-  assessment_id : assessment_id option;
-      [@ocaml.doc
-        "The unique identifier of the newly started directory assessment. Use this identifier to \
-         monitor assessment progress and retrieve results.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec directory_name = string [@@ocaml.doc ""]
-
-type nonrec directory_vpc_settings = {
-  subnet_ids : subnet_ids;
-      [@ocaml.doc
-        "The identifiers of the subnets for the directory servers. The two subnets must be in \
-         different Availability Zones. Directory Service creates a directory server and a DNS \
-         server in each of these subnets.\n"]
-  vpc_id : vpc_id; [@ocaml.doc "The identifier of the VPC in which to create the directory.\n"]
-}
-[@@ocaml.doc
-  "Contains VPC information for the [CreateDirectory], [CreateMicrosoftAD], or [CreateHybridAD] \
-   operation.\n"]
-
-type nonrec security_group_id = string [@@ocaml.doc ""]
-
-type nonrec security_group_ids = security_group_id list [@@ocaml.doc ""]
-
-type nonrec assessment_configuration = {
-  security_group_ids : security_group_ids option;
-      [@ocaml.doc
-        "By default, the service attaches a security group to allow network access to the \
-         self-managed nodes in your Amazon VPC. You can optionally supply your own security group \
-         that allows network traffic to and from your self-managed domain controllers outside of \
-         your Amazon VPC. \n"]
-  instance_ids : assessment_instance_ids;
-      [@ocaml.doc
-        "The identifiers of the self-managed instances with SSM that are used to perform \
-         connectivity and validation tests.\n"]
-  vpc_settings : directory_vpc_settings; [@ocaml.doc ""]
-  dns_name : directory_name;
-      [@ocaml.doc
-        "The fully qualified domain name (FQDN) of the self-managed AD domain to assess.\n"]
-  customer_dns_ips : customer_dns_ips;
-      [@ocaml.doc
-        "A list of IP addresses for the DNS servers or domain controllers in your self-managed AD \
-         that are tested during the assessment.\n"]
-}
-[@@ocaml.doc "Contains configuration parameters required to perform a directory assessment.\n"]
-
-type nonrec start_ad_assessment_request = {
-  directory_id : directory_id option;
-      [@ocaml.doc
-        "The identifier of the directory for which to perform the assessment. This should be an \
-         existing directory. If the assessment is not for an existing directory, this parameter \
-         should be omitted.\n"]
-  assessment_configuration : assessment_configuration option;
-      [@ocaml.doc
-        "Configuration parameters for the directory assessment, including DNS server information, \
-         domain name, Amazon VPC subnet, and Amazon Web Services System Manager managed node \
-         details.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec stage_reason = string [@@ocaml.doc ""]
-
-type nonrec sso_enabled = bool [@@ocaml.doc ""]
-
-type nonrec snapshot_id = string [@@ocaml.doc ""]
-
-type nonrec snapshot_type = MANUAL [@ocaml.doc ""] | AUTO [@ocaml.doc ""] [@@ocaml.doc ""]
-
-type nonrec snapshot_name = string [@@ocaml.doc ""]
-
-type nonrec snapshot_status =
-  | FAILED [@ocaml.doc ""]
-  | COMPLETED [@ocaml.doc ""]
-  | CREATING [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec snapshot = {
-  start_time : start_time option; [@ocaml.doc "The date and time that the snapshot was taken.\n"]
-  status : snapshot_status option; [@ocaml.doc "The snapshot status.\n"]
-  name : snapshot_name option; [@ocaml.doc "The descriptive name of the snapshot.\n"]
-  type_ : snapshot_type option; [@ocaml.doc "The snapshot type.\n"]
-  snapshot_id : snapshot_id option; [@ocaml.doc "The snapshot identifier.\n"]
-  directory_id : directory_id option; [@ocaml.doc "The directory identifier.\n"]
-}
-[@@ocaml.doc "Describes a directory snapshot.\n"]
-
-type nonrec snapshots = snapshot list [@@ocaml.doc ""]
-
-type nonrec limit = int [@@ocaml.doc ""]
-
-type nonrec manual_snapshots_limit_reached = bool [@@ocaml.doc ""]
-
-type nonrec snapshot_limits = {
-  manual_snapshots_limit_reached : manual_snapshots_limit_reached option;
-      [@ocaml.doc "Indicates if the manual snapshot limit has been reached.\n"]
-  manual_snapshots_current_count : limit option;
-      [@ocaml.doc "The current number of manual snapshots of the directory.\n"]
-  manual_snapshots_limit : limit option;
-      [@ocaml.doc "The maximum number of manual snapshots allowed.\n"]
-}
-[@@ocaml.doc "Contains manual snapshot limit information for a directory.\n"]
-
-type nonrec snapshot_ids = snapshot_id list [@@ocaml.doc ""]
+type nonrec directory_id = string [@@ocaml.doc ""]
 
 type nonrec customer_id = string [@@ocaml.doc ""]
 
-type nonrec share_method = HANDSHAKE [@ocaml.doc ""] | ORGANIZATIONS [@ocaml.doc ""]
+type nonrec share_method = ORGANIZATIONS [@ocaml.doc ""] | HANDSHAKE [@ocaml.doc ""]
 [@@ocaml.doc ""]
-
-type nonrec share_status =
-  | DELETING [@ocaml.doc ""]
-  | DELETED [@ocaml.doc ""]
-  | SHARE_FAILED [@ocaml.doc ""]
-  | SHARING [@ocaml.doc ""]
-  | REJECT_FAILED [@ocaml.doc ""]
-  | REJECTING [@ocaml.doc ""]
-  | REJECTED [@ocaml.doc ""]
-  | PENDING_ACCEPTANCE [@ocaml.doc ""]
-  | SHARED [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec notes = string [@@ocaml.doc ""]
 
 type nonrec shared_directory = {
-  last_updated_date_time : last_updated_date_time option;
-      [@ocaml.doc "The date and time that the shared directory was last updated.\n"]
-  created_date_time : created_date_time option;
-      [@ocaml.doc "The date and time that the shared directory was created.\n"]
-  share_notes : notes option;
+  owner_account_id : customer_id option;
       [@ocaml.doc
-        "A directory share request that is sent by the directory owner to the directory consumer. \
-         The request includes a typed message to help the directory consumer administrator \
-         determine whether to approve or reject the share invitation.\n"]
-  share_status : share_status option;
-      [@ocaml.doc "Current directory status of the shared Managed Microsoft AD directory.\n"]
-  shared_directory_id : directory_id option;
-      [@ocaml.doc
-        "Identifier of the shared directory in the directory consumer account. This identifier is \
-         different for each directory owner account.\n"]
-  shared_account_id : customer_id option;
-      [@ocaml.doc
-        "Identifier of the directory consumer account that has access to the shared directory \
-         ([OwnerDirectoryId]) in the directory owner account.\n"]
+        "Identifier of the directory owner account, which contains the directory that has been \
+         shared to the consumer account.\n"]
+  owner_directory_id : directory_id option;
+      [@ocaml.doc "Identifier of the directory in the directory owner account. \n"]
   share_method : share_method option;
       [@ocaml.doc
         "The method used when sharing a directory to determine whether the directory should be \
          shared within your Amazon Web Services organization ([ORGANIZATIONS]) or with any Amazon \
          Web Services account by sending a shared directory request ([HANDSHAKE]).\n"]
-  owner_directory_id : directory_id option;
-      [@ocaml.doc "Identifier of the directory in the directory owner account. \n"]
-  owner_account_id : customer_id option;
+  shared_account_id : customer_id option;
       [@ocaml.doc
-        "Identifier of the directory owner account, which contains the directory that has been \
-         shared to the consumer account.\n"]
-}
-[@@ocaml.doc
-  "Details about the shared directory in the directory owner account for which the share request \
-   in the directory consumer account has been accepted.\n"]
-
-type nonrec shared_directories = shared_directory list [@@ocaml.doc ""]
-
-type nonrec share_target = {
-  type_ : target_type; [@ocaml.doc "Type of identifier to be used in the [Id] field.\n"]
-  id : target_id; [@ocaml.doc "Identifier of the directory consumer account.\n"]
-}
-[@@ocaml.doc "Identifier that contains details about the directory consumer account.\n"]
-
-type nonrec share_limit_exceeded_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc
-  "The maximum number of Amazon Web Services accounts that you can share with this directory has \
-   been reached.\n"]
-
-type nonrec share_directory_result = {
+        "Identifier of the directory consumer account that has access to the shared directory \
+         ([OwnerDirectoryId]) in the directory owner account.\n"]
   shared_directory_id : directory_id option;
       [@ocaml.doc
-        "Identifier of the directory that is stored in the directory consumer account that is \
-         shared from the specified directory ([DirectoryId]).\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec share_directory_request = {
-  share_method : share_method;
-      [@ocaml.doc
-        "The method used when sharing a directory to determine whether the directory should be \
-         shared within your Amazon Web Services organization ([ORGANIZATIONS]) or with any Amazon \
-         Web Services account by sending a directory sharing request ([HANDSHAKE]).\n"]
-  share_target : share_target;
-      [@ocaml.doc
-        "Identifier for the directory consumer account with whom the directory is to be shared.\n"]
+        "Identifier of the shared directory in the directory consumer account. This identifier is \
+         different for each directory owner account.\n"]
+  share_status : share_status option;
+      [@ocaml.doc "Current directory status of the shared Managed Microsoft AD directory.\n"]
   share_notes : notes option;
       [@ocaml.doc
         "A directory share request that is sent by the directory owner to the directory consumer. \
          The request includes a typed message to help the directory consumer administrator \
          determine whether to approve or reject the share invitation.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "Identifier of the Managed Microsoft AD directory that you want to share with other Amazon \
-         Web Services accounts.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec organizations_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
+  created_date_time : created_date_time option;
+      [@ocaml.doc "The date and time that the shared directory was created.\n"]
+  last_updated_date_time : last_updated_date_time option;
+      [@ocaml.doc "The date and time that the shared directory was last updated.\n"]
 }
 [@@ocaml.doc
-  "Exception encountered while trying to access your Amazon Web Services organization.\n"]
+  "Details about the shared directory in the directory owner account for which the share request \
+   in the directory consumer account has been accepted.\n"]
 
-type nonrec directory_already_shared_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc
-  "The specified directory has already been shared with this Amazon Web Services account.\n"]
-
-type nonrec directory_configuration_setting_type = string [@@ocaml.doc ""]
-
-type nonrec directory_configuration_setting_allowed_values = string [@@ocaml.doc ""]
-
-type nonrec directory_configuration_status =
-  | DEFAULT [@ocaml.doc ""]
-  | FAILED [@ocaml.doc ""]
-  | UPDATED [@ocaml.doc ""]
-  | UPDATING [@ocaml.doc ""]
-  | REQUESTED [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec directory_configuration_setting_request_detailed_status =
-  (region_name * directory_configuration_status) list
-[@@ocaml.doc ""]
-
-type nonrec directory_configuration_setting_request_status_message = string [@@ocaml.doc ""]
-
-type nonrec directory_configuration_setting_last_updated_date_time = Smaws_Lib.CoreTypes.Timestamp.t
-[@@ocaml.doc ""]
-
-type nonrec directory_configuration_setting_last_requested_date_time =
-  Smaws_Lib.CoreTypes.Timestamp.t
-[@@ocaml.doc ""]
-
-type nonrec directory_configuration_setting_data_type = string [@@ocaml.doc ""]
-
-type nonrec setting_entry = {
-  data_type : directory_configuration_setting_data_type option;
-      [@ocaml.doc
-        "The data type of a directory setting. This is used to define the [AllowedValues] of a \
-         setting. For example a data type can be [Boolean], [DurationInSeconds], or [Enum].\n"]
-  last_requested_date_time : directory_configuration_setting_last_requested_date_time option;
-      [@ocaml.doc
-        "The date and time when the request to update a directory setting was last submitted.\n"]
-  last_updated_date_time : directory_configuration_setting_last_updated_date_time option;
-      [@ocaml.doc "The date and time when the directory setting was last updated.\n"]
-  request_status_message : directory_configuration_setting_request_status_message option;
-      [@ocaml.doc "The last status message for the directory status request.\n"]
-  request_detailed_status : directory_configuration_setting_request_detailed_status option;
-      [@ocaml.doc
-        "Details about the status of the request to update the directory setting. If the directory \
-         setting is deployed in more than one region, status is returned for the request in each \
-         region where the setting is deployed.\n"]
-  request_status : directory_configuration_status option;
-      [@ocaml.doc
-        "The overall status of the request to update the directory setting request. If the \
-         directory setting is deployed in more than one region, and the request fails in any \
-         region, the overall status is [Failed].\n"]
-  requested_value : directory_configuration_setting_value option;
-      [@ocaml.doc "The value that was last requested for the directory setting.\n"]
-  applied_value : directory_configuration_setting_value option;
-      [@ocaml.doc "The value of the directory setting that is applied to the directory.\n"]
-  allowed_values : directory_configuration_setting_allowed_values option;
-      [@ocaml.doc
-        "The valid range of values for the directory setting. These values depend on the \
-         [DataType] of your directory.\n"]
-  name : directory_configuration_setting_name option;
-      [@ocaml.doc "The name of the directory setting. For example:\n\n  [TLS_1_0] \n "]
-  type_ : directory_configuration_setting_type option;
-      [@ocaml.doc
-        "The type, or category, of a directory setting. Similar settings have the same type. For \
-         example, [Protocol], [Cipher], or [Certificate-Based\n\
-        \        Authentication].\n"]
-}
-[@@ocaml.doc "Contains information about the specified configurable setting for a directory.\n"]
-
-type nonrec setting_entries = setting_entry list [@@ocaml.doc ""]
-
-type nonrec schema_extension_status =
-  | COMPLETED [@ocaml.doc ""]
-  | FAILED [@ocaml.doc ""]
-  | CANCELLED [@ocaml.doc ""]
-  | ROLLBACK_IN_PROGRESS [@ocaml.doc ""]
-  | CANCEL_IN_PROGRESS [@ocaml.doc ""]
-  | REPLICATING [@ocaml.doc ""]
-  | UPDATING_SCHEMA [@ocaml.doc ""]
-  | CREATING_SNAPSHOT [@ocaml.doc ""]
-  | INITIALIZING [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec schema_extension_status_reason = string [@@ocaml.doc ""]
-
-type nonrec end_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
-type nonrec schema_extension_info = {
-  end_date_time : end_date_time option;
-      [@ocaml.doc "The date and time that the schema extension was completed.\n"]
-  start_date_time : start_date_time option;
-      [@ocaml.doc
-        "The date and time that the schema extension started being applied to the directory.\n"]
-  schema_extension_status_reason : schema_extension_status_reason option;
-      [@ocaml.doc "The reason for the [SchemaExtensionStatus].\n"]
-  schema_extension_status : schema_extension_status option;
-      [@ocaml.doc "The current status of the schema extension.\n"]
-  description : description option; [@ocaml.doc "A description of the schema extension.\n"]
-  schema_extension_id : schema_extension_id option;
-      [@ocaml.doc "The identifier of the schema extension.\n"]
-  directory_id : directory_id option;
-      [@ocaml.doc "The identifier of the directory to which the schema extension is applied.\n"]
-}
-[@@ocaml.doc "Information about a schema extension.\n"]
-
-type nonrec schema_extensions_info = schema_extension_info list [@@ocaml.doc ""]
-
-type nonrec si_d = string [@@ocaml.doc ""]
-
-type nonrec restore_from_snapshot_result = unit [@@ocaml.doc ""]
-
-type nonrec restore_from_snapshot_request = {
-  snapshot_id : snapshot_id; [@ocaml.doc "The identifier of the snapshot to restore from.\n"]
-}
-[@@ocaml.doc "An object representing the inputs for the [RestoreFromSnapshot] operation.\n"]
-
-type nonrec resource_id = string [@@ocaml.doc ""]
-
-type nonrec reset_user_password_result = unit [@@ocaml.doc ""]
-
-type nonrec customer_user_name = string [@@ocaml.doc ""]
-
-type nonrec reset_user_password_request = {
-  new_password : user_password; [@ocaml.doc "The new password that will be reset.\n"]
-  user_name : customer_user_name;
-      [@ocaml.doc "The user name of the user whose password will be reset.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "Identifier of the Managed Microsoft AD or Simple AD directory in which the user resides.\n"]
+type nonrec accept_shared_directory_result = {
+  shared_directory : shared_directory option;
+      [@ocaml.doc "The shared directory in the directory consumer account.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec invalid_password_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc
-  "The new password provided by the user does not meet the password complexity requirements \
-   defined in your directory.\n"]
-
-type nonrec replication_scope = Domain [@ocaml.doc ""] [@@ocaml.doc ""]
-
-type nonrec remove_tags_from_resource_result = unit [@@ocaml.doc ""]
-
-type nonrec remove_tags_from_resource_request = {
-  tag_keys : tag_keys; [@ocaml.doc "The tag key (name) of the tag to be removed.\n"]
-  resource_id : resource_id;
-      [@ocaml.doc "Identifier (ID) of the directory from which to remove the tag.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec remove_region_result = unit [@@ocaml.doc ""]
-
-type nonrec remove_region_request = {
-  directory_id : directory_id;
-      [@ocaml.doc
-        "The identifier of the directory for which you want to remove Region replication.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec remove_ip_routes_result = unit [@@ocaml.doc ""]
-
-type nonrec cidr_ip = string [@@ocaml.doc ""]
-
-type nonrec cidr_ips = cidr_ip list [@@ocaml.doc ""]
-
-type nonrec cidr_ipv6 = string [@@ocaml.doc ""]
-
-type nonrec cidr_ipv6s = cidr_ipv6 list [@@ocaml.doc ""]
-
-type nonrec remove_ip_routes_request = {
-  cidr_ipv6s : cidr_ipv6s option; [@ocaml.doc "IPv6 address blocks that you want to remove.\n"]
-  cidr_ips : cidr_ips option; [@ocaml.doc "IP address blocks that you want to remove.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "Identifier (ID) of the directory from which you want to remove the IP addresses.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec remote_domain_names = remote_domain_name list [@@ocaml.doc ""]
-
-type nonrec reject_shared_directory_result = {
-  shared_directory_id : directory_id option;
-      [@ocaml.doc "Identifier of the shared directory in the directory consumer account.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec reject_shared_directory_request = {
+type nonrec accept_shared_directory_request = {
   shared_directory_id : directory_id;
       [@ocaml.doc
         "Identifier of the shared directory in the directory consumer account. This identifier is \
-         different for each directory owner account.\n"]
+         different for each directory owner account. \n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec register_event_topic_result = unit [@@ocaml.doc ""]
-
-type nonrec register_event_topic_request = {
-  topic_name : topic_name;
-      [@ocaml.doc
-        "The Amazon SNS topic name to which the directory will publish status messages. This \
-         Amazon SNS topic must be in the same region as the specified Directory ID.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc "The Directory ID that will publish status messages to the Amazon SNS topic.\n"]
-}
-[@@ocaml.doc "Registers a new event topic.\n"]
-
-type nonrec certificate_id = string [@@ocaml.doc ""]
-
-type nonrec register_certificate_result = {
-  certificate_id : certificate_id option; [@ocaml.doc "The identifier of the certificate.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec certificate_data = string [@@ocaml.doc ""]
-
-type nonrec certificate_type = CLIENT_LDAPS [@ocaml.doc ""] | CLIENT_CERT_AUTH [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec ocsp_url = string [@@ocaml.doc ""]
-
-type nonrec client_cert_auth_settings = {
-  ocsp_url : ocsp_url option;
-      [@ocaml.doc
-        "Specifies the URL of the default OCSP server used to check for revocation status. A \
-         secondary value to any OCSP address found in the AIA extension of the user certificate.\n"]
-}
-[@@ocaml.doc
-  "Contains information about the client certificate authentication settings for the \
-   [RegisterCertificate] and [DescribeCertificate] operations. \n"]
-
-type nonrec register_certificate_request = {
-  client_cert_auth_settings : client_cert_auth_settings option;
-      [@ocaml.doc
-        "A [ClientCertAuthSettings] object that contains client certificate authentication settings.\n"]
-  type_ : certificate_type option;
-      [@ocaml.doc
-        "The function that the registered certificate performs. Valid values include [ClientLDAPS] \
-         or [ClientCertAuth]. The default value is [ClientLDAPS].\n"]
-  certificate_data : certificate_data;
-      [@ocaml.doc "The certificate PEM string that needs to be registered.\n"]
-  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec invalid_certificate_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
+type nonrec access_denied_exception = {
   message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "The certificate PEM that was provided has incorrect encoding.\n"]
-
-type nonrec certificate_limit_exceeded_exception = {
   request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
 }
-[@@ocaml.doc "The certificate could not be added because the certificate limit has been reached.\n"]
+[@@ocaml.doc "You do not have sufficient access to perform this action.\n"]
 
-type nonrec certificate_already_exists_exception = {
+type nonrec access_url = string [@@ocaml.doc ""]
+
+type nonrec ip_route_limit_exceeded_exception = {
+  message : exception_message option; [@ocaml.doc ""]
   request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "The certificate has already been registered into the system.\n"]
-
-type nonrec additional_regions = region_name list [@@ocaml.doc ""]
-
-type nonrec regions_info = {
-  additional_regions : additional_regions option;
-      [@ocaml.doc
-        "Lists the Regions where the directory has been replicated, excluding the primary Region.\n"]
-  primary_region : region_name option;
-      [@ocaml.doc "The Region where the Managed Microsoft AD directory was originally created.\n"]
 }
 [@@ocaml.doc
-  "Provides information about the Regions that are configured for multi-Region replication.\n"]
+  "The maximum allowed number of IP addresses was exceeded. The default limit is 100 IP address \
+   blocks.\n"]
 
-type nonrec region_type = ADDITIONAL [@ocaml.doc ""] | PRIMARY [@ocaml.doc ""] [@@ocaml.doc ""]
-
-type nonrec directory_stage =
-  | UPDATING [@ocaml.doc ""]
-  | FAILED [@ocaml.doc ""]
-  | DELETED [@ocaml.doc ""]
-  | DELETING [@ocaml.doc ""]
-  | RESTOREFAILED [@ocaml.doc ""]
-  | RESTORING [@ocaml.doc ""]
-  | IMPAIRED [@ocaml.doc ""]
-  | INOPERABLE [@ocaml.doc ""]
-  | ACTIVE [@ocaml.doc ""]
-  | CREATED [@ocaml.doc ""]
-  | CREATING [@ocaml.doc ""]
-  | REQUESTED [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec launch_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
-type nonrec region_description = {
-  last_updated_date_time : last_updated_date_time option;
-      [@ocaml.doc "The date and time that the Region description was last updated.\n"]
-  status_last_updated_date_time : state_last_updated_date_time option;
-      [@ocaml.doc "The date and time that the Region status was last updated.\n"]
-  launch_time : launch_time option; [@ocaml.doc "Specifies when the Region replication began.\n"]
-  desired_number_of_domain_controllers : desired_number_of_domain_controllers option;
-      [@ocaml.doc
-        "The desired number of domain controllers in the specified Region for the specified \
-         directory.\n"]
-  vpc_settings : directory_vpc_settings option; [@ocaml.doc ""]
-  status : directory_stage option;
-      [@ocaml.doc "The status of the replication process for the specified Region.\n"]
-  region_type : region_type option;
-      [@ocaml.doc "Specifies whether the Region is the primary Region or an additional Region.\n"]
-  region_name : region_name option;
-      [@ocaml.doc "The name of the Region. For example, [us-east-1].\n"]
-  directory_id : directory_id option; [@ocaml.doc "The identifier of the directory.\n"]
-}
-[@@ocaml.doc "The replicated Region information for a directory.\n"]
-
-type nonrec regions_description = region_description list [@@ocaml.doc ""]
-
-type nonrec region_limit_exceeded_exception = {
+type nonrec entity_already_exists_exception = {
+  message : exception_message option; [@ocaml.doc ""]
   request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The specified entity already exists.\n"]
+
+type nonrec directory_unavailable_exception = {
   message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc
-  "You have reached the limit for maximum number of simultaneous Region replications per directory.\n"]
-
-type nonrec radius_status =
-  | FAILED [@ocaml.doc ""]
-  | COMPLETED [@ocaml.doc ""]
-  | CREATING [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec pca_connector_arn = string [@@ocaml.doc ""]
-
-type nonrec password = string [@@ocaml.doc ""]
-
-type nonrec page_limit = int [@@ocaml.doc ""]
-
-type nonrec availability_zone = string [@@ocaml.doc ""]
-
-type nonrec availability_zones = availability_zone list [@@ocaml.doc ""]
-
-type nonrec directory_vpc_settings_description = {
-  availability_zones : availability_zones option;
-      [@ocaml.doc "The list of Availability Zones that the directory is in.\n"]
-  security_group_id : security_group_id option;
-      [@ocaml.doc "The domain controller security group identifier for the directory.\n"]
-  subnet_ids : subnet_ids option;
-      [@ocaml.doc "The identifiers of the subnets for the directory servers.\n"]
-  vpc_id : vpc_id option; [@ocaml.doc "The identifier of the VPC that the directory is in.\n"]
-}
-[@@ocaml.doc "Contains information about the directory.\n"]
-
-type nonrec owner_directory_description = {
-  network_type : network_type option;
-      [@ocaml.doc "Network type of the directory in the directory owner account.\n"]
-  radius_status : radius_status option; [@ocaml.doc "The status of the RADIUS server.\n"]
-  radius_settings : radius_settings option;
-      [@ocaml.doc "Information about the [RadiusSettings] object server configuration.\n"]
-  vpc_settings : directory_vpc_settings_description option;
-      [@ocaml.doc "Information about the VPC settings for the directory.\n"]
-  dns_ipv6_addrs : dns_ipv6_addrs option;
-      [@ocaml.doc "IPv6 addresses of the directory\226\128\153s domain controllers.\n"]
-  dns_ip_addrs : dns_ip_addrs option;
-      [@ocaml.doc "IP address of the directory\226\128\153s domain controllers.\n"]
-  account_id : customer_id option; [@ocaml.doc "Identifier of the directory owner account.\n"]
-  directory_id : directory_id option;
-      [@ocaml.doc
-        "Identifier of the Managed Microsoft AD directory in the directory owner account.\n"]
-}
-[@@ocaml.doc
-  "Contains the directory owner account details shared with the directory consumer account.\n"]
-
-type nonrec organizational_unit_d_n = string [@@ocaml.doc ""]
-
-type nonrec no_available_certificate_exception = {
   request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
 }
-[@@ocaml.doc
-  "Client authentication setup could not be completed because at least one valid certificate must \
-   be registered in the system.\n"]
+[@@ocaml.doc "The specified directory is unavailable.\n"]
 
-type nonrec next_token = string [@@ocaml.doc ""]
+type nonrec add_ip_routes_result = unit [@@ocaml.doc ""]
 
-type nonrec log_group_name = string [@@ocaml.doc ""]
+type nonrec update_security_group_for_directory_controllers = bool [@@ocaml.doc ""]
 
-type nonrec log_subscription = {
-  subscription_created_date_time : subscription_created_date_time option;
-      [@ocaml.doc "The date and time that the log subscription was created.\n"]
-  log_group_name : log_group_name option; [@ocaml.doc "The name of the log group.\n"]
-  directory_id : directory_id option;
-      [@ocaml.doc
-        "Identifier (ID) of the directory that you want to associate with the log subscription.\n"]
-}
-[@@ocaml.doc
-  "Represents a log subscription, which tracks real-time data from a chosen log group to a \
-   specified destination.\n"]
+type nonrec description = string [@@ocaml.doc ""]
 
-type nonrec log_subscriptions = log_subscription list [@@ocaml.doc ""]
+type nonrec cidr_ipv6 = string [@@ocaml.doc ""]
 
-type nonrec list_tags_for_resource_result = {
-  next_token : next_token option; [@ocaml.doc "Reserved for future use.\n"]
-  tags : tags option; [@ocaml.doc "List of tags returned by the ListTagsForResource operation.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec list_tags_for_resource_request = {
-  limit : limit option; [@ocaml.doc "Reserved for future use.\n"]
-  next_token : next_token option; [@ocaml.doc "Reserved for future use.\n"]
-  resource_id : resource_id;
-      [@ocaml.doc "Identifier (ID) of the directory for which you want to retrieve tags.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec invalid_next_token_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "The [NextToken] value is not valid.\n"]
-
-type nonrec list_schema_extensions_result = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "If not null, more results are available. Pass this value for the [NextToken] parameter in \
-         a subsequent call to [ListSchemaExtensions] to retrieve the next set of items.\n"]
-  schema_extensions_info : schema_extensions_info option;
-      [@ocaml.doc "Information about the schema extensions applied to the directory.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec list_schema_extensions_request = {
-  limit : limit option; [@ocaml.doc "The maximum number of items to return.\n"]
-  next_token : next_token option;
-      [@ocaml.doc
-        "The [ListSchemaExtensions.NextToken] value from a previous call to \
-         [ListSchemaExtensions]. Pass null if this is the first call.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "The identifier of the directory from which to retrieve the schema extension information.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec list_log_subscriptions_result = {
-  next_token : next_token option; [@ocaml.doc "The token for the next set of items to return.\n"]
-  log_subscriptions : log_subscriptions option;
-      [@ocaml.doc
-        "A list of active [LogSubscription] objects for calling the Amazon Web Services account.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec list_log_subscriptions_request = {
-  limit : limit option; [@ocaml.doc "The maximum number of items returned.\n"]
-  next_token : next_token option; [@ocaml.doc "The token for the next set of items to return.\n"]
-  directory_id : directory_id option;
-      [@ocaml.doc
-        "If a {i DirectoryID} is provided, lists only the log subscription associated with that \
-         directory. If no {i DirectoryId} is provided, lists all log subscriptions associated with \
-         your Amazon Web Services account. If there are no log subscriptions for the Amazon Web \
-         Services account or the directory, an empty list will be returned.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec ip_route_status_msg =
-  | REMOVE_FAILED [@ocaml.doc ""]
-  | ADD_FAILED [@ocaml.doc ""]
-  | REMOVED [@ocaml.doc ""]
-  | REMOVING [@ocaml.doc ""]
-  | ADDED [@ocaml.doc ""]
-  | ADDING [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec added_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
-type nonrec ip_route_status_reason = string [@@ocaml.doc ""]
-
-type nonrec ip_route_info = {
-  description : description option; [@ocaml.doc "Description of the [IpRouteInfo].\n"]
-  ip_route_status_reason : ip_route_status_reason option;
-      [@ocaml.doc "The reason for the IpRouteStatusMsg.\n"]
-  added_date_time : added_date_time option;
-      [@ocaml.doc "The date and time the address block was added to the directory.\n"]
-  ip_route_status_msg : ip_route_status_msg option;
-      [@ocaml.doc "The status of the IP address block.\n"]
-  cidr_ipv6 : cidr_ipv6 option; [@ocaml.doc "IPv6 address block in the [IpRoute].\n"]
-  cidr_ip : cidr_ip option; [@ocaml.doc "IP address block in the [IpRoute].\n"]
-  directory_id : directory_id option;
-      [@ocaml.doc "Identifier (ID) of the directory associated with the IP addresses.\n"]
-}
-[@@ocaml.doc "Information about one or more IP address blocks.\n"]
-
-type nonrec ip_routes_info = ip_route_info list [@@ocaml.doc ""]
-
-type nonrec list_ip_routes_result = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "If not null, more results are available. Pass this value for the {i NextToken} parameter \
-         in a subsequent call to [ListIpRoutes] to retrieve the next set of items.\n"]
-  ip_routes_info : ip_routes_info option; [@ocaml.doc "A list of [IpRoute]s.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec list_ip_routes_request = {
-  limit : limit option;
-      [@ocaml.doc
-        "Maximum number of items to return. If this value is zero, the maximum number of items is \
-         specified by the limitations of the operation.\n"]
-  next_token : next_token option;
-      [@ocaml.doc
-        "The {i ListIpRoutes.NextToken} value from a previous call to [ListIpRoutes]. Pass null if \
-         this is the first call.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "Identifier (ID) of the directory for which you want to retrieve the IP addresses.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec certificate_c_n = string [@@ocaml.doc ""]
-
-type nonrec certificate_state =
-  | DEREGISTER_FAILED [@ocaml.doc ""]
-  | DEREGISTERED [@ocaml.doc ""]
-  | DEREGISTERING [@ocaml.doc ""]
-  | REGISTER_FAILED [@ocaml.doc ""]
-  | REGISTERED [@ocaml.doc ""]
-  | REGISTERING [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec certificate_expiry_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
-type nonrec certificate_info = {
-  type_ : certificate_type option;
-      [@ocaml.doc
-        "The function that the registered certificate performs. Valid values include [ClientLDAPS] \
-         or [ClientCertAuth]. The default value is [ClientLDAPS].\n"]
-  expiry_date_time : certificate_expiry_date_time option;
-      [@ocaml.doc "The date and time when the certificate will expire.\n"]
-  state : certificate_state option; [@ocaml.doc "The state of the certificate.\n"]
-  common_name : certificate_c_n option; [@ocaml.doc "The common name for the certificate.\n"]
-  certificate_id : certificate_id option; [@ocaml.doc "The identifier of the certificate.\n"]
-}
-[@@ocaml.doc "Contains general information about a certificate.\n"]
-
-type nonrec certificates_info = certificate_info list [@@ocaml.doc ""]
-
-type nonrec list_certificates_result = {
-  certificates_info : certificates_info option;
-      [@ocaml.doc
-        "A list of certificates with basic details including certificate ID, certificate common \
-         name, certificate state.\n"]
-  next_token : next_token option;
-      [@ocaml.doc
-        "Indicates whether another page of certificates is available when the number of available \
-         certificates exceeds the page limit.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec list_certificates_request = {
-  limit : page_limit option; [@ocaml.doc "The number of items that should show up on one page\n"]
-  next_token : next_token option;
-      [@ocaml.doc
-        "A token for requesting another page of certificates if the [NextToken] response element \
-         indicates that more certificates are available. Use the value of the returned [NextToken] \
-         element in your request until the token comes back as [null]. Pass [null] if this is the \
-         first call.\n"]
-  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec assessment_start_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
-type nonrec last_update_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
-type nonrec assessment_status = string [@@ocaml.doc ""]
-
-type nonrec assessment_report_type = string [@@ocaml.doc ""]
-
-type nonrec assessment_summary = {
-  report_type : assessment_report_type option;
-      [@ocaml.doc
-        "The type of assessment report generated. Valid values include [CUSTOMER] and [SYSTEM].\n"]
-  customer_dns_ips : customer_dns_ips option;
-      [@ocaml.doc
-        "The IP addresses of the DNS servers or domain controllers in your self-managed AD \
-         environment.\n"]
-  status : assessment_status option;
-      [@ocaml.doc
-        "The current status of the assessment. Valid values include [SUCCESS], [FAILED], \
-         [PENDING], and [IN_PROGRESS].\n"]
-  last_update_date_time : last_update_date_time option;
-      [@ocaml.doc "The date and time when the assessment status was last updated.\n"]
-  start_time : assessment_start_time option;
-      [@ocaml.doc "The date and time when the assessment was initiated.\n"]
-  dns_name : directory_name option;
-      [@ocaml.doc
-        "The fully qualified domain name (FQDN) of the Active Directory domain being assessed.\n"]
-  directory_id : directory_id option;
-      [@ocaml.doc "The identifier of the directory associated with this assessment.\n"]
-  assessment_id : assessment_id option;
-      [@ocaml.doc "The unique identifier of the directory assessment.\n"]
-}
-[@@ocaml.doc
-  "Contains summary information about a directory assessment, providing a high-level overview \
-   without detailed validation results.\n"]
-
-type nonrec assessments = assessment_summary list [@@ocaml.doc ""]
-
-type nonrec list_ad_assessments_result = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "If not null, more results are available. Pass this value for the [NextToken] parameter in \
-         a subsequent request to retrieve the next set of items.\n"]
-  assessments : assessments option;
-      [@ocaml.doc
-        "A list of assessment summaries containing basic information about each directory \
-         assessment.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec assessment_limit = int [@@ocaml.doc ""]
-
-type nonrec list_ad_assessments_request = {
-  limit : assessment_limit option;
-      [@ocaml.doc "The maximum number of assessment summaries to return.\n"]
-  next_token : next_token option;
-      [@ocaml.doc
-        "The pagination token from a previous request to [ListADAssessments]. Pass null if this is \
-         the first request.\n"]
-  directory_id : directory_id option;
-      [@ocaml.doc
-        "The identifier of the directory for which to list assessments. If not specified, all \
-         assessments in your account are returned.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec ldaps_type = CLIENT [@ocaml.doc ""] [@@ocaml.doc ""]
-
-type nonrec ldaps_status_reason = string [@@ocaml.doc ""]
-
-type nonrec ldaps_status =
-  | DISABLED [@ocaml.doc ""]
-  | ENABLE_FAILED [@ocaml.doc ""]
-  | ENABLED [@ocaml.doc ""]
-  | ENABLING [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec ldaps_setting_info = {
-  last_updated_date_time : last_updated_date_time option;
-      [@ocaml.doc "The date and time when the LDAPS settings were last updated.\n"]
-  ldaps_status_reason : ldaps_status_reason option;
-      [@ocaml.doc "Describes a state change for LDAPS.\n"]
-  ldaps_status : ldaps_status option; [@ocaml.doc "The state of the LDAPS settings.\n"]
-}
-[@@ocaml.doc "Contains general information about the LDAPS settings.\n"]
-
-type nonrec ldaps_settings_info = ldaps_setting_info list [@@ocaml.doc ""]
-
-type nonrec ip_v6_addrs = ipv6_addr list [@@ocaml.doc ""]
+type nonrec cidr_ip = string [@@ocaml.doc ""]
 
 type nonrec ip_route = {
-  description : description option; [@ocaml.doc "Description of the address block.\n"]
-  cidr_ipv6 : cidr_ipv6 option;
-      [@ocaml.doc
-        "IPv6 address block in CIDR format, such as 2001:db8::/32. This is often the address block \
-         of the DNS server used for your self-managed domain. For a single IPv6 address, use a \
-         CIDR address block with /128. For example, 2001:db8::1/128.\n"]
   cidr_ip : cidr_ip option;
       [@ocaml.doc
         "IP address block in CIDR format, such as 10.0.0.0/24. This is often the address block of \
          the DNS server used for your self-managed domain. For a single IP address, use a CIDR \
          address block with /32. For example, 10.0.0.0/32.\n"]
+  cidr_ipv6 : cidr_ipv6 option;
+      [@ocaml.doc
+        "IPv6 address block in CIDR format, such as 2001:db8::/32. This is often the address block \
+         of the DNS server used for your self-managed domain. For a single IPv6 address, use a \
+         CIDR address block with /128. For example, 2001:db8::1/128.\n"]
+  description : description option; [@ocaml.doc "Description of the address block.\n"]
 }
 [@@ocaml.doc
   "Contains the IP address block. This is often the address block of the DNS server used for your \
@@ -1525,1652 +181,13 @@ type nonrec ip_route = {
 
 type nonrec ip_routes = ip_route list [@@ocaml.doc ""]
 
-type nonrec ip_route_limit_exceeded_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc
-  "The maximum allowed number of IP addresses was exceeded. The default limit is 100 IP address \
-   blocks.\n"]
-
-type nonrec ip_addrs = ip_addr list [@@ocaml.doc ""]
-
-type nonrec invalid_ldaps_status_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc
-  "The LDAP activities could not be performed because they are limited by the LDAPS status.\n"]
-
-type nonrec invalid_client_auth_status_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "Client authentication is already enabled.\n"]
-
-type nonrec insufficient_permissions_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "The account does not have sufficient permission to perform the operation.\n"]
-
-type nonrec hybrid_update_value = {
-  dns_ips : customer_dns_ips option;
-      [@ocaml.doc
-        "The IP addresses of the DNS servers or domain controllers in the hybrid directory \
-         configuration.\n"]
-  instance_ids : assessment_instance_ids option;
-      [@ocaml.doc
-        "The identifiers of the self-managed instances with SSM in the hybrid directory \
-         configuration.\n"]
-}
-[@@ocaml.doc
-  "Contains the configuration values for a hybrid directory update, including Amazon Web Services \
-   System Manager managed node and DNS information.\n"]
-
-type nonrec hybrid_update_type =
-  | HYBRID_ADMINISTRATOR_ACCOUNT [@ocaml.doc ""]
-  | SELF_MANAGED_INSTANCES [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec hybrid_update_info_entry = {
-  assessment_id : assessment_id option;
-      [@ocaml.doc
-        "The identifier of the assessment performed to validate this update configuration.\n"]
-  last_updated_date_time : last_updated_date_time option;
-      [@ocaml.doc "The date and time when the update activity status was last updated.\n"]
-  start_time : start_date_time option;
-      [@ocaml.doc "The date and time when the update activity was initiated.\n"]
-  previous_value : hybrid_update_value option;
-      [@ocaml.doc "The previous configuration values before this update was applied.\n"]
-  new_value : hybrid_update_value option;
-      [@ocaml.doc "The new configuration values being applied in this update.\n"]
-  initiated_by : initiated_by option;
-      [@ocaml.doc "Specifies if the update was initiated by the customer or Amazon Web Services.\n"]
-  status_reason : update_status_reason option;
-      [@ocaml.doc
-        "A human-readable description of the update status, including any error details or \
-         progress information.\n"]
-  status : update_status option;
-      [@ocaml.doc
-        "The current status of the update activity. Valid values include [UPDATED], [UPDATING], \
-         and [UPDATE_FAILED].\n"]
-}
-[@@ocaml.doc
-  "Contains detailed information about a specific update activity for a hybrid directory component.\n"]
-
-type nonrec hybrid_update_info_entries = hybrid_update_info_entry list [@@ocaml.doc ""]
-
-type nonrec hybrid_update_activities = {
-  hybrid_administrator_account : hybrid_update_info_entries option;
-      [@ocaml.doc
-        "A list of update activities related to hybrid directory administrator account changes.\n"]
-  self_managed_instances : hybrid_update_info_entries option;
-      [@ocaml.doc
-        "A list of update activities related to the self-managed instances with SSM in the \
-         self-managed instances with SSM hybrid directory configuration.\n"]
-}
-[@@ocaml.doc
-  "Contains information about update activities for different components of a hybrid directory.\n"]
-
-type nonrec hybrid_settings_description = {
-  self_managed_instance_ids : assessment_instance_ids option;
-      [@ocaml.doc
-        "The identifiers of the self-managed instances with SSM used for hybrid directory \
-         operations.\n"]
-  self_managed_dns_ip_addrs : ip_addrs option;
-      [@ocaml.doc "The IP addresses of the DNS servers in your self-managed AD environment.\n"]
-}
-[@@ocaml.doc "Describes the current hybrid directory configuration settings for a directory.\n"]
-
-type nonrec get_snapshot_limits_result = {
-  snapshot_limits : snapshot_limits option;
-      [@ocaml.doc
-        "A [SnapshotLimits] object that contains the manual snapshot limits for the specified \
-         directory.\n"]
-}
-[@@ocaml.doc "Contains the results of the [GetSnapshotLimits] operation.\n"]
-
-type nonrec get_snapshot_limits_request = {
-  directory_id : directory_id;
-      [@ocaml.doc "Contains the identifier of the directory to obtain the limits for.\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [GetSnapshotLimits] operation.\n"]
-
-type nonrec cloud_only_directories_limit_reached = bool [@@ocaml.doc ""]
-
-type nonrec connected_directories_limit_reached = bool [@@ocaml.doc ""]
-
-type nonrec directory_limits = {
-  connected_directories_limit_reached : connected_directories_limit_reached option;
-      [@ocaml.doc "Indicates if the connected directory limit has been reached.\n"]
-  connected_directories_current_count : limit option;
-      [@ocaml.doc "The current number of connected directories in the Region.\n"]
-  connected_directories_limit : limit option;
-      [@ocaml.doc "The maximum number of connected directories allowed in the Region.\n"]
-  cloud_only_microsoft_ad_limit_reached : cloud_only_directories_limit_reached option;
-      [@ocaml.doc "Indicates if the Managed Microsoft AD directory limit has been reached.\n"]
-  cloud_only_microsoft_ad_current_count : limit option;
-      [@ocaml.doc "The current number of Managed Microsoft AD directories in the region.\n"]
-  cloud_only_microsoft_ad_limit : limit option;
-      [@ocaml.doc "The maximum number of Managed Microsoft AD directories allowed in the region.\n"]
-  cloud_only_directories_limit_reached : cloud_only_directories_limit_reached option;
-      [@ocaml.doc "Indicates if the cloud directory limit has been reached.\n"]
-  cloud_only_directories_current_count : limit option;
-      [@ocaml.doc "The current number of cloud directories in the Region.\n"]
-  cloud_only_directories_limit : limit option;
-      [@ocaml.doc "The maximum number of cloud directories allowed in the Region.\n"]
-}
-[@@ocaml.doc "Contains directory limit information for a Region.\n"]
-
-type nonrec get_directory_limits_result = {
-  directory_limits : directory_limits option;
-      [@ocaml.doc
-        "A [DirectoryLimits] object that contains the directory limits for the current Region.\n"]
-}
-[@@ocaml.doc "Contains the results of the [GetDirectoryLimits] operation.\n"]
-
-type nonrec get_directory_limits_request = unit [@@ocaml.doc ""]
-
-type nonrec event_topic = {
-  status : topic_status option; [@ocaml.doc "The topic registration status.\n"]
-  created_date_time : created_date_time option;
-      [@ocaml.doc
-        "The date and time of when you associated your directory with the Amazon SNS topic.\n"]
-  topic_arn : topic_arn option; [@ocaml.doc "The Amazon SNS topic ARN (Amazon Resource Name).\n"]
-  topic_name : topic_name option;
-      [@ocaml.doc
-        "The name of an Amazon SNS topic the receives status messages from the directory.\n"]
-  directory_id : directory_id option;
-      [@ocaml.doc
-        "The Directory ID of an Directory Service directory that will publish status messages to \
-         an Amazon SNS topic.\n"]
-}
-[@@ocaml.doc "Information about Amazon SNS topic and Directory Service directory associations.\n"]
-
-type nonrec event_topics = event_topic list [@@ocaml.doc ""]
-
-type nonrec entity_already_exists_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc "The specified entity already exists.\n"]
-
-type nonrec enable_sso_result = unit [@@ocaml.doc ""]
-
-type nonrec connect_password = string [@@ocaml.doc ""]
-
-type nonrec enable_sso_request = {
-  password : connect_password option;
-      [@ocaml.doc
-        "The password of an alternate account to use to enable single-sign on. This is only used \
-         for AD Connector directories. For more information, see the {i UserName} parameter.\n"]
-  user_name : user_name option;
-      [@ocaml.doc
-        "The username of an alternate account to use to enable single-sign on. This is only used \
-         for AD Connector directories. This account must have privileges to add a service \
-         principal name.\n\n\
-        \ If the AD Connector service account does not have privileges to add a service principal \
-         name, you can specify an alternate account with the {i UserName} and {i Password} \
-         parameters. These credentials are only used to enable single sign-on and are not stored \
-         by the service. The AD Connector service account is not changed.\n\
-        \ "]
-  directory_id : directory_id;
-      [@ocaml.doc "The identifier of the directory for which to enable single-sign on.\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [EnableSso] operation.\n"]
-
-type nonrec authentication_failed_exception = {
-  request_id : request_id option;
-      [@ocaml.doc "The identifier of the request that caused the exception.\n"]
-  message : exception_message option; [@ocaml.doc "The textual message for the exception.\n"]
-}
-[@@ocaml.doc "An authentication error occurred.\n"]
-
-type nonrec enable_radius_result = unit [@@ocaml.doc ""]
-
-type nonrec enable_radius_request = {
-  radius_settings : radius_settings;
-      [@ocaml.doc "A [RadiusSettings] object that contains information about the RADIUS server.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc "The identifier of the directory for which to enable MFA.\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [EnableRadius] operation.\n"]
-
-type nonrec enable_ldaps_result = unit [@@ocaml.doc ""]
-
-type nonrec enable_ldaps_request = {
-  type_ : ldaps_type;
-      [@ocaml.doc
-        "The type of LDAP security to enable. Currently only the value [Client] is supported.\n"]
-  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec enable_directory_data_access_result = unit [@@ocaml.doc ""]
-
-type nonrec enable_directory_data_access_request = {
-  directory_id : directory_id; [@ocaml.doc "The directory identifier.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec enable_client_authentication_result = unit [@@ocaml.doc ""]
-
-type nonrec client_authentication_type =
-  | SMART_CARD_OR_PASSWORD [@ocaml.doc ""]
-  | SMART_CARD [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec enable_client_authentication_request = {
-  type_ : client_authentication_type;
-      [@ocaml.doc
-        "The type of client authentication to enable. Currently only the value [SmartCard] is \
-         supported. Smart card authentication in AD Connector requires that you enable Kerberos \
-         Constrained Delegation for the Service User to the LDAP service in your self-managed AD. \n"]
-  directory_id : directory_id; [@ocaml.doc "The identifier of the specified directory. \n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec enable_ca_enrollment_policy_result = unit [@@ocaml.doc ""]
-
-type nonrec enable_ca_enrollment_policy_request = {
-  pca_connector_arn : pca_connector_arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the Private Certificate Authority (PCA) connector to \
-         use for automatic certificate enrollment. This connector must be properly configured and \
-         accessible from the directory.\n\n\
-        \ The ARN format is: \n\
-        \ {[\n\
-        \ arn:aws:pca-connector-ad:{i region}:{i account-id}:connector/{i connector-id} \n\
-        \ ]}\n\
-        \  \n\
-        \ "]
-  directory_id : directory_id;
-      [@ocaml.doc "The identifier of the directory for which to enable the CA enrollment policy.\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [EnableCAEnrollmentPolicy] operation.\n"]
-
-type nonrec enable_already_in_progress_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc
-  "An enable operation for CA enrollment policy is already in progress for this directory.\n"]
-
-type nonrec domain_controller_id = string [@@ocaml.doc ""]
-
-type nonrec domain_controller_status =
-  | UPDATING [@ocaml.doc ""]
-  | FAILED [@ocaml.doc ""]
-  | DELETED [@ocaml.doc ""]
-  | DELETING [@ocaml.doc ""]
-  | RESTORING [@ocaml.doc ""]
-  | IMPAIRED [@ocaml.doc ""]
-  | ACTIVE [@ocaml.doc ""]
-  | CREATING [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec domain_controller_status_reason = string [@@ocaml.doc ""]
-
-type nonrec domain_controller = {
-  status_last_updated_date_time : last_updated_date_time option;
-      [@ocaml.doc "The date and time that the status was last updated.\n"]
-  launch_time : launch_time option;
-      [@ocaml.doc "Specifies when the domain controller was created.\n"]
-  status_reason : domain_controller_status_reason option;
-      [@ocaml.doc "A description of the domain controller state.\n"]
-  status : domain_controller_status option; [@ocaml.doc "The status of the domain controller.\n"]
-  availability_zone : availability_zone option;
-      [@ocaml.doc "The Availability Zone where the domain controller is located.\n"]
-  subnet_id : subnet_id option;
-      [@ocaml.doc "Identifier of the subnet in the VPC that contains the domain controller.\n"]
-  vpc_id : vpc_id option;
-      [@ocaml.doc "The identifier of the VPC that contains the domain controller.\n"]
-  dns_ipv6_addr : ipv6_addr option; [@ocaml.doc "The IPv6 address of the domain controller.\n"]
-  dns_ip_addr : ip_addr option; [@ocaml.doc "The IP address of the domain controller.\n"]
-  domain_controller_id : domain_controller_id option;
-      [@ocaml.doc "Identifies a specific domain controller in the directory.\n"]
-  directory_id : directory_id option;
-      [@ocaml.doc "Identifier of the directory where the domain controller resides.\n"]
-}
-[@@ocaml.doc "Contains information about the domain controllers for a specified directory.\n"]
-
-type nonrec domain_controllers = domain_controller list [@@ocaml.doc ""]
-
-type nonrec domain_controller_ids = domain_controller_id list [@@ocaml.doc ""]
-
-type nonrec disable_sso_result = unit [@@ocaml.doc ""]
-
-type nonrec disable_sso_request = {
-  password : connect_password option;
-      [@ocaml.doc
-        "The password of an alternate account to use to disable single-sign on. This is only used \
-         for AD Connector directories. For more information, see the {i UserName} parameter.\n"]
-  user_name : user_name option;
-      [@ocaml.doc
-        "The username of an alternate account to use to disable single-sign on. This is only used \
-         for AD Connector directories. This account must have privileges to remove a service \
-         principal name.\n\n\
-        \ If the AD Connector service account does not have privileges to remove a service \
-         principal name, you can specify an alternate account with the {i UserName} and {i \
-         Password} parameters. These credentials are only used to disable single sign-on and are \
-         not stored by the service. The AD Connector service account is not changed.\n\
-        \ "]
-  directory_id : directory_id;
-      [@ocaml.doc "The identifier of the directory for which to disable single-sign on.\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [DisableSso] operation.\n"]
-
-type nonrec disable_radius_result = unit [@@ocaml.doc ""]
-
-type nonrec disable_radius_request = {
-  directory_id : directory_id;
-      [@ocaml.doc "The identifier of the directory for which to disable MFA.\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [DisableRadius] operation.\n"]
-
-type nonrec disable_ldaps_result = unit [@@ocaml.doc ""]
-
-type nonrec disable_ldaps_request = {
-  type_ : ldaps_type;
-      [@ocaml.doc
-        "The type of LDAP security to enable. Currently only the value [Client] is supported.\n"]
-  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec disable_directory_data_access_result = unit [@@ocaml.doc ""]
-
-type nonrec disable_directory_data_access_request = {
-  directory_id : directory_id; [@ocaml.doc "The directory identifier.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec disable_client_authentication_result = unit [@@ocaml.doc ""]
-
-type nonrec disable_client_authentication_request = {
-  type_ : client_authentication_type;
-      [@ocaml.doc
-        "The type of client authentication to disable. Currently the only parameter \
-         [\"SmartCard\"] is supported.\n"]
-  directory_id : directory_id; [@ocaml.doc "The identifier of the directory \n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec disable_ca_enrollment_policy_result = unit [@@ocaml.doc ""]
-
-type nonrec disable_ca_enrollment_policy_request = {
-  directory_id : directory_id;
-      [@ocaml.doc
-        "The identifier of the directory for which to disable the CA enrollment policy.\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [DisableCAEnrollmentPolicy] operation.\n"]
-
-type nonrec disable_already_in_progress_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc
-  "A disable operation for CA enrollment policy is already in progress for this directory.\n"]
-
-type nonrec directory_type =
-  | SHARED_MICROSOFT_AD [@ocaml.doc ""]
-  | MICROSOFT_AD [@ocaml.doc ""]
-  | AD_CONNECTOR [@ocaml.doc ""]
-  | SIMPLE_AD [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec directory_short_name = string [@@ocaml.doc ""]
-
-type nonrec describe_update_directory_result = {
-  next_token : next_token option;
-      [@ocaml.doc
-        " If not null, more results are available. Pass this value for the [NextToken] parameter. \n"]
-  update_activities : update_activities option;
-      [@ocaml.doc " The list of update activities on a directory for the requested update type. \n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_update_directory_request = {
-  next_token : next_token option;
-      [@ocaml.doc
-        " The [DescribeUpdateDirectoryResult]. NextToken value from a previous call to \
-         [DescribeUpdateDirectory]. Pass null if this is the first call. \n"]
-  region_name : region_name option; [@ocaml.doc " The name of the Region. \n"]
-  update_type : update_type;
-      [@ocaml.doc " The type of updates you want to describe for the directory. \n"]
-  directory_id : directory_id; [@ocaml.doc " The unique identifier of the directory. \n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_trusts_result = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "If not null, more results are available. Pass this value for the {i NextToken} parameter \
-         in a subsequent call to [DescribeTrusts] to retrieve the next set of items.\n"]
-  trusts : trusts option;
-      [@ocaml.doc
-        "The list of Trust objects that were retrieved.\n\n\
-        \ It is possible that this list contains less than the number of items specified in the {i \
-         Limit} member of the request. This occurs if there are less than the requested number of \
-         items left to retrieve, or if the limitations of the operation have been exceeded.\n\
-        \ "]
-}
-[@@ocaml.doc "The result of a DescribeTrust request.\n"]
-
-type nonrec describe_trusts_request = {
-  limit : limit option; [@ocaml.doc "The maximum number of objects to return.\n"]
-  next_token : next_token option;
-      [@ocaml.doc
-        "The {i DescribeTrustsResult.NextToken} value from a previous call to [DescribeTrusts]. \
-         Pass null if this is the first call.\n"]
-  trust_ids : trust_ids option;
-      [@ocaml.doc
-        "A list of identifiers of the trust relationships for which to obtain the information. If \
-         this member is null, all trust relationships that belong to the current account are \
-         returned.\n\n\
-        \ An empty list results in an [InvalidParameterException] being thrown.\n\
-        \ "]
-  directory_id : directory_id option;
-      [@ocaml.doc
-        "The Directory ID of the Amazon Web Services directory that is a part of the requested \
-         trust relationship.\n"]
-}
-[@@ocaml.doc
-  "Describes the trust relationships for a particular Managed Microsoft AD directory. If no input \
-   parameters are provided, such as directory ID or trust ID, this request describes all the trust \
-   relationships.\n"]
-
-type nonrec describe_snapshots_result = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "If not null, more results are available. Pass this value in the {i NextToken} member of a \
-         subsequent call to [DescribeSnapshots].\n"]
-  snapshots : snapshots option;
-      [@ocaml.doc
-        "The list of [Snapshot] objects that were retrieved.\n\n\
-        \ It is possible that this list contains less than the number of items specified in the {i \
-         Limit} member of the request. This occurs if there are less than the requested number of \
-         items left to retrieve, or if the limitations of the operation have been exceeded.\n\
-        \ "]
-}
-[@@ocaml.doc "Contains the results of the [DescribeSnapshots] operation.\n"]
-
-type nonrec describe_snapshots_request = {
-  limit : limit option; [@ocaml.doc "The maximum number of objects to return.\n"]
-  next_token : next_token option;
-      [@ocaml.doc
-        "The {i DescribeSnapshotsResult.NextToken} value from a previous call to \
-         [DescribeSnapshots]. Pass null if this is the first call.\n"]
-  snapshot_ids : snapshot_ids option;
-      [@ocaml.doc
-        "A list of identifiers of the snapshots to obtain the information for. If this member is \
-         null or empty, all snapshots are returned using the {i Limit} and {i NextToken} members.\n"]
-  directory_id : directory_id option;
-      [@ocaml.doc "The identifier of the directory for which to retrieve snapshot information.\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [DescribeSnapshots] operation.\n"]
-
-type nonrec describe_shared_directories_result = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "If not null, token that indicates that more results are available. Pass this value for \
-         the [NextToken] parameter in a subsequent call to [DescribeSharedDirectories] to retrieve \
-         the next set of items.\n"]
-  shared_directories : shared_directories option;
-      [@ocaml.doc "A list of all shared directories in your account.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec directory_ids = directory_id list [@@ocaml.doc ""]
-
-type nonrec describe_shared_directories_request = {
-  limit : limit option;
-      [@ocaml.doc "The number of shared directories to return in the response object.\n"]
-  next_token : next_token option;
-      [@ocaml.doc
-        "The [DescribeSharedDirectoriesResult.NextToken] value from a previous call to \
-         [DescribeSharedDirectories]. Pass null if this is the first call. \n"]
-  shared_directory_ids : directory_ids option;
-      [@ocaml.doc "A list of identifiers of all shared directories in your account. \n"]
-  owner_directory_id : directory_id;
-      [@ocaml.doc "Returns the identifier of the directory in the directory owner account. \n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_settings_result = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "If not null, token that indicates that more results are available. Pass this value for \
-         the [NextToken] parameter in a subsequent call to [DescribeSettings] to retrieve the next \
-         set of items. \n"]
-  setting_entries : setting_entries option;
-      [@ocaml.doc
-        "The list of [SettingEntry] objects that were retrieved.\n\n\
-        \ It is possible that this list contains less than the number of items specified in the \
-         [Limit] member of the request. This occurs if there are less than the requested number of \
-         items left to retrieve, or if the limitations of the operation have been exceeded.\n\
-        \ "]
-  directory_id : directory_id option; [@ocaml.doc "The identifier of the directory.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_settings_request = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "The [DescribeSettingsResult.NextToken] value from a previous call to [DescribeSettings]. \
-         Pass null if this is the first call.\n"]
-  status : directory_configuration_status option;
-      [@ocaml.doc "The status of the directory settings for which to retrieve information.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc "The identifier of the directory for which to retrieve information.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_regions_result = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "If not null, more results are available. Pass this value for the [NextToken] parameter in \
-         a subsequent call to [DescribeRegions] to retrieve the next set of items.\n"]
-  regions_description : regions_description option;
-      [@ocaml.doc
-        "List of Region information related to the directory for each replicated Region.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_regions_request = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "The [DescribeRegionsResult.NextToken] value from a previous call to [DescribeRegions]. \
-         Pass null if this is the first call.\n"]
-  region_name : region_name option;
-      [@ocaml.doc "The name of the Region. For example, [us-east-1].\n"]
-  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_ldaps_settings_result = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "The next token used to retrieve the LDAPS settings if the number of setting types exceeds \
-         page limit and there is another page.\n"]
-  ldaps_settings_info : ldaps_settings_info option;
-      [@ocaml.doc
-        "Information about LDAP security for the specified directory, including status of \
-         enablement, state last updated date time, and the reason for the state.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_ldaps_settings_request = {
-  limit : page_limit option;
-      [@ocaml.doc "Specifies the number of items that should be displayed on one page.\n"]
-  next_token : next_token option; [@ocaml.doc "The type of next token used for pagination.\n"]
-  type_ : ldaps_type option;
-      [@ocaml.doc
-        "The type of LDAP security to enable. Currently only the value [Client] is supported.\n"]
-  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_hybrid_ad_update_result = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "If not null, more results are available. Pass this value for the [NextToken] parameter in \
-         a subsequent request to retrieve the next set of items.\n"]
-  update_activities : hybrid_update_activities option;
-      [@ocaml.doc
-        "Information about update activities for the hybrid directory, organized by update type.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_hybrid_ad_update_request = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "The pagination token from a previous request to [DescribeHybridADUpdate]. Pass null if \
-         this is the first request.\n"]
-  update_type : hybrid_update_type option;
-      [@ocaml.doc
-        "The type of update activities to retrieve. Valid values include [SelfManagedInstances] \
-         and [HybridAdministratorAccount].\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "The identifier of the hybrid directory for which to retrieve update information.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_event_topics_result = {
-  event_topics : event_topics option;
-      [@ocaml.doc
-        "A list of Amazon SNS topic names that receive status messages from the specified \
-         Directory ID.\n"]
-}
-[@@ocaml.doc "The result of a DescribeEventTopic request.\n"]
-
-type nonrec describe_event_topics_request = {
-  topic_names : topic_names option;
-      [@ocaml.doc
-        "A list of Amazon SNS topic names for which to obtain the information. If this member is \
-         null, all associations for the specified Directory ID are returned.\n\n\
-        \ An empty list results in an [InvalidParameterException] being thrown.\n\
-        \ "]
-  directory_id : directory_id option;
-      [@ocaml.doc
-        "The Directory ID for which to get the list of associated Amazon SNS topics. If this \
-         member is null, associations for all Directory IDs are returned.\n"]
-}
-[@@ocaml.doc "Describes event topics.\n"]
-
-type nonrec describe_domain_controllers_result = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "If not null, more results are available. Pass this value for the [NextToken] parameter in \
-         a subsequent call to [DescribeDomainControllers] retrieve the next set of items.\n"]
-  domain_controllers : domain_controllers option;
-      [@ocaml.doc "List of the [DomainController] objects that were retrieved.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_domain_controllers_request = {
-  limit : limit option; [@ocaml.doc "The maximum number of items to return.\n"]
-  next_token : next_token option;
-      [@ocaml.doc
-        "The {i DescribeDomainControllers.NextToken} value from a previous call to \
-         [DescribeDomainControllers]. Pass null if this is the first call. \n"]
-  domain_controller_ids : domain_controller_ids option;
-      [@ocaml.doc
-        "A list of identifiers for the domain controllers whose information will be provided.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "Identifier of the directory for which to retrieve the domain controller information.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec data_access_status =
-  | FAILED [@ocaml.doc ""]
-  | ENABLING [@ocaml.doc ""]
-  | ENABLED [@ocaml.doc ""]
-  | DISABLING [@ocaml.doc ""]
-  | DISABLED [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec describe_directory_data_access_result = {
-  data_access_status : data_access_status option;
-      [@ocaml.doc "The current status of data access through the Directory Service Data API.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_directory_data_access_request = {
-  directory_id : directory_id; [@ocaml.doc "The directory identifier.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec directory_edition =
-  | HYBRID [@ocaml.doc ""]
-  | STANDARD [@ocaml.doc ""]
-  | ENTERPRISE [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec alias_name = string [@@ocaml.doc ""]
-
-type nonrec access_url = string [@@ocaml.doc ""]
-
-type nonrec directory_connect_settings_description = {
-  connect_ips_v6 : ip_v6_addrs option;
-      [@ocaml.doc "The IPv6 addresses of the AD Connector servers.\n"]
-  connect_ips : ip_addrs option; [@ocaml.doc "The IP addresses of the AD Connector servers.\n"]
-  availability_zones : availability_zones option;
-      [@ocaml.doc "The Availability Zones that the directory is in.\n"]
-  security_group_id : security_group_id option;
-      [@ocaml.doc "The security group identifier for the AD Connector directory.\n"]
-  customer_user_name : user_name option;
-      [@ocaml.doc "The user name of the service account in your self-managed directory.\n"]
-  subnet_ids : subnet_ids option;
-      [@ocaml.doc "A list of subnet identifiers in the VPC that the AD Connector is in.\n"]
-  vpc_id : vpc_id option; [@ocaml.doc "The identifier of the VPC that the AD Connector is in.\n"]
-}
-[@@ocaml.doc "Contains information about an AD Connector directory.\n"]
-
-type nonrec directory_description = {
-  network_type : network_type option; [@ocaml.doc "The network type of the directory.\n"]
-  hybrid_settings : hybrid_settings_description option;
-      [@ocaml.doc
-        "Contains information about the hybrid directory configuration for the directory, \
-         including Amazon Web Services System Manager managed node identifiers and DNS IPs.\n"]
-  os_version : os_version option;
-      [@ocaml.doc "The operating system (OS) version of the directory.\n"]
-  regions_info : regions_info option;
-      [@ocaml.doc "Lists the Regions where the directory has replicated.\n"]
-  owner_directory_description : owner_directory_description option;
-      [@ocaml.doc "Describes the Managed Microsoft AD directory in the directory owner account.\n"]
-  desired_number_of_domain_controllers : desired_number_of_domain_controllers option;
-      [@ocaml.doc
-        "The desired number of domain controllers in the directory if the directory is Microsoft AD.\n"]
-  sso_enabled : sso_enabled option;
-      [@ocaml.doc
-        "Indicates whether single sign-on is enabled for the directory. For more information, see \
-         [EnableSso] and [DisableSso].\n"]
-  stage_reason : stage_reason option;
-      [@ocaml.doc "Additional information about the directory stage.\n"]
-  radius_status : radius_status option;
-      [@ocaml.doc "The status of the RADIUS MFA server connection.\n"]
-  radius_settings : radius_settings option;
-      [@ocaml.doc "Information about the [RadiusSettings] object configured for this directory.\n"]
-  connect_settings : directory_connect_settings_description option;
-      [@ocaml.doc
-        " [DirectoryConnectSettingsDescription] object that contains additional information about \
-         an AD Connector directory. Present only for AD Connector directories.\n"]
-  vpc_settings : directory_vpc_settings_description option;
-      [@ocaml.doc
-        "A [DirectoryVpcSettingsDescription] object that contains additional information about a \
-         directory. Present only for Simple AD and Managed Microsoft AD directories.\n"]
-  type_ : directory_type option; [@ocaml.doc "The directory type.\n"]
-  stage_last_updated_date_time : last_updated_date_time option;
-      [@ocaml.doc "The date and time when the stage was last updated.\n"]
-  launch_time : launch_time option;
-      [@ocaml.doc "The date and time when the directory was created.\n"]
-  share_notes : notes option;
-      [@ocaml.doc
-        "A directory share request that is sent by the directory owner to the directory consumer. \
-         The request includes a typed message to help the directory consumer administrator \
-         determine whether to approve or reject the share invitation.\n"]
-  share_method : share_method option;
-      [@ocaml.doc
-        "The method used when sharing a directory to determine whether the directory should be \
-         shared within your Amazon Web Services organization ([ORGANIZATIONS]) or with any Amazon \
-         Web Services account by sending a shared directory request ([HANDSHAKE]).\n"]
-  share_status : share_status option;
-      [@ocaml.doc "Current directory status of the shared Managed Microsoft AD directory.\n"]
-  stage : directory_stage option; [@ocaml.doc "The current stage of the directory.\n"]
-  dns_ipv6_addrs : dns_ipv6_addrs option;
-      [@ocaml.doc
-        "The IPv6 addresses of the DNS servers for the directory. For a Simple AD or Microsoft AD \
-         directory, these are the IPv6 addresses of the Simple AD or Microsoft AD directory \
-         servers. For an AD Connector directory, these are the IPv6 addresses of the DNS servers \
-         or domain controllers in your self-managed directory to which the AD Connector is \
-         connected.\n"]
-  dns_ip_addrs : dns_ip_addrs option;
-      [@ocaml.doc
-        "The IP addresses of the DNS servers for the directory. For a Simple AD or Microsoft AD \
-         directory, these are the IP addresses of the Simple AD or Microsoft AD directory servers. \
-         For an AD Connector directory, these are the IP addresses of self-managed directory to \
-         which the AD Connector is connected.\n"]
-  description : description option; [@ocaml.doc "The description for the directory.\n"]
-  access_url : access_url option;
-      [@ocaml.doc
-        "The access URL for the directory, such as \n\
-         {[\n\
-         http://.awsapps.com\n\
-         ]}\n\
-         . If no alias exists, \n\
-         {[\n\n\
-         ]}\n\
-        \ is the directory identifier, such as [d-XXXXXXXXXX].\n"]
-  alias : alias_name option;
-      [@ocaml.doc
-        "The alias for the directory. If no alias exists, the alias is the directory identifier, \
-         such as [d-XXXXXXXXXX].\n"]
-  edition : directory_edition option; [@ocaml.doc "The edition associated with this directory.\n"]
-  size : directory_size option; [@ocaml.doc "The directory size.\n"]
-  short_name : directory_short_name option; [@ocaml.doc "The short name of the directory.\n"]
-  name : directory_name option; [@ocaml.doc "The fully qualified name of the directory.\n"]
-  directory_id : directory_id option; [@ocaml.doc "The directory identifier.\n"]
-}
-[@@ocaml.doc "Contains information about an Directory Service directory.\n"]
-
-type nonrec directory_descriptions = directory_description list [@@ocaml.doc ""]
-
-type nonrec describe_directories_result = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "If not null, more results are available. Pass this value for the [NextToken] parameter in \
-         a subsequent call to [DescribeDirectories] to retrieve the next set of items.\n"]
-  directory_descriptions : directory_descriptions option;
-      [@ocaml.doc
-        "The list of available [DirectoryDescription] objects that were retrieved.\n\n\
-        \ It is possible that this list contains less than the number of items specified in the \
-         [Limit] member of the request. This occurs if there are less than the requested number of \
-         items left to retrieve, or if the limitations of the operation have been exceeded.\n\
-        \ "]
-}
-[@@ocaml.doc "Contains the results of the [DescribeDirectories] operation.\n"]
-
-type nonrec describe_directories_request = {
-  limit : limit option;
-      [@ocaml.doc
-        "The maximum number of items to return. If this value is zero, the maximum number of items \
-         is specified by the limitations of the operation.\n"]
-  next_token : next_token option;
-      [@ocaml.doc
-        "The [DescribeDirectoriesResult.NextToken] value from a previous call to \
-         [DescribeDirectories]. Pass null if this is the first call.\n"]
-  directory_ids : directory_ids option;
-      [@ocaml.doc
-        "A list of identifiers of the directories for which to obtain the information. If this \
-         member is null, all directories that belong to the current account are returned.\n\n\
-        \ An empty list results in an [InvalidParameterException] being thrown.\n\
-        \ "]
-}
-[@@ocaml.doc "Contains the inputs for the [DescribeDirectories] operation.\n"]
-
-type nonrec conditional_forwarder = {
-  replication_scope : replication_scope option;
-      [@ocaml.doc
-        "The replication scope of the conditional forwarder. The only allowed value is [Domain], \
-         which will replicate the conditional forwarder to all of the domain controllers for your \
-         Amazon Web Services directory.\n"]
-  dns_ipv6_addrs : dns_ipv6_addrs option;
-      [@ocaml.doc
-        "The IPv6 addresses of the remote DNS server associated with RemoteDomainName. This is the \
-         IPv6 address of the DNS server that your conditional forwarder points to.\n"]
-  dns_ip_addrs : dns_ip_addrs option;
-      [@ocaml.doc
-        "The IP addresses of the remote DNS server associated with RemoteDomainName. This is the \
-         IP address of the DNS server that your conditional forwarder points to.\n"]
-  remote_domain_name : remote_domain_name option;
-      [@ocaml.doc
-        "The fully qualified domain name (FQDN) of the remote domains pointed to by the \
-         conditional forwarder.\n"]
-}
-[@@ocaml.doc
-  "Points to a remote domain with which you are setting up a trust relationship. Conditional \
-   forwarders are required in order to set up a trust relationship with another domain.\n"]
-
-type nonrec conditional_forwarders = conditional_forwarder list [@@ocaml.doc ""]
-
-type nonrec describe_conditional_forwarders_result = {
-  conditional_forwarders : conditional_forwarders option;
-      [@ocaml.doc "The list of conditional forwarders that have been created.\n"]
-}
-[@@ocaml.doc "The result of a DescribeConditionalForwarder request.\n"]
-
-type nonrec describe_conditional_forwarders_request = {
-  remote_domain_names : remote_domain_names option;
-      [@ocaml.doc
-        "The fully qualified domain names (FQDN) of the remote domains for which to get the list \
-         of associated conditional forwarders. If this member is null, all conditional forwarders \
-         are returned.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "The directory ID for which to get the list of associated conditional forwarders.\n"]
-}
-[@@ocaml.doc "Describes a conditional forwarder.\n"]
-
-type nonrec client_authentication_status = DISABLED [@ocaml.doc ""] | ENABLED [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec client_authentication_setting_info = {
-  last_updated_date_time : last_updated_date_time option;
-      [@ocaml.doc
-        "The date and time when the status of the client authentication type was last updated.\n"]
-  status : client_authentication_status option;
-      [@ocaml.doc
-        "Whether the client authentication type is enabled or disabled for the specified directory.\n"]
-  type_ : client_authentication_type option;
-      [@ocaml.doc
-        "The type of client authentication for the specified directory. If no type is specified, a \
-         list of all client authentication types that are supported for the directory is \
-         retrieved. \n"]
-}
-[@@ocaml.doc "Contains information about a client authentication method for a directory.\n"]
-
-type nonrec client_authentication_settings_info = client_authentication_setting_info list
-[@@ocaml.doc ""]
-
-type nonrec describe_client_authentication_settings_result = {
-  next_token : next_token option;
-      [@ocaml.doc
-        "The next token used to retrieve the client authentication settings if the number of \
-         setting types exceeds page limit and there is another page.\n"]
-  client_authentication_settings_info : client_authentication_settings_info option;
-      [@ocaml.doc
-        "Information about the type of client authentication for the specified directory. The \
-         following information is retrieved: The date and time when the status of the client \
-         authentication type was last updated, whether the client authentication type is enabled \
-         or disabled, and the type of client authentication.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_client_authentication_settings_request = {
-  limit : page_limit option;
-      [@ocaml.doc
-        "The maximum number of items to return. If this value is zero, the maximum number of items \
-         is specified by the limitations of the operation. \n"]
-  next_token : next_token option;
-      [@ocaml.doc
-        "The {i DescribeClientAuthenticationSettingsResult.NextToken} value from a previous call \
-         to [DescribeClientAuthenticationSettings]. Pass null if this is the first call.\n"]
-  type_ : client_authentication_type option;
-      [@ocaml.doc
-        "The type of client authentication for which to retrieve information. If no type is \
-         specified, a list of all client authentication types that are supported for the specified \
-         directory is retrieved.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc "The identifier of the directory for which to retrieve information.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec certificate_does_not_exist_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc
-  "The certificate is not present in the system for describe or deregister activities.\n"]
-
-type nonrec certificate_state_reason = string [@@ocaml.doc ""]
-
-type nonrec certificate_registered_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
-type nonrec certificate = {
-  client_cert_auth_settings : client_cert_auth_settings option;
-      [@ocaml.doc
-        "A [ClientCertAuthSettings] object that contains client certificate authentication settings.\n"]
-  type_ : certificate_type option;
-      [@ocaml.doc
-        "The function that the registered certificate performs. Valid values include [ClientLDAPS] \
-         or [ClientCertAuth]. The default value is [ClientLDAPS].\n"]
-  expiry_date_time : certificate_expiry_date_time option;
-      [@ocaml.doc "The date and time when the certificate will expire.\n"]
-  registered_date_time : certificate_registered_date_time option;
-      [@ocaml.doc "The date and time that the certificate was registered.\n"]
-  common_name : certificate_c_n option; [@ocaml.doc "The common name for the certificate.\n"]
-  state_reason : certificate_state_reason option;
-      [@ocaml.doc "Describes a state change for the certificate.\n"]
-  state : certificate_state option; [@ocaml.doc "The state of the certificate.\n"]
-  certificate_id : certificate_id option; [@ocaml.doc "The identifier of the certificate.\n"]
-}
-[@@ocaml.doc "Information about the certificate.\n"]
-
-type nonrec describe_certificate_result = {
-  certificate : certificate option;
-      [@ocaml.doc
-        "Information about the certificate, including registered date time, certificate state, the \
-         reason for the state, expiration date time, and certificate common name.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_certificate_request = {
-  certificate_id : certificate_id; [@ocaml.doc "The identifier of the certificate.\n"]
-  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec ca_enrollment_policy_status =
-  | IMPAIRED [@ocaml.doc ""]
-  | DISABLED [@ocaml.doc ""]
-  | DISABLING [@ocaml.doc ""]
-  | FAILED [@ocaml.doc ""]
-  | SUCCESS [@ocaml.doc ""]
-  | IN_PROGRESS [@ocaml.doc ""]
-[@@ocaml.doc ""]
-
-type nonrec ca_enrollment_policy_status_reason = string [@@ocaml.doc ""]
-
-type nonrec describe_ca_enrollment_policy_result = {
-  ca_enrollment_policy_status_reason : ca_enrollment_policy_status_reason option;
-      [@ocaml.doc
-        "Additional information explaining the current status of the CA enrollment policy, \
-         particularly useful when the policy is in an error or transitional state.\n"]
-  last_updated_date_time : last_updated_date_time option;
-      [@ocaml.doc "The date and time when the CA enrollment policy was last modified or updated.\n"]
-  ca_enrollment_policy_status : ca_enrollment_policy_status option;
-      [@ocaml.doc
-        "The current status of the CA enrollment policy. This indicates if automatic certificate \
-         enrollment is currently active, inactive, or in a transitional state.\n\n\
-        \ Valid values:\n\
-        \ \n\
-        \  {ul\n\
-        \        {-   [IN_PROGRESS] - The policy is being activated T\n\
-        \            \n\
-        \             }\n\
-        \        {-   [SUCCESS] - The policy is active and automatic certificate enrollment is \
-         operational\n\
-        \            \n\
-        \             }\n\
-        \        {-   [FAILED] - The policy activation or deactivation failed\n\
-        \            \n\
-        \             }\n\
-        \        {-   [DISABLING] - The policy is being deactivated\n\
-        \            \n\
-        \             }\n\
-        \        {-   [DISABLED] - The policy is inactive and automatic certificate enrollment is \
-         not available\n\
-        \            \n\
-        \             }\n\
-        \        {-   [IMPAIRED] - Network connectivity is impaired.\n\
-        \            \n\
-        \             }\n\
-        \        }\n\
-        \  "]
-  pca_connector_arn : pca_connector_arn option;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the Amazon Web Services Private Certificate Authority \
-         (PCA) connector that is configured for automatic certificate enrollment in this directory.\n"]
-  directory_id : directory_id option;
-      [@ocaml.doc "The identifier of the directory associated with this CA enrollment policy.\n"]
-}
-[@@ocaml.doc "Contains the results of the [DescribeCAEnrollmentPolicy] operation.\n"]
-
-type nonrec describe_ca_enrollment_policy_request = {
-  directory_id : directory_id;
-      [@ocaml.doc
-        "The identifier of the directory for which to retrieve the CA enrollment policy information.\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [DescribeCAEnrollmentPolicy] operation.\n"]
-
-type nonrec assessment_status_code = string [@@ocaml.doc ""]
-
-type nonrec assessment_status_reason = string [@@ocaml.doc ""]
-
-type nonrec assessment_version = string [@@ocaml.doc ""]
-
-type nonrec assessment = {
-  version : assessment_version option;
-      [@ocaml.doc
-        "The version of the assessment framework used to evaluate your self-managed AD environment.\n"]
-  report_type : assessment_report_type option;
-      [@ocaml.doc
-        "The type of assessment report generated. Valid values are [CUSTOMER] and [SYSTEM].\n"]
-  self_managed_instance_ids : assessment_instance_ids option;
-      [@ocaml.doc
-        "The identifiers of the self-managed AD instances used to perform the assessment.\n"]
-  security_group_ids : security_group_ids option;
-      [@ocaml.doc "The security groups identifiers attached to the network interfaces.\n"]
-  subnet_ids : subnet_ids option;
-      [@ocaml.doc
-        "A list of subnet identifiers in the Amazon VPC in which the hybrid directory is created.\n"]
-  vpc_id : vpc_id option;
-      [@ocaml.doc "Contains Amazon VPC information for the [StartADAssessment] operation. \n"]
-  customer_dns_ips : customer_dns_ips option;
-      [@ocaml.doc
-        "The IP addresses of the DNS servers or domain controllers in your self-managed AD \
-         environment.\n"]
-  status_reason : assessment_status_reason option;
-      [@ocaml.doc
-        "A human-readable description of the current assessment status, including any error \
-         details or progress information.\n"]
-  status_code : assessment_status_code option;
-      [@ocaml.doc
-        "A detailed status code providing additional information about the assessment state.\n"]
-  status : assessment_status option;
-      [@ocaml.doc
-        "The current status of the assessment. Valid values include [SUCCESS], [FAILED], \
-         [PENDING], and [IN_PROGRESS].\n"]
-  last_update_date_time : last_update_date_time option;
-      [@ocaml.doc "The date and time when the assessment status was last updated.\n"]
-  start_time : assessment_start_time option;
-      [@ocaml.doc "The date and time when the assessment was initiated.\n"]
-  dns_name : directory_name option;
-      [@ocaml.doc
-        "The fully qualified domain name (FQDN) of the Active Directory domain being assessed.\n"]
-  directory_id : directory_id option;
-      [@ocaml.doc "The identifier of the directory associated with this assessment.\n"]
-  assessment_id : assessment_id option;
-      [@ocaml.doc "The unique identifier of the directory assessment.\n"]
-}
-[@@ocaml.doc
-  "Contains detailed information about a directory assessment, including configuration parameters, \
-   status, and validation results.\n"]
-
-type nonrec assessment_validation_category = string [@@ocaml.doc ""]
-
-type nonrec assessment_validation_name = string [@@ocaml.doc ""]
-
-type nonrec assessment_validation_status = string [@@ocaml.doc ""]
-
-type nonrec assessment_validation_status_code = string [@@ocaml.doc ""]
-
-type nonrec assessment_validation_status_reason = string [@@ocaml.doc ""]
-
-type nonrec assessment_validation_time_stamp = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
-
-type nonrec assessment_validation = {
-  last_update_date_time : assessment_validation_time_stamp option;
-      [@ocaml.doc "The date and time when the validation test was completed or last updated.\n"]
-  start_time : assessment_validation_time_stamp option;
-      [@ocaml.doc "The date and time when the validation test was started.\n"]
-  status_reason : assessment_validation_status_reason option;
-      [@ocaml.doc
-        "A human-readable description of the validation result, including any error details or \
-         recommendations.\n"]
-  status_code : assessment_validation_status_code option;
-      [@ocaml.doc
-        "A detailed status code providing additional information about the validation result.\n"]
-  status : assessment_validation_status option;
-      [@ocaml.doc
-        "The result status of the validation test. Valid values include [SUCCESS], [FAILED], \
-         [PENDING], and [IN_PROGRESS].\n"]
-  name : assessment_validation_name option;
-      [@ocaml.doc "The name of the specific validation test performed within the category.\n"]
-  category : assessment_validation_category option;
-      [@ocaml.doc "The category of the validation test.\n"]
-}
-[@@ocaml.doc
-  "Contains information about a specific validation test performed during a directory assessment.\n"]
-
-type nonrec assessment_validations = assessment_validation list [@@ocaml.doc ""]
-
-type nonrec assessment_report = {
-  validations : assessment_validations option;
-      [@ocaml.doc
-        "A list of validation results for different test categories performed against this domain \
-         controller.\n"]
-  domain_controller_ip : ip_addr option;
-      [@ocaml.doc
-        "The IP address of the domain controller that was tested during the assessment.\n"]
-}
-[@@ocaml.doc
-  "Contains the results of validation tests performed against a specific domain controller during \
-   a directory assessment.\n"]
-
-type nonrec assessment_reports = assessment_report list [@@ocaml.doc ""]
-
-type nonrec describe_ad_assessment_result = {
-  assessment_reports : assessment_reports option;
-      [@ocaml.doc
-        "A list of assessment reports containing validation results for each domain controller and \
-         test category. Each report includes specific validation details and outcomes.\n"]
-  assessment : assessment option;
-      [@ocaml.doc
-        "Detailed information about the self-managed instance settings (IDs and DNS IPs).\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec describe_ad_assessment_request = {
-  assessment_id : assessment_id;
-      [@ocaml.doc "The identifier of the directory assessment to describe.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec deregister_event_topic_result = unit [@@ocaml.doc ""]
-
-type nonrec deregister_event_topic_request = {
-  topic_name : topic_name;
-      [@ocaml.doc
-        "The name of the Amazon SNS topic from which to remove the directory as a publisher.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "The Directory ID to remove as a publisher. This directory will no longer send messages to \
-         the specified Amazon SNS topic.\n"]
-}
-[@@ocaml.doc "Removes the specified directory as a publisher to the specified Amazon SNS topic.\n"]
-
-type nonrec certificate_in_use_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc
-  "The certificate is being used for the LDAP security connection and cannot be removed without \
-   disabling LDAP security.\n"]
-
-type nonrec deregister_certificate_result = unit [@@ocaml.doc ""]
-
-type nonrec deregister_certificate_request = {
-  certificate_id : certificate_id; [@ocaml.doc "The identifier of the certificate.\n"]
-  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec delete_trust_result = {
-  trust_id : trust_id option;
-      [@ocaml.doc "The Trust ID of the trust relationship that was deleted.\n"]
-}
-[@@ocaml.doc "The result of a DeleteTrust request.\n"]
-
-type nonrec delete_associated_conditional_forwarder = bool [@@ocaml.doc ""]
-
-type nonrec delete_trust_request = {
-  delete_associated_conditional_forwarder : delete_associated_conditional_forwarder option;
-      [@ocaml.doc "Delete a conditional forwarder as part of a DeleteTrustRequest.\n"]
-  trust_id : trust_id; [@ocaml.doc "The Trust ID of the trust relationship to be deleted.\n"]
-}
-[@@ocaml.doc
-  "Deletes the local side of an existing trust relationship between the Managed Microsoft AD \
-   directory and the external domain.\n"]
-
-type nonrec delete_snapshot_result = {
-  snapshot_id : snapshot_id option;
-      [@ocaml.doc "The identifier of the directory snapshot that was deleted.\n"]
-}
-[@@ocaml.doc "Contains the results of the [DeleteSnapshot] operation.\n"]
-
-type nonrec delete_snapshot_request = {
-  snapshot_id : snapshot_id; [@ocaml.doc "The identifier of the directory snapshot to be deleted.\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [DeleteSnapshot] operation.\n"]
-
-type nonrec delete_log_subscription_result = unit [@@ocaml.doc ""]
-
-type nonrec delete_log_subscription_request = {
-  directory_id : directory_id;
-      [@ocaml.doc "Identifier of the directory whose log subscription you want to delete.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec delete_directory_result = {
-  directory_id : directory_id option; [@ocaml.doc "The directory identifier.\n"]
-}
-[@@ocaml.doc "Contains the results of the [DeleteDirectory] operation.\n"]
-
-type nonrec delete_directory_request = {
-  directory_id : directory_id; [@ocaml.doc "The identifier of the directory to delete.\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [DeleteDirectory] operation.\n"]
-
-type nonrec delete_conditional_forwarder_result = unit [@@ocaml.doc ""]
-
-type nonrec delete_conditional_forwarder_request = {
-  remote_domain_name : remote_domain_name;
-      [@ocaml.doc
-        "The fully qualified domain name (FQDN) of the remote domain with which you are deleting \
-         the conditional forwarder.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc "The directory ID for which you are deleting the conditional forwarder.\n"]
-}
-[@@ocaml.doc "Deletes a conditional forwarder.\n"]
-
-type nonrec delete_ad_assessment_result = {
-  assessment_id : assessment_id option;
-      [@ocaml.doc "The unique identifier of the deleted directory assessment.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec delete_ad_assessment_request = {
-  assessment_id : assessment_id;
-      [@ocaml.doc "The unique identifier of the directory assessment to delete.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec create_trust_result = {
-  trust_id : trust_id option;
-      [@ocaml.doc "A unique identifier for the trust relationship that was created.\n"]
-}
-[@@ocaml.doc "The result of a CreateTrust request.\n"]
-
-type nonrec create_trust_request = {
-  selective_auth : selective_auth option;
-      [@ocaml.doc "Optional parameter to enable selective authentication for the trust.\n"]
-  conditional_forwarder_ipv6_addrs : dns_ipv6_addrs option;
-      [@ocaml.doc "The IPv6 addresses of the remote DNS server associated with RemoteDomainName.\n"]
-  conditional_forwarder_ip_addrs : dns_ip_addrs option;
-      [@ocaml.doc "The IP addresses of the remote DNS server associated with RemoteDomainName.\n"]
-  trust_type : trust_type option;
-      [@ocaml.doc "The trust relationship type. [Forest] is the default.\n"]
-  trust_direction : trust_direction; [@ocaml.doc "The direction of the trust relationship.\n"]
-  trust_password : trust_password;
-      [@ocaml.doc
-        "The trust password. The trust password must be the same password that was used when \
-         creating the trust relationship on the external domain.\n"]
-  remote_domain_name : remote_domain_name;
-      [@ocaml.doc
-        "The Fully Qualified Domain Name (FQDN) of the external domain for which to create the \
-         trust relationship.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "The Directory ID of the Managed Microsoft AD directory for which to establish the trust \
-         relationship.\n"]
-}
-[@@ocaml.doc
-  "Directory Service for Microsoft Active Directory allows you to configure trust relationships. \
-   For example, you can establish a trust between your Managed Microsoft AD directory, and your \
-   existing self-managed Microsoft Active Directory. This would allow you to provide users and \
-   groups access to resources in either domain, with a single set of credentials.\n\n\
-  \ This action initiates the creation of the Amazon Web Services side of a trust relationship \
-   between an Managed Microsoft AD directory and an external domain.\n\
-  \ "]
-
-type nonrec create_snapshot_result = {
-  snapshot_id : snapshot_id option; [@ocaml.doc "The identifier of the snapshot that was created.\n"]
-}
-[@@ocaml.doc "Contains the results of the [CreateSnapshot] operation.\n"]
-
-type nonrec create_snapshot_request = {
-  name : snapshot_name option; [@ocaml.doc "The descriptive name to apply to the snapshot.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc "The identifier of the directory of which to take a snapshot.\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [CreateSnapshot] operation.\n"]
-
-type nonrec directory_limit_exceeded_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc
-  "The maximum number of directories in the region has been reached. You can use the \
-   [GetDirectoryLimits] operation to determine your directory limits in the region.\n"]
-
-type nonrec create_microsoft_ad_result = {
-  directory_id : directory_id option;
-      [@ocaml.doc "The identifier of the directory that was created.\n"]
-}
-[@@ocaml.doc "Result of a CreateMicrosoftAD request.\n"]
-
-type nonrec create_microsoft_ad_request = {
-  network_type : network_type option;
-      [@ocaml.doc
-        " The network type for your domain. The default value is [IPv4] or [IPv6] based on the \
-         provided subnet capabilities.\n"]
-  tags : tags option;
-      [@ocaml.doc "The tags to be assigned to the Managed Microsoft AD directory.\n"]
-  edition : directory_edition option;
-      [@ocaml.doc
-        "Managed Microsoft AD is available in two editions: [Standard] and [Enterprise]. \
-         [Enterprise] is the default.\n"]
-  vpc_settings : directory_vpc_settings;
-      [@ocaml.doc
-        "Contains VPC information for the [CreateDirectory] or [CreateMicrosoftAD] operation.\n"]
-  description : description option;
-      [@ocaml.doc
-        "A description for the directory. This label will appear on the Amazon Web Services \
-         console [Directory Details] page after the directory is created.\n"]
-  password : password;
-      [@ocaml.doc
-        "The password for the default administrative user named [Admin].\n\n\
-        \ If you need to change the password for the administrator account, you can use the \
-         [ResetUserPassword] API call.\n\
-        \ "]
-  short_name : directory_short_name option;
-      [@ocaml.doc
-        "The NetBIOS name for your domain, such as [CORP]. If you don't specify a NetBIOS name, it \
-         will default to the first part of your directory DNS. For example, [CORP] for the \
-         directory DNS [corp.example.com]. \n"]
-  name : directory_name;
-      [@ocaml.doc
-        "The fully qualified domain name for the Managed Microsoft AD directory, such as \
-         [corp.example.com]. This name will resolve inside your VPC only. It does not need to be \
-         publicly resolvable.\n"]
-}
-[@@ocaml.doc "Creates an Managed Microsoft AD directory.\n"]
-
-type nonrec create_log_subscription_result = unit [@@ocaml.doc ""]
-
-type nonrec create_log_subscription_request = {
-  log_group_name : log_group_name;
-      [@ocaml.doc
-        "The name of the CloudWatch log group where the real-time domain controller logs are \
-         forwarded.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "Identifier of the directory to which you want to subscribe and receive real-time logs to \
-         your specified CloudWatch log group.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec create_hybrid_ad_result = {
-  directory_id : directory_id option;
-      [@ocaml.doc "The unique identifier of the newly created hybrid directory.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec create_hybrid_ad_request = {
-  tags : tags option;
-      [@ocaml.doc
-        "The tags to be assigned to the directory. Each tag consists of a key and value pair. You \
-         can specify multiple tags as a list.\n"]
-  assessment_id : assessment_id;
-      [@ocaml.doc
-        "The unique identifier of the successful directory assessment that validates your \
-         self-managed AD environment. You must have a successful directory assessment before you \
-         create a hybrid directory.\n"]
-  secret_arn : secret_arn;
-      [@ocaml.doc
-        "The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret that \
-         contains the credentials for the service account used to join hybrid domain controllers \
-         to your self-managed AD domain. This secret is used once and not stored.\n\n\
-        \ The secret must contain key-value pairs with keys matching \
-         [customerAdAdminDomainUsername] and [customerAdAdminDomainPassword]. For example: \
-         [{\"customerAdAdminDomainUsername\":\"carlos_salazar\",\"customerAdAdminDomainPassword\":\"ExamplePassword123!\"}].\n\
-        \ "]
-}
-[@@ocaml.doc ""]
-
-type nonrec create_directory_result = {
-  directory_id : directory_id option;
-      [@ocaml.doc "The identifier of the directory that was created.\n"]
-}
-[@@ocaml.doc "Contains the results of the [CreateDirectory] operation.\n"]
-
-type nonrec create_directory_request = {
-  network_type : network_type option;
-      [@ocaml.doc
-        "The network type for your directory. Simple AD supports IPv4 and Dual-stack only.\n"]
-  tags : tags option; [@ocaml.doc "The tags to be assigned to the Simple AD directory.\n"]
-  vpc_settings : directory_vpc_settings option;
-      [@ocaml.doc
-        "A [DirectoryVpcSettings] object that contains additional information for the operation.\n"]
-  size : directory_size; [@ocaml.doc "The size of the directory.\n"]
-  description : description option; [@ocaml.doc "A description for the directory.\n"]
-  password : password;
-      [@ocaml.doc
-        "The password for the directory administrator. The directory creation process creates a \
-         directory administrator account with the user name [Administrator] and this password.\n\n\
-        \ If you need to change the password for the administrator account, you can use the \
-         [ResetUserPassword] API call.\n\
-        \ \n\
-        \  The regex pattern for this string is made up of the following conditions:\n\
-        \  \n\
-        \   {ul\n\
-        \         {-  Length (?=^.\\{8,64\\}$) \226\128\147 Must be between 8 and 64 characters\n\
-        \             \n\
-        \              }\n\
-        \         }\n\
-        \   AND any 3 of the following password complexity rules required by Active Directory:\n\
-        \   \n\
-        \    {ul\n\
-        \          {-  Numbers and upper case and lowercase (?=.*\\d)(?=.*\\[A-Z\\])(?=.*\\[a-z\\])\n\
-        \              \n\
-        \               }\n\
-        \          {-  Numbers and special characters and lower case \
-         (?=.*\\d)(?=.*\\[^A-Za-z0-9\\s\\])(?=.*\\[a-z\\])\n\
-        \              \n\
-        \               }\n\
-        \          {-  Special characters and upper case and lower case \
-         (?=.*\\[^A-Za-z0-9\\s\\])(?=.*\\[A-Z\\])(?=.*\\[a-z\\])\n\
-        \              \n\
-        \               }\n\
-        \          {-  Numbers and upper case and special characters \
-         (?=.*\\d)(?=.*\\[A-Z\\])(?=.*\\[^A-Za-z0-9\\s\\])\n\
-        \              \n\
-        \               }\n\
-        \          }\n\
-        \   For additional information about how Active Directory passwords are enforced, see \
-         {{:https://docs.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/password-must-meet-complexity-requirements}Password \
-         must meet complexity requirements} on the Microsoft website.\n\
-        \   "]
-  short_name : directory_short_name option;
-      [@ocaml.doc "The NetBIOS name of the directory, such as [CORP].\n"]
-  name : directory_name;
-      [@ocaml.doc "The fully qualified name for the directory, such as [corp.example.com].\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [CreateDirectory] operation. \n"]
-
-type nonrec create_conditional_forwarder_result = unit [@@ocaml.doc ""]
-
-type nonrec create_conditional_forwarder_request = {
-  dns_ipv6_addrs : dns_ipv6_addrs option;
-      [@ocaml.doc "The IPv6 addresses of the remote DNS server associated with RemoteDomainName.\n"]
-  dns_ip_addrs : dns_ip_addrs option;
-      [@ocaml.doc "The IP addresses of the remote DNS server associated with RemoteDomainName.\n"]
-  remote_domain_name : remote_domain_name;
-      [@ocaml.doc
-        "The fully qualified domain name (FQDN) of the remote domain with which you will set up a \
-         trust relationship.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc
-        "The directory ID of the Amazon Web Services directory for which you are creating the \
-         conditional forwarder.\n"]
-}
-[@@ocaml.doc
-  "Initiates the creation of a conditional forwarder for your Directory Service for Microsoft \
-   Active Directory. Conditional forwarders are required in order to set up a trust relationship \
-   with another domain.\n"]
-
-type nonrec computer_name = string [@@ocaml.doc ""]
-
-type nonrec attribute_name = string [@@ocaml.doc ""]
-
-type nonrec attribute_value = string [@@ocaml.doc ""]
-
-type nonrec attribute = {
-  value : attribute_value option; [@ocaml.doc "The value of the attribute.\n"]
-  name : attribute_name option; [@ocaml.doc "The name of the attribute.\n"]
-}
-[@@ocaml.doc "Represents a named directory attribute.\n"]
-
-type nonrec attributes = attribute list [@@ocaml.doc ""]
-
-type nonrec computer = {
-  computer_attributes : attributes option;
-      [@ocaml.doc
-        "An array of [Attribute] objects containing the LDAP attributes that belong to the \
-         computer account.\n"]
-  computer_name : computer_name option; [@ocaml.doc "The computer name.\n"]
-  computer_id : si_d option; [@ocaml.doc "The identifier of the computer.\n"]
-}
-[@@ocaml.doc "Contains information about a computer account in a directory.\n"]
-
-type nonrec create_computer_result = {
-  computer : computer option;
-      [@ocaml.doc "A [Computer] object that represents the computer account.\n"]
-}
-[@@ocaml.doc "Contains the results for the [CreateComputer] operation.\n"]
-
-type nonrec computer_password = string [@@ocaml.doc ""]
-
-type nonrec create_computer_request = {
-  computer_attributes : attributes option;
-      [@ocaml.doc
-        "An array of [Attribute] objects that contain any LDAP attributes to apply to the computer \
-         account.\n"]
-  organizational_unit_distinguished_name : organizational_unit_d_n option;
-      [@ocaml.doc
-        "The fully-qualified distinguished name of the organizational unit to place the computer \
-         account in.\n"]
-  password : computer_password;
-      [@ocaml.doc
-        "A one-time password that is used to join the computer to the directory. You should \
-         generate a random, strong password to use for this parameter.\n"]
-  computer_name : computer_name; [@ocaml.doc "The name of the computer account.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc "The identifier of the directory in which to create the computer account.\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [CreateComputer] operation.\n"]
-
-type nonrec create_alias_result = {
-  alias : alias_name option; [@ocaml.doc "The alias for the directory.\n"]
-  directory_id : directory_id option; [@ocaml.doc "The identifier of the directory.\n"]
-}
-[@@ocaml.doc "Contains the results of the [CreateAlias] operation.\n"]
-
-type nonrec create_alias_request = {
-  alias : alias_name;
-      [@ocaml.doc
-        "The requested alias.\n\n\
-        \ The alias must be unique amongst all aliases in Amazon Web Services. This operation \
-         throws an [EntityAlreadyExistsException] error if the alias already exists.\n\
-        \ "]
-  directory_id : directory_id;
-      [@ocaml.doc "The identifier of the directory for which to create the alias.\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [CreateAlias] operation.\n"]
-
-type nonrec connect_directory_result = {
-  directory_id : directory_id option; [@ocaml.doc "The identifier of the new directory.\n"]
-}
-[@@ocaml.doc "Contains the results of the [ConnectDirectory] operation.\n"]
-
-type nonrec directory_connect_settings = {
-  customer_user_name : user_name;
-      [@ocaml.doc
-        "The user name of an account in your self-managed directory that is used to connect to the \
-         directory. This account must have the following permissions:\n\n\
-        \ {ul\n\
-        \       {-  Read users and groups\n\
-        \           \n\
-        \            }\n\
-        \       {-  Create computer objects\n\
-        \           \n\
-        \            }\n\
-        \       {-  Join computers to the domain\n\
-        \           \n\
-        \            }\n\
-        \       }\n\
-        \  "]
-  customer_dns_ips_v6 : dns_ipv6_addrs option;
-      [@ocaml.doc
-        "The IPv6 addresses of DNS servers or domain controllers in your self-managed directory.\n"]
-  customer_dns_ips : dns_ip_addrs option;
-      [@ocaml.doc
-        "The IP addresses of DNS servers or domain controllers in your self-managed directory.\n"]
-  subnet_ids : subnet_ids;
-      [@ocaml.doc "A list of subnet identifiers in the VPC in which the AD Connector is created.\n"]
-  vpc_id : vpc_id; [@ocaml.doc "The identifier of the VPC in which the AD Connector is created.\n"]
-}
-[@@ocaml.doc
-  "Contains connection settings for creating an AD Connector with the [ConnectDirectory] action.\n"]
-
-type nonrec connect_directory_request = {
-  network_type : network_type option;
-      [@ocaml.doc
-        "The network type for your directory. The default value is [IPv4] or [IPv6] based on the \
-         provided subnet capabilities.\n"]
-  tags : tags option; [@ocaml.doc "The tags to be assigned to AD Connector.\n"]
-  connect_settings : directory_connect_settings;
-      [@ocaml.doc
-        "A [DirectoryConnectSettings] object that contains additional information for the operation.\n"]
-  size : directory_size; [@ocaml.doc "The size of the directory.\n"]
-  description : description option; [@ocaml.doc "A description for the directory.\n"]
-  password : connect_password; [@ocaml.doc "The password for your self-managed user account.\n"]
-  short_name : directory_short_name option;
-      [@ocaml.doc "The NetBIOS name of your self-managed directory, such as [CORP].\n"]
-  name : directory_name;
-      [@ocaml.doc
-        "The fully qualified name of your self-managed directory, such as [corp.example.com].\n"]
-}
-[@@ocaml.doc "Contains the inputs for the [ConnectDirectory] operation.\n"]
-
-type nonrec cancel_schema_extension_result = unit [@@ocaml.doc ""]
-
-type nonrec cancel_schema_extension_request = {
-  schema_extension_id : schema_extension_id;
-      [@ocaml.doc "The identifier of the schema extension that will be canceled.\n"]
-  directory_id : directory_id;
-      [@ocaml.doc "The identifier of the directory whose schema extension will be canceled.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec add_tags_to_resource_result = unit [@@ocaml.doc ""]
-
-type nonrec add_tags_to_resource_request = {
-  tags : tags; [@ocaml.doc "The tags to be assigned to the directory.\n"]
-  resource_id : resource_id;
-      [@ocaml.doc "Identifier (ID) for the directory to which to add the tag.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec directory_already_in_region_exception = {
-  request_id : request_id option; [@ocaml.doc ""]
-  message : exception_message option; [@ocaml.doc ""]
-}
-[@@ocaml.doc
-  "The Region you specified is the same Region where the Managed Microsoft AD directory was \
-   created. Specify a different Region and try again.\n"]
-
-type nonrec add_region_result = unit [@@ocaml.doc ""]
-
-type nonrec add_region_request = {
-  vpc_settings : directory_vpc_settings; [@ocaml.doc ""]
-  region_name : region_name;
-      [@ocaml.doc
-        "The name of the Region where you want to add domain controllers for replication. For \
-         example, [us-east-1].\n"]
-  directory_id : directory_id;
-      [@ocaml.doc "The identifier of the directory to which you want to add Region replication.\n"]
-}
-[@@ocaml.doc ""]
-
-type nonrec add_ip_routes_result = unit [@@ocaml.doc ""]
-
 type nonrec add_ip_routes_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "Identifier (ID) of the directory to which to add the address block.\n"]
+  ip_routes : ip_routes;
+      [@ocaml.doc
+        "IP address blocks, using CIDR format, of the traffic to route. This is often the IP \
+         address block of the DNS server used for your self-managed domain.\n"]
   update_security_group_for_directory_controllers :
     update_security_group_for_directory_controllers option;
       [@ocaml.doc
@@ -3260,25 +277,3008 @@ type nonrec add_ip_routes_request = {
         \           }\n\
         \   These security rules impact an internal network interface that is not exposed publicly.\n\
         \   "]
-  ip_routes : ip_routes;
+}
+[@@ocaml.doc ""]
+
+type nonrec unsupported_operation_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The operation is not supported.\n"]
+
+type nonrec region_limit_exceeded_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "You have reached the limit for maximum number of simultaneous Region replications per directory.\n"]
+
+type nonrec directory_does_not_exist_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The specified directory does not exist in the system.\n"]
+
+type nonrec directory_already_in_region_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "The Region you specified is the same Region where the Managed Microsoft AD directory was \
+   created. Specify a different Region and try again.\n"]
+
+type nonrec add_region_result = unit [@@ocaml.doc ""]
+
+type nonrec subnet_id = string [@@ocaml.doc ""]
+
+type nonrec subnet_ids = subnet_id list [@@ocaml.doc ""]
+
+type nonrec vpc_id = string [@@ocaml.doc ""]
+
+type nonrec directory_vpc_settings = {
+  vpc_id : vpc_id; [@ocaml.doc "The identifier of the VPC in which to create the directory.\n"]
+  subnet_ids : subnet_ids;
       [@ocaml.doc
-        "IP address blocks, using CIDR format, of the traffic to route. This is often the IP \
-         address block of the DNS server used for your self-managed domain.\n"]
+        "The identifiers of the subnets for the directory servers. The two subnets must be in \
+         different Availability Zones. Directory Service creates a directory server and a DNS \
+         server in each of these subnets.\n"]
+}
+[@@ocaml.doc
+  "Contains VPC information for the [CreateDirectory], [CreateMicrosoftAD], or [CreateHybridAD] \
+   operation.\n"]
+
+type nonrec region_name = string [@@ocaml.doc ""]
+
+type nonrec add_region_request = {
   directory_id : directory_id;
-      [@ocaml.doc "Identifier (ID) of the directory to which to add the address block.\n"]
+      [@ocaml.doc "The identifier of the directory to which you want to add Region replication.\n"]
+  region_name : region_name;
+      [@ocaml.doc
+        "The name of the Region where you want to add domain controllers for replication. For \
+         example, [us-east-1].\n"]
+  vpc_settings : directory_vpc_settings; [@ocaml.doc ""]
 }
 [@@ocaml.doc ""]
 
-type nonrec accept_shared_directory_result = {
-  shared_directory : shared_directory option;
-      [@ocaml.doc "The shared directory in the directory consumer account.\n"]
+type nonrec tag_limit_exceeded_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The maximum allowed number of tags was exceeded.\n"]
+
+type nonrec add_tags_to_resource_result = unit [@@ocaml.doc ""]
+
+type nonrec tag_value = string [@@ocaml.doc ""]
+
+type nonrec tag_key = string [@@ocaml.doc ""]
+
+type nonrec tag = {
+  key : tag_key;
+      [@ocaml.doc
+        "Required name of the tag. The string value can be Unicode characters and cannot be \
+         prefixed with \"aws:\". The string can contain only the set of Unicode letters, digits, \
+         white-space, '_', '.', '/', '=', '+', '-', ':', '\\@'(Java regex: \
+         \"^(\\[\\\\p\\{L\\}\\\\p\\{Z\\}\\\\p\\{N\\}_.:/=+\\\\-\\]*)$\").\n"]
+  value : tag_value;
+      [@ocaml.doc
+        "The optional value of the tag. The string value can be Unicode characters. The string can \
+         contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', \
+         '-', ':', '\\@' (Java regex: \
+         \"^(\\[\\\\p\\{L\\}\\\\p\\{Z\\}\\\\p\\{N\\}_.:/=+\\\\-\\]*)$\").\n"]
+}
+[@@ocaml.doc "Metadata assigned to a directory consisting of a key-value pair.\n"]
+
+type nonrec tags = tag list [@@ocaml.doc ""]
+
+type nonrec resource_id = string [@@ocaml.doc ""]
+
+type nonrec add_tags_to_resource_request = {
+  resource_id : resource_id;
+      [@ocaml.doc "Identifier (ID) for the directory to which to add the tag.\n"]
+  tags : tags; [@ocaml.doc "The tags to be assigned to the directory.\n"]
 }
 [@@ocaml.doc ""]
 
-type nonrec accept_shared_directory_request = {
+type nonrec added_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec additional_regions = region_name list [@@ocaml.doc ""]
+
+type nonrec alias_name = string [@@ocaml.doc ""]
+
+type nonrec assessment_version = string [@@ocaml.doc ""]
+
+type nonrec assessment_report_type = string [@@ocaml.doc ""]
+
+type nonrec assessment_instance_id = string [@@ocaml.doc ""]
+
+type nonrec assessment_instance_ids = assessment_instance_id list [@@ocaml.doc ""]
+
+type nonrec security_group_id = string [@@ocaml.doc ""]
+
+type nonrec security_group_ids = security_group_id list [@@ocaml.doc ""]
+
+type nonrec ip_addr = string [@@ocaml.doc ""]
+
+type nonrec customer_dns_ips = ip_addr list [@@ocaml.doc ""]
+
+type nonrec assessment_status_reason = string [@@ocaml.doc ""]
+
+type nonrec assessment_status_code = string [@@ocaml.doc ""]
+
+type nonrec assessment_status = string [@@ocaml.doc ""]
+
+type nonrec last_update_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec assessment_start_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec directory_name = string [@@ocaml.doc ""]
+
+type nonrec assessment_id = string [@@ocaml.doc ""]
+
+type nonrec assessment = {
+  assessment_id : assessment_id option;
+      [@ocaml.doc "The unique identifier of the directory assessment.\n"]
+  directory_id : directory_id option;
+      [@ocaml.doc "The identifier of the directory associated with this assessment.\n"]
+  dns_name : directory_name option;
+      [@ocaml.doc
+        "The fully qualified domain name (FQDN) of the Active Directory domain being assessed.\n"]
+  start_time : assessment_start_time option;
+      [@ocaml.doc "The date and time when the assessment was initiated.\n"]
+  last_update_date_time : last_update_date_time option;
+      [@ocaml.doc "The date and time when the assessment status was last updated.\n"]
+  status : assessment_status option;
+      [@ocaml.doc
+        "The current status of the assessment. Valid values include [SUCCESS], [FAILED], \
+         [PENDING], and [IN_PROGRESS].\n"]
+  status_code : assessment_status_code option;
+      [@ocaml.doc
+        "A detailed status code providing additional information about the assessment state.\n"]
+  status_reason : assessment_status_reason option;
+      [@ocaml.doc
+        "A human-readable description of the current assessment status, including any error \
+         details or progress information.\n"]
+  customer_dns_ips : customer_dns_ips option;
+      [@ocaml.doc
+        "The IP addresses of the DNS servers or domain controllers in your self-managed AD \
+         environment.\n"]
+  vpc_id : vpc_id option;
+      [@ocaml.doc "Contains Amazon VPC information for the [StartADAssessment] operation. \n"]
+  subnet_ids : subnet_ids option;
+      [@ocaml.doc
+        "A list of subnet identifiers in the Amazon VPC in which the hybrid directory is created.\n"]
+  security_group_ids : security_group_ids option;
+      [@ocaml.doc "The security groups identifiers attached to the network interfaces.\n"]
+  self_managed_instance_ids : assessment_instance_ids option;
+      [@ocaml.doc
+        "The identifiers of the self-managed AD instances used to perform the assessment.\n"]
+  report_type : assessment_report_type option;
+      [@ocaml.doc
+        "The type of assessment report generated. Valid values are [CUSTOMER] and [SYSTEM].\n"]
+  version : assessment_version option;
+      [@ocaml.doc
+        "The version of the assessment framework used to evaluate your self-managed AD environment.\n"]
+}
+[@@ocaml.doc
+  "Contains detailed information about a directory assessment, including configuration parameters, \
+   status, and validation results.\n"]
+
+type nonrec assessment_configuration = {
+  customer_dns_ips : customer_dns_ips;
+      [@ocaml.doc
+        "A list of IP addresses for the DNS servers or domain controllers in your self-managed AD \
+         that are tested during the assessment.\n"]
+  dns_name : directory_name;
+      [@ocaml.doc
+        "The fully qualified domain name (FQDN) of the self-managed AD domain to assess.\n"]
+  vpc_settings : directory_vpc_settings; [@ocaml.doc ""]
+  instance_ids : assessment_instance_ids;
+      [@ocaml.doc
+        "The identifiers of the self-managed instances with SSM that are used to perform \
+         connectivity and validation tests.\n"]
+  security_group_ids : security_group_ids option;
+      [@ocaml.doc
+        "By default, the service attaches a security group to allow network access to the \
+         self-managed nodes in your Amazon VPC. You can optionally supply your own security group \
+         that allows network traffic to and from your self-managed domain controllers outside of \
+         your Amazon VPC. \n"]
+}
+[@@ocaml.doc "Contains configuration parameters required to perform a directory assessment.\n"]
+
+type nonrec assessment_limit = int [@@ocaml.doc ""]
+
+type nonrec assessment_validation_time_stamp = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec assessment_validation_status_reason = string [@@ocaml.doc ""]
+
+type nonrec assessment_validation_status_code = string [@@ocaml.doc ""]
+
+type nonrec assessment_validation_status = string [@@ocaml.doc ""]
+
+type nonrec assessment_validation_name = string [@@ocaml.doc ""]
+
+type nonrec assessment_validation_category = string [@@ocaml.doc ""]
+
+type nonrec assessment_validation = {
+  category : assessment_validation_category option;
+      [@ocaml.doc "The category of the validation test.\n"]
+  name : assessment_validation_name option;
+      [@ocaml.doc "The name of the specific validation test performed within the category.\n"]
+  status : assessment_validation_status option;
+      [@ocaml.doc
+        "The result status of the validation test. Valid values include [SUCCESS], [FAILED], \
+         [PENDING], and [IN_PROGRESS].\n"]
+  status_code : assessment_validation_status_code option;
+      [@ocaml.doc
+        "A detailed status code providing additional information about the validation result.\n"]
+  status_reason : assessment_validation_status_reason option;
+      [@ocaml.doc
+        "A human-readable description of the validation result, including any error details or \
+         recommendations.\n"]
+  start_time : assessment_validation_time_stamp option;
+      [@ocaml.doc "The date and time when the validation test was started.\n"]
+  last_update_date_time : assessment_validation_time_stamp option;
+      [@ocaml.doc "The date and time when the validation test was completed or last updated.\n"]
+}
+[@@ocaml.doc
+  "Contains information about a specific validation test performed during a directory assessment.\n"]
+
+type nonrec assessment_validations = assessment_validation list [@@ocaml.doc ""]
+
+type nonrec assessment_report = {
+  domain_controller_ip : ip_addr option;
+      [@ocaml.doc
+        "The IP address of the domain controller that was tested during the assessment.\n"]
+  validations : assessment_validations option;
+      [@ocaml.doc
+        "A list of validation results for different test categories performed against this domain \
+         controller.\n"]
+}
+[@@ocaml.doc
+  "Contains the results of validation tests performed against a specific domain controller during \
+   a directory assessment.\n"]
+
+type nonrec assessment_reports = assessment_report list [@@ocaml.doc ""]
+
+type nonrec assessment_summary = {
+  assessment_id : assessment_id option;
+      [@ocaml.doc "The unique identifier of the directory assessment.\n"]
+  directory_id : directory_id option;
+      [@ocaml.doc "The identifier of the directory associated with this assessment.\n"]
+  dns_name : directory_name option;
+      [@ocaml.doc
+        "The fully qualified domain name (FQDN) of the Active Directory domain being assessed.\n"]
+  start_time : assessment_start_time option;
+      [@ocaml.doc "The date and time when the assessment was initiated.\n"]
+  last_update_date_time : last_update_date_time option;
+      [@ocaml.doc "The date and time when the assessment status was last updated.\n"]
+  status : assessment_status option;
+      [@ocaml.doc
+        "The current status of the assessment. Valid values include [SUCCESS], [FAILED], \
+         [PENDING], and [IN_PROGRESS].\n"]
+  customer_dns_ips : customer_dns_ips option;
+      [@ocaml.doc
+        "The IP addresses of the DNS servers or domain controllers in your self-managed AD \
+         environment.\n"]
+  report_type : assessment_report_type option;
+      [@ocaml.doc
+        "The type of assessment report generated. Valid values include [CUSTOMER] and [SYSTEM].\n"]
+}
+[@@ocaml.doc
+  "Contains summary information about a directory assessment, providing a high-level overview \
+   without detailed validation results.\n"]
+
+type nonrec assessments = assessment_summary list [@@ocaml.doc ""]
+
+type nonrec attribute_value = string [@@ocaml.doc ""]
+
+type nonrec attribute_name = string [@@ocaml.doc ""]
+
+type nonrec attribute = {
+  name : attribute_name option; [@ocaml.doc "The name of the attribute.\n"]
+  value : attribute_value option; [@ocaml.doc "The value of the attribute.\n"]
+}
+[@@ocaml.doc "Represents a named directory attribute.\n"]
+
+type nonrec attributes = attribute list [@@ocaml.doc ""]
+
+type nonrec authentication_failed_exception = {
+  message : exception_message option; [@ocaml.doc "The textual message for the exception.\n"]
+  request_id : request_id option;
+      [@ocaml.doc "The identifier of the request that caused the exception.\n"]
+}
+[@@ocaml.doc "An authentication error occurred.\n"]
+
+type nonrec availability_zone = string [@@ocaml.doc ""]
+
+type nonrec availability_zones = availability_zone list [@@ocaml.doc ""]
+
+type nonrec ca_enrollment_policy_status =
+  | IN_PROGRESS [@ocaml.doc ""]
+  | SUCCESS [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+  | DISABLING [@ocaml.doc ""]
+  | DISABLED [@ocaml.doc ""]
+  | IMPAIRED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec ca_enrollment_policy_status_reason = string [@@ocaml.doc ""]
+
+type nonrec cancel_schema_extension_result = unit [@@ocaml.doc ""]
+
+type nonrec schema_extension_id = string [@@ocaml.doc ""]
+
+type nonrec cancel_schema_extension_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "The identifier of the directory whose schema extension will be canceled.\n"]
+  schema_extension_id : schema_extension_id;
+      [@ocaml.doc "The identifier of the schema extension that will be canceled.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec ocsp_url = string [@@ocaml.doc ""]
+
+type nonrec client_cert_auth_settings = {
+  ocsp_url : ocsp_url option;
+      [@ocaml.doc
+        "Specifies the URL of the default OCSP server used to check for revocation status. A \
+         secondary value to any OCSP address found in the AIA extension of the user certificate.\n"]
+}
+[@@ocaml.doc
+  "Contains information about the client certificate authentication settings for the \
+   [RegisterCertificate] and [DescribeCertificate] operations. \n"]
+
+type nonrec certificate_type = CLIENT_CERT_AUTH [@ocaml.doc ""] | CLIENT_LDAPS [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec certificate_expiry_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec certificate_registered_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec certificate_c_n = string [@@ocaml.doc ""]
+
+type nonrec certificate_state_reason = string [@@ocaml.doc ""]
+
+type nonrec certificate_state =
+  | REGISTERING [@ocaml.doc ""]
+  | REGISTERED [@ocaml.doc ""]
+  | REGISTER_FAILED [@ocaml.doc ""]
+  | DEREGISTERING [@ocaml.doc ""]
+  | DEREGISTERED [@ocaml.doc ""]
+  | DEREGISTER_FAILED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec certificate_id = string [@@ocaml.doc ""]
+
+type nonrec certificate = {
+  certificate_id : certificate_id option; [@ocaml.doc "The identifier of the certificate.\n"]
+  state : certificate_state option; [@ocaml.doc "The state of the certificate.\n"]
+  state_reason : certificate_state_reason option;
+      [@ocaml.doc "Describes a state change for the certificate.\n"]
+  common_name : certificate_c_n option; [@ocaml.doc "The common name for the certificate.\n"]
+  registered_date_time : certificate_registered_date_time option;
+      [@ocaml.doc "The date and time that the certificate was registered.\n"]
+  expiry_date_time : certificate_expiry_date_time option;
+      [@ocaml.doc "The date and time when the certificate will expire.\n"]
+  type_ : certificate_type option;
+      [@ocaml.doc
+        "The function that the registered certificate performs. Valid values include [ClientLDAPS] \
+         or [ClientCertAuth]. The default value is [ClientLDAPS].\n"]
+  client_cert_auth_settings : client_cert_auth_settings option;
+      [@ocaml.doc
+        "A [ClientCertAuthSettings] object that contains client certificate authentication settings.\n"]
+}
+[@@ocaml.doc "Information about the certificate.\n"]
+
+type nonrec certificate_already_exists_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The certificate has already been registered into the system.\n"]
+
+type nonrec certificate_data = string [@@ocaml.doc ""]
+
+type nonrec certificate_does_not_exist_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "The certificate is not present in the system for describe or deregister activities.\n"]
+
+type nonrec certificate_in_use_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "The certificate is being used for the LDAP security connection and cannot be removed without \
+   disabling LDAP security.\n"]
+
+type nonrec certificate_info = {
+  certificate_id : certificate_id option; [@ocaml.doc "The identifier of the certificate.\n"]
+  common_name : certificate_c_n option; [@ocaml.doc "The common name for the certificate.\n"]
+  state : certificate_state option; [@ocaml.doc "The state of the certificate.\n"]
+  expiry_date_time : certificate_expiry_date_time option;
+      [@ocaml.doc "The date and time when the certificate will expire.\n"]
+  type_ : certificate_type option;
+      [@ocaml.doc
+        "The function that the registered certificate performs. Valid values include [ClientLDAPS] \
+         or [ClientCertAuth]. The default value is [ClientLDAPS].\n"]
+}
+[@@ocaml.doc "Contains general information about a certificate.\n"]
+
+type nonrec certificate_limit_exceeded_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The certificate could not be added because the certificate limit has been reached.\n"]
+
+type nonrec certificates_info = certificate_info list [@@ocaml.doc ""]
+
+type nonrec cidr_ips = cidr_ip list [@@ocaml.doc ""]
+
+type nonrec cidr_ipv6s = cidr_ipv6 list [@@ocaml.doc ""]
+
+type nonrec client_authentication_status = ENABLED [@ocaml.doc ""] | DISABLED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec client_authentication_type =
+  | SMART_CARD [@ocaml.doc ""]
+  | SMART_CARD_OR_PASSWORD [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec client_authentication_setting_info = {
+  type_ : client_authentication_type option;
+      [@ocaml.doc
+        "The type of client authentication for the specified directory. If no type is specified, a \
+         list of all client authentication types that are supported for the directory is \
+         retrieved. \n"]
+  status : client_authentication_status option;
+      [@ocaml.doc
+        "Whether the client authentication type is enabled or disabled for the specified directory.\n"]
+  last_updated_date_time : last_updated_date_time option;
+      [@ocaml.doc
+        "The date and time when the status of the client authentication type was last updated.\n"]
+}
+[@@ocaml.doc "Contains information about a client authentication method for a directory.\n"]
+
+type nonrec client_authentication_settings_info = client_authentication_setting_info list
+[@@ocaml.doc ""]
+
+type nonrec cloud_only_directories_limit_reached = bool [@@ocaml.doc ""]
+
+type nonrec computer_name = string [@@ocaml.doc ""]
+
+type nonrec si_d = string [@@ocaml.doc ""]
+
+type nonrec computer = {
+  computer_id : si_d option; [@ocaml.doc "The identifier of the computer.\n"]
+  computer_name : computer_name option; [@ocaml.doc "The computer name.\n"]
+  computer_attributes : attributes option;
+      [@ocaml.doc
+        "An array of [Attribute] objects containing the LDAP attributes that belong to the \
+         computer account.\n"]
+}
+[@@ocaml.doc "Contains information about a computer account in a directory.\n"]
+
+type nonrec computer_password = string [@@ocaml.doc ""]
+
+type nonrec replication_scope = Domain [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec ipv6_addr = string [@@ocaml.doc ""]
+
+type nonrec dns_ipv6_addrs = ipv6_addr list [@@ocaml.doc ""]
+
+type nonrec dns_ip_addrs = ip_addr list [@@ocaml.doc ""]
+
+type nonrec remote_domain_name = string [@@ocaml.doc ""]
+
+type nonrec conditional_forwarder = {
+  remote_domain_name : remote_domain_name option;
+      [@ocaml.doc
+        "The fully qualified domain name (FQDN) of the remote domains pointed to by the \
+         conditional forwarder.\n"]
+  dns_ip_addrs : dns_ip_addrs option;
+      [@ocaml.doc
+        "The IP addresses of the remote DNS server associated with RemoteDomainName. This is the \
+         IP address of the DNS server that your conditional forwarder points to.\n"]
+  dns_ipv6_addrs : dns_ipv6_addrs option;
+      [@ocaml.doc
+        "The IPv6 addresses of the remote DNS server associated with RemoteDomainName. This is the \
+         IPv6 address of the DNS server that your conditional forwarder points to.\n"]
+  replication_scope : replication_scope option;
+      [@ocaml.doc
+        "The replication scope of the conditional forwarder. The only allowed value is [Domain], \
+         which will replicate the conditional forwarder to all of the domain controllers for your \
+         Amazon Web Services directory.\n"]
+}
+[@@ocaml.doc
+  "Points to a remote domain with which you are setting up a trust relationship. Conditional \
+   forwarders are required in order to set up a trust relationship with another domain.\n"]
+
+type nonrec conditional_forwarders = conditional_forwarder list [@@ocaml.doc ""]
+
+type nonrec directory_limit_exceeded_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "The maximum number of directories in the region has been reached. You can use the \
+   [GetDirectoryLimits] operation to determine your directory limits in the region.\n"]
+
+type nonrec connect_directory_result = {
+  directory_id : directory_id option; [@ocaml.doc "The identifier of the new directory.\n"]
+}
+[@@ocaml.doc "Contains the results of the [ConnectDirectory] operation.\n"]
+
+type nonrec network_type =
+  | DUAL_STACK [@ocaml.doc ""]
+  | IPV4_ONLY [@ocaml.doc ""]
+  | IPV6_ONLY [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec user_name = string [@@ocaml.doc ""]
+
+type nonrec directory_connect_settings = {
+  vpc_id : vpc_id; [@ocaml.doc "The identifier of the VPC in which the AD Connector is created.\n"]
+  subnet_ids : subnet_ids;
+      [@ocaml.doc "A list of subnet identifiers in the VPC in which the AD Connector is created.\n"]
+  customer_dns_ips : dns_ip_addrs option;
+      [@ocaml.doc
+        "The IP addresses of DNS servers or domain controllers in your self-managed directory.\n"]
+  customer_dns_ips_v6 : dns_ipv6_addrs option;
+      [@ocaml.doc
+        "The IPv6 addresses of DNS servers or domain controllers in your self-managed directory.\n"]
+  customer_user_name : user_name;
+      [@ocaml.doc
+        "The user name of an account in your self-managed directory that is used to connect to the \
+         directory. This account must have the following permissions:\n\n\
+        \ {ul\n\
+        \       {-  Read users and groups\n\
+        \           \n\
+        \            }\n\
+        \       {-  Create computer objects\n\
+        \           \n\
+        \            }\n\
+        \       {-  Join computers to the domain\n\
+        \           \n\
+        \            }\n\
+        \       }\n\
+        \  "]
+}
+[@@ocaml.doc
+  "Contains connection settings for creating an AD Connector with the [ConnectDirectory] action.\n"]
+
+type nonrec directory_size = SMALL [@ocaml.doc ""] | LARGE [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec connect_password = string [@@ocaml.doc ""]
+
+type nonrec directory_short_name = string [@@ocaml.doc ""]
+
+type nonrec connect_directory_request = {
+  name : directory_name;
+      [@ocaml.doc
+        "The fully qualified name of your self-managed directory, such as [corp.example.com].\n"]
+  short_name : directory_short_name option;
+      [@ocaml.doc "The NetBIOS name of your self-managed directory, such as [CORP].\n"]
+  password : connect_password; [@ocaml.doc "The password for your self-managed user account.\n"]
+  description : description option; [@ocaml.doc "A description for the directory.\n"]
+  size : directory_size; [@ocaml.doc "The size of the directory.\n"]
+  connect_settings : directory_connect_settings;
+      [@ocaml.doc
+        "A [DirectoryConnectSettings] object that contains additional information for the operation.\n"]
+  tags : tags option; [@ocaml.doc "The tags to be assigned to AD Connector.\n"]
+  network_type : network_type option;
+      [@ocaml.doc
+        "The network type for your directory. The default value is [IPv4] or [IPv6] based on the \
+         provided subnet capabilities.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [ConnectDirectory] operation.\n"]
+
+type nonrec connected_directories_limit_reached = bool [@@ocaml.doc ""]
+
+type nonrec create_alias_result = {
+  directory_id : directory_id option; [@ocaml.doc "The identifier of the directory.\n"]
+  alias : alias_name option; [@ocaml.doc "The alias for the directory.\n"]
+}
+[@@ocaml.doc "Contains the results of the [CreateAlias] operation.\n"]
+
+type nonrec create_alias_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "The identifier of the directory for which to create the alias.\n"]
+  alias : alias_name;
+      [@ocaml.doc
+        "The requested alias.\n\n\
+        \ The alias must be unique amongst all aliases in Amazon Web Services. This operation \
+         throws an [EntityAlreadyExistsException] error if the alias already exists.\n\
+        \ "]
+}
+[@@ocaml.doc "Contains the inputs for the [CreateAlias] operation.\n"]
+
+type nonrec create_computer_result = {
+  computer : computer option;
+      [@ocaml.doc "A [Computer] object that represents the computer account.\n"]
+}
+[@@ocaml.doc "Contains the results for the [CreateComputer] operation.\n"]
+
+type nonrec organizational_unit_d_n = string [@@ocaml.doc ""]
+
+type nonrec create_computer_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "The identifier of the directory in which to create the computer account.\n"]
+  computer_name : computer_name; [@ocaml.doc "The name of the computer account.\n"]
+  password : computer_password;
+      [@ocaml.doc
+        "A one-time password that is used to join the computer to the directory. You should \
+         generate a random, strong password to use for this parameter.\n"]
+  organizational_unit_distinguished_name : organizational_unit_d_n option;
+      [@ocaml.doc
+        "The fully-qualified distinguished name of the organizational unit to place the computer \
+         account in.\n"]
+  computer_attributes : attributes option;
+      [@ocaml.doc
+        "An array of [Attribute] objects that contain any LDAP attributes to apply to the computer \
+         account.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [CreateComputer] operation.\n"]
+
+type nonrec create_conditional_forwarder_result = unit [@@ocaml.doc ""]
+
+type nonrec create_conditional_forwarder_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The directory ID of the Amazon Web Services directory for which you are creating the \
+         conditional forwarder.\n"]
+  remote_domain_name : remote_domain_name;
+      [@ocaml.doc
+        "The fully qualified domain name (FQDN) of the remote domain with which you will set up a \
+         trust relationship.\n"]
+  dns_ip_addrs : dns_ip_addrs option;
+      [@ocaml.doc "The IP addresses of the remote DNS server associated with RemoteDomainName.\n"]
+  dns_ipv6_addrs : dns_ipv6_addrs option;
+      [@ocaml.doc "The IPv6 addresses of the remote DNS server associated with RemoteDomainName.\n"]
+}
+[@@ocaml.doc
+  "Initiates the creation of a conditional forwarder for your Directory Service for Microsoft \
+   Active Directory. Conditional forwarders are required in order to set up a trust relationship \
+   with another domain.\n"]
+
+type nonrec create_directory_result = {
+  directory_id : directory_id option;
+      [@ocaml.doc "The identifier of the directory that was created.\n"]
+}
+[@@ocaml.doc "Contains the results of the [CreateDirectory] operation.\n"]
+
+type nonrec password = string [@@ocaml.doc ""]
+
+type nonrec create_directory_request = {
+  name : directory_name;
+      [@ocaml.doc "The fully qualified name for the directory, such as [corp.example.com].\n"]
+  short_name : directory_short_name option;
+      [@ocaml.doc "The NetBIOS name of the directory, such as [CORP].\n"]
+  password : password;
+      [@ocaml.doc
+        "The password for the directory administrator. The directory creation process creates a \
+         directory administrator account with the user name [Administrator] and this password.\n\n\
+        \ If you need to change the password for the administrator account, you can use the \
+         [ResetUserPassword] API call.\n\
+        \ \n\
+        \  The regex pattern for this string is made up of the following conditions:\n\
+        \  \n\
+        \   {ul\n\
+        \         {-  Length (?=^.\\{8,64\\}$) \226\128\147 Must be between 8 and 64 characters\n\
+        \             \n\
+        \              }\n\
+        \         }\n\
+        \   AND any 3 of the following password complexity rules required by Active Directory:\n\
+        \   \n\
+        \    {ul\n\
+        \          {-  Numbers and upper case and lowercase (?=.*\\d)(?=.*\\[A-Z\\])(?=.*\\[a-z\\])\n\
+        \              \n\
+        \               }\n\
+        \          {-  Numbers and special characters and lower case \
+         (?=.*\\d)(?=.*\\[^A-Za-z0-9\\s\\])(?=.*\\[a-z\\])\n\
+        \              \n\
+        \               }\n\
+        \          {-  Special characters and upper case and lower case \
+         (?=.*\\[^A-Za-z0-9\\s\\])(?=.*\\[A-Z\\])(?=.*\\[a-z\\])\n\
+        \              \n\
+        \               }\n\
+        \          {-  Numbers and upper case and special characters \
+         (?=.*\\d)(?=.*\\[A-Z\\])(?=.*\\[^A-Za-z0-9\\s\\])\n\
+        \              \n\
+        \               }\n\
+        \          }\n\
+        \   For additional information about how Active Directory passwords are enforced, see \
+         {{:https://docs.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/password-must-meet-complexity-requirements}Password \
+         must meet complexity requirements} on the Microsoft website.\n\
+        \   "]
+  description : description option; [@ocaml.doc "A description for the directory.\n"]
+  size : directory_size; [@ocaml.doc "The size of the directory.\n"]
+  vpc_settings : directory_vpc_settings option;
+      [@ocaml.doc
+        "A [DirectoryVpcSettings] object that contains additional information for the operation.\n"]
+  tags : tags option; [@ocaml.doc "The tags to be assigned to the Simple AD directory.\n"]
+  network_type : network_type option;
+      [@ocaml.doc
+        "The network type for your directory. Simple AD supports IPv4 and Dual-stack only.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [CreateDirectory] operation. \n"]
+
+type nonrec create_hybrid_ad_result = {
+  directory_id : directory_id option;
+      [@ocaml.doc "The unique identifier of the newly created hybrid directory.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec secret_arn = string [@@ocaml.doc ""]
+
+type nonrec create_hybrid_ad_request = {
+  secret_arn : secret_arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret that \
+         contains the credentials for the service account used to join hybrid domain controllers \
+         to your self-managed AD domain. This secret is used once and not stored.\n\n\
+        \ The secret must contain key-value pairs with keys matching \
+         [customerAdAdminDomainUsername] and [customerAdAdminDomainPassword]. For example: \
+         [{\"customerAdAdminDomainUsername\":\"carlos_salazar\",\"customerAdAdminDomainPassword\":\"ExamplePassword123!\"}].\n\
+        \ "]
+  assessment_id : assessment_id;
+      [@ocaml.doc
+        "The unique identifier of the successful directory assessment that validates your \
+         self-managed AD environment. You must have a successful directory assessment before you \
+         create a hybrid directory.\n"]
+  tags : tags option;
+      [@ocaml.doc
+        "The tags to be assigned to the directory. Each tag consists of a key and value pair. You \
+         can specify multiple tags as a list.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec insufficient_permissions_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The account does not have sufficient permission to perform the operation.\n"]
+
+type nonrec create_log_subscription_result = unit [@@ocaml.doc ""]
+
+type nonrec log_group_name = string [@@ocaml.doc ""]
+
+type nonrec create_log_subscription_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "Identifier of the directory to which you want to subscribe and receive real-time logs to \
+         your specified CloudWatch log group.\n"]
+  log_group_name : log_group_name;
+      [@ocaml.doc
+        "The name of the CloudWatch log group where the real-time domain controller logs are \
+         forwarded.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec create_microsoft_ad_result = {
+  directory_id : directory_id option;
+      [@ocaml.doc "The identifier of the directory that was created.\n"]
+}
+[@@ocaml.doc "Result of a CreateMicrosoftAD request.\n"]
+
+type nonrec directory_edition =
+  | ENTERPRISE [@ocaml.doc ""]
+  | STANDARD [@ocaml.doc ""]
+  | HYBRID [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec create_microsoft_ad_request = {
+  name : directory_name;
+      [@ocaml.doc
+        "The fully qualified domain name for the Managed Microsoft AD directory, such as \
+         [corp.example.com]. This name will resolve inside your VPC only. It does not need to be \
+         publicly resolvable.\n"]
+  short_name : directory_short_name option;
+      [@ocaml.doc
+        "The NetBIOS name for your domain, such as [CORP]. If you don't specify a NetBIOS name, it \
+         will default to the first part of your directory DNS. For example, [CORP] for the \
+         directory DNS [corp.example.com]. \n"]
+  password : password;
+      [@ocaml.doc
+        "The password for the default administrative user named [Admin].\n\n\
+        \ If you need to change the password for the administrator account, you can use the \
+         [ResetUserPassword] API call.\n\
+        \ "]
+  description : description option;
+      [@ocaml.doc
+        "A description for the directory. This label will appear on the Amazon Web Services \
+         console [Directory Details] page after the directory is created.\n"]
+  vpc_settings : directory_vpc_settings;
+      [@ocaml.doc
+        "Contains VPC information for the [CreateDirectory] or [CreateMicrosoftAD] operation.\n"]
+  edition : directory_edition option;
+      [@ocaml.doc
+        "Managed Microsoft AD is available in two editions: [Standard] and [Enterprise]. \
+         [Enterprise] is the default.\n"]
+  tags : tags option;
+      [@ocaml.doc "The tags to be assigned to the Managed Microsoft AD directory.\n"]
+  network_type : network_type option;
+      [@ocaml.doc
+        " The network type for your domain. The default value is [IPv4] or [IPv6] based on the \
+         provided subnet capabilities.\n"]
+}
+[@@ocaml.doc "Creates an Managed Microsoft AD directory.\n"]
+
+type nonrec snapshot_limit_exceeded_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "The maximum number of manual snapshots for the directory has been reached. You can use the \
+   [GetSnapshotLimits] operation to determine the snapshot limits for a directory.\n"]
+
+type nonrec snapshot_id = string [@@ocaml.doc ""]
+
+type nonrec create_snapshot_result = {
+  snapshot_id : snapshot_id option; [@ocaml.doc "The identifier of the snapshot that was created.\n"]
+}
+[@@ocaml.doc "Contains the results of the [CreateSnapshot] operation.\n"]
+
+type nonrec snapshot_name = string [@@ocaml.doc ""]
+
+type nonrec create_snapshot_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "The identifier of the directory of which to take a snapshot.\n"]
+  name : snapshot_name option; [@ocaml.doc "The descriptive name to apply to the snapshot.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [CreateSnapshot] operation.\n"]
+
+type nonrec create_snapshot_before_schema_extension = bool [@@ocaml.doc ""]
+
+type nonrec create_snapshot_before_update = bool [@@ocaml.doc ""]
+
+type nonrec trust_id = string [@@ocaml.doc ""]
+
+type nonrec create_trust_result = {
+  trust_id : trust_id option;
+      [@ocaml.doc "A unique identifier for the trust relationship that was created.\n"]
+}
+[@@ocaml.doc "The result of a CreateTrust request.\n"]
+
+type nonrec selective_auth = ENABLED [@ocaml.doc ""] | DISABLED [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec trust_type = FOREST [@ocaml.doc ""] | EXTERNAL [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec trust_direction =
+  | ONE_WAY_OUTGOING [@ocaml.doc ""]
+  | ONE_WAY_INCOMING [@ocaml.doc ""]
+  | TWO_WAY [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec trust_password = string [@@ocaml.doc ""]
+
+type nonrec create_trust_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The Directory ID of the Managed Microsoft AD directory for which to establish the trust \
+         relationship.\n"]
+  remote_domain_name : remote_domain_name;
+      [@ocaml.doc
+        "The Fully Qualified Domain Name (FQDN) of the external domain for which to create the \
+         trust relationship.\n"]
+  trust_password : trust_password;
+      [@ocaml.doc
+        "The trust password. The trust password must be the same password that was used when \
+         creating the trust relationship on the external domain.\n"]
+  trust_direction : trust_direction; [@ocaml.doc "The direction of the trust relationship.\n"]
+  trust_type : trust_type option;
+      [@ocaml.doc "The trust relationship type. [Forest] is the default.\n"]
+  conditional_forwarder_ip_addrs : dns_ip_addrs option;
+      [@ocaml.doc "The IP addresses of the remote DNS server associated with RemoteDomainName.\n"]
+  conditional_forwarder_ipv6_addrs : dns_ipv6_addrs option;
+      [@ocaml.doc "The IPv6 addresses of the remote DNS server associated with RemoteDomainName.\n"]
+  selective_auth : selective_auth option;
+      [@ocaml.doc "Optional parameter to enable selective authentication for the trust.\n"]
+}
+[@@ocaml.doc
+  "Directory Service for Microsoft Active Directory allows you to configure trust relationships. \
+   For example, you can establish a trust between your Managed Microsoft AD directory, and your \
+   existing self-managed Microsoft Active Directory. This would allow you to provide users and \
+   groups access to resources in either domain, with a single set of credentials.\n\n\
+  \ This action initiates the creation of the Amazon Web Services side of a trust relationship \
+   between an Managed Microsoft AD directory and an external domain.\n\
+  \ "]
+
+type nonrec customer_user_name = string [@@ocaml.doc ""]
+
+type nonrec data_access_status =
+  | DISABLED [@ocaml.doc ""]
+  | DISABLING [@ocaml.doc ""]
+  | ENABLED [@ocaml.doc ""]
+  | ENABLING [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec delete_ad_assessment_result = {
+  assessment_id : assessment_id option;
+      [@ocaml.doc "The unique identifier of the deleted directory assessment.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec delete_ad_assessment_request = {
+  assessment_id : assessment_id;
+      [@ocaml.doc "The unique identifier of the directory assessment to delete.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec delete_associated_conditional_forwarder = bool [@@ocaml.doc ""]
+
+type nonrec delete_conditional_forwarder_result = unit [@@ocaml.doc ""]
+
+type nonrec delete_conditional_forwarder_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "The directory ID for which you are deleting the conditional forwarder.\n"]
+  remote_domain_name : remote_domain_name;
+      [@ocaml.doc
+        "The fully qualified domain name (FQDN) of the remote domain with which you are deleting \
+         the conditional forwarder.\n"]
+}
+[@@ocaml.doc "Deletes a conditional forwarder.\n"]
+
+type nonrec delete_directory_result = {
+  directory_id : directory_id option; [@ocaml.doc "The directory identifier.\n"]
+}
+[@@ocaml.doc "Contains the results of the [DeleteDirectory] operation.\n"]
+
+type nonrec delete_directory_request = {
+  directory_id : directory_id; [@ocaml.doc "The identifier of the directory to delete.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [DeleteDirectory] operation.\n"]
+
+type nonrec delete_log_subscription_result = unit [@@ocaml.doc ""]
+
+type nonrec delete_log_subscription_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "Identifier of the directory whose log subscription you want to delete.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec delete_snapshot_result = {
+  snapshot_id : snapshot_id option;
+      [@ocaml.doc "The identifier of the directory snapshot that was deleted.\n"]
+}
+[@@ocaml.doc "Contains the results of the [DeleteSnapshot] operation.\n"]
+
+type nonrec delete_snapshot_request = {
+  snapshot_id : snapshot_id; [@ocaml.doc "The identifier of the directory snapshot to be deleted.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [DeleteSnapshot] operation.\n"]
+
+type nonrec delete_trust_result = {
+  trust_id : trust_id option;
+      [@ocaml.doc "The Trust ID of the trust relationship that was deleted.\n"]
+}
+[@@ocaml.doc "The result of a DeleteTrust request.\n"]
+
+type nonrec delete_trust_request = {
+  trust_id : trust_id; [@ocaml.doc "The Trust ID of the trust relationship to be deleted.\n"]
+  delete_associated_conditional_forwarder : delete_associated_conditional_forwarder option;
+      [@ocaml.doc "Delete a conditional forwarder as part of a DeleteTrustRequest.\n"]
+}
+[@@ocaml.doc
+  "Deletes the local side of an existing trust relationship between the Managed Microsoft AD \
+   directory and the external domain.\n"]
+
+type nonrec deregister_certificate_result = unit [@@ocaml.doc ""]
+
+type nonrec deregister_certificate_request = {
+  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
+  certificate_id : certificate_id; [@ocaml.doc "The identifier of the certificate.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec deregister_event_topic_result = unit [@@ocaml.doc ""]
+
+type nonrec topic_name = string [@@ocaml.doc ""]
+
+type nonrec deregister_event_topic_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The Directory ID to remove as a publisher. This directory will no longer send messages to \
+         the specified Amazon SNS topic.\n"]
+  topic_name : topic_name;
+      [@ocaml.doc
+        "The name of the Amazon SNS topic from which to remove the directory as a publisher.\n"]
+}
+[@@ocaml.doc "Removes the specified directory as a publisher to the specified Amazon SNS topic.\n"]
+
+type nonrec describe_ad_assessment_result = {
+  assessment : assessment option;
+      [@ocaml.doc
+        "Detailed information about the self-managed instance settings (IDs and DNS IPs).\n"]
+  assessment_reports : assessment_reports option;
+      [@ocaml.doc
+        "A list of assessment reports containing validation results for each domain controller and \
+         test category. Each report includes specific validation details and outcomes.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_ad_assessment_request = {
+  assessment_id : assessment_id;
+      [@ocaml.doc "The identifier of the directory assessment to describe.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec pca_connector_arn = string [@@ocaml.doc ""]
+
+type nonrec describe_ca_enrollment_policy_result = {
+  directory_id : directory_id option;
+      [@ocaml.doc "The identifier of the directory associated with this CA enrollment policy.\n"]
+  pca_connector_arn : pca_connector_arn option;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the Amazon Web Services Private Certificate Authority \
+         (PCA) connector that is configured for automatic certificate enrollment in this directory.\n"]
+  ca_enrollment_policy_status : ca_enrollment_policy_status option;
+      [@ocaml.doc
+        "The current status of the CA enrollment policy. This indicates if automatic certificate \
+         enrollment is currently active, inactive, or in a transitional state.\n\n\
+        \ Valid values:\n\
+        \ \n\
+        \  {ul\n\
+        \        {-   [IN_PROGRESS] - The policy is being activated T\n\
+        \            \n\
+        \             }\n\
+        \        {-   [SUCCESS] - The policy is active and automatic certificate enrollment is \
+         operational\n\
+        \            \n\
+        \             }\n\
+        \        {-   [FAILED] - The policy activation or deactivation failed\n\
+        \            \n\
+        \             }\n\
+        \        {-   [DISABLING] - The policy is being deactivated\n\
+        \            \n\
+        \             }\n\
+        \        {-   [DISABLED] - The policy is inactive and automatic certificate enrollment is \
+         not available\n\
+        \            \n\
+        \             }\n\
+        \        {-   [IMPAIRED] - Network connectivity is impaired.\n\
+        \            \n\
+        \             }\n\
+        \        }\n\
+        \  "]
+  last_updated_date_time : last_updated_date_time option;
+      [@ocaml.doc "The date and time when the CA enrollment policy was last modified or updated.\n"]
+  ca_enrollment_policy_status_reason : ca_enrollment_policy_status_reason option;
+      [@ocaml.doc
+        "Additional information explaining the current status of the CA enrollment policy, \
+         particularly useful when the policy is in an error or transitional state.\n"]
+}
+[@@ocaml.doc "Contains the results of the [DescribeCAEnrollmentPolicy] operation.\n"]
+
+type nonrec describe_ca_enrollment_policy_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The identifier of the directory for which to retrieve the CA enrollment policy information.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [DescribeCAEnrollmentPolicy] operation.\n"]
+
+type nonrec describe_certificate_result = {
+  certificate : certificate option;
+      [@ocaml.doc
+        "Information about the certificate, including registered date time, certificate state, the \
+         reason for the state, expiration date time, and certificate common name.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_certificate_request = {
+  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
+  certificate_id : certificate_id; [@ocaml.doc "The identifier of the certificate.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec next_token = string [@@ocaml.doc ""]
+
+type nonrec describe_client_authentication_settings_result = {
+  client_authentication_settings_info : client_authentication_settings_info option;
+      [@ocaml.doc
+        "Information about the type of client authentication for the specified directory. The \
+         following information is retrieved: The date and time when the status of the client \
+         authentication type was last updated, whether the client authentication type is enabled \
+         or disabled, and the type of client authentication.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The next token used to retrieve the client authentication settings if the number of \
+         setting types exceeds page limit and there is another page.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec page_limit = int [@@ocaml.doc ""]
+
+type nonrec describe_client_authentication_settings_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "The identifier of the directory for which to retrieve information.\n"]
+  type_ : client_authentication_type option;
+      [@ocaml.doc
+        "The type of client authentication for which to retrieve information. If no type is \
+         specified, a list of all client authentication types that are supported for the specified \
+         directory is retrieved.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The {i DescribeClientAuthenticationSettingsResult.NextToken} value from a previous call \
+         to [DescribeClientAuthenticationSettings]. Pass null if this is the first call.\n"]
+  limit : page_limit option;
+      [@ocaml.doc
+        "The maximum number of items to return. If this value is zero, the maximum number of items \
+         is specified by the limitations of the operation. \n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_conditional_forwarders_result = {
+  conditional_forwarders : conditional_forwarders option;
+      [@ocaml.doc "The list of conditional forwarders that have been created.\n"]
+}
+[@@ocaml.doc "The result of a DescribeConditionalForwarder request.\n"]
+
+type nonrec remote_domain_names = remote_domain_name list [@@ocaml.doc ""]
+
+type nonrec describe_conditional_forwarders_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The directory ID for which to get the list of associated conditional forwarders.\n"]
+  remote_domain_names : remote_domain_names option;
+      [@ocaml.doc
+        "The fully qualified domain names (FQDN) of the remote domains for which to get the list \
+         of associated conditional forwarders. If this member is null, all conditional forwarders \
+         are returned.\n"]
+}
+[@@ocaml.doc "Describes a conditional forwarder.\n"]
+
+type nonrec invalid_next_token_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The [NextToken] value is not valid.\n"]
+
+type nonrec ip_addrs = ip_addr list [@@ocaml.doc ""]
+
+type nonrec hybrid_settings_description = {
+  self_managed_dns_ip_addrs : ip_addrs option;
+      [@ocaml.doc "The IP addresses of the DNS servers in your self-managed AD environment.\n"]
+  self_managed_instance_ids : assessment_instance_ids option;
+      [@ocaml.doc
+        "The identifiers of the self-managed instances with SSM used for hybrid directory \
+         operations.\n"]
+}
+[@@ocaml.doc "Describes the current hybrid directory configuration settings for a directory.\n"]
+
+type nonrec os_version = VERSION_2012 [@ocaml.doc ""] | VERSION_2019 [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec regions_info = {
+  primary_region : region_name option;
+      [@ocaml.doc "The Region where the Managed Microsoft AD directory was originally created.\n"]
+  additional_regions : additional_regions option;
+      [@ocaml.doc
+        "Lists the Regions where the directory has been replicated, excluding the primary Region.\n"]
+}
+[@@ocaml.doc
+  "Provides information about the Regions that are configured for multi-Region replication.\n"]
+
+type nonrec radius_status =
+  | CREATING [@ocaml.doc ""]
+  | COMPLETED [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec use_same_username = bool [@@ocaml.doc ""]
+
+type nonrec radius_display_label = string [@@ocaml.doc ""]
+
+type nonrec radius_authentication_protocol =
+  | PAP [@ocaml.doc ""]
+  | CHAP [@ocaml.doc ""]
+  | MSCHAPV1 [@ocaml.doc ""]
+  | MSCHAPV2 [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec radius_shared_secret = string [@@ocaml.doc ""]
+
+type nonrec radius_retries = int [@@ocaml.doc ""]
+
+type nonrec radius_timeout = int [@@ocaml.doc ""]
+
+type nonrec port_number = int [@@ocaml.doc ""]
+
+type nonrec server = string [@@ocaml.doc ""]
+
+type nonrec servers = server list [@@ocaml.doc ""]
+
+type nonrec radius_settings = {
+  radius_servers : servers option;
+      [@ocaml.doc
+        "The fully qualified domain name (FQDN) or IP addresses of the RADIUS server endpoints, or \
+         the FQDN or IP addresses of your RADIUS server load balancer.\n"]
+  radius_servers_ipv6 : servers option;
+      [@ocaml.doc
+        "The IPv6 addresses of the RADIUS server endpoints or RADIUS server load balancer.\n"]
+  radius_port : port_number option;
+      [@ocaml.doc
+        "The port that your RADIUS server is using for communications. Your self-managed network \
+         must allow inbound traffic over this port from the Directory Service servers.\n"]
+  radius_timeout : radius_timeout option;
+      [@ocaml.doc "The amount of time, in seconds, to wait for the RADIUS server to respond.\n"]
+  radius_retries : radius_retries option;
+      [@ocaml.doc
+        "The maximum number of times that communication with the RADIUS server is retried after \
+         the initial attempt.\n"]
+  shared_secret : radius_shared_secret option;
+      [@ocaml.doc "Required for enabling RADIUS on the directory.\n"]
+  authentication_protocol : radius_authentication_protocol option;
+      [@ocaml.doc "The protocol specified for your RADIUS endpoints.\n"]
+  display_label : radius_display_label option; [@ocaml.doc "Not currently used.\n"]
+  use_same_username : use_same_username option; [@ocaml.doc "Not currently used.\n"]
+}
+[@@ocaml.doc
+  "Contains information about a Remote Authentication Dial In User Service (RADIUS) server.\n"]
+
+type nonrec directory_vpc_settings_description = {
+  vpc_id : vpc_id option; [@ocaml.doc "The identifier of the VPC that the directory is in.\n"]
+  subnet_ids : subnet_ids option;
+      [@ocaml.doc "The identifiers of the subnets for the directory servers.\n"]
+  security_group_id : security_group_id option;
+      [@ocaml.doc "The domain controller security group identifier for the directory.\n"]
+  availability_zones : availability_zones option;
+      [@ocaml.doc "The list of Availability Zones that the directory is in.\n"]
+}
+[@@ocaml.doc "Contains information about the directory.\n"]
+
+type nonrec owner_directory_description = {
+  directory_id : directory_id option;
+      [@ocaml.doc
+        "Identifier of the Managed Microsoft AD directory in the directory owner account.\n"]
+  account_id : customer_id option; [@ocaml.doc "Identifier of the directory owner account.\n"]
+  dns_ip_addrs : dns_ip_addrs option;
+      [@ocaml.doc "IP address of the directory\226\128\153s domain controllers.\n"]
+  dns_ipv6_addrs : dns_ipv6_addrs option;
+      [@ocaml.doc "IPv6 addresses of the directory\226\128\153s domain controllers.\n"]
+  vpc_settings : directory_vpc_settings_description option;
+      [@ocaml.doc "Information about the VPC settings for the directory.\n"]
+  radius_settings : radius_settings option;
+      [@ocaml.doc "Information about the [RadiusSettings] object server configuration.\n"]
+  radius_status : radius_status option; [@ocaml.doc "The status of the RADIUS server.\n"]
+  network_type : network_type option;
+      [@ocaml.doc "Network type of the directory in the directory owner account.\n"]
+}
+[@@ocaml.doc
+  "Contains the directory owner account details shared with the directory consumer account.\n"]
+
+type nonrec desired_number_of_domain_controllers = int [@@ocaml.doc ""]
+
+type nonrec sso_enabled = bool [@@ocaml.doc ""]
+
+type nonrec stage_reason = string [@@ocaml.doc ""]
+
+type nonrec ip_v6_addrs = ipv6_addr list [@@ocaml.doc ""]
+
+type nonrec directory_connect_settings_description = {
+  vpc_id : vpc_id option; [@ocaml.doc "The identifier of the VPC that the AD Connector is in.\n"]
+  subnet_ids : subnet_ids option;
+      [@ocaml.doc "A list of subnet identifiers in the VPC that the AD Connector is in.\n"]
+  customer_user_name : user_name option;
+      [@ocaml.doc "The user name of the service account in your self-managed directory.\n"]
+  security_group_id : security_group_id option;
+      [@ocaml.doc "The security group identifier for the AD Connector directory.\n"]
+  availability_zones : availability_zones option;
+      [@ocaml.doc "The Availability Zones that the directory is in.\n"]
+  connect_ips : ip_addrs option; [@ocaml.doc "The IP addresses of the AD Connector servers.\n"]
+  connect_ips_v6 : ip_v6_addrs option;
+      [@ocaml.doc "The IPv6 addresses of the AD Connector servers.\n"]
+}
+[@@ocaml.doc "Contains information about an AD Connector directory.\n"]
+
+type nonrec directory_type =
+  | SIMPLE_AD [@ocaml.doc ""]
+  | AD_CONNECTOR [@ocaml.doc ""]
+  | MICROSOFT_AD [@ocaml.doc ""]
+  | SHARED_MICROSOFT_AD [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec launch_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec directory_stage =
+  | REQUESTED [@ocaml.doc ""]
+  | CREATING [@ocaml.doc ""]
+  | CREATED [@ocaml.doc ""]
+  | ACTIVE [@ocaml.doc ""]
+  | INOPERABLE [@ocaml.doc ""]
+  | IMPAIRED [@ocaml.doc ""]
+  | RESTORING [@ocaml.doc ""]
+  | RESTOREFAILED [@ocaml.doc ""]
+  | DELETING [@ocaml.doc ""]
+  | DELETED [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+  | UPDATING [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec directory_description = {
+  directory_id : directory_id option; [@ocaml.doc "The directory identifier.\n"]
+  name : directory_name option; [@ocaml.doc "The fully qualified name of the directory.\n"]
+  short_name : directory_short_name option; [@ocaml.doc "The short name of the directory.\n"]
+  size : directory_size option; [@ocaml.doc "The directory size.\n"]
+  edition : directory_edition option; [@ocaml.doc "The edition associated with this directory.\n"]
+  alias : alias_name option;
+      [@ocaml.doc
+        "The alias for the directory. If no alias exists, the alias is the directory identifier, \
+         such as [d-XXXXXXXXXX].\n"]
+  access_url : access_url option;
+      [@ocaml.doc
+        "The access URL for the directory, such as \n\
+         {[\n\
+         http://.awsapps.com\n\
+         ]}\n\
+         . If no alias exists, \n\
+         {[\n\n\
+         ]}\n\
+        \ is the directory identifier, such as [d-XXXXXXXXXX].\n"]
+  description : description option; [@ocaml.doc "The description for the directory.\n"]
+  dns_ip_addrs : dns_ip_addrs option;
+      [@ocaml.doc
+        "The IP addresses of the DNS servers for the directory. For a Simple AD or Microsoft AD \
+         directory, these are the IP addresses of the Simple AD or Microsoft AD directory servers. \
+         For an AD Connector directory, these are the IP addresses of self-managed directory to \
+         which the AD Connector is connected.\n"]
+  dns_ipv6_addrs : dns_ipv6_addrs option;
+      [@ocaml.doc
+        "The IPv6 addresses of the DNS servers for the directory. For a Simple AD or Microsoft AD \
+         directory, these are the IPv6 addresses of the Simple AD or Microsoft AD directory \
+         servers. For an AD Connector directory, these are the IPv6 addresses of the DNS servers \
+         or domain controllers in your self-managed directory to which the AD Connector is \
+         connected.\n"]
+  stage : directory_stage option; [@ocaml.doc "The current stage of the directory.\n"]
+  share_status : share_status option;
+      [@ocaml.doc "Current directory status of the shared Managed Microsoft AD directory.\n"]
+  share_method : share_method option;
+      [@ocaml.doc
+        "The method used when sharing a directory to determine whether the directory should be \
+         shared within your Amazon Web Services organization ([ORGANIZATIONS]) or with any Amazon \
+         Web Services account by sending a shared directory request ([HANDSHAKE]).\n"]
+  share_notes : notes option;
+      [@ocaml.doc
+        "A directory share request that is sent by the directory owner to the directory consumer. \
+         The request includes a typed message to help the directory consumer administrator \
+         determine whether to approve or reject the share invitation.\n"]
+  launch_time : launch_time option;
+      [@ocaml.doc "The date and time when the directory was created.\n"]
+  stage_last_updated_date_time : last_updated_date_time option;
+      [@ocaml.doc "The date and time when the stage was last updated.\n"]
+  type_ : directory_type option; [@ocaml.doc "The directory type.\n"]
+  vpc_settings : directory_vpc_settings_description option;
+      [@ocaml.doc
+        "A [DirectoryVpcSettingsDescription] object that contains additional information about a \
+         directory. Present only for Simple AD and Managed Microsoft AD directories.\n"]
+  connect_settings : directory_connect_settings_description option;
+      [@ocaml.doc
+        " [DirectoryConnectSettingsDescription] object that contains additional information about \
+         an AD Connector directory. Present only for AD Connector directories.\n"]
+  radius_settings : radius_settings option;
+      [@ocaml.doc "Information about the [RadiusSettings] object configured for this directory.\n"]
+  radius_status : radius_status option;
+      [@ocaml.doc "The status of the RADIUS MFA server connection.\n"]
+  stage_reason : stage_reason option;
+      [@ocaml.doc "Additional information about the directory stage.\n"]
+  sso_enabled : sso_enabled option;
+      [@ocaml.doc
+        "Indicates whether single sign-on is enabled for the directory. For more information, see \
+         [EnableSso] and [DisableSso].\n"]
+  desired_number_of_domain_controllers : desired_number_of_domain_controllers option;
+      [@ocaml.doc
+        "The desired number of domain controllers in the directory if the directory is Microsoft AD.\n"]
+  owner_directory_description : owner_directory_description option;
+      [@ocaml.doc "Describes the Managed Microsoft AD directory in the directory owner account.\n"]
+  regions_info : regions_info option;
+      [@ocaml.doc "Lists the Regions where the directory has replicated.\n"]
+  os_version : os_version option;
+      [@ocaml.doc "The operating system (OS) version of the directory.\n"]
+  hybrid_settings : hybrid_settings_description option;
+      [@ocaml.doc
+        "Contains information about the hybrid directory configuration for the directory, \
+         including Amazon Web Services System Manager managed node identifiers and DNS IPs.\n"]
+  network_type : network_type option; [@ocaml.doc "The network type of the directory.\n"]
+}
+[@@ocaml.doc "Contains information about an Directory Service directory.\n"]
+
+type nonrec directory_descriptions = directory_description list [@@ocaml.doc ""]
+
+type nonrec describe_directories_result = {
+  directory_descriptions : directory_descriptions option;
+      [@ocaml.doc
+        "The list of available [DirectoryDescription] objects that were retrieved.\n\n\
+        \ It is possible that this list contains less than the number of items specified in the \
+         [Limit] member of the request. This occurs if there are less than the requested number of \
+         items left to retrieve, or if the limitations of the operation have been exceeded.\n\
+        \ "]
+  next_token : next_token option;
+      [@ocaml.doc
+        "If not null, more results are available. Pass this value for the [NextToken] parameter in \
+         a subsequent call to [DescribeDirectories] to retrieve the next set of items.\n"]
+}
+[@@ocaml.doc "Contains the results of the [DescribeDirectories] operation.\n"]
+
+type nonrec limit = int [@@ocaml.doc ""]
+
+type nonrec directory_ids = directory_id list [@@ocaml.doc ""]
+
+type nonrec describe_directories_request = {
+  directory_ids : directory_ids option;
+      [@ocaml.doc
+        "A list of identifiers of the directories for which to obtain the information. If this \
+         member is null, all directories that belong to the current account are returned.\n\n\
+        \ An empty list results in an [InvalidParameterException] being thrown.\n\
+        \ "]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The [DescribeDirectoriesResult.NextToken] value from a previous call to \
+         [DescribeDirectories]. Pass null if this is the first call.\n"]
+  limit : limit option;
+      [@ocaml.doc
+        "The maximum number of items to return. If this value is zero, the maximum number of items \
+         is specified by the limitations of the operation.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [DescribeDirectories] operation.\n"]
+
+type nonrec describe_directory_data_access_result = {
+  data_access_status : data_access_status option;
+      [@ocaml.doc "The current status of data access through the Directory Service Data API.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_directory_data_access_request = {
+  directory_id : directory_id; [@ocaml.doc "The directory identifier.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec domain_controller_status_reason = string [@@ocaml.doc ""]
+
+type nonrec domain_controller_status =
+  | CREATING [@ocaml.doc ""]
+  | ACTIVE [@ocaml.doc ""]
+  | IMPAIRED [@ocaml.doc ""]
+  | RESTORING [@ocaml.doc ""]
+  | DELETING [@ocaml.doc ""]
+  | DELETED [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+  | UPDATING [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec domain_controller_id = string [@@ocaml.doc ""]
+
+type nonrec domain_controller = {
+  directory_id : directory_id option;
+      [@ocaml.doc "Identifier of the directory where the domain controller resides.\n"]
+  domain_controller_id : domain_controller_id option;
+      [@ocaml.doc "Identifies a specific domain controller in the directory.\n"]
+  dns_ip_addr : ip_addr option; [@ocaml.doc "The IP address of the domain controller.\n"]
+  dns_ipv6_addr : ipv6_addr option; [@ocaml.doc "The IPv6 address of the domain controller.\n"]
+  vpc_id : vpc_id option;
+      [@ocaml.doc "The identifier of the VPC that contains the domain controller.\n"]
+  subnet_id : subnet_id option;
+      [@ocaml.doc "Identifier of the subnet in the VPC that contains the domain controller.\n"]
+  availability_zone : availability_zone option;
+      [@ocaml.doc "The Availability Zone where the domain controller is located.\n"]
+  status : domain_controller_status option; [@ocaml.doc "The status of the domain controller.\n"]
+  status_reason : domain_controller_status_reason option;
+      [@ocaml.doc "A description of the domain controller state.\n"]
+  launch_time : launch_time option;
+      [@ocaml.doc "Specifies when the domain controller was created.\n"]
+  status_last_updated_date_time : last_updated_date_time option;
+      [@ocaml.doc "The date and time that the status was last updated.\n"]
+}
+[@@ocaml.doc "Contains information about the domain controllers for a specified directory.\n"]
+
+type nonrec domain_controllers = domain_controller list [@@ocaml.doc ""]
+
+type nonrec describe_domain_controllers_result = {
+  domain_controllers : domain_controllers option;
+      [@ocaml.doc "List of the [DomainController] objects that were retrieved.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "If not null, more results are available. Pass this value for the [NextToken] parameter in \
+         a subsequent call to [DescribeDomainControllers] retrieve the next set of items.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec domain_controller_ids = domain_controller_id list [@@ocaml.doc ""]
+
+type nonrec describe_domain_controllers_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "Identifier of the directory for which to retrieve the domain controller information.\n"]
+  domain_controller_ids : domain_controller_ids option;
+      [@ocaml.doc
+        "A list of identifiers for the domain controllers whose information will be provided.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The {i DescribeDomainControllers.NextToken} value from a previous call to \
+         [DescribeDomainControllers]. Pass null if this is the first call. \n"]
+  limit : limit option; [@ocaml.doc "The maximum number of items to return.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec topic_status =
+  | REGISTERED [@ocaml.doc ""]
+  | TOPIC_NOT_FOUND [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+  | DELETED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec topic_arn = string [@@ocaml.doc ""]
+
+type nonrec event_topic = {
+  directory_id : directory_id option;
+      [@ocaml.doc
+        "The Directory ID of an Directory Service directory that will publish status messages to \
+         an Amazon SNS topic.\n"]
+  topic_name : topic_name option;
+      [@ocaml.doc
+        "The name of an Amazon SNS topic the receives status messages from the directory.\n"]
+  topic_arn : topic_arn option; [@ocaml.doc "The Amazon SNS topic ARN (Amazon Resource Name).\n"]
+  created_date_time : created_date_time option;
+      [@ocaml.doc
+        "The date and time of when you associated your directory with the Amazon SNS topic.\n"]
+  status : topic_status option; [@ocaml.doc "The topic registration status.\n"]
+}
+[@@ocaml.doc "Information about Amazon SNS topic and Directory Service directory associations.\n"]
+
+type nonrec event_topics = event_topic list [@@ocaml.doc ""]
+
+type nonrec describe_event_topics_result = {
+  event_topics : event_topics option;
+      [@ocaml.doc
+        "A list of Amazon SNS topic names that receive status messages from the specified \
+         Directory ID.\n"]
+}
+[@@ocaml.doc "The result of a DescribeEventTopic request.\n"]
+
+type nonrec topic_names = topic_name list [@@ocaml.doc ""]
+
+type nonrec describe_event_topics_request = {
+  directory_id : directory_id option;
+      [@ocaml.doc
+        "The Directory ID for which to get the list of associated Amazon SNS topics. If this \
+         member is null, associations for all Directory IDs are returned.\n"]
+  topic_names : topic_names option;
+      [@ocaml.doc
+        "A list of Amazon SNS topic names for which to obtain the information. If this member is \
+         null, all associations for the specified Directory ID are returned.\n\n\
+        \ An empty list results in an [InvalidParameterException] being thrown.\n\
+        \ "]
+}
+[@@ocaml.doc "Describes event topics.\n"]
+
+type nonrec start_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec hybrid_update_value = {
+  instance_ids : assessment_instance_ids option;
+      [@ocaml.doc
+        "The identifiers of the self-managed instances with SSM in the hybrid directory \
+         configuration.\n"]
+  dns_ips : customer_dns_ips option;
+      [@ocaml.doc
+        "The IP addresses of the DNS servers or domain controllers in the hybrid directory \
+         configuration.\n"]
+}
+[@@ocaml.doc
+  "Contains the configuration values for a hybrid directory update, including Amazon Web Services \
+   System Manager managed node and DNS information.\n"]
+
+type nonrec initiated_by = string [@@ocaml.doc ""]
+
+type nonrec update_status_reason = string [@@ocaml.doc ""]
+
+type nonrec update_status =
+  | UPDATED [@ocaml.doc ""]
+  | UPDATING [@ocaml.doc ""]
+  | UPDATE_FAILED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec hybrid_update_info_entry = {
+  status : update_status option;
+      [@ocaml.doc
+        "The current status of the update activity. Valid values include [UPDATED], [UPDATING], \
+         and [UPDATE_FAILED].\n"]
+  status_reason : update_status_reason option;
+      [@ocaml.doc
+        "A human-readable description of the update status, including any error details or \
+         progress information.\n"]
+  initiated_by : initiated_by option;
+      [@ocaml.doc "Specifies if the update was initiated by the customer or Amazon Web Services.\n"]
+  new_value : hybrid_update_value option;
+      [@ocaml.doc "The new configuration values being applied in this update.\n"]
+  previous_value : hybrid_update_value option;
+      [@ocaml.doc "The previous configuration values before this update was applied.\n"]
+  start_time : start_date_time option;
+      [@ocaml.doc "The date and time when the update activity was initiated.\n"]
+  last_updated_date_time : last_updated_date_time option;
+      [@ocaml.doc "The date and time when the update activity status was last updated.\n"]
+  assessment_id : assessment_id option;
+      [@ocaml.doc
+        "The identifier of the assessment performed to validate this update configuration.\n"]
+}
+[@@ocaml.doc
+  "Contains detailed information about a specific update activity for a hybrid directory component.\n"]
+
+type nonrec hybrid_update_info_entries = hybrid_update_info_entry list [@@ocaml.doc ""]
+
+type nonrec hybrid_update_activities = {
+  self_managed_instances : hybrid_update_info_entries option;
+      [@ocaml.doc
+        "A list of update activities related to the self-managed instances with SSM in the \
+         self-managed instances with SSM hybrid directory configuration.\n"]
+  hybrid_administrator_account : hybrid_update_info_entries option;
+      [@ocaml.doc
+        "A list of update activities related to hybrid directory administrator account changes.\n"]
+}
+[@@ocaml.doc
+  "Contains information about update activities for different components of a hybrid directory.\n"]
+
+type nonrec describe_hybrid_ad_update_result = {
+  update_activities : hybrid_update_activities option;
+      [@ocaml.doc
+        "Information about update activities for the hybrid directory, organized by update type.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "If not null, more results are available. Pass this value for the [NextToken] parameter in \
+         a subsequent request to retrieve the next set of items.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec hybrid_update_type =
+  | SELF_MANAGED_INSTANCES [@ocaml.doc ""]
+  | HYBRID_ADMINISTRATOR_ACCOUNT [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec describe_hybrid_ad_update_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The identifier of the hybrid directory for which to retrieve update information.\n"]
+  update_type : hybrid_update_type option;
+      [@ocaml.doc
+        "The type of update activities to retrieve. Valid values include [SelfManagedInstances] \
+         and [HybridAdministratorAccount].\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The pagination token from a previous request to [DescribeHybridADUpdate]. Pass null if \
+         this is the first request.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec ldaps_status_reason = string [@@ocaml.doc ""]
+
+type nonrec ldaps_status =
+  | ENABLING [@ocaml.doc ""]
+  | ENABLED [@ocaml.doc ""]
+  | ENABLE_FAILED [@ocaml.doc ""]
+  | DISABLED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec ldaps_setting_info = {
+  ldaps_status : ldaps_status option; [@ocaml.doc "The state of the LDAPS settings.\n"]
+  ldaps_status_reason : ldaps_status_reason option;
+      [@ocaml.doc "Describes a state change for LDAPS.\n"]
+  last_updated_date_time : last_updated_date_time option;
+      [@ocaml.doc "The date and time when the LDAPS settings were last updated.\n"]
+}
+[@@ocaml.doc "Contains general information about the LDAPS settings.\n"]
+
+type nonrec ldaps_settings_info = ldaps_setting_info list [@@ocaml.doc ""]
+
+type nonrec describe_ldaps_settings_result = {
+  ldaps_settings_info : ldaps_settings_info option;
+      [@ocaml.doc
+        "Information about LDAP security for the specified directory, including status of \
+         enablement, state last updated date time, and the reason for the state.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The next token used to retrieve the LDAPS settings if the number of setting types exceeds \
+         page limit and there is another page.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec ldaps_type = CLIENT [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec describe_ldaps_settings_request = {
+  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
+  type_ : ldaps_type option;
+      [@ocaml.doc
+        "The type of LDAP security to enable. Currently only the value [Client] is supported.\n"]
+  next_token : next_token option; [@ocaml.doc "The type of next token used for pagination.\n"]
+  limit : page_limit option;
+      [@ocaml.doc "Specifies the number of items that should be displayed on one page.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec state_last_updated_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec region_type = PRIMARY [@ocaml.doc ""] | ADDITIONAL [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec region_description = {
+  directory_id : directory_id option; [@ocaml.doc "The identifier of the directory.\n"]
+  region_name : region_name option;
+      [@ocaml.doc "The name of the Region. For example, [us-east-1].\n"]
+  region_type : region_type option;
+      [@ocaml.doc "Specifies whether the Region is the primary Region or an additional Region.\n"]
+  status : directory_stage option;
+      [@ocaml.doc "The status of the replication process for the specified Region.\n"]
+  vpc_settings : directory_vpc_settings option; [@ocaml.doc ""]
+  desired_number_of_domain_controllers : desired_number_of_domain_controllers option;
+      [@ocaml.doc
+        "The desired number of domain controllers in the specified Region for the specified \
+         directory.\n"]
+  launch_time : launch_time option; [@ocaml.doc "Specifies when the Region replication began.\n"]
+  status_last_updated_date_time : state_last_updated_date_time option;
+      [@ocaml.doc "The date and time that the Region status was last updated.\n"]
+  last_updated_date_time : last_updated_date_time option;
+      [@ocaml.doc "The date and time that the Region description was last updated.\n"]
+}
+[@@ocaml.doc "The replicated Region information for a directory.\n"]
+
+type nonrec regions_description = region_description list [@@ocaml.doc ""]
+
+type nonrec describe_regions_result = {
+  regions_description : regions_description option;
+      [@ocaml.doc
+        "List of Region information related to the directory for each replicated Region.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "If not null, more results are available. Pass this value for the [NextToken] parameter in \
+         a subsequent call to [DescribeRegions] to retrieve the next set of items.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_regions_request = {
+  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
+  region_name : region_name option;
+      [@ocaml.doc "The name of the Region. For example, [us-east-1].\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The [DescribeRegionsResult.NextToken] value from a previous call to [DescribeRegions]. \
+         Pass null if this is the first call.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec directory_configuration_setting_data_type = string [@@ocaml.doc ""]
+
+type nonrec directory_configuration_setting_last_requested_date_time =
+  Smaws_Lib.CoreTypes.Timestamp.t
+[@@ocaml.doc ""]
+
+type nonrec directory_configuration_setting_last_updated_date_time = Smaws_Lib.CoreTypes.Timestamp.t
+[@@ocaml.doc ""]
+
+type nonrec directory_configuration_setting_request_status_message = string [@@ocaml.doc ""]
+
+type nonrec directory_configuration_status =
+  | REQUESTED [@ocaml.doc ""]
+  | UPDATING [@ocaml.doc ""]
+  | UPDATED [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+  | DEFAULT [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec directory_configuration_setting_request_detailed_status =
+  (region_name * directory_configuration_status) list
+[@@ocaml.doc ""]
+
+type nonrec directory_configuration_setting_value = string [@@ocaml.doc ""]
+
+type nonrec directory_configuration_setting_allowed_values = string [@@ocaml.doc ""]
+
+type nonrec directory_configuration_setting_name = string [@@ocaml.doc ""]
+
+type nonrec directory_configuration_setting_type = string [@@ocaml.doc ""]
+
+type nonrec setting_entry = {
+  type_ : directory_configuration_setting_type option;
+      [@ocaml.doc
+        "The type, or category, of a directory setting. Similar settings have the same type. For \
+         example, [Protocol], [Cipher], or [Certificate-Based\n\
+        \        Authentication].\n"]
+  name : directory_configuration_setting_name option;
+      [@ocaml.doc "The name of the directory setting. For example:\n\n  [TLS_1_0] \n "]
+  allowed_values : directory_configuration_setting_allowed_values option;
+      [@ocaml.doc
+        "The valid range of values for the directory setting. These values depend on the \
+         [DataType] of your directory.\n"]
+  applied_value : directory_configuration_setting_value option;
+      [@ocaml.doc "The value of the directory setting that is applied to the directory.\n"]
+  requested_value : directory_configuration_setting_value option;
+      [@ocaml.doc "The value that was last requested for the directory setting.\n"]
+  request_status : directory_configuration_status option;
+      [@ocaml.doc
+        "The overall status of the request to update the directory setting request. If the \
+         directory setting is deployed in more than one region, and the request fails in any \
+         region, the overall status is [Failed].\n"]
+  request_detailed_status : directory_configuration_setting_request_detailed_status option;
+      [@ocaml.doc
+        "Details about the status of the request to update the directory setting. If the directory \
+         setting is deployed in more than one region, status is returned for the request in each \
+         region where the setting is deployed.\n"]
+  request_status_message : directory_configuration_setting_request_status_message option;
+      [@ocaml.doc "The last status message for the directory status request.\n"]
+  last_updated_date_time : directory_configuration_setting_last_updated_date_time option;
+      [@ocaml.doc "The date and time when the directory setting was last updated.\n"]
+  last_requested_date_time : directory_configuration_setting_last_requested_date_time option;
+      [@ocaml.doc
+        "The date and time when the request to update a directory setting was last submitted.\n"]
+  data_type : directory_configuration_setting_data_type option;
+      [@ocaml.doc
+        "The data type of a directory setting. This is used to define the [AllowedValues] of a \
+         setting. For example a data type can be [Boolean], [DurationInSeconds], or [Enum].\n"]
+}
+[@@ocaml.doc "Contains information about the specified configurable setting for a directory.\n"]
+
+type nonrec setting_entries = setting_entry list [@@ocaml.doc ""]
+
+type nonrec describe_settings_result = {
+  directory_id : directory_id option; [@ocaml.doc "The identifier of the directory.\n"]
+  setting_entries : setting_entries option;
+      [@ocaml.doc
+        "The list of [SettingEntry] objects that were retrieved.\n\n\
+        \ It is possible that this list contains less than the number of items specified in the \
+         [Limit] member of the request. This occurs if there are less than the requested number of \
+         items left to retrieve, or if the limitations of the operation have been exceeded.\n\
+        \ "]
+  next_token : next_token option;
+      [@ocaml.doc
+        "If not null, token that indicates that more results are available. Pass this value for \
+         the [NextToken] parameter in a subsequent call to [DescribeSettings] to retrieve the next \
+         set of items. \n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_settings_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "The identifier of the directory for which to retrieve information.\n"]
+  status : directory_configuration_status option;
+      [@ocaml.doc "The status of the directory settings for which to retrieve information.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The [DescribeSettingsResult.NextToken] value from a previous call to [DescribeSettings]. \
+         Pass null if this is the first call.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec shared_directories = shared_directory list [@@ocaml.doc ""]
+
+type nonrec describe_shared_directories_result = {
+  shared_directories : shared_directories option;
+      [@ocaml.doc "A list of all shared directories in your account.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "If not null, token that indicates that more results are available. Pass this value for \
+         the [NextToken] parameter in a subsequent call to [DescribeSharedDirectories] to retrieve \
+         the next set of items.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec describe_shared_directories_request = {
+  owner_directory_id : directory_id;
+      [@ocaml.doc "Returns the identifier of the directory in the directory owner account. \n"]
+  shared_directory_ids : directory_ids option;
+      [@ocaml.doc "A list of identifiers of all shared directories in your account. \n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The [DescribeSharedDirectoriesResult.NextToken] value from a previous call to \
+         [DescribeSharedDirectories]. Pass null if this is the first call. \n"]
+  limit : limit option;
+      [@ocaml.doc "The number of shared directories to return in the response object.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec start_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec snapshot_status =
+  | CREATING [@ocaml.doc ""]
+  | COMPLETED [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec snapshot_type = AUTO [@ocaml.doc ""] | MANUAL [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec snapshot = {
+  directory_id : directory_id option; [@ocaml.doc "The directory identifier.\n"]
+  snapshot_id : snapshot_id option; [@ocaml.doc "The snapshot identifier.\n"]
+  type_ : snapshot_type option; [@ocaml.doc "The snapshot type.\n"]
+  name : snapshot_name option; [@ocaml.doc "The descriptive name of the snapshot.\n"]
+  status : snapshot_status option; [@ocaml.doc "The snapshot status.\n"]
+  start_time : start_time option; [@ocaml.doc "The date and time that the snapshot was taken.\n"]
+}
+[@@ocaml.doc "Describes a directory snapshot.\n"]
+
+type nonrec snapshots = snapshot list [@@ocaml.doc ""]
+
+type nonrec describe_snapshots_result = {
+  snapshots : snapshots option;
+      [@ocaml.doc
+        "The list of [Snapshot] objects that were retrieved.\n\n\
+        \ It is possible that this list contains less than the number of items specified in the {i \
+         Limit} member of the request. This occurs if there are less than the requested number of \
+         items left to retrieve, or if the limitations of the operation have been exceeded.\n\
+        \ "]
+  next_token : next_token option;
+      [@ocaml.doc
+        "If not null, more results are available. Pass this value in the {i NextToken} member of a \
+         subsequent call to [DescribeSnapshots].\n"]
+}
+[@@ocaml.doc "Contains the results of the [DescribeSnapshots] operation.\n"]
+
+type nonrec snapshot_ids = snapshot_id list [@@ocaml.doc ""]
+
+type nonrec describe_snapshots_request = {
+  directory_id : directory_id option;
+      [@ocaml.doc "The identifier of the directory for which to retrieve snapshot information.\n"]
+  snapshot_ids : snapshot_ids option;
+      [@ocaml.doc
+        "A list of identifiers of the snapshots to obtain the information for. If this member is \
+         null or empty, all snapshots are returned using the {i Limit} and {i NextToken} members.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The {i DescribeSnapshotsResult.NextToken} value from a previous call to \
+         [DescribeSnapshots]. Pass null if this is the first call.\n"]
+  limit : limit option; [@ocaml.doc "The maximum number of objects to return.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [DescribeSnapshots] operation.\n"]
+
+type nonrec trust_state_reason = string [@@ocaml.doc ""]
+
+type nonrec trust_state =
+  | CREATING [@ocaml.doc ""]
+  | CREATED [@ocaml.doc ""]
+  | VERIFYING [@ocaml.doc ""]
+  | VERIFY_FAILED [@ocaml.doc ""]
+  | VERIFIED [@ocaml.doc ""]
+  | UPDATING [@ocaml.doc ""]
+  | UPDATE_FAILED [@ocaml.doc ""]
+  | UPDATED [@ocaml.doc ""]
+  | DELETING [@ocaml.doc ""]
+  | DELETED [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec trust = {
+  directory_id : directory_id option;
+      [@ocaml.doc
+        "The Directory ID of the Amazon Web Services directory involved in the trust relationship.\n"]
+  trust_id : trust_id option; [@ocaml.doc "The unique ID of the trust relationship.\n"]
+  remote_domain_name : remote_domain_name option;
+      [@ocaml.doc
+        "The Fully Qualified Domain Name (FQDN) of the external domain involved in the trust \
+         relationship.\n"]
+  trust_type : trust_type option;
+      [@ocaml.doc "The trust relationship type. [Forest] is the default.\n"]
+  trust_direction : trust_direction option; [@ocaml.doc "The trust relationship direction.\n"]
+  trust_state : trust_state option; [@ocaml.doc "The trust relationship state.\n"]
+  created_date_time : created_date_time option;
+      [@ocaml.doc "The date and time that the trust relationship was created.\n"]
+  last_updated_date_time : last_updated_date_time option;
+      [@ocaml.doc "The date and time that the trust relationship was last updated.\n"]
+  state_last_updated_date_time : state_last_updated_date_time option;
+      [@ocaml.doc "The date and time that the TrustState was last updated.\n"]
+  trust_state_reason : trust_state_reason option; [@ocaml.doc "The reason for the TrustState.\n"]
+  selective_auth : selective_auth option;
+      [@ocaml.doc "Current state of selective authentication for the trust.\n"]
+}
+[@@ocaml.doc
+  "Describes a trust relationship between an Managed Microsoft AD directory and an external domain.\n"]
+
+type nonrec trusts = trust list [@@ocaml.doc ""]
+
+type nonrec describe_trusts_result = {
+  trusts : trusts option;
+      [@ocaml.doc
+        "The list of Trust objects that were retrieved.\n\n\
+        \ It is possible that this list contains less than the number of items specified in the {i \
+         Limit} member of the request. This occurs if there are less than the requested number of \
+         items left to retrieve, or if the limitations of the operation have been exceeded.\n\
+        \ "]
+  next_token : next_token option;
+      [@ocaml.doc
+        "If not null, more results are available. Pass this value for the {i NextToken} parameter \
+         in a subsequent call to [DescribeTrusts] to retrieve the next set of items.\n"]
+}
+[@@ocaml.doc "The result of a DescribeTrust request.\n"]
+
+type nonrec trust_ids = trust_id list [@@ocaml.doc ""]
+
+type nonrec describe_trusts_request = {
+  directory_id : directory_id option;
+      [@ocaml.doc
+        "The Directory ID of the Amazon Web Services directory that is a part of the requested \
+         trust relationship.\n"]
+  trust_ids : trust_ids option;
+      [@ocaml.doc
+        "A list of identifiers of the trust relationships for which to obtain the information. If \
+         this member is null, all trust relationships that belong to the current account are \
+         returned.\n\n\
+        \ An empty list results in an [InvalidParameterException] being thrown.\n\
+        \ "]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The {i DescribeTrustsResult.NextToken} value from a previous call to [DescribeTrusts]. \
+         Pass null if this is the first call.\n"]
+  limit : limit option; [@ocaml.doc "The maximum number of objects to return.\n"]
+}
+[@@ocaml.doc
+  "Describes the trust relationships for a particular Managed Microsoft AD directory. If no input \
+   parameters are provided, such as directory ID or trust ID, this request describes all the trust \
+   relationships.\n"]
+
+type nonrec os_update_settings = {
+  os_version : os_version option;
+      [@ocaml.doc "OS version that the directory needs to be updated to.\n"]
+}
+[@@ocaml.doc "OS version that the directory needs to be updated to.\n"]
+
+type nonrec update_value = {
+  os_update_settings : os_update_settings option; [@ocaml.doc " The OS update related settings. \n"]
+}
+[@@ocaml.doc " The value for a given type of [UpdateSettings]. \n"]
+
+type nonrec update_info_entry = {
+  region : region_name option; [@ocaml.doc " The name of the Region. \n"]
+  status : update_status option;
+      [@ocaml.doc " The status of the update performed on the directory. \n"]
+  status_reason : update_status_reason option;
+      [@ocaml.doc " The reason for the current status of the update type activity. \n"]
+  initiated_by : initiated_by option;
+      [@ocaml.doc
+        " This specifies if the update was initiated by the customer or by the service team. \n"]
+  new_value : update_value option; [@ocaml.doc " The new value of the target setting. \n"]
+  previous_value : update_value option; [@ocaml.doc " The old value of the target setting. \n"]
+  start_time : start_date_time option;
+      [@ocaml.doc " The start time of the [UpdateDirectorySetup] for the particular type. \n"]
+  last_updated_date_time : last_updated_date_time option;
+      [@ocaml.doc " The last updated date and time of a particular directory setting. \n"]
+}
+[@@ocaml.doc "An entry of update information related to a requested update type.\n"]
+
+type nonrec update_activities = update_info_entry list [@@ocaml.doc ""]
+
+type nonrec describe_update_directory_result = {
+  update_activities : update_activities option;
+      [@ocaml.doc " The list of update activities on a directory for the requested update type. \n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        " If not null, more results are available. Pass this value for the [NextToken] parameter. \n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec update_type = OS [@ocaml.doc ""] | NETWORK [@ocaml.doc ""] | SIZE [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec describe_update_directory_request = {
+  directory_id : directory_id; [@ocaml.doc " The unique identifier of the directory. \n"]
+  update_type : update_type;
+      [@ocaml.doc " The type of updates you want to describe for the directory. \n"]
+  region_name : region_name option; [@ocaml.doc " The name of the Region. \n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        " The [DescribeUpdateDirectoryResult]. NextToken value from a previous call to \
+         [DescribeUpdateDirectory]. Pass null if this is the first call. \n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec directory_in_desired_state_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc " The directory is already updated to desired update type settings. \n"]
+
+type nonrec directory_limits = {
+  cloud_only_directories_limit : limit option;
+      [@ocaml.doc "The maximum number of cloud directories allowed in the Region.\n"]
+  cloud_only_directories_current_count : limit option;
+      [@ocaml.doc "The current number of cloud directories in the Region.\n"]
+  cloud_only_directories_limit_reached : cloud_only_directories_limit_reached option;
+      [@ocaml.doc "Indicates if the cloud directory limit has been reached.\n"]
+  cloud_only_microsoft_ad_limit : limit option;
+      [@ocaml.doc "The maximum number of Managed Microsoft AD directories allowed in the region.\n"]
+  cloud_only_microsoft_ad_current_count : limit option;
+      [@ocaml.doc "The current number of Managed Microsoft AD directories in the region.\n"]
+  cloud_only_microsoft_ad_limit_reached : cloud_only_directories_limit_reached option;
+      [@ocaml.doc "Indicates if the Managed Microsoft AD directory limit has been reached.\n"]
+  connected_directories_limit : limit option;
+      [@ocaml.doc "The maximum number of connected directories allowed in the Region.\n"]
+  connected_directories_current_count : limit option;
+      [@ocaml.doc "The current number of connected directories in the Region.\n"]
+  connected_directories_limit_reached : connected_directories_limit_reached option;
+      [@ocaml.doc "Indicates if the connected directory limit has been reached.\n"]
+}
+[@@ocaml.doc "Contains directory limit information for a Region.\n"]
+
+type nonrec directory_not_shared_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The specified directory has not been shared with this Amazon Web Services account.\n"]
+
+type nonrec verify_trust_result = {
+  trust_id : trust_id option;
+      [@ocaml.doc "The unique Trust ID of the trust relationship that was verified.\n"]
+}
+[@@ocaml.doc "Result of a VerifyTrust request.\n"]
+
+type nonrec verify_trust_request = {
+  trust_id : trust_id; [@ocaml.doc "The unique Trust ID of the trust relationship to verify.\n"]
+}
+[@@ocaml.doc
+  "Initiates the verification of an existing trust relationship between an Managed Microsoft AD \
+   directory and an external domain.\n"]
+
+type nonrec update_trust_result = {
+  request_id : request_id option; [@ocaml.doc ""]
+  trust_id : trust_id option; [@ocaml.doc "Identifier of the trust relationship.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec update_trust_request = {
+  trust_id : trust_id; [@ocaml.doc "Identifier of the trust relationship.\n"]
+  selective_auth : selective_auth option;
+      [@ocaml.doc "Updates selective authentication for the trust.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec unsupported_settings_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The specified directory setting is not supported.\n"]
+
+type nonrec incompatible_settings_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The specified directory setting is not compatible with other settings.\n"]
+
+type nonrec update_settings_result = {
+  directory_id : directory_id option; [@ocaml.doc "The identifier of the directory.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec setting = {
+  name : directory_configuration_setting_name;
+      [@ocaml.doc "The name of the directory setting. For example:\n\n  [TLS_1_0] \n "]
+  value : directory_configuration_setting_value;
+      [@ocaml.doc
+        "The value of the directory setting for which to retrieve information. For example, for \
+         [TLS_1_0], the valid values are: [Enable] and [Disable].\n"]
+}
+[@@ocaml.doc "Contains information about the configurable settings for a directory.\n"]
+
+type nonrec settings = setting list [@@ocaml.doc ""]
+
+type nonrec update_settings_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "The identifier of the directory for which to update settings.\n"]
+  settings : settings; [@ocaml.doc "The list of [Setting] objects.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec update_radius_result = unit [@@ocaml.doc ""]
+
+type nonrec update_radius_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The identifier of the directory for which to update the RADIUS server information.\n"]
+  radius_settings : radius_settings;
+      [@ocaml.doc "A [RadiusSettings] object that contains information about the RADIUS server.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [UpdateRadius] operation.\n"]
+
+type nonrec domain_controller_limit_exceeded_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "The maximum allowed number of domain controllers per directory was exceeded. The default limit \
+   per directory is 20 domain controllers.\n"]
+
+type nonrec update_number_of_domain_controllers_result = unit [@@ocaml.doc ""]
+
+type nonrec update_number_of_domain_controllers_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "Identifier of the directory to which the domain controllers will be added or removed.\n"]
+  desired_number : desired_number_of_domain_controllers;
+      [@ocaml.doc "The number of domain controllers desired in the directory.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec update_hybrid_ad_result = {
+  directory_id : directory_id option;
+      [@ocaml.doc "The identifier of the updated hybrid directory.\n"]
+  assessment_id : assessment_id option;
+      [@ocaml.doc
+        "The identifier of the assessment performed to validate the update configuration. This \
+         assessment ensures the updated settings are compatible with your environment.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec hybrid_customer_instances_settings = {
+  customer_dns_ips : customer_dns_ips;
+      [@ocaml.doc
+        "The IP addresses of the DNS servers or domain controllers in your self-managed AD \
+         environment.\n"]
+  instance_ids : assessment_instance_ids;
+      [@ocaml.doc
+        "The identifiers of the self-managed instances with SSM used in hybrid directory.\n"]
+}
+[@@ocaml.doc
+  "Contains configuration settings for self-managed instances with SSM used in hybrid directory \
+   operations.\n"]
+
+type nonrec hybrid_administrator_account_update = {
+  secret_arn : secret_arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret that \
+         contains the credentials for the AD administrator user, and enables hybrid domain \
+         controllers to join the managed AD domain. For example:\n\n\
+        \  [\n\
+        \                \
+         {\"customerAdAdminDomainUsername\":\"carlos_salazar\",\"customerAdAdminDomainPassword\":\"ExamplePassword123!\"}.\n\
+        \            ] \n\
+        \ "]
+}
+[@@ocaml.doc " Use to recover to the hybrid directory administrator account credentials.\n"]
+
+type nonrec update_hybrid_ad_request = {
+  directory_id : directory_id; [@ocaml.doc "The identifier of the hybrid directory to update.\n"]
+  hybrid_administrator_account_update : hybrid_administrator_account_update option;
+      [@ocaml.doc
+        "We create a hybrid directory administrator account when we create a hybrid directory. Use \
+         [HybridAdministratorAccountUpdate] to recover the hybrid directory administrator account \
+         if you have deleted it.\n\n\
+        \ To recover your hybrid directory administrator account, we need temporary access to a \
+         user in your self-managed AD with administrator permissions in the form of a secret from \
+         Amazon Web Services Secrets Manager. We use these credentials once during recovery and \
+         don't store them.\n\
+        \ \n\
+        \  If your hybrid directory administrator account exists, then you don\226\128\153t need \
+         to use [HybridAdministratorAccountUpdate], even if you have updated your self-managed AD \
+         administrator user.\n\
+        \  "]
+  self_managed_instances_settings : hybrid_customer_instances_settings option;
+      [@ocaml.doc
+        "Updates to the self-managed AD configuration, including DNS server IP addresses and \
+         Amazon Web Services System Manager managed node identifiers.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec update_directory_setup_result = unit [@@ocaml.doc ""]
+
+type nonrec network_update_settings = {
+  network_type : network_type option;
+      [@ocaml.doc "The target network type for the directory update.\n"]
+  customer_dns_ips_v6 : dns_ipv6_addrs option;
+      [@ocaml.doc
+        "IPv6 addresses of DNS servers or domain controllers in the self-managed directory. \
+         Required only when updating an AD Connector directory.\n"]
+}
+[@@ocaml.doc "Contains the network configuration for directory update operations.\n"]
+
+type nonrec directory_size_update_settings = {
+  directory_size : directory_size option;
+      [@ocaml.doc "The target directory size for the update operation.\n"]
+}
+[@@ocaml.doc "Contains the directory size configuration for update operations.\n"]
+
+type nonrec update_directory_setup_request = {
+  directory_id : directory_id; [@ocaml.doc "The identifier of the directory to update.\n"]
+  update_type : update_type; [@ocaml.doc "The type of update to perform on the directory.\n"]
+  os_update_settings : os_update_settings option;
+      [@ocaml.doc
+        "Operating system configuration to apply during the directory update operation.\n"]
+  directory_size_update_settings : directory_size_update_settings option;
+      [@ocaml.doc "Directory size configuration to apply during the update operation.\n"]
+  network_update_settings : network_update_settings option;
+      [@ocaml.doc "Network configuration to apply during the directory update operation.\n"]
+  create_snapshot_before_update : create_snapshot_before_update option;
+      [@ocaml.doc
+        "Specifies whether to create a directory snapshot before performing the update.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec update_conditional_forwarder_result = unit [@@ocaml.doc ""]
+
+type nonrec update_conditional_forwarder_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The directory ID of the Amazon Web Services directory for which to update the conditional \
+         forwarder.\n"]
+  remote_domain_name : remote_domain_name;
+      [@ocaml.doc
+        "The fully qualified domain name (FQDN) of the remote domain with which you will set up a \
+         trust relationship.\n"]
+  dns_ip_addrs : dns_ip_addrs option;
+      [@ocaml.doc
+        "The updated IP addresses of the remote DNS server associated with the conditional \
+         forwarder.\n"]
+  dns_ipv6_addrs : dns_ipv6_addrs option;
+      [@ocaml.doc
+        "The updated IPv6 addresses of the remote DNS server associated with the conditional \
+         forwarder.\n"]
+}
+[@@ocaml.doc "Updates a conditional forwarder.\n"]
+
+type nonrec invalid_target_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The specified shared target is not valid.\n"]
+
+type nonrec unshare_directory_result = {
+  shared_directory_id : directory_id option;
+      [@ocaml.doc
+        "Identifier of the directory stored in the directory consumer account that is to be \
+         unshared from the specified directory ([DirectoryId]).\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec target_type = ACCOUNT [@ocaml.doc ""] [@@ocaml.doc ""]
+
+type nonrec target_id = string [@@ocaml.doc ""]
+
+type nonrec unshare_target = {
+  id : target_id; [@ocaml.doc "Identifier of the directory consumer account.\n"]
+  type_ : target_type; [@ocaml.doc "Type of identifier to be used in the {i Id} field.\n"]
+}
+[@@ocaml.doc
+  "Identifier that contains details about the directory consumer account with whom the directory \
+   is being unshared.\n"]
+
+type nonrec unshare_directory_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The identifier of the Managed Microsoft AD directory that you want to stop sharing.\n"]
+  unshare_target : unshare_target;
+      [@ocaml.doc
+        "Identifier for the directory consumer account with whom the directory has to be unshared.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec start_schema_extension_result = {
+  schema_extension_id : schema_extension_id option;
+      [@ocaml.doc "The identifier of the schema extension that will be applied.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec ldif_content = string [@@ocaml.doc ""]
+
+type nonrec start_schema_extension_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The identifier of the directory for which the schema extension will be applied to.\n"]
+  create_snapshot_before_schema_extension : create_snapshot_before_schema_extension;
+      [@ocaml.doc
+        "If true, creates a snapshot of the directory before applying the schema extension.\n"]
+  ldif_content : ldif_content;
+      [@ocaml.doc
+        "The LDIF file represented as a string. To construct the LdifContent string, precede each \
+         line as it would be formatted in an ldif file with \\n. See the example request below for \
+         more details. The file size can be no larger than 1MB.\n"]
+  description : description; [@ocaml.doc "A description of the schema extension.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec start_ad_assessment_result = {
+  assessment_id : assessment_id option;
+      [@ocaml.doc
+        "The unique identifier of the newly started directory assessment. Use this identifier to \
+         monitor assessment progress and retrieve results.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec start_ad_assessment_request = {
+  assessment_configuration : assessment_configuration option;
+      [@ocaml.doc
+        "Configuration parameters for the directory assessment, including DNS server information, \
+         domain name, Amazon VPC subnet, and Amazon Web Services System Manager managed node \
+         details.\n"]
+  directory_id : directory_id option;
+      [@ocaml.doc
+        "The identifier of the directory for which to perform the assessment. This should be an \
+         existing directory. If the assessment is not for an existing directory, this parameter \
+         should be omitted.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec share_limit_exceeded_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "The maximum number of Amazon Web Services accounts that you can share with this directory has \
+   been reached.\n"]
+
+type nonrec organizations_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "Exception encountered while trying to access your Amazon Web Services organization.\n"]
+
+type nonrec share_directory_result = {
+  shared_directory_id : directory_id option;
+      [@ocaml.doc
+        "Identifier of the directory that is stored in the directory consumer account that is \
+         shared from the specified directory ([DirectoryId]).\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec share_target = {
+  id : target_id; [@ocaml.doc "Identifier of the directory consumer account.\n"]
+  type_ : target_type; [@ocaml.doc "Type of identifier to be used in the [Id] field.\n"]
+}
+[@@ocaml.doc "Identifier that contains details about the directory consumer account.\n"]
+
+type nonrec share_directory_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "Identifier of the Managed Microsoft AD directory that you want to share with other Amazon \
+         Web Services accounts.\n"]
+  share_notes : notes option;
+      [@ocaml.doc
+        "A directory share request that is sent by the directory owner to the directory consumer. \
+         The request includes a typed message to help the directory consumer administrator \
+         determine whether to approve or reject the share invitation.\n"]
+  share_target : share_target;
+      [@ocaml.doc
+        "Identifier for the directory consumer account with whom the directory is to be shared.\n"]
+  share_method : share_method;
+      [@ocaml.doc
+        "The method used when sharing a directory to determine whether the directory should be \
+         shared within your Amazon Web Services organization ([ORGANIZATIONS]) or with any Amazon \
+         Web Services account by sending a directory sharing request ([HANDSHAKE]).\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec restore_from_snapshot_result = unit [@@ocaml.doc ""]
+
+type nonrec restore_from_snapshot_request = {
+  snapshot_id : snapshot_id; [@ocaml.doc "The identifier of the snapshot to restore from.\n"]
+}
+[@@ocaml.doc "An object representing the inputs for the [RestoreFromSnapshot] operation.\n"]
+
+type nonrec user_does_not_exist_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The user provided a username that does not exist in your directory.\n"]
+
+type nonrec invalid_password_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "The new password provided by the user does not meet the password complexity requirements \
+   defined in your directory.\n"]
+
+type nonrec reset_user_password_result = unit [@@ocaml.doc ""]
+
+type nonrec user_password = string [@@ocaml.doc ""]
+
+type nonrec reset_user_password_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "Identifier of the Managed Microsoft AD or Simple AD directory in which the user resides.\n"]
+  user_name : customer_user_name;
+      [@ocaml.doc "The user name of the user whose password will be reset.\n"]
+  new_password : user_password; [@ocaml.doc "The new password that will be reset.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec remove_tags_from_resource_result = unit [@@ocaml.doc ""]
+
+type nonrec tag_keys = tag_key list [@@ocaml.doc ""]
+
+type nonrec remove_tags_from_resource_request = {
+  resource_id : resource_id;
+      [@ocaml.doc "Identifier (ID) of the directory from which to remove the tag.\n"]
+  tag_keys : tag_keys; [@ocaml.doc "The tag key (name) of the tag to be removed.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec remove_region_result = unit [@@ocaml.doc ""]
+
+type nonrec remove_region_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The identifier of the directory for which you want to remove Region replication.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec remove_ip_routes_result = unit [@@ocaml.doc ""]
+
+type nonrec remove_ip_routes_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "Identifier (ID) of the directory from which you want to remove the IP addresses.\n"]
+  cidr_ips : cidr_ips option; [@ocaml.doc "IP address blocks that you want to remove.\n"]
+  cidr_ipv6s : cidr_ipv6s option; [@ocaml.doc "IPv6 address blocks that you want to remove.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec reject_shared_directory_result = {
+  shared_directory_id : directory_id option;
+      [@ocaml.doc "Identifier of the shared directory in the directory consumer account.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec reject_shared_directory_request = {
   shared_directory_id : directory_id;
       [@ocaml.doc
         "Identifier of the shared directory in the directory consumer account. This identifier is \
-         different for each directory owner account. \n"]
+         different for each directory owner account.\n"]
 }
 [@@ocaml.doc ""]
+
+type nonrec register_event_topic_result = unit [@@ocaml.doc ""]
+
+type nonrec register_event_topic_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "The Directory ID that will publish status messages to the Amazon SNS topic.\n"]
+  topic_name : topic_name;
+      [@ocaml.doc
+        "The Amazon SNS topic name to which the directory will publish status messages. This \
+         Amazon SNS topic must be in the same region as the specified Directory ID.\n"]
+}
+[@@ocaml.doc "Registers a new event topic.\n"]
+
+type nonrec invalid_certificate_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "The certificate PEM that was provided has incorrect encoding.\n"]
+
+type nonrec register_certificate_result = {
+  certificate_id : certificate_id option; [@ocaml.doc "The identifier of the certificate.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec register_certificate_request = {
+  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
+  certificate_data : certificate_data;
+      [@ocaml.doc "The certificate PEM string that needs to be registered.\n"]
+  type_ : certificate_type option;
+      [@ocaml.doc
+        "The function that the registered certificate performs. Valid values include [ClientLDAPS] \
+         or [ClientCertAuth]. The default value is [ClientLDAPS].\n"]
+  client_cert_auth_settings : client_cert_auth_settings option;
+      [@ocaml.doc
+        "A [ClientCertAuthSettings] object that contains client certificate authentication settings.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_tags_for_resource_result = {
+  tags : tags option; [@ocaml.doc "List of tags returned by the ListTagsForResource operation.\n"]
+  next_token : next_token option; [@ocaml.doc "Reserved for future use.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_tags_for_resource_request = {
+  resource_id : resource_id;
+      [@ocaml.doc "Identifier (ID) of the directory for which you want to retrieve tags.\n"]
+  next_token : next_token option; [@ocaml.doc "Reserved for future use.\n"]
+  limit : limit option; [@ocaml.doc "Reserved for future use.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec end_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec schema_extension_status_reason = string [@@ocaml.doc ""]
+
+type nonrec schema_extension_status =
+  | INITIALIZING [@ocaml.doc ""]
+  | CREATING_SNAPSHOT [@ocaml.doc ""]
+  | UPDATING_SCHEMA [@ocaml.doc ""]
+  | REPLICATING [@ocaml.doc ""]
+  | CANCEL_IN_PROGRESS [@ocaml.doc ""]
+  | ROLLBACK_IN_PROGRESS [@ocaml.doc ""]
+  | CANCELLED [@ocaml.doc ""]
+  | FAILED [@ocaml.doc ""]
+  | COMPLETED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec schema_extension_info = {
+  directory_id : directory_id option;
+      [@ocaml.doc "The identifier of the directory to which the schema extension is applied.\n"]
+  schema_extension_id : schema_extension_id option;
+      [@ocaml.doc "The identifier of the schema extension.\n"]
+  description : description option; [@ocaml.doc "A description of the schema extension.\n"]
+  schema_extension_status : schema_extension_status option;
+      [@ocaml.doc "The current status of the schema extension.\n"]
+  schema_extension_status_reason : schema_extension_status_reason option;
+      [@ocaml.doc "The reason for the [SchemaExtensionStatus].\n"]
+  start_date_time : start_date_time option;
+      [@ocaml.doc
+        "The date and time that the schema extension started being applied to the directory.\n"]
+  end_date_time : end_date_time option;
+      [@ocaml.doc "The date and time that the schema extension was completed.\n"]
+}
+[@@ocaml.doc "Information about a schema extension.\n"]
+
+type nonrec schema_extensions_info = schema_extension_info list [@@ocaml.doc ""]
+
+type nonrec list_schema_extensions_result = {
+  schema_extensions_info : schema_extensions_info option;
+      [@ocaml.doc "Information about the schema extensions applied to the directory.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "If not null, more results are available. Pass this value for the [NextToken] parameter in \
+         a subsequent call to [ListSchemaExtensions] to retrieve the next set of items.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_schema_extensions_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The identifier of the directory from which to retrieve the schema extension information.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The [ListSchemaExtensions.NextToken] value from a previous call to \
+         [ListSchemaExtensions]. Pass null if this is the first call.\n"]
+  limit : limit option; [@ocaml.doc "The maximum number of items to return.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec subscription_created_date_time = Smaws_Lib.CoreTypes.Timestamp.t [@@ocaml.doc ""]
+
+type nonrec log_subscription = {
+  directory_id : directory_id option;
+      [@ocaml.doc
+        "Identifier (ID) of the directory that you want to associate with the log subscription.\n"]
+  log_group_name : log_group_name option; [@ocaml.doc "The name of the log group.\n"]
+  subscription_created_date_time : subscription_created_date_time option;
+      [@ocaml.doc "The date and time that the log subscription was created.\n"]
+}
+[@@ocaml.doc
+  "Represents a log subscription, which tracks real-time data from a chosen log group to a \
+   specified destination.\n"]
+
+type nonrec log_subscriptions = log_subscription list [@@ocaml.doc ""]
+
+type nonrec list_log_subscriptions_result = {
+  log_subscriptions : log_subscriptions option;
+      [@ocaml.doc
+        "A list of active [LogSubscription] objects for calling the Amazon Web Services account.\n"]
+  next_token : next_token option; [@ocaml.doc "The token for the next set of items to return.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_log_subscriptions_request = {
+  directory_id : directory_id option;
+      [@ocaml.doc
+        "If a {i DirectoryID} is provided, lists only the log subscription associated with that \
+         directory. If no {i DirectoryId} is provided, lists all log subscriptions associated with \
+         your Amazon Web Services account. If there are no log subscriptions for the Amazon Web \
+         Services account or the directory, an empty list will be returned.\n"]
+  next_token : next_token option; [@ocaml.doc "The token for the next set of items to return.\n"]
+  limit : limit option; [@ocaml.doc "The maximum number of items returned.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec ip_route_status_reason = string [@@ocaml.doc ""]
+
+type nonrec ip_route_status_msg =
+  | ADDING [@ocaml.doc ""]
+  | ADDED [@ocaml.doc ""]
+  | REMOVING [@ocaml.doc ""]
+  | REMOVED [@ocaml.doc ""]
+  | ADD_FAILED [@ocaml.doc ""]
+  | REMOVE_FAILED [@ocaml.doc ""]
+[@@ocaml.doc ""]
+
+type nonrec ip_route_info = {
+  directory_id : directory_id option;
+      [@ocaml.doc "Identifier (ID) of the directory associated with the IP addresses.\n"]
+  cidr_ip : cidr_ip option; [@ocaml.doc "IP address block in the [IpRoute].\n"]
+  cidr_ipv6 : cidr_ipv6 option; [@ocaml.doc "IPv6 address block in the [IpRoute].\n"]
+  ip_route_status_msg : ip_route_status_msg option;
+      [@ocaml.doc "The status of the IP address block.\n"]
+  added_date_time : added_date_time option;
+      [@ocaml.doc "The date and time the address block was added to the directory.\n"]
+  ip_route_status_reason : ip_route_status_reason option;
+      [@ocaml.doc "The reason for the IpRouteStatusMsg.\n"]
+  description : description option; [@ocaml.doc "Description of the [IpRouteInfo].\n"]
+}
+[@@ocaml.doc "Information about one or more IP address blocks.\n"]
+
+type nonrec ip_routes_info = ip_route_info list [@@ocaml.doc ""]
+
+type nonrec list_ip_routes_result = {
+  ip_routes_info : ip_routes_info option; [@ocaml.doc "A list of [IpRoute]s.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "If not null, more results are available. Pass this value for the {i NextToken} parameter \
+         in a subsequent call to [ListIpRoutes] to retrieve the next set of items.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_ip_routes_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "Identifier (ID) of the directory for which you want to retrieve the IP addresses.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The {i ListIpRoutes.NextToken} value from a previous call to [ListIpRoutes]. Pass null if \
+         this is the first call.\n"]
+  limit : limit option;
+      [@ocaml.doc
+        "Maximum number of items to return. If this value is zero, the maximum number of items is \
+         specified by the limitations of the operation.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_certificates_result = {
+  next_token : next_token option;
+      [@ocaml.doc
+        "Indicates whether another page of certificates is available when the number of available \
+         certificates exceeds the page limit.\n"]
+  certificates_info : certificates_info option;
+      [@ocaml.doc
+        "A list of certificates with basic details including certificate ID, certificate common \
+         name, certificate state.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_certificates_request = {
+  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "A token for requesting another page of certificates if the [NextToken] response element \
+         indicates that more certificates are available. Use the value of the returned [NextToken] \
+         element in your request until the token comes back as [null]. Pass [null] if this is the \
+         first call.\n"]
+  limit : page_limit option; [@ocaml.doc "The number of items that should show up on one page\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_ad_assessments_result = {
+  assessments : assessments option;
+      [@ocaml.doc
+        "A list of assessment summaries containing basic information about each directory \
+         assessment.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "If not null, more results are available. Pass this value for the [NextToken] parameter in \
+         a subsequent request to retrieve the next set of items.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec list_ad_assessments_request = {
+  directory_id : directory_id option;
+      [@ocaml.doc
+        "The identifier of the directory for which to list assessments. If not specified, all \
+         assessments in your account are returned.\n"]
+  next_token : next_token option;
+      [@ocaml.doc
+        "The pagination token from a previous request to [ListADAssessments]. Pass null if this is \
+         the first request.\n"]
+  limit : assessment_limit option;
+      [@ocaml.doc "The maximum number of assessment summaries to return.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec manual_snapshots_limit_reached = bool [@@ocaml.doc ""]
+
+type nonrec snapshot_limits = {
+  manual_snapshots_limit : limit option;
+      [@ocaml.doc "The maximum number of manual snapshots allowed.\n"]
+  manual_snapshots_current_count : limit option;
+      [@ocaml.doc "The current number of manual snapshots of the directory.\n"]
+  manual_snapshots_limit_reached : manual_snapshots_limit_reached option;
+      [@ocaml.doc "Indicates if the manual snapshot limit has been reached.\n"]
+}
+[@@ocaml.doc "Contains manual snapshot limit information for a directory.\n"]
+
+type nonrec get_snapshot_limits_result = {
+  snapshot_limits : snapshot_limits option;
+      [@ocaml.doc
+        "A [SnapshotLimits] object that contains the manual snapshot limits for the specified \
+         directory.\n"]
+}
+[@@ocaml.doc "Contains the results of the [GetSnapshotLimits] operation.\n"]
+
+type nonrec get_snapshot_limits_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "Contains the identifier of the directory to obtain the limits for.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [GetSnapshotLimits] operation.\n"]
+
+type nonrec get_directory_limits_result = {
+  directory_limits : directory_limits option;
+      [@ocaml.doc
+        "A [DirectoryLimits] object that contains the directory limits for the current Region.\n"]
+}
+[@@ocaml.doc "Contains the results of the [GetDirectoryLimits] operation.\n"]
+
+type nonrec get_directory_limits_request = unit [@@ocaml.doc ""]
+
+type nonrec enable_sso_result = unit [@@ocaml.doc ""]
+
+type nonrec enable_sso_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "The identifier of the directory for which to enable single-sign on.\n"]
+  user_name : user_name option;
+      [@ocaml.doc
+        "The username of an alternate account to use to enable single-sign on. This is only used \
+         for AD Connector directories. This account must have privileges to add a service \
+         principal name.\n\n\
+        \ If the AD Connector service account does not have privileges to add a service principal \
+         name, you can specify an alternate account with the {i UserName} and {i Password} \
+         parameters. These credentials are only used to enable single sign-on and are not stored \
+         by the service. The AD Connector service account is not changed.\n\
+        \ "]
+  password : connect_password option;
+      [@ocaml.doc
+        "The password of an alternate account to use to enable single-sign on. This is only used \
+         for AD Connector directories. For more information, see the {i UserName} parameter.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [EnableSso] operation.\n"]
+
+type nonrec enable_radius_result = unit [@@ocaml.doc ""]
+
+type nonrec enable_radius_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "The identifier of the directory for which to enable MFA.\n"]
+  radius_settings : radius_settings;
+      [@ocaml.doc "A [RadiusSettings] object that contains information about the RADIUS server.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [EnableRadius] operation.\n"]
+
+type nonrec no_available_certificate_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "Client authentication setup could not be completed because at least one valid certificate must \
+   be registered in the system.\n"]
+
+type nonrec invalid_ldaps_status_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "The LDAP activities could not be performed because they are limited by the LDAPS status.\n"]
+
+type nonrec enable_ldaps_result = unit [@@ocaml.doc ""]
+
+type nonrec enable_ldaps_request = {
+  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
+  type_ : ldaps_type;
+      [@ocaml.doc
+        "The type of LDAP security to enable. Currently only the value [Client] is supported.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec enable_directory_data_access_result = unit [@@ocaml.doc ""]
+
+type nonrec enable_directory_data_access_request = {
+  directory_id : directory_id; [@ocaml.doc "The directory identifier.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec invalid_client_auth_status_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc "Client authentication is already enabled.\n"]
+
+type nonrec enable_client_authentication_result = unit [@@ocaml.doc ""]
+
+type nonrec enable_client_authentication_request = {
+  directory_id : directory_id; [@ocaml.doc "The identifier of the specified directory. \n"]
+  type_ : client_authentication_type;
+      [@ocaml.doc
+        "The type of client authentication to enable. Currently only the value [SmartCard] is \
+         supported. Smart card authentication in AD Connector requires that you enable Kerberos \
+         Constrained Delegation for the Service User to the LDAP service in your self-managed AD. \n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec enable_already_in_progress_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "An enable operation for CA enrollment policy is already in progress for this directory.\n"]
+
+type nonrec enable_ca_enrollment_policy_result = unit [@@ocaml.doc ""]
+
+type nonrec enable_ca_enrollment_policy_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "The identifier of the directory for which to enable the CA enrollment policy.\n"]
+  pca_connector_arn : pca_connector_arn;
+      [@ocaml.doc
+        "The Amazon Resource Name (ARN) of the Private Certificate Authority (PCA) connector to \
+         use for automatic certificate enrollment. This connector must be properly configured and \
+         accessible from the directory.\n\n\
+        \ The ARN format is: \n\
+        \ {[\n\
+        \ arn:aws:pca-connector-ad:{i region}:{i account-id}:connector/{i connector-id} \n\
+        \ ]}\n\
+        \  \n\
+        \ "]
+}
+[@@ocaml.doc "Contains the inputs for the [EnableCAEnrollmentPolicy] operation.\n"]
+
+type nonrec disable_sso_result = unit [@@ocaml.doc ""]
+
+type nonrec disable_sso_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "The identifier of the directory for which to disable single-sign on.\n"]
+  user_name : user_name option;
+      [@ocaml.doc
+        "The username of an alternate account to use to disable single-sign on. This is only used \
+         for AD Connector directories. This account must have privileges to remove a service \
+         principal name.\n\n\
+        \ If the AD Connector service account does not have privileges to remove a service \
+         principal name, you can specify an alternate account with the {i UserName} and {i \
+         Password} parameters. These credentials are only used to disable single sign-on and are \
+         not stored by the service. The AD Connector service account is not changed.\n\
+        \ "]
+  password : connect_password option;
+      [@ocaml.doc
+        "The password of an alternate account to use to disable single-sign on. This is only used \
+         for AD Connector directories. For more information, see the {i UserName} parameter.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [DisableSso] operation.\n"]
+
+type nonrec disable_radius_result = unit [@@ocaml.doc ""]
+
+type nonrec disable_radius_request = {
+  directory_id : directory_id;
+      [@ocaml.doc "The identifier of the directory for which to disable MFA.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [DisableRadius] operation.\n"]
+
+type nonrec disable_ldaps_result = unit [@@ocaml.doc ""]
+
+type nonrec disable_ldaps_request = {
+  directory_id : directory_id; [@ocaml.doc "The identifier of the directory.\n"]
+  type_ : ldaps_type;
+      [@ocaml.doc
+        "The type of LDAP security to enable. Currently only the value [Client] is supported.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec disable_directory_data_access_result = unit [@@ocaml.doc ""]
+
+type nonrec disable_directory_data_access_request = {
+  directory_id : directory_id; [@ocaml.doc "The directory identifier.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec disable_client_authentication_result = unit [@@ocaml.doc ""]
+
+type nonrec disable_client_authentication_request = {
+  directory_id : directory_id; [@ocaml.doc "The identifier of the directory \n"]
+  type_ : client_authentication_type;
+      [@ocaml.doc
+        "The type of client authentication to disable. Currently the only parameter \
+         [\"SmartCard\"] is supported.\n"]
+}
+[@@ocaml.doc ""]
+
+type nonrec disable_already_in_progress_exception = {
+  message : exception_message option; [@ocaml.doc ""]
+  request_id : request_id option; [@ocaml.doc ""]
+}
+[@@ocaml.doc
+  "A disable operation for CA enrollment policy is already in progress for this directory.\n"]
+
+type nonrec disable_ca_enrollment_policy_result = unit [@@ocaml.doc ""]
+
+type nonrec disable_ca_enrollment_policy_request = {
+  directory_id : directory_id;
+      [@ocaml.doc
+        "The identifier of the directory for which to disable the CA enrollment policy.\n"]
+}
+[@@ocaml.doc "Contains the inputs for the [DisableCAEnrollmentPolicy] operation.\n"]

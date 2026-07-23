@@ -8,70 +8,58 @@ module Types = Types
 
 (** {1:builders Builders} *)
 
-val make_stream_record :
-  ?stream_view_type:stream_view_type ->
-  ?size_bytes:positive_long_object ->
-  ?sequence_number:sequence_number ->
-  ?old_image:attribute_map ->
-  ?new_image:attribute_map ->
-  ?keys:attribute_map ->
-  ?approximate_creation_date_time:date ->
-  unit ->
-  stream_record
-
-val make_stream :
-  ?stream_label:string_ -> ?table_name:table_name -> ?stream_arn:stream_arn -> unit -> stream
-
-val make_key_schema_element :
-  key_type:key_type -> attribute_name:key_schema_attribute_name -> unit -> key_schema_element
-
 val make_sequence_number_range :
-  ?ending_sequence_number:sequence_number ->
   ?starting_sequence_number:sequence_number ->
+  ?ending_sequence_number:sequence_number ->
   unit ->
   sequence_number_range
 
 val make_shard :
-  ?parent_shard_id:shard_id ->
-  ?sequence_number_range:sequence_number_range ->
   ?shard_id:shard_id ->
+  ?sequence_number_range:sequence_number_range ->
+  ?parent_shard_id:shard_id ->
   unit ->
   shard
 
+val make_key_schema_element :
+  attribute_name:key_schema_attribute_name -> key_type:key_type -> unit -> key_schema_element
+
 val make_stream_description :
-  ?last_evaluated_shard_id:shard_id ->
-  ?shards:shard_description_list ->
-  ?key_schema:key_schema ->
-  ?table_name:table_name ->
-  ?creation_request_date_time:date ->
-  ?stream_view_type:stream_view_type ->
-  ?stream_status:stream_status ->
-  ?stream_label:string_ ->
   ?stream_arn:stream_arn ->
+  ?stream_label:string_ ->
+  ?stream_status:stream_status ->
+  ?stream_view_type:stream_view_type ->
+  ?creation_request_date_time:date ->
+  ?table_name:table_name ->
+  ?key_schema:key_schema ->
+  ?shards:shard_description_list ->
+  ?last_evaluated_shard_id:shard_id ->
   unit ->
   stream_description
 
-val make_shard_filter : ?shard_id:shard_id -> ?type_:shard_filter_type -> unit -> shard_filter
-val make_identity : ?type_:string_ -> ?principal_id:string_ -> unit -> identity
+val make_describe_stream_output :
+  ?stream_description:stream_description -> unit -> describe_stream_output
 
-val make_record :
-  ?user_identity:identity ->
-  ?dynamodb:stream_record ->
-  ?aws_region:string_ ->
-  ?event_source:string_ ->
-  ?event_version:string_ ->
-  ?event_name:operation_type ->
-  ?event_i_d:string_ ->
+val make_shard_filter : ?type_:shard_filter_type -> ?shard_id:shard_id -> unit -> shard_filter
+
+val make_describe_stream_input :
+  ?limit:positive_integer_object ->
+  ?exclusive_start_shard_id:shard_id ->
+  ?shard_filter:shard_filter ->
+  stream_arn:stream_arn ->
   unit ->
-  record
+  describe_stream_input
+
+val make_stream :
+  ?stream_arn:stream_arn -> ?table_name:table_name -> ?stream_label:string_ -> unit -> stream
 
 val make_list_streams_output :
-  ?last_evaluated_stream_arn:stream_arn -> ?streams:stream_list -> unit -> list_streams_output
+  ?streams:stream_list -> ?last_evaluated_stream_arn:stream_arn -> unit -> list_streams_output
 
 val make_list_streams_input :
-  ?exclusive_start_stream_arn:stream_arn ->
-  ?limit:positive_integer_object ->
   ?table_name:table_name ->
+  ?limit:positive_integer_object ->
+  ?exclusive_start_stream_arn:stream_arn ->
   unit ->
   list_streams_input
 
@@ -80,67 +68,42 @@ val make_get_shard_iterator_output :
 
 val make_get_shard_iterator_input :
   ?sequence_number:sequence_number ->
-  shard_iterator_type:shard_iterator_type ->
-  shard_id:shard_id ->
   stream_arn:stream_arn ->
+  shard_id:shard_id ->
+  shard_iterator_type:shard_iterator_type ->
   unit ->
   get_shard_iterator_input
 
+val make_identity : ?principal_id:string_ -> ?type_:string_ -> unit -> identity
+
+val make_stream_record :
+  ?approximate_creation_date_time:date ->
+  ?keys:attribute_map ->
+  ?new_image:attribute_map ->
+  ?old_image:attribute_map ->
+  ?sequence_number:sequence_number ->
+  ?size_bytes:positive_long_object ->
+  ?stream_view_type:stream_view_type ->
+  unit ->
+  stream_record
+
+val make_record :
+  ?event_i_d:string_ ->
+  ?event_name:operation_type ->
+  ?event_version:string_ ->
+  ?event_source:string_ ->
+  ?aws_region:string_ ->
+  ?dynamodb:stream_record ->
+  ?user_identity:identity ->
+  unit ->
+  record
+
 val make_get_records_output :
-  ?next_shard_iterator:shard_iterator -> ?records:record_list -> unit -> get_records_output
+  ?records:record_list -> ?next_shard_iterator:shard_iterator -> unit -> get_records_output
 
 val make_get_records_input :
   ?limit:positive_integer_object -> shard_iterator:shard_iterator -> unit -> get_records_input
-
-val make_describe_stream_output :
-  ?stream_description:stream_description -> unit -> describe_stream_output
-
-val make_describe_stream_input :
-  ?shard_filter:shard_filter ->
-  ?exclusive_start_shard_id:shard_id ->
-  ?limit:positive_integer_object ->
-  stream_arn:stream_arn ->
-  unit ->
-  describe_stream_input
 (** {1:operations Operations} *)
-
-module DescribeStream : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_stream_input ->
-    ( describe_stream_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_stream_input ->
-    ( describe_stream_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about a stream, including the current status of the stream, its Amazon \
-   Resource Name (ARN), the composition of its shards, and its corresponding DynamoDB table.\n\n\
-  \  You can call [DescribeStream] at a maximum rate of 10 times per second.\n\
-  \  \n\
-  \    Each shard in the stream has a [SequenceNumberRange] associated with it. If the \
-   [SequenceNumberRange] has a [StartingSequenceNumber] but no [EndingSequenceNumber], then the \
-   shard is still open (able to receive more stream records). If both [StartingSequenceNumber] and \
-   [EndingSequenceNumber] are present, then that shard is closed and can no longer receive more \
-   data.\n\
-  \    "]
 
 module GetRecords : sig
   val error_to_string :
@@ -227,7 +190,6 @@ end
   \  \n\
   \   "]
 
-(** {1:Serialization and Deserialization} *)
 module ListStreams : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -261,6 +223,45 @@ end
   \  You can call [ListStreams] at a maximum rate of 5 times per second.\n\
   \  \n\
   \   "]
+
+(** {1:Serialization and Deserialization} *)
+module DescribeStream : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stream_input ->
+    ( describe_stream_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_stream_input ->
+    ( describe_stream_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about a stream, including the current status of the stream, its Amazon \
+   Resource Name (ARN), the composition of its shards, and its corresponding DynamoDB table.\n\n\
+  \  You can call [DescribeStream] at a maximum rate of 10 times per second.\n\
+  \  \n\
+  \    Each shard in the stream has a [SequenceNumberRange] associated with it. If the \
+   [SequenceNumberRange] has a [StartingSequenceNumber] but no [EndingSequenceNumber], then the \
+   shard is still open (able to receive more stream records). If both [StartingSequenceNumber] and \
+   [EndingSequenceNumber] are present, then that shard is closed and can no longer receive more \
+   data.\n\
+  \    "]
 
 module Json_serializers = Json_serializers
 module Json_deserializers = Json_deserializers

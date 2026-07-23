@@ -728,46 +728,6 @@ module DeleteEvent = struct
       ~output_deserializer:Json_deserializers.delete_event_result_of_yojson ~error_deserializer
 end
 
-module DeleteEventType = struct
-  let error_to_string = function
-    | `AccessDeniedException _ -> "com.amazonaws.frauddetector#AccessDeniedException"
-    | `ConflictException _ -> "com.amazonaws.frauddetector#ConflictException"
-    | `InternalServerException _ -> "com.amazonaws.frauddetector#InternalServerException"
-    | `ThrottlingException _ -> "com.amazonaws.frauddetector#ThrottlingException"
-    | `ValidationException _ -> "com.amazonaws.frauddetector#ValidationException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "AccessDeniedException" ->
-          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
-      | _, "ConflictException" ->
-          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "ThrottlingException" ->
-          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
-      | _, "ValidationException" ->
-          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : delete_event_type_request) =
-    let input = Json_serializers.delete_event_type_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSHawksNestServiceFacade.DeleteEventType"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_event_type_result_of_yojson ~error_deserializer
-
-  let request_with_metadata context (request : delete_event_type_request) =
-    let input = Json_serializers.delete_event_type_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AWSHawksNestServiceFacade.DeleteEventType" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_event_type_result_of_yojson ~error_deserializer
-end
-
 module DeleteEventsByEventType = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.frauddetector#AccessDeniedException"
@@ -812,6 +772,46 @@ module DeleteEventsByEventType = struct
       ~shape_name:"AWSHawksNestServiceFacade.DeleteEventsByEventType" ~service ~context ~input
       ~output_deserializer:Json_deserializers.delete_events_by_event_type_result_of_yojson
       ~error_deserializer
+end
+
+module DeleteEventType = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.frauddetector#AccessDeniedException"
+    | `ConflictException _ -> "com.amazonaws.frauddetector#ConflictException"
+    | `InternalServerException _ -> "com.amazonaws.frauddetector#InternalServerException"
+    | `ThrottlingException _ -> "com.amazonaws.frauddetector#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.frauddetector#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "ConflictException" ->
+          `ConflictException (Json_deserializers.conflict_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_event_type_request) =
+    let input = Json_serializers.delete_event_type_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSHawksNestServiceFacade.DeleteEventType"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_event_type_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : delete_event_type_request) =
+    let input = Json_serializers.delete_event_type_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSHawksNestServiceFacade.DeleteEventType" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_event_type_result_of_yojson ~error_deserializer
 end
 
 module DeleteExternalModel = struct
@@ -1352,6 +1352,47 @@ module GetDeleteEventsByEventTypeStatus = struct
       ~error_deserializer
 end
 
+module GetDetectors = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.frauddetector#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.frauddetector#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.frauddetector#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.frauddetector#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.frauddetector#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_detectors_request) =
+    let input = Json_serializers.get_detectors_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSHawksNestServiceFacade.GetDetectors"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_detectors_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_detectors_request) =
+    let input = Json_serializers.get_detectors_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSHawksNestServiceFacade.GetDetectors" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_detectors_result_of_yojson ~error_deserializer
+end
+
 module GetDetectorVersion = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.frauddetector#AccessDeniedException"
@@ -1393,47 +1434,6 @@ module GetDetectorVersion = struct
       ~shape_name:"AWSHawksNestServiceFacade.GetDetectorVersion" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_detector_version_result_of_yojson
       ~error_deserializer
-end
-
-module GetDetectors = struct
-  let error_to_string = function
-    | `AccessDeniedException _ -> "com.amazonaws.frauddetector#AccessDeniedException"
-    | `InternalServerException _ -> "com.amazonaws.frauddetector#InternalServerException"
-    | `ResourceNotFoundException _ -> "com.amazonaws.frauddetector#ResourceNotFoundException"
-    | `ThrottlingException _ -> "com.amazonaws.frauddetector#ThrottlingException"
-    | `ValidationException _ -> "com.amazonaws.frauddetector#ValidationException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "AccessDeniedException" ->
-          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "ResourceNotFoundException" ->
-          `ResourceNotFoundException
-            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
-      | _, "ThrottlingException" ->
-          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
-      | _, "ValidationException" ->
-          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : get_detectors_request) =
-    let input = Json_serializers.get_detectors_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSHawksNestServiceFacade.GetDetectors"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.get_detectors_result_of_yojson ~error_deserializer
-
-  let request_with_metadata context (request : get_detectors_request) =
-    let input = Json_serializers.get_detectors_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AWSHawksNestServiceFacade.GetDetectors" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.get_detectors_result_of_yojson ~error_deserializer
 end
 
 module GetEntityTypes = struct
@@ -1860,47 +1860,6 @@ module GetListsMetadata = struct
       ~error_deserializer
 end
 
-module GetModelVersion = struct
-  let error_to_string = function
-    | `AccessDeniedException _ -> "com.amazonaws.frauddetector#AccessDeniedException"
-    | `InternalServerException _ -> "com.amazonaws.frauddetector#InternalServerException"
-    | `ResourceNotFoundException _ -> "com.amazonaws.frauddetector#ResourceNotFoundException"
-    | `ThrottlingException _ -> "com.amazonaws.frauddetector#ThrottlingException"
-    | `ValidationException _ -> "com.amazonaws.frauddetector#ValidationException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "AccessDeniedException" ->
-          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "ResourceNotFoundException" ->
-          `ResourceNotFoundException
-            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
-      | _, "ThrottlingException" ->
-          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
-      | _, "ValidationException" ->
-          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : get_model_version_request) =
-    let input = Json_serializers.get_model_version_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSHawksNestServiceFacade.GetModelVersion"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.get_model_version_result_of_yojson ~error_deserializer
-
-  let request_with_metadata context (request : get_model_version_request) =
-    let input = Json_serializers.get_model_version_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AWSHawksNestServiceFacade.GetModelVersion" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.get_model_version_result_of_yojson ~error_deserializer
-end
-
 module GetModels = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.frauddetector#AccessDeniedException"
@@ -1940,6 +1899,47 @@ module GetModels = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSHawksNestServiceFacade.GetModels" ~service ~context ~input
       ~output_deserializer:Json_deserializers.get_models_result_of_yojson ~error_deserializer
+end
+
+module GetModelVersion = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.frauddetector#AccessDeniedException"
+    | `InternalServerException _ -> "com.amazonaws.frauddetector#InternalServerException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.frauddetector#ResourceNotFoundException"
+    | `ThrottlingException _ -> "com.amazonaws.frauddetector#ThrottlingException"
+    | `ValidationException _ -> "com.amazonaws.frauddetector#ValidationException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _, "ValidationException" ->
+          `ValidationException (Json_deserializers.validation_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : get_model_version_request) =
+    let input = Json_serializers.get_model_version_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSHawksNestServiceFacade.GetModelVersion"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_model_version_result_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : get_model_version_request) =
+    let input = Json_serializers.get_model_version_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSHawksNestServiceFacade.GetModelVersion" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.get_model_version_result_of_yojson ~error_deserializer
 end
 
 module GetOutcomes = struct

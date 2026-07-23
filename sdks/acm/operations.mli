@@ -1,69 +1,5 @@
 open Types
 
-module AddTagsToCertificate : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InvalidArnException of invalid_arn_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `InvalidTagException of invalid_tag_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `TagPolicyException of tag_policy_exception
-    | `ThrottlingException of throttling_exception
-    | `TooManyTagsException of too_many_tags_exception
-    | `ValidationException of validation_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_certificate_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidArnException of invalid_arn_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `InvalidTagException of invalid_tag_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `TagPolicyException of tag_policy_exception
-      | `ThrottlingException of throttling_exception
-      | `TooManyTagsException of too_many_tags_exception
-      | `ValidationException of validation_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_to_certificate_request ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InvalidArnException of invalid_arn_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `InvalidTagException of invalid_tag_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `TagPolicyException of tag_policy_exception
-      | `ThrottlingException of throttling_exception
-      | `TooManyTagsException of too_many_tags_exception
-      | `ValidationException of validation_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds one or more tags to an ACM certificate. Tags are labels that you can use to identify and \
-   organize your Amazon Web Services resources. Each tag consists of a [key] and an optional \
-   [value]. You specify the certificate on input by its Amazon Resource Name (ARN). You specify \
-   the tag by using a key-value pair. \n\n\
-  \  This action applies only to the [certificate] resource type. For all other ACM resource \
-   types, use [TagResource] instead.\n\
-  \  \n\
-  \    You can apply a tag to just one certificate if you want to identify a specific \
-   characteristic of that certificate, or you can apply the same tag to multiple certificates if \
-   you want to filter for a common relationship among those certificates. Similarly, you can apply \
-   the same tag to multiple resources if you want to specify a relationship among those resources. \
-   For example, you can add the same tag to an ACM certificate and an Elastic Load Balancing load \
-   balancer to indicate that they are both used by the same website. For more information, see \
-   {{:https://docs.aws.amazon.com/acm/latest/userguide/tags.html}Tagging ACM certificates}. \n\
-  \    \n\
-  \     To remove one or more tags, use the [RemoveTagsFromCertificate] action. To view all of the \
-   tags that have been applied to the certificate, use the [ListTagsForCertificate] action. \n\
-  \     "]
-
 module CreateAcmeDomainValidation : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1713,3 +1649,67 @@ end
    Transparency Logging} and \
    {{:https://docs.aws.amazon.com/acm/latest/userguide/acm-exportable-certificates.html}Certificate \
    Manager Exportable Managed Certificates}.\n"]
+
+module AddTagsToCertificate : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InvalidArnException of invalid_arn_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `InvalidTagException of invalid_tag_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `TagPolicyException of tag_policy_exception
+    | `ThrottlingException of throttling_exception
+    | `TooManyTagsException of too_many_tags_exception
+    | `ValidationException of validation_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_certificate_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArnException of invalid_arn_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidTagException of invalid_tag_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TagPolicyException of tag_policy_exception
+      | `ThrottlingException of throttling_exception
+      | `TooManyTagsException of too_many_tags_exception
+      | `ValidationException of validation_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_to_certificate_request ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InvalidArnException of invalid_arn_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `InvalidTagException of invalid_tag_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `TagPolicyException of tag_policy_exception
+      | `ThrottlingException of throttling_exception
+      | `TooManyTagsException of too_many_tags_exception
+      | `ValidationException of validation_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds one or more tags to an ACM certificate. Tags are labels that you can use to identify and \
+   organize your Amazon Web Services resources. Each tag consists of a [key] and an optional \
+   [value]. You specify the certificate on input by its Amazon Resource Name (ARN). You specify \
+   the tag by using a key-value pair. \n\n\
+  \  This action applies only to the [certificate] resource type. For all other ACM resource \
+   types, use [TagResource] instead.\n\
+  \  \n\
+  \    You can apply a tag to just one certificate if you want to identify a specific \
+   characteristic of that certificate, or you can apply the same tag to multiple certificates if \
+   you want to filter for a common relationship among those certificates. Similarly, you can apply \
+   the same tag to multiple resources if you want to specify a relationship among those resources. \
+   For example, you can add the same tag to an ACM certificate and an Elastic Load Balancing load \
+   balancer to indicate that they are both used by the same website. For more information, see \
+   {{:https://docs.aws.amazon.com/acm/latest/userguide/tags.html}Tagging ACM certificates}. \n\
+  \    \n\
+  \     To remove one or more tags, use the [RemoveTagsFromCertificate] action. To view all of the \
+   tags that have been applied to the certificate, use the [ListTagsForCertificate] action. \n\
+  \     "]

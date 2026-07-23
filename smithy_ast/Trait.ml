@@ -20,6 +20,12 @@ type arnReferenceDetails = {
 [@@deriving show, equal]
 
 type reference = { resource : string; service : string option } [@@deriving show, equal]
+type httpTrait = { method_ : string; uri : string; code : int option } [@@deriving show, equal]
+type endpointTrait = { hostPrefix : string } [@@deriving show, equal]
+type xmlNamespaceConfig = { uri : string; prefix : string option } [@@deriving show, equal]
+
+type restXmlConfig = { http : string list; eventStreamHttp : string list; noErrorWrapping : bool }
+[@@deriving show, equal]
 
 type clientEndpointDiscoveryDetails = { operation : string; error : string }
 [@@deriving show, equal]
@@ -87,7 +93,7 @@ type httpResponseTest = {
 
 type t =
   | ApiTitleTrait of string
-  | ApiXmlNamespaceTrait of string
+  | ApiXmlNamespaceTrait of xmlNamespaceConfig
   | AuthTrait
   | AwsApiArnReferenceTrait of arnReferenceDetails
   | AwsApiClientDiscoveredEndpointTrait
@@ -111,14 +117,14 @@ type t =
   | AwsProtocolEc2QueryNameTrait of string
   | AwsProtocolEc2QueryTrait
   | AwsProtocolRestJson1Trait
-  | AwsProtocolRestXmlTrait
+  | AwsProtocolRestXmlTrait of restXmlConfig
   | AwsProtocolsHttpChecksumTrait
   | BoxTrait
   | CorsTrait
   | DefaultTrait
   | DeprecatedTrait
   | DocumentationTrait of string
-  | EndpointTrait
+  | EndpointTrait of endpointTrait
   | EnumTrait of enumPair list
   | EnumValueTrait of [ `String of string | `Int of int ]
   | ErrorTrait of errorTraitType
@@ -128,17 +134,18 @@ type t =
   | HostLabelTrait
   | HttpChecksumRequiredTrait
   | HttpErrorTrait of int
-  | HttpHeaderTrait
+  | HttpHeaderTrait of string
   | HttpLabelTrait
   | HttpPayloadTrait
   | HttpPrefixHeadersTrait of string
   | HttpQueryParams
-  | HttpQueryTrait
+  | HttpQueryTrait of string
   | HttpResponseCodeTrait
-  | HttpTrait
+  | HttpTrait of httpTrait
   | IdempotencyTokenTrait
   | IdempotentTrait
   | InputTrait
+  | InternalTrait
   | JsonNameTrait of string
   | LengthTrait of int option * int option
   | MediaTypeTrait of string
@@ -188,6 +195,106 @@ let isErrorTrait trait = match trait with ErrorTrait _ -> true | _ -> false
 let isAwsApiServiceTrait trait = match trait with ServiceTrait _ -> true | _ -> false
 let isTimestampFormatTrait trait = match trait with TimestampFormatTrait _ -> true | _ -> false
 let isIdempotencyTokenTrait trait = match trait with IdempotencyTokenTrait -> true | _ -> false
+
+(* A stable per-constructor key used by [Smaws_parse.Smithy.resolve_mixins] to
+   dedup mixin traits against a consuming shape's own traits (own wins). Two
+   traits with the same [type_key] occupy the same "slot", so a mixin's
+   [@xmlNamespace] is dropped when the consuming shape already declares one.
+   Nullary constructors share a single key; [UnspecifiedTrait] uses the trait
+   id (e.g. "smithy.api#mixin") so two unspecified traits with different ids are
+   distinct slots. *)
+let type_key (trait : t) : string =
+  match trait with
+  | ApiTitleTrait _ -> "ApiTitleTrait"
+  | ApiXmlNamespaceTrait _ -> "ApiXmlNamespaceTrait"
+  | AuthTrait -> "AuthTrait"
+  | AwsApiArnReferenceTrait _ -> "AwsApiArnReferenceTrait"
+  | AwsApiClientDiscoveredEndpointTrait -> "AwsApiClientDiscoveredEndpointTrait"
+  | AwsApiClientEndpointDiscoveryTrait _ -> "AwsApiClientEndpointDiscoveryTrait"
+  | AwsApiControlPlaneTrait -> "AwsApiControlPlaneTrait"
+  | AwsApiDataPlaneTrait -> "AwsApiDataPlaneTrait"
+  | AwsAuthSigV4Trait _ -> "AwsAuthSigV4Trait"
+  | AwsAuthUnsignedPayloadTrait -> "AwsAuthUnsignedPayloadTrait"
+  | AwsCloudFormationCfnExcludePropertyTrait -> "AwsCloudFormationCfnExcludePropertyTrait"
+  | AwsCloudFormationCfnMutabilityTrait -> "AwsCloudFormationCfnMutabilityTrait"
+  | AwsCustomizationsS3UnwrappedXmlOutputTrait -> "AwsCustomizationsS3UnwrappedXmlOutputTrait"
+  | AwsIamActionPermissionDescriptionTrait -> "AwsIamActionPermissionDescriptionTrait"
+  | AwsIamConditionKeysTrait -> "AwsIamConditionKeysTrait"
+  | AwsIamDefineConditionKeysTrait -> "AwsIamDefineConditionKeysTrait"
+  | AwsIamRequiredActionsTrait -> "AwsIamRequiredActionsTrait"
+  | AwsProtocolAwsJson1_0Trait -> "AwsProtocolAwsJson1_0Trait"
+  | AwsProtocolAwsJson1_1Trait -> "AwsProtocolAwsJson1_1Trait"
+  | AwsProtocolAwsQueryCompatibleTrait -> "AwsProtocolAwsQueryCompatibleTrait"
+  | AwsProtocolAwsQueryErrorTrait _ -> "AwsProtocolAwsQueryErrorTrait"
+  | AwsProtocolAwsQueryTrait -> "AwsProtocolAwsQueryTrait"
+  | AwsProtocolEc2QueryNameTrait _ -> "AwsProtocolEc2QueryNameTrait"
+  | AwsProtocolEc2QueryTrait -> "AwsProtocolEc2QueryTrait"
+  | AwsProtocolRestJson1Trait -> "AwsProtocolRestJson1Trait"
+  | AwsProtocolRestXmlTrait _ -> "AwsProtocolRestXmlTrait"
+  | AwsProtocolsHttpChecksumTrait -> "AwsProtocolsHttpChecksumTrait"
+  | BoxTrait -> "BoxTrait"
+  | CorsTrait -> "CorsTrait"
+  | DefaultTrait -> "DefaultTrait"
+  | DeprecatedTrait -> "DeprecatedTrait"
+  | DocumentationTrait _ -> "DocumentationTrait"
+  | EndpointTrait _ -> "EndpointTrait"
+  | EnumTrait _ -> "EnumTrait"
+  | EnumValueTrait _ -> "EnumValueTrait"
+  | ErrorTrait _ -> "ErrorTrait"
+  | EventPayloadTrait -> "EventPayloadTrait"
+  | ExamplesTrait -> "ExamplesTrait"
+  | ExternalDocumentationTrait _ -> "ExternalDocumentationTrait"
+  | HostLabelTrait -> "HostLabelTrait"
+  | HttpChecksumRequiredTrait -> "HttpChecksumRequiredTrait"
+  | HttpErrorTrait _ -> "HttpErrorTrait"
+  | HttpHeaderTrait _ -> "HttpHeaderTrait"
+  | HttpLabelTrait -> "HttpLabelTrait"
+  | HttpPayloadTrait -> "HttpPayloadTrait"
+  | HttpPrefixHeadersTrait _ -> "HttpPrefixHeadersTrait"
+  | HttpQueryParams -> "HttpQueryParams"
+  | HttpQueryTrait _ -> "HttpQueryTrait"
+  | HttpResponseCodeTrait -> "HttpResponseCodeTrait"
+  | HttpTrait _ -> "HttpTrait"
+  | IdempotencyTokenTrait -> "IdempotencyTokenTrait"
+  | IdempotentTrait -> "IdempotentTrait"
+  | InputTrait -> "InputTrait"
+  | InternalTrait -> "InternalTrait"
+  | JsonNameTrait _ -> "JsonNameTrait"
+  | LengthTrait _ -> "LengthTrait"
+  | MediaTypeTrait _ -> "MediaTypeTrait"
+  | OptionalAuthTrait -> "OptionalAuthTrait"
+  | OutputTrait -> "OutputTrait"
+  | PaginatedTrait -> "PaginatedTrait"
+  | PatternTrait _ -> "PatternTrait"
+  | RangeTrait _ -> "RangeTrait"
+  | ReadonlyTrait -> "ReadonlyTrait"
+  | ReferencesTrait _ -> "ReferencesTrait"
+  | RequiredTrait -> "RequiredTrait"
+  | RequiresLengthTrait -> "RequiresLengthTrait"
+  | RequestCompressionTrait _ -> "RequestCompressionTrait"
+  | RetryableTrait -> "RetryableTrait"
+  | RulesEndpointRuleSetTrait -> "RulesEndpointRuleSetTrait"
+  | RulesEndpointTests -> "RulesEndpointTests"
+  | RulesContextParam _ -> "RulesContextParam"
+  | RulesStaticContextParams _ -> "RulesStaticContextParams"
+  | RulesOperationContextParams _ -> "RulesOperationContextParams"
+  | SensitiveTrait -> "SensitiveTrait"
+  | ServiceTrait _ -> "ServiceTrait"
+  | SparseTrait -> "SparseTrait"
+  | StreamingTrait -> "StreamingTrait"
+  | SuppressTrait -> "SuppressTrait"
+  | TagsTrait _ -> "TagsTrait"
+  | TimestampFormatTrait _ -> "TimestampFormatTrait"
+  | TestSmokeTests -> "TestSmokeTests"
+  | TestHttpResponseTests _ -> "TestHttpResponseTests"
+  | WaitableTrait -> "WaitableTrait"
+  | XmlAttributeTrait -> "XmlAttributeTrait"
+  | XmlFlattenedTrait -> "XmlFlattenedTrait"
+  | XmlNameTrait _ -> "XmlNameTrait"
+  | PrivateTrait -> "PrivateTrait"
+  | TestHttpRequestTests _ -> "TestHttpRequestTests"
+  | IdRefTrait _ -> "IdRefTrait"
+  | UnspecifiedTrait (name, _) -> "UnspecifiedTrait(" ^ name ^ ")"
 
 let hasTrait traitsOption traitTest =
   Option.value ~default:false

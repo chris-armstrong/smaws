@@ -1,67 +1,5 @@
 open Types
 
-module CloseTunnel : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    close_tunnel_request ->
-    ( close_tunnel_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    close_tunnel_request ->
-    ( close_tunnel_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Closes a tunnel identified by the unique tunnel id. When a [CloseTunnel] request is received, \
-   we close the WebSocket connections between the client and proxy server so no data can be \
-   transmitted.\n\n\
-  \ Requires permission to access the \
-   {{:https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions}CloseTunnel} \
-   action.\n\
-  \ "]
-
-module DescribeTunnel : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_tunnel_request ->
-    ( describe_tunnel_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_tunnel_request ->
-    ( describe_tunnel_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Gets information about a tunnel identified by the unique tunnel id.\n\n\
-  \ Requires permission to access the \
-   {{:https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions}DescribeTunnel} \
-   action.\n\
-  \ "]
-
 module ListTagsForResource : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -224,3 +162,65 @@ module UntagResource : sig
     result
 end
 [@@ocaml.doc "Removes a tag from a resource.\n"]
+
+module DescribeTunnel : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_tunnel_request ->
+    ( describe_tunnel_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_tunnel_request ->
+    ( describe_tunnel_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Gets information about a tunnel identified by the unique tunnel id.\n\n\
+  \ Requires permission to access the \
+   {{:https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions}DescribeTunnel} \
+   action.\n\
+  \ "]
+
+module CloseTunnel : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    close_tunnel_request ->
+    ( close_tunnel_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    close_tunnel_request ->
+    ( close_tunnel_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Closes a tunnel identified by the unique tunnel id. When a [CloseTunnel] request is received, \
+   we close the WebSocket connections between the client and proxy server so no data can be \
+   transmitted.\n\n\
+  \ Requires permission to access the \
+   {{:https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions}CloseTunnel} \
+   action.\n\
+  \ "]

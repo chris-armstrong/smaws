@@ -39,9 +39,24 @@ Pipeline: Smithy JSON → parse → typed AST → code generation → OCaml sour
 dune build          # build everything; run after any change to verify it compiles
 dune fmt            # always format after build as build changes source code style
 ```
-
 All build artefacts are under `_build/default/`, mirroring the source layout.
 The generator binary is at `_build/default/bin/AwsGenerator.exe`.
+
+### Dune invocation rules (important)
+
+- **Always run `dune` with a tool-call timeout** (e.g. 300s for `dune build`, 600s
+  for `dune runtest`). A dune invocation that loses its tool call can leave a
+  process holding `_build/.lock`, blocking all later builds.
+- **Before invoking `dune`, check for a held lock / runaway process**:
+  ```sh
+  pgrep -fa dune | grep -v 'bash -c'   # confirm nothing is running
+  ls _build/.lock 2>/dev/null && echo "lock present"
+  rm -f _build/.lock                   # only if no dune is actually running
+  ```
+  `A running dune instance has locked the build directory` means either a
+  `dune build --watch` is live (check its output, don't kill it) or a stale
+  lock from an aborted/crashed process — only remove the lock when `pgrep`
+  confirms no dune is running.
 
 ---
 

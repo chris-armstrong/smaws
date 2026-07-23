@@ -1,622 +1,5 @@
 open Types
 
-module AddInstanceFleet : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_instance_fleet_input ->
-    ( add_instance_fleet_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_instance_fleet_input ->
-    ( add_instance_fleet_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds an instance fleet to a running cluster.\n\n\
-  \  The instance fleet configuration is available only in Amazon EMR releases 4.8.0 and later, \
-   excluding 5.0.x.\n\
-  \  \n\
-  \   "]
-
-module AddInstanceGroups : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_instance_groups_input ->
-    ( add_instance_groups_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_instance_groups_input ->
-    ( add_instance_groups_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Adds one or more instance groups to a running cluster.\n"]
-
-module AddJobFlowSteps : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_job_flow_steps_input ->
-    ( add_job_flow_steps_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_job_flow_steps_input ->
-    ( add_job_flow_steps_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "AddJobFlowSteps adds new steps to a running cluster. A maximum of 256 steps are allowed in each \
-   job flow.\n\n\
-  \ If your cluster is long-running (such as a Hive data warehouse) or complex, you may require \
-   more than 256 steps to process your data. You can bypass the 256-step limitation in various \
-   ways, including using SSH to connect to the master node and submitting queries directly to the \
-   software running on the master node, such as Hive and Hadoop.\n\
-  \ \n\
-  \  A step specifies the location of a JAR file stored either on the master node of the cluster \
-   or in Amazon S3. Each step is performed by the main function of the main class of the JAR file. \
-   The main class can be specified either in the manifest of the JAR or by using the MainFunction \
-   parameter of the step.\n\
-  \  \n\
-  \   Amazon EMR executes each step in the order listed. For a step to be considered complete, the \
-   main function must exit with a zero exit code and all Hadoop jobs started while the step was \
-   running must have completed and run successfully.\n\
-  \   \n\
-  \    You can only add steps to a cluster that is in one of the following states: STARTING, \
-   BOOTSTRAPPING, RUNNING, or WAITING.\n\
-  \    \n\
-  \      The string values passed into [HadoopJarStep] object cannot exceed a total of 10240 \
-   characters.\n\
-  \      \n\
-  \       "]
-
-module AddTags : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_input ->
-    ( add_tags_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    add_tags_input ->
-    ( add_tags_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Adds tags to an Amazon EMR resource, such as a cluster or an Amazon EMR Studio. Tags make it \
-   easier to associate resources in various ways, such as grouping clusters to track your Amazon \
-   EMR resource allocation costs. For more information, see \
-   {{:https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-tags.html}Tag Clusters}. \n"]
-
-module CancelSteps : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    cancel_steps_input ->
-    ( cancel_steps_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    cancel_steps_input ->
-    ( cancel_steps_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Cancels a pending step or steps in a running cluster. Available only in Amazon EMR versions \
-   4.8.0 and later, excluding version 5.0.0. A maximum of 256 steps are allowed in each \
-   CancelSteps request. CancelSteps is idempotent but asynchronous; it does not guarantee that a \
-   step will be canceled, even if the request is successfully submitted. When you use Amazon EMR \
-   releases 5.28.0 and later, you can cancel steps that are in a [PENDING] or [RUNNING] state. In \
-   earlier versions of Amazon EMR, you can only cancel steps that are in a [PENDING] state. \n"]
-
-module CreatePersistentAppUI : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_persistent_app_ui_input ->
-    ( create_persistent_app_ui_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_persistent_app_ui_input ->
-    ( create_persistent_app_ui_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Creates a persistent application user interface.\n"]
-
-module CreateSecurityConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_security_configuration_input ->
-    ( create_security_configuration_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_security_configuration_input ->
-    ( create_security_configuration_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Creates a security configuration, which is stored in the service and can be specified when a \
-   cluster is created.\n"]
-
-module CreateStudio : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_studio_input ->
-    ( create_studio_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_studio_input ->
-    ( create_studio_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Creates a new Amazon EMR Studio.\n"]
-
-module CreateStudioSessionMapping : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    create_studio_session_mapping_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    create_studio_session_mapping_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Maps a user or group to the Amazon EMR Studio specified by [StudioId], and applies a session \
-   policy to refine Studio permissions for that user or group. Use [CreateStudioSessionMapping] to \
-   assign users to a Studio when you use IAM Identity Center authentication. For instructions on \
-   how to assign users to a Studio when you use IAM authentication, see \
-   {{:https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-studio-manage-users.html#emr-studio-assign-users-groups}Assign \
-   a user or group to your EMR Studio}.\n"]
-
-module DeleteSecurityConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_security_configuration_input ->
-    ( delete_security_configuration_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_security_configuration_input ->
-    ( delete_security_configuration_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Deletes a security configuration.\n"]
-
-module DeleteStudio : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_studio_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_studio_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Removes an Amazon EMR Studio from the Studio metadata store.\n"]
-
-module DeleteStudioSessionMapping : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_studio_session_mapping_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_studio_session_mapping_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Removes a user or group from an Amazon EMR Studio.\n"]
-
-module DescribeCluster : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_cluster_input ->
-    ( describe_cluster_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_cluster_input ->
-    ( describe_cluster_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides cluster-level details including status, hardware and software configuration, VPC \
-   settings, and so on.\n"]
-
-module DescribeJobFlows : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_job_flows_input ->
-    ( describe_job_flows_output,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_job_flows_input ->
-    ( describe_job_flows_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "This API is no longer supported and will eventually be removed. We recommend you use \
-   [ListClusters], [DescribeCluster], [ListSteps], [ListInstanceGroups] and [ListBootstrapActions] \
-   instead.\n\n\
-  \ DescribeJobFlows returns a list of job flows that match all of the supplied parameters. The \
-   parameters can include a list of job flow IDs, job flow states, and restrictions on job flow \
-   creation date and time.\n\
-  \ \n\
-  \  Regardless of supplied parameters, only job flows created within the last two months are \
-   returned.\n\
-  \  \n\
-  \   If no parameters are supplied, then job flows matching either of the following criteria are \
-   returned:\n\
-  \   \n\
-  \    {ul\n\
-  \          {-  Job flows created and completed in the last two weeks\n\
-  \              \n\
-  \               }\n\
-  \          {-   Job flows created within the last two months that are in one of the following \
-   states: [RUNNING], [WAITING], [SHUTTING_DOWN], [STARTING] \n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \   Amazon EMR can return a maximum of 512 job flow descriptions.\n\
-  \   "]
-
-module DescribeNotebookExecution : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_notebook_execution_input ->
-    ( describe_notebook_execution_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_notebook_execution_input ->
-    ( describe_notebook_execution_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Provides details of a notebook execution.\n"]
-
-module DescribePersistentAppUI : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_persistent_app_ui_input ->
-    ( describe_persistent_app_ui_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_persistent_app_ui_input ->
-    ( describe_persistent_app_ui_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Describes a persistent application user interface.\n"]
-
-module DescribeReleaseLabel : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_release_label_input ->
-    ( describe_release_label_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_release_label_input ->
-    ( describe_release_label_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides Amazon EMR release label details, such as the releases available the Region where the \
-   API request is run, and the available applications for a specific Amazon EMR release label. Can \
-   also list Amazon EMR releases that support a specified version of Spark.\n"]
-
-module DescribeSecurityConfiguration : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_security_configuration_input ->
-    ( describe_security_configuration_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_security_configuration_input ->
-    ( describe_security_configuration_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Provides the details of a security configuration by returning the configuration JSON.\n"]
-
-module DescribeStep : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_step_input ->
-    ( describe_step_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_step_input ->
-    ( describe_step_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Provides more detail about the cluster step.\n"]
-
-module DescribeStudio : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerException of internal_server_exception
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_studio_input ->
-    ( describe_studio_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_studio_input ->
-    ( describe_studio_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerException of internal_server_exception
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns details for the specified Amazon EMR Studio including ID, Name, VPC, Studio access URL, \
-   and so on.\n"]
-
 module GetAutoTerminationPolicy : sig
   val error_to_string : [ | Smaws_Lib.Protocols.AwsJson.error ] -> string
 
@@ -1166,36 +549,6 @@ end
    steps using the CLI, specify a [Marker], which is a pagination token that indicates the next \
    set of steps to retrieve.\n"]
 
-module ListStudioSessionMappings : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `InternalServerError of internal_server_error
-    | `InvalidRequestException of invalid_request_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_studio_session_mappings_input ->
-    ( list_studio_session_mappings_output,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidRequestException of invalid_request_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_studio_session_mappings_input ->
-    ( list_studio_session_mappings_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `InternalServerError of internal_server_error
-      | `InvalidRequestException of invalid_request_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns a list of all user or group session mappings for the Amazon EMR Studio specified by \
-   [StudioId].\n"]
-
 module ListStudios : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -1225,6 +578,36 @@ end
 [@@ocaml.doc
   "Returns a list of all Amazon EMR Studios associated with the Amazon Web Services account. The \
    list includes details such as ID, Studio Access URL, and creation time for each Studio.\n"]
+
+module ListStudioSessionMappings : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_studio_session_mappings_input ->
+    ( list_studio_session_mappings_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_studio_session_mappings_input ->
+    ( list_studio_session_mappings_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns a list of all user or group session mappings for the Amazon EMR Studio specified by \
+   [StudioId].\n"]
 
 module ListSupportedInstanceTypes : sig
   val error_to_string :
@@ -1925,3 +1308,620 @@ module UpdateStudioSessionMapping : sig
 end
 [@@ocaml.doc
   "Updates the session policy attached to the user or group for the specified Amazon EMR Studio.\n"]
+
+module DescribeStudio : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_studio_input ->
+    ( describe_studio_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_studio_input ->
+    ( describe_studio_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns details for the specified Amazon EMR Studio including ID, Name, VPC, Studio access URL, \
+   and so on.\n"]
+
+module DescribeStep : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_step_input ->
+    ( describe_step_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_step_input ->
+    ( describe_step_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Provides more detail about the cluster step.\n"]
+
+module DescribeSecurityConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_security_configuration_input ->
+    ( describe_security_configuration_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_security_configuration_input ->
+    ( describe_security_configuration_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides the details of a security configuration by returning the configuration JSON.\n"]
+
+module DescribeReleaseLabel : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_release_label_input ->
+    ( describe_release_label_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_release_label_input ->
+    ( describe_release_label_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides Amazon EMR release label details, such as the releases available the Region where the \
+   API request is run, and the available applications for a specific Amazon EMR release label. Can \
+   also list Amazon EMR releases that support a specified version of Spark.\n"]
+
+module DescribePersistentAppUI : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_persistent_app_ui_input ->
+    ( describe_persistent_app_ui_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_persistent_app_ui_input ->
+    ( describe_persistent_app_ui_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Describes a persistent application user interface.\n"]
+
+module DescribeNotebookExecution : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_notebook_execution_input ->
+    ( describe_notebook_execution_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_notebook_execution_input ->
+    ( describe_notebook_execution_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Provides details of a notebook execution.\n"]
+
+module DescribeJobFlows : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_job_flows_input ->
+    ( describe_job_flows_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_job_flows_input ->
+    ( describe_job_flows_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "This API is no longer supported and will eventually be removed. We recommend you use \
+   [ListClusters], [DescribeCluster], [ListSteps], [ListInstanceGroups] and [ListBootstrapActions] \
+   instead.\n\n\
+  \ DescribeJobFlows returns a list of job flows that match all of the supplied parameters. The \
+   parameters can include a list of job flow IDs, job flow states, and restrictions on job flow \
+   creation date and time.\n\
+  \ \n\
+  \  Regardless of supplied parameters, only job flows created within the last two months are \
+   returned.\n\
+  \  \n\
+  \   If no parameters are supplied, then job flows matching either of the following criteria are \
+   returned:\n\
+  \   \n\
+  \    {ul\n\
+  \          {-  Job flows created and completed in the last two weeks\n\
+  \              \n\
+  \               }\n\
+  \          {-   Job flows created within the last two months that are in one of the following \
+   states: [RUNNING], [WAITING], [SHUTTING_DOWN], [STARTING] \n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \   Amazon EMR can return a maximum of 512 job flow descriptions.\n\
+  \   "]
+
+module DescribeCluster : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_cluster_input ->
+    ( describe_cluster_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_cluster_input ->
+    ( describe_cluster_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Provides cluster-level details including status, hardware and software configuration, VPC \
+   settings, and so on.\n"]
+
+module DeleteStudioSessionMapping : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_studio_session_mapping_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_studio_session_mapping_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Removes a user or group from an Amazon EMR Studio.\n"]
+
+module DeleteStudio : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_studio_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_studio_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Removes an Amazon EMR Studio from the Studio metadata store.\n"]
+
+module DeleteSecurityConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_security_configuration_input ->
+    ( delete_security_configuration_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_security_configuration_input ->
+    ( delete_security_configuration_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Deletes a security configuration.\n"]
+
+module CreateStudioSessionMapping : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_studio_session_mapping_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_studio_session_mapping_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Maps a user or group to the Amazon EMR Studio specified by [StudioId], and applies a session \
+   policy to refine Studio permissions for that user or group. Use [CreateStudioSessionMapping] to \
+   assign users to a Studio when you use IAM Identity Center authentication. For instructions on \
+   how to assign users to a Studio when you use IAM authentication, see \
+   {{:https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-studio-manage-users.html#emr-studio-assign-users-groups}Assign \
+   a user or group to your EMR Studio}.\n"]
+
+module CreateStudio : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_studio_input ->
+    ( create_studio_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_studio_input ->
+    ( create_studio_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Creates a new Amazon EMR Studio.\n"]
+
+module CreateSecurityConfiguration : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_security_configuration_input ->
+    ( create_security_configuration_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_security_configuration_input ->
+    ( create_security_configuration_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Creates a security configuration, which is stored in the service and can be specified when a \
+   cluster is created.\n"]
+
+module CreatePersistentAppUI : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    create_persistent_app_ui_input ->
+    ( create_persistent_app_ui_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    create_persistent_app_ui_input ->
+    ( create_persistent_app_ui_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Creates a persistent application user interface.\n"]
+
+module CancelSteps : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerError of internal_server_error
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_steps_input ->
+    ( cancel_steps_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    cancel_steps_input ->
+    ( cancel_steps_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerError of internal_server_error
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Cancels a pending step or steps in a running cluster. Available only in Amazon EMR versions \
+   4.8.0 and later, excluding version 5.0.0. A maximum of 256 steps are allowed in each \
+   CancelSteps request. CancelSteps is idempotent but asynchronous; it does not guarantee that a \
+   step will be canceled, even if the request is successfully submitted. When you use Amazon EMR \
+   releases 5.28.0 and later, you can cancel steps that are in a [PENDING] or [RUNNING] state. In \
+   earlier versions of Amazon EMR, you can only cancel steps that are in a [PENDING] state. \n"]
+
+module AddTags : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_input ->
+    ( add_tags_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_tags_input ->
+    ( add_tags_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds tags to an Amazon EMR resource, such as a cluster or an Amazon EMR Studio. Tags make it \
+   easier to associate resources in various ways, such as grouping clusters to track your Amazon \
+   EMR resource allocation costs. For more information, see \
+   {{:https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-tags.html}Tag Clusters}. \n"]
+
+module AddJobFlowSteps : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_job_flow_steps_input ->
+    ( add_job_flow_steps_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_job_flow_steps_input ->
+    ( add_job_flow_steps_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "AddJobFlowSteps adds new steps to a running cluster. A maximum of 256 steps are allowed in each \
+   job flow.\n\n\
+  \ If your cluster is long-running (such as a Hive data warehouse) or complex, you may require \
+   more than 256 steps to process your data. You can bypass the 256-step limitation in various \
+   ways, including using SSH to connect to the master node and submitting queries directly to the \
+   software running on the master node, such as Hive and Hadoop.\n\
+  \ \n\
+  \  A step specifies the location of a JAR file stored either on the master node of the cluster \
+   or in Amazon S3. Each step is performed by the main function of the main class of the JAR file. \
+   The main class can be specified either in the manifest of the JAR or by using the MainFunction \
+   parameter of the step.\n\
+  \  \n\
+  \   Amazon EMR executes each step in the order listed. For a step to be considered complete, the \
+   main function must exit with a zero exit code and all Hadoop jobs started while the step was \
+   running must have completed and run successfully.\n\
+  \   \n\
+  \    You can only add steps to a cluster that is in one of the following states: STARTING, \
+   BOOTSTRAPPING, RUNNING, or WAITING.\n\
+  \    \n\
+  \      The string values passed into [HadoopJarStep] object cannot exceed a total of 10240 \
+   characters.\n\
+  \      \n\
+  \       "]
+
+module AddInstanceGroups : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_instance_groups_input ->
+    ( add_instance_groups_output,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_instance_groups_input ->
+    ( add_instance_groups_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error | `InternalServerError of internal_server_error ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Adds one or more instance groups to a running cluster.\n"]
+
+module AddInstanceFleet : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `InternalServerException of internal_server_exception
+    | `InvalidRequestException of invalid_request_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    add_instance_fleet_input ->
+    ( add_instance_fleet_output,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    add_instance_fleet_input ->
+    ( add_instance_fleet_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `InternalServerException of internal_server_exception
+      | `InvalidRequestException of invalid_request_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Adds an instance fleet to a running cluster.\n\n\
+  \  The instance fleet configuration is available only in Amazon EMR releases 4.8.0 and later, \
+   excluding 5.0.x.\n\
+  \  \n\
+  \   "]

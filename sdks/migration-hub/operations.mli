@@ -743,48 +743,6 @@ module ListDiscoveredResources : sig
 end
 [@@ocaml.doc "Lists discovered resources associated with the given [MigrationTask].\n"]
 
-module ListMigrationTaskUpdates : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `AccessDeniedException of access_denied_exception
-    | `InternalServerError of internal_server_error
-    | `InvalidInputException of invalid_input_exception
-    | `ResourceNotFoundException of resource_not_found_exception
-    | `ServiceUnavailableException of service_unavailable_exception
-    | `ThrottlingException of throttling_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_migration_task_updates_request ->
-    ( list_migration_task_updates_result,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidInputException of invalid_input_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_migration_task_updates_request ->
-    ( list_migration_task_updates_result Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `AccessDeniedException of access_denied_exception
-      | `InternalServerError of internal_server_error
-      | `InvalidInputException of invalid_input_exception
-      | `ResourceNotFoundException of resource_not_found_exception
-      | `ServiceUnavailableException of service_unavailable_exception
-      | `ThrottlingException of throttling_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "This is a paginated API that returns all the migration-task states for the specified \
-   [MigrationTaskName] and [ProgressUpdateStream].\n"]
-
 module ListMigrationTasks : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -845,6 +803,48 @@ end
   \            }\n\
   \       }\n\
   \  "]
+
+module ListMigrationTaskUpdates : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `AccessDeniedException of access_denied_exception
+    | `InternalServerError of internal_server_error
+    | `InvalidInputException of invalid_input_exception
+    | `ResourceNotFoundException of resource_not_found_exception
+    | `ServiceUnavailableException of service_unavailable_exception
+    | `ThrottlingException of throttling_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_migration_task_updates_request ->
+    ( list_migration_task_updates_result,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidInputException of invalid_input_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceUnavailableException of service_unavailable_exception
+      | `ThrottlingException of throttling_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_migration_task_updates_request ->
+    ( list_migration_task_updates_result Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `AccessDeniedException of access_denied_exception
+      | `InternalServerError of internal_server_error
+      | `InvalidInputException of invalid_input_exception
+      | `ResourceNotFoundException of resource_not_found_exception
+      | `ServiceUnavailableException of service_unavailable_exception
+      | `ThrottlingException of throttling_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "This is a paginated API that returns all the migration-task states for the specified \
+   [MigrationTaskName] and [ProgressUpdateStream].\n"]
 
 module ListProgressUpdateStreams : sig
   val error_to_string :

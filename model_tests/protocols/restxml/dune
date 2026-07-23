@@ -1,0 +1,57 @@
+(rule
+ (mode promote)
+ (targets
+  builders.ml
+  builders.mli
+  restxml.ml
+  xml_deserializers.ml
+  xml_serializers.ml
+  operations.ml
+  protocol_tests.ml
+  service.ml
+  service_metadata.ml
+  service_metadata.mli
+  types.ml
+  types.mli)
+ (deps
+  (:gen ../../gen.exe)
+  (:input ../../../smithy-aws-protocol-tests_model.json)
+  (:ocf %{bin:ocamlformat}))
+ (action
+  (progn
+   (run %{gen} %{input} . aws.protocoltests.restxml)
+   (run
+    %{ocf}
+    -i
+    builders.ml
+    builders.mli
+    restxml.ml
+    xml_deserializers.ml
+    xml_serializers.ml
+    operations.ml
+    protocol_tests.ml
+    service.ml
+    service_metadata.ml
+    service_metadata.mli
+    types.ml
+    types.mli))))
+
+(library
+ (name restxml)
+ (modules
+  builders
+  restxml
+  operations
+  service
+  service_metadata
+  types
+  xml_deserializers
+  xml_serializers)
+ (preprocess
+  (pps ppx_deriving.show ppx_deriving.eq))
+ (libraries Smaws_Lib shared))
+
+(test
+ (name protocol_tests)
+ (modules protocol_tests)
+ (libraries Smaws_Lib Smaws_Test_Support_Lib alcotest restxml eio_main))

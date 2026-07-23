@@ -3,284 +3,6 @@ open Service_metadata
 open Query_deserializers
 open Query_serializers
 
-module AddRoleToDBCluster = struct
-  let error_to_string = function
-    | `DBClusterNotFoundFault _ -> "com.amazonaws.rds#DBClusterNotFoundFault"
-    | `DBClusterRoleAlreadyExistsFault _ -> "com.amazonaws.rds#DBClusterRoleAlreadyExistsFault"
-    | `DBClusterRoleQuotaExceededFault _ -> "com.amazonaws.rds#DBClusterRoleQuotaExceededFault"
-    | `InvalidDBClusterStateFault _ -> "com.amazonaws.rds#InvalidDBClusterStateFault"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "DBClusterNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_cluster_not_found_fault_of_xml
-        with
-        | Ok s -> `DBClusterNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "DBClusterRoleAlreadyExists" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_cluster_role_already_exists_fault_of_xml
-        with
-        | Ok s -> `DBClusterRoleAlreadyExistsFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "DBClusterRoleQuotaExceeded" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_cluster_role_quota_exceeded_fault_of_xml
-        with
-        | Ok s -> `DBClusterRoleQuotaExceededFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidDBClusterStateFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_db_cluster_state_fault_of_xml
-        with
-        | Ok s -> `InvalidDBClusterStateFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : add_role_to_db_cluster_message) =
-    let fields = add_role_to_db_cluster_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddRoleToDBCluster"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-
-  let request_with_metadata context (request : add_role_to_db_cluster_message) =
-    let fields = add_role_to_db_cluster_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddRoleToDBCluster"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-end
-
-module AddRoleToDBInstance = struct
-  let error_to_string = function
-    | `DBInstanceNotFoundFault _ -> "com.amazonaws.rds#DBInstanceNotFoundFault"
-    | `DBInstanceRoleAlreadyExistsFault _ -> "com.amazonaws.rds#DBInstanceRoleAlreadyExistsFault"
-    | `DBInstanceRoleQuotaExceededFault _ -> "com.amazonaws.rds#DBInstanceRoleQuotaExceededFault"
-    | `InvalidDBInstanceStateFault _ -> "com.amazonaws.rds#InvalidDBInstanceStateFault"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "DBInstanceNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_instance_not_found_fault_of_xml
-        with
-        | Ok s -> `DBInstanceNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "DBInstanceRoleAlreadyExists" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_instance_role_already_exists_fault_of_xml
-        with
-        | Ok s -> `DBInstanceRoleAlreadyExistsFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "DBInstanceRoleQuotaExceeded" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_instance_role_quota_exceeded_fault_of_xml
-        with
-        | Ok s -> `DBInstanceRoleQuotaExceededFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidDBInstanceState" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_db_instance_state_fault_of_xml
-        with
-        | Ok s -> `InvalidDBInstanceStateFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : add_role_to_db_instance_message) =
-    let fields = add_role_to_db_instance_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddRoleToDBInstance"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-
-  let request_with_metadata context (request : add_role_to_db_instance_message) =
-    let fields = add_role_to_db_instance_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddRoleToDBInstance"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-end
-
-module AddSourceIdentifierToSubscription = struct
-  let error_to_string = function
-    | `SourceNotFoundFault _ -> "com.amazonaws.rds#SourceNotFoundFault"
-    | `SubscriptionNotFoundFault _ -> "com.amazonaws.rds#SubscriptionNotFoundFault"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "SourceNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:source_not_found_fault_of_xml
-        with
-        | Ok s -> `SourceNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "SubscriptionNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:subscription_not_found_fault_of_xml
-        with
-        | Ok s -> `SubscriptionNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : add_source_identifier_to_subscription_message) =
-    let fields = add_source_identifier_to_subscription_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddSourceIdentifierToSubscription"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:add_source_identifier_to_subscription_result_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : add_source_identifier_to_subscription_message) =
-    let fields = add_source_identifier_to_subscription_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddSourceIdentifierToSubscription"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:add_source_identifier_to_subscription_result_of_xml ~error_deserializer
-end
-
-module AddTagsToResource = struct
-  let error_to_string = function
-    | `BlueGreenDeploymentNotFoundFault _ -> "com.amazonaws.rds#BlueGreenDeploymentNotFoundFault"
-    | `DBClusterNotFoundFault _ -> "com.amazonaws.rds#DBClusterNotFoundFault"
-    | `DBInstanceNotFoundFault _ -> "com.amazonaws.rds#DBInstanceNotFoundFault"
-    | `DBProxyEndpointNotFoundFault _ -> "com.amazonaws.rds#DBProxyEndpointNotFoundFault"
-    | `DBProxyNotFoundFault _ -> "com.amazonaws.rds#DBProxyNotFoundFault"
-    | `DBProxyTargetGroupNotFoundFault _ -> "com.amazonaws.rds#DBProxyTargetGroupNotFoundFault"
-    | `DBShardGroupNotFoundFault _ -> "com.amazonaws.rds#DBShardGroupNotFoundFault"
-    | `DBSnapshotNotFoundFault _ -> "com.amazonaws.rds#DBSnapshotNotFoundFault"
-    | `DBSnapshotTenantDatabaseNotFoundFault _ ->
-        "com.amazonaws.rds#DBSnapshotTenantDatabaseNotFoundFault"
-    | `IntegrationNotFoundFault _ -> "com.amazonaws.rds#IntegrationNotFoundFault"
-    | `InvalidDBClusterEndpointStateFault _ ->
-        "com.amazonaws.rds#InvalidDBClusterEndpointStateFault"
-    | `InvalidDBClusterStateFault _ -> "com.amazonaws.rds#InvalidDBClusterStateFault"
-    | `InvalidDBInstanceStateFault _ -> "com.amazonaws.rds#InvalidDBInstanceStateFault"
-    | `TenantDatabaseNotFoundFault _ -> "com.amazonaws.rds#TenantDatabaseNotFoundFault"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "BlueGreenDeploymentNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:blue_green_deployment_not_found_fault_of_xml
-        with
-        | Ok s -> `BlueGreenDeploymentNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "DBClusterNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_cluster_not_found_fault_of_xml
-        with
-        | Ok s -> `DBClusterNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "DBInstanceNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_instance_not_found_fault_of_xml
-        with
-        | Ok s -> `DBInstanceNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "DBProxyEndpointNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_proxy_endpoint_not_found_fault_of_xml
-        with
-        | Ok s -> `DBProxyEndpointNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "DBProxyNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_proxy_not_found_fault_of_xml
-        with
-        | Ok s -> `DBProxyNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "DBProxyTargetGroupNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_proxy_target_group_not_found_fault_of_xml
-        with
-        | Ok s -> `DBProxyTargetGroupNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "DBShardGroupNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_shard_group_not_found_fault_of_xml
-        with
-        | Ok s -> `DBShardGroupNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "DBSnapshotNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_snapshot_not_found_fault_of_xml
-        with
-        | Ok s -> `DBSnapshotNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "DBSnapshotTenantDatabaseNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_snapshot_tenant_database_not_found_fault_of_xml
-        with
-        | Ok s -> `DBSnapshotTenantDatabaseNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "IntegrationNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:integration_not_found_fault_of_xml
-        with
-        | Ok s -> `IntegrationNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidDBClusterEndpointStateFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_db_cluster_endpoint_state_fault_of_xml
-        with
-        | Ok s -> `InvalidDBClusterEndpointStateFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidDBClusterStateFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_db_cluster_state_fault_of_xml
-        with
-        | Ok s -> `InvalidDBClusterStateFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "InvalidDBInstanceState" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:invalid_db_instance_state_fault_of_xml
-        with
-        | Ok s -> `InvalidDBInstanceStateFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | "TenantDatabaseNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:tenant_database_not_found_fault_of_xml
-        with
-        | Ok s -> `TenantDatabaseNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : add_tags_to_resource_message) =
-    let fields = add_tags_to_resource_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddTagsToResource"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-
-  let request_with_metadata context (request : add_tags_to_resource_message) =
-    let fields = add_tags_to_resource_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddTagsToResource"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
-end
-
 module ApplyPendingMaintenanceAction = struct
   let error_to_string = function
     | `InvalidDBClusterStateFault _ -> "com.amazonaws.rds#InvalidDBClusterStateFault"
@@ -3666,6 +3388,35 @@ module DescribeDBClusterParameters = struct
       ~output_deserializer:db_cluster_parameter_group_details_of_xml ~error_deserializer
 end
 
+module DescribeDBClusters = struct
+  let error_to_string = function
+    | `DBClusterNotFoundFault _ -> "com.amazonaws.rds#DBClusterNotFoundFault"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "DBClusterNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_cluster_not_found_fault_of_xml
+        with
+        | Ok s -> `DBClusterNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : describe_db_clusters_message) =
+    let fields = describe_db_clusters_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeDBClusters"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:db_cluster_message_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : describe_db_clusters_message) =
+    let fields = describe_db_clusters_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeDBClusters"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:db_cluster_message_of_xml ~error_deserializer
+end
+
 module DescribeDBClusterSnapshotAttributes = struct
   let error_to_string = function
     | `DBClusterSnapshotNotFoundFault _ -> "com.amazonaws.rds#DBClusterSnapshotNotFoundFault"
@@ -3722,35 +3473,6 @@ module DescribeDBClusterSnapshots = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeDBClusterSnapshots"
       ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
       ~output_deserializer:db_cluster_snapshot_message_of_xml ~error_deserializer
-end
-
-module DescribeDBClusters = struct
-  let error_to_string = function
-    | `DBClusterNotFoundFault _ -> "com.amazonaws.rds#DBClusterNotFoundFault"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "DBClusterNotFoundFault" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_cluster_not_found_fault_of_xml
-        with
-        | Ok s -> `DBClusterNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : describe_db_clusters_message) =
-    let fields = describe_db_clusters_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeDBClusters"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:db_cluster_message_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : describe_db_clusters_message) =
-    let fields = describe_db_clusters_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeDBClusters"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:db_cluster_message_of_xml ~error_deserializer
 end
 
 module DescribeDBEngineVersions = struct
@@ -4223,35 +3945,6 @@ module DescribeDBSnapshotAttributes = struct
       ~output_deserializer:describe_db_snapshot_attributes_result_of_xml ~error_deserializer
 end
 
-module DescribeDBSnapshotTenantDatabases = struct
-  let error_to_string = function
-    | `DBSnapshotNotFoundFault _ -> "com.amazonaws.rds#DBSnapshotNotFoundFault"
-    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
-    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
-    | "DBSnapshotNotFound" -> (
-        match
-          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
-            ~structParser:db_snapshot_not_found_fault_of_xml
-        with
-        | Ok s -> `DBSnapshotNotFoundFault s
-        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
-    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : describe_db_snapshot_tenant_databases_message) =
-    let fields = describe_db_snapshot_tenant_databases_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeDBSnapshotTenantDatabases"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:db_snapshot_tenant_databases_message_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : describe_db_snapshot_tenant_databases_message) =
-    let fields = describe_db_snapshot_tenant_databases_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeDBSnapshotTenantDatabases"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:db_snapshot_tenant_databases_message_of_xml ~error_deserializer
-end
-
 module DescribeDBSnapshots = struct
   let error_to_string = function
     | `DBSnapshotNotFoundFault _ -> "com.amazonaws.rds#DBSnapshotNotFoundFault"
@@ -4279,6 +3972,35 @@ module DescribeDBSnapshots = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeDBSnapshots"
       ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
       ~output_deserializer:db_snapshot_message_of_xml ~error_deserializer
+end
+
+module DescribeDBSnapshotTenantDatabases = struct
+  let error_to_string = function
+    | `DBSnapshotNotFoundFault _ -> "com.amazonaws.rds#DBSnapshotNotFoundFault"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "DBSnapshotNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_snapshot_not_found_fault_of_xml
+        with
+        | Ok s -> `DBSnapshotNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : describe_db_snapshot_tenant_databases_message) =
+    let fields = describe_db_snapshot_tenant_databases_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeDBSnapshotTenantDatabases"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:db_snapshot_tenant_databases_message_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : describe_db_snapshot_tenant_databases_message) =
+    let fields = describe_db_snapshot_tenant_databases_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeDBSnapshotTenantDatabases"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:db_snapshot_tenant_databases_message_of_xml ~error_deserializer
 end
 
 module DescribeDBSubnetGroups = struct
@@ -4370,6 +4092,25 @@ module DescribeEventCategories = struct
       ~output_deserializer:event_categories_message_of_xml ~error_deserializer
 end
 
+module DescribeEvents = struct
+  let error_to_string = Smaws_Lib.Protocols.AwsQuery.error_to_string
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body:_ =
+    Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : describe_events_message) =
+    let fields = describe_events_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeEvents"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:events_message_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : describe_events_message) =
+    let fields = describe_events_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeEvents"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:events_message_of_xml ~error_deserializer
+end
+
 module DescribeEventSubscriptions = struct
   let error_to_string = function
     | `SubscriptionNotFoundFault _ -> "com.amazonaws.rds#SubscriptionNotFoundFault"
@@ -4397,25 +4138,6 @@ module DescribeEventSubscriptions = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeEventSubscriptions"
       ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
       ~output_deserializer:event_subscriptions_message_of_xml ~error_deserializer
-end
-
-module DescribeEvents = struct
-  let error_to_string = Smaws_Lib.Protocols.AwsQuery.error_to_string
-
-  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body:_ =
-    Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
-
-  let request context (request : describe_events_message) =
-    let fields = describe_events_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request ~action:"DescribeEvents"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:events_message_of_xml ~error_deserializer
-
-  let request_with_metadata context (request : describe_events_message) =
-    let fields = describe_events_message_to_query [] request in
-    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"DescribeEvents"
-      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
-      ~output_deserializer:events_message_of_xml ~error_deserializer
 end
 
 module DescribeExportTasks = struct
@@ -9245,4 +8967,282 @@ module SwitchoverReadReplica = struct
     Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"SwitchoverReadReplica"
       ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
       ~output_deserializer:switchover_read_replica_result_of_xml ~error_deserializer
+end
+
+module AddTagsToResource = struct
+  let error_to_string = function
+    | `BlueGreenDeploymentNotFoundFault _ -> "com.amazonaws.rds#BlueGreenDeploymentNotFoundFault"
+    | `DBClusterNotFoundFault _ -> "com.amazonaws.rds#DBClusterNotFoundFault"
+    | `DBInstanceNotFoundFault _ -> "com.amazonaws.rds#DBInstanceNotFoundFault"
+    | `DBProxyEndpointNotFoundFault _ -> "com.amazonaws.rds#DBProxyEndpointNotFoundFault"
+    | `DBProxyNotFoundFault _ -> "com.amazonaws.rds#DBProxyNotFoundFault"
+    | `DBProxyTargetGroupNotFoundFault _ -> "com.amazonaws.rds#DBProxyTargetGroupNotFoundFault"
+    | `DBShardGroupNotFoundFault _ -> "com.amazonaws.rds#DBShardGroupNotFoundFault"
+    | `DBSnapshotNotFoundFault _ -> "com.amazonaws.rds#DBSnapshotNotFoundFault"
+    | `DBSnapshotTenantDatabaseNotFoundFault _ ->
+        "com.amazonaws.rds#DBSnapshotTenantDatabaseNotFoundFault"
+    | `IntegrationNotFoundFault _ -> "com.amazonaws.rds#IntegrationNotFoundFault"
+    | `InvalidDBClusterEndpointStateFault _ ->
+        "com.amazonaws.rds#InvalidDBClusterEndpointStateFault"
+    | `InvalidDBClusterStateFault _ -> "com.amazonaws.rds#InvalidDBClusterStateFault"
+    | `InvalidDBInstanceStateFault _ -> "com.amazonaws.rds#InvalidDBInstanceStateFault"
+    | `TenantDatabaseNotFoundFault _ -> "com.amazonaws.rds#TenantDatabaseNotFoundFault"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "BlueGreenDeploymentNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:blue_green_deployment_not_found_fault_of_xml
+        with
+        | Ok s -> `BlueGreenDeploymentNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "DBClusterNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_cluster_not_found_fault_of_xml
+        with
+        | Ok s -> `DBClusterNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "DBInstanceNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_instance_not_found_fault_of_xml
+        with
+        | Ok s -> `DBInstanceNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "DBProxyEndpointNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_proxy_endpoint_not_found_fault_of_xml
+        with
+        | Ok s -> `DBProxyEndpointNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "DBProxyNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_proxy_not_found_fault_of_xml
+        with
+        | Ok s -> `DBProxyNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "DBProxyTargetGroupNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_proxy_target_group_not_found_fault_of_xml
+        with
+        | Ok s -> `DBProxyTargetGroupNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "DBShardGroupNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_shard_group_not_found_fault_of_xml
+        with
+        | Ok s -> `DBShardGroupNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "DBSnapshotNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_snapshot_not_found_fault_of_xml
+        with
+        | Ok s -> `DBSnapshotNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "DBSnapshotTenantDatabaseNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_snapshot_tenant_database_not_found_fault_of_xml
+        with
+        | Ok s -> `DBSnapshotTenantDatabaseNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "IntegrationNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:integration_not_found_fault_of_xml
+        with
+        | Ok s -> `IntegrationNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidDBClusterEndpointStateFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_db_cluster_endpoint_state_fault_of_xml
+        with
+        | Ok s -> `InvalidDBClusterEndpointStateFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidDBClusterStateFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_db_cluster_state_fault_of_xml
+        with
+        | Ok s -> `InvalidDBClusterStateFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidDBInstanceState" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_db_instance_state_fault_of_xml
+        with
+        | Ok s -> `InvalidDBInstanceStateFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "TenantDatabaseNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:tenant_database_not_found_fault_of_xml
+        with
+        | Ok s -> `TenantDatabaseNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : add_tags_to_resource_message) =
+    let fields = add_tags_to_resource_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddTagsToResource"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_to_resource_message) =
+    let fields = add_tags_to_resource_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddTagsToResource"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+end
+
+module AddSourceIdentifierToSubscription = struct
+  let error_to_string = function
+    | `SourceNotFoundFault _ -> "com.amazonaws.rds#SourceNotFoundFault"
+    | `SubscriptionNotFoundFault _ -> "com.amazonaws.rds#SubscriptionNotFoundFault"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "SourceNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:source_not_found_fault_of_xml
+        with
+        | Ok s -> `SourceNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "SubscriptionNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:subscription_not_found_fault_of_xml
+        with
+        | Ok s -> `SubscriptionNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : add_source_identifier_to_subscription_message) =
+    let fields = add_source_identifier_to_subscription_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddSourceIdentifierToSubscription"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:add_source_identifier_to_subscription_result_of_xml ~error_deserializer
+
+  let request_with_metadata context (request : add_source_identifier_to_subscription_message) =
+    let fields = add_source_identifier_to_subscription_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddSourceIdentifierToSubscription"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:add_source_identifier_to_subscription_result_of_xml ~error_deserializer
+end
+
+module AddRoleToDBInstance = struct
+  let error_to_string = function
+    | `DBInstanceNotFoundFault _ -> "com.amazonaws.rds#DBInstanceNotFoundFault"
+    | `DBInstanceRoleAlreadyExistsFault _ -> "com.amazonaws.rds#DBInstanceRoleAlreadyExistsFault"
+    | `DBInstanceRoleQuotaExceededFault _ -> "com.amazonaws.rds#DBInstanceRoleQuotaExceededFault"
+    | `InvalidDBInstanceStateFault _ -> "com.amazonaws.rds#InvalidDBInstanceStateFault"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "DBInstanceNotFound" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_instance_not_found_fault_of_xml
+        with
+        | Ok s -> `DBInstanceNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "DBInstanceRoleAlreadyExists" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_instance_role_already_exists_fault_of_xml
+        with
+        | Ok s -> `DBInstanceRoleAlreadyExistsFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "DBInstanceRoleQuotaExceeded" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_instance_role_quota_exceeded_fault_of_xml
+        with
+        | Ok s -> `DBInstanceRoleQuotaExceededFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidDBInstanceState" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_db_instance_state_fault_of_xml
+        with
+        | Ok s -> `InvalidDBInstanceStateFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : add_role_to_db_instance_message) =
+    let fields = add_role_to_db_instance_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddRoleToDBInstance"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : add_role_to_db_instance_message) =
+    let fields = add_role_to_db_instance_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddRoleToDBInstance"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+end
+
+module AddRoleToDBCluster = struct
+  let error_to_string = function
+    | `DBClusterNotFoundFault _ -> "com.amazonaws.rds#DBClusterNotFoundFault"
+    | `DBClusterRoleAlreadyExistsFault _ -> "com.amazonaws.rds#DBClusterRoleAlreadyExistsFault"
+    | `DBClusterRoleQuotaExceededFault _ -> "com.amazonaws.rds#DBClusterRoleQuotaExceededFault"
+    | `InvalidDBClusterStateFault _ -> "com.amazonaws.rds#InvalidDBClusterStateFault"
+    | #Smaws_Lib.Protocols.AwsQuery.error as e -> Smaws_Lib.Protocols.AwsQuery.error_to_string e
+
+  let error_deserializer (error : Smaws_Lib.Protocols.AwsQuery.Error.t) ~body =
+    match error.Smaws_Lib.Protocols.AwsQuery.Error.code with
+    | "DBClusterNotFoundFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_cluster_not_found_fault_of_xml
+        with
+        | Ok s -> `DBClusterNotFoundFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "DBClusterRoleAlreadyExists" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_cluster_role_already_exists_fault_of_xml
+        with
+        | Ok s -> `DBClusterRoleAlreadyExistsFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "DBClusterRoleQuotaExceeded" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:db_cluster_role_quota_exceeded_fault_of_xml
+        with
+        | Ok s -> `DBClusterRoleQuotaExceededFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | "InvalidDBClusterStateFault" -> (
+        match
+          Smaws_Lib.Protocols.AwsQuery.Response.parse_error_struct ~body
+            ~structParser:invalid_db_cluster_state_fault_of_xml
+        with
+        | Ok s -> `InvalidDBClusterStateFault s
+        | Error (Smaws_Lib.Xml.Parse.XmlParseError msg) -> `XmlParseError msg)
+    | _ -> Smaws_Lib.Protocols.AwsQuery.Errors.default_handler error
+
+  let request context (request : add_role_to_db_cluster_message) =
+    let fields = add_role_to_db_cluster_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request ~action:"AddRoleToDBCluster"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
+
+  let request_with_metadata context (request : add_role_to_db_cluster_message) =
+    let fields = add_role_to_db_cluster_message_to_query [] request in
+    Smaws_Lib.Protocols.AwsQuery.request_with_metadata ~action:"AddRoleToDBCluster"
+      ~xmlNamespace:"http://rds.amazonaws.com/doc/2014-10-31/" ~service ~context ~fields
+      ~output_deserializer:Smaws_Lib.Smithy_api.Query_deserializers.unit__of_xml ~error_deserializer
 end

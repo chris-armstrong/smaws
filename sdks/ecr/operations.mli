@@ -687,6 +687,54 @@ module DescribeImageReplicationStatus : sig
 end
 [@@ocaml.doc "Returns the replication status for a specified image.\n"]
 
+module DescribeImages : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsJson.error
+    | `ImageNotFoundException of image_not_found_exception
+    | `InvalidParameterException of invalid_parameter_exception
+    | `RepositoryNotFoundException of repository_not_found_exception
+    | `ServerException of server_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_images_request ->
+    ( describe_images_response,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ImageNotFoundException of image_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `RepositoryNotFoundException of repository_not_found_exception
+      | `ServerException of server_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_images_request ->
+    ( describe_images_response Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsJson.error
+      | `ImageNotFoundException of image_not_found_exception
+      | `InvalidParameterException of invalid_parameter_exception
+      | `RepositoryNotFoundException of repository_not_found_exception
+      | `ServerException of server_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns metadata about the images in a repository.\n\n\
+  \  Starting with Docker version 1.9, the Docker client compresses image layers before pushing \
+   them to a V2 Docker registry. The output of the [docker images] command shows the uncompressed \
+   image size. Therefore, Docker might return a larger image than the image shown in the Amazon \
+   Web Services Management Console.\n\
+  \  \n\
+  \     The new version of Amazon ECR {i Basic Scanning} doesn't use the \
+   [ImageDetail$imageScanFindingsSummary] and [ImageDetail$imageScanStatus] attributes from the \
+   API response to return scan results. Use the [DescribeImageScanFindings] API instead. For more \
+   information about Amazon Web Services native basic scanning, see \
+   {{:https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html} Scan images for \
+   software vulnerabilities in Amazon ECR}.\n\
+  \     \n\
+  \      "]
+
 module DescribeImageScanFindings : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsJson.error
@@ -769,54 +817,6 @@ end
    {{:https://docs.aws.amazon.com/AmazonECR/latest/userguide/managed-signing.html}Managed signing} \
    in the {i Amazon Elastic Container Registry User Guide}.\n\
   \ "]
-
-module DescribeImages : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsJson.error
-    | `ImageNotFoundException of image_not_found_exception
-    | `InvalidParameterException of invalid_parameter_exception
-    | `RepositoryNotFoundException of repository_not_found_exception
-    | `ServerException of server_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_images_request ->
-    ( describe_images_response,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ImageNotFoundException of image_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `RepositoryNotFoundException of repository_not_found_exception
-      | `ServerException of server_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_images_request ->
-    ( describe_images_response Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsJson.error
-      | `ImageNotFoundException of image_not_found_exception
-      | `InvalidParameterException of invalid_parameter_exception
-      | `RepositoryNotFoundException of repository_not_found_exception
-      | `ServerException of server_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns metadata about the images in a repository.\n\n\
-  \  Starting with Docker version 1.9, the Docker client compresses image layers before pushing \
-   them to a V2 Docker registry. The output of the [docker images] command shows the uncompressed \
-   image size. Therefore, Docker might return a larger image than the image shown in the Amazon \
-   Web Services Management Console.\n\
-  \  \n\
-  \     The new version of Amazon ECR {i Basic Scanning} doesn't use the \
-   [ImageDetail$imageScanFindingsSummary] and [ImageDetail$imageScanStatus] attributes from the \
-   API response to return scan results. Use the [DescribeImageScanFindings] API instead. For more \
-   information about Amazon Web Services native basic scanning, see \
-   {{:https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html} Scan images for \
-   software vulnerabilities in Amazon ECR}.\n\
-  \     \n\
-  \      "]
 
 module DescribePullThroughCacheRules : sig
   val error_to_string :

@@ -1,649 +1,6 @@
 open Types
 open Service_metadata
 
-module AddInstanceFleet = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : add_instance_fleet_input) =
-    let input = Json_serializers.add_instance_fleet_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.AddInstanceFleet" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.add_instance_fleet_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : add_instance_fleet_input) =
-    let input = Json_serializers.add_instance_fleet_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"ElasticMapReduce.AddInstanceFleet" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.add_instance_fleet_output_of_yojson
-      ~error_deserializer
-end
-
-module AddInstanceGroups = struct
-  let error_to_string = function
-    | `InternalServerError _ -> "com.amazonaws.emr#InternalServerError"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : add_instance_groups_input) =
-    let input = Json_serializers.add_instance_groups_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.AddInstanceGroups" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.add_instance_groups_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : add_instance_groups_input) =
-    let input = Json_serializers.add_instance_groups_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"ElasticMapReduce.AddInstanceGroups" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.add_instance_groups_output_of_yojson
-      ~error_deserializer
-end
-
-module AddJobFlowSteps = struct
-  let error_to_string = function
-    | `InternalServerError _ -> "com.amazonaws.emr#InternalServerError"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : add_job_flow_steps_input) =
-    let input = Json_serializers.add_job_flow_steps_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.AddJobFlowSteps" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.add_job_flow_steps_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : add_job_flow_steps_input) =
-    let input = Json_serializers.add_job_flow_steps_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.AddJobFlowSteps"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.add_job_flow_steps_output_of_yojson
-      ~error_deserializer
-end
-
-module AddTags = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : add_tags_input) =
-    let input = Json_serializers.add_tags_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.AddTags" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.add_tags_output_of_yojson ~error_deserializer
-
-  let request_with_metadata context (request : add_tags_input) =
-    let input = Json_serializers.add_tags_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.AddTags"
-      ~service ~context ~input ~output_deserializer:Json_deserializers.add_tags_output_of_yojson
-      ~error_deserializer
-end
-
-module CancelSteps = struct
-  let error_to_string = function
-    | `InternalServerError _ -> "com.amazonaws.emr#InternalServerError"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : cancel_steps_input) =
-    let input = Json_serializers.cancel_steps_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.CancelSteps" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.cancel_steps_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : cancel_steps_input) =
-    let input = Json_serializers.cancel_steps_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.CancelSteps"
-      ~service ~context ~input ~output_deserializer:Json_deserializers.cancel_steps_output_of_yojson
-      ~error_deserializer
-end
-
-module CreatePersistentAppUI = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_persistent_app_ui_input) =
-    let input = Json_serializers.create_persistent_app_ui_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.CreatePersistentAppUI"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_persistent_app_ui_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_persistent_app_ui_input) =
-    let input = Json_serializers.create_persistent_app_ui_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"ElasticMapReduce.CreatePersistentAppUI" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_persistent_app_ui_output_of_yojson
-      ~error_deserializer
-end
-
-module CreateSecurityConfiguration = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_security_configuration_input) =
-    let input = Json_serializers.create_security_configuration_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.CreateSecurityConfiguration"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_security_configuration_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_security_configuration_input) =
-    let input = Json_serializers.create_security_configuration_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"ElasticMapReduce.CreateSecurityConfiguration" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_security_configuration_output_of_yojson
-      ~error_deserializer
-end
-
-module CreateStudio = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_studio_input) =
-    let input = Json_serializers.create_studio_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.CreateStudio" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.create_studio_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_studio_input) =
-    let input = Json_serializers.create_studio_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.CreateStudio"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.create_studio_output_of_yojson ~error_deserializer
-end
-
-module CreateStudioSessionMapping = struct
-  let error_to_string = function
-    | `InternalServerError _ -> "com.amazonaws.emr#InternalServerError"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : create_studio_session_mapping_input) =
-    let input = Json_serializers.create_studio_session_mapping_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.CreateStudioSessionMapping"
-      ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : create_studio_session_mapping_input) =
-    let input = Json_serializers.create_studio_session_mapping_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"ElasticMapReduce.CreateStudioSessionMapping" ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-end
-
-module DeleteSecurityConfiguration = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : delete_security_configuration_input) =
-    let input = Json_serializers.delete_security_configuration_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DeleteSecurityConfiguration"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_security_configuration_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : delete_security_configuration_input) =
-    let input = Json_serializers.delete_security_configuration_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"ElasticMapReduce.DeleteSecurityConfiguration" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.delete_security_configuration_output_of_yojson
-      ~error_deserializer
-end
-
-module DeleteStudio = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : delete_studio_input) =
-    let input = Json_serializers.delete_studio_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DeleteStudio" ~service
-      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : delete_studio_input) =
-    let input = Json_serializers.delete_studio_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.DeleteStudio"
-      ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-end
-
-module DeleteStudioSessionMapping = struct
-  let error_to_string = function
-    | `InternalServerError _ -> "com.amazonaws.emr#InternalServerError"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : delete_studio_session_mapping_input) =
-    let input = Json_serializers.delete_studio_session_mapping_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DeleteStudioSessionMapping"
-      ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : delete_studio_session_mapping_input) =
-    let input = Json_serializers.delete_studio_session_mapping_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"ElasticMapReduce.DeleteStudioSessionMapping" ~service ~context ~input
-      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
-      ~error_deserializer
-end
-
-module DescribeCluster = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_cluster_input) =
-    let input = Json_serializers.describe_cluster_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribeCluster" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.describe_cluster_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_cluster_input) =
-    let input = Json_serializers.describe_cluster_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.DescribeCluster"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_cluster_output_of_yojson ~error_deserializer
-end
-
-module DescribeJobFlows = struct
-  let error_to_string = function
-    | `InternalServerError _ -> "com.amazonaws.emr#InternalServerError"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_job_flows_input) =
-    let input = Json_serializers.describe_job_flows_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribeJobFlows" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.describe_job_flows_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_job_flows_input) =
-    let input = Json_serializers.describe_job_flows_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"ElasticMapReduce.DescribeJobFlows" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_job_flows_output_of_yojson
-      ~error_deserializer
-end
-
-module DescribeNotebookExecution = struct
-  let error_to_string = function
-    | `InternalServerError _ -> "com.amazonaws.emr#InternalServerError"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_notebook_execution_input) =
-    let input = Json_serializers.describe_notebook_execution_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribeNotebookExecution"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_notebook_execution_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_notebook_execution_input) =
-    let input = Json_serializers.describe_notebook_execution_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"ElasticMapReduce.DescribeNotebookExecution" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_notebook_execution_output_of_yojson
-      ~error_deserializer
-end
-
-module DescribePersistentAppUI = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_persistent_app_ui_input) =
-    let input = Json_serializers.describe_persistent_app_ui_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribePersistentAppUI"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_persistent_app_ui_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_persistent_app_ui_input) =
-    let input = Json_serializers.describe_persistent_app_ui_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"ElasticMapReduce.DescribePersistentAppUI" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_persistent_app_ui_output_of_yojson
-      ~error_deserializer
-end
-
-module DescribeReleaseLabel = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_release_label_input) =
-    let input = Json_serializers.describe_release_label_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribeReleaseLabel" ~service
-      ~context ~input
-      ~output_deserializer:Json_deserializers.describe_release_label_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_release_label_input) =
-    let input = Json_serializers.describe_release_label_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"ElasticMapReduce.DescribeReleaseLabel" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_release_label_output_of_yojson
-      ~error_deserializer
-end
-
-module DescribeSecurityConfiguration = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_security_configuration_input) =
-    let input = Json_serializers.describe_security_configuration_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribeSecurityConfiguration"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_security_configuration_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_security_configuration_input) =
-    let input = Json_serializers.describe_security_configuration_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"ElasticMapReduce.DescribeSecurityConfiguration" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_security_configuration_output_of_yojson
-      ~error_deserializer
-end
-
-module DescribeStep = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_step_input) =
-    let input = Json_serializers.describe_step_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribeStep" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.describe_step_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_step_input) =
-    let input = Json_serializers.describe_step_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.DescribeStep"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_step_output_of_yojson ~error_deserializer
-end
-
-module DescribeStudio = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : describe_studio_input) =
-    let input = Json_serializers.describe_studio_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribeStudio" ~service
-      ~context ~input ~output_deserializer:Json_deserializers.describe_studio_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : describe_studio_input) =
-    let input = Json_serializers.describe_studio_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.DescribeStudio"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.describe_studio_output_of_yojson ~error_deserializer
-end
-
 module GetAutoTerminationPolicy = struct
   let error_to_string = Smaws_Lib.Protocols.AwsJson.error_to_string
 
@@ -1248,6 +605,38 @@ module ListSteps = struct
       ~error_deserializer
 end
 
+module ListStudios = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_studios_input) =
+    let input = Json_serializers.list_studios_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.ListStudios" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.list_studios_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_studios_input) =
+    let input = Json_serializers.list_studios_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.ListStudios"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.list_studios_output_of_yojson
+      ~error_deserializer
+end
+
 module ListStudioSessionMappings = struct
   let error_to_string = function
     | `InternalServerError _ -> "com.amazonaws.emr#InternalServerError"
@@ -1278,38 +667,6 @@ module ListStudioSessionMappings = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"ElasticMapReduce.ListStudioSessionMappings" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_studio_session_mappings_output_of_yojson
-      ~error_deserializer
-end
-
-module ListStudios = struct
-  let error_to_string = function
-    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
-    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "InternalServerException" ->
-          `InternalServerException
-            (Json_deserializers.internal_server_exception_of_yojson tree path)
-      | _, "InvalidRequestException" ->
-          `InvalidRequestException
-            (Json_deserializers.invalid_request_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_studios_input) =
-    let input = Json_serializers.list_studios_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.ListStudios" ~service ~context
-      ~input ~output_deserializer:Json_deserializers.list_studios_output_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_studios_input) =
-    let input = Json_serializers.list_studios_input_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.ListStudios"
-      ~service ~context ~input ~output_deserializer:Json_deserializers.list_studios_output_of_yojson
       ~error_deserializer
 end
 
@@ -2007,5 +1364,648 @@ module UpdateStudioSessionMapping = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"ElasticMapReduce.UpdateStudioSessionMapping" ~service ~context ~input
       ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module DescribeStudio = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_studio_input) =
+    let input = Json_serializers.describe_studio_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribeStudio" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.describe_studio_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_studio_input) =
+    let input = Json_serializers.describe_studio_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.DescribeStudio"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_studio_output_of_yojson ~error_deserializer
+end
+
+module DescribeStep = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_step_input) =
+    let input = Json_serializers.describe_step_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribeStep" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.describe_step_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_step_input) =
+    let input = Json_serializers.describe_step_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.DescribeStep"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_step_output_of_yojson ~error_deserializer
+end
+
+module DescribeSecurityConfiguration = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_security_configuration_input) =
+    let input = Json_serializers.describe_security_configuration_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribeSecurityConfiguration"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_security_configuration_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_security_configuration_input) =
+    let input = Json_serializers.describe_security_configuration_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ElasticMapReduce.DescribeSecurityConfiguration" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_security_configuration_output_of_yojson
+      ~error_deserializer
+end
+
+module DescribeReleaseLabel = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_release_label_input) =
+    let input = Json_serializers.describe_release_label_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribeReleaseLabel" ~service
+      ~context ~input
+      ~output_deserializer:Json_deserializers.describe_release_label_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_release_label_input) =
+    let input = Json_serializers.describe_release_label_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ElasticMapReduce.DescribeReleaseLabel" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_release_label_output_of_yojson
+      ~error_deserializer
+end
+
+module DescribePersistentAppUI = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_persistent_app_ui_input) =
+    let input = Json_serializers.describe_persistent_app_ui_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribePersistentAppUI"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_persistent_app_ui_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_persistent_app_ui_input) =
+    let input = Json_serializers.describe_persistent_app_ui_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ElasticMapReduce.DescribePersistentAppUI" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_persistent_app_ui_output_of_yojson
+      ~error_deserializer
+end
+
+module DescribeNotebookExecution = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.emr#InternalServerError"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_notebook_execution_input) =
+    let input = Json_serializers.describe_notebook_execution_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribeNotebookExecution"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_notebook_execution_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_notebook_execution_input) =
+    let input = Json_serializers.describe_notebook_execution_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ElasticMapReduce.DescribeNotebookExecution" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_notebook_execution_output_of_yojson
+      ~error_deserializer
+end
+
+module DescribeJobFlows = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.emr#InternalServerError"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_job_flows_input) =
+    let input = Json_serializers.describe_job_flows_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribeJobFlows" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.describe_job_flows_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_job_flows_input) =
+    let input = Json_serializers.describe_job_flows_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ElasticMapReduce.DescribeJobFlows" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_job_flows_output_of_yojson
+      ~error_deserializer
+end
+
+module DescribeCluster = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : describe_cluster_input) =
+    let input = Json_serializers.describe_cluster_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DescribeCluster" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.describe_cluster_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : describe_cluster_input) =
+    let input = Json_serializers.describe_cluster_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.DescribeCluster"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.describe_cluster_output_of_yojson ~error_deserializer
+end
+
+module DeleteStudioSessionMapping = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.emr#InternalServerError"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_studio_session_mapping_input) =
+    let input = Json_serializers.delete_studio_session_mapping_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DeleteStudioSessionMapping"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_studio_session_mapping_input) =
+    let input = Json_serializers.delete_studio_session_mapping_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ElasticMapReduce.DeleteStudioSessionMapping" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module DeleteStudio = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_studio_input) =
+    let input = Json_serializers.delete_studio_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DeleteStudio" ~service
+      ~context ~input ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_studio_input) =
+    let input = Json_serializers.delete_studio_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.DeleteStudio"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module DeleteSecurityConfiguration = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : delete_security_configuration_input) =
+    let input = Json_serializers.delete_security_configuration_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.DeleteSecurityConfiguration"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_security_configuration_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : delete_security_configuration_input) =
+    let input = Json_serializers.delete_security_configuration_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ElasticMapReduce.DeleteSecurityConfiguration" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.delete_security_configuration_output_of_yojson
+      ~error_deserializer
+end
+
+module CreateStudioSessionMapping = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.emr#InternalServerError"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_studio_session_mapping_input) =
+    let input = Json_serializers.create_studio_session_mapping_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.CreateStudioSessionMapping"
+      ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_studio_session_mapping_input) =
+    let input = Json_serializers.create_studio_session_mapping_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ElasticMapReduce.CreateStudioSessionMapping" ~service ~context ~input
+      ~output_deserializer:Smaws_Lib.Smithy_api.Json_deserializers.unit__of_yojson
+      ~error_deserializer
+end
+
+module CreateStudio = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_studio_input) =
+    let input = Json_serializers.create_studio_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.CreateStudio" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.create_studio_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_studio_input) =
+    let input = Json_serializers.create_studio_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.CreateStudio"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_studio_output_of_yojson ~error_deserializer
+end
+
+module CreateSecurityConfiguration = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_security_configuration_input) =
+    let input = Json_serializers.create_security_configuration_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.CreateSecurityConfiguration"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_security_configuration_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_security_configuration_input) =
+    let input = Json_serializers.create_security_configuration_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ElasticMapReduce.CreateSecurityConfiguration" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_security_configuration_output_of_yojson
+      ~error_deserializer
+end
+
+module CreatePersistentAppUI = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : create_persistent_app_ui_input) =
+    let input = Json_serializers.create_persistent_app_ui_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.CreatePersistentAppUI"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_persistent_app_ui_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : create_persistent_app_ui_input) =
+    let input = Json_serializers.create_persistent_app_ui_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ElasticMapReduce.CreatePersistentAppUI" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.create_persistent_app_ui_output_of_yojson
+      ~error_deserializer
+end
+
+module CancelSteps = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.emr#InternalServerError"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : cancel_steps_input) =
+    let input = Json_serializers.cancel_steps_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.CancelSteps" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.cancel_steps_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : cancel_steps_input) =
+    let input = Json_serializers.cancel_steps_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.CancelSteps"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.cancel_steps_output_of_yojson
+      ~error_deserializer
+end
+
+module AddTags = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : add_tags_input) =
+    let input = Json_serializers.add_tags_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.AddTags" ~service ~context
+      ~input ~output_deserializer:Json_deserializers.add_tags_output_of_yojson ~error_deserializer
+
+  let request_with_metadata context (request : add_tags_input) =
+    let input = Json_serializers.add_tags_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.AddTags"
+      ~service ~context ~input ~output_deserializer:Json_deserializers.add_tags_output_of_yojson
+      ~error_deserializer
+end
+
+module AddJobFlowSteps = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.emr#InternalServerError"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : add_job_flow_steps_input) =
+    let input = Json_serializers.add_job_flow_steps_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.AddJobFlowSteps" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.add_job_flow_steps_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : add_job_flow_steps_input) =
+    let input = Json_serializers.add_job_flow_steps_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata ~shape_name:"ElasticMapReduce.AddJobFlowSteps"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.add_job_flow_steps_output_of_yojson
+      ~error_deserializer
+end
+
+module AddInstanceGroups = struct
+  let error_to_string = function
+    | `InternalServerError _ -> "com.amazonaws.emr#InternalServerError"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : add_instance_groups_input) =
+    let input = Json_serializers.add_instance_groups_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.AddInstanceGroups" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.add_instance_groups_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : add_instance_groups_input) =
+    let input = Json_serializers.add_instance_groups_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ElasticMapReduce.AddInstanceGroups" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.add_instance_groups_output_of_yojson
+      ~error_deserializer
+end
+
+module AddInstanceFleet = struct
+  let error_to_string = function
+    | `InternalServerException _ -> "com.amazonaws.emr#InternalServerException"
+    | `InvalidRequestException _ -> "com.amazonaws.emr#InvalidRequestException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "InternalServerException" ->
+          `InternalServerException
+            (Json_deserializers.internal_server_exception_of_yojson tree path)
+      | _, "InvalidRequestException" ->
+          `InvalidRequestException
+            (Json_deserializers.invalid_request_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : add_instance_fleet_input) =
+    let input = Json_serializers.add_instance_fleet_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"ElasticMapReduce.AddInstanceFleet" ~service
+      ~context ~input ~output_deserializer:Json_deserializers.add_instance_fleet_output_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : add_instance_fleet_input) =
+    let input = Json_serializers.add_instance_fleet_input_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"ElasticMapReduce.AddInstanceFleet" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.add_instance_fleet_output_of_yojson
       ~error_deserializer
 end

@@ -744,52 +744,6 @@ module ListDiscoveredResources = struct
       ~error_deserializer
 end
 
-module ListMigrationTaskUpdates = struct
-  let error_to_string = function
-    | `AccessDeniedException _ -> "com.amazonaws.migrationhub#AccessDeniedException"
-    | `InternalServerError _ -> "com.amazonaws.migrationhub#InternalServerError"
-    | `InvalidInputException _ -> "com.amazonaws.migrationhub#InvalidInputException"
-    | `ResourceNotFoundException _ -> "com.amazonaws.migrationhub#ResourceNotFoundException"
-    | `ServiceUnavailableException _ -> "com.amazonaws.migrationhub#ServiceUnavailableException"
-    | `ThrottlingException _ -> "com.amazonaws.migrationhub#ThrottlingException"
-    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
-
-  let error_deserializer tree path =
-    let handler handler tree path = function
-      | _, "AccessDeniedException" ->
-          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
-      | _, "InternalServerError" ->
-          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
-      | _, "InvalidInputException" ->
-          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
-      | _, "ResourceNotFoundException" ->
-          `ResourceNotFoundException
-            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
-      | _, "ServiceUnavailableException" ->
-          `ServiceUnavailableException
-            (Json_deserializers.service_unavailable_exception_of_yojson tree path)
-      | _, "ThrottlingException" ->
-          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
-      | _type -> handler tree path _type
-    in
-    Smaws_Lib.Protocols.AwsJson.(
-      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
-
-  let request context (request : list_migration_task_updates_request) =
-    let input = Json_serializers.list_migration_task_updates_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSMigrationHub.ListMigrationTaskUpdates"
-      ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_migration_task_updates_result_of_yojson
-      ~error_deserializer
-
-  let request_with_metadata context (request : list_migration_task_updates_request) =
-    let input = Json_serializers.list_migration_task_updates_request_to_yojson request in
-    Smaws_Lib.Protocols.AwsJson.request_with_metadata
-      ~shape_name:"AWSMigrationHub.ListMigrationTaskUpdates" ~service ~context ~input
-      ~output_deserializer:Json_deserializers.list_migration_task_updates_result_of_yojson
-      ~error_deserializer
-end
-
 module ListMigrationTasks = struct
   let error_to_string = function
     | `AccessDeniedException _ -> "com.amazonaws.migrationhub#AccessDeniedException"
@@ -839,6 +793,52 @@ module ListMigrationTasks = struct
     Smaws_Lib.Protocols.AwsJson.request_with_metadata
       ~shape_name:"AWSMigrationHub.ListMigrationTasks" ~service ~context ~input
       ~output_deserializer:Json_deserializers.list_migration_tasks_result_of_yojson
+      ~error_deserializer
+end
+
+module ListMigrationTaskUpdates = struct
+  let error_to_string = function
+    | `AccessDeniedException _ -> "com.amazonaws.migrationhub#AccessDeniedException"
+    | `InternalServerError _ -> "com.amazonaws.migrationhub#InternalServerError"
+    | `InvalidInputException _ -> "com.amazonaws.migrationhub#InvalidInputException"
+    | `ResourceNotFoundException _ -> "com.amazonaws.migrationhub#ResourceNotFoundException"
+    | `ServiceUnavailableException _ -> "com.amazonaws.migrationhub#ServiceUnavailableException"
+    | `ThrottlingException _ -> "com.amazonaws.migrationhub#ThrottlingException"
+    | #Smaws_Lib.Protocols.AwsJson.error as e -> Smaws_Lib.Protocols.AwsJson.error_to_string e
+
+  let error_deserializer tree path =
+    let handler handler tree path = function
+      | _, "AccessDeniedException" ->
+          `AccessDeniedException (Json_deserializers.access_denied_exception_of_yojson tree path)
+      | _, "InternalServerError" ->
+          `InternalServerError (Json_deserializers.internal_server_error_of_yojson tree path)
+      | _, "InvalidInputException" ->
+          `InvalidInputException (Json_deserializers.invalid_input_exception_of_yojson tree path)
+      | _, "ResourceNotFoundException" ->
+          `ResourceNotFoundException
+            (Json_deserializers.resource_not_found_exception_of_yojson tree path)
+      | _, "ServiceUnavailableException" ->
+          `ServiceUnavailableException
+            (Json_deserializers.service_unavailable_exception_of_yojson tree path)
+      | _, "ThrottlingException" ->
+          `ThrottlingException (Json_deserializers.throttling_exception_of_yojson tree path)
+      | _type -> handler tree path _type
+    in
+    Smaws_Lib.Protocols.AwsJson.(
+      error_deserializer (handler Smaws_Lib.Protocols.AwsJson.Errors.default_handler) tree path)
+
+  let request context (request : list_migration_task_updates_request) =
+    let input = Json_serializers.list_migration_task_updates_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request ~shape_name:"AWSMigrationHub.ListMigrationTaskUpdates"
+      ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_migration_task_updates_result_of_yojson
+      ~error_deserializer
+
+  let request_with_metadata context (request : list_migration_task_updates_request) =
+    let input = Json_serializers.list_migration_task_updates_request_to_yojson request in
+    Smaws_Lib.Protocols.AwsJson.request_with_metadata
+      ~shape_name:"AWSMigrationHub.ListMigrationTaskUpdates" ~service ~context ~input
+      ~output_deserializer:Json_deserializers.list_migration_task_updates_result_of_yojson
       ~error_deserializer
 end
 

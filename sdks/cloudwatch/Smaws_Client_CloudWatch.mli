@@ -8,802 +8,186 @@ module Types = Types
 
 (** {1:builders Builders} *)
 
-val make_wall_clock_window : ?timezone:timezone -> unit -> wall_clock_window
-val make_untag_resource_output : unit -> unit
-
-val make_untag_resource_input :
-  tag_keys:tag_key_list -> resource_ar_n:amazon_resource_name -> unit -> untag_resource_input
-
-val make_tag_resource_output : unit -> unit
-val make_tag : value:tag_value -> key:tag_key -> unit -> tag
-
-val make_tag_resource_input :
-  tags:tag_list -> resource_ar_n:amazon_resource_name -> unit -> tag_resource_input
-
-val make_stop_o_tel_enrichment_output : unit -> unit
-val make_stop_o_tel_enrichment_input : unit -> unit
-val make_stop_metric_streams_output : unit -> unit
-val make_stop_metric_streams_input : names:metric_stream_names -> unit -> stop_metric_streams_input
-
-val make_statistic_set :
-  maximum:datapoint_value ->
-  minimum:datapoint_value ->
-  sum:datapoint_value ->
-  sample_count:datapoint_value ->
-  unit ->
-  statistic_set
-
-val make_start_o_tel_enrichment_output : unit -> unit
-val make_start_o_tel_enrichment_input : unit -> unit
-val make_start_metric_streams_output : unit -> unit
-
-val make_start_metric_streams_input :
-  names:metric_stream_names -> unit -> start_metric_streams_input
-
-val make_sliding_window : unit -> unit
-val make_dimension : value:dimension_value -> name:dimension_name -> unit -> dimension
-
-val make_single_metric_anomaly_detector :
-  ?stat:anomaly_detector_metric_stat ->
-  ?dimensions:dimensions ->
-  ?metric_name:metric_name ->
-  ?namespace:namespace ->
-  ?account_id:account_id ->
-  unit ->
-  single_metric_anomaly_detector
-
-val make_set_alarm_state_input :
-  ?state_reason_data:state_reason_data ->
+val make_alarm_contributor :
+  ?state_transitioned_timestamp:timestamp ->
+  contributor_id:contributor_id ->
+  contributor_attributes:contributor_attributes ->
   state_reason:state_reason ->
-  state_value:state_value ->
-  alarm_name:alarm_name ->
   unit ->
-  set_alarm_state_input
+  alarm_contributor
 
-val make_schedule_configuration :
-  ?end_time_offset:end_time_offset ->
-  ?start_time_offset:start_time_offset ->
-  schedule_expression:schedule_expression ->
-  unit ->
-  schedule_configuration
-
-val make_scheduled_query_configuration :
-  ?tags:tag_list ->
-  ?query_ar_n:amazon_resource_name ->
-  ?log_group_identifiers:log_group_identifiers ->
-  aggregation_expression:aggregation_expression ->
-  schedule_configuration:schedule_configuration ->
-  scheduled_query_role_ar_n:amazon_resource_name ->
-  query_string:query_string ->
-  unit ->
-  scheduled_query_configuration
-
-val make_schedule :
-  ?timezone:timezone -> duration:duration -> expression:expression -> unit -> schedule
-
-val make_rule : schedule:schedule -> unit -> rule
-val make_range : end_time:timestamp -> start_time:timestamp -> unit -> range
-val make_put_metric_stream_output : ?arn:amazon_resource_name -> unit -> put_metric_stream_output
-
-val make_metric_stream_filter :
-  ?metric_names:metric_stream_filter_metric_names ->
-  ?namespace:namespace ->
-  unit ->
-  metric_stream_filter
-
-val make_metric_stream_statistics_metric :
-  metric_name:metric_name -> namespace:namespace -> unit -> metric_stream_statistics_metric
-
-val make_metric_stream_statistics_configuration :
-  additional_statistics:metric_stream_statistics_additional_statistics ->
-  include_metrics:metric_stream_statistics_include_metrics ->
-  unit ->
-  metric_stream_statistics_configuration
-
-val make_put_metric_stream_input :
-  ?include_linked_accounts_metrics:include_linked_accounts_metrics ->
-  ?statistics_configurations:metric_stream_statistics_configurations ->
-  ?tags:tag_list ->
-  ?exclude_filters:metric_stream_filters ->
-  ?include_filters:metric_stream_filters ->
-  output_format:metric_stream_output_format ->
-  role_arn:amazon_resource_name ->
-  firehose_arn:amazon_resource_name ->
-  name:metric_stream_name ->
-  unit ->
-  put_metric_stream_input
-
-val make_metric_datum :
-  ?storage_resolution:storage_resolution ->
-  ?unit_:standard_unit ->
-  ?counts:counts ->
-  ?values:values ->
-  ?statistic_values:statistic_set ->
-  ?value:datapoint_value ->
+val make_alarm_history_item :
+  ?alarm_name:alarm_name ->
+  ?alarm_contributor_id:contributor_id ->
+  ?alarm_type:alarm_type ->
   ?timestamp:timestamp ->
-  ?dimensions:dimensions ->
-  metric_name:metric_name ->
+  ?history_item_type:history_item_type ->
+  ?history_summary:history_summary ->
+  ?history_data:history_data ->
+  ?alarm_contributor_attributes:contributor_attributes ->
   unit ->
-  metric_datum
+  alarm_history_item
 
-val make_entity :
-  ?attributes:entity_attributes_map -> ?key_attributes:entity_key_attributes_map -> unit -> entity
-
-val make_entity_metric_data :
-  ?metric_data:metric_data -> ?entity:entity -> unit -> entity_metric_data
-
-val make_put_metric_data_input :
-  ?strict_entity_validation:strict_entity_validation ->
-  ?entity_metric_data:entity_metric_data_list ->
-  ?metric_data:metric_data ->
-  namespace:namespace ->
+val make_alarm_mute_rule_summary :
+  ?alarm_mute_rule_arn:arn ->
+  ?expire_date:timestamp ->
+  ?status:alarm_mute_rule_status ->
+  ?mute_type:mute_type ->
+  ?last_updated_timestamp:timestamp ->
   unit ->
-  put_metric_data_input
-
-val make_metric :
-  ?dimensions:dimensions -> ?metric_name:metric_name -> ?namespace:namespace -> unit -> metric
-
-val make_metric_stat :
-  ?unit_:standard_unit -> stat:stat -> period:period -> metric:metric -> unit -> metric_stat
-
-val make_metric_data_query :
-  ?account_id:account_id ->
-  ?period:period ->
-  ?return_data:return_data ->
-  ?label:metric_label ->
-  ?expression:metric_expression ->
-  ?metric_stat:metric_stat ->
-  id:metric_id ->
-  unit ->
-  metric_data_query
+  alarm_mute_rule_summary
 
 val make_alarm_prom_ql_criteria :
-  ?recovery_period:recovery_period ->
   ?pending_period:pending_period ->
+  ?recovery_period:recovery_period ->
   query:query ->
   unit ->
   alarm_prom_ql_criteria
 
-val make_put_metric_alarm_input :
-  ?evaluation_interval:evaluation_interval ->
-  ?evaluation_criteria:evaluation_criteria ->
-  ?evaluation_window:evaluation_window ->
-  ?threshold_metric_id:metric_id ->
-  ?tags:tag_list ->
-  ?metrics:metric_data_queries ->
-  ?evaluate_low_sample_count_percentile:evaluate_low_sample_count_percentile ->
-  ?treat_missing_data:treat_missing_data ->
-  ?comparison_operator:comparison_operator ->
-  ?threshold:threshold ->
-  ?datapoints_to_alarm:datapoints_to_alarm ->
-  ?evaluation_periods:evaluation_periods ->
-  ?unit_:standard_unit ->
+val make_dimension : name:dimension_name -> value:dimension_value -> unit -> dimension
+
+val make_metric :
+  ?namespace:namespace -> ?metric_name:metric_name -> ?dimensions:dimensions -> unit -> metric
+
+val make_metric_stat :
+  ?unit_:standard_unit -> metric:metric -> period:period -> stat:stat -> unit -> metric_stat
+
+val make_metric_data_query :
+  ?metric_stat:metric_stat ->
+  ?expression:metric_expression ->
+  ?label:metric_label ->
+  ?return_data:return_data ->
   ?period:period ->
-  ?dimensions:dimensions ->
-  ?extended_statistic:extended_statistic ->
-  ?statistic:statistic ->
-  ?namespace:namespace ->
-  ?metric_name:metric_name ->
-  ?insufficient_data_actions:resource_list ->
-  ?alarm_actions:resource_list ->
-  ?ok_actions:resource_list ->
-  ?actions_enabled:actions_enabled ->
-  ?alarm_description:alarm_description ->
-  alarm_name:alarm_name ->
+  ?account_id:account_id ->
+  id:metric_id ->
   unit ->
-  put_metric_alarm_input
-
-val make_partial_failure :
-  ?failure_description:failure_description ->
-  ?failure_code:failure_code ->
-  ?exception_type:exception_type ->
-  ?failure_resource:failure_resource ->
-  unit ->
-  partial_failure
-
-val make_put_managed_insight_rules_output :
-  ?failures:batch_failures -> unit -> put_managed_insight_rules_output
-
-val make_managed_rule :
-  ?tags:tag_list ->
-  resource_ar_n:amazon_resource_name ->
-  template_name:template_name ->
-  unit ->
-  managed_rule
-
-val make_put_managed_insight_rules_input :
-  managed_rules:managed_rules -> unit -> put_managed_insight_rules_input
-
-val make_put_log_alarm_input :
-  ?tags:tag_list ->
-  ?treat_missing_data:treat_missing_data ->
-  ?insufficient_data_actions:resource_list ->
-  ?alarm_actions:resource_list ->
-  ?ok_actions:resource_list ->
-  ?actions_enabled:actions_enabled ->
-  ?action_log_line_role_arn:action_log_line_role_arn ->
-  ?action_log_line_count:action_log_line_count ->
-  ?alarm_description:alarm_description ->
-  comparison_operator:comparison_operator ->
-  threshold:threshold ->
-  query_results_to_alarm:query_results_to_alarm ->
-  query_results_to_evaluate:query_results_to_evaluate ->
-  scheduled_query_configuration:scheduled_query_configuration ->
-  alarm_name:alarm_name ->
-  unit ->
-  put_log_alarm_input
-
-val make_put_insight_rule_output : unit -> unit
-
-val make_put_insight_rule_input :
-  ?apply_on_transformed_logs:insight_rule_on_transformed_logs ->
-  ?tags:tag_list ->
-  ?rule_state:insight_rule_state ->
-  rule_definition:insight_rule_definition ->
-  rule_name:insight_rule_name ->
-  unit ->
-  put_insight_rule_input
-
-val make_dashboard_validation_message :
-  ?message:message -> ?data_path:data_path -> unit -> dashboard_validation_message
-
-val make_put_dashboard_output :
-  ?dashboard_validation_messages:dashboard_validation_messages -> unit -> put_dashboard_output
-
-val make_put_dashboard_input :
-  ?tags:tag_list ->
-  dashboard_body:dashboard_body ->
-  dashboard_name:dashboard_name ->
-  unit ->
-  put_dashboard_input
-
-val make_put_composite_alarm_input :
-  ?actions_suppressor_extension_period:suppressor_period ->
-  ?actions_suppressor_wait_period:suppressor_period ->
-  ?actions_suppressor:alarm_arn ->
-  ?tags:tag_list ->
-  ?ok_actions:resource_list ->
-  ?insufficient_data_actions:resource_list ->
-  ?alarm_description:alarm_description ->
-  ?alarm_actions:resource_list ->
-  ?actions_enabled:actions_enabled ->
-  alarm_rule:alarm_rule ->
-  alarm_name:alarm_name ->
-  unit ->
-  put_composite_alarm_input
-
-val make_put_anomaly_detector_output : unit -> unit
-
-val make_anomaly_detector_configuration :
-  ?metric_timezone:anomaly_detector_metric_timezone ->
-  ?excluded_time_ranges:anomaly_detector_excluded_time_ranges ->
-  unit ->
-  anomaly_detector_configuration
-
-val make_metric_characteristics : ?periodic_spikes:periodic_spikes -> unit -> metric_characteristics
+  metric_data_query
 
 val make_metric_math_anomaly_detector :
   ?metric_data_queries:metric_data_queries -> unit -> metric_math_anomaly_detector
 
-val make_put_anomaly_detector_input :
-  ?metric_math_anomaly_detector:metric_math_anomaly_detector ->
-  ?single_metric_anomaly_detector:single_metric_anomaly_detector ->
-  ?metric_characteristics:metric_characteristics ->
-  ?configuration:anomaly_detector_configuration ->
+val make_single_metric_anomaly_detector :
+  ?account_id:account_id ->
+  ?namespace:namespace ->
+  ?metric_name:metric_name ->
+  ?dimensions:dimensions ->
   ?stat:anomaly_detector_metric_stat ->
-  ?dimensions:dimensions ->
-  ?metric_name:metric_name ->
-  ?namespace:namespace ->
   unit ->
-  put_anomaly_detector_input
+  single_metric_anomaly_detector
 
-val make_mute_targets : alarm_names:mute_target_alarm_name_list -> unit -> mute_targets
+val make_metric_characteristics : ?periodic_spikes:periodic_spikes -> unit -> metric_characteristics
+val make_range : start_time:timestamp -> end_time:timestamp -> unit -> range
 
-val make_put_alarm_mute_rule_input :
-  ?expire_date:timestamp ->
-  ?start_date:timestamp ->
-  ?tags:tag_list ->
-  ?mute_targets:mute_targets ->
-  ?description:alarm_description ->
-  rule:rule ->
-  name:name ->
+val make_anomaly_detector_configuration :
+  ?excluded_time_ranges:anomaly_detector_excluded_time_ranges ->
+  ?metric_timezone:anomaly_detector_metric_timezone ->
   unit ->
-  put_alarm_mute_rule_input
-
-val make_metric_stream_entry :
-  ?output_format:metric_stream_output_format ->
-  ?state:metric_stream_state ->
-  ?firehose_arn:amazon_resource_name ->
-  ?name:metric_stream_name ->
-  ?last_update_date:timestamp ->
-  ?creation_date:timestamp ->
-  ?arn:amazon_resource_name ->
-  unit ->
-  metric_stream_entry
-
-val make_message_data : ?value:message_data_value -> ?code:message_data_code -> unit -> message_data
-
-val make_metric_alarm :
-  ?evaluation_interval:evaluation_interval ->
-  ?evaluation_criteria:evaluation_criteria ->
-  ?evaluation_window:evaluation_window ->
-  ?state_transitioned_timestamp:timestamp ->
-  ?evaluation_state:evaluation_state ->
-  ?threshold_metric_id:metric_id ->
-  ?metrics:metric_data_queries ->
-  ?evaluate_low_sample_count_percentile:evaluate_low_sample_count_percentile ->
-  ?treat_missing_data:treat_missing_data ->
-  ?comparison_operator:comparison_operator ->
-  ?threshold:threshold ->
-  ?datapoints_to_alarm:datapoints_to_alarm ->
-  ?evaluation_periods:evaluation_periods ->
-  ?unit_:standard_unit ->
-  ?period:period ->
-  ?dimensions:dimensions ->
-  ?extended_statistic:extended_statistic ->
-  ?statistic:statistic ->
-  ?namespace:namespace ->
-  ?metric_name:metric_name ->
-  ?state_updated_timestamp:timestamp ->
-  ?state_reason_data:state_reason_data ->
-  ?state_reason:state_reason ->
-  ?state_value:state_value ->
-  ?insufficient_data_actions:resource_list ->
-  ?alarm_actions:resource_list ->
-  ?ok_actions:resource_list ->
-  ?actions_enabled:actions_enabled ->
-  ?alarm_configuration_updated_timestamp:timestamp ->
-  ?alarm_description:alarm_description ->
-  ?alarm_arn:alarm_arn ->
-  ?alarm_name:alarm_name ->
-  unit ->
-  metric_alarm
-
-val make_managed_rule_state :
-  state:insight_rule_state -> rule_name:insight_rule_name -> unit -> managed_rule_state
-
-val make_managed_rule_description :
-  ?rule_state:managed_rule_state ->
-  ?resource_ar_n:amazon_resource_name ->
-  ?template_name:template_name ->
-  unit ->
-  managed_rule_description
-
-val make_log_alarm :
-  ?action_log_line_role_arn:action_log_line_role_arn ->
-  ?action_log_line_count:action_log_line_count ->
-  ?evaluation_state:evaluation_state ->
-  ?state_transitioned_timestamp:timestamp ->
-  ?treat_missing_data:treat_missing_data ->
-  ?comparison_operator:comparison_operator ->
-  ?threshold:threshold ->
-  ?query_results_to_alarm:query_results_to_alarm ->
-  ?query_results_to_evaluate:query_results_to_evaluate ->
-  ?scheduled_query_configuration:scheduled_query_configuration ->
-  ?state_updated_timestamp:timestamp ->
-  ?state_reason_data:state_reason_data ->
-  ?state_reason:state_reason ->
-  ?state_value:state_value ->
-  ?insufficient_data_actions:resource_list ->
-  ?alarm_actions:resource_list ->
-  ?ok_actions:resource_list ->
-  ?actions_enabled:actions_enabled ->
-  ?alarm_configuration_updated_timestamp:timestamp ->
-  ?alarm_description:alarm_description ->
-  ?alarm_arn:alarm_arn ->
-  ?alarm_name:alarm_name ->
-  unit ->
-  log_alarm
-
-val make_list_tags_for_resource_output : ?tags:tag_list -> unit -> list_tags_for_resource_output
-
-val make_list_tags_for_resource_input :
-  resource_ar_n:amazon_resource_name -> unit -> list_tags_for_resource_input
-
-val make_list_metrics_output :
-  ?owning_accounts:owning_accounts ->
-  ?next_token:next_token ->
-  ?metrics:metrics ->
-  unit ->
-  list_metrics_output
-
-val make_dimension_filter :
-  ?value:dimension_value -> name:dimension_name -> unit -> dimension_filter
-
-val make_list_metrics_input :
-  ?owning_account:account_id ->
-  ?include_linked_accounts:include_linked_accounts ->
-  ?recently_active:recently_active ->
-  ?next_token:next_token ->
-  ?dimensions:dimension_filters ->
-  ?metric_name:metric_name ->
-  ?namespace:namespace ->
-  unit ->
-  list_metrics_input
-
-val make_list_metric_streams_output :
-  ?entries:metric_stream_entries -> ?next_token:next_token -> unit -> list_metric_streams_output
-
-val make_list_metric_streams_input :
-  ?max_results:list_metric_streams_max_results ->
-  ?next_token:next_token ->
-  unit ->
-  list_metric_streams_input
-
-val make_list_managed_insight_rules_output :
-  ?next_token:next_token ->
-  ?managed_rules:managed_rule_descriptions ->
-  unit ->
-  list_managed_insight_rules_output
-
-val make_list_managed_insight_rules_input :
-  ?max_results:insight_rule_max_results ->
-  ?next_token:next_token ->
-  resource_ar_n:amazon_resource_name ->
-  unit ->
-  list_managed_insight_rules_input
-
-val make_dashboard_entry :
-  ?size:size ->
-  ?last_modified:last_modified ->
-  ?dashboard_arn:dashboard_arn ->
-  ?dashboard_name:dashboard_name ->
-  unit ->
-  dashboard_entry
-
-val make_list_dashboards_output :
-  ?next_token:next_token -> ?dashboard_entries:dashboard_entries -> unit -> list_dashboards_output
-
-val make_list_dashboards_input :
-  ?next_token:next_token ->
-  ?dashboard_name_prefix:dashboard_name_prefix ->
-  unit ->
-  list_dashboards_input
-
-val make_alarm_mute_rule_summary :
-  ?last_updated_timestamp:timestamp ->
-  ?mute_type:mute_type ->
-  ?status:alarm_mute_rule_status ->
-  ?expire_date:timestamp ->
-  ?alarm_mute_rule_arn:arn ->
-  unit ->
-  alarm_mute_rule_summary
-
-val make_list_alarm_mute_rules_output :
-  ?next_token:next_token ->
-  ?alarm_mute_rule_summaries:alarm_mute_rule_summaries ->
-  unit ->
-  list_alarm_mute_rules_output
-
-val make_list_alarm_mute_rules_input :
-  ?next_token:next_token ->
-  ?max_records:max_records ->
-  ?statuses:alarm_mute_rule_statuses ->
-  ?alarm_name:name ->
-  unit ->
-  list_alarm_mute_rules_input
-
-val make_label_options : ?timezone:get_metric_data_label_timezone -> unit -> label_options
-
-val make_insight_rule :
-  ?apply_on_transformed_logs:insight_rule_on_transformed_logs ->
-  ?managed_rule:insight_rule_is_managed ->
-  definition:insight_rule_definition ->
-  schema:insight_rule_schema ->
-  state:insight_rule_state ->
-  name:insight_rule_name ->
-  unit ->
-  insight_rule
-
-val make_insight_rule_metric_datapoint :
-  ?maximum:insight_rule_unbound_double ->
-  ?minimum:insight_rule_unbound_double ->
-  ?sum:insight_rule_unbound_double ->
-  ?average:insight_rule_unbound_double ->
-  ?sample_count:insight_rule_unbound_double ->
-  ?max_contributor_value:insight_rule_unbound_double ->
-  ?unique_contributors:insight_rule_unbound_double ->
-  timestamp:timestamp ->
-  unit ->
-  insight_rule_metric_datapoint
-
-val make_insight_rule_contributor_datapoint :
-  approximate_value:insight_rule_unbound_double ->
-  timestamp:timestamp ->
-  unit ->
-  insight_rule_contributor_datapoint
-
-val make_insight_rule_contributor :
-  datapoints:insight_rule_contributor_datapoints ->
-  approximate_aggregate_value:insight_rule_unbound_double ->
-  keys:insight_rule_contributor_keys ->
-  unit ->
-  insight_rule_contributor
-
-val make_get_o_tel_enrichment_output :
-  status:o_tel_enrichment_status -> unit -> get_o_tel_enrichment_output
-
-val make_get_o_tel_enrichment_input : unit -> unit
-
-val make_get_metric_widget_image_output :
-  ?metric_widget_image:metric_widget_image -> unit -> get_metric_widget_image_output
-
-val make_get_metric_widget_image_input :
-  ?output_format:output_format ->
-  metric_widget:metric_widget ->
-  unit ->
-  get_metric_widget_image_input
-
-val make_get_metric_stream_output :
-  ?include_linked_accounts_metrics:include_linked_accounts_metrics ->
-  ?statistics_configurations:metric_stream_statistics_configurations ->
-  ?output_format:metric_stream_output_format ->
-  ?last_update_date:timestamp ->
-  ?creation_date:timestamp ->
-  ?state:metric_stream_state ->
-  ?role_arn:amazon_resource_name ->
-  ?firehose_arn:amazon_resource_name ->
-  ?exclude_filters:metric_stream_filters ->
-  ?include_filters:metric_stream_filters ->
-  ?name:metric_stream_name ->
-  ?arn:amazon_resource_name ->
-  unit ->
-  get_metric_stream_output
-
-val make_get_metric_stream_input : name:metric_stream_name -> unit -> get_metric_stream_input
-
-val make_datapoint :
-  ?extended_statistics:datapoint_value_map ->
-  ?unit_:standard_unit ->
-  ?maximum:datapoint_value ->
-  ?minimum:datapoint_value ->
-  ?sum:datapoint_value ->
-  ?average:datapoint_value ->
-  ?sample_count:datapoint_value ->
-  ?timestamp:timestamp ->
-  unit ->
-  datapoint
-
-val make_get_metric_statistics_output :
-  ?datapoints:datapoints -> ?label:metric_label -> unit -> get_metric_statistics_output
-
-val make_get_metric_statistics_input :
-  ?unit_:standard_unit ->
-  ?extended_statistics:extended_statistics ->
-  ?statistics:statistics ->
-  ?dimensions:dimensions ->
-  period:period ->
-  end_time:timestamp ->
-  start_time:timestamp ->
-  metric_name:metric_name ->
-  namespace:namespace ->
-  unit ->
-  get_metric_statistics_input
-
-val make_get_metric_data_output :
-  ?messages:metric_data_result_messages ->
-  ?next_token:next_token ->
-  ?metric_data_results:metric_data_results ->
-  unit ->
-  get_metric_data_output
-
-val make_get_metric_data_input :
-  ?label_options:label_options ->
-  ?max_datapoints:get_metric_data_max_datapoints ->
-  ?scan_by:scan_by ->
-  ?next_token:next_token ->
-  end_time:timestamp ->
-  start_time:timestamp ->
-  metric_data_queries:metric_data_queries ->
-  unit ->
-  get_metric_data_input
-
-val make_get_insight_rule_report_output :
-  ?metric_datapoints:insight_rule_metric_datapoints ->
-  ?contributors:insight_rule_contributors ->
-  ?approximate_unique_count:insight_rule_unbound_long ->
-  ?aggregate_value:insight_rule_unbound_double ->
-  ?aggregation_statistic:insight_rule_aggregation_statistic ->
-  ?key_labels:insight_rule_contributor_key_labels ->
-  unit ->
-  get_insight_rule_report_output
-
-val make_get_insight_rule_report_input :
-  ?order_by:insight_rule_order_by ->
-  ?metrics:insight_rule_metric_list ->
-  ?max_contributor_count:insight_rule_unbound_integer ->
-  period:period ->
-  end_time:timestamp ->
-  start_time:timestamp ->
-  rule_name:insight_rule_name ->
-  unit ->
-  get_insight_rule_report_input
-
-val make_get_dataset_output :
-  ?kms_key_arn:kms_key_arn -> arn:dataset_arn -> dataset_id:dataset_id -> unit -> get_dataset_output
-
-val make_get_dataset_input : dataset_identifier:dataset_identifier -> unit -> get_dataset_input
-
-val make_get_dashboard_output :
-  ?dashboard_name:dashboard_name ->
-  ?dashboard_body:dashboard_body ->
-  ?dashboard_arn:dashboard_arn ->
-  unit ->
-  get_dashboard_output
-
-val make_get_dashboard_input : dashboard_name:dashboard_name -> unit -> get_dashboard_input
-
-val make_get_alarm_mute_rule_output :
-  ?mute_type:mute_type ->
-  ?last_updated_timestamp:timestamp ->
-  ?status:alarm_mute_rule_status ->
-  ?expire_date:timestamp ->
-  ?start_date:timestamp ->
-  ?mute_targets:mute_targets ->
-  ?rule:rule ->
-  ?description:alarm_description ->
-  ?alarm_mute_rule_arn:arn ->
-  ?name:name ->
-  unit ->
-  get_alarm_mute_rule_output
-
-val make_get_alarm_mute_rule_input : alarm_mute_rule_name:name -> unit -> get_alarm_mute_rule_input
-
-val make_enable_insight_rules_output :
-  ?failures:batch_failures -> unit -> enable_insight_rules_output
-
-val make_enable_insight_rules_input :
-  rule_names:insight_rule_names -> unit -> enable_insight_rules_input
-
-val make_enable_alarm_actions_input : alarm_names:alarm_names -> unit -> enable_alarm_actions_input
-val make_disassociate_dataset_kms_key_output : unit -> unit
-
-val make_disassociate_dataset_kms_key_input :
-  dataset_identifier:dataset_identifier -> unit -> disassociate_dataset_kms_key_input
-
-val make_disable_insight_rules_output :
-  ?failures:batch_failures -> unit -> disable_insight_rules_output
-
-val make_disable_insight_rules_input :
-  rule_names:insight_rule_names -> unit -> disable_insight_rules_input
-
-val make_disable_alarm_actions_input :
-  alarm_names:alarm_names -> unit -> disable_alarm_actions_input
-
-val make_describe_insight_rules_output :
-  ?insight_rules:insight_rules -> ?next_token:next_token -> unit -> describe_insight_rules_output
-
-val make_describe_insight_rules_input :
-  ?max_results:insight_rule_max_results ->
-  ?next_token:next_token ->
-  unit ->
-  describe_insight_rules_input
+  anomaly_detector_configuration
 
 val make_anomaly_detector :
-  ?metric_math_anomaly_detector:metric_math_anomaly_detector ->
-  ?single_metric_anomaly_detector:single_metric_anomaly_detector ->
-  ?metric_characteristics:metric_characteristics ->
-  ?state_value:anomaly_detector_state_value ->
-  ?configuration:anomaly_detector_configuration ->
-  ?stat:anomaly_detector_metric_stat ->
-  ?dimensions:dimensions ->
-  ?metric_name:metric_name ->
   ?namespace:namespace ->
+  ?metric_name:metric_name ->
+  ?dimensions:dimensions ->
+  ?stat:anomaly_detector_metric_stat ->
+  ?configuration:anomaly_detector_configuration ->
+  ?state_value:anomaly_detector_state_value ->
+  ?metric_characteristics:metric_characteristics ->
+  ?single_metric_anomaly_detector:single_metric_anomaly_detector ->
+  ?metric_math_anomaly_detector:metric_math_anomaly_detector ->
   unit ->
   anomaly_detector
 
-val make_describe_anomaly_detectors_output :
-  ?next_token:next_token ->
-  ?anomaly_detectors:anomaly_detectors ->
-  unit ->
-  describe_anomaly_detectors_output
+val make_associate_dataset_kms_key_output : unit -> unit
 
-val make_describe_anomaly_detectors_input :
-  ?anomaly_detector_types:anomaly_detector_types ->
-  ?dimensions:dimensions ->
-  ?metric_name:metric_name ->
-  ?namespace:namespace ->
-  ?max_results:max_returned_results_count ->
-  ?next_token:next_token ->
+val make_associate_dataset_kms_key_input :
+  dataset_identifier:dataset_identifier ->
+  kms_key_arn:kms_key_arn ->
   unit ->
-  describe_anomaly_detectors_input
+  associate_dataset_kms_key_input
 
-val make_describe_alarms_for_metric_output :
-  ?metric_alarms:metric_alarms -> unit -> describe_alarms_for_metric_output
-
-val make_describe_alarms_for_metric_input :
-  ?unit_:standard_unit ->
-  ?period:period ->
-  ?dimensions:dimensions ->
-  ?extended_statistic:extended_statistic ->
-  ?statistic:statistic ->
-  namespace:namespace ->
-  metric_name:metric_name ->
+val make_partial_failure :
+  ?failure_resource:failure_resource ->
+  ?exception_type:exception_type ->
+  ?failure_code:failure_code ->
+  ?failure_description:failure_description ->
   unit ->
-  describe_alarms_for_metric_input
+  partial_failure
 
 val make_composite_alarm :
-  ?actions_suppressor_extension_period:suppressor_period ->
-  ?actions_suppressor_wait_period:suppressor_period ->
-  ?actions_suppressor:alarm_arn ->
-  ?actions_suppressed_reason:actions_suppressed_reason ->
-  ?actions_suppressed_by:actions_suppressed_by ->
-  ?state_transitioned_timestamp:timestamp ->
-  ?state_value:state_value ->
-  ?state_updated_timestamp:timestamp ->
-  ?state_reason_data:state_reason_data ->
-  ?state_reason:state_reason ->
-  ?ok_actions:resource_list ->
-  ?insufficient_data_actions:resource_list ->
-  ?alarm_rule:alarm_rule ->
-  ?alarm_name:alarm_name ->
-  ?alarm_description:alarm_description ->
-  ?alarm_configuration_updated_timestamp:timestamp ->
-  ?alarm_arn:alarm_arn ->
-  ?alarm_actions:resource_list ->
   ?actions_enabled:actions_enabled ->
+  ?alarm_actions:resource_list ->
+  ?alarm_arn:alarm_arn ->
+  ?alarm_configuration_updated_timestamp:timestamp ->
+  ?alarm_description:alarm_description ->
+  ?alarm_name:alarm_name ->
+  ?alarm_rule:alarm_rule ->
+  ?insufficient_data_actions:resource_list ->
+  ?ok_actions:resource_list ->
+  ?state_reason:state_reason ->
+  ?state_reason_data:state_reason_data ->
+  ?state_updated_timestamp:timestamp ->
+  ?state_value:state_value ->
+  ?state_transitioned_timestamp:timestamp ->
+  ?actions_suppressed_by:actions_suppressed_by ->
+  ?actions_suppressed_reason:actions_suppressed_reason ->
+  ?actions_suppressor:alarm_arn ->
+  ?actions_suppressor_wait_period:suppressor_period ->
+  ?actions_suppressor_extension_period:suppressor_period ->
   unit ->
   composite_alarm
 
-val make_describe_alarms_output :
-  ?next_token:next_token ->
-  ?log_alarms:log_alarms ->
-  ?metric_alarms:metric_alarms ->
-  ?composite_alarms:composite_alarms ->
+val make_dashboard_entry :
+  ?dashboard_name:dashboard_name ->
+  ?dashboard_arn:dashboard_arn ->
+  ?last_modified:last_modified ->
+  ?size:size ->
   unit ->
-  describe_alarms_output
+  dashboard_entry
 
-val make_describe_alarms_input :
-  ?next_token:next_token ->
-  ?max_records:max_records ->
-  ?action_prefix:action_prefix ->
-  ?state_value:state_value ->
-  ?parents_of_alarm_name:alarm_name ->
-  ?children_of_alarm_name:alarm_name ->
-  ?alarm_types:alarm_types ->
-  ?alarm_name_prefix:alarm_name_prefix ->
-  ?alarm_names:alarm_names ->
-  unit ->
-  describe_alarms_input
+val make_dashboard_validation_message :
+  ?data_path:data_path -> ?message:message -> unit -> dashboard_validation_message
 
-val make_alarm_history_item :
-  ?alarm_contributor_attributes:contributor_attributes ->
-  ?history_data:history_data ->
-  ?history_summary:history_summary ->
-  ?history_item_type:history_item_type ->
+val make_datapoint :
   ?timestamp:timestamp ->
-  ?alarm_type:alarm_type ->
-  ?alarm_contributor_id:contributor_id ->
-  ?alarm_name:alarm_name ->
+  ?sample_count:datapoint_value ->
+  ?average:datapoint_value ->
+  ?sum:datapoint_value ->
+  ?minimum:datapoint_value ->
+  ?maximum:datapoint_value ->
+  ?unit_:standard_unit ->
+  ?extended_statistics:datapoint_value_map ->
   unit ->
-  alarm_history_item
+  datapoint
 
-val make_describe_alarm_history_output :
-  ?next_token:next_token ->
-  ?alarm_history_items:alarm_history_items ->
-  unit ->
-  describe_alarm_history_output
+val make_delete_alarm_mute_rule_input :
+  alarm_mute_rule_name:name -> unit -> delete_alarm_mute_rule_input
 
-val make_describe_alarm_history_input :
-  ?scan_by:scan_by ->
-  ?next_token:next_token ->
-  ?max_records:max_records ->
-  ?end_date:timestamp ->
-  ?start_date:timestamp ->
-  ?history_item_type:history_item_type ->
-  ?alarm_types:alarm_types ->
-  ?alarm_contributor_id:contributor_id ->
-  ?alarm_name:alarm_name ->
-  unit ->
-  describe_alarm_history_input
+val make_delete_alarms_input : alarm_names:alarm_names -> unit -> delete_alarms_input
+val make_delete_anomaly_detector_output : unit -> unit
 
-val make_alarm_contributor :
-  ?state_transitioned_timestamp:timestamp ->
-  state_reason:state_reason ->
-  contributor_attributes:contributor_attributes ->
-  contributor_id:contributor_id ->
+val make_delete_anomaly_detector_input :
+  ?namespace:namespace ->
+  ?metric_name:metric_name ->
+  ?dimensions:dimensions ->
+  ?stat:anomaly_detector_metric_stat ->
+  ?single_metric_anomaly_detector:single_metric_anomaly_detector ->
+  ?metric_math_anomaly_detector:metric_math_anomaly_detector ->
   unit ->
-  alarm_contributor
+  delete_anomaly_detector_input
+
+val make_delete_dashboards_output : unit -> unit
+
+val make_delete_dashboards_input :
+  dashboard_names:dashboard_names -> unit -> delete_dashboards_input
+
+val make_delete_insight_rules_output :
+  ?failures:batch_failures -> unit -> delete_insight_rules_output
+
+val make_delete_insight_rules_input :
+  rule_names:insight_rule_names -> unit -> delete_insight_rules_input
+
+val make_delete_metric_stream_output : unit -> unit
+val make_delete_metric_stream_input : name:metric_stream_name -> unit -> delete_metric_stream_input
 
 val make_describe_alarm_contributors_output :
   ?next_token:next_token ->
@@ -814,1149 +198,662 @@ val make_describe_alarm_contributors_output :
 val make_describe_alarm_contributors_input :
   ?next_token:next_token -> alarm_name:alarm_name -> unit -> describe_alarm_contributors_input
 
-val make_delete_metric_stream_output : unit -> unit
-val make_delete_metric_stream_input : name:metric_stream_name -> unit -> delete_metric_stream_input
+val make_describe_alarm_history_output :
+  ?alarm_history_items:alarm_history_items ->
+  ?next_token:next_token ->
+  unit ->
+  describe_alarm_history_output
 
-val make_delete_insight_rules_output :
-  ?failures:batch_failures -> unit -> delete_insight_rules_output
+val make_describe_alarm_history_input :
+  ?alarm_name:alarm_name ->
+  ?alarm_contributor_id:contributor_id ->
+  ?alarm_types:alarm_types ->
+  ?history_item_type:history_item_type ->
+  ?start_date:timestamp ->
+  ?end_date:timestamp ->
+  ?max_records:max_records ->
+  ?next_token:next_token ->
+  ?scan_by:scan_by ->
+  unit ->
+  describe_alarm_history_input
 
-val make_delete_insight_rules_input :
-  rule_names:insight_rule_names -> unit -> delete_insight_rules_input
+val make_tag : key:tag_key -> value:tag_value -> unit -> tag
 
-val make_delete_dashboards_output : unit -> unit
+val make_schedule_configuration :
+  ?start_time_offset:start_time_offset ->
+  ?end_time_offset:end_time_offset ->
+  schedule_expression:schedule_expression ->
+  unit ->
+  schedule_configuration
 
-val make_delete_dashboards_input :
-  dashboard_names:dashboard_names -> unit -> delete_dashboards_input
+val make_scheduled_query_configuration :
+  ?log_group_identifiers:log_group_identifiers ->
+  ?query_ar_n:amazon_resource_name ->
+  ?tags:tag_list ->
+  query_string:query_string ->
+  scheduled_query_role_ar_n:amazon_resource_name ->
+  schedule_configuration:schedule_configuration ->
+  aggregation_expression:aggregation_expression ->
+  unit ->
+  scheduled_query_configuration
 
-val make_delete_anomaly_detector_output : unit -> unit
+val make_log_alarm :
+  ?alarm_name:alarm_name ->
+  ?alarm_arn:alarm_arn ->
+  ?alarm_description:alarm_description ->
+  ?alarm_configuration_updated_timestamp:timestamp ->
+  ?actions_enabled:actions_enabled ->
+  ?ok_actions:resource_list ->
+  ?alarm_actions:resource_list ->
+  ?insufficient_data_actions:resource_list ->
+  ?state_value:state_value ->
+  ?state_reason:state_reason ->
+  ?state_reason_data:state_reason_data ->
+  ?state_updated_timestamp:timestamp ->
+  ?scheduled_query_configuration:scheduled_query_configuration ->
+  ?query_results_to_evaluate:query_results_to_evaluate ->
+  ?query_results_to_alarm:query_results_to_alarm ->
+  ?threshold:threshold ->
+  ?comparison_operator:comparison_operator ->
+  ?treat_missing_data:treat_missing_data ->
+  ?state_transitioned_timestamp:timestamp ->
+  ?evaluation_state:evaluation_state ->
+  ?action_log_line_count:action_log_line_count ->
+  ?action_log_line_role_arn:action_log_line_role_arn ->
+  unit ->
+  log_alarm
 
-val make_delete_anomaly_detector_input :
-  ?metric_math_anomaly_detector:metric_math_anomaly_detector ->
-  ?single_metric_anomaly_detector:single_metric_anomaly_detector ->
-  ?stat:anomaly_detector_metric_stat ->
-  ?dimensions:dimensions ->
+val make_sliding_window : unit -> unit
+val make_wall_clock_window : ?timezone:timezone -> unit -> wall_clock_window
+
+val make_metric_alarm :
+  ?alarm_name:alarm_name ->
+  ?alarm_arn:alarm_arn ->
+  ?alarm_description:alarm_description ->
+  ?alarm_configuration_updated_timestamp:timestamp ->
+  ?actions_enabled:actions_enabled ->
+  ?ok_actions:resource_list ->
+  ?alarm_actions:resource_list ->
+  ?insufficient_data_actions:resource_list ->
+  ?state_value:state_value ->
+  ?state_reason:state_reason ->
+  ?state_reason_data:state_reason_data ->
+  ?state_updated_timestamp:timestamp ->
   ?metric_name:metric_name ->
   ?namespace:namespace ->
+  ?statistic:statistic ->
+  ?extended_statistic:extended_statistic ->
+  ?dimensions:dimensions ->
+  ?period:period ->
+  ?unit_:standard_unit ->
+  ?evaluation_periods:evaluation_periods ->
+  ?datapoints_to_alarm:datapoints_to_alarm ->
+  ?threshold:threshold ->
+  ?comparison_operator:comparison_operator ->
+  ?treat_missing_data:treat_missing_data ->
+  ?evaluate_low_sample_count_percentile:evaluate_low_sample_count_percentile ->
+  ?metrics:metric_data_queries ->
+  ?threshold_metric_id:metric_id ->
+  ?evaluation_state:evaluation_state ->
+  ?state_transitioned_timestamp:timestamp ->
+  ?evaluation_window:evaluation_window ->
+  ?evaluation_criteria:evaluation_criteria ->
+  ?evaluation_interval:evaluation_interval ->
   unit ->
-  delete_anomaly_detector_input
+  metric_alarm
 
-val make_delete_alarms_input : alarm_names:alarm_names -> unit -> delete_alarms_input
-
-val make_delete_alarm_mute_rule_input :
-  alarm_mute_rule_name:name -> unit -> delete_alarm_mute_rule_input
-
-val make_associate_dataset_kms_key_output : unit -> unit
-
-val make_associate_dataset_kms_key_input :
-  kms_key_arn:kms_key_arn ->
-  dataset_identifier:dataset_identifier ->
+val make_describe_alarms_output :
+  ?composite_alarms:composite_alarms ->
+  ?metric_alarms:metric_alarms ->
+  ?log_alarms:log_alarms ->
+  ?next_token:next_token ->
   unit ->
-  associate_dataset_kms_key_input
+  describe_alarms_output
+
+val make_describe_alarms_input :
+  ?alarm_names:alarm_names ->
+  ?alarm_name_prefix:alarm_name_prefix ->
+  ?alarm_types:alarm_types ->
+  ?children_of_alarm_name:alarm_name ->
+  ?parents_of_alarm_name:alarm_name ->
+  ?state_value:state_value ->
+  ?action_prefix:action_prefix ->
+  ?max_records:max_records ->
+  ?next_token:next_token ->
+  unit ->
+  describe_alarms_input
+
+val make_describe_alarms_for_metric_output :
+  ?metric_alarms:metric_alarms -> unit -> describe_alarms_for_metric_output
+
+val make_describe_alarms_for_metric_input :
+  ?statistic:statistic ->
+  ?extended_statistic:extended_statistic ->
+  ?dimensions:dimensions ->
+  ?period:period ->
+  ?unit_:standard_unit ->
+  metric_name:metric_name ->
+  namespace:namespace ->
+  unit ->
+  describe_alarms_for_metric_input
+
+val make_describe_anomaly_detectors_output :
+  ?anomaly_detectors:anomaly_detectors ->
+  ?next_token:next_token ->
+  unit ->
+  describe_anomaly_detectors_output
+
+val make_describe_anomaly_detectors_input :
+  ?next_token:next_token ->
+  ?max_results:max_returned_results_count ->
+  ?namespace:namespace ->
+  ?metric_name:metric_name ->
+  ?dimensions:dimensions ->
+  ?anomaly_detector_types:anomaly_detector_types ->
+  unit ->
+  describe_anomaly_detectors_input
+
+val make_insight_rule :
+  ?managed_rule:insight_rule_is_managed ->
+  ?apply_on_transformed_logs:insight_rule_on_transformed_logs ->
+  name:insight_rule_name ->
+  state:insight_rule_state ->
+  schema:insight_rule_schema ->
+  definition:insight_rule_definition ->
+  unit ->
+  insight_rule
+
+val make_describe_insight_rules_output :
+  ?next_token:next_token -> ?insight_rules:insight_rules -> unit -> describe_insight_rules_output
+
+val make_describe_insight_rules_input :
+  ?next_token:next_token ->
+  ?max_results:insight_rule_max_results ->
+  unit ->
+  describe_insight_rules_input
+
+val make_dimension_filter :
+  ?value:dimension_value -> name:dimension_name -> unit -> dimension_filter
+
+val make_disable_alarm_actions_input :
+  alarm_names:alarm_names -> unit -> disable_alarm_actions_input
+
+val make_disable_insight_rules_output :
+  ?failures:batch_failures -> unit -> disable_insight_rules_output
+
+val make_disable_insight_rules_input :
+  rule_names:insight_rule_names -> unit -> disable_insight_rules_input
+
+val make_disassociate_dataset_kms_key_output : unit -> unit
+
+val make_disassociate_dataset_kms_key_input :
+  dataset_identifier:dataset_identifier -> unit -> disassociate_dataset_kms_key_input
+
+val make_enable_alarm_actions_input : alarm_names:alarm_names -> unit -> enable_alarm_actions_input
+
+val make_enable_insight_rules_output :
+  ?failures:batch_failures -> unit -> enable_insight_rules_output
+
+val make_enable_insight_rules_input :
+  rule_names:insight_rule_names -> unit -> enable_insight_rules_input
+
+val make_entity :
+  ?key_attributes:entity_key_attributes_map -> ?attributes:entity_attributes_map -> unit -> entity
+
+val make_statistic_set :
+  sample_count:datapoint_value ->
+  sum:datapoint_value ->
+  minimum:datapoint_value ->
+  maximum:datapoint_value ->
+  unit ->
+  statistic_set
+
+val make_metric_datum :
+  ?dimensions:dimensions ->
+  ?timestamp:timestamp ->
+  ?value:datapoint_value ->
+  ?statistic_values:statistic_set ->
+  ?values:values ->
+  ?counts:counts ->
+  ?unit_:standard_unit ->
+  ?storage_resolution:storage_resolution ->
+  metric_name:metric_name ->
+  unit ->
+  metric_datum
+
+val make_entity_metric_data :
+  ?entity:entity -> ?metric_data:metric_data -> unit -> entity_metric_data
+
+val make_mute_targets : alarm_names:mute_target_alarm_name_list -> unit -> mute_targets
+
+val make_schedule :
+  ?timezone:timezone -> expression:expression -> duration:duration -> unit -> schedule
+
+val make_rule : schedule:schedule -> unit -> rule
+
+val make_get_alarm_mute_rule_output :
+  ?name:name ->
+  ?alarm_mute_rule_arn:arn ->
+  ?description:alarm_description ->
+  ?rule:rule ->
+  ?mute_targets:mute_targets ->
+  ?start_date:timestamp ->
+  ?expire_date:timestamp ->
+  ?status:alarm_mute_rule_status ->
+  ?last_updated_timestamp:timestamp ->
+  ?mute_type:mute_type ->
+  unit ->
+  get_alarm_mute_rule_output
+
+val make_get_alarm_mute_rule_input : alarm_mute_rule_name:name -> unit -> get_alarm_mute_rule_input
+
+val make_get_dashboard_output :
+  ?dashboard_arn:dashboard_arn ->
+  ?dashboard_body:dashboard_body ->
+  ?dashboard_name:dashboard_name ->
+  unit ->
+  get_dashboard_output
+
+val make_get_dashboard_input : dashboard_name:dashboard_name -> unit -> get_dashboard_input
+
+val make_get_dataset_output :
+  ?kms_key_arn:kms_key_arn -> dataset_id:dataset_id -> arn:dataset_arn -> unit -> get_dataset_output
+
+val make_get_dataset_input : dataset_identifier:dataset_identifier -> unit -> get_dataset_input
+
+val make_insight_rule_metric_datapoint :
+  ?unique_contributors:insight_rule_unbound_double ->
+  ?max_contributor_value:insight_rule_unbound_double ->
+  ?sample_count:insight_rule_unbound_double ->
+  ?average:insight_rule_unbound_double ->
+  ?sum:insight_rule_unbound_double ->
+  ?minimum:insight_rule_unbound_double ->
+  ?maximum:insight_rule_unbound_double ->
+  timestamp:timestamp ->
+  unit ->
+  insight_rule_metric_datapoint
+
+val make_insight_rule_contributor_datapoint :
+  timestamp:timestamp ->
+  approximate_value:insight_rule_unbound_double ->
+  unit ->
+  insight_rule_contributor_datapoint
+
+val make_insight_rule_contributor :
+  keys:insight_rule_contributor_keys ->
+  approximate_aggregate_value:insight_rule_unbound_double ->
+  datapoints:insight_rule_contributor_datapoints ->
+  unit ->
+  insight_rule_contributor
+
+val make_get_insight_rule_report_output :
+  ?key_labels:insight_rule_contributor_key_labels ->
+  ?aggregation_statistic:insight_rule_aggregation_statistic ->
+  ?aggregate_value:insight_rule_unbound_double ->
+  ?approximate_unique_count:insight_rule_unbound_long ->
+  ?contributors:insight_rule_contributors ->
+  ?metric_datapoints:insight_rule_metric_datapoints ->
+  unit ->
+  get_insight_rule_report_output
+
+val make_get_insight_rule_report_input :
+  ?max_contributor_count:insight_rule_unbound_integer ->
+  ?metrics:insight_rule_metric_list ->
+  ?order_by:insight_rule_order_by ->
+  rule_name:insight_rule_name ->
+  start_time:timestamp ->
+  end_time:timestamp ->
+  period:period ->
+  unit ->
+  get_insight_rule_report_input
+
+val make_message_data : ?code:message_data_code -> ?value:message_data_value -> unit -> message_data
+
+val make_get_metric_data_output :
+  ?metric_data_results:metric_data_results ->
+  ?next_token:next_token ->
+  ?messages:metric_data_result_messages ->
+  unit ->
+  get_metric_data_output
+
+val make_label_options : ?timezone:get_metric_data_label_timezone -> unit -> label_options
+
+val make_get_metric_data_input :
+  ?next_token:next_token ->
+  ?scan_by:scan_by ->
+  ?max_datapoints:get_metric_data_max_datapoints ->
+  ?label_options:label_options ->
+  metric_data_queries:metric_data_queries ->
+  start_time:timestamp ->
+  end_time:timestamp ->
+  unit ->
+  get_metric_data_input
+
+val make_get_metric_statistics_output :
+  ?label:metric_label -> ?datapoints:datapoints -> unit -> get_metric_statistics_output
+
+val make_get_metric_statistics_input :
+  ?dimensions:dimensions ->
+  ?statistics:statistics ->
+  ?extended_statistics:extended_statistics ->
+  ?unit_:standard_unit ->
+  namespace:namespace ->
+  metric_name:metric_name ->
+  start_time:timestamp ->
+  end_time:timestamp ->
+  period:period ->
+  unit ->
+  get_metric_statistics_input
+
+val make_metric_stream_statistics_metric :
+  namespace:namespace -> metric_name:metric_name -> unit -> metric_stream_statistics_metric
+
+val make_metric_stream_statistics_configuration :
+  include_metrics:metric_stream_statistics_include_metrics ->
+  additional_statistics:metric_stream_statistics_additional_statistics ->
+  unit ->
+  metric_stream_statistics_configuration
+
+val make_metric_stream_filter :
+  ?namespace:namespace ->
+  ?metric_names:metric_stream_filter_metric_names ->
+  unit ->
+  metric_stream_filter
+
+val make_get_metric_stream_output :
+  ?arn:amazon_resource_name ->
+  ?name:metric_stream_name ->
+  ?include_filters:metric_stream_filters ->
+  ?exclude_filters:metric_stream_filters ->
+  ?firehose_arn:amazon_resource_name ->
+  ?role_arn:amazon_resource_name ->
+  ?state:metric_stream_state ->
+  ?creation_date:timestamp ->
+  ?last_update_date:timestamp ->
+  ?output_format:metric_stream_output_format ->
+  ?statistics_configurations:metric_stream_statistics_configurations ->
+  ?include_linked_accounts_metrics:include_linked_accounts_metrics ->
+  unit ->
+  get_metric_stream_output
+
+val make_get_metric_stream_input : name:metric_stream_name -> unit -> get_metric_stream_input
+
+val make_get_metric_widget_image_output :
+  ?metric_widget_image:metric_widget_image -> unit -> get_metric_widget_image_output
+
+val make_get_metric_widget_image_input :
+  ?output_format:output_format ->
+  metric_widget:metric_widget ->
+  unit ->
+  get_metric_widget_image_input
+
+val make_get_o_tel_enrichment_output :
+  status:o_tel_enrichment_status -> unit -> get_o_tel_enrichment_output
+
+val make_get_o_tel_enrichment_input : unit -> unit
+val make_untag_resource_output : unit -> unit
+
+val make_untag_resource_input :
+  resource_ar_n:amazon_resource_name -> tag_keys:tag_key_list -> unit -> untag_resource_input
+
+val make_tag_resource_output : unit -> unit
+
+val make_tag_resource_input :
+  resource_ar_n:amazon_resource_name -> tags:tag_list -> unit -> tag_resource_input
+
+val make_stop_o_tel_enrichment_output : unit -> unit
+val make_stop_o_tel_enrichment_input : unit -> unit
+val make_stop_metric_streams_output : unit -> unit
+val make_stop_metric_streams_input : names:metric_stream_names -> unit -> stop_metric_streams_input
+val make_start_o_tel_enrichment_output : unit -> unit
+val make_start_o_tel_enrichment_input : unit -> unit
+val make_start_metric_streams_output : unit -> unit
+
+val make_start_metric_streams_input :
+  names:metric_stream_names -> unit -> start_metric_streams_input
+
+val make_set_alarm_state_input :
+  ?state_reason_data:state_reason_data ->
+  alarm_name:alarm_name ->
+  state_value:state_value ->
+  state_reason:state_reason ->
+  unit ->
+  set_alarm_state_input
+
+val make_put_metric_stream_output : ?arn:amazon_resource_name -> unit -> put_metric_stream_output
+
+val make_put_metric_stream_input :
+  ?include_filters:metric_stream_filters ->
+  ?exclude_filters:metric_stream_filters ->
+  ?tags:tag_list ->
+  ?statistics_configurations:metric_stream_statistics_configurations ->
+  ?include_linked_accounts_metrics:include_linked_accounts_metrics ->
+  name:metric_stream_name ->
+  firehose_arn:amazon_resource_name ->
+  role_arn:amazon_resource_name ->
+  output_format:metric_stream_output_format ->
+  unit ->
+  put_metric_stream_input
+
+val make_put_metric_data_input :
+  ?metric_data:metric_data ->
+  ?entity_metric_data:entity_metric_data_list ->
+  ?strict_entity_validation:strict_entity_validation ->
+  namespace:namespace ->
+  unit ->
+  put_metric_data_input
+
+val make_put_metric_alarm_input :
+  ?alarm_description:alarm_description ->
+  ?actions_enabled:actions_enabled ->
+  ?ok_actions:resource_list ->
+  ?alarm_actions:resource_list ->
+  ?insufficient_data_actions:resource_list ->
+  ?metric_name:metric_name ->
+  ?namespace:namespace ->
+  ?statistic:statistic ->
+  ?extended_statistic:extended_statistic ->
+  ?dimensions:dimensions ->
+  ?period:period ->
+  ?unit_:standard_unit ->
+  ?evaluation_periods:evaluation_periods ->
+  ?datapoints_to_alarm:datapoints_to_alarm ->
+  ?threshold:threshold ->
+  ?comparison_operator:comparison_operator ->
+  ?treat_missing_data:treat_missing_data ->
+  ?evaluate_low_sample_count_percentile:evaluate_low_sample_count_percentile ->
+  ?metrics:metric_data_queries ->
+  ?tags:tag_list ->
+  ?threshold_metric_id:metric_id ->
+  ?evaluation_window:evaluation_window ->
+  ?evaluation_criteria:evaluation_criteria ->
+  ?evaluation_interval:evaluation_interval ->
+  alarm_name:alarm_name ->
+  unit ->
+  put_metric_alarm_input
+
+val make_put_managed_insight_rules_output :
+  ?failures:batch_failures -> unit -> put_managed_insight_rules_output
+
+val make_managed_rule :
+  ?tags:tag_list ->
+  template_name:template_name ->
+  resource_ar_n:amazon_resource_name ->
+  unit ->
+  managed_rule
+
+val make_put_managed_insight_rules_input :
+  managed_rules:managed_rules -> unit -> put_managed_insight_rules_input
+
+val make_put_log_alarm_input :
+  ?alarm_description:alarm_description ->
+  ?action_log_line_count:action_log_line_count ->
+  ?action_log_line_role_arn:action_log_line_role_arn ->
+  ?actions_enabled:actions_enabled ->
+  ?ok_actions:resource_list ->
+  ?alarm_actions:resource_list ->
+  ?insufficient_data_actions:resource_list ->
+  ?treat_missing_data:treat_missing_data ->
+  ?tags:tag_list ->
+  alarm_name:alarm_name ->
+  scheduled_query_configuration:scheduled_query_configuration ->
+  query_results_to_evaluate:query_results_to_evaluate ->
+  query_results_to_alarm:query_results_to_alarm ->
+  threshold:threshold ->
+  comparison_operator:comparison_operator ->
+  unit ->
+  put_log_alarm_input
+
+val make_put_insight_rule_output : unit -> unit
+
+val make_put_insight_rule_input :
+  ?rule_state:insight_rule_state ->
+  ?tags:tag_list ->
+  ?apply_on_transformed_logs:insight_rule_on_transformed_logs ->
+  rule_name:insight_rule_name ->
+  rule_definition:insight_rule_definition ->
+  unit ->
+  put_insight_rule_input
+
+val make_put_dashboard_output :
+  ?dashboard_validation_messages:dashboard_validation_messages -> unit -> put_dashboard_output
+
+val make_put_dashboard_input :
+  ?tags:tag_list ->
+  dashboard_name:dashboard_name ->
+  dashboard_body:dashboard_body ->
+  unit ->
+  put_dashboard_input
+
+val make_put_composite_alarm_input :
+  ?actions_enabled:actions_enabled ->
+  ?alarm_actions:resource_list ->
+  ?alarm_description:alarm_description ->
+  ?insufficient_data_actions:resource_list ->
+  ?ok_actions:resource_list ->
+  ?tags:tag_list ->
+  ?actions_suppressor:alarm_arn ->
+  ?actions_suppressor_wait_period:suppressor_period ->
+  ?actions_suppressor_extension_period:suppressor_period ->
+  alarm_name:alarm_name ->
+  alarm_rule:alarm_rule ->
+  unit ->
+  put_composite_alarm_input
+
+val make_put_anomaly_detector_output : unit -> unit
+
+val make_put_anomaly_detector_input :
+  ?namespace:namespace ->
+  ?metric_name:metric_name ->
+  ?dimensions:dimensions ->
+  ?stat:anomaly_detector_metric_stat ->
+  ?configuration:anomaly_detector_configuration ->
+  ?metric_characteristics:metric_characteristics ->
+  ?single_metric_anomaly_detector:single_metric_anomaly_detector ->
+  ?metric_math_anomaly_detector:metric_math_anomaly_detector ->
+  unit ->
+  put_anomaly_detector_input
+
+val make_put_alarm_mute_rule_input :
+  ?description:alarm_description ->
+  ?mute_targets:mute_targets ->
+  ?tags:tag_list ->
+  ?start_date:timestamp ->
+  ?expire_date:timestamp ->
+  name:name ->
+  rule:rule ->
+  unit ->
+  put_alarm_mute_rule_input
+
+val make_list_tags_for_resource_output : ?tags:tag_list -> unit -> list_tags_for_resource_output
+
+val make_list_tags_for_resource_input :
+  resource_ar_n:amazon_resource_name -> unit -> list_tags_for_resource_input
+
+val make_metric_stream_entry :
+  ?arn:amazon_resource_name ->
+  ?creation_date:timestamp ->
+  ?last_update_date:timestamp ->
+  ?name:metric_stream_name ->
+  ?firehose_arn:amazon_resource_name ->
+  ?state:metric_stream_state ->
+  ?output_format:metric_stream_output_format ->
+  unit ->
+  metric_stream_entry
+
+val make_list_metric_streams_output :
+  ?next_token:next_token -> ?entries:metric_stream_entries -> unit -> list_metric_streams_output
+
+val make_list_metric_streams_input :
+  ?next_token:next_token ->
+  ?max_results:list_metric_streams_max_results ->
+  unit ->
+  list_metric_streams_input
+
+val make_list_metrics_output :
+  ?metrics:metrics ->
+  ?next_token:next_token ->
+  ?owning_accounts:owning_accounts ->
+  unit ->
+  list_metrics_output
+
+val make_list_metrics_input :
+  ?namespace:namespace ->
+  ?metric_name:metric_name ->
+  ?dimensions:dimension_filters ->
+  ?next_token:next_token ->
+  ?recently_active:recently_active ->
+  ?include_linked_accounts:include_linked_accounts ->
+  ?owning_account:account_id ->
+  unit ->
+  list_metrics_input
+
+val make_managed_rule_state :
+  rule_name:insight_rule_name -> state:insight_rule_state -> unit -> managed_rule_state
+
+val make_managed_rule_description :
+  ?template_name:template_name ->
+  ?resource_ar_n:amazon_resource_name ->
+  ?rule_state:managed_rule_state ->
+  unit ->
+  managed_rule_description
+
+val make_list_managed_insight_rules_output :
+  ?managed_rules:managed_rule_descriptions ->
+  ?next_token:next_token ->
+  unit ->
+  list_managed_insight_rules_output
+
+val make_list_managed_insight_rules_input :
+  ?next_token:next_token ->
+  ?max_results:insight_rule_max_results ->
+  resource_ar_n:amazon_resource_name ->
+  unit ->
+  list_managed_insight_rules_input
+
+val make_list_dashboards_output :
+  ?dashboard_entries:dashboard_entries -> ?next_token:next_token -> unit -> list_dashboards_output
+
+val make_list_dashboards_input :
+  ?dashboard_name_prefix:dashboard_name_prefix ->
+  ?next_token:next_token ->
+  unit ->
+  list_dashboards_input
+
+val make_list_alarm_mute_rules_output :
+  ?alarm_mute_rule_summaries:alarm_mute_rule_summaries ->
+  ?next_token:next_token ->
+  unit ->
+  list_alarm_mute_rules_output
+
+val make_list_alarm_mute_rules_input :
+  ?alarm_name:name ->
+  ?statuses:alarm_mute_rule_statuses ->
+  ?max_records:max_records ->
+  ?next_token:next_token ->
+  unit ->
+  list_alarm_mute_rules_input
 (** {1:operations Operations} *)
-
-module AssociateDatasetKmsKey : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `ConflictException of conflict_exception
-    | `KmsAccessDeniedException of kms_access_denied_exception
-    | `KmsKeyDisabledException of kms_key_disabled_exception
-    | `KmsKeyNotFoundException of kms_key_not_found_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    associate_dataset_kms_key_input ->
-    ( associate_dataset_kms_key_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `ConflictException of conflict_exception
-      | `KmsAccessDeniedException of kms_access_denied_exception
-      | `KmsKeyDisabledException of kms_key_disabled_exception
-      | `KmsKeyNotFoundException of kms_key_not_found_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    associate_dataset_kms_key_input ->
-    ( associate_dataset_kms_key_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `ConflictException of conflict_exception
-      | `KmsAccessDeniedException of kms_access_denied_exception
-      | `KmsKeyDisabledException of kms_key_disabled_exception
-      | `KmsKeyNotFoundException of kms_key_not_found_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Associates an Amazon Web Services Key Management Service (Amazon Web Services KMS) customer \
-   managed key with the specified dataset. After this operation completes, all data published to \
-   the dataset is encrypted at rest using the specified KMS key. Callers must have [kms:Decrypt] \
-   permission on the key to read the encrypted data.\n\n\
-  \ Only the [default] dataset is supported. The [default] dataset is implicit for every account \
-   in every Region \226\128\148 you do not need to create it before calling this operation.\n\
-  \ \n\
-  \  You can call [AssociateDatasetKmsKey] on a dataset that is already associated with a KMS key \
-   to replace the existing key with a different one. To replace a key, the caller must have \
-   [kms:Decrypt] permission on both the current key and the new key.\n\
-  \  \n\
-  \   The KMS key that you specify must meet all of the following requirements:\n\
-  \   \n\
-  \    {ul\n\
-  \          {-  It must be a symmetric encryption KMS key (key spec [SYMMETRIC_DEFAULT], key \
-   usage [ENCRYPT_DECRYPT]). Asymmetric keys, HMAC keys, and key material types other than \
-   [SYMMETRIC_DEFAULT] are not supported.\n\
-  \              \n\
-  \               }\n\
-  \          {-  It must be enabled and not pending deletion.\n\
-  \              \n\
-  \               }\n\
-  \          {-  Its key policy must grant the CloudWatch service principal \
-   ([cloudwatch.amazonaws.com]) these permissions: [kms:DescribeKey], [kms:GenerateDataKey], \
-   [kms:Encrypt], [kms:Decrypt], and [kms:ReEncrypt*]. Amazon CloudWatch requires these \
-   permissions to manage the data on your behalf.\n\
-  \              \n\
-  \               }\n\
-  \          {-  The calling principal must have [kms:Decrypt] permission on the key.\n\
-  \              \n\
-  \               }\n\
-  \          {-  It must be specified as a fully qualified key ARN. Key IDs, aliases, and alias \
-   ARNs are not accepted.\n\
-  \              \n\
-  \               }\n\
-  \          {-  It must be in the same Amazon Web Services Region as the dataset.\n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \   Before completing the association, Amazon CloudWatch validates the key by performing a \
-   series of dry-run KMS operations. Service-principal checks run first to verify that the key \
-   policy grants the required access to Amazon CloudWatch. These checks include [kms:DescribeKey], \
-   [kms:GenerateDataKey], [kms:Encrypt], [kms:Decrypt], and [kms:ReEncrypt*]. After those succeed, \
-   a [kms:Decrypt] dry-run is run with the caller's credentials to verify that the calling \
-   principal can use the key. When you are replacing an existing key, the caller's [kms:Decrypt] \
-   dry-run is run on the current key first, and only then on the new key.\n\
-  \   \n\
-  \    If any of these checks fails, the operation fails and the existing key association (if any) \
-   remains unchanged. Common failure causes include the key being disabled, the key policy not \
-   granting the required permissions to Amazon CloudWatch, or the caller lacking [kms:Decrypt] \
-   permission on the key.\n\
-  \    \n\
-  \     For more information about using customer managed keys with Amazon CloudWatch, see \
-   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cmk-encryption.html}Encryption \
-   at rest with customer managed keys} in the {i Amazon CloudWatch User Guide}.\n\
-  \     "]
-
-module DeleteAlarmMuteRule : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_alarm_mute_rule_input ->
-    (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_alarm_mute_rule_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes a specific alarm mute rule.\n\n\
-  \ When you delete a mute rule, any alarms that are currently being muted by that rule are \
-   immediately unmuted. If those alarms are in an ALARM state, their configured actions will \
-   trigger.\n\
-  \ \n\
-  \  This operation is idempotent. If you delete a mute rule that does not exist, the operation \
-   succeeds without returning an error.\n\
-  \  \n\
-  \    {b Permissions} \n\
-  \   \n\
-  \    To delete a mute rule, you need the [cloudwatch:DeleteAlarmMuteRule] permission on the \
-   alarm mute rule resource.\n\
-  \    "]
-
-module DeleteAlarms : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `ResourceConflict of resource_conflict
-    | `ResourceNotFound of resource_not_found ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_alarms_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `ResourceConflict of resource_conflict
-      | `ResourceNotFound of resource_not_found ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_alarms_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `ResourceConflict of resource_conflict
-      | `ResourceNotFound of resource_not_found ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes the specified alarms. You can delete up to 100 alarms in one operation. However, this \
-   total can include no more than one composite alarm. For example, you could delete 99 metric \
-   alarms and one composite alarms with one operation, but you can't delete two composite alarms \
-   with one operation. Log alarms cannot be batch deleted.\n\n\
-  \  If you specify any incorrect alarm names, the alarms you specify with correct names are still \
-   deleted. Other syntax errors might result in no alarms being deleted. To confirm that alarms \
-   were deleted successfully, you can use the \
-   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_DescribeAlarms.html}DescribeAlarms} \
-   operation after using [DeleteAlarms].\n\
-  \ \n\
-  \   It is possible to create a loop or cycle of composite alarms, where composite alarm A \
-   depends on composite alarm B, and composite alarm B also depends on composite alarm A. In this \
-   scenario, you can't delete any composite alarm that is part of the cycle because there is \
-   always still a composite alarm that depends on that alarm that you want to delete.\n\
-  \   \n\
-  \    To get out of such a situation, you must break the cycle by changing the rule of one of the \
-   composite alarms in the cycle to remove a dependency that creates the cycle. The simplest \
-   change to make to break a cycle is to change the [AlarmRule] of one of the alarms to [false]. \n\
-  \    \n\
-  \     Additionally, the evaluation of composite alarms stops if CloudWatch detects a cycle in \
-   the evaluation path. \n\
-  \     \n\
-  \      "]
-
-module DeleteAnomalyDetector : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InternalServiceFault of internal_service_fault
-    | `InvalidParameterCombinationException of invalid_parameter_combination_exception
-    | `InvalidParameterValueException of invalid_parameter_value_exception
-    | `MissingRequiredParameterException of missing_required_parameter_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_anomaly_detector_input ->
-    ( delete_anomaly_detector_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_anomaly_detector_input ->
-    ( delete_anomaly_detector_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  " Deletes the specified anomaly detection model from your account. For more information about \
-   how to delete an anomaly detection model, see \
-   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Create_Anomaly_Detection_Alarm.html#Delete_Anomaly_Detection_Model}Deleting \
-   an anomaly detection model} in the {i CloudWatch User Guide}. \n"]
-
-module DeleteDashboards : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `ConflictException of conflict_exception
-    | `InternalServiceFault of internal_service_fault
-    | `InvalidParameterValueException of invalid_parameter_value_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_dashboards_input ->
-    ( delete_dashboards_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidParameterValueException of invalid_parameter_value_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_dashboards_input ->
-    ( delete_dashboards_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `ConflictException of conflict_exception
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidParameterValueException of invalid_parameter_value_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Deletes all dashboards that you specify. You can specify up to 100 dashboards to delete. If \
-   there is an error during this call, the operation attempts to delete as many dashboards as \
-   possible.\n"]
-
-module DeleteInsightRules : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InvalidParameterValueException of invalid_parameter_value_exception
-    | `MissingRequiredParameterException of missing_required_parameter_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_insight_rules_input ->
-    ( delete_insight_rules_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_insight_rules_input ->
-    ( delete_insight_rules_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Permanently deletes the specified Contributor Insights rules.\n\n\
-  \ If you create a rule, delete it, and then re-create it with the same name, historical data \
-   from the first time the rule was created might not be available.\n\
-  \ "]
-
-module DeleteMetricStream : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InternalServiceFault of internal_service_fault
-    | `InvalidParameterValueException of invalid_parameter_value_exception
-    | `MissingRequiredParameterException of missing_required_parameter_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    delete_metric_stream_input ->
-    ( delete_metric_stream_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    delete_metric_stream_input ->
-    ( delete_metric_stream_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Permanently deletes the metric stream that you specify.\n"]
-
-module DescribeAlarmContributors : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InvalidNextToken of invalid_next_token
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_alarm_contributors_input ->
-    ( describe_alarm_contributors_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidNextToken of invalid_next_token
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_alarm_contributors_input ->
-    ( describe_alarm_contributors_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidNextToken of invalid_next_token
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns the information of the current alarm contributors that are in [ALARM] state. This \
-   operation returns details about the individual time series that contribute to the alarm's state.\n"]
-
-module DescribeAlarmHistory : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_alarm_history_input ->
-    ( describe_alarm_history_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_alarm_history_input ->
-    ( describe_alarm_history_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Retrieves the history for the specified alarm. You can filter the results by date range or item \
-   type. If an alarm name is not specified, the histories for either all metric alarms or all \
-   composite alarms are returned.\n\n\
-  \ CloudWatch retains the history of an alarm even if you delete the alarm.\n\
-  \ \n\
-  \  To use this operation and return information about a composite alarm, you must be signed on \
-   with the [cloudwatch:DescribeAlarmHistory] permission that is scoped to [*]. You can't return \
-   information about composite alarms if your [cloudwatch:DescribeAlarmHistory] permission has a \
-   narrower scope.\n\
-  \  "]
-
-module DescribeAlarms : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_alarms_input ->
-    ( describe_alarms_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_alarms_input ->
-    ( describe_alarms_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Retrieves the specified alarms. You can filter the results by specifying a prefix for the alarm \
-   name, the alarm state, or a prefix for any action.\n\n\
-  \ To use this operation and return information about composite alarms, you must be signed on \
-   with the [cloudwatch:DescribeAlarms] permission that is scoped to [*]. You can't return \
-   information about composite alarms if your [cloudwatch:DescribeAlarms] permission has a \
-   narrower scope.\n\
-  \ "]
-
-module DescribeAlarmsForMetric : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_alarms_for_metric_input ->
-    (describe_alarms_for_metric_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_alarms_for_metric_input ->
-    ( describe_alarms_for_metric_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Retrieves the alarms for the specified metric. To filter the results, specify a statistic, \
-   period, or unit.\n\n\
-  \ This operation retrieves only standard alarms that are based on the specified metric. It does \
-   not return alarms based on math expressions that use the specified metric, or composite alarms \
-   that use the specified metric.\n\
-  \ "]
-
-module DescribeAnomalyDetectors : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InternalServiceFault of internal_service_fault
-    | `InvalidNextToken of invalid_next_token
-    | `InvalidParameterCombinationException of invalid_parameter_combination_exception
-    | `InvalidParameterValueException of invalid_parameter_value_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_anomaly_detectors_input ->
-    ( describe_anomaly_detectors_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidNextToken of invalid_next_token
-      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_anomaly_detectors_input ->
-    ( describe_anomaly_detectors_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidNextToken of invalid_next_token
-      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Lists the anomaly detection models that you have created in your account. For single metric \
-   anomaly detectors, you can list all of the models in your account or filter the results to only \
-   the models that are related to a certain namespace, metric name, or metric dimension. For \
-   metric math anomaly detectors, you can list them by adding [METRIC_MATH] to the \
-   [AnomalyDetectorTypes] array. This will return all metric math anomaly detectors in your \
-   account.\n"]
-
-module DescribeInsightRules : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    describe_insight_rules_input ->
-    ( describe_insight_rules_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    describe_insight_rules_input ->
-    ( describe_insight_rules_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns a list of all the Contributor Insights rules in your account.\n\n\
-  \ For more information about Contributor Insights, see \
-   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ContributorInsights.html}Using \
-   Contributor Insights to Analyze High-Cardinality Data}.\n\
-  \ "]
-
-module DisableAlarmActions : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    disable_alarm_actions_input ->
-    (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    disable_alarm_actions_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Disables the actions for the specified alarms. When an alarm's actions are disabled, the alarm \
-   actions do not execute when the alarm state changes.\n"]
-
-module DisableInsightRules : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InvalidParameterValueException of invalid_parameter_value_exception
-    | `MissingRequiredParameterException of missing_required_parameter_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    disable_insight_rules_input ->
-    ( disable_insight_rules_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    disable_insight_rules_input ->
-    ( disable_insight_rules_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Disables the specified Contributor Insights rules. When rules are disabled, they do not analyze \
-   log groups and do not incur costs.\n"]
-
-module DisassociateDatasetKmsKey : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `ConflictException of conflict_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    disassociate_dataset_kms_key_input ->
-    ( disassociate_dataset_kms_key_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `ConflictException of conflict_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    disassociate_dataset_kms_key_input ->
-    ( disassociate_dataset_kms_key_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `ConflictException of conflict_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Removes the customer managed Amazon Web Services Key Management Service (Amazon Web Services \
-   KMS) key association from the specified dataset. After this operation completes, data that you \
-   publish to the dataset is encrypted at rest using an Amazon Web Services owned key managed by \
-   Amazon CloudWatch.\n\n\
-  \ Only the [default] dataset is supported. To call this operation, the dataset must currently \
-   have a customer managed KMS key associated with it. If the dataset has no associated KMS key, \
-   the operation fails with [ResourceNotFoundException].\n\
-  \ \n\
-  \  Amazon CloudWatch performs a dry-run [kms:Decrypt] call on the key as part of this operation. \
-   This verifies that the caller is authorized to use the currently associated key. The caller \
-   must have [kms:Decrypt] permission on the currently associated key, and the key must be enabled \
-   and accessible. If the key has been disabled or scheduled for deletion, you must first \
-   re-enable or restore it before you can disassociate it from the dataset.\n\
-  \  \n\
-  \    Disassociating a KMS key from a dataset does not immediately remove the [kms:Decrypt] \
-   requirement on data plane operations. For up to three hours after disassociation, callers must \
-   continue to have [kms:Decrypt] permission on the previously associated key. Some data may still \
-   be encrypted with that key during this window. After this enforcement window elapses, the \
-   [kms:Decrypt] requirement is lifted.\n\
-  \    \n\
-  \      For more information about using customer managed keys with Amazon CloudWatch, see \
-   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cmk-encryption.html}Encryption \
-   at rest with customer managed keys} in the {i Amazon CloudWatch User Guide}.\n\
-  \      "]
-
-module EnableAlarmActions : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    enable_alarm_actions_input ->
-    (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    enable_alarm_actions_input ->
-    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Enables the actions for the specified alarms.\n"]
-
-module EnableInsightRules : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InvalidParameterValueException of invalid_parameter_value_exception
-    | `LimitExceededException of limit_exceeded_exception
-    | `MissingRequiredParameterException of missing_required_parameter_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    enable_insight_rules_input ->
-    ( enable_insight_rules_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    enable_insight_rules_input ->
-    ( enable_insight_rules_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `LimitExceededException of limit_exceeded_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Enables the specified Contributor Insights rules. When rules are enabled, they immediately \
-   begin analyzing log data.\n"]
-
-module GetAlarmMuteRule : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_alarm_mute_rule_input ->
-    ( get_alarm_mute_rule_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_alarm_mute_rule_input ->
-    ( get_alarm_mute_rule_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Retrieves details for a specific alarm mute rule.\n\n\
-  \ This operation returns complete information about the mute rule, including its configuration, \
-   status, targeted alarms, and metadata.\n\
-  \ \n\
-  \  The returned status indicates the current state of the mute rule:\n\
-  \  \n\
-  \   {ul\n\
-  \         {-   {b SCHEDULED}: The mute rule is configured and will become active in the future\n\
-  \             \n\
-  \              }\n\
-  \         {-   {b ACTIVE}: The mute rule is currently muting alarm actions\n\
-  \             \n\
-  \              }\n\
-  \         {-   {b EXPIRED}: The mute rule has passed its expiration date and will no longer \
-   become active\n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \    {b Permissions} \n\
-  \   \n\
-  \    To retrieve details for a mute rule, you need the [cloudwatch:GetAlarmMuteRule] permission \
-   on the alarm mute rule resource.\n\
-  \    "]
-
-module GetDashboard : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `DashboardNotFoundError of dashboard_not_found_error
-    | `InternalServiceFault of internal_service_fault
-    | `InvalidParameterValueException of invalid_parameter_value_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_dashboard_input ->
-    ( get_dashboard_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `DashboardNotFoundError of dashboard_not_found_error
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidParameterValueException of invalid_parameter_value_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_dashboard_input ->
-    ( get_dashboard_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `DashboardNotFoundError of dashboard_not_found_error
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidParameterValueException of invalid_parameter_value_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Displays the details of the dashboard that you specify.\n\n\
-  \ To copy an existing dashboard, use [GetDashboard], and then use the data returned within \
-   [DashboardBody] as the template for the new dashboard when you call [PutDashboard] to create \
-   the copy.\n\
-  \ "]
-
-module GetDataset : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_dataset_input ->
-    ( get_dataset_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_dataset_input ->
-    ( get_dataset_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns information about the specified dataset. This includes its identifier, Amazon Resource \
-   Name (ARN), and any customer managed Amazon Web Services Key Management Service (Amazon Web \
-   Services KMS) key that is currently associated with it.\n\n\
-  \ Only the [default] dataset is supported. The [default] dataset is implicit for every account \
-   in every Region \226\128\148 you can call [GetDataset] for it without first creating it. If no \
-   customer managed KMS key has been associated with the dataset, the response omits the \
-   [KmsKeyArn] field, indicating that data is encrypted at rest using an Amazon Web Services owned \
-   key managed by Amazon CloudWatch.\n\
-  \ \n\
-  \  To associate a customer managed KMS key with a dataset, use \
-   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_AssociateDatasetKmsKey.html}AssociateDatasetKmsKey}. \
-   To remove the association, use \
-   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_DisassociateDatasetKmsKey.html}DisassociateDatasetKmsKey}.\n\
-  \  "]
-
-module GetInsightRuleReport : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InvalidParameterValueException of invalid_parameter_value_exception
-    | `MissingRequiredParameterException of missing_required_parameter_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_insight_rule_report_input ->
-    ( get_insight_rule_report_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_insight_rule_report_input ->
-    ( get_insight_rule_report_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "This operation returns the time series data collected by a Contributor Insights rule. The data \
-   includes the identity and number of contributors to the log group.\n\n\
-  \ You can also optionally return one or more statistics about each data point in the time \
-   series. These statistics can include the following:\n\
-  \ \n\
-  \  {ul\n\
-  \        {-   [UniqueContributors] -- the number of unique contributors for each data point.\n\
-  \            \n\
-  \             }\n\
-  \        {-   [MaxContributorValue] -- the value of the top contributor for each data point. The \
-   identity of the contributor might change for each data point in the graph.\n\
-  \            \n\
-  \             If this rule aggregates by COUNT, the top contributor for each data point is the \
-   contributor with the most occurrences in that period. If the rule aggregates by SUM, the top \
-   contributor is the contributor with the highest sum in the log field specified by the rule's \
-   [Value], during that period.\n\
-  \             \n\
-  \              }\n\
-  \        {-   [SampleCount] -- the number of data points matched by the rule.\n\
-  \            \n\
-  \             }\n\
-  \        {-   [Sum] -- the sum of the values from all contributors during the time period \
-   represented by that data point.\n\
-  \            \n\
-  \             }\n\
-  \        {-   [Minimum] -- the minimum value from a single observation during the time period \
-   represented by that data point.\n\
-  \            \n\
-  \             }\n\
-  \        {-   [Maximum] -- the maximum value from a single observation during the time period \
-   represented by that data point.\n\
-  \            \n\
-  \             }\n\
-  \        {-   [Average] -- the average value from all contributors during the time period \
-   represented by that data point.\n\
-  \            \n\
-  \             }\n\
-  \        }\n\
-  \  "]
-
-module GetMetricData : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_metric_data_input ->
-    ( get_metric_data_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_metric_data_input ->
-    ( get_metric_data_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "You can use the [GetMetricData] API to retrieve CloudWatch metric values. The operation can \
-   also include a CloudWatch Metrics Insights query, and one or more metric math functions.\n\n\
-  \ A [GetMetricData] operation that does not include a query can retrieve as many as 500 \
-   different metrics in a single request, with a total of as many as 100,800 data points. You can \
-   also optionally perform metric math expressions on the values of the returned statistics, to \
-   create new time series that represent new insights into your data. For example, using Lambda \
-   metrics, you could divide the Errors metric by the Invocations metric to get an error rate time \
-   series. For more information about metric math expressions, see \
-   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/using-metric-math.html#metric-math-syntax}Metric \
-   Math Syntax and Functions} in the {i Amazon CloudWatch User Guide}.\n\
-  \ \n\
-  \  If you include a Metrics Insights query, each [GetMetricData] operation can include only one \
-   query. But the same [GetMetricData] operation can also retrieve other metrics. Metrics Insights \
-   queries can query only the most recent three hours of metric data. For more information about \
-   Metrics Insights, see \
-   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/query_with_cloudwatch-metrics-insights.html}Query \
-   your metrics with CloudWatch Metrics Insights}.\n\
-  \  \n\
-  \   Calls to the [GetMetricData] API have a different pricing structure than calls to \
-   [GetMetricStatistics]. For more information about pricing, see \
-   {{:https://aws.amazon.com/cloudwatch/pricing/}Amazon CloudWatch Pricing}.\n\
-  \   \n\
-  \    Amazon CloudWatch retains metric data as follows:\n\
-  \    \n\
-  \     {ul\n\
-  \           {-  Data points with a period of less than 60 seconds are available for 3 hours. \
-   These data points are high-resolution metrics and are available only for custom metrics that \
-   have been defined with a [StorageResolution] of 1.\n\
-  \               \n\
-  \                }\n\
-  \           {-  Data points with a period of 60 seconds (1-minute) are available for 15 days.\n\
-  \               \n\
-  \                }\n\
-  \           {-  Data points with a period of 300 seconds (5-minute) are available for 63 days.\n\
-  \               \n\
-  \                }\n\
-  \           {-  Data points with a period of 3600 seconds (1 hour) are available for 455 days \
-   (15 months).\n\
-  \               \n\
-  \                }\n\
-  \           }\n\
-  \   Data points that are initially published with a shorter period are aggregated together for \
-   long-term storage. For example, if you collect data using a period of 1 minute, the data \
-   remains available for 15 days with 1-minute resolution. After 15 days, this data is still \
-   available, but is aggregated and retrievable only with a resolution of 5 minutes. After 63 \
-   days, the data is further aggregated and is available with a resolution of 1 hour.\n\
-  \   \n\
-  \    If you omit [Unit] in your request, all data that was collected with any unit is returned, \
-   along with the corresponding units that were specified when the data was reported to \
-   CloudWatch. If you specify a unit, the operation returns only data that was collected with that \
-   unit specified. If you specify a unit that does not match the data collected, the results of \
-   the operation are null. CloudWatch does not perform unit conversions.\n\
-  \    \n\
-  \      {b Using Metrics Insights queries with metric math} \n\
-  \     \n\
-  \      You can't mix a Metric Insights query and metric math syntax in the same expression, but \
-   you can reference results from a Metrics Insights query within other Metric math expressions. A \
-   Metrics Insights query without a {b GROUP BY} clause returns a single time-series (TS), and can \
-   be used as input for a metric math expression that expects a single time series. A Metrics \
-   Insights query with a {b GROUP BY} clause returns an array of time-series (TS\\[\\]), and can \
-   be used as input for a metric math expression that expects an array of time series. \n\
-  \      "]
-
-module GetMetricStatistics : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InternalServiceFault of internal_service_fault
-    | `InvalidParameterCombinationException of invalid_parameter_combination_exception
-    | `InvalidParameterValueException of invalid_parameter_value_exception
-    | `MissingRequiredParameterException of missing_required_parameter_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_metric_statistics_input ->
-    ( get_metric_statistics_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_metric_statistics_input ->
-    ( get_metric_statistics_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Gets statistics for the specified metric.\n\n\
-  \ The maximum number of data points returned from a single call is 1,440. If you request more \
-   than 1,440 data points, CloudWatch returns an error. To reduce the number of data points, you \
-   can narrow the specified time range and make multiple requests across adjacent time ranges, or \
-   you can increase the specified period. Data points are not returned in chronological order.\n\
-  \ \n\
-  \  CloudWatch aggregates data points based on the length of the period that you specify. For \
-   example, if you request statistics with a one-hour period, CloudWatch aggregates all data \
-   points with time stamps that fall within each one-hour period. Therefore, the number of values \
-   aggregated by CloudWatch is larger than the number of data points returned.\n\
-  \  \n\
-  \   CloudWatch needs raw data points to calculate percentile statistics. If you publish data \
-   using a statistic set instead, you can only retrieve percentile statistics for this data if one \
-   of the following conditions is true:\n\
-  \   \n\
-  \    {ul\n\
-  \          {-  The SampleCount value of the statistic set is 1.\n\
-  \              \n\
-  \               }\n\
-  \          {-  The Min and the Max values of the statistic set are equal.\n\
-  \              \n\
-  \               }\n\
-  \          }\n\
-  \   Percentile statistics are not available for metrics when any of the metric values are \
-   negative numbers.\n\
-  \   \n\
-  \    Amazon CloudWatch retains metric data as follows:\n\
-  \    \n\
-  \     {ul\n\
-  \           {-  Data points with a period of less than 60 seconds are available for 3 hours. \
-   These data points are high-resolution metrics and are available only for custom metrics that \
-   have been defined with a [StorageResolution] of 1.\n\
-  \               \n\
-  \                }\n\
-  \           {-  Data points with a period of 60 seconds (1-minute) are available for 15 days.\n\
-  \               \n\
-  \                }\n\
-  \           {-  Data points with a period of 300 seconds (5-minute) are available for 63 days.\n\
-  \               \n\
-  \                }\n\
-  \           {-  Data points with a period of 3600 seconds (1 hour) are available for 455 days \
-   (15 months).\n\
-  \               \n\
-  \                }\n\
-  \           }\n\
-  \   Data points that are initially published with a shorter period are aggregated together for \
-   long-term storage. For example, if you collect data using a period of 1 minute, the data \
-   remains available for 15 days with 1-minute resolution. After 15 days, this data is still \
-   available, but is aggregated and retrievable only with a resolution of 5 minutes. After 63 \
-   days, the data is further aggregated and is available with a resolution of 1 hour.\n\
-  \   \n\
-  \    CloudWatch started retaining 5-minute and 1-hour metric data as of July 9, 2016.\n\
-  \    \n\
-  \     For information about metrics and dimensions supported by Amazon Web Services services, \
-   see the \
-   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CW_Support_For_AWS.html}Amazon \
-   CloudWatch Metrics and Dimensions Reference} in the {i Amazon CloudWatch User Guide}.\n\
-  \     "]
-
-module GetMetricStream : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InternalServiceFault of internal_service_fault
-    | `InvalidParameterCombinationException of invalid_parameter_combination_exception
-    | `InvalidParameterValueException of invalid_parameter_value_exception
-    | `MissingRequiredParameterException of missing_required_parameter_exception
-    | `ResourceNotFoundException of resource_not_found_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_metric_stream_input ->
-    ( get_metric_stream_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception
-      | `ResourceNotFoundException of resource_not_found_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_metric_stream_input ->
-    ( get_metric_stream_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception
-      | `ResourceNotFoundException of resource_not_found_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns information about the metric stream that you specify.\n"]
-
-module GetMetricWidgetImage : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_metric_widget_image_input ->
-    (get_metric_widget_image_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_metric_widget_image_input ->
-    ( get_metric_widget_image_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "You can use the [GetMetricWidgetImage] API to retrieve a snapshot graph of one or more Amazon \
-   CloudWatch metrics as a bitmap image. You can then embed this image into your services and \
-   products, such as wiki pages, reports, and documents. You could also retrieve images regularly, \
-   such as every minute, and create your own custom live dashboard.\n\n\
-  \ The graph you retrieve can include all CloudWatch metric graph features, including metric math \
-   and horizontal and vertical annotations.\n\
-  \ \n\
-  \  There is a limit of 20 transactions per second for this API. Each [GetMetricWidgetImage] \
-   action has the following limits:\n\
-  \  \n\
-  \   {ul\n\
-  \         {-  As many as 100 metrics in the graph.\n\
-  \             \n\
-  \              }\n\
-  \         {-  Up to 100 KB uncompressed payload.\n\
-  \             \n\
-  \              }\n\
-  \         }\n\
-  \  "]
-
-module GetOTelEnrichment : sig
-  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    get_o_tel_enrichment_input ->
-    (get_o_tel_enrichment_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    get_o_tel_enrichment_input ->
-    ( get_o_tel_enrichment_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc
-  "Returns the current status of vended metric enrichment for the account, including whether \
-   CloudWatch vended metrics are enriched with resource ARN and resource tag labels and queryable \
-   using PromQL. For the list of supported resources, see \
-   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/UsingResourceTagsForTelemetry.html}Supported \
-   Amazon Web Services infrastructure metrics}.\n"]
 
 module ListAlarmMuteRules : sig
   val error_to_string :
@@ -2064,40 +961,6 @@ end
 [@@ocaml.doc
   " Returns a list that contains the number of managed Contributor Insights rules in your account. \n"]
 
-module ListMetricStreams : sig
-  val error_to_string :
-    [ Smaws_Lib.Protocols.AwsQuery.error
-    | `InternalServiceFault of internal_service_fault
-    | `InvalidNextToken of invalid_next_token
-    | `InvalidParameterValueException of invalid_parameter_value_exception
-    | `MissingRequiredParameterException of missing_required_parameter_exception ] ->
-    string
-
-  val request :
-    'http_type Smaws_Lib.Context.t ->
-    list_metric_streams_input ->
-    ( list_metric_streams_output,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidNextToken of invalid_next_token
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception ] )
-    result
-
-  val request_with_metadata :
-    'http_type Smaws_Lib.Context.t ->
-    list_metric_streams_input ->
-    ( list_metric_streams_output Smaws_Lib.Response.t,
-      [> Smaws_Lib.Protocols.AwsQuery.error
-      | `InternalServiceFault of internal_service_fault
-      | `InvalidNextToken of invalid_next_token
-      | `InvalidParameterValueException of invalid_parameter_value_exception
-      | `MissingRequiredParameterException of missing_required_parameter_exception ]
-      * Smaws_Lib.Response.metadata )
-    result
-end
-[@@ocaml.doc "Returns a list of metric streams in this account.\n"]
-
 module ListMetrics : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -2150,6 +1013,40 @@ end
    or \
    {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html}GetMetricStatistics}.\n\
   \    "]
+
+module ListMetricStreams : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InternalServiceFault of internal_service_fault
+    | `InvalidNextToken of invalid_next_token
+    | `InvalidParameterValueException of invalid_parameter_value_exception
+    | `MissingRequiredParameterException of missing_required_parameter_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    list_metric_streams_input ->
+    ( list_metric_streams_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidNextToken of invalid_next_token
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    list_metric_streams_input ->
+    ( list_metric_streams_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidNextToken of invalid_next_token
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns a list of metric streams in this account.\n"]
 
 module ListTagsForResource : sig
   val error_to_string :
@@ -2993,7 +1890,6 @@ end
   \    You can associate as many as 50 tags with a CloudWatch resource.\n\
   \    "]
 
-(** {1:Serialization and Deserialization} *)
 module UntagResource : sig
   val error_to_string :
     [ Smaws_Lib.Protocols.AwsQuery.error
@@ -3032,6 +1928,1111 @@ end
 [@@ocaml.doc
   "Removes one or more tags from the specified resource. Currently, alarms, dashboards, metric \
    streams and Contributor Insights rules support tagging.\n"]
+
+module GetOTelEnrichment : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_o_tel_enrichment_input ->
+    (get_o_tel_enrichment_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_o_tel_enrichment_input ->
+    ( get_o_tel_enrichment_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns the current status of vended metric enrichment for the account, including whether \
+   CloudWatch vended metrics are enriched with resource ARN and resource tag labels and queryable \
+   using PromQL. For the list of supported resources, see \
+   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/UsingResourceTagsForTelemetry.html}Supported \
+   Amazon Web Services infrastructure metrics}.\n"]
+
+module GetMetricWidgetImage : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_metric_widget_image_input ->
+    (get_metric_widget_image_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_metric_widget_image_input ->
+    ( get_metric_widget_image_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "You can use the [GetMetricWidgetImage] API to retrieve a snapshot graph of one or more Amazon \
+   CloudWatch metrics as a bitmap image. You can then embed this image into your services and \
+   products, such as wiki pages, reports, and documents. You could also retrieve images regularly, \
+   such as every minute, and create your own custom live dashboard.\n\n\
+  \ The graph you retrieve can include all CloudWatch metric graph features, including metric math \
+   and horizontal and vertical annotations.\n\
+  \ \n\
+  \  There is a limit of 20 transactions per second for this API. Each [GetMetricWidgetImage] \
+   action has the following limits:\n\
+  \  \n\
+  \   {ul\n\
+  \         {-  As many as 100 metrics in the graph.\n\
+  \             \n\
+  \              }\n\
+  \         {-  Up to 100 KB uncompressed payload.\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \  "]
+
+module GetMetricStream : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InternalServiceFault of internal_service_fault
+    | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+    | `InvalidParameterValueException of invalid_parameter_value_exception
+    | `MissingRequiredParameterException of missing_required_parameter_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_metric_stream_input ->
+    ( get_metric_stream_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_metric_stream_input ->
+    ( get_metric_stream_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Returns information about the metric stream that you specify.\n"]
+
+module GetMetricStatistics : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InternalServiceFault of internal_service_fault
+    | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+    | `InvalidParameterValueException of invalid_parameter_value_exception
+    | `MissingRequiredParameterException of missing_required_parameter_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_metric_statistics_input ->
+    ( get_metric_statistics_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_metric_statistics_input ->
+    ( get_metric_statistics_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Gets statistics for the specified metric.\n\n\
+  \ The maximum number of data points returned from a single call is 1,440. If you request more \
+   than 1,440 data points, CloudWatch returns an error. To reduce the number of data points, you \
+   can narrow the specified time range and make multiple requests across adjacent time ranges, or \
+   you can increase the specified period. Data points are not returned in chronological order.\n\
+  \ \n\
+  \  CloudWatch aggregates data points based on the length of the period that you specify. For \
+   example, if you request statistics with a one-hour period, CloudWatch aggregates all data \
+   points with time stamps that fall within each one-hour period. Therefore, the number of values \
+   aggregated by CloudWatch is larger than the number of data points returned.\n\
+  \  \n\
+  \   CloudWatch needs raw data points to calculate percentile statistics. If you publish data \
+   using a statistic set instead, you can only retrieve percentile statistics for this data if one \
+   of the following conditions is true:\n\
+  \   \n\
+  \    {ul\n\
+  \          {-  The SampleCount value of the statistic set is 1.\n\
+  \              \n\
+  \               }\n\
+  \          {-  The Min and the Max values of the statistic set are equal.\n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \   Percentile statistics are not available for metrics when any of the metric values are \
+   negative numbers.\n\
+  \   \n\
+  \    Amazon CloudWatch retains metric data as follows:\n\
+  \    \n\
+  \     {ul\n\
+  \           {-  Data points with a period of less than 60 seconds are available for 3 hours. \
+   These data points are high-resolution metrics and are available only for custom metrics that \
+   have been defined with a [StorageResolution] of 1.\n\
+  \               \n\
+  \                }\n\
+  \           {-  Data points with a period of 60 seconds (1-minute) are available for 15 days.\n\
+  \               \n\
+  \                }\n\
+  \           {-  Data points with a period of 300 seconds (5-minute) are available for 63 days.\n\
+  \               \n\
+  \                }\n\
+  \           {-  Data points with a period of 3600 seconds (1 hour) are available for 455 days \
+   (15 months).\n\
+  \               \n\
+  \                }\n\
+  \           }\n\
+  \   Data points that are initially published with a shorter period are aggregated together for \
+   long-term storage. For example, if you collect data using a period of 1 minute, the data \
+   remains available for 15 days with 1-minute resolution. After 15 days, this data is still \
+   available, but is aggregated and retrievable only with a resolution of 5 minutes. After 63 \
+   days, the data is further aggregated and is available with a resolution of 1 hour.\n\
+  \   \n\
+  \    CloudWatch started retaining 5-minute and 1-hour metric data as of July 9, 2016.\n\
+  \    \n\
+  \     For information about metrics and dimensions supported by Amazon Web Services services, \
+   see the \
+   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CW_Support_For_AWS.html}Amazon \
+   CloudWatch Metrics and Dimensions Reference} in the {i Amazon CloudWatch User Guide}.\n\
+  \     "]
+
+module GetMetricData : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_metric_data_input ->
+    ( get_metric_data_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_metric_data_input ->
+    ( get_metric_data_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "You can use the [GetMetricData] API to retrieve CloudWatch metric values. The operation can \
+   also include a CloudWatch Metrics Insights query, and one or more metric math functions.\n\n\
+  \ A [GetMetricData] operation that does not include a query can retrieve as many as 500 \
+   different metrics in a single request, with a total of as many as 100,800 data points. You can \
+   also optionally perform metric math expressions on the values of the returned statistics, to \
+   create new time series that represent new insights into your data. For example, using Lambda \
+   metrics, you could divide the Errors metric by the Invocations metric to get an error rate time \
+   series. For more information about metric math expressions, see \
+   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/using-metric-math.html#metric-math-syntax}Metric \
+   Math Syntax and Functions} in the {i Amazon CloudWatch User Guide}.\n\
+  \ \n\
+  \  If you include a Metrics Insights query, each [GetMetricData] operation can include only one \
+   query. But the same [GetMetricData] operation can also retrieve other metrics. Metrics Insights \
+   queries can query only the most recent three hours of metric data. For more information about \
+   Metrics Insights, see \
+   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/query_with_cloudwatch-metrics-insights.html}Query \
+   your metrics with CloudWatch Metrics Insights}.\n\
+  \  \n\
+  \   Calls to the [GetMetricData] API have a different pricing structure than calls to \
+   [GetMetricStatistics]. For more information about pricing, see \
+   {{:https://aws.amazon.com/cloudwatch/pricing/}Amazon CloudWatch Pricing}.\n\
+  \   \n\
+  \    Amazon CloudWatch retains metric data as follows:\n\
+  \    \n\
+  \     {ul\n\
+  \           {-  Data points with a period of less than 60 seconds are available for 3 hours. \
+   These data points are high-resolution metrics and are available only for custom metrics that \
+   have been defined with a [StorageResolution] of 1.\n\
+  \               \n\
+  \                }\n\
+  \           {-  Data points with a period of 60 seconds (1-minute) are available for 15 days.\n\
+  \               \n\
+  \                }\n\
+  \           {-  Data points with a period of 300 seconds (5-minute) are available for 63 days.\n\
+  \               \n\
+  \                }\n\
+  \           {-  Data points with a period of 3600 seconds (1 hour) are available for 455 days \
+   (15 months).\n\
+  \               \n\
+  \                }\n\
+  \           }\n\
+  \   Data points that are initially published with a shorter period are aggregated together for \
+   long-term storage. For example, if you collect data using a period of 1 minute, the data \
+   remains available for 15 days with 1-minute resolution. After 15 days, this data is still \
+   available, but is aggregated and retrievable only with a resolution of 5 minutes. After 63 \
+   days, the data is further aggregated and is available with a resolution of 1 hour.\n\
+  \   \n\
+  \    If you omit [Unit] in your request, all data that was collected with any unit is returned, \
+   along with the corresponding units that were specified when the data was reported to \
+   CloudWatch. If you specify a unit, the operation returns only data that was collected with that \
+   unit specified. If you specify a unit that does not match the data collected, the results of \
+   the operation are null. CloudWatch does not perform unit conversions.\n\
+  \    \n\
+  \      {b Using Metrics Insights queries with metric math} \n\
+  \     \n\
+  \      You can't mix a Metric Insights query and metric math syntax in the same expression, but \
+   you can reference results from a Metrics Insights query within other Metric math expressions. A \
+   Metrics Insights query without a {b GROUP BY} clause returns a single time-series (TS), and can \
+   be used as input for a metric math expression that expects a single time series. A Metrics \
+   Insights query with a {b GROUP BY} clause returns an array of time-series (TS\\[\\]), and can \
+   be used as input for a metric math expression that expects an array of time series. \n\
+  \      "]
+
+module GetInsightRuleReport : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InvalidParameterValueException of invalid_parameter_value_exception
+    | `MissingRequiredParameterException of missing_required_parameter_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_insight_rule_report_input ->
+    ( get_insight_rule_report_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_insight_rule_report_input ->
+    ( get_insight_rule_report_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "This operation returns the time series data collected by a Contributor Insights rule. The data \
+   includes the identity and number of contributors to the log group.\n\n\
+  \ You can also optionally return one or more statistics about each data point in the time \
+   series. These statistics can include the following:\n\
+  \ \n\
+  \  {ul\n\
+  \        {-   [UniqueContributors] -- the number of unique contributors for each data point.\n\
+  \            \n\
+  \             }\n\
+  \        {-   [MaxContributorValue] -- the value of the top contributor for each data point. The \
+   identity of the contributor might change for each data point in the graph.\n\
+  \            \n\
+  \             If this rule aggregates by COUNT, the top contributor for each data point is the \
+   contributor with the most occurrences in that period. If the rule aggregates by SUM, the top \
+   contributor is the contributor with the highest sum in the log field specified by the rule's \
+   [Value], during that period.\n\
+  \             \n\
+  \              }\n\
+  \        {-   [SampleCount] -- the number of data points matched by the rule.\n\
+  \            \n\
+  \             }\n\
+  \        {-   [Sum] -- the sum of the values from all contributors during the time period \
+   represented by that data point.\n\
+  \            \n\
+  \             }\n\
+  \        {-   [Minimum] -- the minimum value from a single observation during the time period \
+   represented by that data point.\n\
+  \            \n\
+  \             }\n\
+  \        {-   [Maximum] -- the maximum value from a single observation during the time period \
+   represented by that data point.\n\
+  \            \n\
+  \             }\n\
+  \        {-   [Average] -- the average value from all contributors during the time period \
+   represented by that data point.\n\
+  \            \n\
+  \             }\n\
+  \        }\n\
+  \  "]
+
+module GetDataset : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_dataset_input ->
+    ( get_dataset_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_dataset_input ->
+    ( get_dataset_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns information about the specified dataset. This includes its identifier, Amazon Resource \
+   Name (ARN), and any customer managed Amazon Web Services Key Management Service (Amazon Web \
+   Services KMS) key that is currently associated with it.\n\n\
+  \ Only the [default] dataset is supported. The [default] dataset is implicit for every account \
+   in every Region \226\128\148 you can call [GetDataset] for it without first creating it. If no \
+   customer managed KMS key has been associated with the dataset, the response omits the \
+   [KmsKeyArn] field, indicating that data is encrypted at rest using an Amazon Web Services owned \
+   key managed by Amazon CloudWatch.\n\
+  \ \n\
+  \  To associate a customer managed KMS key with a dataset, use \
+   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_AssociateDatasetKmsKey.html}AssociateDatasetKmsKey}. \
+   To remove the association, use \
+   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_DisassociateDatasetKmsKey.html}DisassociateDatasetKmsKey}.\n\
+  \  "]
+
+module GetDashboard : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `DashboardNotFoundError of dashboard_not_found_error
+    | `InternalServiceFault of internal_service_fault
+    | `InvalidParameterValueException of invalid_parameter_value_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_dashboard_input ->
+    ( get_dashboard_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `DashboardNotFoundError of dashboard_not_found_error
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidParameterValueException of invalid_parameter_value_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_dashboard_input ->
+    ( get_dashboard_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `DashboardNotFoundError of dashboard_not_found_error
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Displays the details of the dashboard that you specify.\n\n\
+  \ To copy an existing dashboard, use [GetDashboard], and then use the data returned within \
+   [DashboardBody] as the template for the new dashboard when you call [PutDashboard] to create \
+   the copy.\n\
+  \ "]
+
+module GetAlarmMuteRule : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    get_alarm_mute_rule_input ->
+    ( get_alarm_mute_rule_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    get_alarm_mute_rule_input ->
+    ( get_alarm_mute_rule_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Retrieves details for a specific alarm mute rule.\n\n\
+  \ This operation returns complete information about the mute rule, including its configuration, \
+   status, targeted alarms, and metadata.\n\
+  \ \n\
+  \  The returned status indicates the current state of the mute rule:\n\
+  \  \n\
+  \   {ul\n\
+  \         {-   {b SCHEDULED}: The mute rule is configured and will become active in the future\n\
+  \             \n\
+  \              }\n\
+  \         {-   {b ACTIVE}: The mute rule is currently muting alarm actions\n\
+  \             \n\
+  \              }\n\
+  \         {-   {b EXPIRED}: The mute rule has passed its expiration date and will no longer \
+   become active\n\
+  \             \n\
+  \              }\n\
+  \         }\n\
+  \    {b Permissions} \n\
+  \   \n\
+  \    To retrieve details for a mute rule, you need the [cloudwatch:GetAlarmMuteRule] permission \
+   on the alarm mute rule resource.\n\
+  \    "]
+
+module EnableInsightRules : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InvalidParameterValueException of invalid_parameter_value_exception
+    | `LimitExceededException of limit_exceeded_exception
+    | `MissingRequiredParameterException of missing_required_parameter_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    enable_insight_rules_input ->
+    ( enable_insight_rules_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    enable_insight_rules_input ->
+    ( enable_insight_rules_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `LimitExceededException of limit_exceeded_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Enables the specified Contributor Insights rules. When rules are enabled, they immediately \
+   begin analyzing log data.\n"]
+
+module EnableAlarmActions : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    enable_alarm_actions_input ->
+    (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    enable_alarm_actions_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Enables the actions for the specified alarms.\n"]
+
+module DisassociateDatasetKmsKey : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `ConflictException of conflict_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    disassociate_dataset_kms_key_input ->
+    ( disassociate_dataset_kms_key_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ConflictException of conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    disassociate_dataset_kms_key_input ->
+    ( disassociate_dataset_kms_key_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ConflictException of conflict_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Removes the customer managed Amazon Web Services Key Management Service (Amazon Web Services \
+   KMS) key association from the specified dataset. After this operation completes, data that you \
+   publish to the dataset is encrypted at rest using an Amazon Web Services owned key managed by \
+   Amazon CloudWatch.\n\n\
+  \ Only the [default] dataset is supported. To call this operation, the dataset must currently \
+   have a customer managed KMS key associated with it. If the dataset has no associated KMS key, \
+   the operation fails with [ResourceNotFoundException].\n\
+  \ \n\
+  \  Amazon CloudWatch performs a dry-run [kms:Decrypt] call on the key as part of this operation. \
+   This verifies that the caller is authorized to use the currently associated key. The caller \
+   must have [kms:Decrypt] permission on the currently associated key, and the key must be enabled \
+   and accessible. If the key has been disabled or scheduled for deletion, you must first \
+   re-enable or restore it before you can disassociate it from the dataset.\n\
+  \  \n\
+  \    Disassociating a KMS key from a dataset does not immediately remove the [kms:Decrypt] \
+   requirement on data plane operations. For up to three hours after disassociation, callers must \
+   continue to have [kms:Decrypt] permission on the previously associated key. Some data may still \
+   be encrypted with that key during this window. After this enforcement window elapses, the \
+   [kms:Decrypt] requirement is lifted.\n\
+  \    \n\
+  \      For more information about using customer managed keys with Amazon CloudWatch, see \
+   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cmk-encryption.html}Encryption \
+   at rest with customer managed keys} in the {i Amazon CloudWatch User Guide}.\n\
+  \      "]
+
+module DisableInsightRules : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InvalidParameterValueException of invalid_parameter_value_exception
+    | `MissingRequiredParameterException of missing_required_parameter_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    disable_insight_rules_input ->
+    ( disable_insight_rules_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    disable_insight_rules_input ->
+    ( disable_insight_rules_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Disables the specified Contributor Insights rules. When rules are disabled, they do not analyze \
+   log groups and do not incur costs.\n"]
+
+module DisableAlarmActions : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    disable_alarm_actions_input ->
+    (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    disable_alarm_actions_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Disables the actions for the specified alarms. When an alarm's actions are disabled, the alarm \
+   actions do not execute when the alarm state changes.\n"]
+
+module DescribeInsightRules : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_insight_rules_input ->
+    ( describe_insight_rules_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_insight_rules_input ->
+    ( describe_insight_rules_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns a list of all the Contributor Insights rules in your account.\n\n\
+  \ For more information about Contributor Insights, see \
+   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ContributorInsights.html}Using \
+   Contributor Insights to Analyze High-Cardinality Data}.\n\
+  \ "]
+
+module DescribeAnomalyDetectors : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InternalServiceFault of internal_service_fault
+    | `InvalidNextToken of invalid_next_token
+    | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+    | `InvalidParameterValueException of invalid_parameter_value_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_anomaly_detectors_input ->
+    ( describe_anomaly_detectors_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidNextToken of invalid_next_token
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_anomaly_detectors_input ->
+    ( describe_anomaly_detectors_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidNextToken of invalid_next_token
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Lists the anomaly detection models that you have created in your account. For single metric \
+   anomaly detectors, you can list all of the models in your account or filter the results to only \
+   the models that are related to a certain namespace, metric name, or metric dimension. For \
+   metric math anomaly detectors, you can list them by adding [METRIC_MATH] to the \
+   [AnomalyDetectorTypes] array. This will return all metric math anomaly detectors in your \
+   account.\n"]
+
+module DescribeAlarmsForMetric : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_alarms_for_metric_input ->
+    (describe_alarms_for_metric_output, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_alarms_for_metric_input ->
+    ( describe_alarms_for_metric_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Retrieves the alarms for the specified metric. To filter the results, specify a statistic, \
+   period, or unit.\n\n\
+  \ This operation retrieves only standard alarms that are based on the specified metric. It does \
+   not return alarms based on math expressions that use the specified metric, or composite alarms \
+   that use the specified metric.\n\
+  \ "]
+
+module DescribeAlarms : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_alarms_input ->
+    ( describe_alarms_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_alarms_input ->
+    ( describe_alarms_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Retrieves the specified alarms. You can filter the results by specifying a prefix for the alarm \
+   name, the alarm state, or a prefix for any action.\n\n\
+  \ To use this operation and return information about composite alarms, you must be signed on \
+   with the [cloudwatch:DescribeAlarms] permission that is scoped to [*]. You can't return \
+   information about composite alarms if your [cloudwatch:DescribeAlarms] permission has a \
+   narrower scope.\n\
+  \ "]
+
+module DescribeAlarmHistory : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_alarm_history_input ->
+    ( describe_alarm_history_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_alarm_history_input ->
+    ( describe_alarm_history_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error | `InvalidNextToken of invalid_next_token ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Retrieves the history for the specified alarm. You can filter the results by date range or item \
+   type. If an alarm name is not specified, the histories for either all metric alarms or all \
+   composite alarms are returned.\n\n\
+  \ CloudWatch retains the history of an alarm even if you delete the alarm.\n\
+  \ \n\
+  \  To use this operation and return information about a composite alarm, you must be signed on \
+   with the [cloudwatch:DescribeAlarmHistory] permission that is scoped to [*]. You can't return \
+   information about composite alarms if your [cloudwatch:DescribeAlarmHistory] permission has a \
+   narrower scope.\n\
+  \  "]
+
+module DescribeAlarmContributors : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InvalidNextToken of invalid_next_token
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    describe_alarm_contributors_input ->
+    ( describe_alarm_contributors_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidNextToken of invalid_next_token
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    describe_alarm_contributors_input ->
+    ( describe_alarm_contributors_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidNextToken of invalid_next_token
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Returns the information of the current alarm contributors that are in [ALARM] state. This \
+   operation returns details about the individual time series that contribute to the alarm's state.\n"]
+
+module DeleteMetricStream : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InternalServiceFault of internal_service_fault
+    | `InvalidParameterValueException of invalid_parameter_value_exception
+    | `MissingRequiredParameterException of missing_required_parameter_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_metric_stream_input ->
+    ( delete_metric_stream_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_metric_stream_input ->
+    ( delete_metric_stream_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc "Permanently deletes the metric stream that you specify.\n"]
+
+module DeleteInsightRules : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InvalidParameterValueException of invalid_parameter_value_exception
+    | `MissingRequiredParameterException of missing_required_parameter_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_insight_rules_input ->
+    ( delete_insight_rules_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_insight_rules_input ->
+    ( delete_insight_rules_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Permanently deletes the specified Contributor Insights rules.\n\n\
+  \ If you create a rule, delete it, and then re-create it with the same name, historical data \
+   from the first time the rule was created might not be available.\n\
+  \ "]
+
+module DeleteDashboards : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `ConflictException of conflict_exception
+    | `InternalServiceFault of internal_service_fault
+    | `InvalidParameterValueException of invalid_parameter_value_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_dashboards_input ->
+    ( delete_dashboards_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidParameterValueException of invalid_parameter_value_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_dashboards_input ->
+    ( delete_dashboards_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ConflictException of conflict_exception
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidParameterValueException of invalid_parameter_value_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes all dashboards that you specify. You can specify up to 100 dashboards to delete. If \
+   there is an error during this call, the operation attempts to delete as many dashboards as \
+   possible.\n"]
+
+module DeleteAnomalyDetector : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `InternalServiceFault of internal_service_fault
+    | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+    | `InvalidParameterValueException of invalid_parameter_value_exception
+    | `MissingRequiredParameterException of missing_required_parameter_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_anomaly_detector_input ->
+    ( delete_anomaly_detector_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_anomaly_detector_input ->
+    ( delete_anomaly_detector_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `InternalServiceFault of internal_service_fault
+      | `InvalidParameterCombinationException of invalid_parameter_combination_exception
+      | `InvalidParameterValueException of invalid_parameter_value_exception
+      | `MissingRequiredParameterException of missing_required_parameter_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  " Deletes the specified anomaly detection model from your account. For more information about \
+   how to delete an anomaly detection model, see \
+   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Create_Anomaly_Detection_Alarm.html#Delete_Anomaly_Detection_Model}Deleting \
+   an anomaly detection model} in the {i CloudWatch User Guide}. \n"]
+
+module DeleteAlarms : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `ResourceConflict of resource_conflict
+    | `ResourceNotFound of resource_not_found ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_alarms_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ResourceConflict of resource_conflict
+      | `ResourceNotFound of resource_not_found ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_alarms_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ResourceConflict of resource_conflict
+      | `ResourceNotFound of resource_not_found ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes the specified alarms. You can delete up to 100 alarms in one operation. However, this \
+   total can include no more than one composite alarm. For example, you could delete 99 metric \
+   alarms and one composite alarms with one operation, but you can't delete two composite alarms \
+   with one operation. Log alarms cannot be batch deleted.\n\n\
+  \  If you specify any incorrect alarm names, the alarms you specify with correct names are still \
+   deleted. Other syntax errors might result in no alarms being deleted. To confirm that alarms \
+   were deleted successfully, you can use the \
+   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_DescribeAlarms.html}DescribeAlarms} \
+   operation after using [DeleteAlarms].\n\
+  \ \n\
+  \   It is possible to create a loop or cycle of composite alarms, where composite alarm A \
+   depends on composite alarm B, and composite alarm B also depends on composite alarm A. In this \
+   scenario, you can't delete any composite alarm that is part of the cycle because there is \
+   always still a composite alarm that depends on that alarm that you want to delete.\n\
+  \   \n\
+  \    To get out of such a situation, you must break the cycle by changing the rule of one of the \
+   composite alarms in the cycle to remove a dependency that creates the cycle. The simplest \
+   change to make to break a cycle is to change the [AlarmRule] of one of the alarms to [false]. \n\
+  \    \n\
+  \     Additionally, the evaluation of composite alarms stops if CloudWatch detects a cycle in \
+   the evaluation path. \n\
+  \     \n\
+  \      "]
+
+module DeleteAlarmMuteRule : sig
+  val error_to_string : [ | Smaws_Lib.Protocols.AwsQuery.error ] -> string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    delete_alarm_mute_rule_input ->
+    (Smaws_Lib.Smithy_api.Types.unit_, [> Smaws_Lib.Protocols.AwsQuery.error ]) result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    delete_alarm_mute_rule_input ->
+    ( Smaws_Lib.Smithy_api.Types.unit_ Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error ] * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Deletes a specific alarm mute rule.\n\n\
+  \ When you delete a mute rule, any alarms that are currently being muted by that rule are \
+   immediately unmuted. If those alarms are in an ALARM state, their configured actions will \
+   trigger.\n\
+  \ \n\
+  \  This operation is idempotent. If you delete a mute rule that does not exist, the operation \
+   succeeds without returning an error.\n\
+  \  \n\
+  \    {b Permissions} \n\
+  \   \n\
+  \    To delete a mute rule, you need the [cloudwatch:DeleteAlarmMuteRule] permission on the \
+   alarm mute rule resource.\n\
+  \    "]
+
+(** {1:Serialization and Deserialization} *)
+module AssociateDatasetKmsKey : sig
+  val error_to_string :
+    [ Smaws_Lib.Protocols.AwsQuery.error
+    | `ConflictException of conflict_exception
+    | `KmsAccessDeniedException of kms_access_denied_exception
+    | `KmsKeyDisabledException of kms_key_disabled_exception
+    | `KmsKeyNotFoundException of kms_key_not_found_exception
+    | `ResourceNotFoundException of resource_not_found_exception ] ->
+    string
+
+  val request :
+    'http_type Smaws_Lib.Context.t ->
+    associate_dataset_kms_key_input ->
+    ( associate_dataset_kms_key_output,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ConflictException of conflict_exception
+      | `KmsAccessDeniedException of kms_access_denied_exception
+      | `KmsKeyDisabledException of kms_key_disabled_exception
+      | `KmsKeyNotFoundException of kms_key_not_found_exception
+      | `ResourceNotFoundException of resource_not_found_exception ] )
+    result
+
+  val request_with_metadata :
+    'http_type Smaws_Lib.Context.t ->
+    associate_dataset_kms_key_input ->
+    ( associate_dataset_kms_key_output Smaws_Lib.Response.t,
+      [> Smaws_Lib.Protocols.AwsQuery.error
+      | `ConflictException of conflict_exception
+      | `KmsAccessDeniedException of kms_access_denied_exception
+      | `KmsKeyDisabledException of kms_key_disabled_exception
+      | `KmsKeyNotFoundException of kms_key_not_found_exception
+      | `ResourceNotFoundException of resource_not_found_exception ]
+      * Smaws_Lib.Response.metadata )
+    result
+end
+[@@ocaml.doc
+  "Associates an Amazon Web Services Key Management Service (Amazon Web Services KMS) customer \
+   managed key with the specified dataset. After this operation completes, all data published to \
+   the dataset is encrypted at rest using the specified KMS key. Callers must have [kms:Decrypt] \
+   permission on the key to read the encrypted data.\n\n\
+  \ Only the [default] dataset is supported. The [default] dataset is implicit for every account \
+   in every Region \226\128\148 you do not need to create it before calling this operation.\n\
+  \ \n\
+  \  You can call [AssociateDatasetKmsKey] on a dataset that is already associated with a KMS key \
+   to replace the existing key with a different one. To replace a key, the caller must have \
+   [kms:Decrypt] permission on both the current key and the new key.\n\
+  \  \n\
+  \   The KMS key that you specify must meet all of the following requirements:\n\
+  \   \n\
+  \    {ul\n\
+  \          {-  It must be a symmetric encryption KMS key (key spec [SYMMETRIC_DEFAULT], key \
+   usage [ENCRYPT_DECRYPT]). Asymmetric keys, HMAC keys, and key material types other than \
+   [SYMMETRIC_DEFAULT] are not supported.\n\
+  \              \n\
+  \               }\n\
+  \          {-  It must be enabled and not pending deletion.\n\
+  \              \n\
+  \               }\n\
+  \          {-  Its key policy must grant the CloudWatch service principal \
+   ([cloudwatch.amazonaws.com]) these permissions: [kms:DescribeKey], [kms:GenerateDataKey], \
+   [kms:Encrypt], [kms:Decrypt], and [kms:ReEncrypt*]. Amazon CloudWatch requires these \
+   permissions to manage the data on your behalf.\n\
+  \              \n\
+  \               }\n\
+  \          {-  The calling principal must have [kms:Decrypt] permission on the key.\n\
+  \              \n\
+  \               }\n\
+  \          {-  It must be specified as a fully qualified key ARN. Key IDs, aliases, and alias \
+   ARNs are not accepted.\n\
+  \              \n\
+  \               }\n\
+  \          {-  It must be in the same Amazon Web Services Region as the dataset.\n\
+  \              \n\
+  \               }\n\
+  \          }\n\
+  \   Before completing the association, Amazon CloudWatch validates the key by performing a \
+   series of dry-run KMS operations. Service-principal checks run first to verify that the key \
+   policy grants the required access to Amazon CloudWatch. These checks include [kms:DescribeKey], \
+   [kms:GenerateDataKey], [kms:Encrypt], [kms:Decrypt], and [kms:ReEncrypt*]. After those succeed, \
+   a [kms:Decrypt] dry-run is run with the caller's credentials to verify that the calling \
+   principal can use the key. When you are replacing an existing key, the caller's [kms:Decrypt] \
+   dry-run is run on the current key first, and only then on the new key.\n\
+  \   \n\
+  \    If any of these checks fails, the operation fails and the existing key association (if any) \
+   remains unchanged. Common failure causes include the key being disabled, the key policy not \
+   granting the required permissions to Amazon CloudWatch, or the caller lacking [kms:Decrypt] \
+   permission on the key.\n\
+  \    \n\
+  \     For more information about using customer managed keys with Amazon CloudWatch, see \
+   {{:https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cmk-encryption.html}Encryption \
+   at rest with customer managed keys} in the {i Amazon CloudWatch User Guide}.\n\
+  \     "]
 
 module Query_serializers = Query_serializers
 module Query_deserializers = Query_deserializers
